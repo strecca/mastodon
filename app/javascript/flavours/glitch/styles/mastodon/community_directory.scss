@@ -524,35 +524,150 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 .community-entry-detail {
-  &__nav {
-    padding: 12px 20px 0;
+
+  // ── Hero — landscape art banner (mirrors card landscape, scaled up) ─────────
+
+  &__hero {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #f7e157, #e96594);
+    flex-shrink: 0;
+  }
+
+  &__sun {
+    position: absolute;
+    top: 20%;
+    left: 62%;
+    transform: translateX(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 32px white, 0 0 64px rgba(255, 255, 255, 0.5);
+    z-index: 1;
+  }
+
+  &__hills {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  &__hill {
+    position: absolute;
+    bottom: 0;
+    border-radius: 50%;
+
+    &--1 { width: 200%; height: 90px;  left: -50%; background: #e6b29d; }
+    &--2 { width: 180%; height: 72px;  left: -40%; background: #c29182; }
+    &--3 { width: 150%; height: 58px;  left: -25%; background: #b77873; }
+    &--4 { width: 120%; height: 40px;  left: -10%; background: #a16773; }
+  }
+
+  &__filter {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.06);
+    z-index: 3;
+  }
+
+  // ── "← Back" nav link overlaid top-left of the hero ──────────────────────
+
+  &__hero-nav {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    z-index: 5;
 
     a {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--color-text-brand);
-      text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.92);
+      text-decoration: none;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 
       &:hover {
+        color: #fff;
         text-decoration: underline;
       }
     }
   }
 
-  &__meta {
-    padding: 16px 20px 20px;
-    border-bottom: 1px solid var(--color-border-primary);
-    background: var(--color-bg-elevated);
+  // ── Name / badges / location centred at the bottom of the hero ───────────
+
+  &__hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 20px 18px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.52) 0%, transparent 100%);
+    z-index: 5;
   }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(4px);
+  }
+
+  &__display-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+    margin: 0 0 4px;
+  }
+
+  &__location {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  // ── White card body below the hero ───────────────────────────────────────
+
+  &__card {
+    background: var(--color-bg-elevated);
+    border-top: 1px solid var(--color-border-primary);
+  }
+
+  // ── Account row ────────────────────────────────────────────────────────────
 
   &__account {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 10px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-border-primary);
+  }
+
+  &__account-info {
+    flex: 1;
+    min-width: 0;
 
     strong {
       display: block;
@@ -567,12 +682,23 @@
     display: block;
     font-size: 13px;
     color: var(--color-text-tertiary);
+    margin-top: 1px;
   }
 
   &__timestamps {
+    margin-left: auto;
+    text-align: right;
     font-size: 12px;
     color: var(--color-text-tertiary);
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    span {
+      display: block;
+    }
   }
+
+  // ── Field groups ───────────────────────────────────────────────────────────
 
   &__group {
     padding: 20px 20px 4px;
@@ -600,17 +726,7 @@
   }
 
   &__field {
-    &--full {
-      width: 100%;
-    }
-
-    &--half {
-      width: calc(50% - 12px);
-
-      @media (max-width: 600px) {
-        width: 100%;
-      }
-    }
+    width: 100%;
   }
 
   &__field-label {
@@ -620,16 +736,28 @@
     color: var(--color-text-tertiary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 
   &__field-value {
     font-size: 15px;
     font-weight: 500;
     color: var(--color-text-primary);
-    line-height: 1.5;
+    line-height: 1.6;
     word-break: break-word;
   }
+
+  &__link {
+    color: var(--color-text-brand);
+    text-decoration: none;
+    word-break: break-all;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // ── Edit / owner actions ───────────────────────────────────────────────────
 
   &__actions {
     padding: 16px 20px;
