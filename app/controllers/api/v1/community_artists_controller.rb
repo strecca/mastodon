@@ -34,6 +34,7 @@ class Api::V1::CommunityArtistsController < Api::BaseController
 
     if entry.save
       CommunityDirectoryMailer.entry_submitted(entry, CATEGORY_KEY).deliver_later unless entry.approved?
+      CommunityTranslationWorker.perform_async(entry.class.name, entry.id)
       render json: serialize(entry), status: :created
     else
       render json: { errors: entry.errors.full_messages }, status: :unprocessable_entity
@@ -42,6 +43,7 @@ class Api::V1::CommunityArtistsController < Api::BaseController
 
   def update
     if @entry.update(entry_params)
+      CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
       render json: serialize(@entry)
     else
       render json: { errors: @entry.errors.full_messages }, status: :unprocessable_entity
@@ -99,6 +101,12 @@ class Api::V1::CommunityArtistsController < Api::BaseController
   end
 
   def serialize(e)
+    translations = CommunityEntryTranslation
+      .where(translatable_type: e.class.name, translatable_id: e.id)
+      .each_with_object({}) do |t, h|
+        (h[t.locale] ||= {})[t.field_name] = t.translated_text
+      end
+
     { id: e.id, account_id: e.account_id, status: e.status,
       account: { id: e.account.id, username: e.account.username,
                  display_name: e.account.display_name, avatar: e.account.avatar_original_url },
@@ -112,6 +120,7 @@ class Api::V1::CommunityArtistsController < Api::BaseController
       contact_info_2: e.contact_info_2,
       website: e.website,
       telephone: e.telephone,
+      translations: translations,
       created_at: e.created_at.iso8601, updated_at: e.updated_at.iso8601 }
   end
 end

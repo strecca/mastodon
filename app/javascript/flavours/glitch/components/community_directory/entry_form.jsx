@@ -4,12 +4,14 @@
 // Renders fields grouped and laid out in 1 or 2 columns based on config.
 // mode='create' | 'edit'
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 
 import { useIntl, defineMessages } from 'react-intl';
 import { useHistory, Link } from 'react-router-dom';
 
+import api from 'flavours/glitch/api';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
+import { fieldLabel, fieldPlaceholder } from './translation_helpers';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
 import {
@@ -49,6 +51,8 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [populated, setPopulated] = useState(false);
+  const [duplicateWarning, setDuplicateWarning] = useState(null);
+  const checkingDuplicate = useRef(false);
 
   // In edit mode, fetch the entry and populate form
   useEffect(() => {
@@ -101,10 +105,8 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
     return Object.keys(errs).length === 0;
   }, [config.fields, formData, intl]);
 
-  const handleSubmit = useCallback(async () => {
-    if (!validate() || submitting) return;
+  const doSubmit = useCallback(async () => {
     setSubmitting(true);
-
     try {
       if (mode === 'create') {
         await dispatch(createEntry(categoryKey, apiEndpoint, formData));
@@ -113,16 +115,44 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
       }
       setSuccess(true);
       setTimeout(() => {
-        if (mode === 'create') {
-          history.push(`/${featureKey}`);
-        } else {
-          history.push(`/${featureKey}/${entryId}`);
-        }
+        history.push(mode === 'create' ? `/${featureKey}` : `/${featureKey}/${entryId}`);
       }, 1000);
     } catch {
       setSubmitting(false);
     }
-  }, [validate, submitting, mode, dispatch, categoryKey, apiEndpoint, formData, entryId, history, featureKey]);
+  }, [mode, dispatch, categoryKey, apiEndpoint, formData, entryId, history, featureKey]);
+
+  const handleSubmit = useCallback(async () => {
+    if (!validate() || submitting || checkingDuplicate.current) return;
+    setDuplicateWarning(null);
+
+    if (mode === 'create') {
+      const textFields = config.fields.filter(f => f.widget === 'text' && f.required);
+      if (textFields.length > 0) {
+        const checkParams = { category: categoryKey };
+        textFields.forEach(f => { checkParams[f.db_name] = formData[f.db_name] || ''; });
+        checkingDuplicate.current = true;
+        try {
+          const res = await api().get('/api/v1/community_directory/duplicate_check', { params: checkParams });
+          if (res.data.matches?.length > 0) {
+            setDuplicateWarning(res.data.matches);
+            checkingDuplicate.current = false;
+            return;
+          }
+        } catch {
+          // proceed on API error — don't block the submit
+        }
+        checkingDuplicate.current = false;
+      }
+    }
+
+    doSubmit();
+  }, [validate, submitting, mode, config.fields, categoryKey, formData, doSubmit]);
+
+  const handleSubmitAnyway = useCallback(() => {
+    setDuplicateWarning(null);
+    doSubmit();
+  }, [doSubmit]);
 
   // Group fields by their group property
   const groupedFields = useMemo(() => {
@@ -193,6 +223,47 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
         );
       })}
 
+      {/* Duplicate warning */}
+      {duplicateWarning && (
+        <div className='community-entry-form__duplicate-warning'>
+          <p className='community-entry-form__duplicate-warning-text'>
+            A similar entry already exists in this category — it may be a duplicate:
+          </p>
+          <ul className='community-entry-form__duplicate-list'>
+            {duplicateWarning.map(match => (
+              <li key={match.id} className='community-entry-form__duplicate-item'>
+                <span className='community-entry-form__duplicate-name'>{match.preview}</span>
+                <span className={`cd-status-badge cd-status-badge--${match.status}`}>{match.status}</span>
+                <Link
+                  to={`/${featureKey}/${match.id}`}
+                  className='community-entry-form__duplicate-link'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  View entry →
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className='community-entry-form__duplicate-actions'>
+            <button
+              type='button'
+              className='button button-secondary'
+              onClick={() => setDuplicateWarning(null)}
+            >
+              Edit my entry
+            </button>
+            <button
+              type='button'
+              className='button'
+              onClick={handleSubmitAnyway}
+            >
+              Submit anyway
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Actions */}
       <div className='community-entry-form__actions'>
         <button
@@ -219,7 +290,9 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
 const FormField = ({ field, value, error, onChange, intl }) => {
   const id = `cf-${field.db_name}`;
   const errorId = error ? `${id}-err` : undefined;
-  const label = field.label || humanize(field.db_name);
+  const locale = intl.locale;
+  const label = fieldLabel(field, locale) || humanize(field.db_name);
+  const ph    = fieldPlaceholder(field, locale);
 
   const colClass = field.column === '1' ? 'community-entry-form__field--col1'
     : field.column === '2' ? 'community-entry-form__field--col2'
@@ -230,8 +303,6 @@ const FormField = ({ field, value, error, onChange, intl }) => {
   const inputClass = `community-entry-form__input ${error ? 'community-entry-form__input--error' : ''}`;
 
   let input;
-
-  const ph = field.placeholder || '';
 
   switch (field.widget) {
   case 'textarea':

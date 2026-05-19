@@ -100,10 +100,15 @@ class CommunityDirectoryGenerator
 
   def normalize_field(f)
     f = f.deep_symbolize_keys
-    { db_name: f[:db_name], label: f[:label], widget: f[:widget] || 'text',
-      required: !!f[:required], searchable: !!f[:searchable],
-      options: Array(f[:options]), column: f[:column] || 'full',
-      group: f[:group] || 'default' }
+    base = { db_name: f[:db_name], label: f[:label], widget: f[:widget] || 'text',
+             required: !!f[:required], searchable: !!f[:searchable],
+             duplicate_key: !!f[:duplicate_key], translatable: !!f[:translatable],
+             options: Array(f[:options]), column: f[:column] || 'full',
+             group: f[:group] || 'default' }
+    # Preserve any label_<locale> and placeholder_<locale> keys the admin entered
+    locale_keys = f.keys.map(&:to_s).select { |k| k =~ /\A(label|placeholder)_[a-z]{2}\z/ }
+    locale_keys.each { |k| base[k] = f[k.to_sym] }
+    base
   end
 
   # ── React Feature Pages ──────────────────────────────────────
@@ -252,8 +257,8 @@ class CommunityDirectoryGenerator
     }.map { |f| f.deep_symbolize_keys[:db_name] }
 
     scope = if str_search.any?
-      cond = str_search.map { |c| "#{c} ILIKE :q" }.join(' OR ')
-      "  scope :search, ->(query) { query.blank? ? all : where(\"#{cond}\", q: \"%\#{query}%\") }"
+      cols = str_search.map { |c| "coalesce(#{c}, '')" }.join(" || ' ' || ")
+      "  scope :search, ->(query) { query.blank? ? all : where(\"to_tsvector('english', #{cols}) @@ plainto_tsquery('english', ?)\", query) }"
     else
       "  scope :search, ->(_q) { all }"
     end
@@ -261,6 +266,8 @@ class CommunityDirectoryGenerator
     write Rails.root.join('app','models',"#{@table_name.singularize}.rb"), <<~RB
       class #{@model_name} < ApplicationRecord
         belongs_to :account
+        has_many :entry_translations, class_name: 'CommunityEntryTranslation',
+                 as: :translatable, dependent: :destroy
 
         enum :status, { pending: 0, approved: 1, rejected: 2 }, default: :pending
 
@@ -330,6 +337,7 @@ class CommunityDirectoryGenerator
 
           if entry.save
             CommunityDirectoryMailer.entry_submitted(entry, CATEGORY_KEY).deliver_later unless entry.approved?
+            CommunityTranslationWorker.perform_async(entry.class.name, entry.id)
             render json: serialize(entry), status: :created
           else
             render json: { errors: entry.errors.full_messages }, status: :unprocessable_entity
@@ -338,6 +346,7 @@ class CommunityDirectoryGenerator
 
         def update
           if @entry.update(entry_params)
+            CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
             render json: serialize(@entry)
           else
             render json: { errors: @entry.errors.full_messages }, status: :unprocessable_entity
@@ -395,10 +404,17 @@ class CommunityDirectoryGenerator
         end
 
         def serialize(e)
+          translations = CommunityEntryTranslation
+            .where(translatable_type: e.class.name, translatable_id: e.id)
+            .each_with_object({}) do |t, h|
+              (h[t.locale] ||= {})[t.field_name] = t.translated_text
+            end
+
           { id: e.id, account_id: e.account_id, status: e.status,
             account: { id: e.account.id, username: e.account.username,
                         display_name: e.account.display_name, avatar: e.account.avatar_original_url },
       #{field_serialize}
+            translations: translations,
             created_at: e.created_at.iso8601, updated_at: e.updated_at.iso8601 }
         end
       end

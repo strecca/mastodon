@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_19_110000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_19_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -450,6 +450,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_110000) do
     t.datetime "updated_at", null: false
     t.index ["account_id", "category_key"], name: "idx_cd_permissions_account_category", unique: true
     t.index ["account_id"], name: "index_community_directory_permissions_on_account_id"
+  end
+
+  create_table "community_entry_translations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "field_name", null: false
+    t.string "locale", null: false
+    t.string "source_digest", null: false
+    t.bigint "translatable_id", null: false
+    t.string "translatable_type", null: false
+    t.text "translated_text", null: false
+    t.datetime "updated_at", null: false
+    t.index ["translatable_type", "translatable_id", "locale", "field_name"], name: "idx_community_translations_unique", unique: true
+    t.index ["translatable_type", "translatable_id", "locale"], name: "idx_community_translations_by_entry_locale"
+    t.index ["translatable_type", "translatable_id"], name: "index_community_entry_translations_on_translatable"
   end
 
   create_table "conversation_mutes", force: :cascade do |t|

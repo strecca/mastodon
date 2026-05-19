@@ -12,6 +12,7 @@ import { withIdentity } from 'flavours/glitch/identity_context';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
 import { fetchEntry, clearCurrentEntry } from 'flavours/glitch/actions/community_entries';
+import { fieldLabel, translatedValue } from './translation_helpers';
 
 const messages = defineMessages({
   edit:    { id: 'community.detail.edit',    defaultMessage: 'Edit this entry' },
@@ -26,6 +27,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
 
+  const locale      = intl.locale;
   const categoryKey = config.category_key;
   const apiEndpoint = config.api_endpoint;
   const featureKey  = `community_${categoryKey}`;
@@ -124,7 +126,12 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
     : Object.keys(groupMap);
 
   const groupLabels = {};
-  if (config.groups) config.groups.forEach(g => { groupLabels[g.name] = g.label; });
+  if (config.groups) {
+    const lang = locale?.split('-')[0];
+    config.groups.forEach(g => {
+      groupLabels[g.name] = g[`label_${locale}`] || g[`label_${lang}`] || g.label;
+    });
+  }
 
   return (
     <div className='scrollable'>
@@ -200,15 +207,18 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
                   {groupFields.map(field => {
                     const rawVal = entry.get(field.db_name);
                     if (rawVal == null || rawVal === '') return null;
-                    const val = rawVal && typeof rawVal.toJS === 'function'
+                    const storedVal = rawVal && typeof rawVal.toJS === 'function'
                       ? rawVal.toJS().join(', ')
                       : String(rawVal);
+                    const val = field.translatable
+                      ? (translatedValue(entry, field.db_name, locale) || storedVal)
+                      : storedVal;
                     const isLink = field.widget === 'url' || /^https?:\/\//.test(val);
                     const href = isLink && !/^https?:\/\//.test(val) ? `https://${val}` : val;
                     return (
                       <div key={field.db_name} className='community-entry-detail__field'>
                         <dt className='community-entry-detail__field-label'>
-                          {field.label || humanize(field.db_name)}
+                          {fieldLabel(field, locale) || humanize(field.db_name)}
                         </dt>
                         <dd className='community-entry-detail__field-value'>
                           {isLink ? (

@@ -33,6 +33,8 @@
 #
 class CommunityArtist < ApplicationRecord
   belongs_to :account
+  has_many :entry_translations, class_name: 'CommunityEntryTranslation',
+           as: :translatable, dependent: :destroy
 
   enum :status, { pending: 0, approved: 1, rejected: 2 }, default: :pending
 
@@ -42,5 +44,9 @@ class CommunityArtist < ApplicationRecord
   validates :last_name, presence: true
   validates :artist_description, presence: true
   validates :contact_info_1, presence: true
-  scope :search, ->(query) { query.blank? ? all : where("location_town_city ILIKE :q OR last_name ILIKE :q", q: "%#{query}%") }
+  scope :search, ->(query) {
+    return all if query.blank?
+    cols = "coalesce(first_name, '') || ' ' || coalesce(last_name, '') || ' ' || coalesce(location_town_city, '') || ' ' || coalesce(artist_description, '')"
+    where("to_tsvector('english', #{cols}) @@ plainto_tsquery('english', ?)", query)
+  }
 end

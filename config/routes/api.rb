@@ -41,6 +41,7 @@ namespace :api, format: false do
     # Category settings
     get   'community_directory/settings',             to: 'community_directory#settings_index'
     put   'community_directory/settings/:category_key', to: 'community_directory#settings_update'
+    get   'community_directory/duplicate_check',      to: 'community_directory#duplicate_check'
     # Community Directory public API
     resources :community_directory_public, only: [:index]
     resources :statuses, only: [:index, :create, :show, :update, :destroy] do

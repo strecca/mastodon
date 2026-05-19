@@ -2,7 +2,7 @@
 
 class Api::V1::CommunityDirectoryController < Api::BaseController
   before_action :require_user!
-  before_action :require_admin!, except: [:moderation_index, :moderation_approve, :moderation_reject]
+  before_action :require_admin!, except: [:moderation_index, :moderation_approve, :moderation_reject, :duplicate_check]
   before_action :require_admin_or_steward!, only: [:moderation_index, :moderation_approve, :moderation_reject]
 
   # ── Category scaffolding ─────────────────────────────────────
@@ -100,6 +100,40 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     perm = CommunityDirectoryPermission.find(params[:id])
     perm.destroy!
     head :no_content
+  end
+
+  # ── Duplicate detection ──────────────────────────────────────
+
+  def duplicate_check
+    category_key = params[:category].to_s
+    model = model_for_category(category_key)
+    return render json: { matches: [] } unless model
+
+    config_path = category_config_path(category_key)
+    return render json: { matches: [] } unless File.exist?(config_path)
+
+    config = JSON.parse(File.read(config_path))
+    all_text = (config['fields'] || []).select { |f| f['widget'] == 'text' && f['required'] }
+    text_fields = all_text.select { |f| f['duplicate_key'] }
+    text_fields = all_text.first(2) if text_fields.empty?
+    return render json: { matches: [] } if text_fields.empty?
+
+    submitted_concat = text_fields.map { |f| params[f['db_name']].to_s.strip }.join(' ')
+    return render json: { matches: [] } if submitted_concat.blank?
+
+    submitted_key = submitted_concat.downcase[0, 50]
+    conn = model.connection
+    concat_sql = text_fields.map { |f| "COALESCE(#{conn.quote_column_name(f['db_name'])}, '')" }.join(" || ' ' || ")
+
+    matches = model.where(status: [0, 1])
+                   .where("LOWER(SUBSTRING(#{concat_sql}, 1, 50)) = ?", submitted_key)
+                   .limit(5)
+                   .map do |entry|
+                     preview = text_fields.map { |f| entry.send(f['db_name']).to_s }.join(' ')
+                     { id: entry.id, preview: preview, status: entry.status }
+                   end
+
+    render json: { matches: }
   end
 
   # ── Category settings (rate limits) ──────────────────────────
@@ -224,12 +258,13 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   end
 
   def permit_config_params
-    params.permit(
-      :name, :display_name, :description, :icon,
-      groups: [:name, :label, :columns],
-      fields: [:db_name, :label, :placeholder, :widget, :required, :searchable,
-               :show_in_list, :show_in_detail, :column, :group, options: []]
-    ).to_h
+    # Admin-only endpoint — use permit! on fields/groups so locale keys
+    # (label_it, placeholder_de, etc.) and new flags (translatable, duplicate_key)
+    # are not stripped by Strong Parameters.
+    p = params.permit(:name, :display_name, :description, :icon).to_h
+    p['fields'] = params[:fields]&.map(&:permit!) || []
+    p['groups'] = params[:groups]&.map(&:permit!) || []
+    p
   end
 
   def category_config_path(name)
