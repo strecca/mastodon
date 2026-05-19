@@ -74,8 +74,8 @@ class CommunityTranslationWorker
   end
 
   def load_config(translatable_type)
-    # "CommunityArtist" → "artist" → config path community_artists/config.json
-    category_key = translatable_type.delete_prefix('Community').underscore
+    # "CommunityArtist" → "artists" → config path community_artists/config.json
+    category_key = translatable_type.delete_prefix('Community').underscore.pluralize
     config_path  = Rails.root.join(
       'app', 'javascript', 'flavours', 'glitch', 'features',
       "community_#{category_key}", 'config.json'
