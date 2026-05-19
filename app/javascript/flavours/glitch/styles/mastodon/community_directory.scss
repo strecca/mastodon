@@ -576,22 +576,30 @@
 
   &__hero-nav {
     position: absolute;
-    top: 14px;
-    left: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 5;
 
     a {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      font-size: 13px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.92);
+      justify-content: center;
+      gap: 6px;
+      min-height: 44px;
+      padding: 0 24px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
       text-decoration: none;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      letter-spacing: 0.01em;
 
       &:hover {
-        color: #fff;
         text-decoration: underline;
       }
     }
