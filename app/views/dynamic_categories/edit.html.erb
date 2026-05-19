@@ -1,0 +1,153 @@
+<h2>Edit Dynamic Category: <%= @category %></h2>
+
+<!-- PHASE 1: Add DB Fields -->
+<div id="phase-fields">
+  <h3>Step 1 — Define Database Fields</h3>
+  <div id="fields-list"></div>
+
+  <div class="field-row mt-3">
+    <input id="new-field-name" type="text" placeholder="Field name (e.g. first_name)" class="form-control w-50 d-inline">
+    <select id="new-field-type" class="form-control d-inline w-auto">
+      <% %w[string text integer bigint float decimal boolean date datetime jsonb uuid string[] integer[]].each do |t| %>
+        <option value="<%= t %>"><%= t %></option>
+      <% end %>
+    </select>
+    <button onclick="addFieldRow()" class="btn btn-primary">Add Field</button>
+  </div>
+
+  <button onclick="saveFields()" class="btn btn-success mt-3">Save Fields &amp; Continue to Form Editor</button>
+</div>
+
+<!-- PHASE 2: Form Editor (hidden until fields saved) -->
+<div id="phase-form" class="mt-5" style="display:none;">
+  <h3>Step 2 — Form Editor (UI metadata)</h3>
+  <div id="form-fields-list"></div>
+  <button onclick="saveFullForm()" class="btn btn-success mt-3">Save Full Model &amp; Generate Migration</button>
+</div>
+
+<script>
+// Simple vanilla JS builder — works inside Mastodon admin layout
+let dbFields = <%= raw @schema['db_fields'].to_json %>;
+
+function renderFieldsList() {
+  const container = document.getElementById('fields-list');
+  container.innerHTML = dbFields.map((f, i) => `
+    <div class="d-flex mb-2 align-items-center">
+      <input value="${f.name}" onchange="dbFields[${i}].name=this.value" class="form-control me-2" style="width:250px">
+      <select onchange="dbFields[${i}].type=this.value" class="form-control me-2" style="width:150px">
+        <% %w[string text integer bigint float decimal boolean date datetime jsonb uuid string[] integer[]].each do |t| %>
+          <option value="<%= t %>" ${f.type === '<%= t %>' ? 'selected' : ''}><%= t %></option>
+        <% end %>
+      </select>
+      <button onclick="dbFields.splice(${i},1);renderFieldsList()" class="btn btn-danger btn-sm">Remove</button>
+    </div>
+  `).join('');
+}
+
+function addFieldRow() {
+  const name = document.getElementById('new-field-name').value.trim();
+  const type = document.getElementById('new-field-type').value;
+  if (!name) return alert('Field name required');
+  dbFields.push({ name, type });
+  renderFieldsList();
+  document.getElementById('new-field-name').value = '';
+}
+
+function saveFields() {
+  fetch('<%= save_fields_admin_dynamic_category_path(@category) %>', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.querySelector('meta[name=csrf-token]').content },
+    body: JSON.stringify({ db_fields: dbFields })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('phase-fields').style.display = 'none';
+      document.getElementById('phase-form').style.display = 'block';
+      renderFormEditor();
+    }
+  });
+}
+
+// PHASE 2
+let formFields = <%= raw @schema.dig('form_config', 'fields')&.to_json || '[]' %>;
+<!-- Inside the form-fields-list loop, or as a top-level setting -->
+<div class="form-check">
+  <input type="checkbox" name="form_config[link_to_account]" id="link_account" checked>
+  <label for="link_account">Link this resource to Mastodon Account (recommended)</label>
+</div>
+
+function renderFormEditor() {
+  const container = document.getElementById('form-fields-list');
+  container.innerHTML = dbFields.map((db, i) => {
+    const existing = formFields.find(f => f.db_name === db.name) || {};
+    return `
+      <div class="border p-3 mb-3">
+        <strong>${db.name} (${db.type})</strong>
+        <input type="hidden" name="form_fields[${i}][db_name]" value="${db.name}">
+        <div class="row mt-2">
+          <div class="col">
+            <label>Label</label>
+            <input value="${existing.label || db.name.humanize}" name="form_fields[${i}][label]" class="form-control">
+          </div>
+          <div class="col">
+            <label>Widget</label>
+            <select name="form_fields[${i}][widget]" class="form-control">
+              <option value="text" ${existing.widget==='text'?'selected':''}>Text</option>
+              <option value="textarea" ${existing.widget==='textarea'?'selected':''}>Textarea</option>
+              <option value="select" ${existing.widget==='select'?'selected':''}>Select</option>
+              <option value="checkboxes" ${existing.widget==='checkboxes'?'selected':''}>Checkboxes</option>
+              <option value="date" ${existing.widget==='date'?'selected':''}>Date</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Required</label><br>
+            <input type="checkbox" name="form_fields[${i}][required]" ${existing.required ? 'checked' : ''}>
+          </div>
+          <div class="col-12 mt-2">
+            <label>Options (one per line — for select/checkboxes)</label>
+            <textarea name="form_fields[${i}][options]" rows="3" class="form-control">${(existing.options || []).join('\n')}</textarea>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function saveFullForm() {
+  // collect form fields from DOM
+  const formData = Array.from(document.querySelectorAll('#form-fields-list > div')).map((div, i) => {
+    const inputs = div.querySelectorAll('input, select, textarea');
+    const obj = {};
+    inputs.forEach(el => {
+      if (el.type === 'checkbox') obj[el.name.split('[').pop().replace(']', '')] = el.checked;
+      else if (el.name.includes('options')) obj.options = el.value.split('\n').map(l => l.trim()).filter(Boolean);
+      else obj[el.name.split('[').pop().replace(']', '')] = el.value;
+    });
+    return obj;
+  });
+
+  fetch('<%= save_form_admin_dynamic_category_path(@category) %>', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.querySelector('meta[name=csrf-token]').content },
+    body: JSON.stringify({ form_fields: formData })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      alert(data.message + '\n\n' + data.instruction);
+      window.location.href = '<%= admin_dynamic_categories_path %>';
+    }
+  });
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  renderFieldsList();
+  if (dbFields.length > 0 && document.getElementById('phase-form').style.display === 'none') {
+    // already has fields — show form editor immediately
+    document.getElementById('phase-fields').style.display = 'none';
+    document.getElementById('phase-form').style.display = 'block';
+    renderFormEditor();
+  }
+});
+</script>

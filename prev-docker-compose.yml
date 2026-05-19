@@ -1,0 +1,59 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /workspaces/glitch-soc
+    volumes:
+      - .:/workspaces/glitch-soc:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/workspaces/glitch-soc/node_modules
+    environment:
+      RAILS_ENV: development
+      NODE_ENV: development
+      GEM_HOME: /usr/local/bundle
+      BUNDLE_PATH: /usr/local/bundle
+      BUNDLE_APP_CONFIG: /usr/local/bundle
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_PORT: "5432"
+      VITE_RUBY_HOST: 0.0.0.0
+      VITE_DEV_SERVER_PUBLIC: localhost:3036
+    ports:
+      - "3000:3000"   # Rails
+      - "3036:3036"   # Vite
+    command: sleep infinity
+    networks:
+      - devnet
+
+  db:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - devnet
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - devnet
+
+volumes:
+  postgres-data:
+  redis-data:
+  bundle:
+  node_modules:
+
+networks:
+  devnet:

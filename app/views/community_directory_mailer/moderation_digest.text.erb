@@ -1,0 +1,15 @@
+You have <%= @total %> Community Directory <%= @total == 1 ? 'entry' : 'entries' %> waiting for review (pending more than 24 hours).
+
+<% @pending_by_category.each do |group| %>
+── <%= group[:category_display_name] %> (<%= group[:entries].length %> pending) ──
+<% group[:entries].each do |entry| %>
+  • @<%= entry[:submitter] %> — submitted <%= entry[:submitted_at] %>
+<% end %>
+
+<% end %>
+To review these entries, visit the moderation queue on your instance:
+
+  /community_directory/moderation
+
+---
+This is an automated daily digest from your Mastodon Community Directory.

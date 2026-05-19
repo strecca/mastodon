@@ -1,0 +1,159 @@
+{
+  "category_key": "artists",
+  "display_name": "Community Artists",
+  "description": "Discover local artists in Civezza, Cipress, Lingueletta, Poggi, San Lorenzo al Mare, Costareinera, Imperia and surrounding communities",
+  "icon": "category",
+  "table_name": "community_artists",
+  "api_endpoint": "/api/v1/community_artists",
+  "fields": [
+    {
+      "db_name": "category",
+      "label": "Category",
+      "placeholder": "",
+      "widget": "checkboxes",
+      "required": true,
+      "searchable": true,
+      "show_in_list": true,
+      "show_in_detail": true,
+      "options": [
+        "Painting Oil/Acrylic/Tempera",
+        "Encaustic Art",
+        "Singing Teacher",
+        "Singing Artist",
+        "Theatrical Performance",
+        "Sculptor",
+        "Woodworking",
+        "Musical Performer",
+        "Musical Composer",
+        "Dance Performer/Instructor",
+        "Writer"
+      ],
+      "column": "full",
+      "group": "basic"
+    },
+    {
+      "db_name": "location_town_city",
+      "label": "Location Town/City",
+      "placeholder": "e.g. San Lorenzo al Mare",
+      "widget": "text",
+      "required": true,
+      "searchable": true,
+      "show_in_list": true,
+      "show_in_detail": true,
+      "options": [],
+      "column": "full",
+      "group": "basic"
+    },
+    {
+      "db_name": "first_name",
+      "label": "First Name",
+      "placeholder": "",
+      "widget": "text",
+      "required": true,
+      "searchable": false,
+      "show_in_list": true,
+      "show_in_detail": true,
+      "options": [],
+      "column": "1",
+      "group": "basic"
+    },
+    {
+      "db_name": "last_name",
+      "label": "Last Name",
+      "placeholder": "",
+      "widget": "text",
+      "required": true,
+      "searchable": true,
+      "show_in_list": true,
+      "show_in_detail": true,
+      "options": [],
+      "column": "2",
+      "group": "basic"
+    },
+    {
+      "db_name": "artist_description",
+      "label": "Artist Description",
+      "placeholder": "With short sentences describe yourself: Your talent & experience & what you want to offer the community.",
+      "widget": "textarea",
+      "required": true,
+      "searchable": false,
+      "show_in_list": false,
+      "show_in_detail": true,
+      "options": [],
+      "column": "full",
+      "group": "basic"
+    },
+    {
+      "db_name": "hours_schedule",
+      "label": "Hours/Schedule",
+      "placeholder": "e.g. Mon–Fri 9am–5pm",
+      "widget": "text",
+      "required": false,
+      "searchable": false,
+      "show_in_list": false,
+      "show_in_detail": true,
+      "options": [],
+      "column": "full",
+      "group": "basic"
+    },
+    {
+      "db_name": "contact_info_1",
+      "label": "Contact Info #1",
+      "placeholder": "Email, phone, or social handle",
+      "widget": "text",
+      "required": true,
+      "searchable": false,
+      "show_in_list": false,
+      "show_in_detail": true,
+      "options": [],
+      "column": "full",
+      "group": "basic"
+    },
+    {
+      "db_name": "contact_info_2",
+      "label": "Contact Info #2",
+      "placeholder": "Another way to contact you",
+      "widget": "text",
+      "required": false,
+      "searchable": false,
+      "show_in_list": false,
+      "show_in_detail": true,
+      "options": [],
+      "column": "full",
+      "group": "basic"
+    },
+    {
+      "db_name": "website",
+      "label": "Website",
+      "placeholder": "https://",
+      "widget": "url",
+      "required": false,
+      "searchable": false,
+      "show_in_list": false,
+      "show_in_detail": true,
+      "options": [],
+      "column": "full",
+      "group": "basic"
+    },
+    {
+      "db_name": "telephone",
+      "label": "Telephone",
+      "placeholder": "",
+      "widget": "number",
+      "required": false,
+      "searchable": false,
+      "show_in_list": true,
+      "show_in_detail": true,
+      "options": [],
+      "column": "full",
+      "group": "basic"
+    }
+  ],
+  "groups": [
+    {
+      "name": "basic",
+      "label": "Basic Information",
+      "columns": 2
+    }
+  ]
+}

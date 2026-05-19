@@ -1,0 +1,31 @@
+{
+  "all": {
+    "sourceCodeDir": "app/javascript",
+    "additionalEntrypoints": [
+      "~/{fonts,icons,images}/**/*",
+      "~/styles/entrypoints/*.scss",
+      "~/flavours/*/{fonts,icons,images}/**/*"
+    ],
+    "watchAdditionalPaths": [
+      "app/javascript/flavours/glitch/features/community_directory/**/*",
+      "app/javascript/flavours/glitch/actions/community_directory.js",
+      "app/javascript/flavours/glitch/reducers/community_directory.js",
+      "app/javascript/flavours/glitch/features/ui/index.jsx",
+      "app/javascript/flavours/glitch/features/ui/util/async-components.js",
+      "app/javascript/flavours/glitch/features/community_directory/admin/**/*"
+    ]
+  },
+  "production": {
+    "publicOutputDir": "packs"
+  },
+  "development": {
+    "autoBuild": true,
+    "publicOutputDir": "packs-dev",
+    "port": 3036
+  },
+  "test": {
+    "autoBuild": true,
+    "publicOutputDir": "packs-test",
+    "port": 3037
+  }
+}
