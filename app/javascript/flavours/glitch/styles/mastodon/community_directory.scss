@@ -529,7 +529,7 @@
 
   &__hero {
     position: relative;
-    height: 200px;
+    height: 100px;
     overflow: hidden;
     background: linear-gradient(to bottom, #f7e157, #e96594);
     flex-shrink: 0;
@@ -537,14 +537,14 @@
 
   &__sun {
     position: absolute;
-    top: 20%;
-    left: 62%;
+    top: 18%;
+    left: 78%;
     transform: translateX(-50%);
-    width: 46px;
-    height: 46px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: white;
-    box-shadow: 0 0 32px white, 0 0 64px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 20px white, 0 0 40px rgba(255, 255, 255, 0.5);
     z-index: 1;
   }
 
@@ -559,10 +559,10 @@
     bottom: 0;
     border-radius: 50%;
 
-    &--1 { width: 200%; height: 90px;  left: -50%; background: #e6b29d; }
-    &--2 { width: 180%; height: 72px;  left: -40%; background: #c29182; }
-    &--3 { width: 150%; height: 58px;  left: -25%; background: #b77873; }
-    &--4 { width: 120%; height: 40px;  left: -10%; background: #a16773; }
+    &--1 { width: 200%; height: 52px; left: -50%; background: #e6b29d; }
+    &--2 { width: 180%; height: 40px; left: -40%; background: #c29182; }
+    &--3 { width: 150%; height: 30px; left: -25%; background: #b77873; }
+    &--4 { width: 120%; height: 20px; left: -10%; background: #a16773; }
   }
 
   &__filter {
@@ -604,7 +604,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 40px 20px 18px;
+    padding: 24px 20px 12px;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.52) 0%, transparent 100%);
     z-index: 5;
   }
@@ -613,7 +613,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
-    margin-bottom: 8px;
+    margin-bottom: 14px;
   }
 
   &__badge {
@@ -625,19 +625,18 @@
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.62);
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   &__display-name {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: #fff;
     line-height: 1.2;
-    letter-spacing: -0.3px;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+    letter-spacing: -0.2px;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
     margin: 0 0 4px;
   }
 
