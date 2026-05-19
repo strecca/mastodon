@@ -405,7 +405,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-    margin-bottom: 45px;
+    margin-bottom: 65px;
   }
 
   &__badge {
@@ -417,10 +417,9 @@
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.62);
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   &__name {
