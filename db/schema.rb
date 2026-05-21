@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_19_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_21_100300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -464,6 +464,54 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_120000) do
     t.index ["translatable_type", "translatable_id", "locale", "field_name"], name: "idx_community_translations_unique", unique: true
     t.index ["translatable_type", "translatable_id", "locale"], name: "idx_community_translations_by_entry_locale"
     t.index ["translatable_type", "translatable_id"], name: "index_community_entry_translations_on_translatable"
+  end
+
+  create_table "community_notification_preferences", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.boolean "browser_push", default: false, null: false
+    t.datetime "created_at", null: false
+    t.integer "email_frequency", default: 2, null: false
+    t.boolean "on_friend_ping", default: true, null: false
+    t.boolean "on_new_member", default: false, null: false
+    t.boolean "on_visit_overlap", default: true, null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "idx_community_notif_prefs_account", unique: true
+    t.index ["account_id"], name: "index_community_notification_preferences_on_account_id"
+  end
+
+  create_table "community_visit_notifications", force: :cascade do |t|
+    t.datetime "browser_pushed_at"
+    t.bigint "community_visit_id"
+    t.datetime "created_at", null: false
+    t.datetime "emailed_at"
+    t.integer "kind", null: false
+    t.text "message"
+    t.datetime "read_at"
+    t.bigint "recipient_account_id", null: false
+    t.bigint "sender_account_id"
+    t.datetime "updated_at", null: false
+    t.index ["community_visit_id"], name: "idx_community_visit_notifs_visit"
+    t.index ["community_visit_id"], name: "index_community_visit_notifications_on_community_visit_id"
+    t.index ["recipient_account_id", "created_at"], name: "idx_community_visit_notifs_inbox"
+    t.index ["recipient_account_id", "read_at"], name: "idx_community_visit_notifs_unread"
+    t.index ["recipient_account_id"], name: "index_community_visit_notifications_on_recipient_account_id"
+    t.index ["sender_account_id"], name: "index_community_visit_notifications_on_sender_account_id"
+  end
+
+  create_table "community_visits", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.date "arrival_date", null: false
+    t.bigint "community_profile_id"
+    t.datetime "created_at", null: false
+    t.date "departure_date", null: false
+    t.text "note"
+    t.datetime "updated_at", null: false
+    t.integer "visibility", default: 0, null: false
+    t.index ["account_id"], name: "index_community_visits_on_account_id"
+    t.index ["arrival_date", "departure_date"], name: "idx_community_visits_date_range"
+    t.index ["departure_date"], name: "idx_community_visits_departure"
+    t.index ["visibility"], name: "idx_community_visits_visibility"
+    t.check_constraint "departure_date >= arrival_date", name: "chk_community_visits_date_order"
   end
 
   create_table "conversation_mutes", force: :cascade do |t|
@@ -1466,6 +1514,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_120000) do
     t.index ["unconfirmed_email"], name: "index_users_on_unconfirmed_email", where: "(unconfirmed_email IS NOT NULL)"
   end
 
+  create_table "visit_availabilities", force: :cascade do |t|
+    t.bigint "community_visit_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "kind", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_visit_id", "kind"], name: "idx_visit_availabilities_unique", unique: true
+    t.index ["community_visit_id"], name: "index_visit_availabilities_on_community_visit_id"
+  end
+
   create_table "web_push_subscriptions", force: :cascade do |t|
     t.bigint "access_token_id", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -1558,6 +1615,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_120000) do
   add_foreign_key "collections", "tags"
   add_foreign_key "community_artists", "accounts"
   add_foreign_key "community_directory_permissions", "accounts"
+  add_foreign_key "community_notification_preferences", "accounts"
+  add_foreign_key "community_visit_notifications", "accounts", column: "recipient_account_id"
+  add_foreign_key "community_visit_notifications", "accounts", column: "sender_account_id"
+  add_foreign_key "community_visit_notifications", "community_visits"
+  add_foreign_key "community_visits", "accounts"
   add_foreign_key "conversation_mutes", "accounts", name: "fk_225b4212bb", on_delete: :cascade
   add_foreign_key "conversation_mutes", "conversations", on_delete: :cascade
   add_foreign_key "custom_emoji_categories", "custom_emojis", column: "featured_emoji_id", on_delete: :nullify
@@ -1663,6 +1725,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_120000) do
   add_foreign_key "users", "invites", on_delete: :nullify
   add_foreign_key "users", "oauth_applications", column: "created_by_application_id", on_delete: :nullify
   add_foreign_key "users", "user_roles", column: "role_id", on_delete: :nullify
+  add_foreign_key "visit_availabilities", "community_visits"
   add_foreign_key "web_push_subscriptions", "oauth_access_tokens", column: "access_token_id", on_delete: :cascade
   add_foreign_key "web_push_subscriptions", "users", on_delete: :cascade
   add_foreign_key "web_settings", "users", name: "fk_11910667b2", on_delete: :cascade
