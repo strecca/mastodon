@@ -1,0 +1,13 @@
+Hi @<%= @recipient.username %>,
+
+Great news — <%= @sender.display_name.presence || "@#{@sender.username}" %> (@<%= @sender.username %>) will be in town at the same time as you!
+
+Your visit:   <%= @visit.arrival_date.strftime('%B %-d') %> – <%= @visit.departure_date.strftime('%B %-d, %Y') %>
+
+Head to the community calendar to see their availability and arrange to meet:
+
+  /community_visits
+
+---
+You're receiving this because you have instant overlap notifications enabled.
+To change your notification preferences, visit /community_visits and open Settings.

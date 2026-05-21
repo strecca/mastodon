@@ -2,6 +2,7 @@
 // "When I'll Be In Town" — calendar view for community member visit planning.
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from '@unhead/react/helmet';
 import { Column }       from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
@@ -10,8 +11,9 @@ import { useIdentity }  from 'flavours/glitch/identity_context';
 import {
   fetchVisits, fetchMyVisits, fetchHeatmap, deleteVisit,
 } from 'flavours/glitch/actions/community_visits';
-import { VisitForm }          from './components/visit_form';
+import { VisitForm }        from './components/visit_form';
 import { NotifyFriendsModal } from './components/notify_friends_modal';
+import { DayDetailPanel }  from './components/day_detail_panel';
 import AddIcon          from '@/material-icons/400-24px/add.svg?react';
 import EditIcon         from '@/material-icons/400-24px/edit.svg?react';
 import DeleteIcon       from '@/material-icons/400-24px/delete.svg?react';
@@ -129,11 +131,11 @@ const HeatmapTeaser = ({ heatmap }) => {
 };
 
 // Avatar pile for a calendar day cell — up to 5 avatars + overflow count
-const AvatarPile = ({ visits, onDayClick }) => {
+const AvatarPile = ({ visits }) => {
   const visible  = visits.slice(0, 5);
   const overflow = visits.length - 5;
   return (
-    <div className='cv-day__avatars' onClick={onDayClick}>
+    <div className='cv-day__avatars'>
       {visible.map(v => {
         const rel  = v.get('relationship') || 'none';
         const acct = v.get('account');
@@ -214,9 +216,10 @@ const CommunityVisits = ({ multiColumn }) => {
   const { year, month } = navDate;
 
   // Modal state
-  const [showForm,    setShowForm]    = useState(false);
+  const [showForm,     setShowForm]     = useState(false);
   const [editingVisit, setEditingVisit] = useState(null); // ImmutableMap or null
   const [notifyVisit,  setNotifyVisit]  = useState(null); // ImmutableMap or null
+  const [dayPanel,     setDayPanel]     = useState(null); // { date, visits } or null
 
   // Load calendar data for the visible month
   useEffect(() => {
@@ -247,9 +250,12 @@ const CommunityVisits = ({ multiColumn }) => {
       m === 11 ? { year: y + 1, month: 0 } : { year: y, month: m + 1 }
     ), []);
 
-  const openCreate = () => { setEditingVisit(null); setShowForm(true); };
-  const openEdit   = (v) => { setEditingVisit(v);   setShowForm(true); };
-  const closeForm  = () => { setShowForm(false); setEditingVisit(null); };
+  const openCreate  = () => { setEditingVisit(null); setShowForm(true); };
+  const openEdit    = (v) => { setEditingVisit(v);   setShowForm(true); };
+  const closeForm   = () => { setShowForm(false); setEditingVisit(null); };
+  const openDayPanel = useCallback((key, dayVisits) => {
+    if (dayVisits.length > 0) setDayPanel({ date: key, visits: dayVisits });
+  }, []);
 
   const handleDelete = useCallback(async (visit) => {
     if (!window.confirm('Remove this visit from the calendar?')) return;
@@ -311,6 +317,7 @@ const CommunityVisits = ({ multiColumn }) => {
                     if (!day) return <div key={i} className='cv-cal__day cv-cal__day--empty' />;
                     const key       = isoDate(day);
                     const dayVisits = visitsByDay[key] || [];
+                    const clickable = dayVisits.length > 0;
                     return (
                       <div
                         key={key}
@@ -318,8 +325,13 @@ const CommunityVisits = ({ multiColumn }) => {
                           'cv-cal__day',
                           isToday(day)   && 'cv-cal__day--today',
                           isPastDay(day) && 'cv-cal__day--past',
-                          dayVisits.length > 0 && 'cv-cal__day--has-visits',
+                          clickable      && 'cv-cal__day--has-visits',
                         ].filter(Boolean).join(' ')}
+                        onClick={clickable ? () => openDayPanel(key, dayVisits) : undefined}
+                        role={clickable ? 'button' : undefined}
+                        tabIndex={clickable ? 0 : undefined}
+                        onKeyDown={clickable ? (e) => (e.key === 'Enter' || e.key === ' ') && openDayPanel(key, dayVisits) : undefined}
+                        aria-label={clickable ? `${day.getDate()} — ${dayVisits.length} visitor${dayVisits.length === 1 ? '' : 's'}` : undefined}
                       >
                         <span className='cv-cal__day-num'>{day.getDate()}</span>
                         {dayVisits.length > 0 && (
@@ -331,7 +343,7 @@ const CommunityVisits = ({ multiColumn }) => {
               }
             </div>
 
-            {/* ── Relationship legend ───────────────────────────────── */}
+            {/* ── Relationship legend + notifications link ──────────── */}
             <div className='cv-legend'>
               {Object.entries({ mutual: 'Mutual', following: 'Following', follower: 'Follows you', none: 'Member' }).map(([k, label]) => (
                 <span key={k} className='cv-legend__item'>
@@ -339,6 +351,9 @@ const CommunityVisits = ({ multiColumn }) => {
                   {label}
                 </span>
               ))}
+              <Link to='/community_visits/notifications' className='cv-legend__notif-link'>
+                Notifications &amp; Settings →
+              </Link>
             </div>
 
             {/* ── My visits strip ───────────────────────────────────── */}
@@ -384,6 +399,14 @@ const CommunityVisits = ({ multiColumn }) => {
         <NotifyFriendsModal
           visit={notifyVisit}
           onClose={() => setNotifyVisit(null)}
+        />
+      )}
+      {dayPanel && (
+        <DayDetailPanel
+          date={dayPanel.date}
+          visits={dayPanel.visits}
+          onClose={() => setDayPanel(null)}
+          onEdit={openEdit}
         />
       )}
 

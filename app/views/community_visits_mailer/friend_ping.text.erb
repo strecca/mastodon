@@ -1,0 +1,19 @@
+Hi @<%= @recipient.username %>,
+
+<%= @sender.display_name.presence || "@#{@sender.username}" %> (@<%= @sender.username %>) sent you a message about your upcoming visit:
+
+<% if @message.present? %>
+  "<%= @message %>"
+
+<% end %>
+<% if @visit.present? %>
+Their visit: <%= @visit.arrival_date.strftime('%B %-d') %> – <%= @visit.departure_date.strftime('%B %-d, %Y') %>
+
+<% end %>
+Reply and connect on the community calendar:
+
+  /community_visits
+
+---
+You're receiving this because you have friend ping notifications enabled.
+To change your notification preferences, visit /community_visits and open Settings.

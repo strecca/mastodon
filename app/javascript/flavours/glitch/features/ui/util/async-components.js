@@ -319,6 +319,10 @@ export function CommunityVisits () {
   return import('../../community_visits');
 }
 
+export function CommunityVisitsNotifications () {
+  return import('../../community_visits/notifications');
+}
+
 export function CommunityArtistsShow () {
   return import('../../community_artists/show');
 }
@@ -326,6 +330,8 @@ export function CommunityArtistsShow () {
 export function CommunityArtistsNew () {
   return import('../../community_artists/new');
 }
+
+// [CD:ASYNC_EXPORTS]
 
 export function CommunityArtistsEdit () {
   return import('../../community_artists/edit');

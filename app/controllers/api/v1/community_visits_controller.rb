@@ -111,13 +111,14 @@ class Api::V1::CommunityVisitsController < Api::BaseController
         read_at:              nil
       )
 
-      CommunityVisitNotification.create!(
+      notif = CommunityVisitNotification.create!(
         recipient_account_id: recipient_id,
         sender_account_id:    current_account.id,
         community_visit_id:   @visit.id,
         kind:                 :friend_ping,
         message:              message
       )
+      CommunityVisitEmailWorker.perform_async(notif.id)
       notified += 1
     end
 

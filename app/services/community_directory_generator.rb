@@ -54,6 +54,7 @@ class CommunityDirectoryGenerator
     inject_ui_routes
     inject_rails_routes
     inject_web_app_routes
+    verify_injection!
     run_migration if Rails.env.development?
 
     { success: true, name: @name, display_name: @display_name,
@@ -421,14 +422,20 @@ class CommunityDirectoryGenerator
     RB
   end
 
+  ASYNC_EXPORT_MARKER = '// [CD:ASYNC_EXPORTS]'
+  ASYNC_IMPORT_MARKER = '// [CD:ASYNC_IMPORTS]'
+  ROUTE_MARKER        = '{/* [CD:ROUTES] */}'
+
   # ── Inject async-components.js ───────────────────────────────
 
   def inject_async_components
-    path = async_path
+    path    = async_path
     content = File.read(path)
     return if content.include?("function #{@pascal_name}")
 
-    content = content.rstrip + <<~JS
+    raise missing_marker_error('async-components.js', ASYNC_EXPORT_MARKER) unless content.include?(ASYNC_EXPORT_MARKER)
+
+    new_exports = <<~JS
 
       export function #{@pascal_name} () {
         return import('../../#{@feature_key}');
@@ -447,6 +454,8 @@ class CommunityDirectoryGenerator
       }
     JS
 
+    # Insert immediately before the marker so the marker stays at the bottom
+    content.sub!(ASYNC_EXPORT_MARKER, "#{new_exports.rstrip}\n\n#{ASYNC_EXPORT_MARKER}")
     File.write(path, content)
     @files_modified << path.to_s
   end
@@ -454,24 +463,27 @@ class CommunityDirectoryGenerator
   # ── Inject ui/index.jsx routes ───────────────────────────────
 
   def inject_ui_routes
-    path = ui_path
+    path    = ui_path
     content = File.read(path)
     return if content.include?("#{@pascal_name},")
 
-    # Add imports
-    imports = "  #{@pascal_name},\n  #{@pascal_name}Show,\n  #{@pascal_name}New,\n  #{@pascal_name}Edit,"
-    content.sub!("} from './util/async-components';", "#{imports}\n} from './util/async-components';")
+    raise missing_marker_error('ui/index.jsx', ASYNC_IMPORT_MARKER) unless content.include?(ASYNC_IMPORT_MARKER)
+    raise missing_marker_error('ui/index.jsx', ROUTE_MARKER)        unless content.include?(ROUTE_MARKER)
 
-    # Add routes before /explore
+    # Add imports — insert the four new names before the marker comment
+    imports = "  #{@pascal_name},\n  #{@pascal_name}Show,\n  #{@pascal_name}New,\n  #{@pascal_name}Edit,\n  #{ASYNC_IMPORT_MARKER}"
+    content.sub!(ASYNC_IMPORT_MARKER, imports)
+
+    # Add routes — insert the four new WrappedRoutes before the marker comment
     routes = <<~JSX
                 {/* #{@display_name} */}
                 <WrappedRoute path='/#{@feature_key}/new' exact component={#{@pascal_name}New} content={children} />
                 <WrappedRoute path='/#{@feature_key}/:id/edit' exact component={#{@pascal_name}Edit} content={children} />
                 <WrappedRoute path='/#{@feature_key}/:id' exact component={#{@pascal_name}Show} content={children} />
                 <WrappedRoute path='/#{@feature_key}' exact component={#{@pascal_name}} content={children} />
-
+                #{ROUTE_MARKER}
     JSX
-    content.sub!("<WrappedRoute path='/explore'", "#{routes}            <WrappedRoute path='/explore'")
+    content.sub!(ROUTE_MARKER, routes.rstrip)
 
     File.write(path, content)
     @files_modified << path.to_s
@@ -510,7 +522,35 @@ class CommunityDirectoryGenerator
     @files_modified << path.to_s
   end
 
+  # ── Post-generation verification ─────────────────────────────
+  # Called automatically at the end of generate! to catch silent failures
+  # before the admin sees a success message.
+
+  def verify_injection!
+    async_content = File.read(async_path)
+    ui_content    = File.read(ui_path)
+
+    missing = []
+    missing << "#{@pascal_name} export in async-components.js"   unless async_content.include?("function #{@pascal_name} ")
+    missing << "#{@pascal_name}Show export in async-components.js" unless async_content.include?("function #{@pascal_name}Show ")
+    missing << "#{@pascal_name} import in ui/index.jsx"          unless ui_content.include?("#{@pascal_name},")
+    missing << "/#{@feature_key} WrappedRoute in ui/index.jsx"   unless ui_content.include?("path='/#{@feature_key}'")
+
+    return if missing.empty?
+
+    raise "Injection verification failed — these items are missing after generation:\n" \
+          "  • #{missing.join("\n  • ")}\n\n" \
+          "Check that the injection markers (#{ASYNC_IMPORT_MARKER}, #{ASYNC_EXPORT_MARKER}, #{ROUTE_MARKER}) " \
+          "are present in the target files and have not been removed."
+  end
+
   # ── Helpers ──────────────────────────────────────────────────
+
+  def missing_marker_error(filename, marker)
+    "Injection marker missing from #{filename}: #{marker}\n" \
+    "This marker must be present for the generator to safely insert new routes. " \
+    "Check git history or restore the marker manually before generating a new category."
+  end
 
   def run_migration = system('bin/rails db:migrate')
 

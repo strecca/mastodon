@@ -1,0 +1,28 @@
+Hi @<%= @recipient.username %>,
+
+Here's a summary of your recent community visit activity:
+
+<% if @overlap_count > 0 %>
+VISIT OVERLAPS (<%= @overlap_count %>)
+<% @notifications.select { |n| n.kind == 'overlap_detected' }.each do |n| %>
+  • <%= n.sender&.display_name&.presence || "@#{n.sender&.username}" %> (@<%= n.sender&.username %>) — overlapping visit detected
+<% end %>
+
+<% end %>
+<% if @ping_count > 0 %>
+FRIEND PINGS (<%= @ping_count %>)
+<% @notifications.select { |n| n.kind == 'friend_ping' }.each do |n| %>
+  • <%= n.sender&.display_name&.presence || "@#{n.sender&.username}" %> (@<%= n.sender&.username %>) wants to connect
+<% if n.message.present? %>
+    "<%= n.message %>"
+<% end %>
+<% end %>
+
+<% end %>
+View all your notifications and manage your calendar at:
+
+  /community_visits
+
+---
+This digest was sent because you have <%= @notifications.first&.recipient&.notification_preference&.email_frequency&.humanize&.downcase || 'digest' %> email notifications enabled.
+To change your preferences, visit /community_visits and open Settings.

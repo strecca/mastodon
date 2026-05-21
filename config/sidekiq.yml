@@ -82,3 +82,7 @@
       cron: '<%= Random.rand(0..59) %> 3 * * *'
       class: Scheduler::CommunityStaleEntryScheduler
       queue: scheduler
+    community_visit_digest_scheduler:
+      interval: 1 hour
+      class: Scheduler::CommunityVisitDigestScheduler
+      queue: scheduler

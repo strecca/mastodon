@@ -51,22 +51,24 @@ class CommunityVisitOverlapWorker
 
       # → Notify owner: a connection will be in town during your visit
       if owner_pref.on_visit_overlap
-        CommunityVisitNotification.find_or_create_by(
+        notif = CommunityVisitNotification.find_or_create_by(
           recipient_account_id: owner.id,
           sender_account_id:    other_account.id,
           community_visit_id:   other_visit.id,
           kind:                 :overlap_detected
         )
+        CommunityVisitEmailWorker.perform_async(notif.id)
       end
 
       # → Notify the other person: a connection just announced a visit that overlaps yours
       if other_pref.on_visit_overlap
-        CommunityVisitNotification.find_or_create_by(
+        notif = CommunityVisitNotification.find_or_create_by(
           recipient_account_id: other_account.id,
           sender_account_id:    owner.id,
           community_visit_id:   visit.id,
           kind:                 :overlap_detected
         )
+        CommunityVisitEmailWorker.perform_async(notif.id)
       end
     rescue ActiveRecord::RecordNotUnique
       # Race condition on find_or_create_by — already exists, move on
