@@ -44,6 +44,7 @@ import trends from './trends';
 import user_lists from './user_lists';
 import community_directory from './community_directory';
 import community_entries from './community_entries';
+import community_visits from './community_visits';
 
 const reducers = {
   announcements,
@@ -52,6 +53,7 @@ const reducers = {
   meta,
   community_directory,
   community_entries,
+  community_visits,
   alerts: alertsReducer,
   loadingBar: loadingBarReducer,
   modal: modalReducer,

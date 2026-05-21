@@ -98,6 +98,7 @@ import {
   CommunityArtistsShow,
   CommunityArtistsNew,
   CommunityArtistsEdit,
+  CommunityVisits,
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
 import { focusColumn, getFocusedItemIndex, focusItemSibling, focusFirstItem } from './util/focusUtils';
@@ -249,6 +250,8 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/community_directory/moderation' exact component={CommunityDirectoryModeration} content={children} />
             <WrappedRoute path='/community_directory/permissions' exact component={CommunityDirectoryPermissions} content={children} />
             <WrappedRoute path='/community_directory' exact component={CommunityDirectory} content={children} />
+            {/* Community Visits */}
+            <WrappedRoute path='/community_visits' exact component={CommunityVisits} content={children} />
             {/* Community Artists */}
 <WrappedRoute path='/community_artists/new' exact component={CommunityArtistsNew} content={children} />
 <WrappedRoute path='/community_artists/:id/edit' exact component={CommunityArtistsEdit} content={children} />

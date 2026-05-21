@@ -38,4 +38,5 @@
   /community_directory
   /community_directory/(*any)
   /community_artists/(*any)
+  /community_visits
 ).each { |path| get path, to: 'home#index' }

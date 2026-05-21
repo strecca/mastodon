@@ -1912,3 +1912,693 @@
     flex-wrap: wrap;
   }
 }
+
+// ═══════════════════════════════════════════════════════════════
+//  Community Visits — "When I'll Be In Town" calendar
+// ═══════════════════════════════════════════════════════════════
+
+.cv-page {
+  padding: 0;
+  overflow-y: auto;
+}
+
+// ── Public teaser ─────────────────────────────────────────────
+
+.cv-teaser {
+  padding: 24px 20px;
+
+  &__hero {
+    text-align: center;
+    margin-bottom: 28px;
+
+    svg {
+      width: 40px;
+      height: 40px;
+      fill: var(--color-text-brand);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0 0 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      max-width: 380px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  }
+
+  &__heatmap {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    scrollbar-width: thin;
+  }
+
+  &__month {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 44px;
+    flex-shrink: 0;
+  }
+
+  &__bar {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--color-bg-brand-base);
+    opacity: calc(0.15 + var(--intensity, 0) * 0.85);
+    transition: opacity 0.2s ease;
+  }
+
+  &__month-label {
+    font-size: 10px;
+    color: var(--color-text-tertiary);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  &__count {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-brand);
+  }
+
+  &__cta {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-brand);
+    margin: 0;
+  }
+}
+
+// ── Calendar navigation header ────────────────────────────────
+
+.cv-cal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+.cv-cal__month-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.cv-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border-primary);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  svg { width: 20px; height: 20px; fill: currentColor; }
+
+  &:hover {
+    background: var(--color-bg-hover, rgba(0, 0, 0, 0.06));
+    color: var(--color-text-primary);
+  }
+}
+
+// ── Calendar grid ─────────────────────────────────────────────
+
+.cv-cal {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--color-border-primary);
+
+  &__weekday {
+    padding: 6px 4px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--color-text-tertiary);
+    border-bottom: 1px solid var(--color-border-primary);
+  }
+
+  &__day {
+    min-height: 68px;
+    padding: 5px;
+    border-right: 1px solid var(--color-border-primary);
+    border-bottom: 1px solid var(--color-border-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    cursor: default;
+
+    &:nth-child(7n) { border-right: none; }
+
+    &--empty,
+    &--skeleton {
+      background: var(--color-bg-secondary);
+      opacity: 0.4;
+    }
+
+    &--skeleton {
+      animation: cv-pulse 1.4s ease-in-out infinite;
+    }
+
+    &--past {
+      opacity: 0.48;
+      filter: sepia(0.3);
+    }
+
+    &--today .cv-cal__day-num {
+      background: var(--color-bg-brand-base);
+      color: #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    &--has-visits {
+      background: var(--color-bg-elevated);
+    }
+  }
+
+  &__day-num {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    line-height: 22px;
+    width: 22px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+}
+
+@keyframes cv-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.2; }
+}
+
+// ── Avatar pile inside a day cell ─────────────────────────────
+
+.cv-day__avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  cursor: default;
+}
+
+.cv-day__avatar-wrap {
+  display: inline-flex;
+  border-radius: 50%;
+  border: 2px solid var(--ring, #bdbdbd);
+  flex-shrink: 0;
+}
+
+.cv-day__avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: block;
+}
+
+.cv-day__overflow {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  align-self: center;
+}
+
+// ── Relationship legend ───────────────────────────────────────
+
+.cv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--color-border-primary);
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+// ── My visits strip ───────────────────────────────────────────
+
+.cv-my-section {
+  padding: 16px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  &__empty {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.cv-my-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: opacity 0.15s ease;
+
+  &--past {
+    opacity: 0.55;
+    filter: grayscale(0.25);
+  }
+
+  &__dates {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  &__chip {
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--color-bg-brand-softest);
+    color: var(--color-text-brand);
+    border: 1px solid var(--color-border-brand-soft, transparent);
+  }
+
+  &__note {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 2px;
+  }
+}
+
+.cv-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--color-border-primary);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  svg { width: 16px; height: 16px; fill: currentColor; }
+
+  &:hover {
+    background: var(--color-bg-hover, rgba(0, 0, 0, 0.06));
+    color: var(--color-text-primary);
+  }
+
+  &--danger:hover {
+    background: var(--color-bg-error-softest);
+    color: var(--color-text-error);
+    border-color: var(--color-border-error-soft);
+  }
+}
+
+// ── Visit / Notify modals ─────────────────────────────────────
+
+.cv-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 9000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  @media (min-width: 600px) {
+    align-items: center;
+  }
+}
+
+.cv-modal {
+  background: var(--color-bg-elevated);
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  max-width: 520px;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.2);
+
+  @media (min-width: 600px) {
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--color-border-primary);
+    position: sticky;
+    top: 0;
+    background: var(--color-bg-elevated);
+    z-index: 1;
+  }
+
+  &__title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-tertiary);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.15s ease;
+
+    svg { width: 20px; height: 20px; fill: currentColor; }
+
+    &:hover { background: var(--color-bg-hover, rgba(0, 0, 0, 0.08)); }
+  }
+
+  &__body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+// ── Form elements inside the modal ────────────────────────────
+
+.cv-form {
+  &__errors {
+    padding: 10px 14px;
+    background: var(--color-bg-error-softest);
+    border: 1px solid var(--color-border-error-soft);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--color-text-error);
+    margin: 0;
+    padding-left: 28px;
+
+    li + li { margin-top: 4px; }
+  }
+
+  &__date-row {
+    display: flex;
+    gap: 12px;
+
+    .cv-form__field { flex: 1; }
+  }
+
+  &__field { display: flex; flex-direction: column; gap: 5px; }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  &__optional {
+    font-weight: 400;
+    color: var(--color-text-tertiary);
+  }
+
+  &__input {
+    padding: 9px 12px;
+    border: 1.5px solid var(--color-border-primary);
+    border-radius: 8px;
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease;
+
+    &:focus { border-color: var(--color-border-brand); }
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 72px;
+  }
+
+  &__fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__legend {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 10px;
+  }
+
+  &__radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  &__radio-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--color-border-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+
+    input[type='radio'] { margin-top: 2px; flex-shrink: 0; accent-color: var(--color-bg-brand-base); }
+
+    &--active {
+      border-color: var(--color-border-brand);
+      background: var(--color-bg-brand-softest);
+    }
+  }
+
+  &__radio-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  &__radio-desc {
+    display: block;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 1px;
+  }
+
+  &__check-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  &__check-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1.5px solid var(--color-border-primary);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+
+    input[type='checkbox'] { display: none; }
+
+    &--on {
+      border-color: var(--color-bg-brand-base);
+      background: var(--color-bg-brand-base);
+      color: #fff;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 4px;
+
+    .button { min-width: 100px; }
+  }
+}
+
+// ── Notify friends modal specifics ────────────────────────────
+
+.cv-notify {
+  &__subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    text-align: center;
+
+    svg { width: 36px; height: 36px; fill: var(--color-text-success, #2e7d32); }
+
+    span { font-size: 16px; font-weight: 600; color: var(--color-text-primary); }
+  }
+
+  &__empty {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 12px 0;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__item { display: flex; }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1.5px solid var(--color-border-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+
+    input[type='checkbox'] { flex-shrink: 0; accent-color: var(--color-bg-brand-base); }
+
+    &:has(input:checked) { border-color: var(--color-border-brand); background: var(--color-bg-brand-softest); }
+  }
+
+  &__avatar-wrap {
+    display: inline-flex;
+    border-radius: 50%;
+    border: 2px solid var(--ring, #bdbdbd);
+    flex-shrink: 0;
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: block;
+  }
+
+  &__name {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+
+    strong { font-size: 14px; color: var(--color-text-primary); }
+    span   { font-size: 12px; color: var(--color-text-tertiary); }
+  }
+
+  &__dates {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__error {
+    font-size: 13px;
+    color: var(--color-text-error);
+    margin: 0;
+  }
+}

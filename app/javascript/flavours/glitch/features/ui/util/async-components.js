@@ -315,6 +315,10 @@ export function CommunityArtists () {
   return import('../../community_artists');
 }
 
+export function CommunityVisits () {
+  return import('../../community_visits');
+}
+
 export function CommunityArtistsShow () {
   return import('../../community_artists/show');
 }
