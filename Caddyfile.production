@@ -1,0 +1,29 @@
+# Caddyfile.production
+#
+# HTTP-only reverse proxy. HTTPS is terminated externally by Cloudflare Tunnel.
+# Cloudflare forwards to port 80 on the host; this file routes internally.
+#
+# Two rules matter for Mastodon:
+#   /api/v1/streaming and /api/v2/streaming  → Node.js streaming server (port 4000)
+#   everything else                          → Rails Puma (port 3000)
+
+:80 {
+    # Streaming WebSocket endpoints
+    handle /api/v1/streaming* {
+        reverse_proxy streaming:4000
+    }
+    handle /api/v2/streaming* {
+        reverse_proxy streaming:4000
+    }
+
+    # All other requests to Rails
+    handle {
+        reverse_proxy web:3000
+    }
+
+    # Keep logs quiet for health checks
+    @healthcheck path /health
+    log {
+        except @healthcheck
+    }
+}

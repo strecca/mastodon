@@ -1,0 +1,200 @@
+# docker-compose.production.yml
+#
+# Closed community instance — NOT a Fediverse participant.
+# Users post internally. External content is shared as URLs (X, YouTube,
+# other Mastodon servers, etc.) and rendered as link previews.
+#
+# Federation is suppressed by:
+#   - AUTHORIZED_FETCH=true  (ActivityPub endpoints require HTTP signatures)
+#   - Set "Allowlist mode" with an empty allowlist in Admin > Federation
+#   - Set registrations to Invite-only in Admin > Registrations
+#
+# HTTPS is handled externally by Cloudflare Tunnel.
+# Caddy runs HTTP-only on port 80 inside the stack and routes internally.
+#
+# First-time setup (run once before starting):
+#   docker compose -f docker-compose.production.yml run --rm web bundle exec rails db:setup
+#   docker compose -f docker-compose.production.yml run --rm web bundle exec rails mastodon:make_admin USERNAME=your_username
+#
+# Start everything:
+#   docker compose -f docker-compose.production.yml up -d
+#
+# Run migrations after updates:
+#   docker compose -f docker-compose.production.yml run --rm web bundle exec rails db:migrate
+
+services:
+
+  # ── Reverse proxy ─────────────────────────────────────────────────────────
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    volumes:
+      - ./Caddyfile.production:/etc/caddy/Caddyfile:ro
+    networks:
+      - external_network
+    depends_on:
+      - web
+      - streaming
+
+  # ── Rails web server ──────────────────────────────────────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    env_file: .env.production
+    command: bundle exec puma -C config/puma.rb
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - mastodon-uploads:/app/public/system
+    networks:
+      - internal_network
+      - external_network
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q --spider http://localhost:3000/health || exit 1']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── Node.js streaming server ──────────────────────────────────────────────
+  # Handles WebSocket connections for real-time timeline updates.
+  # Nothing to do with federation — this is purely UI plumbing.
+  streaming:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    env_file: .env.production
+    command: node ./streaming/index.js
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - internal_network
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q --spider http://localhost:4000/api/v1/streaming/health || exit 1']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── Sidekiq background jobs ───────────────────────────────────────────────
+  # push/pull/ingress queues handle Fediverse federation traffic.
+  # On a closed instance they will be permanently idle — kept in the list
+  # so Sidekiq doesn't silently ignore any stray enqueued jobs.
+  # mailers handles community visit emails, moderation alerts, etc.
+  # scheduler handles digest emails and cleanup jobs.
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    env_file: .env.production
+    command: >
+      bundle exec sidekiq
+      -c 5
+      -q default
+      -q mailers
+      -q scheduler
+      -q push
+      -q pull
+      -q ingress
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - mastodon-uploads:/app/public/system
+    networks:
+      - internal_network
+
+  # ── PostgreSQL ────────────────────────────────────────────────────────────
+  db:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mastodon_production
+      POSTGRES_USER: mastodon
+      POSTGRES_PASSWORD: ${DB_PASS:?DB_PASS must be set in .env.production}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - internal_network
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'mastodon', '-d', 'mastodon_production']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis ─────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis-data:/data
+    networks:
+      - internal_network
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Elasticsearch ─────────────────────────────────────────────────────────
+  # Powers full-text search across posts and profiles.
+  # Comment out this entire service (and set ES_ENABLED=false in .env.production)
+  # to save ~400MB RAM on a tight server. Search will fall back to database queries.
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.29
+    restart: unless-stopped
+    environment:
+      ES_JAVA_OPTS: -Xms256m -Xmx256m
+      cluster.name: es-mastodon
+      discovery.type: single-node
+      bootstrap.memory_lock: 'true'
+      xpack.security.enabled: 'false'
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    networks:
+      - internal_network
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -sf http://localhost:9200/_cluster/health | grep -q "green\|yellow" || exit 1']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ── LibreTranslate ────────────────────────────────────────────────────────
+  # Powers the community directory translation features.
+  # Models are downloaded on first start (~1-2GB depending on language pairs).
+  libretranslate:
+    image: libretranslate/libretranslate:v1.7.3
+    restart: unless-stopped
+    volumes:
+      - lt-data:/home/libretranslate/.local
+    networks:
+      - internal_network
+
+volumes:
+  postgres-data:
+  redis-data:
+  mastodon-uploads:   # user-uploaded media, avatars, attachments
+  es-data:
+  lt-data:            # LibreTranslate language model cache
+
+networks:
+  external_network:
+  internal_network:
+    internal: true    # no direct internet access from db/redis/sidekiq/streaming
