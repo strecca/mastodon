@@ -1,24 +1,33 @@
 # Caddyfile.production
 #
-# HTTP-only reverse proxy. HTTPS is terminated externally by Cloudflare Tunnel.
-# Cloudflare forwards to port 80 on the host; this file routes internally.
+# Caddy handles TLS directly via automatic Let's Encrypt cert for miacivezza.com.
+# DNS: GoDaddy A record → Hetzner Floating IP (ports 80 + 443 open in firewall).
 #
 # Two rules matter for Mastodon:
 #   /api/v1/streaming and /api/v2/streaming  → Node.js streaming server (port 4000)
 #   everything else                          → Rails Puma (port 3000)
 
-:80 {
+miacivezza.com {
     # Streaming WebSocket endpoints
     handle /api/v1/streaming* {
-        reverse_proxy streaming:4000
+        reverse_proxy localhost:4000 {
+            header_up Upgrade {http.upgrade}
+            header_up Connection {http.upgrade}
+        }
     }
     handle /api/v2/streaming* {
-        reverse_proxy streaming:4000
+        reverse_proxy localhost:4000 {
+            header_up Upgrade {http.upgrade}
+            header_up Connection {http.upgrade}
+        }
     }
 
     # All other requests to Rails
     handle {
-        reverse_proxy web:3000
+        reverse_proxy localhost:3000 {
+            header_up X-Real-IP {remote_host}
+            header_up X-Forwarded-For {remote_host}
+        }
     }
 
     # Keep logs quiet for health checks
