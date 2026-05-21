@@ -141,7 +141,7 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
                   className='cv-form__input cv-form__textarea'
                   value={message}
                   onChange={e => setMessage(e.target.value)}
-                  placeholder='e.g. "Let's grab a coffee while we're both in town!"'
+                  placeholder="e.g. Let's grab a coffee while we're both in town!"
                   maxLength={140}
                   rows={2}
                 />

@@ -271,7 +271,7 @@ const CommunityVisits = ({ multiColumn }) => {
   const isPastDay = (d) => d && isoDate(d) < todayIso;
 
   return (
-    <Column bindToDocument={!multiColumn} label='When I\'ll Be In Town'>
+    <Column bindToDocument={!multiColumn} label="When I'll Be In Town">
       <ColumnHeader
         title="When I'll Be In Town"
         icon='trip'
