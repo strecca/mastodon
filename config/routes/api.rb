@@ -25,6 +25,27 @@ namespace :api, format: false do
   # JSON / REST API
   namespace :v1 do
     resources :community_artists, only: [:index, :show, :create, :update, :destroy]
+
+    # ── Community Visits — "When I'll Be In Town" ───────────────────────────
+    resources :community_visits, only: [:index, :show, :create, :update, :destroy] do
+      collection do
+        get  :mine
+        get  :heatmap
+      end
+      member do
+        post :notify_friends
+      end
+    end
+    resource  :community_notification_preferences, only: [:show, :update]
+    resources :community_visit_notifications, only: [:index] do
+      collection do
+        get  :unread_count
+        post :read_all
+      end
+      member do
+        post :read
+      end
+    end
     # Community Directory admin API
     get   'community_directory/categories',           to: 'community_directory#categories'
     get   'community_directory/categories/:name',     to: 'community_directory#show_category'

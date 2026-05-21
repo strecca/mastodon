@@ -243,7 +243,15 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
 
   # ── Category helpers ─────────────────────────────────────────
 
-  EXCLUDED_TABLES = %w[community_directory community_directory_permissions community_directory_category_settings community_entry_translations].freeze
+  EXCLUDED_TABLES = %w[
+    community_directory
+    community_directory_permissions
+    community_directory_category_settings
+    community_entry_translations
+    community_visits
+    community_notification_preferences
+    community_visit_notifications
+  ].freeze
 
   def community_table_names
     ActiveRecord::Base.connection.tables
