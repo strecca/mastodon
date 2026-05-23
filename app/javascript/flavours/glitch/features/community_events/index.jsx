@@ -252,7 +252,8 @@ const CommunityEvents = ({ multiColumn }) => {
     if (q) {
       result = result.filter(e =>
         e.event_name?.toLowerCase().includes(q) ||
-        e.location_town_city?.toLowerCase().includes(q)
+        e.location_town_city?.toLowerCase().includes(q) ||
+        e.category?.some(c => c.toLowerCase().includes(q))
       );
     }
     if (activeFilter) {
@@ -329,7 +330,7 @@ const CommunityEvents = ({ multiColumn }) => {
           <input
             type='search'
             className='cv-search__input ce-search__input'
-            placeholder='Search events or locations…'
+            placeholder='Search by title, category or location…'
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />
