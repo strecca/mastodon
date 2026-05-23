@@ -17,7 +17,7 @@ const AVAILABILITY_OPTIONS = [
 const VISIBILITY_OPTIONS = [
   { value: 'public_to_members', label: 'All members',    desc: 'Everyone who has joined can see you\'re in town' },
   { value: 'connections_only',  label: 'My connections', desc: 'Only people you follow or who follow you' },
-  { value: 'ghost',             label: 'Private',        desc: 'You see others; they don\'t see you' },
+  { value: 'ghost',             label: 'Private',        desc: 'Only members you specifically choose can see this visit' },
 ];
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -27,7 +27,7 @@ export const VisitForm = ({ visit, onClose, onSaved }) => {
 
   const [arrivalDate,   setArrivalDate]   = useState(visit ? visit.get('arrival_date')   : today());
   const [departureDate, setDepartureDate] = useState(visit ? visit.get('departure_date') : today());
-  const [visibility,    setVisibility]    = useState(visit ? visit.get('visibility')     : 'public_to_members');
+  const [visibility,    setVisibility]    = useState(visit ? visit.get('visibility')     : 'ghost');
   const [availabilities, setAvailabilities] = useState(
     visit ? (visit.get('availabilities')?.toJS() ?? []) : []
   );
@@ -135,7 +135,7 @@ export const VisitForm = ({ visit, onClose, onSaved }) => {
           </fieldset>
 
           {/* Availability checkboxes */}
-          {visibility !== 'ghost' && (
+          {(
             <fieldset className='cv-form__fieldset'>
               <legend className='cv-form__legend'>I'm open to…</legend>
               <div className='cv-form__check-grid'>
@@ -154,7 +154,7 @@ export const VisitForm = ({ visit, onClose, onSaved }) => {
           )}
 
           {/* Optional note */}
-          {visibility !== 'ghost' && (
+          {(
             <div className='cv-form__field'>
               <label className='cv-form__label' htmlFor='cv-note'>Note <span className='cv-form__optional'>(optional)</span></label>
               <textarea
