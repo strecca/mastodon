@@ -220,7 +220,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
                         <dt className='community-entry-detail__field-label'>
                           {fieldLabel(field, locale) || humanize(field.db_name)}
                         </dt>
-                        <dd className='community-entry-detail__field-value'>
+                        <dd className={`community-entry-detail__field-value${field.widget === 'textarea' ? ' community-entry-detail__field-value--multiline' : ''}`}>
                           {isLink ? (
                             <a href={href} target='_blank' rel='noopener noreferrer' className='community-entry-detail__link'>
                               {val}

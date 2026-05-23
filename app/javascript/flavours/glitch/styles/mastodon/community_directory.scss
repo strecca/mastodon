@@ -751,6 +751,10 @@
     color: var(--color-text-primary);
     line-height: 1.6;
     word-break: break-word;
+
+    &--multiline {
+      white-space: pre-line;
+    }
   }
 
   &__link {
