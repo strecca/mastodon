@@ -2416,7 +2416,7 @@
 .cv-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.65);
   z-index: 9000;
   display: flex;
   align-items: flex-end;
@@ -2428,17 +2428,18 @@
 }
 
 .cv-modal {
-  background: var(--color-bg-elevated);
+  background: #ffffff;
+  color: #1a1a1a;
   border-radius: 16px 16px 0 0;
   width: 100%;
   max-width: 520px;
   max-height: 92vh;
   overflow-y: auto;
-  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -6px 40px rgba(0, 0, 0, 0.32);
 
   @media (min-width: 600px) {
     border-radius: 16px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.35);
   }
 
   &__header {
@@ -2449,7 +2450,7 @@
     border-bottom: 1px solid var(--color-border-primary);
     position: sticky;
     top: 0;
-    background: var(--color-bg-elevated);
+    background: #ffffff;
     z-index: 1;
   }
 
@@ -3423,12 +3424,35 @@
 }
 
 // ── Day detail panel ───────────────────────────────────────────
+// Explicit white background + amber accent top-border ensures the card
+// is clearly distinct from both dark-theme and light-theme backdrops.
 
 .ce-day-panel {
-  // inherits cv-modal base; overrides accent colour
+  background: #ffffff;
+  border-top: 3px solid #E87D0D;
+  box-shadow: 0 -6px 40px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(232, 125, 13, 0.25);
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow: hidden;
+
+  .cv-day-panel__header {
+    background: #ffffff;
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+  }
 
   .cv-day-panel__title {
     color: #C65900;
+  }
+
+  .cv-day-panel__count {
+    color: #555;
+  }
+
+  .cv-day-panel__list {
+    overflow-y: auto;
+    flex: 1;
   }
 }
 
