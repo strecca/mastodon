@@ -31,7 +31,7 @@ import SettingsIcon from '@/material-icons/400-24px/settings.svg?react';
 import StarActiveIcon from '@/material-icons/400-24px/star-fill.svg?react';
 import StarIcon from '@/material-icons/400-24px/star.svg?react';
 import TrendingUpIcon from '@/material-icons/400-24px/trending_up.svg?react';
-import EventIcon from '@/material-icons/400-24px/event.svg?react';
+import TripIcon from '@/material-icons/400-24px/trip.svg?react';
 import { fetchFollowRequests } from 'flavours/glitch/actions/accounts';
 import { openModal } from 'flavours/glitch/actions/modal';
 import {
@@ -322,8 +322,8 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
           <ColumnLink
             transparent
             to='/community_visits'
-            icon='event'
-            iconComponent={EventIcon}
+            icon='trip'
+            iconComponent={TripIcon}
             text={intl.formatMessage(messages.communityVisits)}
           />
         )}
