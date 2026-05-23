@@ -3231,6 +3231,75 @@
   }
 }
 
+// ── Cross-link banner (visits ↔ events) ───────────────────────────────────────
+
+.cv-crosslink {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  text-decoration: none;
+  border-top: 1px solid var(--color-border-subtle);
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: var(--color-bg-secondary);
+
+    .cv-crosslink__arrow { transform: translateX(4px); }
+  }
+
+  &__icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    fill: currentColor;
+    opacity: 0.85;
+  }
+
+  &__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    strong {
+      font-size: 14px;
+      font-weight: 700;
+      display: block;
+    }
+
+    span {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  }
+
+  &__arrow {
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+    opacity: 0.6;
+  }
+
+  // Visits → Events: amber/golden accent
+  &--events {
+    color: #C65900;
+    background: rgba(244, 160, 0, 0.05);
+    border-top-color: rgba(244, 160, 0, 0.2);
+
+    &:hover { background: rgba(244, 160, 0, 0.1); }
+  }
+
+  // Events → Visits: blue accent
+  &--visits {
+    color: #1565c0;
+    background: rgba(21, 101, 192, 0.05);
+    border-top-color: rgba(21, 101, 192, 0.2);
+
+    &:hover { background: rgba(21, 101, 192, 0.1); }
+  }
+}
+
 // ── Shared footer ─────────────────────────────────────────────────────────────
 
 .cv-notif-footer {

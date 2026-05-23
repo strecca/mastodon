@@ -20,6 +20,7 @@ import DeleteIcon       from '@/material-icons/400-24px/delete.svg?react';
 import ChevronLeftIcon  from '@/material-icons/400-24px/chevron_left.svg?react';
 import ChevronRightIcon from '@/material-icons/400-24px/chevron_right.svg?react';
 import ShareIcon        from '@/material-icons/400-24px/share.svg?react';
+import CelebrationIcon  from '@/material-icons/400-24px/celebration.svg?react';
 import TripIcon         from '@/material-icons/400-24px/trip.svg?react';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -492,6 +493,16 @@ const CommunityVisits = ({ multiColumn }) => {
                 </div>
               )}
             </div>
+
+            {/* ── Cross-link to events ──────────────────────────────── */}
+            <Link to='/community_events' className='cv-crosslink cv-crosslink--events'>
+              <CelebrationIcon className='cv-crosslink__icon' />
+              <span className='cv-crosslink__text'>
+                <strong>See what's happening</strong>
+                <span>Concerts · Festivals · Workshops in the area</span>
+              </span>
+              <span className='cv-crosslink__arrow'>→</span>
+            </Link>
           </>
         )}
       </div>

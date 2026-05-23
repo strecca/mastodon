@@ -13,6 +13,7 @@ import AddIcon          from '@/material-icons/400-24px/add.svg?react';
 import ChevronLeftIcon  from '@/material-icons/400-24px/chevron_left.svg?react';
 import ChevronRightIcon from '@/material-icons/400-24px/chevron_right.svg?react';
 import CelebrationIcon  from '@/material-icons/400-24px/celebration.svg?react';
+import TripIcon         from '@/material-icons/400-24px/trip.svg?react';
 import CloseIcon        from '@/material-icons/400-24px/close.svg?react';
 import EditIcon         from '@/material-icons/400-24px/edit.svg?react';
 
@@ -426,6 +427,18 @@ const CommunityEvents = ({ multiColumn }) => {
               </div>
             )}
           </div>
+        )}
+
+        {/* ── Cross-link to visits ─────────────────────────────────── */}
+        {signedIn && (
+          <Link to='/community_visits' className='cv-crosslink cv-crosslink--visits'>
+            <TripIcon className='cv-crosslink__icon' />
+            <span className='cv-crosslink__text'>
+              <strong>Who's in town?</strong>
+              <span>See which members will be visiting around event dates</span>
+            </span>
+            <span className='cv-crosslink__arrow'>→</span>
+          </Link>
         )}
 
       </div>
