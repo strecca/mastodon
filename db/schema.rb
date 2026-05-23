@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_23_100001) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_23_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -449,7 +449,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_100001) do
     t.boolean "trusted", default: false, null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "category_key"], name: "idx_cd_permissions_account_category", unique: true
-    t.index ["account_id"], name: "index_community_directory_permissions_on_account_id"
   end
 
   create_table "community_entry_translations", force: :cascade do |t|
@@ -462,8 +461,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_100001) do
     t.text "translated_text", null: false
     t.datetime "updated_at", null: false
     t.index ["translatable_type", "translatable_id", "locale", "field_name"], name: "idx_community_translations_unique", unique: true
-    t.index ["translatable_type", "translatable_id", "locale"], name: "idx_community_translations_by_entry_locale"
-    t.index ["translatable_type", "translatable_id"], name: "index_community_entry_translations_on_translatable"
   end
 
   create_table "community_events", force: :cascade do |t|
@@ -498,7 +495,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_100001) do
     t.boolean "on_visit_overlap", default: true, null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "idx_community_notif_prefs_account", unique: true
-    t.index ["account_id"], name: "index_community_notification_preferences_on_account_id"
   end
 
   create_table "community_visit_notifications", force: :cascade do |t|
@@ -513,10 +509,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_100001) do
     t.bigint "sender_account_id"
     t.datetime "updated_at", null: false
     t.index ["community_visit_id"], name: "idx_community_visit_notifs_visit"
-    t.index ["community_visit_id"], name: "index_community_visit_notifications_on_community_visit_id"
     t.index ["recipient_account_id", "created_at"], name: "idx_community_visit_notifs_inbox"
     t.index ["recipient_account_id", "read_at"], name: "idx_community_visit_notifs_unread"
-    t.index ["recipient_account_id"], name: "index_community_visit_notifications_on_recipient_account_id"
     t.index ["sender_account_id"], name: "index_community_visit_notifications_on_sender_account_id"
   end
 
@@ -645,7 +639,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_100001) do
     t.string "locale", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "email"], name: "index_email_subscriptions_on_account_id_and_email", unique: true
-    t.index ["account_id"], name: "index_email_subscriptions_on_account_id"
     t.index ["confirmation_token"], name: "index_email_subscriptions_on_confirmation_token", unique: true, where: "(confirmation_token IS NOT NULL)"
   end
 
@@ -1542,7 +1535,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_100001) do
     t.integer "kind", null: false
     t.datetime "updated_at", null: false
     t.index ["community_visit_id", "kind"], name: "idx_visit_availabilities_unique", unique: true
-    t.index ["community_visit_id"], name: "index_visit_availabilities_on_community_visit_id"
   end
 
   create_table "web_push_subscriptions", force: :cascade do |t|
