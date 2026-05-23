@@ -2411,6 +2411,24 @@
   }
 }
 
+// Icon buttons inside white modals need explicit dark colours
+.cv-modal .cv-icon-btn {
+  color: #555;
+  border-color: #ddd;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.07);
+    color: #1a1a1a;
+    border-color: #bbb;
+  }
+
+  &--danger:hover {
+    background: #fff0f0;
+    color: #c0392b;
+    border-color: #f5c6cb;
+  }
+}
+
 // ── Visit / Notify modals ─────────────────────────────────────
 
 .cv-modal-backdrop {
@@ -2457,7 +2475,7 @@
   &__title {
     font-size: 17px;
     font-weight: 700;
-    color: var(--color-text-primary);
+    color: #1a1a1a;
     margin: 0;
   }
 
@@ -2469,14 +2487,14 @@
     height: 32px;
     border: none;
     background: transparent;
-    color: var(--color-text-tertiary);
+    color: #666;
     cursor: pointer;
     border-radius: 50%;
     transition: background 0.15s ease;
 
     svg { width: 20px; height: 20px; fill: currentColor; }
 
-    &:hover { background: var(--color-bg-hover, rgba(0, 0, 0, 0.08)); }
+    &:hover { background: rgba(0, 0, 0, 0.08); color: #1a1a1a; }
   }
 
   &__body {
@@ -2750,20 +2768,20 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 20px 12px;
-    border-bottom: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid #e8e8e8;
     flex-shrink: 0;
   }
 
   &__title {
     font-size: 16px;
     font-weight: 600;
-    color: var(--color-text-primary);
+    color: #1a1a1a;
     margin: 0;
   }
 
   &__count {
     font-size: 13px;
-    color: var(--color-text-tertiary);
+    color: #888;
     padding: 6px 20px 8px;
     flex-shrink: 0;
   }
@@ -2781,7 +2799,7 @@
     align-items: flex-start;
     gap: 12px;
     padding: 12px 20px;
-    border-bottom: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid #e8e8e8;
 
     &:last-child { border-bottom: none; }
 
@@ -2822,19 +2840,19 @@
     strong {
       font-size: 14px;
       font-weight: 600;
-      color: var(--color-text-primary);
+      color: #1a1a1a;
     }
   }
 
   &__profile-link {
     text-decoration: none;
 
-    &:hover strong { text-decoration: underline; color: var(--color-text-brand); }
+    &:hover strong { text-decoration: underline; color: #1565c0; }
   }
 
   &__visitor-username {
     font-size: 12px;
-    color: var(--color-text-tertiary);
+    color: #888;
   }
 
   &__visitor-you {
@@ -2842,15 +2860,15 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-border-brand);
-    background: color-mix(in srgb, var(--color-border-brand) 15%, transparent);
+    color: #1565c0;
+    background: rgba(21, 101, 192, 0.12);
     padding: 1px 5px;
     border-radius: 10px;
   }
 
   &__visitor-dates {
     font-size: 12px;
-    color: var(--color-text-secondary);
+    color: #555;
   }
 
   &__chips {
@@ -2865,14 +2883,14 @@
     font-weight: 500;
     padding: 2px 8px;
     border-radius: 10px;
-    background: var(--color-border-brand);
+    background: #1565c0;
     color: #fff;
     opacity: 0.85;
   }
 
   &__note {
     font-size: 13px;
-    color: var(--color-text-secondary);
+    color: #555;
     margin: 2px 0 0;
     line-height: 1.4;
     font-style: italic;
@@ -2880,7 +2898,7 @@
 
   &__visibility {
     font-size: 11px;
-    color: var(--color-text-tertiary);
+    color: #888;
     margin-top: 2px;
   }
 
@@ -3458,8 +3476,8 @@
 
 .ce-day-panel__event {
   list-style: none;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--color-border-subtle);
+  padding: 14px 18px;
+  border-bottom: 1px solid #e8e8e8;
 
   &:last-child { border-bottom: none; }
 }
@@ -3469,50 +3487,59 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .ce-day-panel__event-link {
-  color: var(--color-text-primary);
+  color: #1a1a1a;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 18px;
+  font-weight: 700;
   line-height: 1.3;
+  flex: 1;
 
-  &:hover { color: #C65900; text-decoration: underline; }
+  &:hover {
+    color: #C65900;
+    text-decoration: underline;
+  }
 
-  strong { font-weight: 700; }
+  strong { font-weight: 800; }
 }
 
 .ce-day-panel__location {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  margin-bottom: 6px;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 8px;
+
+  &::before {
+    content: '📍 ';
+  }
 }
 
 .ce-day-panel__chip {
   background: rgba(244, 160, 0, 0.15);
-  color: #C65900;
-  border-color: rgba(244, 160, 0, 0.3);
+  color: #a34200;
+  border: 1px solid rgba(244, 160, 0, 0.4);
 }
 
 .ce-day-panel__organizer {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .ce-day-panel__avatar {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: 1.5px solid rgba(244, 160, 0, 0.4);
+  border: 2px solid rgba(244, 160, 0, 0.5);
   flex-shrink: 0;
 }
 
 .ce-day-panel__organizer-name {
   font-size: 12px;
-  color: var(--color-text-secondary);
+  color: #666;
 }
 
 // ── My Events section ──────────────────────────────────────────
