@@ -179,7 +179,8 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
           },
         },
         workbox: {
-          codeSplitting: false,        // Fixed deprecated inlineDynamicImports warning
+          // @ts-expect-error codeSplitting exists in workbox-build ≥7 but is absent from the bundled GenerateSWOptions types
+          codeSplitting: false,
         },
         outDir: path.resolve(__dirname, 'public/packs'),
         devOptions: {
