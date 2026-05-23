@@ -1,9 +1,12 @@
-# Dockerfile - Fixed for Glitch-Soc (includes build deps for native gems)
+# Dockerfile — Dev container for Mastodon Glitch-Soc
 FROM ruby:3.4-slim
 
-WORKDIR /workspaces/glitch-soc
+WORKDIR /workspaces/mastodon
 
-# Install system dependencies + build tools + Git + Node.js
+ENV BASH_ENV="/root/.bashrc"
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
+# System dependencies + build tools + Node.js + Yarn
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
@@ -21,26 +24,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && corepack enable \
+    && corepack prepare yarn@4.14.1 --activate \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-# Install Bundler and foreman
+# Ruby tools
 RUN gem install bundler -v 4.0.10 --force --no-document \
     && gem install foreman irb --no-document
 
-# Environment
-ENV BASH_ENV="/root/.bashrc"
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-
-# Pre-install gems (with development/test excluded)
+# Pre-install all gems (dev container needs full bundle including development/test)
 COPY Gemfile Gemfile.lock ./
-RUN bundle config set --local without 'development test' \
-    && bundle install --jobs 4 --retry 3
+RUN bundle install --jobs 4 --retry 3
 
-# Copy the rest of the app
+# Copy app
 COPY . .
-
-# Precompile assets
-RUN SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=development bundle exec rails assets:precompile
 
 EXPOSE 3000 3036
 
