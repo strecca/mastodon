@@ -31,6 +31,7 @@ import SettingsIcon from '@/material-icons/400-24px/settings.svg?react';
 import StarActiveIcon from '@/material-icons/400-24px/star-fill.svg?react';
 import StarIcon from '@/material-icons/400-24px/star.svg?react';
 import TrendingUpIcon from '@/material-icons/400-24px/trending_up.svg?react';
+import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
 import TripIcon from '@/material-icons/400-24px/trip.svg?react';
 import { fetchFollowRequests } from 'flavours/glitch/actions/accounts';
 import { openModal } from 'flavours/glitch/actions/modal';
@@ -114,6 +115,7 @@ const messages = defineMessages({
   },
   logout: { id: 'navigation_bar.logout', defaultMessage: 'Logout' },
   communityVisits: { id: 'navigation_bar.community_visits', defaultMessage: "When I'm In Town" },
+  communityEvents: { id: 'navigation_bar.community_events', defaultMessage: 'Community Events' },
   compose: { id: 'tabs_bar.publish', defaultMessage: 'New Post' },
   app_settings: {
     id: 'navigation_bar.app_settings',
@@ -327,6 +329,14 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             text={intl.formatMessage(messages.communityVisits)}
           />
         )}
+        {/* Community Events calendar — visible to everyone */}
+        <ColumnLink
+          transparent
+          to='/community_events'
+          icon='celebration'
+          iconComponent={CelebrationIcon}
+          text={intl.formatMessage(messages.communityEvents)}
+        />
         {/* Community admin panel — visible only to administrators */}
         {!!(permissions & 0x1) && (
           <ColumnLink
