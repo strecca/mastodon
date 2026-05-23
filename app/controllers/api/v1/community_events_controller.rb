@@ -95,11 +95,9 @@ class Api::V1::CommunityEventsController < Api::BaseController
   end
 
   def entry_params
-    p = params.require(:entry).permit(:category, :event_name, :event_description, :event_date,
-                                      :location_town_city, :contact_info_1, :contact_info_2,
-                                      :website, :telephone)
-    p[:category] = params[:entry][:category] if params[:entry][:category].is_a?(Array)
-    p
+    params.require(:entry).permit(:event_name, :event_description, :event_date,
+                                  :location_town_city, :contact_info_1, :contact_info_2,
+                                  :website, :telephone, category: [])
   end
 
   def serialize(e)
