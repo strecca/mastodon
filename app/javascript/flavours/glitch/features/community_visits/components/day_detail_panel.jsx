@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import CloseIcon from '@/material-icons/400-24px/close.svg?react';
 import EditIcon  from '@/material-icons/400-24px/edit.svg?react';
 
@@ -19,9 +20,9 @@ const AVAILABILITY_LABELS = {
 };
 
 const VISIBILITY_LABELS = {
-  public_to_members: 'Public to members',
-  connections_only:  'Connections only',
-  ghost:             'Ghost mode',
+  public_to_members: 'All members',
+  connections_only:  'My connections',
+  ghost:             'Private',
 };
 
 const fmtDate = (iso) => {
@@ -85,7 +86,9 @@ export const DayDetailPanel = ({ date, visits, onClose, onEdit }) => {
 
                 <div className='cv-day-panel__visitor-info'>
                   <div className='cv-day-panel__visitor-name'>
-                    <strong>{acct?.get('display_name') || `@${acct?.get('username')}`}</strong>
+                    <Link to={`/@${acct?.get('username')}`} className='cv-day-panel__profile-link'>
+                      <strong>{acct?.get('display_name') || `@${acct?.get('username')}`}</strong>
+                    </Link>
                     <span className='cv-day-panel__visitor-username'>@{acct?.get('username')}</span>
                     {isOwn && <span className='cv-day-panel__visitor-you'>you</span>}
                   </div>

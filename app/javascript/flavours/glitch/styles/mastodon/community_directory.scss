@@ -2007,6 +2007,75 @@
   }
 }
 
+// ── Search bar ────────────────────────────────────────────────
+
+.cv-search {
+  padding: 12px 16px 4px;
+
+  &__input {
+    width: 100%;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--color-border-default);
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    box-sizing: border-box;
+
+    &::placeholder { color: var(--color-text-secondary); }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-border-brand);
+    }
+  }
+}
+
+// ── Filter chips ──────────────────────────────────────────────
+
+.cv-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 16px 12px;
+}
+
+.cv-filter-chip {
+  padding: 4px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--color-border-default);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: var(--color-border-brand);
+    color: var(--color-text-primary);
+  }
+
+  &--active {
+    background: var(--color-accent, #6364ff);
+    border-color: var(--color-accent, #6364ff);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  &--clear {
+    border-style: dashed;
+    border-color: var(--color-text-secondary);
+    color: var(--color-text-secondary);
+
+    &:hover {
+      border-color: #e74c3c;
+      color: #e74c3c;
+    }
+  }
+}
+
 // ── Calendar navigation header ────────────────────────────────
 
 .cv-cal__nav {
@@ -2711,6 +2780,12 @@
       font-weight: 600;
       color: var(--color-text-primary);
     }
+  }
+
+  &__profile-link {
+    text-decoration: none;
+
+    &:hover strong { text-decoration: underline; color: var(--color-text-brand); }
   }
 
   &__visitor-username {

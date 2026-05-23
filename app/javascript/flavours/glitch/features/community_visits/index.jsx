@@ -26,6 +26,41 @@ import TripIcon         from '@/material-icons/400-24px/trip.svg?react';
 
 const WEEKDAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+const FILTER_CHIPS = [
+  { key: 'now',       label: 'In Town Now' },
+  { key: 'today',     label: 'Today' },
+  { key: 'tomorrow',  label: 'Tomorrow' },
+  { key: 'this_week', label: 'This Week' },
+  { key: 'next_week', label: 'Next Week' },
+];
+
+const getFilterRange = (key) => {
+  const t = new Date();
+  switch (key) {
+    case 'now':
+    case 'today': {
+      const s = isoDate(t);
+      return { from: s, to: s, navDate: { year: t.getFullYear(), month: t.getMonth() } };
+    }
+    case 'tomorrow': {
+      const tom = new Date(t); tom.setDate(t.getDate() + 1);
+      const s = isoDate(tom);
+      return { from: s, to: s, navDate: { year: tom.getFullYear(), month: tom.getMonth() } };
+    }
+    case 'this_week': {
+      const ws = new Date(t); ws.setDate(t.getDate() - t.getDay());
+      const we = new Date(ws); we.setDate(ws.getDate() + 6);
+      return { from: isoDate(ws), to: isoDate(we), navDate: { year: t.getFullYear(), month: t.getMonth() } };
+    }
+    case 'next_week': {
+      const ws = new Date(t); ws.setDate(t.getDate() - t.getDay() + 7);
+      const we = new Date(ws); we.setDate(ws.getDate() + 6);
+      return { from: isoDate(ws), to: isoDate(we), navDate: { year: ws.getFullYear(), month: ws.getMonth() } };
+    }
+    default: return null;
+  }
+};
+
 const RING_COLORS = {
   mutual:    '#f4a000',
   following: '#4caf50',
@@ -215,6 +250,10 @@ const CommunityVisits = ({ multiColumn }) => {
   });
   const { year, month } = navDate;
 
+  // Search + filter state
+  const [searchQuery,  setSearchQuery]  = useState('');
+  const [activeFilter, setActiveFilter] = useState(null);
+
   // Modal state
   const [showForm,     setShowForm]     = useState(false);
   const [editingVisit, setEditingVisit] = useState(null); // ImmutableMap or null
@@ -236,9 +275,38 @@ const CommunityVisits = ({ multiColumn }) => {
     dispatch(fetchHeatmap());
   }, [dispatch, signedIn]);
 
+  // Navigate calendar when filter is selected
+  useEffect(() => {
+    if (!activeFilter) return;
+    const range = getFilterRange(activeFilter);
+    if (range?.navDate) setNavDate(range.navDate);
+  }, [activeFilter]);
+
+  // Filter visits by search query and active chip filter
+  const filteredVisits = useMemo(() => {
+    let result = visits;
+    const q = searchQuery.trim().toLowerCase();
+    if (q) {
+      result = result.filter(v => {
+        const acct = v.get('account');
+        return acct?.get('display_name')?.toLowerCase().includes(q) ||
+               acct?.get('username')?.toLowerCase().includes(q);
+      });
+    }
+    if (activeFilter) {
+      const range = getFilterRange(activeFilter);
+      if (range) {
+        result = result.filter(v =>
+          v.get('arrival_date') <= range.to && v.get('departure_date') >= range.from
+        );
+      }
+    }
+    return result;
+  }, [visits, searchQuery, activeFilter]);
+
   // Calendar grid
   const calendarGrid = useMemo(() => buildGrid(year, month), [year, month]);
-  const visitsByDay  = useMemo(() => buildVisitsByDay(visits),   [visits]);
+  const visitsByDay  = useMemo(() => buildVisitsByDay(filteredVisits), [filteredVisits]);
 
   const prevMonth = useCallback(() =>
     setNavDate(({ year: y, month: m }) =>
@@ -249,6 +317,10 @@ const CommunityVisits = ({ multiColumn }) => {
     setNavDate(({ year: y, month: m }) =>
       m === 11 ? { year: y + 1, month: 0 } : { year: y, month: m + 1 }
     ), []);
+
+  const toggleFilter = useCallback((key) =>
+    setActiveFilter(prev => prev === key ? null : key), []);
+  const clearFilters = useCallback(() => { setActiveFilter(null); setSearchQuery(''); }, []);
 
   const openCreate  = () => { setEditingVisit(null); setShowForm(true); };
   const openEdit    = (v) => { setEditingVisit(v);   setShowForm(true); };
@@ -290,6 +362,36 @@ const CommunityVisits = ({ multiColumn }) => {
           <HeatmapTeaser heatmap={heatmap} />
         ) : (
           <>
+            {/* ── Search ────────────────────────────────────────────── */}
+            <div className='cv-search'>
+              <input
+                type='search'
+                className='cv-search__input'
+                placeholder='Search members…'
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+              />
+            </div>
+
+            {/* ── Filter chips ──────────────────────────────────────── */}
+            <div className='cv-filters'>
+              {FILTER_CHIPS.map(chip => (
+                <button
+                  key={chip.key}
+                  type='button'
+                  className={`cv-filter-chip${activeFilter === chip.key ? ' cv-filter-chip--active' : ''}`}
+                  onClick={() => toggleFilter(chip.key)}
+                >
+                  {chip.label}
+                </button>
+              ))}
+              {(activeFilter || searchQuery) && (
+                <button type='button' className='cv-filter-chip cv-filter-chip--clear' onClick={clearFilters}>
+                  Clear
+                </button>
+              )}
+            </div>
+
             {/* ── Month navigation ──────────────────────────────────── */}
             <div className='cv-cal__nav'>
               <button className='cv-nav-btn' onClick={prevMonth} aria-label='Previous month'>
