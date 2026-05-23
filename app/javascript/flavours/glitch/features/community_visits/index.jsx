@@ -362,6 +362,13 @@ const CommunityVisits = ({ multiColumn }) => {
           <HeatmapTeaser heatmap={heatmap} />
         ) : (
           <>
+            {/* ── Hero banner ───────────────────────────────────────── */}
+            <div className='cv-hero'>
+              <TripIcon className='cv-hero__icon' />
+              <h2 className='cv-hero__title'>When I'll Be In Town</h2>
+              <p className='cv-hero__subtitle'>Share your dates · See who's arriving · Meet up</p>
+            </div>
+
             {/* ── Search ────────────────────────────────────────────── */}
             <div className='cv-search'>
               <input

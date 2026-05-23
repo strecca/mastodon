@@ -1926,6 +1926,39 @@
   overflow-y: auto;
 }
 
+// ── Hero banner ────────────────────────────────────────────────
+
+.cv-hero {
+  background: linear-gradient(135deg, #1a3a6b 0%, #1565c0 45%, #0288d1 75%, #26c6da 100%);
+  padding: 22px 20px 18px;
+  text-align: center;
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    fill: rgba(255, 255, 255, 0.9);
+    display: block;
+    margin: 0 auto 10px;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 5px;
+    letter-spacing: -0.3px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &__subtitle {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.78);
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+}
+
 // ── Public teaser ─────────────────────────────────────────────
 
 .cv-teaser {
@@ -2082,35 +2115,38 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--color-border-primary);
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(21, 101, 192, 0.1) 0%, rgba(2, 136, 209, 0.06) 100%);
+  border-bottom: 2px solid rgba(21, 101, 192, 0.18);
 }
 
 .cv-cal__month-title {
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
   color: var(--color-text-primary);
   margin: 0;
+  letter-spacing: -0.2px;
 }
 
 .cv-nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--color-border-primary);
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(21, 101, 192, 0.3);
   border-radius: 50%;
-  background: transparent;
-  color: var(--color-text-secondary);
+  background: rgba(21, 101, 192, 0.08);
+  color: #1565c0;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s;
 
   svg { width: 20px; height: 20px; fill: currentColor; }
 
   &:hover {
-    background: var(--color-bg-hover, rgba(0, 0, 0, 0.06));
-    color: var(--color-text-primary);
+    background: rgba(21, 101, 192, 0.18);
+    border-color: rgba(21, 101, 192, 0.5);
+    color: #1565c0;
   }
 }
 
@@ -2128,8 +2164,9 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.4px;
-    color: var(--color-text-tertiary);
-    border-bottom: 1px solid var(--color-border-primary);
+    color: #1565c0;
+    background: rgba(21, 101, 192, 0.06);
+    border-bottom: 1px solid rgba(21, 101, 192, 0.15);
   }
 
   &__day {
@@ -2172,7 +2209,7 @@
     }
 
     &--has-visits {
-      background: var(--color-bg-elevated);
+      background: linear-gradient(160deg, rgba(244, 160, 0, 0.13) 0%, rgba(255, 107, 53, 0.07) 100%);
     }
   }
 
@@ -2271,8 +2308,11 @@
 
   &__title {
     font-size: 14px;
-    font-weight: 700;
-    color: var(--color-text-primary);
+    font-weight: 800;
+    background: linear-gradient(90deg, #1565c0, #0288d1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin: 0;
   }
 
@@ -2291,14 +2331,17 @@
 }
 
 .cv-my-card {
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border-primary);
+  background: linear-gradient(135deg, rgba(21, 101, 192, 0.06) 0%, var(--color-bg-elevated) 100%);
+  border: 1px solid rgba(21, 101, 192, 0.2);
+  border-left: 4px solid #1565c0;
   border-radius: 10px;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.15s ease, box-shadow 0.15s;
+
+  &:hover { box-shadow: 0 2px 10px rgba(21, 101, 192, 0.12); }
 
   &--past {
     opacity: 0.55;
@@ -2849,14 +2892,22 @@
 // Make clickable day cells show pointer cursor and subtle hover
 .cv-cal__day--has-visits {
   cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
 
-  &:hover, &:focus-visible {
-    background: color-mix(in srgb, var(--color-border-brand) 8%, transparent);
+  .cv-cal__day-num {
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  &:hover {
+    background: linear-gradient(160deg, rgba(244, 160, 0, 0.28) 0%, rgba(255, 107, 53, 0.18) 100%);
+    box-shadow: inset 0 0 0 2px rgba(244, 160, 0, 0.45);
     outline: none;
   }
 
   &:focus-visible {
-    box-shadow: inset 0 0 0 2px var(--color-border-brand);
+    box-shadow: inset 0 0 0 2px rgba(244, 160, 0, 0.7);
+    outline: none;
   }
 }
 
