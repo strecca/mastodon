@@ -38,3 +38,8 @@ core
 # IDE
 .vscode/
 .idea/
+
+# Local server setup notes and SSH keys
+claude-hetzner-setup.txt
+public-miacivezza-key.txt
+public-miacivezza-key.txt.pub
