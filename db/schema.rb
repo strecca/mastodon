@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_21_100300) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_23_100001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -464,6 +464,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_21_100300) do
     t.index ["translatable_type", "translatable_id", "locale", "field_name"], name: "idx_community_translations_unique", unique: true
     t.index ["translatable_type", "translatable_id", "locale"], name: "idx_community_translations_by_entry_locale"
     t.index ["translatable_type", "translatable_id"], name: "index_community_entry_translations_on_translatable"
+  end
+
+  create_table "community_events", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.jsonb "category", default: [], null: false
+    t.string "contact_info_1", null: false
+    t.string "contact_info_2"
+    t.datetime "created_at", null: false
+    t.datetime "event_date", null: false
+    t.text "event_description"
+    t.string "event_name", null: false
+    t.string "location_town_city", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "telephone"
+    t.datetime "updated_at", null: false
+    t.string "website"
+    t.index ["account_id"], name: "index_community_events_on_account_id"
+    t.index ["category"], name: "index_community_events_on_category", using: :gin
+    t.index ["created_at"], name: "index_community_events_on_created_at"
+    t.index ["event_date"], name: "index_community_events_on_event_date"
+    t.index ["location_town_city"], name: "index_community_events_on_location_town_city"
+    t.index ["status"], name: "index_community_events_on_status"
   end
 
   create_table "community_notification_preferences", force: :cascade do |t|
@@ -1615,6 +1637,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_21_100300) do
   add_foreign_key "collections", "tags"
   add_foreign_key "community_artists", "accounts"
   add_foreign_key "community_directory_permissions", "accounts"
+  add_foreign_key "community_events", "accounts"
   add_foreign_key "community_notification_preferences", "accounts"
   add_foreign_key "community_visit_notifications", "accounts", column: "recipient_account_id"
   add_foreign_key "community_visit_notifications", "accounts", column: "sender_account_id"

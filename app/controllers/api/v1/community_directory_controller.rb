@@ -260,7 +260,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   end
 
   def model_for_category(category_key)
-    "Community#{category_key.camelize}".constantize
+    "Community#{category_key.classify}".constantize
   rescue NameError
     nil
   end

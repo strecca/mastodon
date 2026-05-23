@@ -98,6 +98,10 @@ import {
   CommunityArtistsShow,
   CommunityArtistsNew,
   CommunityArtistsEdit,
+  CommunityEvents,
+  CommunityEventsShow,
+  CommunityEventsNew,
+  CommunityEventsEdit,
   CommunityVisits,
   CommunityVisitsNotifications,
   // [CD:ASYNC_IMPORTS]
@@ -260,6 +264,11 @@ class SwitchingColumnsArea extends PureComponent {
 <WrappedRoute path='/community_artists/:id/edit' exact component={CommunityArtistsEdit} content={children} />
 <WrappedRoute path='/community_artists/:id' exact component={CommunityArtistsShow} content={children} />
 <WrappedRoute path='/community_artists' exact component={CommunityArtists} content={children} />
+            {/* Community Events */}
+<WrappedRoute path='/community_events/new' exact component={CommunityEventsNew} content={children} />
+<WrappedRoute path='/community_events/:id/edit' exact component={CommunityEventsEdit} content={children} />
+<WrappedRoute path='/community_events/:id' exact component={CommunityEventsShow} content={children} />
+<WrappedRoute path='/community_events' exact component={CommunityEvents} content={children} />
             {/* [CD:ROUTES] */}
 
             <WrappedRoute path='/explore' component={Explore} content={children} />

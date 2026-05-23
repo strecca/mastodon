@@ -25,6 +25,7 @@ namespace :api, format: false do
   # JSON / REST API
   namespace :v1 do
     resources :community_artists, only: [:index, :show, :create, :update, :destroy]
+    resources :community_events,  only: [:index, :show, :create, :update, :destroy]
 
     # ── Community Visits — "When I'll Be In Town" ───────────────────────────
     resources :community_visits, only: [:index, :show, :create, :update, :destroy] do

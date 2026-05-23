@@ -336,3 +336,19 @@ export function CommunityArtistsNew () {
 export function CommunityArtistsEdit () {
   return import('../../community_artists/edit');
 }
+
+export function CommunityEvents () {
+  return import('../../community_events');
+}
+
+export function CommunityEventsShow () {
+  return import('../../community_events/show');
+}
+
+export function CommunityEventsNew () {
+  return import('../../community_events/new');
+}
+
+export function CommunityEventsEdit () {
+  return import('../../community_events/edit');
+}
