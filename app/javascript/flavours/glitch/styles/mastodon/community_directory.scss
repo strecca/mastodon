@@ -2586,16 +2586,20 @@
     align-items: flex-start;
     gap: 10px;
     padding: 10px 12px;
-    border: 1.5px solid var(--color-border-primary);
+    border: 1.5px solid #ccc;
     border-radius: 8px;
     cursor: pointer;
+    background: #fff;
     transition: border-color 0.15s ease, background 0.15s ease;
 
-    input[type='radio'] { margin-top: 2px; flex-shrink: 0; accent-color: var(--color-bg-brand-base); }
+    input[type='radio'] { margin-top: 2px; flex-shrink: 0; accent-color: #1565c0; }
 
     &--active {
-      border-color: var(--color-border-brand);
-      background: var(--color-bg-brand-softest);
+      border-color: #1565c0;
+      background: #1565c0;
+
+      .cv-form__radio-label { color: #fff; }
+      .cv-form__radio-desc  { color: rgba(255, 255, 255, 0.85); }
     }
   }
 
@@ -2624,19 +2628,20 @@
     align-items: center;
     gap: 6px;
     padding: 5px 12px;
-    border: 1.5px solid #bbb;
+    border: 1.5px solid #aaa;
     border-radius: 100px;
     font-size: 13px;
     font-weight: 500;
     color: #333;
+    background: #fff;
     cursor: pointer;
     transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 
     input[type='checkbox'] { display: none; }
 
     &--on {
-      border-color: var(--color-bg-brand-base);
-      background: var(--color-bg-brand-base);
+      border-color: #1565c0;
+      background: #1565c0;
       color: #fff;
     }
   }
