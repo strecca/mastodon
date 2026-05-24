@@ -12,8 +12,7 @@
 #
 # Indexes
 #
-#  idx_visit_availabilities_unique                   (community_visit_id,kind) UNIQUE
-#  index_visit_availabilities_on_community_visit_id  (community_visit_id)
+#  idx_visit_availabilities_unique  (community_visit_id,kind) UNIQUE
 #
 # Foreign Keys
 #

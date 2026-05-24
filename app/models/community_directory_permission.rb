@@ -13,8 +13,7 @@
 #
 # Indexes
 #
-#  idx_cd_permissions_account_category                  (account_id,category_key) UNIQUE
-#  index_community_directory_permissions_on_account_id  (account_id)
+#  idx_cd_permissions_account_category  (account_id,category_key) UNIQUE
 #
 # Foreign Keys
 #

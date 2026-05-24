@@ -18,12 +18,10 @@
 #
 # Indexes
 #
-#  idx_community_visit_notifs_inbox                             (recipient_account_id,created_at)
-#  idx_community_visit_notifs_unread                            (recipient_account_id,read_at)
-#  idx_community_visit_notifs_visit                             (community_visit_id)
-#  index_community_visit_notifications_on_community_visit_id    (community_visit_id)
-#  index_community_visit_notifications_on_recipient_account_id  (recipient_account_id)
-#  index_community_visit_notifications_on_sender_account_id     (sender_account_id)
+#  idx_community_visit_notifs_inbox                          (recipient_account_id,created_at)
+#  idx_community_visit_notifs_unread                         (recipient_account_id,read_at)
+#  idx_community_visit_notifs_visit                          (community_visit_id)
+#  index_community_visit_notifications_on_sender_account_id  (sender_account_id)
 #
 # Foreign Keys
 #

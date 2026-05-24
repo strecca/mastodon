@@ -15,7 +15,6 @@
 #
 # Indexes
 #
-#  index_email_subscriptions_on_account_id            (account_id)
 #  index_email_subscriptions_on_account_id_and_email  (account_id,email) UNIQUE
 #  index_email_subscriptions_on_confirmation_token    (confirmation_token) UNIQUE WHERE (confirmation_token IS NOT NULL)
 #

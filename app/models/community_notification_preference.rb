@@ -16,8 +16,7 @@
 #
 # Indexes
 #
-#  idx_community_notif_prefs_account                       (account_id) UNIQUE
-#  index_community_notification_preferences_on_account_id  (account_id)
+#  idx_community_notif_prefs_account  (account_id) UNIQUE
 #
 # Foreign Keys
 #

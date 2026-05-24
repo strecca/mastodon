@@ -16,9 +16,7 @@
 #
 # Indexes
 #
-#  idx_community_translations_by_entry_locale          (translatable_type,translatable_id,locale)
-#  idx_community_translations_unique                   (translatable_type,translatable_id,locale,field_name) UNIQUE
-#  index_community_entry_translations_on_translatable  (translatable_type,translatable_id)
+#  idx_community_translations_unique  (translatable_type,translatable_id,locale,field_name) UNIQUE
 #
 class CommunityEntryTranslation < ApplicationRecord
   belongs_to :translatable, polymorphic: true
