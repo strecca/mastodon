@@ -4,7 +4,7 @@
 class DynamicResourceSerializer < ActiveModel::Serializer
     attributes :id, :created_at, :updated_at, :public, :display_name
   
-    belongs_to :account, serializer: ::AccountSerializer
+    belongs_to :account, serializer: ::REST::AccountSerializer
   
     def attributes(*args)
       data = super
