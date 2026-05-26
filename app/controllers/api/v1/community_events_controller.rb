@@ -114,11 +114,15 @@ class Api::V1::CommunityEventsController < Api::BaseController
       event_name: e.event_name,
       event_description: e.event_description,
       event_date: e.event_date&.iso8601,
+      end_date: e.end_date&.iso8601,
       location_town_city: e.location_town_city,
       contact_info_1: e.contact_info_1,
       contact_info_2: e.contact_info_2,
       website: e.website,
       telephone: e.telephone,
+      source_url: e.source_url,
+      source_name: e.source_name,
+      auto_imported: e.auto_imported,
       translations: translations,
       created_at: e.created_at.iso8601, updated_at: e.updated_at.iso8601 }
   end

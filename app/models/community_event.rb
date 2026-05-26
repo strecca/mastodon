@@ -41,7 +41,7 @@ class CommunityEvent < ApplicationRecord
   validates :event_name, presence: true
   validates :event_description, presence: true
   validates :location_town_city, presence: true
-  validates :contact_info_1, presence: true
+  validates :contact_info_1, presence: true, unless: :auto_imported?
   validates :event_date, presence: true
 
   scope :search, ->(query) {

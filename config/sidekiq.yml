@@ -59,3 +59,7 @@
       interval: 1 hour
       class: Scheduler::CommunityVisitDigestScheduler
       queue: scheduler
+    event_import_scheduler:
+      cron: '0 2 * * *'
+      class: Scheduler::EventImportScheduler
+      queue: scheduler
