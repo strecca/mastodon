@@ -23,6 +23,13 @@ const messages = defineMessages({
 
 const humanize = (str) => str ? str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
 
+const fmtFieldDate = (iso) => {
+  if (!iso) return iso;
+  const d = new Date(iso.slice(0, 10) + 'T00:00:00');
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+};
+
 const EntryDetailInner = ({ config, entryId, identity }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
@@ -210,9 +217,10 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
                     const storedVal = rawVal && typeof rawVal.toJS === 'function'
                       ? rawVal.toJS().join(', ')
                       : String(rawVal);
-                    const val = field.translatable
+                    const rawDisplayVal = field.translatable
                       ? (translatedValue(entry, field.db_name, locale) || storedVal)
                       : storedVal;
+                    const val = field.widget === 'date' ? fmtFieldDate(rawDisplayVal) : rawDisplayVal;
                     const isLink = field.widget === 'url' || /^https?:\/\//.test(val);
                     const href = isLink && !/^https?:\/\//.test(val) ? `https://${val}` : val;
                     return (
