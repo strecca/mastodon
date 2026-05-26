@@ -4059,14 +4059,14 @@
     justify-content: space-between;
     padding: 12px 14px 10px;
     border-bottom: 2px solid rgba(21, 101, 192, 0.25);
-    background: linear-gradient(135deg, rgba(21, 101, 192, 0.08) 0%, rgba(25, 118, 210, 0.04) 100%);
+    background: linear-gradient(135deg, rgba(21, 101, 192, 0.08) 0%, rgba(25, 118, 210, 0.04) 100%) !important;
   }
 
   &__header {
     margin: 0;
     font-size: 18px;
     font-weight: 800;
-    color: #1565c0;
+    color: #1565c0 !important;
     letter-spacing: -0.2px;
   }
 
