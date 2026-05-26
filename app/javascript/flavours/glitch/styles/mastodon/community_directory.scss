@@ -4000,3 +4000,346 @@
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+// ═══════════════════════════════════════════════════════════════
+//  Community Visits — List View  (cv-list-* / cv-date-range-*)
+// ═══════════════════════════════════════════════════════════════
+
+// ── Date range pickers ─────────────────────────────────────────
+
+.cv-date-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 10px;
+  border-bottom: 1px solid #e8e8e8;
+  flex-wrap: wrap;
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  &__input {
+    font-size: 12px;
+    padding: 4px 8px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    color: #1a1a1a;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: rgba(21, 101, 192, 0.6);
+      box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.12);
+    }
+  }
+
+  &__sep {
+    font-size: 14px;
+    color: #aaa;
+    font-weight: 500;
+  }
+}
+
+// ── List container ────────────────────────────────────────────
+
+.cv-list {
+  display: flex;
+  flex-direction: column;
+
+  &__header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px 10px;
+    border-bottom: 2px solid rgba(21, 101, 192, 0.25);
+    background: linear-gradient(135deg, rgba(21, 101, 192, 0.08) 0%, rgba(25, 118, 210, 0.04) 100%);
+  }
+
+  &__header {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: #1565c0;
+    letter-spacing: -0.2px;
+  }
+
+  &__loading,
+  &__empty {
+    padding: 28px 20px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+  }
+
+  &__clear-link {
+    background: none;
+    border: none;
+    color: #1565c0;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+    padding: 0;
+  }
+
+  // ── Date group ──────────────────────────────────────────────
+
+  &__group { border-bottom: 1px solid #e8e8e8; }
+
+  &__date-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    background: #f9f9f9;
+    border-bottom: 1px solid #efefef;
+
+    &--current  { background: linear-gradient(90deg, rgba(21, 101, 192, 0.12) 0%, rgba(25, 118, 210, 0.05) 100%); color: #1565c0; }
+    &--tomorrow { background: rgba(21, 101, 192, 0.05); color: #0d47a1; }
+  }
+
+  &__date-count {
+    font-size: 11px;
+    font-weight: 500;
+    color: #aaa;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  // ── Visit row (accordion) ───────────────────────────────────
+  // Rule: collapsed = white bg + dark text; expanded = dark bg + white text.
+  // !important required — Mastodon's theme button selectors have higher specificity.
+
+  &__row {
+    border-bottom: 1px solid #f0f0f0;
+    &:last-child { border-bottom: none; }
+
+    &--expanded > .cv-list__row-main {
+      background: #1a1a1a !important;
+      border-left: 3px solid #1565c0 !important;
+      color: #fff !important;
+
+      .cv-list__name         { color: #fff !important; }
+      .cv-list__dates        { color: rgba(255, 255, 255, 0.72) !important; }
+      .cv-list__in-town-badge {
+        background: rgba(255, 255, 255, 0.18) !important;
+        border-color: rgba(255, 255, 255, 0.35) !important;
+        color: #fff !important;
+      }
+      .cv-list__avail-preview {
+        background: rgba(255, 255, 255, 0.12) !important;
+        border-color: rgba(255, 255, 255, 0.25) !important;
+        color: #fff !important;
+      }
+      .cv-list__chevron { color: #64b5f6 !important; }
+    }
+  }
+
+  &__row-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 11px 14px;
+    background: #fff !important;
+    color: #1a1a1a !important;
+    border: none;
+    border-left: 3px solid transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover  { background: #f5f5f5 !important; color: #1a1a1a !important; }
+    &:active { background: #1a1a1a !important; color: #fff !important; }
+
+    &:focus-visible {
+      outline: 2px solid rgba(21, 101, 192, 0.5);
+      outline-offset: -2px;
+    }
+  }
+
+  // ── Avatar with relationship ring ───────────────────────────
+
+  &__avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2.5px solid var(--ring, #bdbdbd);
+    overflow: hidden;
+  }
+
+  &__avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  &__name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__dates {
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__in-town-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: rgba(21, 101, 192, 0.12);
+    border: 1px solid rgba(21, 101, 192, 0.3);
+    color: #1565c0;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    @media (max-width: 400px) { display: none; }
+  }
+
+  &__avail-preview {
+    font-size: 11px;
+    color: #1565c0;
+    background: rgba(21, 101, 192, 0.08);
+    border: 1px solid rgba(21, 101, 192, 0.22);
+    border-radius: 10px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    @media (max-width: 480px) { display: none; }
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    svg { width: 18px; height: 18px; fill: currentColor; }
+  }
+
+  // ── Accordion detail panel ──────────────────────────────────
+
+  &__detail {
+    background: #f7f7f7;
+    border-top: 1px solid #e0e0e0;
+    border-left: 3px solid #1565c0;
+    animation: cv-slide-in 0.15s ease;
+  }
+
+  &__detail-inner {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__detail-dates { font-size: 13px; font-weight: 600; color: #333; }
+  &__detail-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+  &__detail-note  { margin: 0; font-size: 13px; color: #333; line-height: 1.55; }
+
+  &__chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(21, 101, 192, 0.1);
+    color: #1565c0;
+    border: 1px solid rgba(21, 101, 192, 0.25);
+  }
+
+  &__detail-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 2px;
+  }
+
+  &__action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px !important;
+    padding: 4px 12px !important;
+    background: #fff !important;
+    color: #1a1a1a !important;
+    border: 1.5px solid #ccc !important;
+    border-radius: 6px;
+    cursor: pointer;
+    svg { width: 14px; height: 14px; fill: currentColor; }
+
+    &:hover  { background: #f0f0f0 !important; color: #1a1a1a !important; }
+    &:active { background: #1a1a1a !important; color: #fff !important; border-color: #1a1a1a !important; }
+
+    &--danger {
+      color: #c62828 !important;
+      border-color: rgba(198, 40, 40, 0.35) !important;
+
+      &:hover  { background: rgba(198, 40, 40, 0.06) !important; color: #c62828 !important; }
+      &:active { background: #c62828 !important; color: #fff !important; border-color: #c62828 !important; }
+    }
+  }
+}
+
+// ── View toggle button (list ↔ calendar) — visits ─────────────
+
+.cv-view-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid rgba(21, 101, 192, 0.35);
+  background: rgba(21, 101, 192, 0.08) !important;
+  color: #1565c0 !important;
+  transition: background 0.12s, border-color 0.12s;
+
+  svg { width: 14px; height: 14px; fill: currentColor; }
+
+  &:hover  { background: rgba(21, 101, 192, 0.15) !important; color: #1565c0 !important; border-color: rgba(21, 101, 192, 0.55); }
+  &:active { background: #1a1a1a !important; color: #fff !important; border-color: #1a1a1a; }
+}
+
+.cv-cal__view-toggle-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 14px 4px;
+}
+
+// ── Slide-in animation for accordion ─────────────────────────
+
+@keyframes cv-slide-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
