@@ -45,6 +45,10 @@ class CommunityEventImportService
       Account.joins(:user).merge(User.admins).first
   end
 
+  def utc_midnight(date)
+    Time.utc(date.year, date.month, date.day)
+  end
+
   def duplicate?(attrs)
     return true if attrs[:source_url].present? &&
                    CommunityEvent.exists?(source_url: attrs[:source_url])
@@ -61,8 +65,8 @@ class CommunityEventImportService
       account:            @system_account,
       event_name:         attrs[:title].to_s.truncate(255),
       event_description:  (attrs[:description] || attrs[:title]).to_s.truncate(5000),
-      event_date:         attrs[:event_date].to_time,
-      end_date:           attrs[:end_date]&.to_time,
+      event_date:         utc_midnight(attrs[:event_date]),
+      end_date:           attrs[:end_date] ? utc_midnight(attrs[:end_date]) : nil,
       location_town_city: (attrs[:location] || 'Imperia').to_s.truncate(255),
       contact_info_1:     attrs[:contact]&.truncate(255),
       website:            attrs[:website]&.truncate(255),
