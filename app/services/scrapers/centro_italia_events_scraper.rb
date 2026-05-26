@@ -49,8 +49,10 @@ module Scrapers
       dates = parse_italian_date_range(date_text)
       return nil unless dates
 
-      # Only import present/future events
+      # Skip if fully in the past, or if start date is implausibly old
+      # (guards against find_date_text picking up a past-edition date from page text)
       return nil if dates[:end] < Date.today
+      return nil if dates[:start] < (Date.today - 7)
 
       location = extract_location(doc, url)
       description = extract_description(doc) || title

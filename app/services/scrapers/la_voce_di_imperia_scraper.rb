@@ -42,8 +42,8 @@ module Scrapers
       dates = extract_event_date(full_text, pub_date)
       return nil unless dates
 
-      # Skip events already in the past
       return nil if dates[:end] < Date.today
+      return nil if dates[:start] < (Date.today - 7)
 
       location = extract_location(full_text) || 'Imperia'
 

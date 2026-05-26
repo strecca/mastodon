@@ -61,11 +61,19 @@ class CommunityEventImportService
   end
 
   def create_event(attrs)
+    # For multi-day events already in progress, anchor the display date to today
+    # so they appear in the current list rather than on a past calendar cell.
+    display_date = if attrs[:event_date] < Date.today && attrs[:end_date]&.>=(Date.today)
+                     Date.today
+                   else
+                     attrs[:event_date]
+                   end
+
     CommunityEvent.create!(
       account:            @system_account,
       event_name:         attrs[:title].to_s.truncate(255),
       event_description:  (attrs[:description] || attrs[:title]).to_s.truncate(5000),
-      event_date:         utc_midnight(attrs[:event_date]),
+      event_date:         utc_midnight(display_date),
       end_date:           attrs[:end_date] ? utc_midnight(attrs[:end_date]) : nil,
       location_town_city: (attrs[:location] || 'Imperia').to_s.truncate(255),
       contact_info_1:     attrs[:contact]&.truncate(255),

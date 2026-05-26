@@ -41,8 +41,8 @@ module Scrapers
       dates = parse_slash_date_range(date_text)
       return nil unless dates
 
-      # Future events only
       return nil if dates[:end] < Date.today
+      return nil if dates[:start] < (Date.today - 7)
 
       description = clean_text(
         node.at_css('p, .abstract, .descrizione')&.text
