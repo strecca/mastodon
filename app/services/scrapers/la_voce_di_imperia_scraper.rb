@@ -15,10 +15,10 @@ module Scrapers
     ].freeze
 
     def fetch_events
-      feed = fetch_rss(RSS_URL)
-      return [] unless feed
+      doc = fetch_rss(RSS_URL)
+      return [] unless doc
 
-      events = feed.items.filter_map { |item| parse_item(item) }
+      events = doc.css('item').filter_map { |item| parse_item(item) }
       Rails.logger.info("[LaVoceDiImperia] Parsed #{events.size} usable events from RSS")
       events
     end
@@ -26,10 +26,12 @@ module Scrapers
     private
 
     def parse_item(item)
-      title       = clean_text(item.title)
-      description = clean_text(strip_html(item.description.to_s))
-      link        = item.link.to_s.strip
-      pub_date    = item.pubDate&.to_date || Date.today
+      title       = clean_text(item.at_xpath('title')&.text)
+      description = clean_text(strip_html(item.at_xpath('description')&.text.to_s))
+      link        = item.at_xpath('link')&.text&.strip.presence ||
+                    item.at_xpath('following-sibling::text()[normalize-space()]')&.text&.strip
+      pub_date_str = item.at_xpath('pubDate')&.text
+      pub_date     = pub_date_str ? (Time.parse(pub_date_str).to_date rescue Date.today) : Date.today
 
       return nil if title.blank?
 

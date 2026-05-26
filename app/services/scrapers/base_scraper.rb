@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'net/http'
-require 'rss'
-
 module Scrapers
   class BaseScraper
     TIMEOUT    = 15
@@ -56,16 +53,18 @@ module Scrapers
       nil
     end
 
+    # Returns a Nokogiri::XML::Document of the RSS feed, or nil on failure.
+    # Callers access items via doc.css('item').
     def fetch_rss(url)
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl     = (uri.scheme == 'https')
+      http.use_ssl      = (uri.scheme == 'https')
       http.open_timeout = TIMEOUT
       http.read_timeout = TIMEOUT
       response = http.get(uri.request_uri, 'User-Agent' => USER_AGENT)
       return nil unless response.code.to_i == 200
 
-      RSS::Parser.parse(response.body, false)
+      Nokogiri::XML(response.body)
     rescue StandardError => e
       Rails.logger.error("[#{self.class.name}] RSS error #{url}: #{e.message}")
       nil
