@@ -213,6 +213,11 @@ const EventListRow = ({ event, isExpanded, onToggle, accountId }) => {
             {event.category.slice(0, 2).join(' · ')}
           </span>
         )}
+        {event.auto_imported && event.source_name && (
+          <span className='ce-list__source-badge' title={`Auto-imported from ${event.source_name}`}>
+            {event.source_name}
+          </span>
+        )}
         <span className='ce-list__chevron' aria-hidden='true'>
           {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </span>
@@ -250,6 +255,15 @@ const EventListRow = ({ event, isExpanded, onToggle, accountId }) => {
 
             {event.contact_info_1 && (
               <div className='ce-list__detail-contact'>{event.contact_info_1}</div>
+            )}
+
+            {event.auto_imported && (
+              <div className='ce-list__detail-source'>
+                Via{' '}
+                {event.source_url
+                  ? <a href={event.source_url} target='_blank' rel='noopener noreferrer' className='ce-list__source-link'>{event.source_name}</a>
+                  : event.source_name}
+              </div>
             )}
 
             <div className='ce-list__detail-actions'>

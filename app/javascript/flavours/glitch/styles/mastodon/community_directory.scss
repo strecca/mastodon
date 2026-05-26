@@ -3833,6 +3833,11 @@
         border-color: rgba(255, 255, 255, 0.25) !important;
         color: #fff !important;
       }
+      .ce-list__source-badge {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(255, 255, 255, 0.25) !important;
+        color: #80cbc4 !important;
+      }
       .ce-list__chevron    { color: #E87D0D !important; }
     }
   }
@@ -3891,6 +3896,22 @@
     @media (max-width: 480px) { display: none; }
   }
 
+  &__source-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: rgba(0, 121, 107, 0.1);
+    border: 1px solid rgba(0, 121, 107, 0.3);
+    color: #00695c;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+
+    @media (max-width: 560px) { display: none; }
+  }
+
   &__chevron {
     flex-shrink: 0;
     color: #aaa;
@@ -3933,6 +3954,18 @@
   &__detail-organizer { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
   &__organizer-name   { font-size: 12px; color: #555; font-weight: 500; }
   &__detail-contact   { font-size: 12px; color: #666; }
+
+  &__detail-source {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+  }
+
+  &__source-link {
+    color: #00695c;
+    text-decoration: underline;
+    &:hover { color: #004d40; }
+  }
 
   &__detail-actions {
     display: flex;
