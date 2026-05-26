@@ -74,27 +74,33 @@ module Scrapers
     end
 
     def extract_title(doc)
+      # Site uses bare <h2> with no class attributes
       clean_text(
         doc.at_css('h1')&.text ||
-        doc.at_css('h2.titolo, .event-title, .titolo-evento')&.text ||
+        doc.at_css('h2')&.text ||
+        doc.at_css('.event-title, .titolo-evento')&.text ||
         doc.at_css('[class*="titolo"]')&.text
       )
     end
 
     def find_date_text(doc)
-      # Try common date container selectors
+      # Try common date container selectors first
       %w[.data .date .periodo .dates [class*="data"] [class*="date"] [class*="periodo"]].each do |sel|
         node = doc.at_css(sel)
         next unless node
-
         text = node.text
         return text if text.match?(ITALIAN_DATE_RE)
       end
 
-      # Scan all visible text for an Italian date range
-      doc.text.scan(
-        /(?:dal?\s+)?\d{1,2}\s+(?:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)\s+\d{4}/i
-      ).first
+      full_text = doc.text
+
+      # Look for full Italian date range: "Dal 29 Maggio al 31 Maggio 2026"
+      range_re = /(?:dal?\s+)?\d{1,2}\s+\w+(?:\s+\d{4})?\s+(?:al?|-|–)\s+\d{1,2}\s+(?:#{ITALIAN_MONTHS.keys.join('|')})\s+\d{4}/i
+      m = full_text.match(range_re)
+      return m[0] if m
+
+      # Fallback: single date "29 Maggio 2026"
+      full_text.scan(ITALIAN_DATE_RE).first
     end
 
     def extract_location(doc, url)
