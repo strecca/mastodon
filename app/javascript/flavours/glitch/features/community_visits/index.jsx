@@ -85,7 +85,12 @@ const MONTH_NAMES = [
 
 // ── Date helpers ──────────────────────────────────────────────────────────────
 
-const isoDate = (d) => d.toISOString().slice(0, 10);
+const isoDate = (d) => {
+  const y  = d.getFullYear();
+  const m  = String(d.getMonth() + 1).padStart(2, '0');
+  const dy = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${dy}`;
+};
 const todayIso = isoDate(new Date());
 
 // Build the 7-column grid for a month (null = padding day from adjacent month)

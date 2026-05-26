@@ -1,20 +1,14 @@
-# Caddyfile.production
-#
-# Caddy handles TLS directly via automatic Let's Encrypt cert for miacivezza.com.
-# DNS: GoDaddy A record → Hetzner Floating IP (ports 80 + 443 open in firewall).
-#
-# Two rules matter for Mastodon:
-#   /api/v1/streaming and /api/v2/streaming  → Node.js streaming server (port 4000)
-#   everything else                          → Rails Puma (port 3000)
-
 miacivezza.com {
-    # Streaming WebSocket endpoints
+    @healthcheck path /health
+    skip_log @healthcheck
+
     handle /api/v1/streaming* {
         reverse_proxy localhost:4000 {
             header_up Upgrade {http.upgrade}
             header_up Connection {http.upgrade}
         }
     }
+
     handle /api/v2/streaming* {
         reverse_proxy localhost:4000 {
             header_up Upgrade {http.upgrade}
@@ -22,17 +16,9 @@ miacivezza.com {
         }
     }
 
-    # All other requests to Rails
     handle {
         reverse_proxy localhost:3000 {
             header_up X-Real-IP {remote_host}
-            header_up X-Forwarded-For {remote_host}
         }
-    }
-
-    # Keep logs quiet for health checks
-    @healthcheck path /health
-    log {
-        except @healthcheck
     }
 }

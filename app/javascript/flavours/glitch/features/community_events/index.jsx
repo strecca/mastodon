@@ -1,6 +1,6 @@
 // features/community_events/index.jsx
-// Community Events calendar — monthly grid with event dots, day-click panel,
-// filter chips, search, and "My Events" strip. Uses ce-* CSS namespace.
+// Community Events — list view default, calendar view secondary.
+// ce-* CSS namespace, amber/golden colour scheme.
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
@@ -12,10 +12,13 @@ import api              from 'flavours/glitch/api';
 import AddIcon          from '@/material-icons/400-24px/add.svg?react';
 import ChevronLeftIcon  from '@/material-icons/400-24px/chevron_left.svg?react';
 import ChevronRightIcon from '@/material-icons/400-24px/chevron_right.svg?react';
+import ExpandMoreIcon   from '@/material-icons/400-24px/expand_more.svg?react';
+import ExpandLessIcon   from '@/material-icons/400-24px/expand_less.svg?react';
 import CelebrationIcon  from '@/material-icons/400-24px/celebration.svg?react';
 import TripIcon         from '@/material-icons/400-24px/trip.svg?react';
 import CloseIcon        from '@/material-icons/400-24px/close.svg?react';
 import EditIcon         from '@/material-icons/400-24px/edit.svg?react';
+import ListIcon         from '@/material-icons/400-24px/list.svg?react';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -27,23 +30,32 @@ const MONTH_NAMES = [
 ];
 
 const FILTER_CHIPS = [
-  { key: 'upcoming',   label: 'Upcoming' },
+  { key: 'today',      label: 'Today' },
+  { key: 'tomorrow',   label: 'Tomorrow' },
   { key: 'this_week',  label: 'This Week' },
   { key: 'this_month', label: 'This Month' },
-  { key: 'next_month', label: 'Next Month' },
-  { key: 'past',       label: 'Past' },
 ];
 
 // ── Date helpers ──────────────────────────────────────────────────────────────
 
-const isoDate  = (d) => d.toISOString().slice(0, 10);
+const isoDate = (d) => {
+  const y  = d.getFullYear();
+  const m  = String(d.getMonth() + 1).padStart(2, '0');
+  const dy = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${dy}`;
+};
 const todayIso = isoDate(new Date());
 
 const getFilterRange = (key) => {
   const t = new Date();
   switch (key) {
-    case 'upcoming':
-      return { from: todayIso, to: null };
+    case 'today':
+      return { from: todayIso, to: todayIso };
+    case 'tomorrow': {
+      const tm = new Date(t); tm.setDate(t.getDate() + 1);
+      const tmIso = isoDate(tm);
+      return { from: tmIso, to: tmIso };
+    }
     case 'this_week': {
       const ws = new Date(t); ws.setDate(t.getDate() - t.getDay());
       const we = new Date(ws); we.setDate(ws.getDate() + 6);
@@ -55,18 +67,6 @@ const getFilterRange = (key) => {
         to:      isoDate(new Date(t.getFullYear(), t.getMonth() + 1, 0)),
         navDate: { year: t.getFullYear(), month: t.getMonth() },
       };
-    case 'next_month': {
-      const nm = new Date(t.getFullYear(), t.getMonth() + 1, 1);
-      return {
-        from:    isoDate(nm),
-        to:      isoDate(new Date(nm.getFullYear(), nm.getMonth() + 1, 0)),
-        navDate: { year: nm.getFullYear(), month: nm.getMonth() },
-      };
-    }
-    case 'past': {
-      const yesterday = new Date(t); yesterday.setDate(t.getDate() - 1);
-      return { from: null, to: isoDate(yesterday) };
-    }
     default: return null;
   }
 };
@@ -95,6 +95,12 @@ const buildEventsByDay = (events) => {
 const fmtDate = (iso) => {
   if (!iso) return '';
   const d = new Date(iso.slice(0, 10) + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+};
+
+const fmtDateShort = (iso) => {
+  if (!iso) return '';
+  const d = new Date(iso.slice(0, 10) + 'T00:00:00');
   return d.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
 };
 
@@ -113,7 +119,7 @@ const EventDots = ({ events }) => {
   );
 };
 
-// ── EventDayPanel — modal listing all events for a clicked day ────────────────
+// ── EventDayPanel — modal listing all events for a clicked calendar day ────────
 
 const EventDayPanel = ({ date, events, onClose, accountId }) => {
   const handleBackdropClick = useCallback((e) => {
@@ -123,10 +129,10 @@ const EventDayPanel = ({ date, events, onClose, accountId }) => {
   if (!date || !events) return null;
 
   return (
-    <div className='cv-modal-backdrop' onClick={handleBackdropClick} role='dialog' aria-modal='true' aria-label={`Events on ${fmtDate(date)}`}>
+    <div className='cv-modal-backdrop' onClick={handleBackdropClick} role='dialog' aria-modal='true' aria-label={`Events on ${fmtDateShort(date)}`}>
       <div className='cv-modal ce-day-panel'>
         <div className='cv-day-panel__header'>
-          <h2 className='cv-day-panel__title'>{fmtDate(date)}</h2>
+          <h2 className='cv-day-panel__title'>{fmtDateShort(date)}</h2>
           <button className='cv-icon-btn' onClick={onClose} aria-label='Close'>
             <CloseIcon />
           </button>
@@ -185,13 +191,120 @@ const EventDayPanel = ({ date, events, onClose, accountId }) => {
   );
 };
 
+// ── EventListRow — one event row in list view with accordion detail ────────────
+
+const EventListRow = ({ event, isExpanded, onToggle, accountId }) => {
+  const isOwn = String(event.account_id) === String(accountId);
+
+  return (
+    <div className={`ce-list__row${isExpanded ? ' ce-list__row--expanded' : ''}`}>
+      <button
+        type='button'
+        className='ce-list__row-main'
+        onClick={onToggle}
+        aria-expanded={isExpanded}
+      >
+        <span className='ce-list__title'>{event.event_name}</span>
+        {event.location_town_city && (
+          <span className='ce-list__location'>{event.location_town_city}</span>
+        )}
+        {event.category?.length > 0 && (
+          <span className='ce-list__cat-preview'>
+            {event.category.slice(0, 2).join(' · ')}
+          </span>
+        )}
+        <span className='ce-list__chevron' aria-hidden='true'>
+          {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </span>
+      </button>
+
+      {isExpanded && (
+        <div className='ce-list__detail'>
+          <div className='ce-list__detail-inner'>
+            {event.event_description && (
+              <p className='ce-list__detail-desc'>{event.event_description}</p>
+            )}
+
+            <div className='ce-list__detail-row'>
+              {event.category?.length > 0 && (
+                <div className='ce-list__detail-chips'>
+                  {event.category.map(c => (
+                    <span key={c} className='ce-list__chip'>{c}</span>
+                  ))}
+                </div>
+              )}
+
+              {event.account && (
+                <div className='ce-list__detail-organizer'>
+                  <img
+                    className='ce-day-panel__avatar'
+                    src={event.account.avatar}
+                    alt={event.account.username}
+                  />
+                  <span className='ce-list__organizer-name'>
+                    {event.account.display_name || `@${event.account.username}`}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {event.contact_info_1 && (
+              <div className='ce-list__detail-contact'>{event.contact_info_1}</div>
+            )}
+
+            <div className='ce-list__detail-actions'>
+              <Link to={`/community_events/${event.id}`} className='button button--compact ce-list__action-btn'>
+                View Details
+              </Link>
+              {isOwn && (
+                <Link to={`/community_events/${event.id}/edit`} className='button button--compact ce-list__action-btn ce-list__action-btn--edit'>
+                  <EditIcon /> Edit
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ── EventDateGroup — one date heading with its events ─────────────────────────
+
+const EventDateGroup = ({ dateKey, events, expandedId, onToggle, accountId }) => {
+  const isToday    = dateKey === todayIso;
+  const isTomorrow = (() => {
+    const tm = new Date(); tm.setDate(tm.getDate() + 1);
+    return dateKey === isoDate(tm);
+  })();
+  const label = fmtDate(dateKey);
+
+  return (
+    <div className='ce-list__group'>
+      <div className={`ce-list__date-heading${isToday ? ' ce-list__date-heading--today' : isTomorrow ? ' ce-list__date-heading--tomorrow' : ''}`}>
+        {isToday ? `Today — ${label}` : isTomorrow ? `Tomorrow — ${label}` : label}
+        <span className='ce-list__date-count'>{events.length} {events.length === 1 ? 'event' : 'events'}</span>
+      </div>
+      {events.map(evt => (
+        <EventListRow
+          key={evt.id}
+          event={evt}
+          isExpanded={expandedId === evt.id}
+          onToggle={() => onToggle(evt.id)}
+          accountId={accountId}
+        />
+      ))}
+    </div>
+  );
+};
+
 // ── MyEventCard — card in the "My Events" strip ───────────────────────────────
 
 const MyEventCard = ({ event }) => {
   const isPast = (event.event_date?.slice(0, 10) ?? '') < todayIso;
   return (
     <div className={`ce-my-card${isPast ? ' ce-my-card--past' : ''}`}>
-      <div className='ce-my-card__date'>{fmtDate(event.event_date)}</div>
+      <div className='ce-my-card__date'>{fmtDateShort(event.event_date)}</div>
       <div className='ce-my-card__name'>
         <Link to={`/community_events/${event.id}`}>{event.event_name}</Link>
       </div>
@@ -219,18 +332,22 @@ const MyEventCard = ({ event }) => {
 const CommunityEvents = ({ multiColumn }) => {
   const { signedIn, accountId } = useIdentity();
 
-  const [events,       setEvents]       = useState([]);
-  const [loading,      setLoading]      = useState(false);
-  const [navDate,      setNavDate]      = useState(() => {
+  const [events,          setEvents]          = useState([]);
+  const [loading,         setLoading]         = useState(false);
+  const [view,            setView]            = useState('list');
+  const [expandedEventId, setExpandedEventId] = useState(null);
+  const [navDate,         setNavDate]         = useState(() => {
     const d = new Date(); return { year: d.getFullYear(), month: d.getMonth() };
   });
-  const [activeFilter, setActiveFilter] = useState(null);
-  const [searchQuery,  setSearchQuery]  = useState('');
-  const [dayPanel,     setDayPanel]     = useState(null);
+  const [activeFilter,    setActiveFilter]    = useState(null);
+  const [searchQuery,     setSearchQuery]     = useState('');
+  const [dateFrom,        setDateFrom]        = useState('');
+  const [dateTo,          setDateTo]          = useState('');
+  const [dayPanel,        setDayPanel]        = useState(null);
 
   const { year, month } = navDate;
 
-  // Load all approved events once (public endpoint, no auth needed)
+  // Load all approved events once
   useEffect(() => {
     setLoading(true);
     api().get('/api/v1/community_events', { params: { per_page: 200 } })
@@ -239,14 +356,39 @@ const CommunityEvents = ({ multiColumn }) => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Auto-navigate calendar when a date-range filter is selected
+  // Auto-navigate calendar when a date-range chip is selected
   useEffect(() => {
     if (!activeFilter) return;
     const range = getFilterRange(activeFilter);
     if (range?.navDate) setNavDate(range.navDate);
   }, [activeFilter]);
 
-  // Apply search and chip filter to event list
+  // Chip filter — clears date pickers
+  const toggleFilter = useCallback((key) => {
+    setActiveFilter(prev => prev === key ? null : key);
+    setDateFrom('');
+    setDateTo('');
+  }, []);
+
+  // Date picker change — clears chip filter
+  const handleDateFrom = useCallback((e) => {
+    setDateFrom(e.target.value);
+    setActiveFilter(null);
+  }, []);
+
+  const handleDateTo = useCallback((e) => {
+    setDateTo(e.target.value);
+    setActiveFilter(null);
+  }, []);
+
+  const clearFilters = useCallback(() => {
+    setActiveFilter(null);
+    setSearchQuery('');
+    setDateFrom('');
+    setDateTo('');
+  }, []);
+
+  // Apply search + chip + date range filters
   const filteredEvents = useMemo(() => {
     let result = events;
     const q = searchQuery.trim().toLowerCase();
@@ -269,9 +411,57 @@ const CommunityEvents = ({ multiColumn }) => {
         });
       }
     }
+    if (dateFrom) result = result.filter(e => (e.event_date?.slice(0, 10) ?? '') >= dateFrom);
+    if (dateTo)   result = result.filter(e => (e.event_date?.slice(0, 10) ?? '') <= dateTo);
     return result;
-  }, [events, searchQuery, activeFilter]);
+  }, [events, searchQuery, activeFilter, dateFrom, dateTo]);
 
+  // List view: default scope is today-forward; sort chronologically
+  const listEvents = useMemo(() => {
+    const base = (!activeFilter && !dateFrom && !dateTo)
+      ? filteredEvents.filter(e => (e.event_date?.slice(0, 10) ?? '') >= todayIso)
+      : filteredEvents;
+    return [...base].sort((a, b) => {
+      const da = a.event_date ?? ''; const db = b.event_date ?? '';
+      return da < db ? -1 : da > db ? 1 : 0;
+    });
+  }, [filteredEvents, activeFilter, dateFrom, dateTo]);
+
+  // Group list events by date for rendering
+  const groupedByDate = useMemo(() => {
+    const groups = {};
+    listEvents.forEach(evt => {
+      const key = evt.event_date?.slice(0, 10);
+      if (!key) return;
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(evt);
+    });
+    return Object.entries(groups).sort(([a], [b]) => a < b ? -1 : 1);
+  }, [listEvents]);
+
+  // Smart list header text
+  const listHeader = useMemo(() => {
+    if (activeFilter) {
+      const chip = FILTER_CHIPS.find(c => c.key === activeFilter);
+      return chip ? `Upcoming Events: ${chip.label}` : 'Upcoming Events';
+    }
+    if (dateFrom || dateTo) return 'Upcoming Events';
+    if (listEvents.some(e => e.event_date?.slice(0, 10) === todayIso)) {
+      return 'Upcoming Events: Today';
+    }
+    const t = new Date();
+    const weEnd = new Date(t); weEnd.setDate(t.getDate() + (6 - t.getDay()));
+    const weEndIso = isoDate(weEnd);
+    if (listEvents.some(e => {
+      const d = e.event_date?.slice(0, 10) ?? '';
+      return d > todayIso && d <= weEndIso;
+    })) {
+      return 'Upcoming Events: This Week';
+    }
+    return 'Upcoming Events';
+  }, [activeFilter, dateFrom, dateTo, listEvents]);
+
+  // Calendar helpers
   const calendarGrid = useMemo(() => buildGrid(year, month), [year, month]);
   const eventsByDay  = useMemo(() => buildEventsByDay(filteredEvents), [filteredEvents]);
 
@@ -285,22 +475,30 @@ const CommunityEvents = ({ multiColumn }) => {
       m === 11 ? { year: y + 1, month: 0 } : { year: y, month: m + 1 }
     ), []);
 
-  const toggleFilter = useCallback((key) =>
-    setActiveFilter(prev => prev === key ? null : key), []);
-  const clearFilters = useCallback(() => { setActiveFilter(null); setSearchQuery(''); }, []);
+  const isToday   = (d) => d && isoDate(d) === todayIso;
+  const isPastDay = (d) => d && isoDate(d) < todayIso;
 
   const openDayPanel = useCallback((key, dayEvents) => {
     if (dayEvents.length > 0) setDayPanel({ date: key, events: dayEvents });
   }, []);
 
-  const isToday   = (d) => d && isoDate(d) === todayIso;
-  const isPastDay = (d) => d && isoDate(d) < todayIso;
+  const toggleExpanded = useCallback((id) => {
+    setExpandedEventId(prev => prev === id ? null : id);
+  }, []);
+
+  const switchToCalendar = useCallback(() => {
+    setView('calendar');
+    const t = new Date();
+    setNavDate({ year: t.getFullYear(), month: t.getMonth() });
+  }, []);
 
   const myEvents = useMemo(() =>
     events
       .filter(e => String(e.account_id) === String(accountId))
       .sort((a, b) => (a.event_date > b.event_date ? -1 : 1)),
   [events, accountId]);
+
+  const hasActiveFilters = !!(activeFilter || searchQuery || dateFrom || dateTo);
 
   return (
     <Column bindToDocument={!multiColumn} label='Community Events'>
@@ -349,61 +547,143 @@ const CommunityEvents = ({ multiColumn }) => {
               {chip.label}
             </button>
           ))}
-          {(activeFilter || searchQuery) && (
+          {hasActiveFilters && (
             <button type='button' className='cv-filter-chip ce-filter-chip ce-filter-chip--clear' onClick={clearFilters}>
               Clear
             </button>
           )}
         </div>
 
-        {/* ── Month navigation ─────────────────────────────────────── */}
-        <div className='ce-cal__nav'>
-          <button className='ce-nav-btn' onClick={prevMonth} aria-label='Previous month'>
-            <ChevronLeftIcon />
-          </button>
-          <h2 className='cv-cal__month-title'>{MONTH_NAMES[month]} {year}</h2>
-          <button className='ce-nav-btn' onClick={nextMonth} aria-label='Next month'>
-            <ChevronRightIcon />
-          </button>
+        {/* ── Date range pickers ───────────────────────────────────── */}
+        <div className='ce-date-range'>
+          <label className='ce-date-range__label'>
+            From
+            <input
+              type='date'
+              className='ce-date-range__input'
+              value={dateFrom}
+              onChange={handleDateFrom}
+            />
+          </label>
+          <span className='ce-date-range__sep'>→</span>
+          <label className='ce-date-range__label'>
+            To
+            <input
+              type='date'
+              className='ce-date-range__input'
+              value={dateTo}
+              onChange={handleDateTo}
+            />
+          </label>
         </div>
 
-        {/* ── Calendar grid ─────────────────────────────────────────── */}
-        <div className='cv-cal ce-cal'>
-          {WEEKDAY_LABELS.map(d => (
-            <div key={d} className='cv-cal__weekday ce-cal__weekday'>{d}</div>
-          ))}
+        {/* ════════════════════════════════════════════════════════ */}
+        {/*  LIST VIEW                                               */}
+        {/* ════════════════════════════════════════════════════════ */}
+        {view === 'list' && (
+          <div className='ce-list'>
 
-          {loading && events.length === 0
-            ? Array.from({ length: 35 }, (_, i) => (
-                <div key={i} className='cv-cal__day cv-cal__day--skeleton' />
+            <div className='ce-list__header-bar'>
+              <h3 className='ce-list__header'>{listHeader}</h3>
+              <button
+                type='button'
+                className='ce-view-toggle'
+                onClick={switchToCalendar}
+                title='Switch to calendar view'
+              >
+                View Calendar
+              </button>
+            </div>
+
+            {loading && listEvents.length === 0 ? (
+              <div className='ce-list__loading'>Loading events…</div>
+            ) : groupedByDate.length === 0 ? (
+              <div className='ce-list__empty'>
+                No upcoming events found.{' '}
+                {hasActiveFilters && (
+                  <button type='button' className='ce-list__clear-link' onClick={clearFilters}>
+                    Clear filters
+                  </button>
+                )}
+              </div>
+            ) : (
+              groupedByDate.map(([dateKey, dateEvents]) => (
+                <EventDateGroup
+                  key={dateKey}
+                  dateKey={dateKey}
+                  events={dateEvents}
+                  expandedId={expandedEventId}
+                  onToggle={toggleExpanded}
+                  accountId={accountId}
+                />
               ))
-            : calendarGrid.map((day, i) => {
-                if (!day) return <div key={i} className='cv-cal__day cv-cal__day--empty' />;
-                const key       = isoDate(day);
-                const dayEvents = eventsByDay[key] || [];
-                const clickable = dayEvents.length > 0;
-                return (
-                  <div
-                    key={key}
-                    className={[
-                      'cv-cal__day',
-                      isToday(day)   && 'cv-cal__day--today',
-                      isPastDay(day) && 'cv-cal__day--past',
-                      clickable      && 'ce-cal__day--has-events',
-                    ].filter(Boolean).join(' ')}
-                    onClick={clickable ? () => openDayPanel(key, dayEvents) : undefined}
-                    role={clickable ? 'button' : undefined}
-                    tabIndex={clickable ? 0 : undefined}
-                    onKeyDown={clickable ? (e) => (e.key === 'Enter' || e.key === ' ') && openDayPanel(key, dayEvents) : undefined}
-                    aria-label={clickable ? `${day.getDate()} — ${dayEvents.length} event${dayEvents.length === 1 ? '' : 's'}` : undefined}
-                  >
-                    <span className='cv-cal__day-num'>{day.getDate()}</span>
-                    {dayEvents.length > 0 && <EventDots events={dayEvents} />}
-                  </div>
-                );
-              })
-          }
-        </div>
+            )}
+          </div>
+        )}
+
+        {/* ════════════════════════════════════════════════════════ */}
+        {/*  CALENDAR VIEW                                           */}
+        {/* ════════════════════════════════════════════════════════ */}
+        {view === 'calendar' && (
+          <>
+            <div className='ce-cal__nav'>
+              <button className='ce-nav-btn' onClick={prevMonth} aria-label='Previous month'>
+                <ChevronLeftIcon />
+              </button>
+              <h2 className='cv-cal__month-title'>{MONTH_NAMES[month]} {year}</h2>
+              <button className='ce-nav-btn' onClick={nextMonth} aria-label='Next month'>
+                <ChevronRightIcon />
+              </button>
+            </div>
+
+            <div className='ce-cal__view-toggle-row'>
+              <button
+                type='button'
+                className='ce-view-toggle'
+                onClick={() => setView('list')}
+              >
+                <ListIcon /> Back to List
+              </button>
+            </div>
+
+            <div className='cv-cal ce-cal'>
+              {WEEKDAY_LABELS.map(d => (
+                <div key={d} className='cv-cal__weekday ce-cal__weekday'>{d}</div>
+              ))}
+
+              {loading && events.length === 0
+                ? Array.from({ length: 35 }, (_, i) => (
+                    <div key={i} className='cv-cal__day cv-cal__day--skeleton' />
+                  ))
+                : calendarGrid.map((day, i) => {
+                    if (!day) return <div key={i} className='cv-cal__day cv-cal__day--empty' />;
+                    const key       = isoDate(day);
+                    const dayEvents = eventsByDay[key] || [];
+                    const clickable = dayEvents.length > 0;
+                    return (
+                      <div
+                        key={key}
+                        className={[
+                          'cv-cal__day',
+                          isToday(day)   && 'cv-cal__day--today',
+                          isPastDay(day) && 'cv-cal__day--past',
+                          clickable      && 'ce-cal__day--has-events',
+                        ].filter(Boolean).join(' ')}
+                        onClick={clickable ? () => openDayPanel(key, dayEvents) : undefined}
+                        role={clickable ? 'button' : undefined}
+                        tabIndex={clickable ? 0 : undefined}
+                        onKeyDown={clickable ? (e) => (e.key === 'Enter' || e.key === ' ') && openDayPanel(key, dayEvents) : undefined}
+                        aria-label={clickable ? `${day.getDate()} — ${dayEvents.length} event${dayEvents.length === 1 ? '' : 's'}` : undefined}
+                      >
+                        <span className='cv-cal__day-num'>{day.getDate()}</span>
+                        {dayEvents.length > 0 && <EventDots events={dayEvents} />}
+                      </div>
+                    );
+                  })
+              }
+            </div>
+          </>
+        )}
 
         {/* ── My Events strip ──────────────────────────────────────── */}
         {signedIn && (
@@ -434,7 +714,7 @@ const CommunityEvents = ({ multiColumn }) => {
           <Link to='/community_visits' className='cv-crosslink cv-crosslink--visits'>
             <TripIcon className='cv-crosslink__icon' />
             <span className='cv-crosslink__text'>
-              <strong>Who's in town?</strong>
+              <strong>Who&#39;s in town?</strong>
               <span>See which members will be visiting around event dates</span>
             </span>
             <span className='cv-crosslink__arrow'>→</span>
@@ -443,7 +723,7 @@ const CommunityEvents = ({ multiColumn }) => {
 
       </div>
 
-      {/* ── Day panel modal ─────────────────────────────────────────── */}
+      {/* ── Day panel modal (calendar view) ─────────────────────────── */}
       {dayPanel && (
         <EventDayPanel
           date={dayPanel.date}
