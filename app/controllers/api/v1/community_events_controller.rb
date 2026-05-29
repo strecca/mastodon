@@ -1,6 +1,8 @@
 class Api::V1::CommunityEventsController < Api::BaseController
   CATEGORY_KEY = 'events'
 
+  skip_before_action :require_authenticated_user!, only: [:index, :show]
+
   before_action :require_user!, only: [:create, :update, :destroy]
   before_action :set_entry, only: [:show, :update, :destroy]
   before_action :authorize_owner!, only: [:update, :destroy]

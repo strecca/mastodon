@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_23_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_26_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -465,23 +465,30 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_120000) do
 
   create_table "community_events", force: :cascade do |t|
     t.bigint "account_id", null: false
+    t.boolean "auto_imported", default: false, null: false
     t.jsonb "category", default: [], null: false
-    t.string "contact_info_1", null: false
+    t.string "contact_info_1"
     t.string "contact_info_2"
     t.datetime "created_at", null: false
+    t.datetime "end_date"
     t.datetime "event_date", null: false
     t.text "event_description"
     t.string "event_name", null: false
     t.string "location_town_city", null: false
+    t.string "source_name"
+    t.string "source_url"
     t.integer "status", default: 0, null: false
     t.integer "telephone"
     t.datetime "updated_at", null: false
     t.string "website"
     t.index ["account_id"], name: "index_community_events_on_account_id"
+    t.index ["auto_imported"], name: "index_community_events_on_auto_imported"
     t.index ["category"], name: "index_community_events_on_category", using: :gin
     t.index ["created_at"], name: "index_community_events_on_created_at"
+    t.index ["end_date"], name: "index_community_events_on_end_date"
     t.index ["event_date"], name: "index_community_events_on_event_date"
     t.index ["location_town_city"], name: "index_community_events_on_location_town_city"
+    t.index ["source_url"], name: "index_community_events_on_source_url", unique: true, where: "(source_url IS NOT NULL)"
     t.index ["status"], name: "index_community_events_on_status"
   end
 
