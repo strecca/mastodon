@@ -94,6 +94,7 @@ import {
   CommunityDirectoryEdit,
   CommunityDirectoryModeration,
   CommunityDirectoryPermissions,
+  CommunityDirectoryScraperLogs,
   CommunityArtists,
   CommunityArtistsShow,
   CommunityArtistsNew,
@@ -104,6 +105,7 @@ import {
   CommunityEventsEdit,
   CommunityVisits,
   CommunityVisitsNotifications,
+  CommunityVisitsAdmin,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
@@ -253,10 +255,12 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/community' exact component={CommunityHub} content={children} />
             <WrappedRoute path='/community_directory/admin' component={CommunityDirectoryFormBuilder} content={children} />
             <WrappedRoute path='/community_directory/edit/:category' component={CommunityDirectoryEdit} content={children} />
+            <WrappedRoute path='/community_directory/scraper_logs' exact component={CommunityDirectoryScraperLogs} content={children} />
             <WrappedRoute path='/community_directory/moderation' exact component={CommunityDirectoryModeration} content={children} />
             <WrappedRoute path='/community_directory/permissions' exact component={CommunityDirectoryPermissions} content={children} />
             <WrappedRoute path='/community_directory' exact component={CommunityDirectory} content={children} />
             {/* Community Visits */}
+            <WrappedRoute path='/community_visits/admin' exact component={CommunityVisitsAdmin} content={children} />
             <WrappedRoute path='/community_visits/notifications' exact component={CommunityVisitsNotifications} content={children} />
             <WrappedRoute path='/community_visits' exact component={CommunityVisits} content={children} />
             {/* Community Artists */}

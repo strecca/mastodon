@@ -166,6 +166,18 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
                    stale_reject_after_days: setting.stale_reject_after_days }
   end
 
+  # GET /api/v1/community_directory/scraper_logs
+  # Returns last 10 runs per source, plus a latest-per-source summary.
+  def scraper_logs
+    rows  = ScraperRunLog.recent.limit(60)
+    latest = ScraperRunLog.latest_per_source
+
+    render json: {
+      latest: latest.map { |r| serialize_log(r) },
+      recent: rows.map  { |r| serialize_log(r) },
+    }
+  end
+
   private
 
   # ── Auth helpers ─────────────────────────────────────────────
@@ -190,6 +202,20 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
       .where(account: current_account, is_steward: true)
       .pluck(:category_key)
       .compact
+  end
+
+  def serialize_log(r)
+    {
+      id:            r.id,
+      source_name:   r.source_name,
+      ran_at:        r.ran_at.iso8601,
+      fetched:       r.fetched,
+      imported:      r.imported,
+      skipped:       r.skipped,
+      errors:        r.errors,
+      status:        r.status,
+      error_message: r.error_message,
+    }
   end
 
   # ── Moderation helpers ───────────────────────────────────────

@@ -311,6 +311,10 @@ export function CommunityDirectoryModeration () {
 export function CommunityDirectoryPermissions () {
   return import('../../community_directory/permissions');
 }
+
+export function CommunityDirectoryScraperLogs () {
+  return import('../../community_directory/scraper_logs');
+}
 export function CommunityArtists () {
   return import('../../community_artists');
 }
@@ -321,6 +325,10 @@ export function CommunityVisits () {
 
 export function CommunityVisitsNotifications () {
   return import('../../community_visits/notifications');
+}
+
+export function CommunityVisitsAdmin () {
+  return import('../../community_visits/admin');
 }
 
 export function CommunityArtistsShow () {

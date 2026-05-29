@@ -1930,29 +1930,29 @@
 
 .cv-hero {
   background: linear-gradient(135deg, #1a3a6b 0%, #1565c0 45%, #0288d1 75%, #26c6da 100%);
-  padding: 22px 20px 18px;
+  padding: 8px 20px 6px;
   text-align: center;
 
   &__icon {
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     fill: rgba(255, 255, 255, 0.9);
     display: block;
-    margin: 0 auto 10px;
+    margin: 0 auto 4px;
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
   }
 
   &__title {
-    font-size: 20px;
+    font-size: 11px;
     font-weight: 800;
     color: #fff;
-    margin: 0 0 5px;
+    margin: 0 0 2px;
     letter-spacing: -0.3px;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   }
 
   &__subtitle {
-    font-size: 12px;
+    font-size: 8px;
     color: rgba(255, 255, 255, 0.78);
     margin: 0;
     letter-spacing: 0.5px;
@@ -3338,21 +3338,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 28px 20px 22px;
+  gap: 3px;
+  padding: 10px 20px 8px;
   background: linear-gradient(135deg, #5D1A0B 0%, #C04B0A 45%, #E87D0D 75%, #F4A000 100%);
   color: #fff;
   text-align: center;
 
   &__icon {
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     fill: rgba(255, 255, 255, 0.9);
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
   }
 
   &__title {
-    font-size: 22px;
+    font-size: 11px;
     font-weight: 800;
     margin: 0;
     letter-spacing: -0.3px;
@@ -3360,7 +3360,7 @@
   }
 
   &__subtitle {
-    font-size: 13px;
+    font-size: 7px;
     margin: 0;
     opacity: 0.88;
     letter-spacing: 0.4px;
@@ -4375,4 +4375,441 @@
 @keyframes cv-slide-in {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── Community Visits Admin (/community_visits/admin) ──────────
+
+.cv-admin {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  // ── Stats row ────────────────────────────────────────────────
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+
+    @media (max-width: 600px) { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  &__stat-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__stat-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1565c0;
+    line-height: 1;
+  }
+
+  &__stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  &__stat-sub {
+    font-size: 11px;
+    color: #888;
+  }
+
+  // ── Filter bar ───────────────────────────────────────────────
+
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  &__filter-input,
+  &__filter-select {
+    font-size: 13px;
+    padding: 6px 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    color: #1a1a1a;
+    outline: none;
+
+    &:focus { border-color: #1565c0; }
+
+    &--date { width: 130px; }
+  }
+
+  &__filter-select { padding-right: 6px; }
+
+  &__filter-apply {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #1565c0 !important;
+    color: #fff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover { background: #0d47a1 !important; }
+  }
+
+  &__filter-clear {
+    padding: 6px 12px;
+    font-size: 13px;
+    background: #fff !important;
+    color: #555 !important;
+    border: 1.5px solid #ccc !important;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover { background: #f5f5f5 !important; }
+  }
+
+  // ── Count label ──────────────────────────────────────────────
+
+  &__count {
+    font-size: 12px;
+    color: #888;
+    font-weight: 600;
+  }
+
+  // ── Visit list ───────────────────────────────────────────────
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__empty {
+    font-size: 14px;
+    color: #888;
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  &__error {
+    font-size: 14px;
+    color: #c62828;
+    padding: 12px;
+    background: rgba(198, 40, 40, 0.07);
+    border-radius: 8px;
+    border: 1px solid rgba(198, 40, 40, 0.2);
+  }
+
+  // ── Individual visit row ──────────────────────────────────────
+
+  &__row {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &--active {
+      border-color: rgba(21, 101, 192, 0.45);
+      background: rgba(21, 101, 192, 0.03);
+    }
+  }
+
+  &__row-member {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  &__row-names {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  &__display-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a !important;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; color: #1565c0 !important; }
+  }
+
+  &__username {
+    font-size: 12px;
+    color: #888;
+  }
+
+  &__row-dates {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  &__date {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  &__date-sep {
+    font-size: 12px;
+    color: #bbb;
+  }
+
+  &__duration {
+    font-size: 12px;
+    color: #888;
+  }
+
+  &__row-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  &__vis-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    background: color-mix(in srgb, var(--badge-color) 12%, transparent);
+    color: var(--badge-color);
+    border: 1px solid color-mix(in srgb, var(--badge-color) 30%, transparent);
+  }
+
+  &__avail-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  &__avail-chip {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.06);
+    color: #555;
+    text-transform: capitalize;
+  }
+
+  &__row-note {
+    font-size: 12px;
+    color: #555;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  &__row-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 2px;
+  }
+
+  &__delete-btn {
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1.5px solid rgba(198, 40, 40, 0.35) !important;
+    background: #fff !important;
+    color: #c62828 !important;
+    transition: background 0.1s;
+
+    &:hover  { background: rgba(198, 40, 40, 0.07) !important; }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    &--confirm {
+      background: #c62828 !important;
+      color: #fff !important;
+      border-color: #c62828 !important;
+
+      &:hover { background: #b71c1c !important; }
+    }
+  }
+
+  &__cancel-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1.5px solid #ccc !important;
+    background: #fff !important;
+    color: #555 !important;
+
+    &:hover { background: #f5f5f5 !important; }
+  }
+}
+
+// ── Scraper Logs (/community_directory/scraper_logs) ──────────
+
+.scraper-logs {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__nav { font-size: 13px; }
+
+  &__back {
+    color: #1565c0 !important;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+
+  &__empty {
+    font-size: 14px;
+    color: #888;
+    padding: 24px 0;
+    text-align: center;
+  }
+
+  &__error {
+    font-size: 14px;
+    color: #c62828;
+    padding: 12px;
+    background: rgba(198, 40, 40, 0.07);
+    border-radius: 8px;
+  }
+
+  // ── Per-source summary cards ─────────────────────────────────
+
+  &__sources {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  &__source-card {
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &--failed { border-color: rgba(198, 40, 40, 0.4); background: rgba(198, 40, 40, 0.03); }
+    &--empty  { border-color: rgba(230, 81, 0, 0.35); }
+    &--ok     { border-color: rgba(46, 125, 50, 0.35); }
+  }
+
+  &__source-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  &__source-time {
+    font-size: 11px;
+    color: #888;
+  }
+
+  &__source-stats {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  &__stat {
+    font-size: 12px;
+    color: #555;
+
+    strong { color: #1a1a1a; }
+
+    &--imported strong { color: #2e7d32; }
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    background: color-mix(in srgb, var(--badge-color) 12%, transparent);
+    color: var(--badge-color);
+    border: 1px solid color-mix(in srgb, var(--badge-color) 30%, transparent);
+    align-self: flex-start;
+  }
+
+  &__error-msg {
+    font-size: 11px;
+    color: #c62828;
+    font-family: monospace;
+    word-break: break-all;
+  }
+
+  // ── Run history table ────────────────────────────────────────
+
+  &__history-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+
+  &__table-head,
+  &__row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 60px 70px 60px 60px;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  &__table-head {
+    font-weight: 700;
+    color: #888;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  &__row {
+    border-bottom: 1px solid #f0f0f0;
+    color: #1a1a1a;
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: #fafafa; }
+  }
+
+  &__row-source { font-weight: 600; }
+
+  &__row-time { color: #888; }
+
+  &__row-num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+
+    &--imported { color: #2e7d32; font-weight: 600; }
+  }
+
+  &__row-error {
+    font-size: 11px;
+    color: #c62828;
+    cursor: help;
+  }
 }

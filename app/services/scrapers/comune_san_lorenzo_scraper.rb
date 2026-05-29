@@ -23,21 +23,35 @@ module Scrapers
     private
 
     def find_event_cards(doc)
-      # Try specific CMS selectors first, then fall back to any block with a date + heading
-      candidates = doc.css('.notizia, .news-item, .evento, article, .list-item, [class*="notizia"], [class*="news"]')
-      return candidates unless candidates.empty?
-
-      # Broad fallback: divs that contain a DD/MM/YYYY date and an h3
-      doc.css('div, section, li').select do |node|
-        node.text.match?(%r{\d{2}/\d{2}/\d{4}}) && node.at_css('h3, h2')
+      # Anchor on date spans (span.data or span[class*="data"] containing DD/MM/YYYY),
+      # then walk up the DOM to find the enclosing event card container.
+      date_spans = doc.css('span.data, span[class*="data"]').select do |s|
+        s.text.strip.match?(%r{\d{2}/\d{2}/\d{4}})
       end
+
+      return [] if date_spans.empty?
+
+      date_spans.filter_map do |span|
+        node = span
+        5.times do
+          parent = node.parent
+          break if parent.nil? || parent.name == 'body'
+          node = parent
+          # Stop once we have a heading or a descriptive link alongside the date
+          break if node.at_css('h2, h3, h4') || (node.css('a').size > 1)
+        end
+        node if node.name != 'body' && node.name != 'html' && node != span
+      end.uniq(&:object_id)
     end
 
     def parse_card(node)
-      title = clean_text(node.at_css('h3, h2, .titolo, .title')&.text)
+      title = clean_text(node.at_css('h3, h2, h4, .titolo, .title')&.text ||
+                         node.at_css('a')&.text)
       return nil if title.blank?
 
-      date_text = node.css('*').map(&:text).find { |t| t.match?(%r{\d{2}/\d{2}/\d{4}}) }
+      # Prefer the explicit date span, fall back to any text matching DD/MM/YYYY
+      date_text = node.at_css('span.data, span[class*="data"]')&.text ||
+                  node.css('*').map(&:text).find { |t| t.match?(%r{\d{2}/\d{2}/\d{4}}) }
       dates = parse_slash_date_range(date_text)
       return nil unless dates
 
@@ -48,7 +62,6 @@ module Scrapers
         node.at_css('p, .abstract, .descrizione')&.text
       ) || title
 
-      # Build detail URL from link if available
       href = node.at_css('a[href*="Dettaglio"], a[href*="IDNews"], a[href]')&.[]('href')
       url  = if href
                href.start_with?('http') ? href : "#{BASE_URL}/#{href.sub(%r{\A/}, '')}"

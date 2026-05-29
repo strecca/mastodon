@@ -32,6 +32,8 @@ namespace :api, format: false do
       collection do
         get  :mine
         get  :heatmap
+        get  :admin_all
+        get  :admin_stats
       end
       member do
         post :notify_friends
@@ -64,6 +66,7 @@ namespace :api, format: false do
     get   'community_directory/settings',             to: 'community_directory#settings_index'
     put   'community_directory/settings/:category_key', to: 'community_directory#settings_update'
     get   'community_directory/duplicate_check',      to: 'community_directory#duplicate_check'
+    get   'community_directory/scraper_logs',         to: 'community_directory#scraper_logs'
     # Community Directory public API
     resources :community_directory_public, only: [:index]
     resources :statuses, only: [:index, :create, :show, :update, :destroy] do

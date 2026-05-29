@@ -106,28 +106,33 @@ module Scrapers
     end
 
     def extract_location(doc, url)
-      # Try explicit location elements
+      # URL is reliable: /liguria/imperia/san-lorenzo-al-mare/slug.html → "San Lorenzo al Mare"
+      city_slug = URI.parse(url).path.split('/')[3]
+      from_url  = city_slug&.split('-')&.map(&:capitalize)&.join(' ')
+      return from_url if from_url.present?
+
+      # Fallback: first explicit location element, capped short to avoid boilerplate
       from_element = clean_text(
         doc.at_css('.luogo, .location, .comune, [class*="luogo"], [class*="location"]')&.text
       )
-      return from_element if from_element.present?
-
-      # Derive city from URL: /liguria/imperia/san-lorenzo-al-mare/slug.html → "San Lorenzo al Mare"
-      city_slug = URI.parse(url).path.split('/')[3]
-      city_slug&.split('-')&.map(&:capitalize)&.join(' ') || 'Imperia'
+      from_element&.truncate(80) || 'Imperia'
     end
+
+    BOILERPLATE_FRAGMENT = 'Centro Italia Events è una piattaforma'.freeze
 
     def extract_description(doc)
       # Prefer a dedicated description block
-      desc = doc.at_css('.descrizione, .description, .testo, [class*="descrizione"], [class*="description"]')&.text
-      return clean_text(desc) if desc.present?
+      desc = clean_text(
+        doc.at_css('.descrizione, .description, .testo, [class*="descrizione"], [class*="description"]')&.text
+      )
+      return desc if desc.present? && !desc.include?(BOILERPLATE_FRAGMENT)
 
-      # Fall back to the longest paragraph on the page
+      # Fall back to longest paragraph, but skip the generic platform blurb
       clean_text(
         doc.css('p')
            .map(&:text)
            .map { |t| t.strip.gsub(/\s+/, ' ') }
-           .reject { |t| t.length < 40 }
+           .reject { |t| t.length < 40 || t.include?(BOILERPLATE_FRAGMENT) }
            .max_by(&:length)
       )
     end

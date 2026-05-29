@@ -2,6 +2,7 @@
 
 class Api::V1::CommunityVisitsController < Api::BaseController
   before_action :require_user!, except: [:heatmap]
+  before_action :require_admin!, only: [:admin_all, :admin_stats]
   before_action :set_visit,     only: [:show, :update, :destroy, :notify_friends]
   before_action :authorize_owner!, only: [:update, :destroy, :notify_friends]
 
@@ -125,6 +126,50 @@ class Api::V1::CommunityVisitsController < Api::BaseController
     render json: { notified: notified }
   end
 
+  # GET /api/v1/community_visits/admin_all
+  # Admin: returns every visit regardless of visibility. Supports optional
+  # query params: member (username/display_name substring), visibility, from, to.
+  def admin_all
+    scope = CommunityVisit.includes(:account, :visit_availabilities).order(arrival_date: :desc)
+
+    if params[:member].present?
+      q = "%#{params[:member].downcase}%"
+      scope = scope.joins(:account).where('LOWER(accounts.username) LIKE ? OR LOWER(accounts.display_name) LIKE ?', q, q)
+    end
+
+    scope = scope.where(visibility: params[:visibility]) if params[:visibility].present?
+
+    if params[:from].present?
+      from_date = parse_date(params[:from])
+      scope = scope.where('departure_date >= ?', from_date) if from_date
+    end
+
+    if params[:to].present?
+      to_date = parse_date(params[:to])
+      scope = scope.where('arrival_date <= ?', to_date) if to_date
+    end
+
+    render json: scope.map { |v| admin_serialize_visit(v) }
+  end
+
+  # GET /api/v1/community_visits/admin_stats
+  # Admin: aggregate counts for the dashboard stats panel.
+  def admin_stats
+    today = Date.current
+
+    in_town_now = CommunityVisit.where('arrival_date <= ? AND departure_date >= ?', today, today).count
+    upcoming_7  = CommunityVisit.where('arrival_date > ? AND arrival_date <= ?', today, today + 7).count
+    total       = CommunityVisit.count
+    members     = CommunityVisit.distinct.count(:account_id)
+
+    render json: {
+      in_town_now:   in_town_now,
+      upcoming_7days: upcoming_7,
+      total_visits:  total,
+      total_members: members,
+    }
+  end
+
   private
 
   # ── Finders ───────────────────────────────────────────────────────────────
@@ -137,6 +182,11 @@ class Api::V1::CommunityVisitsController < Api::BaseController
 
   def authorize_owner!
     return if @visit.account_id == current_account.id
+    return if current_user&.can?(:administrator)
+    render json: { error: 'Forbidden' }, status: :forbidden
+  end
+
+  def require_admin!
     return if current_user&.can?(:administrator)
     render json: { error: 'Forbidden' }, status: :forbidden
   end
@@ -220,6 +270,21 @@ class Api::V1::CommunityVisitsController < Api::BaseController
       active:         visit.active?,
       created_at:     visit.created_at.iso8601,
       updated_at:     visit.updated_at.iso8601,
+    }
+  end
+
+  def admin_serialize_visit(visit)
+    {
+      id:             visit.id,
+      account:        serialize_account(visit.account),
+      arrival_date:   visit.arrival_date.iso8601,
+      departure_date: visit.departure_date.iso8601,
+      duration_days:  visit.duration_days,
+      visibility:     visit.visibility,
+      note:           visit.note,
+      availabilities: visit.visit_availabilities.map(&:kind),
+      active:         visit.active?,
+      created_at:     visit.created_at.iso8601,
     }
   end
 

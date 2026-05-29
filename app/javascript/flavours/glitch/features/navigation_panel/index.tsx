@@ -116,6 +116,7 @@ const messages = defineMessages({
   logout: { id: 'navigation_bar.logout', defaultMessage: 'Logout' },
   communityVisits: { id: 'navigation_bar.community_visits', defaultMessage: "When I'm In Town" },
   communityEvents: { id: 'navigation_bar.community_events', defaultMessage: 'Community Events' },
+  visitsAdmin: { id: 'navigation_bar.visits_admin', defaultMessage: 'Visits Admin' },
   compose: { id: 'tabs_bar.publish', defaultMessage: 'New Post' },
   app_settings: {
     id: 'navigation_bar.app_settings',
@@ -345,6 +346,14 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             icon='category'
             iconComponent={CollectionsIcon}
             text='Community Admin'
+          />
+        )}
+        {!!(permissions & 0x1) && (
+          <ColumnLink
+            transparent
+            to='/community_visits/admin'
+            icon='manage_accounts'
+            text={intl.formatMessage(messages.visitsAdmin)}
           />
         )}
         {(canViewFeed(signedIn, permissions, localLiveFeedAccess) ||
