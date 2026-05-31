@@ -376,3 +376,11 @@ export function CommunityEventsNew () {
 export function CommunityEventsEdit () {
   return import('../../community_events/edit');
 }
+
+export function CommunityLanding () {
+  return import('../../community_landing');
+}
+
+export function CommunityLandingSettings () {
+  return import('../../community_directory/landing_settings');
+}

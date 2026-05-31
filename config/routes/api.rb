@@ -80,6 +80,9 @@ namespace :api, format: false do
     put   'community_directory/settings/:category_key', to: 'community_directory#settings_update'
     get   'community_directory/duplicate_check',      to: 'community_directory#duplicate_check'
     get   'community_directory/scraper_logs',         to: 'community_directory#scraper_logs'
+
+    get   'community_landing',  to: 'community_landing#show'
+    patch 'community_landing',  to: 'community_landing#update'
     # Community Directory public API
     resources :community_directory_public, only: [:index]
     resources :statuses, only: [:index, :create, :show, :update, :destroy] do

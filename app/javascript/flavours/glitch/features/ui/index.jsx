@@ -110,6 +110,8 @@ import {
   CommunityListingsShow,
   CommunityListingsNew,
   CommunityListingsEdit,
+  CommunityLanding,
+  CommunityLandingSettings,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
@@ -210,7 +212,7 @@ class SwitchingColumnsArea extends PureComponent {
     } else if (localLiveFeedAccess === 'public' && landingPage === 'local_feed') {
       rootRedirect = '/public/local';
     } else {
-      rootRedirect = '/about';
+      rootRedirect = '/landing';
     }
 
     return (
@@ -282,6 +284,9 @@ class SwitchingColumnsArea extends PureComponent {
 <WrappedRoute path='/community_events/:id/edit' exact component={CommunityEventsEdit} content={children} />
 <WrappedRoute path='/community_events/:id' exact component={CommunityEventsShow} content={children} />
 <WrappedRoute path='/community_events' exact component={CommunityEvents} content={children} />
+            {/* Landing page */}
+            <WrappedRoute path='/landing' exact component={CommunityLanding} content={children} />
+            <WrappedRoute path='/community_directory/landing-settings' exact component={CommunityLandingSettings} content={children} />
             {/* [CD:ROUTES] */}
 
             <WrappedRoute path='/explore' component={Explore} content={children} />
