@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V1::CommunityListingsController < Api::BaseController
-  before_action :require_user!, except: [:index, :show]
+  skip_before_action :require_authenticated_user!, only: [:index, :show]
+
+  before_action :require_user!, only: [:create, :update, :destroy, :fulfill, :close]
   before_action :set_listing,   only: [:show, :update, :destroy, :fulfill, :close]
   before_action :authorize_owner!, only: [:update, :fulfill, :close]
 
