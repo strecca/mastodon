@@ -43,7 +43,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
   # PUT /api/v1/community_listings/:id
   def update
     attrs = listing_params.to_h
-    attrs[:image_media_ids] = validated_media_ids if params[:media_ids].present?
+    attrs[:image_media_ids] = validated_media_ids if params.key?(:media_ids)
 
     if @listing.update(attrs)
       render json: serialize(@listing)
@@ -133,8 +133,9 @@ class Api::V1::CommunityListingsController < Api::BaseController
       location:      listing.location,
       status:        listing.status,
       interest_count: listing.community_listing_interests.size,
-      images:         imgs.map { |i| i[:original] },
-      image_previews: imgs.map { |i| i[:preview] },
+      images:          imgs.map { |i| i[:original] },
+      image_previews:  imgs.map { |i| i[:preview] },
+      image_media_ids: listing.image_media_ids,
       account: {
         id:           owner.id.to_s,
         username:     owner.username,

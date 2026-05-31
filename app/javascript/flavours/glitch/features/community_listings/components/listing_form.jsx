@@ -58,10 +58,18 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
   const [tradeFor,      setTradeFor]      = useState(initial?.trade_for     ?? '');
   const [condition,     setCondition]     = useState(initial?.condition     ?? 'used');
   const [location,      setLocation]      = useState(initial?.location      ?? 'Civezza');
-  const [mediaIds,      setMediaIds]      = useState([]); // uploaded MediaAttachment IDs
-  const [previews,      setPreviews]      = useState([]); // { url, mediaId }
-  const [uploading,     setUploading]     = useState(false);
-  const [uploadError,   setUploadError]   = useState(null);
+  // Unified image list: { mediaId, previewUrl } — covers both saved and newly uploaded
+  const [images,      setImages]      = useState(() => {
+    const ids      = initial?.image_media_ids  ?? [];
+    const previews = initial?.image_previews   ?? [];
+    const originals = initial?.images          ?? [];
+    return ids.map((id, i) => ({
+      mediaId:    String(id),
+      previewUrl: previews[i] ?? originals[i] ?? null,
+    }));
+  });
+  const [uploading,   setUploading]   = useState(false);
+  const [uploadError, setUploadError] = useState(null);
   const fileRef = useRef(null);
 
   const needsPrice    = listingType === 'sell' || listingType === 'rent';
@@ -69,12 +77,9 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
   const needsTrade    = listingType === 'trade';
   const needsCondition = listingType !== 'iso';
 
-  const existingImages = initial?.images ?? [];
-  const totalImages = existingImages.length + previews.length;
-
   const handleImages = useCallback(async (e) => {
-    const files = Array.from(e.target.files);
-    const allowed = MAX_IMAGES - existingImages.length - previews.length;
+    const files   = Array.from(e.target.files);
+    const allowed = MAX_IMAGES - images.length;
     const toUpload = files.slice(0, allowed);
     e.target.value = '';
     if (!toUpload.length) return;
@@ -89,20 +94,19 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
         const res = await api().post('/api/v2/media', fd, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
-        const id  = res.data.id;
-        const url = res.data.url || res.data.preview_url;
-        setMediaIds(prev => [...prev, id]);
-        setPreviews(prev => [...prev, { url, mediaId: id }]);
+        setImages(prev => [...prev, {
+          mediaId:    String(res.data.id),
+          previewUrl: res.data.url || res.data.preview_url,
+        }]);
       } catch {
         setUploadError('Failed to upload one or more images — please try again.');
       }
     }
     setUploading(false);
-  }, [existingImages.length, previews.length]);
+  }, [images.length]);
 
-  const removeNew = useCallback((idx) => {
-    setPreviews(prev => prev.filter((_, i) => i !== idx));
-    setMediaIds(prev => prev.filter((_, i) => i !== idx));
+  const removeImage = useCallback((idx) => {
+    setImages(prev => prev.filter((_, i) => i !== idx));
   }, []);
 
   const handleSubmit = useCallback((e) => {
@@ -112,14 +116,16 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
     fd.append('listing[title]',        title.trim());
     fd.append('listing[description]',  description.trim());
     fd.append('listing[location]',     location.trim());
-    if (needsPrice)   fd.append('listing[price]',          price);
-    if (needsPrice)   fd.append('listing[currency]',       currency);
-    if (needsRental)  fd.append('listing[rental_period]',  rentalPeriod);
-    if (needsTrade)   fd.append('listing[trade_for]',      tradeFor.trim());
+    if (needsPrice)    fd.append('listing[price]',          price);
+    if (needsPrice)    fd.append('listing[currency]',       currency);
+    if (needsRental)   fd.append('listing[rental_period]',  rentalPeriod);
+    if (needsTrade)    fd.append('listing[trade_for]',      tradeFor.trim());
     if (needsCondition) fd.append('listing[condition_value]', condition);
-    mediaIds.forEach(id => fd.append('media_ids[]', id));
+    // Always send the complete current media_ids list (empty = remove all)
+    images.forEach(img => fd.append('media_ids[]', img.mediaId));
+    if (images.length === 0) fd.append('media_ids[]', ''); // signal "replace with empty"
     onSubmit(fd);
-  }, [listingType, title, description, location, price, currency, rentalPeriod, tradeFor, condition, mediaIds, needsPrice, needsRental, needsTrade, needsCondition, onSubmit]);
+  }, [listingType, title, description, location, price, currency, rentalPeriod, tradeFor, condition, images, needsPrice, needsRental, needsTrade, needsCondition, onSubmit]);
 
   const handleFormKeyDown = useCallback((e) => {
     // Stop Mastodon's global keyboard handler from seeing keystrokes in form fields.
@@ -265,27 +271,24 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
         />
       </div>
 
-      {/* Images */}
+      {/* Images — unified list, every photo has an X */}
       <div className='cl-form__field'>
-        <label className='cl-form__label'>Photos ({totalImages}/{MAX_IMAGES})</label>
+        <label className='cl-form__label'>Photos ({images.length}/{MAX_IMAGES})</label>
 
-        {existingImages.length > 0 && (
+        {images.length > 0 && (
           <div className='cl-form__img-row'>
-            {existingImages.map((src, i) => (
-              <div key={i} className='cl-form__img-thumb'>
-                <img src={src} alt='' />
-                <span className='cl-form__img-existing-label'>Saved</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {previews.length > 0 && (
-          <div className='cl-form__img-row'>
-            {previews.map((p, i) => (
-              <div key={i} className='cl-form__img-thumb'>
-                <img src={p.url} alt='' />
-                <button type='button' className='cl-form__img-remove' onClick={() => removeNew(i)}>×</button>
+            {images.map((img, i) => (
+              <div key={img.mediaId} className='cl-form__img-thumb'>
+                {img.previewUrl
+                  ? <img src={img.previewUrl} alt='' loading='lazy' />
+                  : <div className='cl-form__img-placeholder'>📷</div>
+                }
+                <button
+                  type='button'
+                  className='cl-form__img-remove'
+                  onClick={() => removeImage(i)}
+                  title='Remove photo'
+                >×</button>
               </div>
             ))}
           </div>
@@ -293,11 +296,14 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
 
         {uploadError && <div className='cl-form__upload-error'>{uploadError}</div>}
 
-        {totalImages < MAX_IMAGES && (
+        {images.length < MAX_IMAGES && (
           <>
-            <button type='button' className='button button-secondary cl-form__add-img-btn'
+            <button
+              type='button'
+              className='button button-secondary cl-form__add-img-btn'
               onClick={() => fileRef.current?.click()}
-              disabled={uploading}>
+              disabled={uploading}
+            >
               {uploading ? 'Compressing & uploading…' : '+ Add Photo'}
             </button>
             <input
