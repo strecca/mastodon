@@ -22,7 +22,11 @@ const CommunityListingsEdit = ({ multiColumn, params }) => {
 
   useEffect(() => {
     api().get(`/api/v1/community_listings/${id}`)
-      .then(res => setListing(res.data))
+      .then(res => {
+        const d = res.data;
+        // pass preview URLs as the `images` prop so the form shows small thumbs
+        setListing({ ...d, images: d.image_previews?.length ? d.image_previews : d.images });
+      })
       .finally(() => setLoading(false));
   }, [id]);
 

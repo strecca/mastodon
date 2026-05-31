@@ -19,13 +19,13 @@ const fmtPrice = (listing) => {
 export const ListingCard = ({ listing }) => {
   const meta  = TYPE_COLORS[listing.listing_type] ?? { bg: '#f5f5f5', color: '#555', label: listing.listing_type };
   const price = fmtPrice(listing);
-  const thumb = listing.images?.[0];
+  const thumb = listing.image_previews?.[0] ?? listing.images?.[0];
 
   return (
     <Link to={`/community_listings/${listing.id}`} className='cl-card'>
       {thumb ? (
         <div className='cl-card__img-wrap'>
-          <img src={thumb} alt={listing.title} className='cl-card__img' />
+          <img src={thumb} alt={listing.title} className='cl-card__img' loading='lazy' />
         </div>
       ) : (
         <div className='cl-card__img-wrap cl-card__img-wrap--empty'>

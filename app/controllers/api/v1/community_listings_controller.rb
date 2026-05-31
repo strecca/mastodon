@@ -98,18 +98,27 @@ class Api::V1::CommunityListingsController < Api::BaseController
     MediaAttachment.where(id: ids, account: current_account).pluck(:id)
   end
 
-  def image_urls_for(listing)
+  def attachment_url(ma, style)
+    raw = style == :original && ma.remote_url.present? ? ma.remote_url : ma.file.url(style)
+    return nil if raw.blank?
+    raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
+  rescue StandardError
+    nil
+  end
+
+  def image_data_for(listing)
     listing.image_media_attachments.filter_map do |ma|
-      raw = ma.remote_url.presence || ma.file.url(:original)
-      next if raw.blank?
-      raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
+      original = attachment_url(ma, :original)
+      next if original.blank?
+      { original: original, preview: attachment_url(ma, :small) || original }
     end
   rescue StandardError
     []
   end
 
   def serialize(listing, detail: false)
-    owner = listing.account
+    owner   = listing.account
+    imgs    = image_data_for(listing)
     data = {
       id:            listing.id,
       listing_type:  listing.listing_type,
@@ -124,7 +133,8 @@ class Api::V1::CommunityListingsController < Api::BaseController
       location:      listing.location,
       status:        listing.status,
       interest_count: listing.community_listing_interests.size,
-      images:        image_urls_for(listing),
+      images:         imgs.map { |i| i[:original] },
+      image_previews: imgs.map { |i| i[:preview] },
       account: {
         id:           owner.id.to_s,
         username:     owner.username,

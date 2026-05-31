@@ -202,13 +202,27 @@ const CommunityListingsShow = ({ identity, multiColumn, params }) => {
 
         {listing.images?.length > 0 && (
           <div className='cl-detail__gallery'>
-            <img src={listing.images[activeImg]} alt={listing.title} className='cl-detail__main-img' />
+            <img
+              src={listing.images[activeImg]}
+              alt={listing.title}
+              className='cl-detail__main-img'
+              loading='eager'
+            />
             {listing.images.length > 1 && (
               <div className='cl-detail__thumbs'>
-                {listing.images.map((img, i) => (
-                  <img key={i} src={img} alt='' className={`cl-detail__thumb${activeImg === i ? ' cl-detail__thumb--active' : ''}`}
-                    onClick={() => setActiveImg(i)} />
-                ))}
+                {listing.images.map((img, i) => {
+                  const thumbSrc = listing.image_previews?.[i] ?? img;
+                  return (
+                    <img
+                      key={i}
+                      src={thumbSrc}
+                      alt=''
+                      className={`cl-detail__thumb${activeImg === i ? ' cl-detail__thumb--active' : ''}`}
+                      onClick={() => setActiveImg(i)}
+                      loading='lazy'
+                    />
+                  );
+                })}
               </div>
             )}
           </div>
