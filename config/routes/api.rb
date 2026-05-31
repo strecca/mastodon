@@ -26,6 +26,19 @@ namespace :api, format: false do
   namespace :v1 do
     resources :community_artists, only: [:index, :show, :create, :update, :destroy]
     resources :community_events,  only: [:index, :show, :create, :update, :destroy]
+    resources :community_listings, only: [:index, :show, :create, :update, :destroy] do
+      member do
+        post :fulfill
+        post :close
+      end
+      resources :interests, only: [:create, :destroy],
+                            controller: 'community_listing_interests' do
+        member do
+          put :select
+          put :dismiss
+        end
+      end
+    end
 
     # ── Community Visits — "When I'll Be In Town" ───────────────────────────
     resources :community_visits, only: [:index, :show, :create, :update, :destroy] do

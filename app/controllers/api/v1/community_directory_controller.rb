@@ -277,6 +277,8 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     community_visits
     community_notification_preferences
     community_visit_notifications
+    community_listings
+    community_listing_interests
   ].freeze
 
   def community_table_names

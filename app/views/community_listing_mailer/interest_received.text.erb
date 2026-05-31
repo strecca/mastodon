@@ -1,0 +1,12 @@
+Someone is interested in your listing on miacivezza.com.
+
+Listing: <%= @listing.title %>
+Interested member: <%= @interested.display_name.presence || @interested.username %> (@<%= @interested.username %>)
+<% if @listing.community_listing_interests.find_by(account: @interested)&.message.present? %>
+Their message: <%= @listing.community_listing_interests.find_by(account: @interested).message %>
+<% end %>
+
+View your listing and send them a direct message:
+<%= @listing_url %>
+
+— miacivezza.com

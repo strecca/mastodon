@@ -331,6 +331,22 @@ export function CommunityVisitsAdmin () {
   return import('../../community_visits/admin');
 }
 
+export function CommunityListings () {
+  return import('../../community_listings');
+}
+
+export function CommunityListingsShow () {
+  return import('../../community_listings/show');
+}
+
+export function CommunityListingsNew () {
+  return import('../../community_listings/new');
+}
+
+export function CommunityListingsEdit () {
+  return import('../../community_listings/edit');
+}
+
 export function CommunityArtistsShow () {
   return import('../../community_artists/show');
 }

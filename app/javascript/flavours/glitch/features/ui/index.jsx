@@ -106,6 +106,10 @@ import {
   CommunityVisits,
   CommunityVisitsNotifications,
   CommunityVisitsAdmin,
+  CommunityListings,
+  CommunityListingsShow,
+  CommunityListingsNew,
+  CommunityListingsEdit,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
@@ -259,6 +263,11 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/community_directory/moderation' exact component={CommunityDirectoryModeration} content={children} />
             <WrappedRoute path='/community_directory/permissions' exact component={CommunityDirectoryPermissions} content={children} />
             <WrappedRoute path='/community_directory' exact component={CommunityDirectory} content={children} />
+            {/* Community Listings */}
+            <WrappedRoute path='/community_listings/new'      exact component={CommunityListingsNew}  content={children} />
+            <WrappedRoute path='/community_listings/:id/edit' exact component={CommunityListingsEdit} content={children} />
+            <WrappedRoute path='/community_listings/:id'      exact component={CommunityListingsShow} content={children} />
+            <WrappedRoute path='/community_listings'          exact component={CommunityListings}     content={children} />
             {/* Community Visits */}
             <WrappedRoute path='/community_visits/admin' exact component={CommunityVisitsAdmin} content={children} />
             <WrappedRoute path='/community_visits/notifications' exact component={CommunityVisitsNotifications} content={children} />

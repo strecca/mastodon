@@ -39,6 +39,8 @@
   /community_directory/scraper_logs
   /community_directory/(*any)
   /community_artists/(*any)
+  /community_listings
+  /community_listings/(*any)
   /community_events
   /community_events/(*any)
   /community_visits

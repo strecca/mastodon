@@ -1,0 +1,155 @@
+# frozen_string_literal: true
+
+class Api::V1::CommunityListingsController < Api::BaseController
+  before_action :require_user!, except: [:index, :show]
+  before_action :set_listing,   only: [:show, :update, :destroy, :fulfill, :close]
+  before_action :authorize_owner!, only: [:update, :fulfill, :close]
+
+  # GET /api/v1/community_listings
+  def index
+    scope = CommunityListing.publicly_visible
+                             .includes(:account, images_attachments: :blob)
+                             .recent
+
+    scope = scope.by_type(params[:listing_type]) if params[:listing_type].present?
+
+    if params[:q].present?
+      q = "%#{params[:q].downcase}%"
+      scope = scope.where('LOWER(title) LIKE ? OR LOWER(description) LIKE ?', q, q)
+    end
+
+    @listings = scope.limit(60)
+    render json: @listings.map { |l| serialize(l) }
+  end
+
+  # GET /api/v1/community_listings/:id
+  def show
+    render json: serialize(@listing, detail: true)
+  end
+
+  # POST /api/v1/community_listings
+  def create
+    @listing = CommunityListing.new(listing_params)
+    @listing.account = current_account
+
+    if @listing.save
+      attach_images
+      render json: serialize(@listing), status: :created
+    else
+      render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  # PUT /api/v1/community_listings/:id
+  def update
+    if @listing.update(listing_params)
+      attach_images if params[:images].present?
+      render json: serialize(@listing)
+    else
+      render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /api/v1/community_listings/:id
+  def destroy
+    @listing.destroy!
+    head :no_content
+  end
+
+  # POST /api/v1/community_listings/:id/fulfill
+  def fulfill
+    @listing.update!(status: :fulfilled)
+    render json: serialize(@listing)
+  end
+
+  # POST /api/v1/community_listings/:id/close
+  def close
+    @listing.update!(status: :closed)
+    render json: serialize(@listing)
+  end
+
+  private
+
+  def set_listing
+    @listing = CommunityListing.includes(:account,
+                                         :community_listing_interests,
+                                         images_attachments: :blob).find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Listing not found' }, status: :not_found
+  end
+
+  def authorize_owner!
+    return if @listing.account_id == current_account.id
+    return if current_user&.can?(:administrator)
+    render json: { error: 'Forbidden' }, status: :forbidden
+  end
+
+  def listing_params
+    params.require(:listing).permit(
+      :listing_type, :title, :description, :condition_value,
+      :price, :currency, :rental_period, :trade_for, :location,
+      category: []
+    )
+  end
+
+  def attach_images
+    Array(params[:images]).first(4).each do |image|
+      @listing.images.attach(image)
+    end
+  end
+
+  def serialize(listing, detail: false)
+    owner = listing.account
+    data = {
+      id:            listing.id,
+      listing_type:  listing.listing_type,
+      title:         listing.title,
+      description:   listing.description,
+      category:      listing.category,
+      condition:     listing.condition_value,
+      price:         listing.price&.to_s,
+      currency:      listing.currency,
+      rental_period: listing.rental_period,
+      trade_for:     listing.trade_for,
+      location:      listing.location,
+      status:        listing.status,
+      interest_count: listing.community_listing_interests.size,
+      images:        listing.images.map { |img| rails_blob_url(img) },
+      account: {
+        id:           owner.id.to_s,
+        username:     owner.username,
+        display_name: owner.display_name,
+        avatar:       owner.avatar_original_url,
+      },
+      is_own:     current_account&.id == listing.account_id,
+      interested: current_account ? listing.interested?(current_account) : false,
+      created_at: listing.created_at.iso8601,
+      updated_at: listing.updated_at.iso8601,
+    }
+
+    if detail && current_account&.id == listing.account_id
+      data[:interests] = listing.community_listing_interests
+                                .includes(:account)
+                                .order(created_at: :asc)
+                                .map { |i| serialize_interest(i) }
+    end
+
+    data
+  end
+
+  def serialize_interest(interest)
+    acc = interest.account
+    {
+      id:      interest.id,
+      message: interest.message,
+      status:  interest.status,
+      account: {
+        id:           acc.id.to_s,
+        username:     acc.username,
+        display_name: acc.display_name,
+        avatar:       acc.avatar_original_url,
+      },
+      created_at: interest.created_at.iso8601,
+    }
+  end
+end
