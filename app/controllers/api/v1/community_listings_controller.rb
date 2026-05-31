@@ -97,12 +97,10 @@ class Api::V1::CommunityListingsController < Api::BaseController
   end
 
   def image_urls_for(listing)
-    listing.image_media_attachments.map do |ma|
-      if ma.remote_url.present?
-        ma.remote_url
-      else
-        full_asset_url(ma.file.url(:original))
-      end
+    listing.image_media_attachments.filter_map do |ma|
+      raw = ma.remote_url.presence || ma.file.url(:original)
+      next if raw.blank?
+      raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
     end
   rescue StandardError
     []
