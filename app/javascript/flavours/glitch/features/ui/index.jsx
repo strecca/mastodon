@@ -272,15 +272,15 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/community_visits/notifications' exact component={CommunityVisitsNotifications} content={children} />
             <WrappedRoute path='/community_visits' exact component={CommunityVisits} content={children} />
             {/* Community Artists */}
-<WrappedRoute path='/community_artists/new' exact component={CommunityArtistsNew} content={children} />
-<WrappedRoute path='/community_artists/:id/edit' exact component={CommunityArtistsEdit} content={children} />
-<WrappedRoute path='/community_artists/:id' exact component={CommunityArtistsShow} content={children} />
-<WrappedRoute path='/community_artists' exact component={CommunityArtists} content={children} />
+            <WrappedRoute path='/community_artists/new'      exact component={CommunityArtistsNew}  content={children} />
+            <WrappedRoute path='/community_artists/:id/edit' exact component={CommunityArtistsEdit} content={children} />
+            <WrappedRoute path='/community_artists/:id'      exact component={CommunityArtistsShow} content={children} />
+            <WrappedRoute path='/community_artists'          exact component={CommunityArtists}     content={children} />
             {/* Community Events */}
-<WrappedRoute path='/community_events/new' exact component={CommunityEventsNew} content={children} />
-<WrappedRoute path='/community_events/:id/edit' exact component={CommunityEventsEdit} content={children} />
-<WrappedRoute path='/community_events/:id' exact component={CommunityEventsShow} content={children} />
-<WrappedRoute path='/community_events' exact component={CommunityEvents} content={children} />
+            <WrappedRoute path='/community_events/new'      exact component={CommunityEventsNew}  content={children} />
+            <WrappedRoute path='/community_events/:id/edit' exact component={CommunityEventsEdit} content={children} />
+            <WrappedRoute path='/community_events/:id'      exact component={CommunityEventsShow} content={children} />
+            <WrappedRoute path='/community_events'          exact component={CommunityEvents}     content={children} />
             {/* Landing page */}
             <WrappedRoute path='/landing' exact component={CommunityLanding} content={children} />
             <WrappedRoute path='/community_directory/landing-settings' exact component={CommunityLandingSettings} content={children} />
