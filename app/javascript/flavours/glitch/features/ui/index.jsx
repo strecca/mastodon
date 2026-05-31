@@ -207,10 +207,6 @@ class SwitchingColumnsArea extends PureComponent {
       }
     } else if (singleUserMode && owner && initialState?.accounts[owner]) {
       rootRedirect = `/@${initialState.accounts[owner].username}`;
-    } else if (trendsEnabled && landingPage === 'trends') {
-      rootRedirect = '/explore';
-    } else if (localLiveFeedAccess === 'public' && landingPage === 'local_feed') {
-      rootRedirect = '/public/local';
     } else {
       rootRedirect = '/landing';
     }
