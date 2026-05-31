@@ -31,7 +31,8 @@ export const fetchEntries = (categoryKey, apiEndpoint, query = '', page = 1, sor
   const t = types(categoryKey);
   dispatch({ type: t.FETCH_REQUEST, categoryKey });
 
-  const params = { page, sort };
+  const params = { sort };
+  if (page > 1) params.page = page;
   if (query) params.q = query;
 
   api().get(apiEndpoint, { params }).then(response => {
