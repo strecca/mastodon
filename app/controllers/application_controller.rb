@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
     if ENV['OMNIAUTH_ONLY'] == 'true' && Rails.configuration.x.omniauth.oidc_enabled?
       '/auth/auth/openid_connect/logout'
     else
-      new_user_session_path
+      root_path
     end
   end
 
