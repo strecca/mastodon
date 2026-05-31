@@ -95,8 +95,17 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
     onSubmit(fd);
   }, [listingType, title, description, location, price, currency, rentalPeriod, tradeFor, condition, mediaIds, needsPrice, needsRental, needsTrade, needsCondition, onSubmit]);
 
+  const handleFormKeyDown = useCallback((e) => {
+    // Stop Mastodon's global keyboard handler from seeing keystrokes in form fields.
+    // For non-textarea inputs, also prevent Enter from submitting the form early.
+    e.stopPropagation();
+    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+    }
+  }, []);
+
   return (
-    <form className='cl-form' onSubmit={handleSubmit}>
+    <form className='cl-form' onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
 
       {/* Listing type */}
       <div className='cl-form__field'>
