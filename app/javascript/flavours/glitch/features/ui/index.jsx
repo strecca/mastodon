@@ -207,15 +207,16 @@ class SwitchingColumnsArea extends PureComponent {
       }
     } else if (singleUserMode && owner && initialState?.accounts[owner]) {
       rootRedirect = `/@${initialState.accounts[owner].username}`;
-    } else {
-      rootRedirect = '/landing';
     }
 
     return (
       <ColumnsContextProvider multiColumn={!singleColumn}>
         <ColumnsArea ref={this.setRef} singleColumn={singleColumn}>
           <WrappedSwitch>
-            <Redirect from='/' to={{pathname: rootRedirect, state: this.props.location.state}} exact />
+            {rootRedirect
+              ? <Redirect from='/' to={{pathname: rootRedirect, state: this.props.location.state}} exact />
+              : <WrappedRoute path='/' exact component={CommunityLanding} content={children} />
+            }
 
             {singleColumn ? <Redirect from='/deck' to='/home' exact /> : null}
             {singleColumn && pathName.startsWith('/deck/') ? <Redirect from={pathName} to={{...this.props.location, pathname: pathName.slice(5)}} /> : null}
