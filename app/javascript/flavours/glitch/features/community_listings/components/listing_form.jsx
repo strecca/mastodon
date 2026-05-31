@@ -1,5 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 
+import api from 'flavours/glitch/api';
+
 const CONDITIONS = [
   { value: 'new_item',  label: 'New' },
   { value: 'like_new',  label: 'Like New' },
@@ -31,8 +33,10 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
   const [tradeFor,      setTradeFor]      = useState(initial?.trade_for     ?? '');
   const [condition,     setCondition]     = useState(initial?.condition     ?? 'used');
   const [location,      setLocation]      = useState(initial?.location      ?? 'Civezza');
-  const [newImages,     setNewImages]     = useState([]);   // File objects
-  const [previews,      setPreviews]      = useState([]);   // data URLs
+  const [mediaIds,      setMediaIds]      = useState([]); // uploaded MediaAttachment IDs
+  const [previews,      setPreviews]      = useState([]); // { url, mediaId }
+  const [uploading,     setUploading]     = useState(false);
+  const [uploadError,   setUploadError]   = useState(null);
   const fileRef = useRef(null);
 
   const needsPrice    = listingType === 'sell' || listingType === 'rent';
@@ -40,42 +44,56 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
   const needsTrade    = listingType === 'trade';
   const needsCondition = listingType !== 'iso';
 
-  const handleImages = useCallback((e) => {
+  const existingImages = initial?.images ?? [];
+  const totalImages = existingImages.length + previews.length;
+
+  const handleImages = useCallback(async (e) => {
     const files = Array.from(e.target.files);
-    const allowed = MAX_IMAGES - (initial?.images?.length ?? 0) - newImages.length;
-    const toAdd = files.slice(0, allowed);
-    setNewImages(prev => [...prev, ...toAdd]);
-    toAdd.forEach(f => {
-      const reader = new FileReader();
-      reader.onload = ev => setPreviews(prev => [...prev, ev.target.result]);
-      reader.readAsDataURL(f);
-    });
+    const allowed = MAX_IMAGES - existingImages.length - previews.length;
+    const toUpload = files.slice(0, allowed);
     e.target.value = '';
-  }, [newImages.length, initial?.images?.length]);
+    if (!toUpload.length) return;
+
+    setUploading(true);
+    setUploadError(null);
+    for (const file of toUpload) {
+      try {
+        const fd = new FormData();
+        fd.append('file', file);
+        const res = await api().post('/api/v2/media', fd, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        const id  = res.data.id;
+        const url = res.data.url || res.data.preview_url;
+        setMediaIds(prev => [...prev, id]);
+        setPreviews(prev => [...prev, { url, mediaId: id }]);
+      } catch {
+        setUploadError('Failed to upload one or more images — please try again.');
+      }
+    }
+    setUploading(false);
+  }, [existingImages.length, previews.length]);
 
   const removeNew = useCallback((idx) => {
-    setNewImages(prev => prev.filter((_, i) => i !== idx));
     setPreviews(prev => prev.filter((_, i) => i !== idx));
+    setMediaIds(prev => prev.filter((_, i) => i !== idx));
   }, []);
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     const fd = new FormData();
-    fd.append('community_listing[listing_type]', listingType);
-    fd.append('community_listing[title]',        title.trim());
-    fd.append('community_listing[description]',  description.trim());
-    fd.append('community_listing[location]',     location.trim());
-    if (needsPrice)   fd.append('community_listing[price]',          price);
-    if (needsPrice)   fd.append('community_listing[currency]',       currency);
-    if (needsRental)  fd.append('community_listing[rental_period]',  rentalPeriod);
-    if (needsTrade)   fd.append('community_listing[trade_for]',      tradeFor.trim());
-    if (needsCondition) fd.append('community_listing[condition]',    condition);
-    newImages.forEach(img => fd.append('community_listing[images][]', img));
+    fd.append('listing[listing_type]', listingType);
+    fd.append('listing[title]',        title.trim());
+    fd.append('listing[description]',  description.trim());
+    fd.append('listing[location]',     location.trim());
+    if (needsPrice)   fd.append('listing[price]',          price);
+    if (needsPrice)   fd.append('listing[currency]',       currency);
+    if (needsRental)  fd.append('listing[rental_period]',  rentalPeriod);
+    if (needsTrade)   fd.append('listing[trade_for]',      tradeFor.trim());
+    if (needsCondition) fd.append('listing[condition_value]', condition);
+    mediaIds.forEach(id => fd.append('media_ids[]', id));
     onSubmit(fd);
-  }, [listingType, title, description, location, price, currency, rentalPeriod, tradeFor, condition, newImages, needsPrice, needsRental, needsTrade, needsCondition, onSubmit]);
-
-  const existingImages = initial?.images ?? [];
-  const totalImages = existingImages.length + newImages.length;
+  }, [listingType, title, description, location, price, currency, rentalPeriod, tradeFor, condition, mediaIds, needsPrice, needsRental, needsTrade, needsCondition, onSubmit]);
 
   return (
     <form className='cl-form' onSubmit={handleSubmit}>
@@ -221,7 +239,7 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
             {existingImages.map((src, i) => (
               <div key={i} className='cl-form__img-thumb'>
                 <img src={src} alt='' />
-                <span className='cl-form__img-existing-label'>Existing</span>
+                <span className='cl-form__img-existing-label'>Saved</span>
               </div>
             ))}
           </div>
@@ -229,25 +247,28 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
 
         {previews.length > 0 && (
           <div className='cl-form__img-row'>
-            {previews.map((src, i) => (
+            {previews.map((p, i) => (
               <div key={i} className='cl-form__img-thumb'>
-                <img src={src} alt='' />
+                <img src={p.url} alt='' />
                 <button type='button' className='cl-form__img-remove' onClick={() => removeNew(i)}>×</button>
               </div>
             ))}
           </div>
         )}
 
+        {uploadError && <div className='cl-form__upload-error'>{uploadError}</div>}
+
         {totalImages < MAX_IMAGES && (
           <>
             <button type='button' className='button button-secondary cl-form__add-img-btn'
-              onClick={() => fileRef.current?.click()}>
-              + Add Photo
+              onClick={() => fileRef.current?.click()}
+              disabled={uploading}>
+              {uploading ? 'Uploading…' : '+ Add Photo'}
             </button>
             <input
               ref={fileRef}
               type='file'
-              accept='image/*'
+              accept='image/jpeg,image/png,image/webp,image/gif'
               multiple
               style={{ display: 'none' }}
               onChange={handleImages}
@@ -258,7 +279,7 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
 
       {/* Submit */}
       <div className='cl-form__actions'>
-        <button type='submit' className='button' disabled={saving}>
+        <button type='submit' className='button' disabled={saving || uploading}>
           {saving ? 'Saving…' : (initial ? 'Save Changes' : 'Post Listing')}
         </button>
       </div>

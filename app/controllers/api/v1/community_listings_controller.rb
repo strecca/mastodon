@@ -7,9 +7,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
 
   # GET /api/v1/community_listings
   def index
-    scope = CommunityListing.publicly_visible
-                             .includes(:account, images_attachments: :blob)
-                             .recent
+    scope = CommunityListing.publicly_visible.includes(:account).recent
 
     scope = scope.by_type(params[:listing_type]) if params[:listing_type].present?
 
@@ -31,9 +29,9 @@ class Api::V1::CommunityListingsController < Api::BaseController
   def create
     @listing = CommunityListing.new(listing_params)
     @listing.account = current_account
+    @listing.image_media_ids = validated_media_ids
 
     if @listing.save
-      attach_images
       render json: serialize(@listing), status: :created
     else
       render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity
@@ -42,8 +40,10 @@ class Api::V1::CommunityListingsController < Api::BaseController
 
   # PUT /api/v1/community_listings/:id
   def update
-    if @listing.update(listing_params)
-      attach_images if params[:images].present?
+    attrs = listing_params.to_h
+    attrs[:image_media_ids] = validated_media_ids if params[:media_ids].present?
+
+    if @listing.update(attrs)
       render json: serialize(@listing)
     else
       render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity
@@ -71,9 +71,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
   private
 
   def set_listing
-    @listing = CommunityListing.includes(:account,
-                                         :community_listing_interests,
-                                         images_attachments: :blob).find(params[:id])
+    @listing = CommunityListing.includes(:account, :community_listing_interests).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'Listing not found' }, status: :not_found
   end
@@ -92,10 +90,22 @@ class Api::V1::CommunityListingsController < Api::BaseController
     )
   end
 
-  def attach_images
-    Array(params[:images]).first(4).each do |image|
-      @listing.images.attach(image)
+  def validated_media_ids
+    ids = Array(params[:media_ids]).first(4).map(&:to_i).select(&:positive?)
+    return [] if ids.empty?
+    MediaAttachment.where(id: ids, account: current_account).pluck(:id)
+  end
+
+  def image_urls_for(listing)
+    listing.image_media_attachments.map do |ma|
+      if ma.remote_url.present?
+        ma.remote_url
+      else
+        full_asset_url(ma.file.url(:original))
+      end
     end
+  rescue StandardError
+    []
   end
 
   def serialize(listing, detail: false)
@@ -114,7 +124,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
       location:      listing.location,
       status:        listing.status,
       interest_count: listing.community_listing_interests.size,
-      images:        listing.images.map { |img| rails_blob_url(img) },
+      images:        image_urls_for(listing),
       account: {
         id:           owner.id.to_s,
         username:     owner.username,

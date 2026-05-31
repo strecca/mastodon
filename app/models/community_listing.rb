@@ -4,7 +4,6 @@ class CommunityListing < ApplicationRecord
   belongs_to :account
 
   has_many :community_listing_interests, dependent: :destroy
-  has_many_attached :images
 
   enum :listing_type, {
     giveaway: 0,
@@ -33,8 +32,6 @@ class CommunityListing < ApplicationRecord
   validates :trade_for,    length: { maximum: 500 }
   validates :rental_period, length: { maximum: 100 }
   validates :price,        numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :images, content_type: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
-                     size: { less_than: 8.megabytes }
 
   validate :price_required_for_sell_and_rent
   validate :image_count_limit
@@ -42,6 +39,11 @@ class CommunityListing < ApplicationRecord
   scope :publicly_visible, -> { where(status: :open) }
   scope :recent,           -> { order(created_at: :desc) }
   scope :by_type,          ->(t) { where(listing_type: t) if t.present? }
+
+  def image_media_attachments
+    return [] if image_media_ids.blank?
+    MediaAttachment.where(id: image_media_ids).index_by(&:id).values_at(*image_media_ids).compact
+  end
 
   def interest_count
     community_listing_interests.count
@@ -59,6 +61,6 @@ class CommunityListing < ApplicationRecord
   end
 
   def image_count_limit
-    errors.add(:images, 'maximum 4 images per listing') if images.length > 4
+    errors.add(:image_media_ids, 'maximum 4 images per listing') if image_media_ids.length > 4
   end
 end
