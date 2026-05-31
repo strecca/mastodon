@@ -215,7 +215,7 @@ const CommunityListingsShow = ({ identity, multiColumn, params }) => {
         )}
 
         <div className='cl-detail__body'>
-          <div className='cl-detail__type-badge cl-detail__type-badge--' + listing.listing_type}>
+          <div className={`cl-detail__type-badge cl-detail__type-badge--${listing.listing_type}`}>
             {TYPE_LABELS[listing.listing_type]}
           </div>
 
