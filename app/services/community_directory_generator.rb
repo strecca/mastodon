@@ -222,15 +222,28 @@ class CommunityDirectoryGenerator
       pg == 'jsonb' ? "      t.jsonb :#{f[:db_name]}, default: []#{nl}" : "      t.#{pg} :#{f[:db_name]}#{nl}"
     end
 
-    idxs = @fields.select { |f| f.deep_symbolize_keys[:searchable] }.map do |f|
-      f = f.deep_symbolize_keys
-      gin = WIDGET_TO_PG[f[:widget].to_s] == 'jsonb' ? ', using: :gin' : ''
-      "    add_index :#{@table_name}, :#{f[:db_name]}#{gin}"
+    # GIN indexes for JSONB fields (category checkboxes — used for filtering)
+    jsonb_idxs = @fields.select { |f|
+      WIDGET_TO_PG[f.deep_symbolize_keys[:widget].to_s] == 'jsonb'
+    }.map { |f| "    add_index :#{@table_name}, :#{f.deep_symbolize_keys[:db_name]}, using: :gin" }
+
+    # Searchable text columns for the trigram index
+    str_cols = @fields.select { |f|
+      fs = f.deep_symbolize_keys
+      fs[:searchable] && %w[text textarea select radio url email].include?(fs[:widget].to_s)
+    }.map { |f| f.deep_symbolize_keys[:db_name] }
+
+    trgm_idx = if str_cols.any?
+      expr = str_cols.map { |c| "coalesce(#{c},'')" }.join(" || ' ' || ")
+      "    execute \"CREATE INDEX idx_#{@table_name}_search_trgm ON #{@table_name} USING gin (lower(#{expr}) gin_trgm_ops) WHERE status = 1;\""
     end
+
+    # az sort column = first text field
+    az_col = str_cols.first || 'id'
 
     write Rails.root.join('db','migrate',"#{ts}_create_#{@table_name}.rb"), <<~RB
       class Create#{@table_name.camelize} < ActiveRecord::Migration[7.2]
-        def change
+        def up
           create_table :#{@table_name} do |t|
             t.references :account, null: false, foreign_key: true
       #{cols.join("\n")}
@@ -238,9 +251,21 @@ class CommunityDirectoryGenerator
             t.timestamps
           end
 
-      #{idxs.join("\n")}
-          add_index :#{@table_name}, :created_at
           add_index :#{@table_name}, :status
+      #{jsonb_idxs.join("\n")}
+
+          # Trigram full-text search index (approved entries only)
+      #{trgm_idx}
+
+          # Partial B-tree indexes for each sort option (approved entries only)
+          execute "CREATE INDEX idx_#{@table_name}_approved_newest  ON #{@table_name} (created_at DESC) WHERE status = 1;"
+          execute "CREATE INDEX idx_#{@table_name}_approved_oldest  ON #{@table_name} (created_at ASC)  WHERE status = 1;"
+          execute "CREATE INDEX idx_#{@table_name}_approved_az      ON #{@table_name} (#{az_col} ASC)   WHERE status = 1;"
+          execute "CREATE INDEX idx_#{@table_name}_approved_updated ON #{@table_name} (updated_at DESC) WHERE status = 1;"
+        end
+
+        def down
+          drop_table :#{@table_name}
         end
       end
     RB
@@ -296,6 +321,7 @@ class CommunityDirectoryGenerator
       class Api::V1::#{@table_name.camelize}Controller < Api::BaseController
         CATEGORY_KEY = '#{@name}'
 
+        skip_before_action :require_authenticated_user!, only: [:index, :show]
         before_action :require_user!, only: [:create, :update, :destroy]
         before_action :set_entry, only: [:show, :update, :destroy]
         before_action :authorize_owner!, only: [:update, :destroy]
