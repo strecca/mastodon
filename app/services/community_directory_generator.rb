@@ -254,14 +254,16 @@ class CommunityDirectoryGenerator
           add_index :#{@table_name}, :status
       #{jsonb_idxs.join("\n")}
 
-          # Trigram full-text search index (approved entries only)
+          safety_assured do
+            # Trigram full-text search index (approved entries only)
       #{trgm_idx}
 
-          # Partial B-tree indexes for each sort option (approved entries only)
-          execute "CREATE INDEX idx_#{@table_name}_approved_newest  ON #{@table_name} (created_at DESC) WHERE status = 1;"
-          execute "CREATE INDEX idx_#{@table_name}_approved_oldest  ON #{@table_name} (created_at ASC)  WHERE status = 1;"
-          execute "CREATE INDEX idx_#{@table_name}_approved_az      ON #{@table_name} (#{az_col} ASC)   WHERE status = 1;"
-          execute "CREATE INDEX idx_#{@table_name}_approved_updated ON #{@table_name} (updated_at DESC) WHERE status = 1;"
+            # Partial B-tree indexes for each sort option (approved entries only)
+            execute "CREATE INDEX idx_#{@table_name}_approved_newest  ON #{@table_name} (created_at DESC) WHERE status = 1;"
+            execute "CREATE INDEX idx_#{@table_name}_approved_oldest  ON #{@table_name} (created_at ASC)  WHERE status = 1;"
+            execute "CREATE INDEX idx_#{@table_name}_approved_az      ON #{@table_name} (#{az_col} ASC)   WHERE status = 1;"
+            execute "CREATE INDEX idx_#{@table_name}_approved_updated ON #{@table_name} (updated_at DESC) WHERE status = 1;"
+          end
         end
 
         def down
