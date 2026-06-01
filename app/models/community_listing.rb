@@ -39,6 +39,11 @@ class CommunityListing < ApplicationRecord
   scope :publicly_visible, -> { where(status: :open) }
   scope :recent,           -> { order(created_at: :desc) }
   scope :by_type,          ->(t) { where(listing_type: t) if t.present? }
+  scope :search,           ->(query) {
+    return all if query.blank?
+    cols = "lower(coalesce(title,'') || ' ' || coalesce(description,''))"
+    where("#{cols} LIKE ?", "%#{query.downcase}%")
+  }
 
   def image_media_attachments
     return [] if image_media_ids.blank?

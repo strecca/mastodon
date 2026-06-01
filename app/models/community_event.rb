@@ -46,7 +46,7 @@ class CommunityEvent < ApplicationRecord
 
   scope :search, ->(query) {
     return all if query.blank?
-    cols = "coalesce(event_name, '') || ' ' || coalesce(location_town_city, '') || ' ' || coalesce(event_description, '')"
-    where("to_tsvector('english', #{cols}) @@ plainto_tsquery('english', ?)", query)
+    cols = "lower(coalesce(event_name,'') || ' ' || coalesce(location_town_city,'') || ' ' || coalesce(event_description,''))"
+    where("#{cols} LIKE ?", "%#{query.downcase}%")
   }
 end

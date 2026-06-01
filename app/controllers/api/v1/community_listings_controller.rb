@@ -12,11 +12,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
     scope = CommunityListing.publicly_visible.includes(:account).recent
 
     scope = scope.by_type(params[:listing_type]) if params[:listing_type].present?
-
-    if params[:q].present?
-      q = "%#{params[:q].downcase}%"
-      scope = scope.where('LOWER(title) LIKE ? OR LOWER(description) LIKE ?', q, q)
-    end
+    scope = scope.search(params[:q])
 
     @listings = scope.limit(60)
     render json: @listings.map { |l| serialize(l) }

@@ -46,7 +46,7 @@ class CommunityArtist < ApplicationRecord
   validates :contact_info_1, presence: true
   scope :search, ->(query) {
     return all if query.blank?
-    cols = "coalesce(first_name, '') || ' ' || coalesce(last_name, '') || ' ' || coalesce(location_town_city, '') || ' ' || coalesce(artist_description, '')"
-    where("to_tsvector('english', #{cols}) @@ plainto_tsquery('english', ?)", query)
+    cols = "lower(coalesce(first_name,'') || ' ' || coalesce(last_name,'') || ' ' || coalesce(location_town_city,'') || ' ' || coalesce(artist_description,''))"
+    where("#{cols} LIKE ?", "%#{query.downcase}%")
   }
 end

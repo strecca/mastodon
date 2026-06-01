@@ -259,7 +259,7 @@ class CommunityDirectoryGenerator
 
     scope = if str_search.any?
       cols = str_search.map { |c| "coalesce(#{c}, '')" }.join(" || ' ' || ")
-      "  scope :search, ->(query) { query.blank? ? all : where(\"to_tsvector('english', #{cols}) @@ plainto_tsquery('english', ?)\", query) }"
+      "  scope :search, ->(query) { query.blank? ? all : where(\"lower(#{cols}) LIKE ?\", \"%\#{query.downcase}%\") }"
     else
       "  scope :search, ->(_q) { all }"
     end
