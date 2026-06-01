@@ -252,20 +252,12 @@ class CommunityDirectoryGenerator
     vals = @fields.select { |f| f.deep_symbolize_keys[:required] }
                   .map { |f| "  validates :#{f.deep_symbolize_keys[:db_name]}, presence: true" }
 
-    str_search = @fields.select { |f|
-      fs = f.deep_symbolize_keys
-      fs[:searchable] && %w[text textarea select radio url email].include?(fs[:widget].to_s)
-    }.map { |f| f.deep_symbolize_keys[:db_name] }
-
-    scope = if str_search.any?
-      cols = str_search.map { |c| "coalesce(#{c}, '')" }.join(" || ' ' || ")
-      "  scope :search, ->(query) { query.blank? ? all : where(\"lower(#{cols}) LIKE ?\", \"%\#{query.downcase}%\") }"
-    else
-      "  scope :search, ->(_q) { all }"
-    end
-
     write Rails.root.join('app','models',"#{@table_name.singularize}.rb"), <<~RB
       class #{@model_name} < ApplicationRecord
+        CATEGORY_KEY = '#{@name}'
+
+        include CommunitySearchable
+
         belongs_to :account
         has_many :entry_translations, class_name: 'CommunityEntryTranslation',
                  as: :translatable, dependent: :destroy
@@ -273,7 +265,6 @@ class CommunityDirectoryGenerator
         enum :status, { pending: 0, approved: 1, rejected: 2 }, default: :pending
 
       #{vals.join("\n")}
-      #{scope}
       end
     RB
   end

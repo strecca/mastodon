@@ -31,6 +31,10 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class CommunityEvent < ApplicationRecord
+  CATEGORY_KEY = 'events'
+
+  include CommunitySearchable
+
   belongs_to :account
   has_many :entry_translations, class_name: 'CommunityEntryTranslation',
            as: :translatable, dependent: :destroy
@@ -43,10 +47,4 @@ class CommunityEvent < ApplicationRecord
   validates :location_town_city, presence: true
   validates :contact_info_1, presence: true, unless: :auto_imported?
   validates :event_date, presence: true
-
-  scope :search, ->(query) {
-    return all if query.blank?
-    cols = "lower(coalesce(event_name,'') || ' ' || coalesce(location_town_city,'') || ' ' || coalesce(event_description,''))"
-    where("#{cols} LIKE ?", "%#{query.downcase}%")
-  }
 end

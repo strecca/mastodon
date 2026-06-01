@@ -32,6 +32,10 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class CommunityArtist < ApplicationRecord
+  CATEGORY_KEY = 'artists'
+
+  include CommunitySearchable
+
   belongs_to :account
   has_many :entry_translations, class_name: 'CommunityEntryTranslation',
            as: :translatable, dependent: :destroy
@@ -44,9 +48,4 @@ class CommunityArtist < ApplicationRecord
   validates :last_name, presence: true
   validates :artist_description, presence: true
   validates :contact_info_1, presence: true
-  scope :search, ->(query) {
-    return all if query.blank?
-    cols = "lower(coalesce(first_name,'') || ' ' || coalesce(last_name,'') || ' ' || coalesce(location_town_city,'') || ' ' || coalesce(artist_description,''))"
-    where("#{cols} LIKE ?", "%#{query.downcase}%")
-  }
 end
