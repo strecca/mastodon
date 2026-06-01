@@ -13,6 +13,11 @@ module CommunitySearchable
   SEARCHABLE_WIDGETS = %w[text textarea select radio url email].freeze
 
   included do
+    # Invalidate the list cache whenever status changes (e.g. moderation approve/reject)
+    # or an entry is destroyed. Uses a version counter so one INCREMENT clears all
+    # page/sort/query variants without a Redis SCAN.
+    after_commit :invalidate_list_cache, if: -> { saved_change_to_status? || destroyed? }
+
     config_path = Rails.root.join(
       'app', 'javascript', 'flavours', 'glitch', 'features',
       "community_#{self::CATEGORY_KEY}", 'config.json'
@@ -36,5 +41,11 @@ module CommunitySearchable
     else
       scope :search, ->(_q) { all }
     end
+  end
+
+  private
+
+  def invalidate_list_cache
+    Rails.cache.increment("community:#{self.class::CATEGORY_KEY}:list:v")
   end
 end

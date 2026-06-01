@@ -317,9 +317,21 @@ class CommunityDirectoryGenerator
       %w[text select url email].include?(f.deep_symbolize_keys[:widget])
     }&.deep_symbolize_keys&.dig(:db_name) || 'id'
 
+    list_field_serialize = @fields
+      .select { |f| f.deep_symbolize_keys[:show_in_list] }
+      .map { |f| "        #{f.deep_symbolize_keys[:db_name]}: e.#{f.deep_symbolize_keys[:db_name]}," }
+      .join("\n")
+
+    detail_field_serialize = @fields
+      .reject { |f| f.deep_symbolize_keys[:show_in_list] }
+      .map { |f| "      #{f.deep_symbolize_keys[:db_name]}: e.#{f.deep_symbolize_keys[:db_name]}," }
+      .join("\n")
+
     write Rails.root.join('app','controllers','api','v1',"#{@table_name}_controller.rb"), <<~RB
       class Api::V1::#{@table_name.camelize}Controller < Api::BaseController
         CATEGORY_KEY = '#{@name}'
+
+        include CommunityCacheable
 
         skip_before_action :require_authenticated_user!, only: [:index, :show]
         before_action :require_user!, only: [:create, :update, :destroy]
@@ -333,16 +345,23 @@ class CommunityDirectoryGenerator
                                when 'updated' then [:updated_at, :desc]
                                else                [:created_at, :desc]
                                end
-          entries = #{@model_name}.includes(:account).search(params[:q])
-                      .where(status: :approved)
-                      .order(sort_col => sort_dir)
-                      .page(params[:page]).per(params[:per_page] || 20)
-          render json: { entries: entries.map { |e| serialize(e) },
-                         total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
+
+          result = cached_list do
+            entries = #{@model_name}.includes(:account).search(params[:q])
+                        .where(status: :approved)
+                        .order(sort_col => sort_dir)
+                        .select(*list_columns)
+                        .page(params[:page]).per(params[:per_page] || 20)
+
+            { entries: entries.map { |e| serialize(e, detail: false) },
+              total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
+          end
+
+          render json: result
         end
 
         def show
-          render json: serialize(@entry)
+          render json: serialize(@entry, detail: true)
         end
 
         def create
@@ -354,9 +373,10 @@ class CommunityDirectoryGenerator
           entry.status  = auto_approve? ? :approved : :pending
 
           if entry.save
+            invalidate_list_cache
             CommunityDirectoryMailer.entry_submitted(entry, CATEGORY_KEY).deliver_later unless entry.approved?
             CommunityTranslationWorker.perform_async(entry.class.name, entry.id)
-            render json: serialize(entry), status: :created
+            render json: serialize(entry, detail: true), status: :created
           else
             render json: { errors: entry.errors.full_messages }, status: :unprocessable_entity
           end
@@ -364,8 +384,9 @@ class CommunityDirectoryGenerator
 
         def update
           if @entry.update(entry_params)
+            invalidate_list_cache
             CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
-            render json: serialize(@entry)
+            render json: serialize(@entry, detail: true)
           else
             render json: { errors: @entry.errors.full_messages }, status: :unprocessable_entity
           end
@@ -373,6 +394,7 @@ class CommunityDirectoryGenerator
 
         def destroy
           @entry.destroy!
+          invalidate_list_cache
           head :no_content
         end
 
@@ -421,19 +443,26 @@ class CommunityDirectoryGenerator
           p
         end
 
-        def serialize(e)
+        def serialize(e, detail: true)
+          base = {
+            id: e.id, account_id: e.account_id, status: e.status,
+            account: { id: e.account.id, username: e.account.username,
+                       display_name: e.account.display_name, avatar: e.account.avatar_original_url },
+      #{list_field_serialize}
+            created_at: e.created_at.iso8601,
+            updated_at: e.updated_at.iso8601,
+          }
+
+          return base unless detail
+
           translations = CommunityEntryTranslation
             .where(translatable_type: e.class.name, translatable_id: e.id)
-            .each_with_object({}) do |t, h|
-              (h[t.locale] ||= {})[t.field_name] = t.translated_text
-            end
+            .each_with_object({}) { |t, h| (h[t.locale] ||= {})[t.field_name] = t.translated_text }
 
-          { id: e.id, account_id: e.account_id, status: e.status,
-            account: { id: e.account.id, username: e.account.username,
-                        display_name: e.account.display_name, avatar: e.account.avatar_original_url },
-      #{field_serialize}
+          base.merge(
+      #{detail_field_serialize}
             translations: translations,
-            created_at: e.created_at.iso8601, updated_at: e.updated_at.iso8601 }
+          )
         end
       end
     RB

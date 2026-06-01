@@ -1,6 +1,8 @@
 class Api::V1::CommunityEventsController < Api::BaseController
   CATEGORY_KEY = 'events'
 
+  include CommunityCacheable
+
   skip_before_action :require_authenticated_user!, only: [:index, :show]
 
   before_action :require_user!, only: [:create, :update, :destroy]
@@ -14,16 +16,24 @@ class Api::V1::CommunityEventsController < Api::BaseController
                          when 'az'      then [:event_name, :asc]
                          else                [:event_date, :asc]
                          end
-    entries = CommunityEvent.includes(:account).search(params[:q])
-                .where(status: :approved)
-                .order(sort_col => sort_dir)
-                .page(params[:page]).per(params[:per_page] || 20)
-    render json: { entries: entries.map { |e| serialize(e) },
-                   total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
+
+    result = cached_list do
+      entries = CommunityEvent.includes(:account)
+                              .search(params[:q])
+                              .where(status: :approved)
+                              .order(sort_col => sort_dir)
+                              .select(*list_columns)
+                              .page(params[:page]).per(params[:per_page] || 20)
+
+      { entries: entries.map { |e| serialize(e, detail: false) },
+        total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
+    end
+
+    render json: result
   end
 
   def show
-    render json: serialize(@entry)
+    render json: serialize(@entry, detail: true)
   end
 
   def create
@@ -35,9 +45,10 @@ class Api::V1::CommunityEventsController < Api::BaseController
     entry.status  = auto_approve? ? :approved : :pending
 
     if entry.save
+      invalidate_list_cache
       CommunityDirectoryMailer.entry_submitted(entry, CATEGORY_KEY).deliver_later unless entry.approved?
       CommunityTranslationWorker.perform_async(entry.class.name, entry.id)
-      render json: serialize(entry), status: :created
+      render json: serialize(entry, detail: true), status: :created
     else
       render json: { errors: entry.errors.full_messages }, status: :unprocessable_entity
     end
@@ -45,8 +56,9 @@ class Api::V1::CommunityEventsController < Api::BaseController
 
   def update
     if @entry.update(entry_params)
+      invalidate_list_cache
       CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
-      render json: serialize(@entry)
+      render json: serialize(@entry, detail: true)
     else
       render json: { errors: @entry.errors.full_messages }, status: :unprocessable_entity
     end
@@ -54,6 +66,7 @@ class Api::V1::CommunityEventsController < Api::BaseController
 
   def destroy
     @entry.destroy!
+    invalidate_list_cache
     head :no_content
   end
 
@@ -102,30 +115,36 @@ class Api::V1::CommunityEventsController < Api::BaseController
                                   :website, :telephone, category: [])
   end
 
-  def serialize(e)
-    translations = CommunityEntryTranslation
-      .where(translatable_type: e.class.name, translatable_id: e.id)
-      .each_with_object({}) do |t, h|
-        (h[t.locale] ||= {})[t.field_name] = t.translated_text
-      end
-
-    { id: e.id, account_id: e.account_id, status: e.status,
+  def serialize(e, detail: true)
+    base = {
+      id: e.id, account_id: e.account_id, status: e.status,
       account: { id: e.account.id, username: e.account.username,
                  display_name: e.account.display_name, avatar: e.account.avatar_original_url },
-      category: e.category,
-      event_name: e.event_name,
-      event_description: e.event_description,
-      event_date: e.event_date&.iso8601,
-      end_date: e.end_date&.iso8601,
+      category:           e.category,
+      event_name:         e.event_name,
+      event_date:         e.event_date&.iso8601,
       location_town_city: e.location_town_city,
-      contact_info_1: e.contact_info_1,
-      contact_info_2: e.contact_info_2,
-      website: e.website,
-      telephone: e.telephone,
-      source_url: e.source_url,
-      source_name: e.source_name,
-      auto_imported: e.auto_imported,
-      translations: translations,
-      created_at: e.created_at.iso8601, updated_at: e.updated_at.iso8601 }
+      source_name:        e.source_name,
+      auto_imported:      e.auto_imported,
+      created_at:         e.created_at.iso8601,
+      updated_at:         e.updated_at.iso8601,
+    }
+
+    return base unless detail
+
+    translations = CommunityEntryTranslation
+      .where(translatable_type: e.class.name, translatable_id: e.id)
+      .each_with_object({}) { |t, h| (h[t.locale] ||= {})[t.field_name] = t.translated_text }
+
+    base.merge(
+      event_description: e.event_description,
+      end_date:          e.end_date&.iso8601,
+      contact_info_1:    e.contact_info_1,
+      contact_info_2:    e.contact_info_2,
+      website:           e.website,
+      telephone:         e.telephone,
+      source_url:        e.source_url,
+      translations:      translations
+    )
   end
 end

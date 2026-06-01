@@ -1,6 +1,8 @@
 class Api::V1::CommunityArtistsController < Api::BaseController
   CATEGORY_KEY = 'artists'
 
+  include CommunityCacheable
+
   skip_before_action :require_authenticated_user!, only: [:index, :show]
 
   before_action :require_user!, only: [:create, :update, :destroy]
@@ -14,16 +16,24 @@ class Api::V1::CommunityArtistsController < Api::BaseController
                          when 'updated' then [:updated_at, :desc]
                          else                [:created_at, :desc]
                          end
-    entries = CommunityArtist.includes(:account).search(params[:q])
-                .where(status: :approved)
-                .order(sort_col => sort_dir)
-                .page(params[:page]).per(params[:per_page] || 20)
-    render json: { entries: entries.map { |e| serialize(e) },
-                   total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
+
+    result = cached_list do
+      entries = CommunityArtist.includes(:account)
+                               .search(params[:q])
+                               .where(status: :approved)
+                               .order(sort_col => sort_dir)
+                               .select(*list_columns)
+                               .page(params[:page]).per(params[:per_page] || 20)
+
+      { entries: entries.map { |e| serialize(e, detail: false) },
+        total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
+    end
+
+    render json: result
   end
 
   def show
-    render json: serialize(@entry)
+    render json: serialize(@entry, detail: true)
   end
 
   def create
@@ -35,9 +45,10 @@ class Api::V1::CommunityArtistsController < Api::BaseController
     entry.status  = auto_approve? ? :approved : :pending
 
     if entry.save
+      invalidate_list_cache
       CommunityDirectoryMailer.entry_submitted(entry, CATEGORY_KEY).deliver_later unless entry.approved?
       CommunityTranslationWorker.perform_async(entry.class.name, entry.id)
-      render json: serialize(entry), status: :created
+      render json: serialize(entry, detail: true), status: :created
     else
       render json: { errors: entry.errors.full_messages }, status: :unprocessable_entity
     end
@@ -45,8 +56,9 @@ class Api::V1::CommunityArtistsController < Api::BaseController
 
   def update
     if @entry.update(entry_params)
+      invalidate_list_cache
       CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
-      render json: serialize(@entry)
+      render json: serialize(@entry, detail: true)
     else
       render json: { errors: @entry.errors.full_messages }, status: :unprocessable_entity
     end
@@ -54,6 +66,7 @@ class Api::V1::CommunityArtistsController < Api::BaseController
 
   def destroy
     @entry.destroy!
+    invalidate_list_cache
     head :no_content
   end
 
@@ -89,7 +102,7 @@ class Api::V1::CommunityArtistsController < Api::BaseController
   def check_rate_limit
     setting = CommunityDirectoryCategorySetting.find_by(category_key: CATEGORY_KEY)
     return nil unless setting&.max_entries_per_account.present?
-    return nil if auto_approve? # trusted/admin bypass rate limit
+    return nil if auto_approve?
 
     window = setting.period_days.present? ? setting.period_days.days.ago : 30.days.ago
     count = CommunityArtist.where(account: current_account, created_at: window..).count
@@ -102,27 +115,33 @@ class Api::V1::CommunityArtistsController < Api::BaseController
     p
   end
 
-  def serialize(e)
-    translations = CommunityEntryTranslation
-      .where(translatable_type: e.class.name, translatable_id: e.id)
-      .each_with_object({}) do |t, h|
-        (h[t.locale] ||= {})[t.field_name] = t.translated_text
-      end
-
-    { id: e.id, account_id: e.account_id, status: e.status,
+  def serialize(e, detail: true)
+    base = {
+      id: e.id, account_id: e.account_id, status: e.status,
       account: { id: e.account.id, username: e.account.username,
                  display_name: e.account.display_name, avatar: e.account.avatar_original_url },
-      category: e.category,
+      category:           e.category,
       location_town_city: e.location_town_city,
-      first_name: e.first_name,
-      last_name: e.last_name,
+      first_name:         e.first_name,
+      last_name:          e.last_name,
+      telephone:          e.telephone,
+      created_at:         e.created_at.iso8601,
+      updated_at:         e.updated_at.iso8601,
+    }
+
+    return base unless detail
+
+    translations = CommunityEntryTranslation
+      .where(translatable_type: e.class.name, translatable_id: e.id)
+      .each_with_object({}) { |t, h| (h[t.locale] ||= {})[t.field_name] = t.translated_text }
+
+    base.merge(
       artist_description: e.artist_description,
-      hours_schedule: e.hours_schedule,
-      contact_info_1: e.contact_info_1,
-      contact_info_2: e.contact_info_2,
-      website: e.website,
-      telephone: e.telephone,
-      translations: translations,
-      created_at: e.created_at.iso8601, updated_at: e.updated_at.iso8601 }
+      hours_schedule:     e.hours_schedule,
+      contact_info_1:     e.contact_info_1,
+      contact_info_2:     e.contact_info_2,
+      website:            e.website,
+      translations:       translations
+    )
   end
 end
