@@ -197,14 +197,8 @@ class SwitchingColumnsArea extends PureComponent {
     const pathName = this.props.location.pathname;
 
     let rootRedirect;
-    if (signedIn) {
-      if (forceOnboarding) {
-        rootRedirect = '/start';
-      } else if (singleColumn) {
-        rootRedirect = '/home';
-      } else {
-        rootRedirect = '/deck/getting-started';
-      }
+    if (signedIn && forceOnboarding) {
+      rootRedirect = '/start';
     } else if (singleUserMode && owner && initialState?.accounts[owner]) {
       rootRedirect = `/@${initialState.accounts[owner].username}`;
     }

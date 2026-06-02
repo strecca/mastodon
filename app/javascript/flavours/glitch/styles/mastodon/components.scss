@@ -1070,6 +1070,18 @@ body > [data-popper-placement] {
   .button {
     margin-bottom: 10px;
   }
+
+  &--compact {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding: 10px 10px 4px;
+
+    .button {
+      flex: 1;
+      margin-bottom: 0;
+    }
+  }
 }
 
 .emojione {

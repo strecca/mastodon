@@ -42,7 +42,6 @@ import {
 } from 'flavours/glitch/actions/navigation';
 import { Account } from 'flavours/glitch/components/account';
 import { IconWithBadge } from 'flavours/glitch/components/icon_with_badge';
-import { Search } from 'flavours/glitch/features/compose/components/search';
 import { ColumnLink } from 'flavours/glitch/features/ui/components/column_link';
 import { getNavigationSkipLinkId } from 'flavours/glitch/features/ui/components/skip_links';
 import { useBreakpoint } from 'flavours/glitch/features/ui/hooks/useBreakpoint';
@@ -233,7 +232,6 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
   const intl = useIntl();
   const { signedIn, permissions, disabledAccountId } = useIdentity();
   const location = useLocation();
-  const showSearch = useBreakpoint('full') && !multiColumn;
   const account = useAccount(me);
   const dispatch = useAppDispatch();
 
@@ -272,15 +270,62 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
 
   return (
     <div className='navigation-panel'>
-      {showSearch && <Search singleColumn />}
-
       {!multiColumn && <ProfileCard />}
 
       {banner && <div className='navigation-panel__banner'>{banner}</div>}
 
       <div className='navigation-panel__menu'>
+        {/* Login / Join — compact buttons at the top for visitors */}
+        {!signedIn && (
+          <div className='navigation-panel__sign-in-banner'>
+            {disabledAccountId ? <DisabledAccountBanner /> : <SignInBanner />}
+          </div>
+        )}
+
+        {/* ── Primary community nav — visible to everyone ── */}
+        <ColumnLink
+          transparent
+          to='/'
+          icon='home'
+          iconComponent={HomeIcon}
+          activeIconComponent={HomeActiveIcon}
+          text={intl.formatMessage(messages.home)}
+          id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
+        />
+        <ColumnLink
+          transparent
+          to='/community'
+          icon='category'
+          iconComponent={CollectionsIcon}
+          text='Community'
+        />
+        <ColumnLink
+          transparent
+          to='/community_visits'
+          icon='trip'
+          iconComponent={TripIcon}
+          text={intl.formatMessage(messages.communityVisits)}
+        />
+        <ColumnLink
+          transparent
+          to='/community_events'
+          icon='celebration'
+          iconComponent={CelebrationIcon}
+          text={intl.formatMessage(messages.communityEvents)}
+        />
+        <ColumnLink
+          transparent
+          to='/community_listings'
+          icon='tag'
+          iconComponent={TagIcon}
+          text={intl.formatMessage(messages.communityListings)}
+        />
+
+        {/* ── Social features — signed-in only ── */}
         {signedIn && (
           <>
+            <hr />
+
             {!multiColumn && (
               <ColumnLink
                 to='/publish'
@@ -289,107 +334,18 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
                 activeIconComponent={AddIcon}
                 text={intl.formatMessage(messages.compose)}
                 className='button navigation-panel__compose-button'
-                id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
               />
             )}
+
             <ColumnLink
               transparent
               to='/home'
               icon='home'
               iconComponent={HomeIcon}
               activeIconComponent={HomeActiveIcon}
-              text={intl.formatMessage(messages.home)}
-              id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
+              text='Timeline'
             />
-          </>
-        )}
 
-        {trendsEnabled && (
-          <ColumnLink
-            transparent
-            to='/explore'
-            icon='explore'
-            iconComponent={TrendingUpIcon}
-            text={intl.formatMessage(messages.explore)}
-            id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
-          />
-        )}
-        {/* Community public hub — visible to everyone */}
-        <ColumnLink
-          transparent
-          to='/community'
-          icon='category'
-          iconComponent={CollectionsIcon}
-          text='Community'
-        />
-        {/* In Town calendar — signed-in only */}
-        {signedIn && (
-          <ColumnLink
-            transparent
-            to='/community_visits'
-            icon='trip'
-            iconComponent={TripIcon}
-            text={intl.formatMessage(messages.communityVisits)}
-          />
-        )}
-        {/* Community Events calendar — visible to everyone */}
-        <ColumnLink
-          transparent
-          to='/community_events'
-          icon='celebration'
-          iconComponent={CelebrationIcon}
-          text={intl.formatMessage(messages.communityEvents)}
-        />
-        {/* Community Listings — visible to everyone, post requires sign-in */}
-        <ColumnLink
-          transparent
-          to='/community_listings'
-          icon='tag'
-          iconComponent={TagIcon}
-          text={intl.formatMessage(messages.communityListings)}
-        />
-        {/* Community admin panel — visible only to administrators */}
-        {!!(permissions & 0x1) && (
-          <ColumnLink
-            transparent
-            to='/community_directory/admin'
-            icon='category'
-            iconComponent={CollectionsIcon}
-            text='Community Admin'
-          />
-        )}
-        {!!(permissions & 0x1) && (
-          <ColumnLink
-            transparent
-            to='/community_visits/admin'
-            icon='manage_accounts'
-            text={intl.formatMessage(messages.visitsAdmin)}
-          />
-        )}
-        {(canViewFeed(signedIn, permissions, localLiveFeedAccess) ||
-          canViewFeed(signedIn, permissions, remoteLiveFeedAccess)) && (
-          <ColumnLink
-            transparent
-            to={
-              canViewFeed(signedIn, permissions, localLiveFeedAccess)
-                ? '/public/local'
-                : '/public/remote'
-            }
-            icon='globe'
-            iconComponent={PublicIcon}
-            isActive={isFirehoseActive}
-            text={intl.formatMessage(
-              canViewFeed(signedIn, permissions, localLiveFeedAccess) &&
-                canViewFeed(signedIn, permissions, remoteLiveFeedAccess)
-                ? messages.firehose
-                : messages.firehose_singular,
-            )}
-            id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
-          />
-        )}
-
-        {signedIn && (
-          <>
             <NotificationsLink />
 
             <FollowRequestsLink />
@@ -453,6 +409,25 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
               text={intl.formatMessage(messages.app_settings)}
             />
 
+            {!!(permissions & 0x1) && (
+              <>
+                <hr />
+                <ColumnLink
+                  transparent
+                  to='/community_directory/admin'
+                  icon='category'
+                  iconComponent={CollectionsIcon}
+                  text='Community Admin'
+                />
+                <ColumnLink
+                  transparent
+                  to='/community_visits/admin'
+                  icon='manage_accounts'
+                  text={intl.formatMessage(messages.visitsAdmin)}
+                />
+              </>
+            )}
+
             <MoreLink />
           </>
         )}
@@ -467,14 +442,6 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
           />
         </div>
-
-        {!signedIn && (
-          <div className='navigation-panel__sign-in-banner'>
-            <hr />
-
-            {disabledAccountId ? <DisabledAccountBanner /> : <SignInBanner />}
-          </div>
-        )}
       </div>
 
       <div className='flex-spacer' />

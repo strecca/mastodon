@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::CommunityVisitsController < Api::BaseController
-  before_action :require_user!, except: [:heatmap]
+  before_action :require_user!, except: [:heatmap, :index]
   before_action :require_admin!, only: [:admin_all, :admin_stats]
   before_action :set_visit,     only: [:show, :update, :destroy, :notify_friends]
   before_action :authorize_owner!, only: [:update, :destroy, :notify_friends]
@@ -198,6 +198,8 @@ class Api::V1::CommunityVisitsController < Api::BaseController
                          .includes(:account, :visit_availabilities)
 
     public_visits = base.where(visibility: :public_to_members)
+
+    return public_visits.to_a.sort_by(&:arrival_date) unless current_account
 
     # connections_only: visible to accounts in the current user's follow graph
     following_ids = Follow.where(account_id: current_account.id).pluck(:target_account_id)

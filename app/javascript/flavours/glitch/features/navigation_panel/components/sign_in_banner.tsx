@@ -17,8 +17,6 @@ export const SignInBanner: React.FC = () => {
     [dispatch],
   );
 
-  let signupButton: React.ReactNode;
-
   const signupUrl = useAppSelector(
     (state) =>
       (state.server.getIn(['server', 'registrations', 'url'], null) as
@@ -28,25 +26,11 @@ export const SignInBanner: React.FC = () => {
 
   if (sso_redirect) {
     return (
-      <div className='sign-in-banner'>
-        <p>
-          <strong>
-            <FormattedMessage
-              id='sign_in_banner.mastodon_is'
-              defaultMessage="Mastodon is the best way to keep up with what's happening."
-            />
-          </strong>
-        </p>
-        <p>
-          <FormattedMessage
-            id='sign_in_banner.follow_anyone'
-            defaultMessage='Follow anyone across the fediverse and see it all in chronological order. No algorithms, ads, or clickbait in sight.'
-          />
-        </p>
+      <div className='sign-in-banner sign-in-banner--compact'>
         <a
           href={sso_redirect}
           data-method='post'
-          className='button button--block button-secondary'
+          className='button button--block'
         >
           <FormattedMessage
             id='sign_in_banner.sso_redirect'
@@ -57,50 +41,30 @@ export const SignInBanner: React.FC = () => {
     );
   }
 
-  if (registrationsOpen) {
-    signupButton = (
-      <a href={signupUrl} className='button button--block'>
-        <FormattedMessage
-          id='sign_in_banner.create_account'
-          defaultMessage='Create account'
-        />
-      </a>
-    );
-  } else {
-    signupButton = (
-      <button
-        className='button button--block'
-        onClick={openClosedRegistrationsModal}
-        type='button'
-      >
-        <FormattedMessage
-          id='sign_in_banner.create_account'
-          defaultMessage='Create account'
-        />
-      </button>
-    );
-  }
-
   return (
-    <div className='sign-in-banner'>
-      <p>
-        <strong>
-          <FormattedMessage
-            id='sign_in_banner.mastodon_is'
-            defaultMessage="Mastodon is the best way to keep up with what's happening."
-          />
-        </strong>
-      </p>
-      <p>
-        <FormattedMessage
-          id='sign_in_banner.follow_anyone'
-          defaultMessage='Follow anyone across the fediverse and see it all in chronological order. No algorithms, ads, or clickbait in sight.'
-        />
-      </p>
-      {signupButton}
+    <div className='sign-in-banner sign-in-banner--compact'>
       <a href='/auth/sign_in' className='button button--block button-secondary'>
-        <FormattedMessage id='sign_in_banner.sign_in' defaultMessage='Login' />
+        <FormattedMessage id='sign_in_banner.sign_in' defaultMessage='Log in' />
       </a>
+      {registrationsOpen ? (
+        <a href={signupUrl} className='button button--block'>
+          <FormattedMessage
+            id='sign_in_banner.create_account'
+            defaultMessage='Join'
+          />
+        </a>
+      ) : (
+        <button
+          className='button button--block'
+          onClick={openClosedRegistrationsModal}
+          type='button'
+        >
+          <FormattedMessage
+            id='sign_in_banner.create_account'
+            defaultMessage='Join'
+          />
+        </button>
+      )}
     </div>
   );
 };
