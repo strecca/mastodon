@@ -39,9 +39,19 @@ class Vacuum::MediaAttachmentsVacuum
   end
 
   def orphaned_media_attachments
-    MediaAttachment
-      .unattached
-      .created_before(TTL.ago)
+    scope = MediaAttachment.unattached.created_before(TTL.ago)
+    sql   = community_image_media_ids_sql
+    sql ? scope.where("id NOT IN (#{sql})") : scope
+  end
+
+  def community_image_media_ids_sql
+    conn   = ActiveRecord::Base.connection
+    tables = conn.tables.select { |t| t.start_with?('community_') && conn.column_exists?(t, :image_media_ids) }
+    return nil if tables.empty?
+
+    tables.map { |t|
+      "SELECT unnest(image_media_ids) FROM #{conn.quote_table_name(t)} WHERE image_media_ids IS NOT NULL AND image_media_ids != '{}'"
+    }.join(' UNION ')
   end
 
   def retention_period?
