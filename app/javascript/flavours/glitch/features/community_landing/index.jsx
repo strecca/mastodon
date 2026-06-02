@@ -7,6 +7,7 @@ import { Helmet } from '@unhead/react/helmet';
 import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
 import GroupsIcon from '@/material-icons/400-24px/group.svg?react';
 import TagIcon from '@/material-icons/400-24px/tag.svg?react';
+import TripIcon from '@/material-icons/400-24px/trip.svg?react';
 import api from 'flavours/glitch/api';
 import { withIdentity } from 'flavours/glitch/identity_context';
 
@@ -19,6 +20,14 @@ const DEFAULTS = {
 };
 
 const NAV_TILES = [
+  {
+    to:    '/community_visits',
+    Icon:  TripIcon,
+    label: "When I'm In Town",
+    desc:  'See who\'s visiting · Share your dates',
+    color: '#c62828',
+    bg:    '#ffebee',
+  },
   {
     to:    '/community_events',
     Icon:  CelebrationIcon,
