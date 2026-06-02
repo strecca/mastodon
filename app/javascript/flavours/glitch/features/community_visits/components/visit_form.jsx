@@ -17,7 +17,7 @@ const AVAILABILITY_OPTIONS = [
 const VISIBILITY_OPTIONS = [
   { value: 'public_to_members', label: 'All members',    desc: 'Everyone who has joined can see you\'re in town' },
   { value: 'connections_only',  label: 'My connections', desc: 'Only people you follow or who follow you' },
-  { value: 'ghost',             label: 'Private',        desc: 'Only members you specifically choose can see this visit' },
+  { value: 'ghost',             label: 'Private',        desc: 'Only you can see this — useful for planning your own dates' },
 ];
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -27,7 +27,7 @@ export const VisitForm = ({ visit, onClose, onSaved }) => {
 
   const [arrivalDate,   setArrivalDate]   = useState(visit ? visit.get('arrival_date')   : today());
   const [departureDate, setDepartureDate] = useState(visit ? visit.get('departure_date') : today());
-  const [visibility,    setVisibility]    = useState(visit ? visit.get('visibility')     : 'ghost');
+  const [visibility,    setVisibility]    = useState(visit ? visit.get('visibility')     : 'public_to_members');
   const [availabilities, setAvailabilities] = useState(
     visit ? (visit.get('availabilities')?.toJS() ?? []) : []
   );
