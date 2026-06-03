@@ -318,6 +318,9 @@ export function CommunityDirectoryScraperLogs () {
 export function CommunityArtists () {
   return import('../../community_artists');
 }
+export function CommunityMaintenance () {
+  return import('../../community_maintenance');
+}
 
 export function CommunityVisits () {
   return import('../../community_visits');

@@ -83,6 +83,16 @@ namespace :api, format: false do
 
     get   'community_landing',  to: 'community_landing#show'
     patch 'community_landing',  to: 'community_landing#update'
+
+    # Community maintenance console (admin only)
+    get    'community_maintenance/stats',         to: 'community_maintenance#stats'
+    delete 'community_maintenance/past_events',   to: 'community_maintenance#past_events'
+    delete 'community_maintenance/stale_listings',to: 'community_maintenance#stale_listings'
+    delete 'community_maintenance/past_visits',   to: 'community_maintenance#past_visits'
+    delete 'community_maintenance/scraper_logs',  to: 'community_maintenance#scraper_logs'
+    post   'community_maintenance/run_scraper',   to: 'community_maintenance#run_scraper'
+    post   'community_maintenance/run_all_scrapers', to: 'community_maintenance#run_all_scrapers'
+    post   'community_maintenance/run_vacuum',    to: 'community_maintenance#run_vacuum'
     # Community Directory public API
     resources :community_directory_public, only: [:index]
     resources :statuses, only: [:index, :create, :show, :update, :destroy] do

@@ -49,4 +49,5 @@
   /community_visits/notifications
   /landing
   /community_directory/landing-settings
+  /community_maintenance
 ).each { |path| get path, to: 'home#index' }

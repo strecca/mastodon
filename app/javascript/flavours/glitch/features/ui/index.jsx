@@ -89,6 +89,7 @@ import {
   AccountEditFeaturedTags,
   Quotes,
   CommunityHub,
+  CommunityMaintenance,
   CommunityDirectory,
   CommunityDirectoryFormBuilder,
   CommunityDirectoryEdit,
@@ -250,6 +251,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/directory' component={Directory} content={children} />
             {/* Community Directory */}
             <WrappedRoute path='/community' exact component={CommunityHub} content={children} />
+            <WrappedRoute path='/community_maintenance' exact component={CommunityMaintenance} content={children} />
             <WrappedRoute path='/community_directory/admin' component={CommunityDirectoryFormBuilder} content={children} />
             <WrappedRoute path='/community_directory/edit/:category' component={CommunityDirectoryEdit} content={children} />
             <WrappedRoute path='/community_directory/scraper_logs' exact component={CommunityDirectoryScraperLogs} content={children} />
