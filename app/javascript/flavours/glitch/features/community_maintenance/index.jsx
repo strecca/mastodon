@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { Helmet } from '@unhead/react/helmet';
 
-import BuildIcon       from '@/material-icons/400-24px/build.svg?react';
-import CalendarIcon    from '@/material-icons/400-24px/calendar_today.svg?react';
+import TuneIcon        from '@/material-icons/400-24px/tune.svg?react';
+import HistoryIcon     from '@/material-icons/400-24px/history.svg?react';
 import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
 import DeleteIcon      from '@/material-icons/400-24px/delete.svg?react';
 import PlayIcon        from '@/material-icons/400-24px/play_arrow.svg?react';
-import StorageIcon     from '@/material-icons/400-24px/storage.svg?react';
+import DatabaseIcon    from '@/material-icons/400-24px/database.svg?react';
 import TagIcon         from '@/material-icons/400-24px/tag.svg?react';
 import TripIcon        from '@/material-icons/400-24px/trip.svg?react';
 import { Column }       from 'flavours/glitch/components/column';
@@ -117,7 +117,7 @@ const CommunityMaintenance = ({ multiColumn }) => {
     <Column bindToDocument={!multiColumn} label='Site Maintenance'>
       <ColumnHeader
         icon='build'
-        iconComponent={BuildIcon}
+        iconComponent={TuneIcon}
         title='Site Maintenance'
         multiColumn={multiColumn}
         showBackButton
@@ -136,7 +136,7 @@ const CommunityMaintenance = ({ multiColumn }) => {
               <PlayIcon /> Run All Scrapers
             </button>
             <button className='cm-btn cm-btn--action' onClick={() => post('run_vacuum', {}, 'Vacuum')} disabled={busy}>
-              <StorageIcon /> Run Vacuum
+              <DatabaseIcon /> Run Vacuum
             </button>
           </div>
         </section>
@@ -217,7 +217,7 @@ const CommunityMaintenance = ({ multiColumn }) => {
         {/* ── Scrapers ───────────────────────────────────────────── */}
         <section className='cm-section'>
           <h2 className='cm-section__title'>
-            <CalendarIcon className='cm-section__icon' /> Scrapers
+            <HistoryIcon className='cm-section__icon' /> Scrapers
           </h2>
           <div className='cm-scraper-grid'>
             {SCRAPERS.map(sc => {
@@ -274,7 +274,7 @@ const CommunityMaintenance = ({ multiColumn }) => {
         {/* ── Storage ────────────────────────────────────────────── */}
         <section className='cm-section'>
           <h2 className='cm-section__title'>
-            <StorageIcon className='cm-section__icon' /> Storage
+            <DatabaseIcon className='cm-section__icon' /> Storage
           </h2>
           <div className='cm-stat-row'>
             <span className='cm-stat'><strong>{s.storage.protected_ids}</strong> media files protected from vacuum</span>

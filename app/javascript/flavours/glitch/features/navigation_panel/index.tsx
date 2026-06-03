@@ -415,7 +415,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
                 <ColumnLink
                   transparent
                   to='/community_maintenance'
-                  icon='build'
+                  icon='manufacturing'
                   iconComponent={AdministrationIcon}
                   text='Site Maintenance'
                 />
