@@ -5949,7 +5949,7 @@
   &__title {
     font-size: 15px;
     font-weight: 600;
-    color: var(--color-text-primary);
+    color: #212529;
     margin: 0 0 12px;
     display: flex;
     align-items: center;
@@ -5978,12 +5978,12 @@
 
 .cm-stat {
   font-size: 13px;
-  color: var(--color-text-secondary);
+  color: #212529;
 
   strong {
     font-size: 22px;
     font-weight: 700;
-    color: var(--color-text-primary);
+    color: #212529;
     margin-right: 2px;
   }
 
@@ -6003,7 +6003,7 @@
 
 .cm-label {
   font-size: 13px;
-  color: var(--color-text-secondary);
+  color: #212529;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -6017,19 +6017,17 @@
   font-size: 13px;
   text-align: center;
   background: var(--color-bg-base, #fff);
-  color: var(--color-text-primary);
+  color: #212529;
 }
 
 .cm-hint {
   font-size: 12px;
-  color: var(--color-text-secondary);
-  opacity: 0.7;
+  color: #212529;
 }
 
 .cm-zero {
   font-size: 13px;
-  color: var(--color-text-secondary);
-  opacity: 0.6;
+  color: #212529;
 }
 
 .cm-btn {
@@ -6106,7 +6104,7 @@
   &__name {
     font-size: 13px;
     font-weight: 600;
-    color: var(--color-text-primary);
+    color: #212529;
     margin-bottom: 4px;
   }
 
@@ -6123,7 +6121,7 @@
 
   &__meta {
     font-size: 11px;
-    color: var(--color-text-secondary);
+    color: #212529;
   }
 
   &__error {
