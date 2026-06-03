@@ -101,3 +101,29 @@ export const markNotificationRead = (id) => (dispatch) =>
 export const markAllNotificationsRead = () => (dispatch) =>
   api().post('/api/v1/community_visit_notifications/read_all')
     .then(() => dispatch({ type: VISIT_NOTIFS_READ_ALL }));
+
+// ── My People group ────────────────────────────────────────────────────────────
+
+export const MY_PEOPLE_FETCH_SUCCESS  = 'COMMUNITY_VISITS/MY_PEOPLE_FETCH_SUCCESS';
+export const MY_PEOPLE_ADD_SUCCESS    = 'COMMUNITY_VISITS/MY_PEOPLE_ADD_SUCCESS';
+export const MY_PEOPLE_REMOVE_SUCCESS = 'COMMUNITY_VISITS/MY_PEOPLE_REMOVE_SUCCESS';
+export const MY_FOLLOWERS_SUCCESS     = 'COMMUNITY_VISITS/MY_FOLLOWERS_SUCCESS';
+
+export const fetchMyPeople = () => (dispatch) =>
+  api().get('/api/v1/community_my_people')
+    .then(res => dispatch({ type: MY_PEOPLE_FETCH_SUCCESS, people: res.data }));
+
+export const addMyPerson = (memberAccountId) => (dispatch) =>
+  api().post('/api/v1/community_my_people', { member_account_id: memberAccountId })
+    .then(res => {
+      dispatch({ type: MY_PEOPLE_ADD_SUCCESS, person: res.data });
+      return res.data;
+    });
+
+export const removeMyPerson = (id) => (dispatch) =>
+  api().delete(`/api/v1/community_my_people/${id}`)
+    .then(() => dispatch({ type: MY_PEOPLE_REMOVE_SUCCESS, id }));
+
+export const fetchMyFollowers = (accountId) => (dispatch) =>
+  api().get(`/api/v1/accounts/${accountId}/followers`, { params: { limit: 80 } })
+    .then(res => dispatch({ type: MY_FOLLOWERS_SUCCESS, followers: res.data }));

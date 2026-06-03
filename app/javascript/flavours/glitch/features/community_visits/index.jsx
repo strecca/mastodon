@@ -14,6 +14,7 @@ import {
 import { VisitForm }          from './components/visit_form';
 import { NotifyFriendsModal } from './components/notify_friends_modal';
 import { DayDetailPanel }     from './components/day_detail_panel';
+import { MyPeoplePanel }      from './components/my_people_panel';
 import AddIcon          from '@/material-icons/400-24px/add.svg?react';
 import EditIcon         from '@/material-icons/400-24px/edit.svg?react';
 import DeleteIcon       from '@/material-icons/400-24px/delete.svg?react';
@@ -376,10 +377,11 @@ const CommunityVisits = ({ multiColumn }) => {
   const dispatch     = useAppDispatch();
   const { signedIn } = useIdentity();
 
-  const visits   = useAppSelector(s => s.getIn(['community_visits', 'visits']));
-  const myVisits = useAppSelector(s => s.getIn(['community_visits', 'myVisits']));
-  const heatmap  = useAppSelector(s => s.getIn(['community_visits', 'heatmap']));
-  const loading  = useAppSelector(s => s.getIn(['community_visits', 'loading']));
+  const visits        = useAppSelector(s => s.getIn(['community_visits', 'visits']));
+  const myVisits      = useAppSelector(s => s.getIn(['community_visits', 'myVisits']));
+  const heatmap       = useAppSelector(s => s.getIn(['community_visits', 'heatmap']));
+  const loading       = useAppSelector(s => s.getIn(['community_visits', 'loading']));
+  const myPeopleCount = useAppSelector(s => s.getIn(['community_visits', 'myPeople'])?.size ?? 0);
 
   const [view,            setView]            = useState('list');
   const [expandedVisitId, setExpandedVisitId] = useState(null);
@@ -760,6 +762,9 @@ const CommunityVisits = ({ multiColumn }) => {
             </div>
           )}
 
+          {/* ── My People group — signed-in only ─────────────────── */}
+          {signedIn && <MyPeoplePanel />}
+
           {/* ── Cross-link to events ──────────────────────────────── */}
           <Link to='/community_events' className='cv-crosslink cv-crosslink--events'>
             <CelebrationIcon className='cv-crosslink__icon' />
@@ -773,7 +778,7 @@ const CommunityVisits = ({ multiColumn }) => {
       </div>
 
       {showForm && (
-        <VisitForm visit={editingVisit} onClose={closeForm} onSaved={closeForm} />
+        <VisitForm visit={editingVisit} onClose={closeForm} onSaved={closeForm} myPeopleCount={myPeopleCount} />
       )}
       {notifyVisit && (
         <NotifyFriendsModal visit={notifyVisit} onClose={() => setNotifyVisit(null)} />

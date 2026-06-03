@@ -52,6 +52,7 @@ namespace :api, format: false do
         post :notify_friends
       end
     end
+    resources :community_my_people, only: [:index, :create, :destroy]
     resource  :community_notification_preferences, only: [:show, :update]
     resources :community_visit_notifications, only: [:index] do
       collection do

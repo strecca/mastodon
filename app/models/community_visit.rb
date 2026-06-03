@@ -31,7 +31,7 @@ class CommunityVisit < ApplicationRecord
   has_many :visit_notifications, class_name: 'CommunityVisitNotification',
            foreign_key: :community_visit_id, dependent: :destroy
 
-  enum :visibility, { public_to_members: 0, connections_only: 1, ghost: 2 }, default: :public_to_members
+  enum :visibility, { public_to_members: 0, connections_only: 1, ghost: 2, my_people: 3 }, default: :public_to_members
 
   validates :arrival_date,   presence: true
   validates :departure_date, presence: true

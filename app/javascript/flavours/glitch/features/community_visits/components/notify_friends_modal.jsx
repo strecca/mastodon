@@ -1,4 +1,4 @@
-// notify_friends_modal.jsx — send a friend_ping to connected visitors
+// notify_friends_modal.jsx — send a friend_ping to connected visitors or My People group
 
 import { useState, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
@@ -23,10 +23,22 @@ const datesOverlap = (a1, a2, b1, b2) => a1 <= b2 && a2 >= b1;
 export const NotifyFriendsModal = ({ visit, onClose }) => {
   const dispatch = useAppDispatch();
 
-  const visits = useAppSelector(s => s.getIn(['community_visits', 'visits']));
+  const visits   = useAppSelector(s => s.getIn(['community_visits', 'visits']));
+  const myPeople = useAppSelector(s => s.getIn(['community_visits', 'myPeople']));
 
-  // People who have overlapping visits AND are a connection (not own visit)
+  const isMyPeopleVisit = visit.get('visibility') === 'my_people';
+
+  // For my_people visits: all group members, pre-selected.
+  // For others: overlapping visits from connections.
   const candidates = useMemo(() => {
+    if (isMyPeopleVisit) {
+      return myPeople.map(p => ({
+        id:          p.get('id'),
+        account:     p.get('account').toJS(),
+        relationship: 'my_people',
+      })).toJS();
+    }
+
     const arrival   = visit.get('arrival_date');
     const departure = visit.get('departure_date');
 
@@ -34,11 +46,17 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
       !v.get('is_own') &&
       v.get('relationship') !== 'none' &&
       datesOverlap(arrival, departure, v.get('arrival_date'), v.get('departure_date'))
-    ).toJS();
-  }, [visits, visit]);
+    ).map(v => ({
+      id:           v.get('id'),
+      account:      v.get('account').toJS(),
+      relationship: v.get('relationship'),
+      arrival_date:   v.get('arrival_date'),
+      departure_date: v.get('departure_date'),
+    })).toJS();
+  }, [isMyPeopleVisit, myPeople, visits, visit]);
 
   const [selected, setSelected] = useState(() =>
-    Object.fromEntries(candidates.map(v => [v.account.id, true]))
+    Object.fromEntries(candidates.map(c => [c.account.id, true]))
   );
   const [message, setMessage] = useState('');
   const [sending,  setSending] = useState(false);
@@ -49,8 +67,8 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
     setSelected(prev => ({ ...prev, [id]: !prev[id] }));
 
   const selectedIds = candidates
-    .filter(v => selected[v.account.id])
-    .map(v => Number(v.account.id));
+    .filter(c => selected[c.account.id])
+    .map(c => Number(c.account.id));
 
   const handleSend = async () => {
     if (selectedIds.length === 0) return;
@@ -66,11 +84,16 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
     }
   };
 
+  const title    = isMyPeopleVisit ? 'Notify My People' : 'Notify your connections';
+  const emptyMsg = isMyPeopleVisit
+    ? 'Your My People group is empty. Add members below to notify them.'
+    : 'No connections have announced overlapping visits yet. They\'ll get an automatic notification when they do.';
+
   return (
     <div className='cv-modal-backdrop' onClick={onClose}>
       <div className='cv-modal' onClick={e => e.stopPropagation()} role='dialog' aria-modal='true'>
         <div className='cv-modal__header'>
-          <h2 className='cv-modal__title'>Notify your connections</h2>
+          <h2 className='cv-modal__title'>{title}</h2>
           <button className='cv-modal__close' onClick={onClose} aria-label='Close'>
             <CloseIcon />
           </button>
@@ -78,7 +101,9 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
 
         <div className='cv-modal__body'>
           <p className='cv-notify__subtitle'>
-            Let people know you'll be in town{' '}
+            {isMyPeopleVisit
+              ? 'Let your hand-picked group know you\'ll be in town '
+              : 'Let people know you\'ll be in town '}
             <strong>{fmtDate(visit.get('arrival_date'))}–{fmtDate(visit.get('departure_date'))}</strong>.
           </p>
 
@@ -91,15 +116,13 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
           ) : (
             <>
               {candidates.length === 0 ? (
-                <p className='cv-notify__empty'>
-                  No connections have announced overlapping visits yet.
-                  They'll get an automatic notification when they do.
-                </p>
+                <p className='cv-notify__empty'>{emptyMsg}</p>
               ) : (
                 <ul className='cv-notify__list'>
-                  {candidates.map(v => {
-                    const acct = v.account;
-                    const rel  = v.relationship;
+                  {candidates.map(c => {
+                    const acct = c.account;
+                    const rel  = c.relationship;
+                    const ringColor = rel === 'my_people' ? '#7b1fa2' : (RING_COLORS[rel] ?? RING_COLORS.none);
                     return (
                       <li key={acct.id} className='cv-notify__item'>
                         <label className='cv-notify__label'>
@@ -110,7 +133,7 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
                           />
                           <span
                             className='cv-notify__avatar-wrap'
-                            style={{ '--ring': RING_COLORS[rel] ?? RING_COLORS.none }}
+                            style={{ '--ring': ringColor }}
                           >
                             <img
                               className='cv-notify__avatar'
@@ -122,9 +145,11 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
                             <strong>{acct.display_name || acct.username}</strong>
                             <span>@{acct.username}</span>
                           </span>
-                          <span className='cv-notify__dates'>
-                            {fmtDate(v.arrival_date)}–{fmtDate(v.departure_date)}
-                          </span>
+                          {!isMyPeopleVisit && c.arrival_date && (
+                            <span className='cv-notify__dates'>
+                              {fmtDate(c.arrival_date)}–{fmtDate(c.departure_date)}
+                            </span>
+                          )}
                         </label>
                       </li>
                     );
@@ -158,7 +183,7 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
                   onClick={handleSend}
                   disabled={sending || selectedIds.length === 0}
                 >
-                  {sending ? 'Sending…' : `Notify ${selectedIds.length} connection${selectedIds.length === 1 ? '' : 's'}`}
+                  {sending ? 'Sending…' : `Notify ${selectedIds.length} ${selectedIds.length === 1 ? 'person' : 'people'}`}
                 </button>
               </div>
             </>

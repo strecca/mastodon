@@ -2411,6 +2411,158 @@
   }
 }
 
+// ── My People group section ───────────────────────────────────────────────────
+
+.cv-my-people {
+  padding: 16px;
+  border-top: 1px solid var(--color-border-subtle);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #6a1b9a, #ab47bc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+  }
+
+  &__title-icon {
+    width: 18px;
+    height: 18px;
+    fill: #7b1fa2;
+    flex-shrink: 0;
+    // SVG fill doesn't inherit text gradient; keep it solid purple
+    -webkit-text-fill-color: initial;
+  }
+
+  &__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background: #7b1fa2;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    -webkit-text-fill-color: #fff;
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 0 0 12px;
+    line-height: 1.4;
+  }
+
+  &__empty {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 12px 0;
+    margin: 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  &__member {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: rgba(123, 31, 162, 0.04);
+    border: 1px solid rgba(123, 31, 162, 0.12);
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid #ab47bc;
+  }
+
+  &__name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__remove {
+    flex-shrink: 0;
+  }
+
+  // Add-from-followers panel
+  &__add-panel {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  &__add-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 10px;
+  }
+
+  &__add-empty {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    padding: 8px 0;
+  }
+
+  &__add-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 240px;
+    overflow-y: auto;
+  }
+
+  &__add-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 4px;
+    border-radius: 6px;
+    transition: background 0.1s ease;
+
+    &:hover { background: var(--color-bg-hover, rgba(0, 0, 0, 0.04)); }
+  }
+
+  &__add-btn {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+}
+
 // Icon buttons inside white modals need explicit dark colours
 .cv-modal .cv-icon-btn {
   color: #555;

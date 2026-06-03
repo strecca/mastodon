@@ -18,6 +18,10 @@ import {
   VISIT_NOTIFS_UNREAD,
   VISIT_NOTIF_READ,
   VISIT_NOTIFS_READ_ALL,
+  MY_PEOPLE_FETCH_SUCCESS,
+  MY_PEOPLE_ADD_SUCCESS,
+  MY_PEOPLE_REMOVE_SUCCESS,
+  MY_FOLLOWERS_SUCCESS,
 } from '../actions/community_visits';
 
 const initialState = ImmutableMap({
@@ -42,6 +46,11 @@ const initialState = ImmutableMap({
   notifPage:     1,
   notifPages:    1,
   unreadCount:   0,
+
+  // My People group
+  myPeople:       ImmutableList(),
+  myPeopleLoaded: false,
+  myFollowers:    ImmutableList(),
 });
 
 export default function communityVisitsReducer(state = initialState, action) {
@@ -120,6 +129,20 @@ export default function communityVisitsReducer(state = initialState, action) {
     return state
       .update('notifications', l => l.map(n => n.set('read', true)))
       .set('unreadCount', 0);
+
+  // ── My People ─────────────────────────────────────────────────────────────
+
+  case MY_PEOPLE_FETCH_SUCCESS:
+    return state.set('myPeople', fromJS(action.people)).set('myPeopleLoaded', true);
+
+  case MY_PEOPLE_ADD_SUCCESS:
+    return state.update('myPeople', l => l.push(fromJS(action.person)));
+
+  case MY_PEOPLE_REMOVE_SUCCESS:
+    return state.update('myPeople', l => l.filter(p => p.get('id') !== action.id));
+
+  case MY_FOLLOWERS_SUCCESS:
+    return state.set('myFollowers', fromJS(action.followers));
 
   default:
     return state;

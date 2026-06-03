@@ -97,8 +97,14 @@ class Api::V1::CommunityVisitsController < Api::BaseController
     raw_ids = Array(params[:account_ids]).map(&:to_i).first(20).uniq
     return render json: { error: 'No accounts specified' }, status: :bad_request if raw_ids.empty?
 
-    valid_ids = connected_subset(raw_ids)
-    return render json: { error: 'None of those accounts are connections' }, status: :unprocessable_entity if valid_ids.empty?
+    valid_ids = if @visit.my_people?
+                  # Gate on My People group membership instead of follow graph
+                  CommunityMyPerson.where(account_id: current_account.id, member_account_id: raw_ids)
+                                   .pluck(:member_account_id) & raw_ids
+                else
+                  connected_subset(raw_ids)
+                end
+    return render json: { error: 'None of those accounts are in your group' }, status: :unprocessable_entity if valid_ids.empty?
 
     message = params[:message].presence&.truncate(140)
     notified = 0
@@ -208,11 +214,15 @@ class Api::V1::CommunityVisitsController < Api::BaseController
 
     connections_visits = connected_ids.any? ? base.where(visibility: :connections_only, account_id: connected_ids) : CommunityVisit.none
 
-    # Own visits at any visibility so the user sees their own ghost entries
+    # my_people: visible to accounts that the visit owner has added to their My People group
+    my_people_owner_ids = CommunityMyPerson.where(member_account_id: current_account.id).pluck(:account_id)
+    my_people_visits    = my_people_owner_ids.any? ? base.where(visibility: :my_people, account_id: my_people_owner_ids) : CommunityVisit.none
+
+    # Own visits at any visibility so the user sees their own ghost/my_people entries
     own_visits = base.where(account_id: current_account.id)
 
-    (public_visits.to_a + connections_visits.to_a + own_visits.to_a).uniq(&:id)
-                                                                     .sort_by(&:arrival_date)
+    (public_visits.to_a + connections_visits.to_a + my_people_visits.to_a + own_visits.to_a).uniq(&:id)
+                                                                                             .sort_by(&:arrival_date)
   end
 
   # ── Availabilities ────────────────────────────────────────────────────────

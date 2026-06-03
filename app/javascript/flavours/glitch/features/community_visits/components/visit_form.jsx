@@ -14,15 +14,16 @@ const AVAILABILITY_OPTIONS = [
   { value: 'open_house',   label: 'Open house / drop by' },
 ];
 
-const VISIBILITY_OPTIONS = [
+const buildVisibilityOptions = (myPeopleCount) => [
   { value: 'public_to_members', label: 'All members',    desc: 'Everyone who has joined can see you\'re in town' },
   { value: 'connections_only',  label: 'My connections', desc: 'Only people you follow or who follow you' },
+  { value: 'my_people',         label: 'My People',      desc: myPeopleCount > 0 ? `Your hand-picked group of ${myPeopleCount} — manage below` : 'Your hand-picked group — add members below' },
   { value: 'ghost',             label: 'Private',        desc: 'Only you can see this — useful for planning your own dates' },
 ];
 
 const today = () => new Date().toISOString().slice(0, 10);
 
-export const VisitForm = ({ visit, onClose, onSaved }) => {
+export const VisitForm = ({ visit, onClose, onSaved, myPeopleCount = 0 }) => {
   const dispatch = useAppDispatch();
 
   const [arrivalDate,   setArrivalDate]   = useState(visit ? visit.get('arrival_date')   : today());
@@ -34,6 +35,8 @@ export const VisitForm = ({ visit, onClose, onSaved }) => {
   const [note,    setNote]    = useState(visit ? (visit.get('note') ?? '') : '');
   const [saving,  setSaving]  = useState(false);
   const [errors,  setErrors]  = useState([]);
+
+  const visibilityOptions = buildVisibilityOptions(myPeopleCount);
 
   // Keep departure ≥ arrival whenever arrival changes
   useEffect(() => {
@@ -118,7 +121,7 @@ export const VisitForm = ({ visit, onClose, onSaved }) => {
           <fieldset className='cv-form__fieldset'>
             <legend className='cv-form__legend'>Who can see this visit?</legend>
             <div className='cv-form__radio-group'>
-              {VISIBILITY_OPTIONS.map(opt => (
+              {visibilityOptions.map(opt => (
                 <label key={opt.value} className={`cv-form__radio-card${visibility === opt.value ? ' cv-form__radio-card--active' : ''}`}>
                   <input
                     type='radio'
