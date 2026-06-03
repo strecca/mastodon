@@ -1,6 +1,6 @@
 // notify_friends_modal.jsx — send a friend_ping to connected visitors or My People group
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import { notifyFriends } from 'flavours/glitch/actions/community_visits';
 import CloseIcon from '@/material-icons/400-24px/close.svg?react';
@@ -58,6 +58,20 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
   const [selected, setSelected] = useState(() =>
     Object.fromEntries(candidates.map(c => [c.account.id, true]))
   );
+
+  // Re-initialize checkboxes if candidates arrive after modal opens (async myPeople load)
+  useEffect(() => {
+    if (candidates.length > 0) {
+      setSelected(prev => {
+        const next = { ...prev };
+        candidates.forEach(c => {
+          if (!(c.account.id in next)) next[c.account.id] = true;
+        });
+        return next;
+      });
+    }
+  }, [candidates.length]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const [message, setMessage] = useState('');
   const [sending,  setSending] = useState(false);
   const [sent,     setSent]    = useState(false);

@@ -9,7 +9,7 @@ import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import { useIdentity }  from 'flavours/glitch/identity_context';
 import {
-  fetchVisits, fetchMyVisits, fetchHeatmap, deleteVisit,
+  fetchVisits, fetchMyVisits, fetchHeatmap, deleteVisit, fetchMyPeople,
 } from 'flavours/glitch/actions/community_visits';
 import { VisitForm }          from './components/visit_form';
 import { NotifyFriendsModal } from './components/notify_friends_modal';
@@ -409,6 +409,7 @@ const CommunityVisits = ({ multiColumn }) => {
   useEffect(() => {
     if (!signedIn) return;
     dispatch(fetchMyVisits());
+    dispatch(fetchMyPeople());
   }, [dispatch, signedIn]);
 
   useEffect(() => {
