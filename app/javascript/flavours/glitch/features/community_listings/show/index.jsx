@@ -7,8 +7,14 @@ import { Helmet } from '@unhead/react/helmet';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { withIdentity } from 'flavours/glitch/identity_context';
+import { useIdentity } from 'flavours/glitch/identity_context';
 import api from 'flavours/glitch/api';
+import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import {
+  fetchListing, refreshListing, deleteListing,
+  fulfillListing, closeListing,
+  addInterest, removeInterest,
+} from 'flavours/glitch/actions/community_listings';
 
 const TYPE_LABELS = {
   giveaway: 'Giveaway', trade: 'Trade', sell: 'Sell', rent: 'Rent', iso: 'ISO',
@@ -28,6 +34,7 @@ const fmtPrice = (listing) => {
 };
 
 const InterestModal = ({ listing, onClose, onSubmitted }) => {
+  const dispatch  = useAppDispatch();
   const [message, setMessage] = useState('');
   const [saving,  setSaving]  = useState(false);
   const [error,   setError]   = useState(null);
@@ -37,13 +44,13 @@ const InterestModal = ({ listing, onClose, onSubmitted }) => {
     setSaving(true);
     setError(null);
     try {
-      await api().post(`/api/v1/community_listings/${listing.id}/interests`, { message });
+      await dispatch(addInterest(listing.id, message));
       onSubmitted();
     } catch (err) {
       setError(err.response?.data?.error ?? 'Something went wrong');
       setSaving(false);
     }
-  }, [listing.id, message, onSubmitted]);
+  }, [dispatch, listing.id, message, onSubmitted]);
 
   return (
     <div className='cv-modal' onClick={onClose}>
@@ -71,16 +78,18 @@ const InterestModal = ({ listing, onClose, onSubmitted }) => {
   );
 };
 
-const InterestQueue = ({ interests, listingId, onUpdate }) => {
-  const handleSelect  = useCallback(async (id) => {
-    await api().put(`/api/v1/community_listings/${listingId}/interests/${id}/select`);
-    onUpdate();
-  }, [listingId, onUpdate]);
+const InterestQueue = ({ interests, listingId, onRefresh }) => {
+  const [working, setWorking] = useState(null);
 
-  const handleDismiss = useCallback(async (id) => {
-    await api().put(`/api/v1/community_listings/${listingId}/interests/${id}/dismiss`);
-    onUpdate();
-  }, [listingId, onUpdate]);
+  const handle = useCallback(async (action, interestId) => {
+    setWorking(interestId);
+    try {
+      await action();
+      onRefresh();
+    } finally {
+      setWorking(null);
+    }
+  }, [onRefresh]);
 
   if (!interests?.length) return <div className='cl-interests__empty'>No one has expressed interest yet.</div>;
 
@@ -107,8 +116,20 @@ const InterestQueue = ({ interests, listingId, onUpdate }) => {
             </a>
             {i.status === 'pending' && (
               <>
-                <button className='cl-interests__select-btn' onClick={() => handleSelect(i.id)}>Select</button>
-                <button className='cl-interests__dismiss-btn' onClick={() => handleDismiss(i.id)}>Dismiss</button>
+                <button
+                  className='cl-interests__select-btn'
+                  disabled={!!working}
+                  onClick={() => handle(() => api().put(`/api/v1/community_listings/${listingId}/interests/${i.id}/select`), i.id)}
+                >
+                  Select
+                </button>
+                <button
+                  className='cl-interests__dismiss-btn'
+                  disabled={!!working}
+                  onClick={() => handle(() => api().put(`/api/v1/community_listings/${listingId}/interests/${i.id}/dismiss`), i.id)}
+                >
+                  Dismiss
+                </button>
               </>
             )}
             {i.status === 'selected'  && <span className='cl-interests__status-badge cl-interests__status-badge--selected'>Selected</span>}
@@ -120,64 +141,58 @@ const InterestQueue = ({ interests, listingId, onUpdate }) => {
   );
 };
 
-const CommunityListingsShow = ({ identity, multiColumn, params }) => {
-  const [listing,       setListing]       = useState(null);
-  const [loading,       setLoading]       = useState(true);
-  const [showInterest,  setShowInterest]  = useState(false);
-  const [interested,    setInterested]    = useState(false);
-  const [activeImg,     setActiveImg]     = useState(0);
+const CommunityListingsShow = ({ multiColumn, params }) => {
+  const dispatch = useAppDispatch();
+  const { signedIn } = useIdentity();
   const history = useHistory();
 
-  const signedIn = identity?.signedIn;
-  const id       = params?.id;
+  const id = String(params?.id);
+  const cached = useAppSelector(s => s.getIn(['community_listings', 'byId', id]));
 
-  const load = useCallback(async () => {
+  const [loading,      setLoading]      = useState(!cached);
+  const [showInterest, setShowInterest] = useState(false);
+  const [activeImg,    setActiveImg]    = useState(0);
+
+  useEffect(() => {
+    if (cached) return;
     setLoading(true);
-    try {
-      const res = await api().get(`/api/v1/community_listings/${id}`);
-      setListing(res.data);
-      setInterested(res.data.interested);
-    } finally {
-      setLoading(false);
-    }
-  }, [id]);
+    dispatch(fetchListing(id)).finally(() => setLoading(false));
+  }, [dispatch, id, cached]);
 
-  useEffect(() => { load(); }, [load]);
+  const listing = cached?.toJS();
 
   const handleInterestSubmitted = useCallback(() => {
     setShowInterest(false);
-    setInterested(true);
-    load();
-  }, [load]);
+  }, []);
 
   const handleWithdraw = useCallback(async () => {
-    await api().delete(`/api/v1/community_listings/${id}/interests`);
-    setInterested(false);
-    load();
-  }, [id, load]);
+    await dispatch(removeInterest(id));
+  }, [dispatch, id]);
 
   const handleFulfill = useCallback(async () => {
-    await api().post(`/api/v1/community_listings/${id}/fulfill`);
-    load();
-  }, [id, load]);
+    await dispatch(fulfillListing(id));
+  }, [dispatch, id]);
 
   const handleClose = useCallback(async () => {
-    await api().post(`/api/v1/community_listings/${id}/close`);
-    load();
-  }, [id, load]);
+    await dispatch(closeListing(id));
+  }, [dispatch, id]);
 
   const handleDelete = useCallback(async () => {
     if (!window.confirm('Delete this listing?')) return;
-    await api().delete(`/api/v1/community_listings/${id}`);
+    await dispatch(deleteListing(id));
     history.push('/community_listings');
-  }, [id, history]);
+  }, [dispatch, id, history]);
+
+  const handleRefreshInterests = useCallback(() => {
+    dispatch(refreshListing(id));
+  }, [dispatch, id]);
 
   if (loading) return <Column><LoadingIndicator /></Column>;
   if (!listing) return <Column><div style={{ padding: 20 }}>Listing not found.</div></Column>;
 
-  const isOwn    = listing.is_own;
-  const isOpen   = listing.status === 'open';
-  const price    = fmtPrice(listing);
+  const isOwn       = listing.is_own;
+  const isOpen      = listing.status === 'open';
+  const price       = fmtPrice(listing);
   const statusLabel = STATUS_LABELS[listing.status];
 
   return (
@@ -267,10 +282,9 @@ const CommunityListingsShow = ({ identity, multiColumn, params }) => {
             </div>
           </div>
 
-          {/* Actions for non-owners */}
           {signedIn && !isOwn && isOpen && (
             <div className='cl-detail__actions'>
-              {interested ? (
+              {listing.interested ? (
                 <>
                   <div className='cl-detail__interested-msg'>✓ You expressed interest</div>
                   <button className='button button-secondary' onClick={handleWithdraw}>Withdraw</button>
@@ -290,7 +304,6 @@ const CommunityListingsShow = ({ identity, multiColumn, params }) => {
             </div>
           )}
 
-          {/* Owner controls */}
           {isOwn && (
             <div className='cl-detail__owner-actions'>
               {isOpen && (
@@ -305,12 +318,11 @@ const CommunityListingsShow = ({ identity, multiColumn, params }) => {
           )}
         </div>
 
-        {/* Interest queue — owner only */}
         {isOwn && (
           <InterestQueue
             interests={listing.interests}
             listingId={listing.id}
-            onUpdate={load}
+            onRefresh={handleRefreshInterests}
           />
         )}
       </div>
@@ -318,4 +330,4 @@ const CommunityListingsShow = ({ identity, multiColumn, params }) => {
   );
 };
 
-export default withIdentity(CommunityListingsShow);
+export default CommunityListingsShow;

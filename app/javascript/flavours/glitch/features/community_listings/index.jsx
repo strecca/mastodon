@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -8,8 +8,9 @@ import TagIcon from '@/material-icons/400-24px/tag.svg?react';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { withIdentity } from 'flavours/glitch/identity_context';
-import api from 'flavours/glitch/api';
+import { useIdentity } from 'flavours/glitch/identity_context';
+import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import { fetchListings } from 'flavours/glitch/actions/community_listings';
 
 import { ListingCard } from './components/listing_card';
 
@@ -22,34 +23,40 @@ const TYPES = [
   { key: 'iso',      label: 'ISO' },
 ];
 
-const CommunityListings = ({ identity, multiColumn }) => {
-  const [listings,    setListings]    = useState([]);
-  const [loading,     setLoading]     = useState(true);
+const CommunityListings = ({ multiColumn }) => {
+  const dispatch   = useAppDispatch();
+  const { signedIn } = useIdentity();
+
+  const listings = useAppSelector(s => s.getIn(['community_listings', 'items']));
+  const loading  = useAppSelector(s => s.getIn(['community_listings', 'loading']));
+  const loaded   = useAppSelector(s => s.getIn(['community_listings', 'loaded']));
+
   const [typeFilter,  setTypeFilter]  = useState('');
   const [search,      setSearch]      = useState('');
   const [searchInput, setSearchInput] = useState('');
 
-  const signedIn = identity?.signedIn;
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = {};
-      if (typeFilter) params.listing_type = typeFilter;
-      if (search)     params.q            = search;
-      const res = await api().get('/api/v1/community_listings', { params });
-      setListings(res.data);
-    } finally {
-      setLoading(false);
-    }
-  }, [typeFilter, search]);
-
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    dispatch(fetchListings());
+  }, [dispatch]);
 
   const handleSearch = useCallback((e) => {
     e.preventDefault();
     setSearch(searchInput);
   }, [searchInput]);
+
+  // Filter client-side — no extra API calls when switching type or searching
+  const visibleListings = useMemo(() => {
+    let result = listings;
+    if (typeFilter) result = result.filter(l => l.get('listing_type') === typeFilter);
+    if (search) {
+      const q = search.toLowerCase();
+      result = result.filter(l =>
+        (l.get('title') ?? '').toLowerCase().includes(q) ||
+        (l.get('description') ?? '').toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }, [listings, typeFilter, search]);
 
   return (
     <Column>
@@ -106,16 +113,16 @@ const CommunityListings = ({ identity, multiColumn }) => {
           </div>
         )}
 
-        {loading && <LoadingIndicator />}
+        {loading && !loaded && <LoadingIndicator />}
 
-        {!loading && listings.length === 0 && (
+        {loaded && visibleListings.size === 0 && (
           <div className='cl-empty'>No listings found.</div>
         )}
 
-        {!loading && listings.length > 0 && (
+        {loaded && visibleListings.size > 0 && (
           <div className='cl-grid'>
-            {listings.map(listing => (
-              <ListingCard key={listing.id} listing={listing} />
+            {visibleListings.map(listing => (
+              <ListingCard key={listing.get('id')} listing={listing.toJS()} />
             ))}
           </div>
         )}
@@ -124,4 +131,4 @@ const CommunityListings = ({ identity, multiColumn }) => {
   );
 };
 
-export default withIdentity(CommunityListings);
+export default CommunityListings;

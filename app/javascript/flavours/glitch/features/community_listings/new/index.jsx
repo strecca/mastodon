@@ -7,11 +7,13 @@ import { Helmet } from '@unhead/react/helmet';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { withIdentity } from 'flavours/glitch/identity_context';
-import api from 'flavours/glitch/api';
+import { useAppDispatch } from 'flavours/glitch/store';
+import { createListing } from 'flavours/glitch/actions/community_listings';
 
 import { ListingForm } from '../components/listing_form';
 
 const CommunityListingsNew = ({ multiColumn }) => {
+  const dispatch = useAppDispatch();
   const [saving, setSaving] = useState(false);
   const [error,  setError]  = useState(null);
   const history = useHistory();
@@ -20,15 +22,13 @@ const CommunityListingsNew = ({ multiColumn }) => {
     setSaving(true);
     setError(null);
     try {
-      const res = await api().post('/api/v1/community_listings', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      history.push(`/community_listings/${res.data.id}`);
+      const listing = await dispatch(createListing(formData));
+      history.push(`/community_listings/${listing.id}`);
     } catch (err) {
       setError(err.response?.data?.error ?? 'Something went wrong');
       setSaving(false);
     }
-  }, [history]);
+  }, [dispatch, history]);
 
   return (
     <Column>
