@@ -42,6 +42,7 @@ class Api::V1::CommunityArtistsController < Api::BaseController
 
     entry = CommunityArtist.new(entry_params)
     entry.account = current_account
+    entry.image_media_ids = validated_media_ids
     entry.status  = auto_approve? ? :approved : :pending
 
     if entry.save
@@ -55,6 +56,7 @@ class Api::V1::CommunityArtistsController < Api::BaseController
   end
 
   def update
+    @entry.image_media_ids = validated_media_ids if params.key?(:media_ids)
     if @entry.update(entry_params)
       invalidate_list_cache
       CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
@@ -115,11 +117,30 @@ class Api::V1::CommunityArtistsController < Api::BaseController
     p
   end
 
+  def list_columns
+    super + [:image_media_ids]
+  end
+
+  def image_data_for(entry)
+    return [] unless Array(entry.image_media_ids).any?
+    MediaAttachment.where(id: entry.image_media_ids)
+                   .filter_map { |ma| { original: ma.url, preview: ma.thumbnail_url || ma.url } }
+  end
+
+  def validated_media_ids
+    ids = Array(params[:media_ids]).reject(&:blank?).first(3).map(&:to_i).select(&:positive?)
+    MediaAttachment.where(id: ids, account: current_account).pluck(:id)
+  end
+
   def serialize(e, detail: true)
+    imgs = image_data_for(e)
     base = {
       id: e.id, account_id: e.account_id, status: e.status,
       account: { id: e.account.id, username: e.account.username,
                  display_name: e.account.display_name, avatar: e.account.avatar_original_url },
+      images:             imgs.map { |i| i[:original] },
+      image_previews:     imgs.map { |i| i[:preview] },
+      image_media_ids:    e.image_media_ids,
       category:           e.category,
       location_town_city: e.location_town_city,
       first_name:         e.first_name,

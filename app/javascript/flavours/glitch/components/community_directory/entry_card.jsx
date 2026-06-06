@@ -56,9 +56,27 @@ export const EntryCard = ({ entry, config, featureKey }) => {
     })
     .slice(0, 2);
 
+  // Show first uploaded image instead of the SVG landscape when available
+  const firstImage = entry.get('images')?.get?.(0) ?? entry.getIn(['images', 0]);
+
   return (
     <Link to={`/${featureKey}/${id}`} className='community-entry-card'>
-      {/* Landscape art header */}
+      {firstImage ? (
+        <div className='community-entry-card__landscape community-entry-card__landscape--photo'>
+          <img src={firstImage} alt={displayName} className='community-entry-card__photo' loading='lazy' />
+          <div className='community-entry-card__landscape-overlay'>
+            {badges.length > 0 && (
+              <div className='community-entry-card__badges'>
+                {badges.map((v, i) => (
+                  <span key={i} className='community-entry-card__badge'>{v}</span>
+                ))}
+              </div>
+            )}
+            <div className='community-entry-card__name'>{displayName}</div>
+          </div>
+        </div>
+      ) : (
+      /* Landscape art header (fallback when no photo) */
       <div className='community-entry-card__landscape'>
         <div className='community-entry-card__sun' />
         <div className='community-entry-card__hills'>
@@ -98,6 +116,7 @@ export const EntryCard = ({ entry, config, featureKey }) => {
           <div className='community-entry-card__name'>{displayName}</div>
         </div>
       </div>
+      )}
 
       {/* Card content below the landscape */}
       <div className='community-entry-card__content'>

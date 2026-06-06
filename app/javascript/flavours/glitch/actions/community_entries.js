@@ -74,7 +74,11 @@ export const createEntry = (categoryKey, apiEndpoint, formData) => (dispatch) =>
   const t = types(categoryKey);
   dispatch({ type: t.CREATE_REQUEST, categoryKey });
 
-  return api().post(apiEndpoint, { entry: formData }).then(response => {
+  const isMultipart = formData instanceof FormData;
+  const body    = isMultipart ? formData : { entry: formData };
+  const headers = isMultipart ? { 'Content-Type': 'multipart/form-data' } : {};
+
+  return api().post(apiEndpoint, body, { headers }).then(response => {
     dispatch({
       type: t.CREATE_SUCCESS,
       categoryKey,
@@ -93,7 +97,11 @@ export const updateEntry = (categoryKey, apiEndpoint, id, formData) => (dispatch
   const t = types(categoryKey);
   dispatch({ type: t.UPDATE_REQUEST, categoryKey });
 
-  return api().put(`${apiEndpoint}/${id}`, { entry: formData }).then(response => {
+  const isMultipart = formData instanceof FormData;
+  const body    = isMultipart ? formData : { entry: formData };
+  const headers = isMultipart ? { 'Content-Type': 'multipart/form-data' } : {};
+
+  return api().put(`${apiEndpoint}/${id}`, body, { headers }).then(response => {
     dispatch({
       type: t.UPDATE_SUCCESS,
       categoryKey,

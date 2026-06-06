@@ -42,6 +42,10 @@ class CommunityArtist < ApplicationRecord
 
   enum :status, { pending: 0, approved: 1, rejected: 2 }, default: :pending
 
+  def image_media_attachments
+    MediaAttachment.where(id: Array(image_media_ids))
+  end
+
   validates :category, presence: true
   validates :location_town_city, presence: true
   validates :first_name, presence: true

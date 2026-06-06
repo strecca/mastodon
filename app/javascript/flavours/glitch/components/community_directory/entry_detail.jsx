@@ -109,6 +109,13 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
   );
   const locationVal = locationField && entry.get(locationField.db_name);
 
+  // Image gallery — from image_media_ids serialization
+  const images = (() => {
+    const raw = entry.get('images');
+    if (!raw) return [];
+    return typeof raw.toJS === 'function' ? raw.toJS() : Array.isArray(raw) ? raw : [];
+  })();
+
   // Fields absorbed into the hero — excluded from body field list
   const heroDbNames = new Set([
     'first_name', 'last_name',
@@ -119,7 +126,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
 
   // ── Group fields for body ────────────────────────────────────
   const visibleFields = config.fields.filter(f =>
-    f.show_in_detail !== false && !heroDbNames.has(f.db_name),
+    f.show_in_detail !== false && !heroDbNames.has(f.db_name) && f.widget !== 'images',
   );
   const groupMap = {};
   visibleFields.forEach(field => {
@@ -198,6 +205,17 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
                   <span> · {intl.formatMessage(messages.updated)} <RelativeTimestamp timestamp={updatedAt} /></span>
                 )}
               </div>
+            </div>
+          )}
+
+          {/* Image gallery */}
+          {images.length > 0 && (
+            <div className='community-entry-detail__gallery'>
+              {images.map((url, i) => (
+                <a key={i} href={url} target='_blank' rel='noopener noreferrer' className='community-entry-detail__gallery-item'>
+                  <img src={url} alt='' loading='lazy' />
+                </a>
+              ))}
             </div>
           )}
 

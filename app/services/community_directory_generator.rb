@@ -12,16 +12,20 @@
 
 class CommunityDirectoryGenerator
   WIDGET_TO_PG = {
-    'text'       => 'string',
-    'textarea'   => 'text',
-    'select'     => 'string',
-    'checkboxes' => 'jsonb',
-    'radio'      => 'string',
-    'date'       => 'date',
-    'url'        => 'string',
-    'email'      => 'string',
-    'number'     => 'integer',
+    'text'            => 'string',
+    'textarea'        => 'text',
+    'select'          => 'string',
+    'checkboxes'      => 'jsonb',
+    'radio'           => 'string',
+    'date'            => 'date',
+    'url'             => 'string',
+    'email'           => 'string',
+    'number'          => 'integer',
+    'location_select' => 'string',
+    # 'images' is handled separately — generates image_media_ids bigint[]
   }.freeze
+
+  IMAGES_WIDGET = 'images'
 
   attr_reader :name, :display_name, :description, :icon, :fields, :groups,
               :table_name, :model_name, :feature_key, :pascal_name,
@@ -217,10 +221,15 @@ class CommunityDirectoryGenerator
 
     cols = @fields.map do |f|
       f = f.deep_symbolize_keys
-      pg = WIDGET_TO_PG[f[:widget].to_s] || 'string'
+      widget = f[:widget].to_s
+      next if widget == IMAGES_WIDGET  # image_media_ids added separately below
+      pg = WIDGET_TO_PG[widget] || 'string'
       nl = f[:required] ? ', null: false' : ''
       pg == 'jsonb' ? "      t.jsonb :#{f[:db_name]}, default: []#{nl}" : "      t.#{pg} :#{f[:db_name]}#{nl}"
-    end
+    end.compact
+
+    has_images = @fields.any? { |f| f.deep_symbolize_keys[:widget].to_s == IMAGES_WIDGET }
+    cols << '      t.column :image_media_ids, :bigint, array: true, default: []' if has_images
 
     # GIN indexes for JSONB fields (category checkboxes — used for filtering)
     jsonb_idxs = @fields.select { |f|
@@ -276,8 +285,15 @@ class CommunityDirectoryGenerator
   # ── Rails Model ──────────────────────────────────────────────
 
   def create_model
+    has_images = @fields.any? { |f| f.deep_symbolize_keys[:widget].to_s == IMAGES_WIDGET }
     vals = @fields.select { |f| f.deep_symbolize_keys[:required] }
                   .map { |f| "  validates :#{f.deep_symbolize_keys[:db_name]}, presence: true" }
+
+    image_method = has_images ? <<~RUBY : ''
+        def image_media_attachments
+          MediaAttachment.where(id: Array(image_media_ids))
+        end
+      RUBY
 
     write Rails.root.join('app','models',"#{@table_name.singularize}.rb"), <<~RB
       class #{@model_name} < ApplicationRecord
@@ -292,6 +308,7 @@ class CommunityDirectoryGenerator
         enum :status, { pending: 0, approved: 1, rejected: 2 }, default: :pending
 
       #{vals.join("\n")}
+      #{image_method}
       end
     RB
   end
@@ -299,9 +316,12 @@ class CommunityDirectoryGenerator
   # ── Rails Controller ─────────────────────────────────────────
 
   def create_controller
-    permitted = @fields.map { |f| ":#{f.deep_symbolize_keys[:db_name]}" }.join(', ')
-    jsonb_fields = @fields.select { |f| f.deep_symbolize_keys[:widget] == 'checkboxes' }
-                          .map { |f| ":#{f.deep_symbolize_keys[:db_name]}" }
+    has_images    = @fields.any? { |f| f.deep_symbolize_keys[:widget].to_s == IMAGES_WIDGET }
+    non_img_fields = @fields.reject { |f| f.deep_symbolize_keys[:widget].to_s == IMAGES_WIDGET }
+
+    permitted = non_img_fields.map { |f| ":#{f.deep_symbolize_keys[:db_name]}" }.join(', ')
+    jsonb_fields = non_img_fields.select { |f| f.deep_symbolize_keys[:widget] == 'checkboxes' }
+                                 .map { |f| ":#{f.deep_symbolize_keys[:db_name]}" }
 
     jsonb_permit = if jsonb_fields.any?
       jsonb_fields.map { |jf|
@@ -311,23 +331,41 @@ class CommunityDirectoryGenerator
       ''
     end
 
-    field_serialize = @fields.map { |f|
-      "        #{f.deep_symbolize_keys[:db_name]}: e.#{f.deep_symbolize_keys[:db_name]},"
-    }.join("\n")
-
-    az_field = @fields.find { |f|
-      %w[text select url email].include?(f.deep_symbolize_keys[:widget])
+    az_field = non_img_fields.find { |f|
+      %w[text select url email location_select].include?(f.deep_symbolize_keys[:widget])
     }&.deep_symbolize_keys&.dig(:db_name) || 'id'
 
-    list_field_serialize = @fields
+    list_field_serialize = non_img_fields
       .select { |f| f.deep_symbolize_keys[:show_in_list] }
       .map { |f| "        #{f.deep_symbolize_keys[:db_name]}: e.#{f.deep_symbolize_keys[:db_name]}," }
       .join("\n")
 
-    detail_field_serialize = @fields
+    detail_field_serialize = non_img_fields
       .reject { |f| f.deep_symbolize_keys[:show_in_list] }
       .map { |f| "      #{f.deep_symbolize_keys[:db_name]}: e.#{f.deep_symbolize_keys[:db_name]}," }
       .join("\n")
+
+    image_data_method = has_images ? <<~RUBY : ''
+          def image_data_for(entry)
+            return [] unless Array(entry.image_media_ids).any?
+            MediaAttachment.where(id: entry.image_media_ids)
+                           .filter_map { |ma| { original: ma.url, preview: ma.thumbnail_url || ma.url } }
+          end
+
+          def validated_media_ids
+            ids = Array(params[:media_ids]).reject(&:blank?).first(3).map(&:to_i).select(&:positive?)
+            MediaAttachment.where(id: ids, account: current_account).pluck(:id)
+          end
+        RUBY
+
+    image_create_line   = has_images ? '          entry.image_media_ids = validated_media_ids' : ''
+    image_update_line   = has_images ? '            @entry.image_media_ids = validated_media_ids if params.key?(:media_ids)' : ''
+    image_local_var     = has_images ? '          imgs = image_data_for(e)' : ''
+    image_base_fields   = has_images ? <<~RUBY.strip : ''
+              images:          imgs.map { |i| i[:original] },
+              image_previews:  imgs.map { |i| i[:preview] },
+              image_media_ids: e.image_media_ids,
+          RUBY
 
     write Rails.root.join('app','controllers','api','v1',"#{@table_name}_controller.rb"), <<~RB
       class Api::V1::#{@table_name.camelize}Controller < Api::BaseController
@@ -372,6 +410,7 @@ class CommunityDirectoryGenerator
 
           entry = #{@model_name}.new(entry_params)
           entry.account = current_account
+      #{image_create_line}
           entry.status  = auto_approve? ? :approved : :pending
 
           if entry.save
@@ -385,6 +424,7 @@ class CommunityDirectoryGenerator
         end
 
         def update
+      #{image_update_line}
           if @entry.update(entry_params)
             invalidate_list_cache
             CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
@@ -445,11 +485,14 @@ class CommunityDirectoryGenerator
           p
         end
 
+      #{image_data_method}
         def serialize(e, detail: true)
+      #{image_local_var}
           base = {
             id: e.id, account_id: e.account_id, status: e.status,
             account: { id: e.account.id, username: e.account.username,
                        display_name: e.account.display_name, avatar: e.account.avatar_original_url },
+      #{image_base_fields}
       #{list_field_serialize}
             created_at: e.created_at.iso8601,
             updated_at: e.updated_at.iso8601,

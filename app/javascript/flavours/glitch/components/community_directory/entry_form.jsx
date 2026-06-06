@@ -6,6 +6,29 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 
+// Resize + compress uploaded images to JPEG before sending to /api/v2/media.
+const compressImage = (file, maxPx = 1280, quality = 0.82) =>
+  new Promise((resolve) => {
+    const img = new Image();
+    const blobUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(blobUrl);
+      const scale = Math.min(1, maxPx / img.width, maxPx / img.height);
+      const canvas = document.createElement('canvas');
+      canvas.width  = Math.round(img.width  * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(
+        (blob) => resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' })),
+        'image/jpeg', quality,
+      );
+    };
+    img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
+    img.src = blobUrl;
+  });
+
+const MAX_CATEGORY_IMAGES = 3;
+
 import { useIntl, defineMessages } from 'react-intl';
 import { useHistory, Link } from 'react-router-dom';
 
@@ -54,6 +77,13 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
   const [duplicateWarning, setDuplicateWarning] = useState(null);
   const checkingDuplicate = useRef(false);
 
+  // Images — populated in edit mode from currentEntry
+  const hasImagesField = useMemo(() => config.fields.some(f => f.widget === 'images'), [config.fields]);
+  const [images, setImages] = useState([]);  // [{ mediaId, previewUrl }]
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+  const fileRef = useRef(null);
+
   // In edit mode, fetch the entry and populate form
   useEffect(() => {
     if (mode === 'edit' && entryId) {
@@ -68,15 +98,28 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
     if (mode === 'edit' && currentEntry && !populated) {
       const data = {};
       config.fields.forEach(field => {
+        if (field.widget === 'images') return; // handled separately
         const val = currentEntry.get(field.db_name);
         if (val != null) {
           data[field.db_name] = val && typeof val.toJS === 'function' ? val.toJS() : val;
         }
       });
       setFormData(data);
+
+      // Seed images from saved media
+      if (hasImagesField) {
+        const ids      = currentEntry.get('image_media_ids')?.toJS?.() ?? currentEntry.get('image_media_ids') ?? [];
+        const previews = currentEntry.get('image_previews')?.toJS?.()  ?? currentEntry.get('image_previews')  ?? [];
+        const originals= currentEntry.get('images')?.toJS?.()          ?? currentEntry.get('images')          ?? [];
+        setImages(Array.isArray(ids) ? ids.map((id, i) => ({
+          mediaId:    String(id),
+          previewUrl: previews[i] ?? originals[i] ?? null,
+        })) : []);
+      }
+
       setPopulated(true);
     }
-  }, [mode, currentEntry, populated, config.fields]);
+  }, [mode, currentEntry, populated, config.fields, hasImagesField]);
 
   const handleChange = useCallback((fieldName, value) => {
     setFormData(prev => ({ ...prev, [fieldName]: value }));
@@ -105,13 +148,66 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
     return Object.keys(errs).length === 0;
   }, [config.fields, formData, intl]);
 
+  const handleImageFiles = useCallback(async (e) => {
+    const files   = Array.from(e.target.files);
+    const allowed = MAX_CATEGORY_IMAGES - images.length;
+    const toUpload = files.slice(0, allowed);
+    e.target.value = '';
+    if (!toUpload.length) return;
+
+    setUploading(true);
+    setUploadError(null);
+    for (const file of toUpload) {
+      try {
+        const compressed = await compressImage(file);
+        const fd = new FormData();
+        fd.append('file', compressed);
+        const res = await api().post('/api/v2/media', fd, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        setImages(prev => [...prev, {
+          mediaId:    String(res.data.id),
+          previewUrl: res.data.url || res.data.preview_url,
+        }]);
+      } catch {
+        setUploadError('Failed to upload image — please try again.');
+      }
+    }
+    setUploading(false);
+  }, [images.length]);
+
+  const removeImage = useCallback((idx) => {
+    setImages(prev => prev.filter((_, i) => i !== idx));
+  }, []);
+
   const doSubmit = useCallback(async () => {
     setSubmitting(true);
     try {
-      if (mode === 'create') {
-        await dispatch(createEntry(categoryKey, apiEndpoint, formData));
+      let payload;
+      if (hasImagesField) {
+        // Send as multipart so media_ids[] travels alongside entry fields
+        const fd = new FormData();
+        Object.entries(formData).forEach(([k, v]) => {
+          if (Array.isArray(v)) {
+            v.forEach(item => fd.append(`entry[${k}][]`, item));
+          } else if (v != null) {
+            fd.append(`entry[${k}]`, v);
+          }
+        });
+        if (images.length > 0) {
+          images.forEach(img => fd.append('media_ids[]', img.mediaId));
+        } else {
+          fd.append('media_ids[]', ''); // signal: remove all images
+        }
+        payload = fd;
       } else {
-        await dispatch(updateEntry(categoryKey, apiEndpoint, entryId, formData));
+        payload = formData;
+      }
+
+      if (mode === 'create') {
+        await dispatch(createEntry(categoryKey, apiEndpoint, payload));
+      } else {
+        await dispatch(updateEntry(categoryKey, apiEndpoint, entryId, payload));
       }
       setSuccess(true);
       setTimeout(() => {
@@ -120,7 +216,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
     } catch {
       setSubmitting(false);
     }
-  }, [mode, dispatch, categoryKey, apiEndpoint, formData, entryId, history, featureKey]);
+  }, [mode, dispatch, categoryKey, apiEndpoint, formData, entryId, history, featureKey, hasImagesField, images]);
 
   const handleSubmit = useCallback(async () => {
     if (!validate() || submitting || checkingDuplicate.current) return;
@@ -190,6 +286,40 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
       {success && (
         <div className='community-entry-form__success'>
           {intl.formatMessage(messages.success)}
+        </div>
+      )}
+
+      {/* Image upload — shown once above the field groups if config has images widget */}
+      {hasImagesField && (
+        <div className='community-entry-form__group'>
+          <legend className='community-entry-form__group-title'>Photos (up to {MAX_CATEGORY_IMAGES})</legend>
+          <div className='community-entry-form__image-row'>
+            {images.map((img, idx) => (
+              <div key={img.mediaId} className='community-entry-form__image-thumb'>
+                <img src={img.previewUrl} alt='' />
+                <button type='button' className='community-entry-form__image-remove' onClick={() => removeImage(idx)} aria-label='Remove photo'>×</button>
+              </div>
+            ))}
+            {images.length < MAX_CATEGORY_IMAGES && (
+              <button
+                type='button'
+                className='community-entry-form__image-add'
+                onClick={() => fileRef.current?.click()}
+                disabled={uploading}
+              >
+                {uploading ? 'Uploading…' : '+ Add Photo'}
+              </button>
+            )}
+          </div>
+          <input
+            ref={fileRef}
+            type='file'
+            accept='image/*'
+            multiple
+            style={{ display: 'none' }}
+            onChange={handleImageFiles}
+          />
+          {uploadError && <p className='community-entry-form__error'>{uploadError}</p>}
         </div>
       )}
 
@@ -305,6 +435,9 @@ const FormField = ({ field, value, error, onChange, intl }) => {
   let input;
 
   switch (field.widget) {
+  case 'images':
+    return null; // rendered centrally in EntryForm above the field groups
+
   case 'textarea':
     input = (
       <textarea id={id} value={value || ''} onChange={handleInput}
