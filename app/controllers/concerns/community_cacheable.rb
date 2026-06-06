@@ -53,7 +53,7 @@ module CommunityCacheable
   # Cache key includes a version counter so a single Redis INCREMENT
   # invalidates all pages/sorts/queries for this category at once.
   def list_cache_key
-    v = Rails.cache.read("community:#{self.class::CATEGORY_KEY}:list:v").to_i
+    v = Rails.cache.read("community:#{self.class::CATEGORY_KEY}:list:v", raw: true).to_i
     "community:#{self.class::CATEGORY_KEY}:list:v#{v}:#{params.slice(:sort, :q, :page).to_h}"
   end
 
