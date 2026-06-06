@@ -124,8 +124,6 @@ class Api::V1::CommunityEventsController < Api::BaseController
       event_name:         e.event_name,
       event_date:         e.event_date&.iso8601,
       location_town_city: e.location_town_city,
-      source_name:        e.source_name,
-      auto_imported:      e.auto_imported,
       created_at:         e.created_at.iso8601,
       updated_at:         e.updated_at.iso8601,
     }
@@ -144,6 +142,8 @@ class Api::V1::CommunityEventsController < Api::BaseController
       website:           e.website,
       telephone:         e.telephone,
       source_url:        e.source_url,
+      source_name:       e.source_name,
+      auto_imported:     e.auto_imported,
       translations:      translations
     )
   end
