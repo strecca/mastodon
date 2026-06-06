@@ -54,7 +54,7 @@ module CommunityCacheable
   # invalidates all pages/sorts/queries for this category at once.
   def list_cache_key
     v = Rails.cache.read("community:#{self.class::CATEGORY_KEY}:list:v", raw: true).to_i
-    "community:#{self.class::CATEGORY_KEY}:list:v#{v}:#{params.slice(:sort, :q, :page).to_h}"
+    "community:#{self.class::CATEGORY_KEY}:list:v#{v}:#{params.slice(:sort, :q, :page).to_unsafe_h}"
   end
 
   # Wraps the index action body — executes the block only on cache miss.
