@@ -38,7 +38,8 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
   const catState = useAppSelector(state => state.community_entries.get(categoryKey));
   const entries = catState?.get('entries');
   const loading = catState?.get('entriesLoading') || false;
-  const total = catState?.get('total') || 0;
+  const total   = catState?.get('total') || 0;
+  const fetchError = catState?.get('error') || null;
 
   const [query, setQuery] = useState('');
   const [activeFilters, setActiveFilters] = useState({});
@@ -135,6 +136,10 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
       {/* Results */}
       {isInitialLoad ? (
         <LoadingIndicator />
+      ) : fetchError && !hasEntries ? (
+        <div className='empty-column-indicator' style={{ color: '#c62828' }}>
+          <p>⚠ {fetchError}</p>
+        </div>
       ) : hasEntries ? (
         <div className='community-entry-list__entries'>
           {filteredEntries.map(entry => (

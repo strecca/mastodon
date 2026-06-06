@@ -45,6 +45,8 @@ export const fetchEntries = (categoryKey, apiEndpoint, query = '', page = 1, sor
       pages: response.data.pages || 1,
     });
   }).catch(error => {
+    const status = error?.response?.status;
+    console.error(`[community_entries] ${categoryKey} fetch failed — HTTP ${status ?? 'network error'}`, error);
     dispatch({ type: t.FETCH_FAIL, categoryKey, error, skipAlert: true });
   });
 };

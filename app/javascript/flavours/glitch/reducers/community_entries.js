@@ -62,9 +62,12 @@ export default function communityEntriesReducer(state = initialState, action) {
       s.setIn([categoryKey, 'error'], null);
     });
 
-  case 'FETCH_FAIL':
+  case 'FETCH_FAIL': {
+    const status = action.error?.response?.status;
+    const msg    = status ? `Server error ${status} — check logs` : (action.error?.message || 'Failed to load entries');
     return state.setIn([categoryKey, 'entriesLoading'], false)
-                .setIn([categoryKey, 'error'], action.error?.message || 'Failed to load entries');
+                .setIn([categoryKey, 'error'], msg);
+  }
 
   // ── Single entry ─────────────────────────────────────
   case 'FETCH_ONE_REQUEST':
