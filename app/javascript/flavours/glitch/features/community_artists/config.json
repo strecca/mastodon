@@ -325,6 +325,23 @@
       "options": [],
       "column": "full",
       "group": "basic"
+    },
+    {
+      "db_name": "image_media_ids",
+      "label": "Photos",
+      "label_it": "Foto",
+      "label_de": "Fotos",
+      "label_fr": "Photos",
+      "label_es": "Fotos",
+      "widget": "images",
+      "required": false,
+      "searchable": false,
+      "translatable": false,
+      "show_in_list": true,
+      "show_in_detail": true,
+      "options": [],
+      "column": "full",
+      "group": "basic"
     }
   ],
   "groups": [
