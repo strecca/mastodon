@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 import { Helmet } from '@unhead/react/helmet';
 
-import PlaceIcon from '@/material-icons/400-24px/place.svg?react';
+import PlaceIcon from '@/material-icons/400-24px/push_pin.svg?react';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
@@ -108,7 +108,7 @@ const CommunityDirectoryLocations = ({ multiColumn }) => {
   return (
     <Column bindToDocument={!multiColumn} label={title}>
       <ColumnHeader
-        icon='place'
+        icon='push-pin'
         iconComponent={PlaceIcon}
         title={title}
         multiColumn={multiColumn}
