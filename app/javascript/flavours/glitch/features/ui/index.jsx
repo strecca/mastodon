@@ -96,6 +96,7 @@ import {
   CommunityDirectoryModeration,
   CommunityDirectoryPermissions,
   CommunityDirectoryScraperLogs,
+  CommunityDirectoryLocations,
   CommunityArtists,
   CommunityArtistsShow,
   CommunityArtistsNew,
@@ -257,6 +258,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/community_directory/scraper_logs' exact component={CommunityDirectoryScraperLogs} content={children} />
             <WrappedRoute path='/community_directory/moderation' exact component={CommunityDirectoryModeration} content={children} />
             <WrappedRoute path='/community_directory/permissions' exact component={CommunityDirectoryPermissions} content={children} />
+            <WrappedRoute path='/community_directory/locations' exact component={CommunityDirectoryLocations} content={children} />
             <WrappedRoute path='/community_directory' exact component={CommunityDirectory} content={children} />
             {/* Community Listings */}
             <WrappedRoute path='/community_listings/new'      exact component={CommunityListingsNew}  content={children} />

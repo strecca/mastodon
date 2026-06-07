@@ -315,6 +315,9 @@ export function CommunityDirectoryPermissions () {
 export function CommunityDirectoryScraperLogs () {
   return import('../../community_directory/scraper_logs');
 }
+export function CommunityDirectoryLocations () {
+  return import('../../community_directory/locations');
+}
 export function CommunityArtists () {
   return import('../../community_artists');
 }

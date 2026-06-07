@@ -44,6 +44,20 @@ import {
   clearCurrentEntry,
 } from 'flavours/glitch/actions/community_entries';
 
+// Fetches active locations once; cached across multiple LocationSelectField mounts.
+let _locationsCache = null;
+let _locationsFetch = null;
+const getLocations = () => {
+  if (_locationsCache) return Promise.resolve(_locationsCache);
+  if (!_locationsFetch) {
+    _locationsFetch = api().get('/api/v1/community_locations').then(res => {
+      _locationsCache = res.data;
+      return _locationsCache;
+    }).catch(() => []);
+  }
+  return _locationsFetch;
+};
+
 const messages = defineMessages({
   submitCreate: { id: 'community.form.submit_create', defaultMessage: 'Submit entry' },
   submitEdit: { id: 'community.form.submit_edit', defaultMessage: 'Save changes' },
@@ -457,6 +471,20 @@ const FormField = ({ field, value, error, onChange, intl }) => {
     );
     break;
 
+  case 'location_select':
+    input = (
+      <LocationSelectField field={field} value={value} onChange={onChange} error={error} errorId={errorId} intl={intl} />
+    );
+    return (
+      <div className={`community-entry-form__field ${colClass}`}>
+        <label htmlFor={id} className='community-entry-form__label'>
+          {label}{field.required && <span className='community-entry-form__required'> *</span>}
+        </label>
+        {input}
+        {error && <p id={errorId} className='community-entry-form__error'>{error}</p>}
+      </div>
+    );
+
   case 'checkboxes':
     input = (
       <CheckboxField field={field} value={value} onChange={onChange} error={error} errorId={errorId} />
@@ -511,6 +539,37 @@ const FormField = ({ field, value, error, onChange, intl }) => {
       {input}
       {error && <p id={errorId} className='community-entry-form__error'>{error}</p>}
     </div>
+  );
+};
+
+// ── Location select sub-component ────────────────────────────
+
+const LocationSelectField = ({ field, value, onChange, error, errorId, intl }) => {
+  const id = `cf-${field.db_name}`;
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    getLocations().then(locs => setOptions(locs));
+  }, []);
+
+  const handleChange = useCallback((e) => onChange(field.db_name, e.target.value), [onChange, field.db_name]);
+  const inputClass = `community-entry-form__input ${error ? 'community-entry-form__input--error' : ''}`;
+
+  return (
+    <select
+      id={id}
+      value={value || ''}
+      onChange={handleChange}
+      className={inputClass}
+      required={field.required}
+      aria-invalid={!!error}
+      aria-describedby={errorId}
+    >
+      <option value=''>{intl.formatMessage({ id: 'community.form.select', defaultMessage: 'Select…' })}</option>
+      {options.map(loc => (
+        <option key={loc.id} value={loc.name}>{loc.name}</option>
+      ))}
+    </select>
   );
 };
 

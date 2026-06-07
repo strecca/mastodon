@@ -21,6 +21,7 @@ const messages = defineMessages({
   moderation:   { id: 'community_directory.moderation',   defaultMessage: 'Moderation Queue' },
   permissions:  { id: 'community_directory.permissions',  defaultMessage: 'Permissions' },
   scraperLogs:  { id: 'community_directory.scraper_logs', defaultMessage: 'Scraper Logs' },
+  locations:    { id: 'community_directory.locations',    defaultMessage: 'Manage Towns' },
   empty:        { id: 'community_directory.empty',        defaultMessage: 'No categories generated yet. Create your first one.' },
   entries:      { id: 'community_directory.entries',      defaultMessage: '{count, plural, one {# entry} other {# entries}}' },
   view:         { id: 'community_directory.view',         defaultMessage: 'View' },
@@ -190,6 +191,9 @@ const CommunityDirectoryAdmin = ({ multiColumn }) => {
             </Link>
             <Link to='/community_directory/scraper_logs' className='button button-secondary'>
               {intl.formatMessage(messages.scraperLogs)}
+            </Link>
+            <Link to='/community_directory/locations' className='button button-secondary'>
+              {intl.formatMessage(messages.locations)}
             </Link>
           </div>
 
