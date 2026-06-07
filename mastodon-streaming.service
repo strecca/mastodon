@@ -1,0 +1,15 @@
+[Unit]
+Description=Mastodon Streaming
+After=network.target valkey-server.service
+
+[Service]
+Type=simple
+User=mastodon
+WorkingDirectory=/home/mastodon/live/streaming
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node index.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

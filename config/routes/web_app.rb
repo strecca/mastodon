@@ -50,4 +50,10 @@
   /landing
   /community_directory/landing-settings
   /community_maintenance
+  /community_services
+  /community_services/(*any)
+  /community_restaurants
+  /community_restaurants/(*any)
+  /community_properties
+  /community_properties/(*any)
 ).each { |path| get path, to: 'home#index' }

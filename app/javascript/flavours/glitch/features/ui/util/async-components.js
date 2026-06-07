@@ -361,6 +361,54 @@ export function CommunityArtistsNew () {
   return import('../../community_artists/new');
 }
 
+export function CommunityServices () {
+  return import('../../community_services');
+}
+
+export function CommunityServicesShow () {
+  return import('../../community_services/show');
+}
+
+export function CommunityServicesNew () {
+  return import('../../community_services/new');
+}
+
+export function CommunityServicesEdit () {
+  return import('../../community_services/edit');
+}
+
+export function CommunityRestaurants () {
+  return import('../../community_restaurants');
+}
+
+export function CommunityRestaurantsShow () {
+  return import('../../community_restaurants/show');
+}
+
+export function CommunityRestaurantsNew () {
+  return import('../../community_restaurants/new');
+}
+
+export function CommunityRestaurantsEdit () {
+  return import('../../community_restaurants/edit');
+}
+
+export function CommunityProperties () {
+  return import('../../community_properties');
+}
+
+export function CommunityPropertiesShow () {
+  return import('../../community_properties/show');
+}
+
+export function CommunityPropertiesNew () {
+  return import('../../community_properties/new');
+}
+
+export function CommunityPropertiesEdit () {
+  return import('../../community_properties/edit');
+}
+
 // [CD:ASYNC_EXPORTS]
 
 export function CommunityArtistsEdit () {

@@ -114,6 +114,18 @@ import {
   CommunityListingsEdit,
   CommunityLanding,
   CommunityLandingSettings,
+  CommunityServices,
+  CommunityServicesShow,
+  CommunityServicesNew,
+  CommunityServicesEdit,
+  CommunityRestaurants,
+  CommunityRestaurantsShow,
+  CommunityRestaurantsNew,
+  CommunityRestaurantsEdit,
+  CommunityProperties,
+  CommunityPropertiesShow,
+  CommunityPropertiesNew,
+  CommunityPropertiesEdit,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
@@ -282,6 +294,21 @@ class SwitchingColumnsArea extends PureComponent {
             {/* Landing page */}
             <WrappedRoute path='/landing' exact component={CommunityLanding} content={children} />
             <WrappedRoute path='/community_directory/landing-settings' exact component={CommunityLandingSettings} content={children} />
+            {/* Community Services */}
+            <WrappedRoute path='/community_services/new'      exact component={CommunityServicesNew}  content={children} />
+            <WrappedRoute path='/community_services/:id/edit' exact component={CommunityServicesEdit} content={children} />
+            <WrappedRoute path='/community_services/:id'      exact component={CommunityServicesShow} content={children} />
+            <WrappedRoute path='/community_services'          exact component={CommunityServices}     content={children} />
+            {/* Community Restaurants */}
+            <WrappedRoute path='/community_restaurants/new'      exact component={CommunityRestaurantsNew}  content={children} />
+            <WrappedRoute path='/community_restaurants/:id/edit' exact component={CommunityRestaurantsEdit} content={children} />
+            <WrappedRoute path='/community_restaurants/:id'      exact component={CommunityRestaurantsShow} content={children} />
+            <WrappedRoute path='/community_restaurants'          exact component={CommunityRestaurants}     content={children} />
+            {/* Community Properties */}
+            <WrappedRoute path='/community_properties/new'      exact component={CommunityPropertiesNew}  content={children} />
+            <WrappedRoute path='/community_properties/:id/edit' exact component={CommunityPropertiesEdit} content={children} />
+            <WrappedRoute path='/community_properties/:id'      exact component={CommunityPropertiesShow} content={children} />
+            <WrappedRoute path='/community_properties'          exact component={CommunityProperties}     content={children} />
             {/* [CD:ROUTES] */}
 
             <WrappedRoute path='/explore' component={Explore} content={children} />

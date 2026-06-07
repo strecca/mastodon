@@ -311,9 +311,12 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   def build_category_info(table_name)
     config_path = Rails.root.join('app', 'javascript', 'flavours', 'glitch', 'features', table_name, 'config.json')
     count = begin
-      ActiveRecord::Base.connection
-        .execute("SELECT COUNT(*) FROM #{ActiveRecord::Base.connection.quote_table_name(table_name)}")
-        .first['count'].to_i
+      conn      = ActiveRecord::Base.connection
+      quoted    = conn.quote_table_name(table_name)
+      has_status = conn.column_exists?(table_name, :status)
+      sql = has_status ? "SELECT COUNT(*) FROM #{quoted} WHERE status = 1" \
+                       : "SELECT COUNT(*) FROM #{quoted}"
+      conn.execute(sql).first['count'].to_i
     rescue StandardError
       0
     end

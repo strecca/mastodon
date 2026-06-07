@@ -1,0 +1,15 @@
+[Unit]
+Description=Mastodon Web (Puma)
+After=network.target postgresql.service valkey-server.service
+
+[Service]
+Type=simple
+User=mastodon
+WorkingDirectory=/home/mastodon/live
+Environment=RAILS_ENV=production
+ExecStart=/usr/local/rbenv/versions/3.4.9/bin/bundle exec puma -C config/puma.rb
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
