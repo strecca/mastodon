@@ -13,14 +13,17 @@ import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
 import { fetchModeration, approveEntry, rejectEntry } from '../../../actions/community_directory';
+import { deleteEntry } from '../../../actions/community_entries';
 
 const messages = defineMessages({
-  title:   { id: 'community_directory.moderation.title',   defaultMessage: 'Moderation Queue' },
-  empty:   { id: 'community_directory.moderation.empty',   defaultMessage: 'No entries pending review. All clear!' },
-  approve: { id: 'community_directory.moderation.approve', defaultMessage: 'Approve' },
-  reject:  { id: 'community_directory.moderation.reject',  defaultMessage: 'Reject' },
-  back:    { id: 'community_directory.moderation.back',    defaultMessage: '← Back to Admin' },
-  pending: { id: 'community_directory.moderation.pending', defaultMessage: '{count} pending' },
+  title:         { id: 'community_directory.moderation.title',          defaultMessage: 'Moderation Queue' },
+  empty:         { id: 'community_directory.moderation.empty',          defaultMessage: 'No entries pending review. All clear!' },
+  approve:       { id: 'community_directory.moderation.approve',        defaultMessage: 'Approve' },
+  reject:        { id: 'community_directory.moderation.reject',         defaultMessage: 'Reject' },
+  delete:        { id: 'community_directory.moderation.delete',         defaultMessage: 'Delete' },
+  deleteConfirm: { id: 'community_directory.moderation.delete_confirm', defaultMessage: 'Permanently delete this entry? This cannot be undone.' },
+  back:          { id: 'community_directory.moderation.back',           defaultMessage: '← Back to Admin' },
+  pending:       { id: 'community_directory.moderation.pending',        defaultMessage: '{count} pending' },
 });
 
 const CommunityDirectoryModeration = ({ multiColumn }) => {
@@ -41,6 +44,12 @@ const CommunityDirectoryModeration = ({ multiColumn }) => {
       dispatch(rejectEntry(categoryKey, entryId));
     }
   }, [dispatch]);
+
+  const handleDelete = useCallback((categoryKey, entryId) => {
+    if (!window.confirm(intl.formatMessage(messages.deleteConfirm))) return;
+    const apiEndpoint = `/api/v1/community_${categoryKey}`;
+    dispatch(deleteEntry(categoryKey, apiEndpoint, entryId));
+  }, [dispatch, intl]);
 
   const title = intl.formatMessage(messages.title);
 
@@ -129,6 +138,13 @@ const CommunityDirectoryModeration = ({ multiColumn }) => {
                         onClick={() => handleReject(categoryKey, entryId)}
                       >
                         {intl.formatMessage(messages.reject)}
+                      </button>
+                      <button
+                        type='button'
+                        className='button button--destructive'
+                        onClick={() => handleDelete(categoryKey, entryId)}
+                      >
+                        {intl.formatMessage(messages.delete)}
                       </button>
                     </div>
                   </div>

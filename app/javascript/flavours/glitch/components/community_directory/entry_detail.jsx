@@ -1,9 +1,9 @@
 // app/javascript/flavours/glitch/components/community_directory/entry_detail.jsx
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { useIntl, defineMessages } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import { RelativeTimestamp } from 'flavours/glitch/components/relative_timestamp';
@@ -11,14 +11,16 @@ import { Avatar } from 'flavours/glitch/components/avatar';
 import { withIdentity } from 'flavours/glitch/identity_context';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
-import { fetchEntry, clearCurrentEntry } from 'flavours/glitch/actions/community_entries';
+import { fetchEntry, clearCurrentEntry, deleteEntry } from 'flavours/glitch/actions/community_entries';
 import { fieldLabel, translatedValue } from './translation_helpers';
 
 const messages = defineMessages({
-  edit:    { id: 'community.detail.edit',    defaultMessage: 'Edit this entry' },
-  back:    { id: 'community.detail.back',    defaultMessage: '← Back' },
-  added:   { id: 'community.detail.added',   defaultMessage: 'Added' },
-  updated: { id: 'community.detail.updated', defaultMessage: 'Updated' },
+  edit:          { id: 'community.detail.edit',          defaultMessage: 'Edit this entry' },
+  delete:        { id: 'community.detail.delete',        defaultMessage: 'Delete' },
+  deleteConfirm: { id: 'community.detail.delete_confirm', defaultMessage: 'Permanently delete this entry? This cannot be undone.' },
+  back:          { id: 'community.detail.back',          defaultMessage: '← Back' },
+  added:         { id: 'community.detail.added',         defaultMessage: 'Added' },
+  updated:       { id: 'community.detail.updated',       defaultMessage: 'Updated' },
 });
 
 const humanize = (str) => str ? str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
@@ -34,6 +36,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
 
+  const history     = useHistory();
   const locale      = intl.locale;
   const categoryKey = config.category_key;
   const apiEndpoint = config.api_endpoint;
@@ -51,6 +54,13 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
 
   const { signedIn } = identity;
   const isAdmin = !!(identity.permissions & 0x1);
+
+  const handleDelete = useCallback(() => {
+    if (!window.confirm(intl.formatMessage(messages.deleteConfirm))) return;
+    dispatch(deleteEntry(categoryKey, apiEndpoint, entryId)).then(() => {
+      history.push(`/${featureKey}`);
+    });
+  }, [dispatch, intl, categoryKey, apiEndpoint, entryId, featureKey, history]);
 
   if (error && !entry) {
     return (
@@ -266,6 +276,15 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
               <Link to={`/${featureKey}/${entryId}/edit`} className='button'>
                 {intl.formatMessage(messages.edit)}
               </Link>
+              {isAdmin && (
+                <button
+                  type='button'
+                  className='button button--destructive'
+                  onClick={handleDelete}
+                >
+                  {intl.formatMessage(messages.delete)}
+                </button>
+              )}
             </div>
           )}
         </div>
