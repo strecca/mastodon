@@ -282,7 +282,7 @@
       "duplicate_key": false,
       "show_in_list": true,
       "show_in_detail": true,
-      "options": ["Free", "€", "€€", "€€€"],
+      "options": ["Free / Volunteer", "Affordable", "Standard Rates", "Premium / Specialist"],
       "column": "full",
       "group": "details"
     },

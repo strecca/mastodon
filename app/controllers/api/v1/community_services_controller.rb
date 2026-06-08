@@ -122,7 +122,21 @@ class Api::V1::CommunityServicesController < Api::BaseController
   def image_data_for(entry)
     return [] unless Array(entry.image_media_ids).any?
     MediaAttachment.where(id: entry.image_media_ids)
-                   .filter_map { |ma| { original: ma.url, preview: ma.thumbnail_url || ma.url } }
+                   .filter_map do |ma|
+                     original = attachment_url(ma, :original)
+                     next if original.blank?
+                     { original: original, preview: attachment_url(ma, :small) || original }
+                   end
+  rescue StandardError
+    []
+  end
+
+  def attachment_url(ma, style)
+    raw = style == :original && ma.remote_url.present? ? ma.remote_url : ma.file.url(style)
+    return nil if raw.blank?
+    raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
+  rescue StandardError
+    nil
   end
 
   def validated_media_ids

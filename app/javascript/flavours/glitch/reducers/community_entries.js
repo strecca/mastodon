@@ -64,7 +64,14 @@ export default function communityEntriesReducer(state = initialState, action) {
 
   case 'FETCH_FAIL': {
     const status = action.error?.response?.status;
-    const msg    = status ? `Server error ${status} — check logs` : (action.error?.message || 'Failed to load entries');
+    let msg;
+    if (!status) {
+      msg = 'Unable to load entries — check your connection.';
+    } else if (status >= 500) {
+      msg = 'This category is temporarily unavailable. Please try again later.';
+    } else {
+      msg = 'Unable to load entries. Please try again.';
+    }
     return state.setIn([categoryKey, 'entriesLoading'], false)
                 .setIn([categoryKey, 'error'], msg);
   }
@@ -79,9 +86,19 @@ export default function communityEntriesReducer(state = initialState, action) {
     return state.setIn([categoryKey, 'currentEntry'], fromJS(action.entry))
                 .setIn([categoryKey, 'currentEntryLoading'], false);
 
-  case 'FETCH_ONE_FAIL':
+  case 'FETCH_ONE_FAIL': {
+    const oneStatus = action.error?.response?.status;
+    let oneMsg;
+    if (oneStatus === 404) {
+      oneMsg = 'This entry was not found. It may have been removed.';
+    } else if (!oneStatus) {
+      oneMsg = 'Unable to load entry — check your connection.';
+    } else {
+      oneMsg = 'Unable to load this entry. Please try again.';
+    }
     return state.setIn([categoryKey, 'currentEntryLoading'], false)
-                .setIn([categoryKey, 'error'], action.error?.message || 'Failed to load entry');
+                .setIn([categoryKey, 'error'], oneMsg);
+  }
 
   case 'CLEAR_CURRENT':
     return state.setIn([categoryKey, 'currentEntry'], null)

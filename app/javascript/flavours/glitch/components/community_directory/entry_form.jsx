@@ -580,8 +580,9 @@ const CheckboxField = ({ field, value, onChange, error, errorId }) => {
   const label = field.label || humanize(field.db_name);
 
   const toggle = useCallback((opt) => {
-    // Single-select: clicking the active option deselects it; clicking any other replaces selection
-    const next = arr.includes(opt) ? [] : [opt];
+    const next = arr.includes(opt)
+      ? arr.filter(v => v !== opt)
+      : [...arr, opt];
     onChange(field.db_name, next);
   }, [arr, onChange, field.db_name]);
 

@@ -52,9 +52,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
   const { signedIn } = identity;
   const isAdmin = !!(identity.permissions & 0x1);
 
-  if (loading || !entry) return loading ? <LoadingIndicator /> : null;
-
-  if (error) {
+  if (error && !entry) {
     return (
       <div className='scrollable'>
         <div className='empty-column-indicator'>
@@ -66,6 +64,8 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
       </div>
     );
   }
+
+  if (loading || !entry) return loading ? <LoadingIndicator /> : null;
 
   const account   = entry.get('account');
   const createdAt = entry.get('created_at');
