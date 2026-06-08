@@ -1315,7 +1315,7 @@ en:
       title: Login to %{domain}
     sign_up:
       manual_review: Sign-ups on %{domain} go through manual review by our moderators. To help us process your registration, write a bit about yourself and why you want an account on %{domain}.
-      preamble: With an account on this Mastodon server, you'll be able to follow any other person on the fediverse, regardless of where their account is hosted.
+      preamble: Create your free account on the miacivezza.com community platform. Connect with neighbours, discover local events, services, artists, and culture in Civezza and the surrounding Liguria region.
       title: Let's get you set up on %{domain}.
     status:
       account_status: Account status
