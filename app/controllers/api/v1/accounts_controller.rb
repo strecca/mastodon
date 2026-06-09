@@ -19,7 +19,7 @@ class Api::V1::AccountsController < Api::BaseController
   before_action :check_accounts_limit, only: [:index]
   before_action :check_following_self, only: [:follow]
 
-  skip_before_action :require_authenticated_user!, only: :create
+  skip_before_action :require_authenticated_user!, only: [:index, :show, :create]
 
   override_rate_limit_headers :follow, family: :follows
 

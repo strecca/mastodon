@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::Accounts::StatusesController < Api::BaseController
+  skip_before_action :require_authenticated_user!
+
   before_action -> { authorize_if_got_token! :read, :'read:statuses' }
   before_action :set_account
 

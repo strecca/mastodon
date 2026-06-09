@@ -5,6 +5,8 @@ class Api::V1::StatusesController < Api::BaseController
   include AsyncRefreshesConcern
   include Api::InteractionPoliciesConcern
 
+  skip_before_action :require_authenticated_user!, only: [:index, :show, :context]
+
   before_action -> { authorize_if_got_token! :read, :'read:statuses' }, except: [:create, :update, :destroy]
   before_action -> { doorkeeper_authorize! :write, :'write:statuses' }, only:   [:create, :update, :destroy]
   before_action :require_user!, except:      [:index, :show, :context]
