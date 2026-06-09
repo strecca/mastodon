@@ -409,6 +409,10 @@ export function CommunityPropertiesEdit () {
   return import('../../community_properties/edit');
 }
 
+export function CommunityDirectoryEntries () {
+  return import('../../community_directory/entries');
+}
+
 // [CD:ASYNC_EXPORTS]
 
 export function CommunityArtistsEdit () {

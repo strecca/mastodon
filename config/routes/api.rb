@@ -85,6 +85,9 @@ namespace :api, format: false do
     put   'community_directory/settings/:category_key', to: 'community_directory#settings_update'
     get   'community_directory/duplicate_check',      to: 'community_directory#duplicate_check'
     get   'community_directory/scraper_logs',         to: 'community_directory#scraper_logs'
+    # Admin entry management
+    get    'community_directory/admin_entries',        to: 'community_directory#admin_entries'
+    delete 'community_directory/admin_entries/:id',    to: 'community_directory#admin_delete_entry'
 
     get   'community_landing',  to: 'community_landing#show'
     patch 'community_landing',  to: 'community_landing#update'

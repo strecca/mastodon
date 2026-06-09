@@ -126,6 +126,7 @@ import {
   CommunityPropertiesShow,
   CommunityPropertiesNew,
   CommunityPropertiesEdit,
+  CommunityDirectoryEntries,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
@@ -309,6 +310,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/community_properties/:id/edit' exact component={CommunityPropertiesEdit} content={children} />
             <WrappedRoute path='/community_properties/:id'      exact component={CommunityPropertiesShow} content={children} />
             <WrappedRoute path='/community_properties'          exact component={CommunityProperties}     content={children} />
+            <WrappedRoute path='/community_directory/entries/:categoryKey' exact component={CommunityDirectoryEntries} content={children} />
             {/* [CD:ROUTES] */}
 
             <WrappedRoute path='/explore' component={Explore} content={children} />

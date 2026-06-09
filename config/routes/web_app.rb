@@ -49,6 +49,7 @@
   /community_visits/notifications
   /landing
   /community_directory/landing-settings
+  /community_directory/entries/(*any)
   /community_maintenance
   /community_services
   /community_services/(*any)

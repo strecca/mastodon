@@ -166,6 +166,49 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
                    stale_reject_after_days: setting.stale_reject_after_days }
   end
 
+  # ── Admin entry management ───────────────────────────────────
+
+  # GET /api/v1/community_directory/admin_entries?category=services[&status=approved|pending|rejected]
+  # Returns all entries for a category regardless of status — admin only.
+  def admin_entries
+    category_key = params[:category].to_s.gsub(/[^a-z0-9_]/, '')
+    model = model_for_category(category_key)
+    return render json: { error: 'Category not found' }, status: :not_found unless model
+
+    scope = model.includes(:account).order(created_at: :desc)
+    if params[:status].present? && params[:status] != 'all'
+      scope = scope.where(status: params[:status])
+    end
+
+    page_entries = scope.page(params[:page]).per(50)
+
+    config_path = category_config_path(category_key)
+    config = File.exist?(config_path) ? JSON.parse(File.read(config_path)) : {}
+    name_field = (config['fields'] || []).find { |f| %w[name title first_name].include?(f['db_name']) }
+
+    render json: {
+      category_key:  category_key,
+      display_name:  config['display_name'] || category_key.titleize,
+      entries:       page_entries.map { |e| admin_entry_serialize(e, category_key, name_field) },
+      total:         page_entries.total_count,
+      pages:         page_entries.total_pages,
+    }
+  end
+
+  # DELETE /api/v1/community_directory/admin_entries/:id?category=services
+  def admin_delete_entry
+    category_key = params[:category].to_s.gsub(/[^a-z0-9_]/, '')
+    model = model_for_category(category_key)
+    return render json: { error: 'Category not found' }, status: :not_found unless model
+
+    entry = model.find(params[:id])
+    entry.destroy!
+    Rails.cache.increment("community:#{category_key}:list:v")
+    head :no_content
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Entry not found' }, status: :not_found
+  end
+
   # GET /api/v1/community_directory/scraper_logs
   # Returns last 10 runs per source, plus a latest-per-source summary.
   def scraper_logs
@@ -291,6 +334,25 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     "Community#{category_key.classify}".constantize
   rescue NameError
     nil
+  end
+
+  def admin_entry_serialize(e, category_key, name_field)
+    name = if name_field && e.respond_to?(name_field['db_name'])
+      val = e.send(name_field['db_name']).to_s
+      val.presence || "##{e.id}"
+    elsif e.respond_to?(:first_name)
+      [e.try(:first_name), e.try(:last_name)].compact.join(' ').presence || "##{e.id}"
+    elsif e.respond_to?(:name) then e.name.to_s.presence || "##{e.id}"
+    elsif e.respond_to?(:title) then e.title.to_s.presence || "##{e.id}"
+    else "##{e.id}"
+    end
+
+    { id:           e.id,
+      category_key: category_key,
+      status:       e.status,
+      name:         name,
+      account:      { username: e.account&.username, display_name: e.account&.display_name },
+      created_at:   e.created_at.iso8601 }
   end
 
   def permit_config_params

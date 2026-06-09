@@ -23,9 +23,10 @@ const messages = defineMessages({
   scraperLogs:  { id: 'community_directory.scraper_logs', defaultMessage: 'Scraper Logs' },
   locations:    { id: 'community_directory.locations',    defaultMessage: 'Manage Towns' },
   empty:        { id: 'community_directory.empty',        defaultMessage: 'No categories generated yet. Create your first one.' },
-  entries:      { id: 'community_directory.entries',      defaultMessage: '{count, plural, one {# entry} other {# entries}}' },
-  view:         { id: 'community_directory.view',         defaultMessage: 'View' },
-  edit:         { id: 'community_directory.edit',         defaultMessage: 'Edit' },
+  entries:       { id: 'community_directory.entries',        defaultMessage: '{count, plural, one {# entry} other {# entries}}' },
+  view:          { id: 'community_directory.view',           defaultMessage: 'View' },
+  edit:          { id: 'community_directory.edit',           defaultMessage: 'Edit' },
+  manageEntries: { id: 'community_directory.manage_entries', defaultMessage: 'Manage Entries' },
   rateLimits:   { id: 'community_directory.rate_limits',  defaultMessage: 'Rate Limits' },
   maxEntries:   { id: 'community_directory.max_entries',  defaultMessage: 'Max entries per account' },
   periodDays:   { id: 'community_directory.period_days',  defaultMessage: 'Period (days)' },
@@ -78,6 +79,9 @@ const CategoryCard = ({ cat, setting, intl, dispatch }) => {
       <div className='community-directory-admin__card-actions'>
         <Link to={`/community_${name}`} className='button button-secondary'>
           {intl.formatMessage(messages.view)}
+        </Link>
+        <Link to={`/community_directory/entries/${name}`} className='button button-secondary'>
+          {intl.formatMessage(messages.manageEntries)}
         </Link>
         <Link to={`/community_directory/edit/${name}`} className='button'>
           {intl.formatMessage(messages.edit)}
