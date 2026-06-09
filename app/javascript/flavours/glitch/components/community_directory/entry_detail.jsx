@@ -1,6 +1,6 @@
 // app/javascript/flavours/glitch/components/community_directory/entry_detail.jsx
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 
 import { useIntl, defineMessages } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
@@ -54,6 +54,15 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
 
   const { signedIn } = identity;
   const isAdmin = !!(identity.permissions & 0x1);
+
+  const [lightboxUrl, setLightboxUrl] = useState(null);
+
+  const openLightbox  = useCallback((url) => setLightboxUrl(url), []);
+  const closeLightbox = useCallback(() => setLightboxUrl(null), []);
+
+  const handleLightboxKeyDown = useCallback((e) => {
+    if (e.key === 'Escape') closeLightbox();
+  }, [closeLightbox]);
 
   const handleDelete = useCallback(() => {
     if (!window.confirm(intl.formatMessage(messages.deleteConfirm))) return;
@@ -224,13 +233,19 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
             </div>
           )}
 
-          {/* Image gallery — preview for display, original for full-size link */}
+          {/* Image gallery — tap to open lightbox, never navigates away */}
           {images.length > 0 && (
             <div className='community-entry-detail__gallery'>
               {images.map((url, i) => (
-                <a key={i} href={url} target='_blank' rel='noopener noreferrer' className='community-entry-detail__gallery-item'>
+                <button
+                  key={i}
+                  type='button'
+                  className='community-entry-detail__gallery-item'
+                  onClick={() => openLightbox(url)}
+                  aria-label='View full size'
+                >
                   <img src={imagePreviews[i] || url} alt='' loading='lazy' />
-                </a>
+                </button>
               ))}
             </div>
           )}
@@ -295,6 +310,33 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
           )}
         </div>
       </div>
+
+      {/* Lightbox overlay */}
+      {lightboxUrl && (
+        <div
+          className='cd-lightbox'
+          role='dialog'
+          aria-modal='true'
+          onClick={closeLightbox}
+          onKeyDown={handleLightboxKeyDown}
+          tabIndex={-1}
+        >
+          <button
+            type='button'
+            className='cd-lightbox__close'
+            onClick={closeLightbox}
+            aria-label='Close'
+          >
+            ✕
+          </button>
+          <img
+            className='cd-lightbox__img'
+            src={lightboxUrl}
+            alt=''
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 };

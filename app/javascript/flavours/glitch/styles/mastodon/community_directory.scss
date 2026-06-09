@@ -5237,6 +5237,11 @@
     border-radius: 10px;
     overflow: hidden;
     line-height: 0;
+    cursor: zoom-in;
+    padding: 0;
+    border: none;
+    background: none;
+    width: 100%;
 
     img {
       display: block;
@@ -6315,4 +6320,57 @@
   z-index: 9999;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+// ── Image lightbox ───────────────────────────────────────────────────────────
+.cd-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  cursor: zoom-out;
+
+  // Focus ring from keyboard
+  &:focus-visible {
+    outline: none;
+  }
+
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #fff;
+      outline: none;
+    }
+  }
+
+  &__img {
+    max-width: 100%;
+    max-height: 90dvh;
+    object-fit: contain;
+    border-radius: 6px;
+    cursor: default;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  }
 }
