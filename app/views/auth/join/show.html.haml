@@ -1,0 +1,42 @@
+- content_for :page_title do
+  = "Join #{site_hostname}"
+
+%h1.title Welcome to #{site_hostname}!
+
+.join-page
+
+  .join-page__hero
+    %p.join-page__tagline
+      If you want all the benefits of
+      %strong= site_hostname
+      Membership, here's the place to start!
+
+  .join-page__benefits
+    %h2.join-page__benefits-title What you get as a Member:
+    %ul.join-page__benefits-list
+      %li
+        ✅
+        %strong Add your own entries
+        to all Community categories — Services, Artists, Restaurants, Properties and more
+      %li
+        ✅
+        %strong Make your own posts
+        and connect with neighbours in the community feed
+      %li
+        ✅
+        %strong Use the When I'll Be In Town
+        calendar to coordinate visits with friends
+      %li
+        ✅
+        %strong It's completely Free
+        — no credit card, no subscription, no catch
+
+  .join-page__cta
+    %p.join-page__cta-note
+      Sign up as an authorized Member in just a few seconds.
+      All we need is a username, email address and password.
+    = link_to 'Sign Up Free →', available_sign_up_url, class: 'button join-page__signup-btn'
+
+  .join-page__signin
+    Already have an account?
+    = link_to 'Sign in here', new_user_session_path

@@ -63,7 +63,7 @@ export const showAlertForError = (error: unknown, skipNotFound = false) => {
         title: messages.memberRequiredTitle,
         message: messages.memberRequiredMessage,
         action: messages.memberRequiredAction,
-        onClick: () => { window.location.href = '/auth/sign_in'; },
+        onClick: () => { window.location.href = '/join'; },
         className: 'notification-bar--member',
         dismissAfter: 10000,
       });

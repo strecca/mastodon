@@ -87,6 +87,8 @@ Rails.application.routes.draw do
     devise_for :users, path: 'auth', format: false
   end
 
+  get '/join', to: 'auth/join#show', as: :join
+
   with_options constraints: ->(req) { req.format.nil? || req.format.html? } do
     get '/users/:username', to: redirect_with_vary('/@%{username}')
     get '/users/:username/following', to: redirect_with_vary('/@%{username}/following')

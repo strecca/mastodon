@@ -1510,3 +1510,84 @@ code {
     }
   }
 }
+
+// ── /join welcome page ───────────────────────────────────────────────────────
+.join-page {
+  color: var(--color-text-primary);
+
+  &__hero {
+    margin-bottom: 28px;
+  }
+
+  &__tagline {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+  }
+
+  &__benefits {
+    background: var(--color-bg-secondary, rgba(0, 0, 0, 0.05));
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+
+  &__benefits-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--color-text-primary);
+  }
+
+  &__benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+  }
+
+  &__cta {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  &__cta-note {
+    font-size: 15px;
+    color: var(--color-text-secondary, #666);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  &__signup-btn {
+    display: inline-block;
+    font-size: 17px;
+    padding: 14px 32px;
+    background: #2e7d32;
+    border-color: #1b5e20;
+    border-radius: 8px;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      background: #1b5e20;
+    }
+  }
+
+  &__signin {
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-text-secondary, #888);
+
+    a {
+      color: var(--color-text-brand, #6364ff);
+      text-decoration: underline;
+    }
+  }
+}
