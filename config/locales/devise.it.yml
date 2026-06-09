@@ -7,7 +7,7 @@ it:
       send_paranoid_instructions: Se il tuo indirizzo email esiste nel nostro database, riceverai un'email con le istruzioni su come confermare il tuo indirizzo email in pochi minuti. Sei pregato di controllare la tua cartella dello spam se non hai ricevuto quest'email.
     failure:
       already_authenticated: Sei già connesso.
-      closed_registrations: Il tuo tentativo di registrazione è stato bloccato a causa di una politica di rete. Se ritieni che si tratti di un errore, contatta %{email}.
+      closed_registrations: "Mentre effettuiamo dei test per assicurarci che il nostro sito web funzioni alla perfezione, vi chiediamo gentilmente di pazientare. Speriamo di rendere MiaCivezza.com disponibile per le vostre richieste di iscrizione entro il 15 giugno 2026. Nel frattempo, potete dare un'occhiata ai post e alle categorie della community per farvi un'idea di ciò che potrete pubblicare una volta diventati membri. Nel frattempo, molti dei nostri test potrebbero risultare assurdi o divertenti 😊"
       inactive: Il tuo profilo non è ancora attivo.
       invalid: "%{authentication_keys} o password non valida."
       last_attempt: Hai un altro tentativo, prima che il tuo profilo venga bloccato.
