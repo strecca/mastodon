@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
+  # Public timeline is intentionally open to unauthenticated visitors —
+  # LIMITED_FEDERATION_MODE limits federation, not local public visibility.
+  skip_before_action :require_authenticated_user!
+
   before_action -> { authorize_if_got_token! :read, :'read:statuses' }
   before_action :require_user!, if: :require_auth?
 
@@ -15,12 +19,14 @@ class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
   private
 
   def require_auth?
+    # Local timeline is always public on this instance.
+    # Remote/federated timeline still requires login.
     if truthy_param?(:local)
-      Setting.local_live_feed_access != 'public'
+      false
     elsif truthy_param?(:remote)
       Setting.remote_live_feed_access != 'public'
     else
-      Setting.local_live_feed_access != 'public' || Setting.remote_live_feed_access != 'public'
+      false
     end
   end
 
