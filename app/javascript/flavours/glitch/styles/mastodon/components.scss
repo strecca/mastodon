@@ -10766,6 +10766,43 @@ noscript {
   }
 }
 
+// ── Members-only 401 banner ──────────────────────────────────────────────
+.notification-bar--member {
+  background: #2e7d32;
+  border-color: #1b5e20;
+  color: #fff;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 340px;
+
+  .notification-bar__content {
+    margin-inline-end: 0;
+    line-height: 1.6;
+    white-space: normal;
+  }
+
+  .notification-bar__title {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 4px;
+    margin-inline-end: 0;
+  }
+
+  .notification-bar__action {
+    align-self: flex-start;
+    color: #c8e6c9;
+    font-size: 14px;
+    padding: 4px 8px;
+    border: 1px solid rgb(from #c8e6c9 r g b / 60%);
+    border-radius: 4px;
+
+    &:hover,
+    &:active {
+      background: rgb(255 255 255 / 15%);
+    }
+  }
+}
+
 .hashtag-header {
   border-bottom: 1px solid var(--color-border-primary);
   padding: 15px;

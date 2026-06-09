@@ -19,6 +19,7 @@ export const Alert: React.FC<{
   isActive?: boolean;
   isLoading?: boolean;
   animateFrom?: 'side' | 'below';
+  className?: string;
 }> = ({
   title,
   message,
@@ -28,6 +29,7 @@ export const Alert: React.FC<{
   isActive,
   isLoading,
   animateFrom = 'side',
+  className,
 }) => {
   const intl = useIntl();
 
@@ -35,7 +37,7 @@ export const Alert: React.FC<{
 
   return (
     <div
-      className={classNames('notification-bar', {
+      className={classNames('notification-bar', className, {
         'notification-bar--active': isActive,
         'from-side': animateFrom === 'side',
         'from-below': animateFrom === 'below',

@@ -11,4 +11,6 @@ export interface Alert {
   action?: TranslatableString;
   values?: TranslatableValues;
   onClick?: () => void;
+  className?: string;
+  dismissAfter?: number;
 }

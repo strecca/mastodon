@@ -25,6 +25,18 @@ const messages = defineMessages({
     id: 'alert.rate_limited.message',
     defaultMessage: 'Please retry after {retry_time, time, medium}.',
   },
+  memberRequiredTitle: {
+    id: 'alert.member_required.title',
+    defaultMessage: 'Members Only',
+  },
+  memberRequiredMessage: {
+    id: 'alert.member_required.message',
+    defaultMessage: "To see this Community Information you must be a Subscribed Member. It's easy, quick and Free.",
+  },
+  memberRequiredAction: {
+    id: 'alert.member_required.action',
+    defaultMessage: 'Sign Up Free →',
+  },
 });
 
 export const dismissAlert = createAction<{ key: number }>('alerts/dismiss');
@@ -43,6 +55,18 @@ export const showAlertForError = (error: unknown, skipNotFound = false) => {
     // Skip these errors as they are reflected in the UI
     if (skipNotFound && (status === 404 || status === 410)) {
       return ignoreAlert();
+    }
+
+    // 401 — show friendly membership banner
+    if (status === 401) {
+      return showAlert({
+        title: messages.memberRequiredTitle,
+        message: messages.memberRequiredMessage,
+        action: messages.memberRequiredAction,
+        onClick: () => { window.location.href = '/auth/sign_in'; },
+        className: 'notification-bar--member',
+        dismissAfter: 10000,
+      });
     }
 
     // Rate limit errors

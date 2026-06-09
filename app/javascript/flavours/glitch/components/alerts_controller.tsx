@@ -29,9 +29,10 @@ const TimedAlert: React.FC<{
   alert: AlertType;
   dismissAfter: number;
 }> = ({
-  alert: { key, title, message, values, action, onClick },
-  dismissAfter,
+  alert: { key, title, message, values, action, onClick, className, dismissAfter: alertDismissAfter },
+  dismissAfter: defaultDismissAfter,
 }) => {
+  const dismissAfter = alertDismissAfter ?? defaultDismissAfter;
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const [active, setActive] = useState(false);
@@ -68,6 +69,7 @@ const TimedAlert: React.FC<{
       message={formatIfNeeded(intl, message, values)}
       action={action ? formatIfNeeded(intl, action, values) : undefined}
       onActionClick={onClick}
+      className={className}
     />
   );
 };
