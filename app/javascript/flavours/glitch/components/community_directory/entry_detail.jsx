@@ -119,9 +119,15 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
   );
   const locationVal = locationField && entry.get(locationField.db_name);
 
-  // Image gallery — from image_media_ids serialization
+  // Image gallery — originals for links, previews (:small ~400px) for display
   const images = (() => {
     const raw = entry.get('images');
+    if (!raw) return [];
+    return typeof raw.toJS === 'function' ? raw.toJS() : Array.isArray(raw) ? raw : [];
+  })();
+
+  const imagePreviews = (() => {
+    const raw = entry.get('image_previews');
     if (!raw) return [];
     return typeof raw.toJS === 'function' ? raw.toJS() : Array.isArray(raw) ? raw : [];
   })();
@@ -218,12 +224,12 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
             </div>
           )}
 
-          {/* Image gallery */}
+          {/* Image gallery — preview for display, original for full-size link */}
           {images.length > 0 && (
             <div className='community-entry-detail__gallery'>
               {images.map((url, i) => (
                 <a key={i} href={url} target='_blank' rel='noopener noreferrer' className='community-entry-detail__gallery-item'>
-                  <img src={url} alt='' loading='lazy' />
+                  <img src={imagePreviews[i] || url} alt='' loading='lazy' />
                 </a>
               ))}
             </div>

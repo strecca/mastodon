@@ -5227,8 +5227,24 @@
 
   &__gallery {
     margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__gallery-item {
+    display: block;
     border-radius: 10px;
     overflow: hidden;
+    line-height: 0;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
   }
 
   &__main-img {
