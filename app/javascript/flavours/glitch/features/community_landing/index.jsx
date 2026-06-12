@@ -54,14 +54,6 @@ const NAV_TILES = [
   },
 ];
 
-const SIDEBAR_HINTS = [
-  { icon: '🔍', text: 'Search posts, people & tags' },
-  { icon: '📣', text: 'Local & federated timelines' },
-  { icon: '🔔', text: 'Notifications & mentions' },
-  { icon: '💬', text: 'Private messages' },
-  { icon: '📌', text: 'Trending topics & news' },
-  { icon: '🌍', text: 'Connect across the Fediverse' },
-];
 
 const CommunityLanding = ({ identity }) => {
   const history  = useHistory();
@@ -90,8 +82,7 @@ const CommunityLanding = ({ identity }) => {
       {/* ── Hero / Logo ── */}
       <header className='cl-landing__hero'>
         <div className='cl-landing__logo'>
-          <span className='cl-landing__logo-main'>{settings.site_name}</span>
-          <span className='cl-landing__logo-sub'>{settings.site_subtitle}</span>
+          <span className='cl-landing__logo-main'>{settings.site_name} <span className='cl-landing__logo-sub'>{settings.site_subtitle}</span></span>
         </div>
         <p className='cl-landing__tagline'>{settings.tagline}</p>
 
@@ -115,7 +106,6 @@ const CommunityLanding = ({ identity }) => {
 
       {/* ── Community tiles ── */}
       <section className='cl-landing__section'>
-        <h2 className='cl-landing__section-title'>Explore Our Community</h2>
         <div className='cl-landing__tiles'>
           {NAV_TILES.map(({ to, Icon, label, desc, color, bg }) => (
             <Link
@@ -135,21 +125,6 @@ const CommunityLanding = ({ identity }) => {
         </div>
       </section>
 
-      {/* ── What's inside (sidebar preview) ── */}
-      <section className='cl-landing__section cl-landing__section--hints'>
-        <h2 className='cl-landing__section-title'>What's inside the app</h2>
-        <div className='cl-landing__hint-grid'>
-          {SIDEBAR_HINTS.map(({ icon, text }) => (
-            <div key={text} className='cl-landing__hint-item'>
-              <span className='cl-landing__hint-icon'>{icon}</span>
-              <span className='cl-landing__hint-text'>{text}</span>
-            </div>
-          ))}
-        </div>
-        <button className='cl-landing__see-posts-btn cl-landing__see-posts-btn--secondary' onClick={handleSeePosts}>
-          Browse public posts →
-        </button>
-      </section>
 
       {/* ── Sign-up CTA ── */}
       {!signedIn && (

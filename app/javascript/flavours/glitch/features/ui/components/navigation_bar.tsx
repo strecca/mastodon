@@ -6,12 +6,14 @@ import classNames from 'classnames';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
 import AddIcon from '@/material-icons/400-24px/add.svg?react';
+import GroupsIcon from '@/material-icons/400-24px/group.svg?react';
 import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
 import MenuIcon from '@/material-icons/400-24px/menu.svg?react';
 import NotificationsActiveIcon from '@/material-icons/400-24px/notifications-fill.svg?react';
 import NotificationsIcon from '@/material-icons/400-24px/notifications.svg?react';
 import SearchIcon from '@/material-icons/400-24px/search.svg?react';
+import { Icon } from 'flavours/glitch/components/icon';
 import { openModal } from 'flavours/glitch/actions/modal';
 import { toggleNavigation } from 'flavours/glitch/actions/navigation';
 import { fetchServer } from 'flavours/glitch/actions/server';
@@ -173,6 +175,16 @@ export const NavigationBar: React.FC = () => {
           active: signedIn,
         })}
       >
+        <NavLink
+          className='ui__navigation-bar__item ui__navigation-bar__item--home'
+          activeClassName='active'
+          exact
+          to='/landing'
+          aria-label='See Everything'
+        >
+          <Icon id='' icon={GroupsIcon} />
+        </NavLink>
+
         {signedIn && (
           <>
             <IconLabelButton

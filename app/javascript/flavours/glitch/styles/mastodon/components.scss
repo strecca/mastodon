@@ -3165,6 +3165,18 @@ a.account__display-name {
       border-top-color: var(--color-border-brand);
       border-radius: 0;
     }
+
+    &--home {
+      color: #6a1b9a;
+
+      &.active {
+        color: #4a148c;
+      }
+
+      svg {
+        filter: drop-shadow(0 0 4px rgba(106, 27, 154, 0.4));
+      }
+    }
   }
 }
 
