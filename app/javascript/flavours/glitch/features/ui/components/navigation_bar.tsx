@@ -13,7 +13,6 @@ import MenuIcon from '@/material-icons/400-24px/menu.svg?react';
 import NotificationsActiveIcon from '@/material-icons/400-24px/notifications-fill.svg?react';
 import NotificationsIcon from '@/material-icons/400-24px/notifications.svg?react';
 import SearchIcon from '@/material-icons/400-24px/search.svg?react';
-import { Icon } from 'flavours/glitch/components/icon';
 import { openModal } from 'flavours/glitch/actions/modal';
 import { toggleNavigation } from 'flavours/glitch/actions/navigation';
 import { fetchServer } from 'flavours/glitch/actions/server';
