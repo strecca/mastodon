@@ -60,7 +60,7 @@ const ColumnSettings = () => {
             settings={settings}
             settingPath={['allowLocalOnly']}
             onChange={onChange}
-            label={<FormattedMessage id='firehose.column_settings.allow_local_only' defaultMessage='Show local-only posts in "All"' />}
+            label={<FormattedMessage id='firehose.column_settings.allow_local_only' defaultMessage='See All posts' />}
           />
         </div>
       </section>
@@ -225,12 +225,8 @@ const Firehose = ({ feedType, multiColumn }) => {
             <FormattedMessage tagName='div' id='firehose.local' defaultMessage='This server' />
           </NavLink>
 
-          <NavLink exact to='/public/remote'>
-            <FormattedMessage tagName='div' id='firehose.remote' defaultMessage='Other servers' />
-          </NavLink>
-
-          <NavLink exact to='/public'>
-            <FormattedMessage tagName='div' id='firehose.all' defaultMessage='All' />
+          <NavLink exact to='/community'>
+            <FormattedMessage tagName='div' id='firehose.community' defaultMessage='See Community' />
           </NavLink>
         </div>
       )}

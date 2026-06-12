@@ -14,6 +14,7 @@ import { Helmet } from '@unhead/react/helmet';
 
 import CategoryIcon from '@/material-icons/400-24px/category.svg?react';
 import GroupsIcon from '@/material-icons/400-24px/group.svg?react';
+import TagIcon from '@/material-icons/400-24px/tag.svg?react';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
@@ -86,8 +87,18 @@ const CommunityHub = ({ multiColumn }) => {
             <div className='empty-column-indicator'>
               <p>{error}</p>
             </div>
-          ) : categories.length > 0 ? (
+          ) : (
             <div className='community-hub__grid'>
+              <Link to='/community_listings' className='community-hub__card'>
+                <div className='community-hub__card-icon'>
+                  <TagIcon />
+                </div>
+                <div className='community-hub__card-body'>
+                  <h3 className='community-hub__card-name'>Community Listings</h3>
+                  <p className='community-hub__card-desc'>Giveaway · Trade · Sell · ISO</p>
+                </div>
+                <span className='community-hub__card-action'>{intl.formatMessage(messages.explore)} →</span>
+              </Link>
               {categories.map(cat => (
                 <CategoryCard
                   key={cat.name}
@@ -96,7 +107,8 @@ const CommunityHub = ({ multiColumn }) => {
                 />
               ))}
             </div>
-          ) : (
+          )}
+          {!loading && !error && categories.length === 0 && (
             <div className='empty-column-indicator'>
               {intl.formatMessage(messages.empty)}
             </div>
