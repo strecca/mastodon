@@ -9,7 +9,8 @@ class ClosedRegistrationsModal extends ImmutablePureComponent {
     return (
       <div className='modal-root__modal interaction-modal'>
         <div className='interaction-modal__lead'>
-          <h3><FormattedMessage id='closed_registrations_modal.title' defaultMessage='Join Our Community' /></h3>
+          <img src='/miacivezza-sun-small.png' alt='Mia Civezza' style={{ height: '60px', width: 'auto', marginBottom: '12px' }} />
+          <h3><FormattedMessage id='closed_registrations_modal.title' defaultMessage='Signing up on MiaCivezza.com' /></h3>
           <p>
             <FormattedMessage
               id='closed_registrations_modal.preamble'
