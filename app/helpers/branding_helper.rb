@@ -11,7 +11,7 @@ module BrandingHelper
   end
 
   def _logo_as_symbol_wordmark
-    image_tag('/miacivezza-sun-small.png', alt: 'Mia Civezza', class: 'logo logo--wordmark', style: 'height: 50px; width: auto;')
+    image_tag('/miacivezza-sun-small.png', alt: 'Mia Civezza', class: 'logo logo--wordmark', style: 'width: 100%; max-width: 320px; height: auto; display: block; margin: 0 auto;')
   end
 
   def _logo_as_symbol_icon
