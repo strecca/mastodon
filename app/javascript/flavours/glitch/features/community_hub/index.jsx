@@ -79,6 +79,9 @@ const CommunityHub = ({ multiColumn }) => {
             <p className='community-hub__subtitle'>
               {intl.formatMessage(messages.subtitle)}
             </p>
+            <Link to='/public/local' className='button community-hub__posts-btn'>
+              See Community Posts
+            </Link>
           </div>
 
           {loading ? (

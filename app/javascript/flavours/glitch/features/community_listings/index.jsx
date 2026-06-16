@@ -68,6 +68,10 @@ const CommunityListings = ({ multiColumn }) => {
       />
       <Helmet><title>Community Listings · miacivezza</title></Helmet>
 
+      <Link to='/community' className='community-category-banner'>
+        Click here to see All Community Categories
+      </Link>
+
       <div className='cl-page'>
         <div className='cl-hero'>
           <div className='cl-hero__title'>Exchange &amp; Find</div>

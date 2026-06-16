@@ -24,14 +24,14 @@ import SettingToggle from '../notifications/components/setting_toggle';
 import StatusListContainer from '../ui/containers/status_list_container';
 
 const messages = defineMessages({
-  title: { id: 'column.firehose', defaultMessage: 'Live feeds' },
+  title: { id: 'column.firehose', defaultMessage: 'Live feeds of Community Posts' },
   title_local: {
     id: 'column.firehose_local',
-    defaultMessage: 'Live feed for this server',
+    defaultMessage: 'Live feeds of Community Posts',
   },
   title_singular: {
     id: 'column.firehose_singular',
-    defaultMessage: 'Live feed',
+    defaultMessage: 'Live feeds of Community Posts',
   },
   filter_regex: { id: 'home.column_settings.filter_regex', defaultMessage: 'Filter out by regular expressions' },
 });
@@ -219,17 +219,11 @@ const Firehose = ({ feedType, multiColumn }) => {
         <ColumnSettings />
       </ColumnHeader>
 
-      {(canViewFeed(signedIn, permissions, localLiveFeedAccess) && canViewFeed(signedIn, permissions, remoteLiveFeedAccess)) && (
-        <div className='account__section-headline'>
-          <NavLink exact to='/public/local'>
-            <FormattedMessage tagName='div' id='firehose.local' defaultMessage='This server' />
-          </NavLink>
-
-          <NavLink exact to='/community'>
-            <FormattedMessage tagName='div' id='firehose.community' defaultMessage='See Community' />
-          </NavLink>
-        </div>
-      )}
+      <div className='account__section-headline'>
+        <NavLink exact to='/community'>
+          <FormattedMessage tagName='div' id='firehose.community' defaultMessage='Click here to see All Community Categories' />
+        </NavLink>
+      </div>
 
       <StatusListContainer
         prepend={prependBanner}

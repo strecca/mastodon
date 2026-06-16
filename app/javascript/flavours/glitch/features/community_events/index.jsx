@@ -529,6 +529,10 @@ const CommunityEvents = ({ multiColumn }) => {
         )}
       </ColumnHeader>
 
+      <Link to='/community' className='community-category-banner'>
+        Click here to see All Community Categories
+      </Link>
+
       <div className='ce-page'>
 
         {/* ── Hero banner ──────────────────────────────────────────── */}

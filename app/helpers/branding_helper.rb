@@ -11,10 +11,7 @@ module BrandingHelper
   end
 
   def _logo_as_symbol_wordmark
-    tag.svg(viewBox: '0 0 261 66', class: 'logo logo--wordmark') do
-      tag.title('Mastodon') +
-        tag.use(href: '#logo-symbol-wordmark')
-    end
+    image_tag('/assets/miacivezza-sun-small.png', alt: 'Mia Civezza', class: 'logo logo--wordmark', style: 'height: 50px; width: auto;')
   end
 
   def _logo_as_symbol_icon
