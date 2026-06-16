@@ -30,11 +30,24 @@
     &:focus-visible {
       outline: var(--outline-focus-default);
     }
+
+    &:has(img.logo--wordmark) {
+      width: 100%;
+      max-width: 480px;
+      padding: 8px 16px;
+    }
   }
 
   .logo {
     height: 42px;
     margin-inline-end: 10px;
+  }
+
+  img.logo--wordmark {
+    height: auto;
+    width: 100%;
+    max-width: 100%;
+    margin-inline-end: 0;
   }
 }
 
