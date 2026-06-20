@@ -4,8 +4,11 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { Helmet } from '@unhead/react/helmet';
 
+import BrushIcon from '@/material-icons/400-24px/brush.svg?react';
 import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
-import GroupsIcon from '@/material-icons/400-24px/group.svg?react';
+import HomeIcon from '@/material-icons/400-24px/home.svg?react';
+import ManufacturingIcon from '@/material-icons/400-24px/manufacturing.svg?react';
+import StarIcon from '@/material-icons/400-24px/star.svg?react';
 import TagIcon from '@/material-icons/400-24px/tag.svg?react';
 import TripIcon from '@/material-icons/400-24px/trip.svg?react';
 import api from 'flavours/glitch/api';
@@ -21,12 +24,12 @@ const DEFAULTS = {
 
 const NAV_TILES = [
   {
-    to:    '/community_visits',
-    Icon:  TripIcon,
-    label: "When I'm In Town",
-    desc:  'See who\'s visiting · Share your dates',
-    color: '#c62828',
-    bg:    '#ffebee',
+    to:    '/community_listings',
+    Icon:  TagIcon,
+    label: 'Community Listings',
+    desc:  'Giveaway · Trade · Sell · ISO',
+    color: '#2e7d32',
+    bg:    '#e8f5e9',
   },
   {
     to:    '/community_events',
@@ -37,20 +40,44 @@ const NAV_TILES = [
     bg:    '#e3f2fd',
   },
   {
-    to:    '/community_listings',
-    Icon:  TagIcon,
-    label: 'Listings',
-    desc:  'Giveaway · Trade · Sell · ISO',
-    color: '#2e7d32',
-    bg:    '#e8f5e9',
+    to:    '/community_properties',
+    Icon:  HomeIcon,
+    label: 'Community Properties',
+    desc:  'Houses · Apartments · Rentals',
+    color: '#5d4037',
+    bg:    '#efebe9',
   },
   {
-    to:    '/community',
-    Icon:  GroupsIcon,
-    label: 'Community Directory',
-    desc:  'Artists, businesses & more',
+    to:    '/community_services',
+    Icon:  ManufacturingIcon,
+    label: 'Community Services',
+    desc:  'Local businesses & services',
+    color: '#00695c',
+    bg:    '#e0f2f1',
+  },
+  {
+    to:    '/community_restaurants',
+    Icon:  StarIcon,
+    label: 'Community Restaurants',
+    desc:  'Dining · Cafés · Trattorias',
+    color: '#e65100',
+    bg:    '#fff3e0',
+  },
+  {
+    to:    '/community_artists',
+    Icon:  BrushIcon,
+    label: 'Community Artists',
+    desc:  'Local talent & creatives',
     color: '#6a1b9a',
     bg:    '#f3e5f5',
+  },
+  {
+    to:    '/community_visits',
+    Icon:  TripIcon,
+    label: "Community When I'm In Town",
+    desc:  "See who's visiting · Share your dates",
+    color: '#c62828',
+    bg:    '#ffebee',
   },
 ];
 
@@ -82,13 +109,13 @@ const CommunityLanding = ({ identity }) => {
       {/* ── Hero / Logo ── */}
       <header className='cl-landing__hero'>
         <div className='cl-landing__logo'>
-          <span className='cl-landing__logo-main'>{settings.site_name} <span className='cl-landing__logo-sub'>{settings.site_subtitle}</span></span>
+          <span className='cl-landing__logo-main'>Community Directory</span>
         </div>
-        <p className='cl-landing__tagline'>{settings.tagline}</p>
+        <p className='cl-landing__tagline'>Explore everything our community has to offer</p>
 
         <div className='cl-landing__hero-actions'>
           <button className='cl-landing__see-posts-btn' onClick={handleSeePosts}>
-            See Posts ↓
+            See Community Posts
           </button>
           {!signedIn && (
             <a href='/auth/sign_in' className='cl-landing__login-link'>Log in →</a>
