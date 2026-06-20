@@ -44,7 +44,7 @@ class ServerBanner extends PureComponent {
     return (
       <div className='server-banner'>
         <div className='server-banner__introduction'>
-          <FormattedMessage id='server_banner.is_one_of_many' defaultMessage='{domain} is one of the many independent Mastodon servers you can use to participate in the fediverse.' values={{ domain: <strong>{domain}</strong>, mastodon: <a href='https://joinmastodon.org' target='_blank' rel='noopener'>Mastodon</a> }} />
+          <FormattedMessage id='server_banner.is_one_of_many' defaultMessage='{domain} is a community bulletin board for Civezza, in the hills of Imperia province, Liguria.' values={{ domain: <strong>{domain}</strong> }} />
         </div>
 
         <Link to='/about'>
