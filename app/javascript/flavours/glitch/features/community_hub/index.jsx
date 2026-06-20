@@ -5,56 +5,43 @@
 // Anyone can see this page — it's the main entry point to all community features.
 // Route: /community
 
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import { defineMessages, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { Helmet } from '@unhead/react/helmet';
 
-import CategoryIcon from '@/material-icons/400-24px/category.svg?react';
+import BrushIcon from '@/material-icons/400-24px/brush.svg?react';
+import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
 import GroupsIcon from '@/material-icons/400-24px/group.svg?react';
+import HomeIcon from '@/material-icons/400-24px/home.svg?react';
+import ManufacturingIcon from '@/material-icons/400-24px/manufacturing.svg?react';
+import StarIcon from '@/material-icons/400-24px/star.svg?react';
 import TagIcon from '@/material-icons/400-24px/tag.svg?react';
+import TripIcon from '@/material-icons/400-24px/trip.svg?react';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import api from 'flavours/glitch/api';
 
 const messages = defineMessages({
-  title: { id: 'community_hub.title', defaultMessage: 'Community Directory' },
+  title: { id: 'community_hub.title', defaultMessage: 'Civezza Community Directory' },
   subtitle: { id: 'community_hub.subtitle', defaultMessage: 'Explore everything our community has to offer' },
-  empty: { id: 'community_hub.empty', defaultMessage: 'No community directories have been set up yet. Check back soon!' },
-  entries: { id: 'community_hub.entries', defaultMessage: '{count, plural, one {# entry} other {# entries}}' },
   explore: { id: 'community_hub.explore', defaultMessage: 'Browse' },
 });
 
-// Icon map — maps icon names from config to Material icon components
-// Falls back to CategoryIcon for unknown icons
-const ICON_MAP = {
-  category: CategoryIcon,
-  group: GroupsIcon,
-};
+const ORDERED_TILES = [
+  { to: '/community_listings',   Icon: TagIcon,           label: 'Community Listings',         desc: 'Giveaway · Trade · Sell · ISO' },
+  { to: '/community_events',     Icon: CelebrationIcon,   label: 'Community Events',            desc: "What's happening nearby" },
+  { to: '/community_properties', Icon: HomeIcon,          label: 'Community Properties',        desc: 'Houses · Apartments · Rentals' },
+  { to: '/community_services',   Icon: ManufacturingIcon, label: 'Community Services',          desc: 'Local businesses & services' },
+  { to: '/community_restaurants',Icon: StarIcon,          label: 'Community Restaurants',       desc: 'Dining · Cafés · Trattorias' },
+  { to: '/community_artists',    Icon: BrushIcon,         label: 'Community Artists',           desc: 'Local talent & creatives' },
+  { to: '/community_visits',     Icon: TripIcon,          label: "Community When I'm In Town",  desc: "See who's visiting · Share your dates" },
+];
 
 const CommunityHub = ({ multiColumn }) => {
   const intl = useIntl();
   const column = useRef(null);
-
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setLoading(true);
-    api().get('/api/v1/community_directory_public')
-      .then(response => {
-        setCategories(response.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err?.message || 'Failed to load directories');
-        setLoading(false);
-      });
-  }, []);
 
   const handleHeaderClick = useCallback(() => {
     column.current?.scrollTop();
@@ -84,38 +71,20 @@ const CommunityHub = ({ multiColumn }) => {
             </Link>
           </div>
 
-          {loading ? (
-            <LoadingIndicator />
-          ) : error ? (
-            <div className='empty-column-indicator'>
-              <p>{error}</p>
-            </div>
-          ) : (
-            <div className='community-hub__grid'>
-              <Link to='/community_listings' className='community-hub__card'>
+          <div className='community-hub__grid'>
+            {ORDERED_TILES.map(({ to, Icon, label, desc }) => (
+              <Link key={to} to={to} className='community-hub__card'>
                 <div className='community-hub__card-icon'>
-                  <TagIcon />
+                  <Icon />
                 </div>
                 <div className='community-hub__card-body'>
-                  <h3 className='community-hub__card-name'>Community Listings</h3>
-                  <p className='community-hub__card-desc'>Giveaway · Trade · Sell · ISO</p>
+                  <h3 className='community-hub__card-name'>{label}</h3>
+                  <p className='community-hub__card-desc'>{desc}</p>
                 </div>
                 <span className='community-hub__card-action'>{intl.formatMessage(messages.explore)} →</span>
               </Link>
-              {categories.map(cat => (
-                <CategoryCard
-                  key={cat.name}
-                  category={cat}
-                  intl={intl}
-                />
-              ))}
-            </div>
-          )}
-          {!loading && !error && categories.length === 0 && (
-            <div className='empty-column-indicator'>
-              {intl.formatMessage(messages.empty)}
-            </div>
-          )}
+            ))}
+          </div>
         </div>
       </div>
 
@@ -124,39 +93,6 @@ const CommunityHub = ({ multiColumn }) => {
         <meta name='description' content={intl.formatMessage(messages.subtitle)} />
       </Helmet>
     </Column>
-  );
-};
-
-const CategoryCard = ({ category, intl }) => {
-  const IconComponent = ICON_MAP[category.icon] || CategoryIcon;
-  const count = category.entries_count || 0;
-
-  return (
-    <Link to={category.route} className='community-hub__card'>
-      <div className='community-hub__card-icon'>
-        <IconComponent />
-      </div>
-
-      <div className='community-hub__card-body'>
-        <h3 className='community-hub__card-name'>
-          {category.display_name}
-        </h3>
-
-        {category.description && (
-          <p className='community-hub__card-desc'>
-            {category.description}
-          </p>
-        )}
-
-        <span className='community-hub__card-count'>
-          {intl.formatMessage(messages.entries, { count })}
-        </span>
-      </div>
-
-      <span className='community-hub__card-action'>
-        {intl.formatMessage(messages.explore)} →
-      </span>
-    </Link>
   );
 };
 

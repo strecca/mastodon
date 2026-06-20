@@ -22,62 +22,56 @@ const DEFAULTS = {
   join_body:    'Mastodon is an open, decentralised social network. Your posts belong to you, not an algorithm. Sign up to post, interact and connect with your neighbours.',
 };
 
+// Backgrounds darkened from the Cinque Terre (Manarola) palette for WCAG AA white-text contrast
 const NAV_TILES = [
   {
     to:    '/community_listings',
     Icon:  TagIcon,
     label: 'Community Listings',
     desc:  'Giveaway · Trade · Sell · ISO',
-    color: '#2e7d32',
-    bg:    '#e8f5e9',
+    bg:    '#5A7A1A',  // darkened olive  (#7A9A2B)
   },
   {
     to:    '/community_events',
     Icon:  CelebrationIcon,
     label: 'Community Events',
     desc:  "What's happening nearby",
-    color: '#1565c0',
-    bg:    '#e3f2fd',
+    bg:    '#007A80',  // darkened turquoise  (#00C0C0)
   },
   {
     to:    '/community_properties',
     Icon:  HomeIcon,
     label: 'Community Properties',
     desc:  'Houses · Apartments · Rentals',
-    color: '#5d4037',
-    bg:    '#efebe9',
+    bg:    '#8B2240',  // darkened deep rose  (#C23B5A)
   },
   {
     to:    '/community_services',
     Icon:  ManufacturingIcon,
     label: 'Community Services',
     desc:  'Local businesses & services',
-    color: '#00695c',
-    bg:    '#e0f2f1',
+    bg:    '#8B3E24',  // darkened terracotta  (#E87050)
   },
   {
     to:    '/community_restaurants',
     Icon:  StarIcon,
     label: 'Community Restaurants',
     desc:  'Dining · Cafés · Trattorias',
-    color: '#e65100',
-    bg:    '#fff3e0',
+    bg:    '#A8302A',  // darkened tomato red  (#E8453C)
   },
   {
     to:    '/community_artists',
     Icon:  BrushIcon,
     label: 'Community Artists',
     desc:  'Local talent & creatives',
-    color: '#6a1b9a',
-    bg:    '#f3e5f5',
+    bg:    '#7A5410',  // darkened warm sand/gold  (#F0C472)
   },
   {
     to:    '/community_visits',
     Icon:  TripIcon,
     label: "Community When I'm In Town",
     desc:  "See who's visiting · Share your dates",
-    color: '#c62828',
-    bg:    '#ffebee',
+    bg:    '#6B1A30',  // deep crimson (second Cinque Terre rose, shifted darker)
   },
 ];
 
@@ -109,7 +103,7 @@ const CommunityLanding = ({ identity }) => {
       {/* ── Hero / Logo ── */}
       <header className='cl-landing__hero'>
         <div className='cl-landing__logo'>
-          <span className='cl-landing__logo-main'>Community Directory</span>
+          <span className='cl-landing__logo-main'>Civezza Community Directory</span>
         </div>
         <p className='cl-landing__tagline'>Explore everything our community has to offer</p>
 
@@ -134,12 +128,12 @@ const CommunityLanding = ({ identity }) => {
       {/* ── Community tiles ── */}
       <section className='cl-landing__section'>
         <div className='cl-landing__tiles'>
-          {NAV_TILES.map(({ to, Icon, label, desc, color, bg }) => (
+          {NAV_TILES.map(({ to, Icon, label, desc, bg }) => (
             <Link
               key={to}
               to={to}
               className='cl-landing__tile'
-              style={{ '--tile-color': color, '--tile-bg': bg }}
+              style={{ '--tile-bg': bg }}
             >
               <span className='cl-landing__tile-icon-wrap'>
                 <Icon />
