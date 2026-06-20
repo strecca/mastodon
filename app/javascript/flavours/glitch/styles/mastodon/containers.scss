@@ -13,6 +13,10 @@
 .logo-container {
   margin: 50px auto;
 
+  @media screen and (width <= 740px) {
+    margin: 0 auto 4px;
+  }
+
   a {
     display: flex;
     justify-content: center;
