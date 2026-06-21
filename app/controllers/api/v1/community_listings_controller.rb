@@ -26,7 +26,8 @@ class Api::V1::CommunityListingsController < Api::BaseController
   # POST /api/v1/community_listings
   def create
     @listing = CommunityListing.new(listing_params)
-    @listing.account = current_account
+    @listing.account    = current_account
+    @listing.expires_at = 60.days.from_now
     @listing.image_media_ids = validated_media_ids
 
     if @listing.save

@@ -63,3 +63,7 @@
       cron: '0 2 * * *'
       class: Scheduler::EventImportScheduler
       queue: scheduler
+    expire_listings_scheduler:
+      cron: '0 3 * * *'
+      class: Scheduler::ExpireListingsScheduler
+      queue: scheduler
