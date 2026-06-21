@@ -31,6 +31,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
     @listing.image_media_ids = validated_media_ids
 
     if @listing.save
+      CommunityDirectoryRefreshWorker.perform_in(30.seconds, 'community:listings')
       render json: serialize(@listing), status: :created
     else
       render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity
@@ -43,6 +44,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
     attrs[:image_media_ids] = validated_media_ids if params.key?(:media_ids)
 
     if @listing.update(attrs)
+      CommunityDirectoryRefreshWorker.perform_in(30.seconds, 'community:listings')
       render json: serialize(@listing)
     else
       render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity

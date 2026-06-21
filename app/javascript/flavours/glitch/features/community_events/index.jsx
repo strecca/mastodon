@@ -8,6 +8,8 @@ import { Helmet } from '@unhead/react/helmet';
 import { Column }       from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { useIdentity }  from 'flavours/glitch/identity_context';
+import { useAppDispatch } from 'flavours/glitch/store';
+import { connectStream } from 'flavours/glitch/stream';
 import api              from 'flavours/glitch/api';
 import AddIcon          from '@/material-icons/400-24px/add.svg?react';
 import ChevronLeftIcon  from '@/material-icons/400-24px/chevron_left.svg?react';
@@ -345,6 +347,7 @@ const MyEventCard = ({ event }) => {
 
 const CommunityEvents = ({ multiColumn }) => {
   const { signedIn, accountId } = useIdentity();
+  const dispatch = useAppDispatch();
 
   const [events,          setEvents]          = useState([]);
   const [loading,         setLoading]         = useState(false);
@@ -361,14 +364,27 @@ const CommunityEvents = ({ multiColumn }) => {
 
   const { year, month } = navDate;
 
-  // Load all approved events once
-  useEffect(() => {
+  const loadEvents = useCallback(() => {
     setLoading(true);
     api().get('/api/v1/community_events', { params: { per_page: 200 } })
       .then(res => { setEvents(res.data.entries || []); })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => { loadEvents(); }, [loadEvents]);
+
+  useEffect(() => {
+    if (!signedIn) return;
+    const disconnect = dispatch(connectStream('community:events', {}, () => ({
+      onConnect() {},
+      onDisconnect() {},
+      onReceive(data) {
+        if (data.event === 'refresh') loadEvents();
+      },
+    })));
+    return disconnect;
+  }, [dispatch, signedIn, loadEvents]);
 
   // Auto-navigate calendar when a date-range chip is selected
   useEffect(() => {

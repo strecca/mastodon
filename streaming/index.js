@@ -448,6 +448,10 @@ const startServer = async () => {
       return 'direct';
     case '/api/v1/streaming/list':
       return 'list';
+    case '/api/v1/streaming/community/listings':
+      return 'community:listings';
+    case '/api/v1/streaming/community/events':
+      return 'community:events';
     default:
       return undefined;
     }
@@ -1173,6 +1177,18 @@ const startServer = async () => {
         reject(new AuthenticationError('Not authorized to stream this list'));
       });
 
+      break;
+    case 'community:listings':
+      resolve({
+        channelIds: ['timeline:community:listings'],
+        options: { needsFiltering: false, allowLocalOnly: true },
+      });
+      break;
+    case 'community:events':
+      resolve({
+        channelIds: ['timeline:community:events'],
+        options: { needsFiltering: false, allowLocalOnly: true },
+      });
       break;
     default:
       reject(new RequestError('Unknown stream type'));

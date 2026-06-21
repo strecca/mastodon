@@ -11,6 +11,7 @@ import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import { fetchListings } from 'flavours/glitch/actions/community_listings';
+import { connectStream } from 'flavours/glitch/stream';
 
 import { ListingCard } from './components/listing_card';
 
@@ -38,6 +39,18 @@ const CommunityListings = ({ multiColumn }) => {
   useEffect(() => {
     dispatch(fetchListings());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!signedIn) return;
+    const disconnect = dispatch(connectStream('community:listings', {}, (innerDispatch) => ({
+      onConnect() {},
+      onDisconnect() {},
+      onReceive(data) {
+        if (data.event === 'refresh') innerDispatch(fetchListings());
+      },
+    })));
+    return disconnect;
+  }, [dispatch, signedIn]);
 
   const handleSearch = useCallback((e) => {
     e.preventDefault();
