@@ -28,7 +28,7 @@ class CommunityScraperWorker
         fetched:       events.size,
         imported:      result[:imported],
         skipped:       result[:skipped],
-        errors:        result[:errors],
+        error_count:   result[:errors],
         status:        events.empty? ? 'empty' : 'ok'
       )
     rescue StandardError => e
@@ -38,7 +38,7 @@ class CommunityScraperWorker
         fetched:       0,
         imported:      0,
         skipped:       0,
-        errors:        1,
+        error_count:   1,
         status:        'failed',
         error_message: e.message.truncate(500)
       )

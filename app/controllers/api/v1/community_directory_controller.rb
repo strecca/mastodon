@@ -255,7 +255,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
       fetched:       r.fetched,
       imported:      r.imported,
       skipped:       r.skipped,
-      errors:        r.errors,
+      errors:        r.error_count,
       status:        r.status,
       error_message: r.error_message,
     }

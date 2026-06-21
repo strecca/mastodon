@@ -135,7 +135,7 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
       fetched:       log.fetched,
       imported:      log.imported,
       skipped:       log.skipped,
-      errors:        log.errors,
+      errors:        log.error_count,
       error_message: log.error_message,
     }
   end
