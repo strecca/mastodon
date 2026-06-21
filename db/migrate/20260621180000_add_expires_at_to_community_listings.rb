@@ -1,7 +1,9 @@
 class AddExpiresAtToCommunityListings < ActiveRecord::Migration[7.2]
+  disable_ddl_transaction!
+
   def up
     add_column :community_listings, :expires_at, :datetime
-    add_index  :community_listings, :expires_at
+    add_index  :community_listings, :expires_at, algorithm: :concurrently
 
     # Backfill existing open listings: expire 60 days after creation
     safety_assured do
