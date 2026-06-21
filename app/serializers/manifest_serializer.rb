@@ -77,41 +77,25 @@ class ManifestSerializer < ActiveModel::Serializer
   def shortcuts
     [
       {
-        name: 'Compose new post',
-        url: '/publish',
+        name: 'Community Directory',
+        url: '/community',
       },
       {
-        name: 'Notifications',
-        url: '/notifications',
+        name: 'Community Events',
+        url: '/community_events',
       },
       {
-        name: 'Explore',
-        url: '/explore',
+        name: 'Community Listings',
+        url: '/community_listings',
       },
     ]
   end
 
   def prefer_related_applications
-    true
+    false
   end
 
   def related_applications
-    [
-      {
-        platform: 'play',
-        url: 'https://play.google.com/store/apps/details?id=org.joinmastodon.android',
-        id: 'org.joinmastodon.android',
-      },
-      {
-        platform: 'itunes',
-        url: 'https://apps.apple.com/us/app/mastodon-for-iphone/id1571998974',
-        id: 'id1571998974',
-      },
-      {
-        platform: 'f-droid',
-        url: 'https://f-droid.org/en/packages/org.joinmastodon.android/',
-        id: 'org.joinmastodon.android',
-      },
-    ]
+    []
   end
 end
