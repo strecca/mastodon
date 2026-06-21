@@ -2,6 +2,12 @@
   = t('doorkeeper.authorizations.new.title')
 
 .form-container.simple_form
+  .oauth-pwa-notice
+    %strong You're connecting a Mastodon client.
+    miacivezza.com is a community directory — listings, events, and local resources won't appear in third-party apps. For the full experience,
+    %a{ href: '/' } install the Mia Civezza website
+    as a PWA on your home screen instead.
+
   .oauth-prompt
     %h3= t('doorkeeper.authorizations.new.title')
 
