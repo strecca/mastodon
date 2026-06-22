@@ -18,8 +18,8 @@ const DEFAULTS = {
   site_name:    'Centro Comunitario',
   site_subtitle: 'Mia Civezza al Mare',
   tagline:      'La nostra comunità online — eventi, scambi, artisti e molto altro.',
-  join_heading: 'Join the community',
-  join_body:    'Mastodon is an open, decentralised social network. Your posts belong to you, not an algorithm. Sign up to post, interact and connect with your neighbours.',
+  join_heading: 'Join the MiaCivezza.com Community',
+  join_body:    'You will be able to make your own posts to all of us as well as add your own Civezza Community Events, Favorite Restaurants, and List Items for Sale, Giveaway, Trade or Searching For & Properties for Sale, Rent or for short-term Vacation stays. Also in the Community Services section let us know your skills or pass along the names and contacts for Builders, Architects, Craftspeople, Cooks, Cleaning, Property Management, or where to go and who to see for various permits, regulations, etc. Additionally you can post for Members to see privately the dates when you will be returning to Civezza or the Imperia area and the details to alert us to know you\'re hoping to see other Members while you are back in Italy. Registration is Free. No Credit Card required. Come Join us!',
 };
 
 // Backgrounds darkened from the Cinque Terre (Manarola) palette for WCAG AA white-text contrast
