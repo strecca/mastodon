@@ -5983,7 +5983,8 @@
 
   &__cta {
     padding: 32px 24px;
-    background: var(--color-bg-elevated, #f9f9f9);
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
     text-align: center;
   }
@@ -5991,13 +5992,13 @@
   &__cta-title {
     font-size: 20px;
     font-weight: 700;
-    color: var(--color-text);
+    color: #ffffff;
     margin: 0 0 12px;
   }
 
   &__cta-body {
     font-size: 14px;
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.75);
     line-height: 1.6;
     margin: 0 0 24px;
   }
