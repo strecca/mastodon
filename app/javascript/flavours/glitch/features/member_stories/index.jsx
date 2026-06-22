@@ -38,11 +38,9 @@ const MemberStoriesList = ({ multiColumn, signedIn }) => {
           <p className='ms-page__subtitle'>
             Stories from our Civezza community — personal histories, connections, and moments that matter.
           </p>
-          {signedIn && (
-            <Link to='/member_stories/edit' className='button ms-page__edit-btn'>
-              My Story
-            </Link>
-          )}
+          <Link to='/member_stories/edit' className='button ms-page__edit-btn'>
+            My Story
+          </Link>
         </div>
 
         {loading ? (
@@ -50,9 +48,7 @@ const MemberStoriesList = ({ multiColumn, signedIn }) => {
         ) : stories.length === 0 ? (
           <div className='ms-page__empty'>
             <p>No stories published yet. Be the first to share yours!</p>
-            {signedIn && (
-              <Link to='/member_stories/edit' className='button'>Write My Story</Link>
-            )}
+            <Link to='/member_stories/edit' className='button'>Write My Story</Link>
           </div>
         ) : (
           <div className='ms-grid'>
