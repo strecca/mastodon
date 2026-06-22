@@ -10,9 +10,10 @@ import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import api from 'flavours/glitch/api';
-import { withIdentity } from 'flavours/glitch/identity_context';
+import { useIdentity } from 'flavours/glitch/identity_context';
 
-const MemberStoriesList = ({ multiColumn, signedIn }) => {
+const MemberStoriesList = ({ multiColumn }) => {
+  const { signedIn } = useIdentity();
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -94,4 +95,4 @@ const StoryCard = ({ story }) => {
   );
 };
 
-export default withIdentity(MemberStoriesList);
+export default MemberStoriesList;

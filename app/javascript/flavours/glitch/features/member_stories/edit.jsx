@@ -8,7 +8,7 @@ import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import api from 'flavours/glitch/api';
-import { withIdentity } from 'flavours/glitch/identity_context';
+import { useIdentity } from 'flavours/glitch/identity_context';
 
 const FIELDS = [
   {
@@ -93,7 +93,8 @@ const PhotoSlot = ({ index, currentUrl, currentMediaId, onUpload, onRemove }) =>
   );
 };
 
-const MemberStoriesEdit = ({ multiColumn, signedIn }) => {
+const MemberStoriesEdit = ({ multiColumn }) => {
+  const { signedIn } = useIdentity();
   const history = useHistory();
   const [form, setForm]     = useState({ about_me: '', civezza_story: '', shaping_moment: '', why_i_joined: '', published: false });
   const [mediaIds, setMediaIds]   = useState([null, null, null]);
@@ -268,4 +269,4 @@ const MemberStoriesEdit = ({ multiColumn, signedIn }) => {
   );
 };
 
-export default withIdentity(MemberStoriesEdit);
+export default MemberStoriesEdit;
