@@ -151,7 +151,21 @@ const CommunityLanding = ({ identity }) => {
       {!signedIn && (
         <section className='cl-landing__cta'>
           <h2 className='cl-landing__cta-title'>{settings.join_heading}</h2>
-          <p className='cl-landing__cta-body'>{settings.join_body}</p>
+          <ul className='cl-landing__cta-features'>
+            <li className='cl-landing__cta-feature'>
+              <span className='cl-landing__cta-feature-icon'><CelebrationIcon /></span>
+              <span>Make your own posts, add Civezza Community Events, Favorite Restaurants, and list items for Sale, Giveaway, Trade or Searching For &mdash; plus Properties for Sale, Rent or short-term Vacation stays.</span>
+            </li>
+            <li className='cl-landing__cta-feature'>
+              <span className='cl-landing__cta-feature-icon'><ManufacturingIcon /></span>
+              <span>In the Community Services section, share your skills or recommend Builders, Architects, Craftspeople, Cooks, Cleaning services, Property Management, and guidance on permits, regulations, and local contacts.</span>
+            </li>
+            <li className='cl-landing__cta-feature'>
+              <span className='cl-landing__cta-feature-icon'><TripIcon /></span>
+              <span>Post <em>When I&apos;ll Be In Town</em> to privately share the dates you&apos;ll be returning to Civezza or the Imperia area &mdash; and let Members know you&apos;d love to connect while you&apos;re back in Italy.</span>
+            </li>
+          </ul>
+          <p className='cl-landing__cta-footer'>Registration is Free. No Credit Card required. Come Join us!</p>
           <div className='cl-landing__cta-actions'>
             <a href='/auth/sign_up' className='button cl-landing__signup-btn'>Create Account</a>
             <a href='/auth/sign_in' className='button button-secondary'>Log In</a>
