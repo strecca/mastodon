@@ -43,6 +43,14 @@ namespace :api, format: false do
       end
     end
 
+    # ── Member Stories ───────────────────────────────────────────────────────
+    scope :civezza_member_stories do
+      get  '/',            to: 'civezza_member_stories#index',  as: :civezza_member_stories
+      get  '/me',          to: 'civezza_member_stories#me',     as: :civezza_member_story_me
+      post '/upsert',      to: 'civezza_member_stories#upsert', as: :civezza_member_story_upsert
+      get  '/:account_id', to: 'civezza_member_stories#show',   as: :civezza_member_story
+    end
+
     # ── Community Visits — "When I'll Be In Town" ───────────────────────────
     resources :community_visits, only: [:index, :show, :create, :update, :destroy] do
       collection do

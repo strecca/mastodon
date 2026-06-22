@@ -32,6 +32,7 @@ import StarActiveIcon from '@/material-icons/400-24px/star-fill.svg?react';
 import StarIcon from '@/material-icons/400-24px/star.svg?react';
 import TrendingUpIcon from '@/material-icons/400-24px/trending_up.svg?react';
 import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
+import GroupsIcon from '@/material-icons/400-24px/groups.svg?react';
 import TagIcon from '@/material-icons/400-24px/tag.svg?react';
 import TripIcon from '@/material-icons/400-24px/trip.svg?react';
 import { fetchFollowRequests } from 'flavours/glitch/actions/accounts';
@@ -117,6 +118,7 @@ const messages = defineMessages({
   communityVisits: { id: 'navigation_bar.community_visits', defaultMessage: "When I'm In Town" },
   communityEvents: { id: 'navigation_bar.community_events', defaultMessage: 'Community Events' },
   communityListings: { id: 'navigation_bar.community_listings', defaultMessage: 'Listings' },
+  memberStories: { id: 'navigation_bar.member_stories', defaultMessage: 'Member Stories' },
   visitsAdmin: { id: 'navigation_bar.visits_admin', defaultMessage: 'Visits Admin' },
   compose: { id: 'tabs_bar.publish', defaultMessage: 'New Post' },
   app_settings: {
@@ -320,6 +322,16 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
           iconComponent={TagIcon}
           text={intl.formatMessage(messages.communityListings)}
         />
+
+        {signedIn && (
+          <ColumnLink
+            transparent
+            to='/member_stories'
+            icon='groups'
+            iconComponent={GroupsIcon}
+            text={intl.formatMessage(messages.memberStories)}
+          />
+        )}
 
         {/* ── Social features — signed-in only ── */}
         {signedIn && (

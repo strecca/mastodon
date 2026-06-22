@@ -442,3 +442,15 @@ export function CommunityLanding () {
 export function CommunityLandingSettings () {
   return import('../../community_directory/landing_settings');
 }
+
+export function MemberStories () {
+  return import('../../member_stories');
+}
+
+export function MemberStoriesShow () {
+  return import('../../member_stories/show');
+}
+
+export function MemberStoriesEdit () {
+  return import('../../member_stories/edit');
+}

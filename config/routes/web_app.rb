@@ -57,4 +57,6 @@
   /community_restaurants/(*any)
   /community_properties
   /community_properties/(*any)
+  /member_stories
+  /member_stories/(*any)
 ).each { |path| get path, to: 'home#index' }

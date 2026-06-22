@@ -6421,3 +6421,405 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  Member Stories  (.ms-page, .ms-card, .ms-story, .ms-edit, .ms-grid)
+// ─────────────────────────────────────────────────────────────────────────────
+
+.ms-page {
+  padding: 16px;
+  max-width: 860px;
+  margin: 0 auto;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  &__subtitle {
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
+    font-size: 14px;
+    margin: 0;
+    max-width: 520px;
+  }
+
+  &__edit-btn {
+    flex: 0 0 auto;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.6));
+
+    .button { margin-top: 16px; }
+  }
+
+  &--not-found {
+    text-align: center;
+    padding: 48px 24px;
+  }
+}
+
+.ms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+// ── Card (browse list) ───────────────────────────────────────────────────────
+
+.ms-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-elevated, #282c37);
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__photo {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    background: #1a1b2e;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  &__account {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+  }
+
+  &__name {
+    display: flex;
+    flex-direction: column;
+
+    strong {
+      font-size: 14px;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+  }
+
+  &__username {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__excerpt {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+  }
+
+  &__cta {
+    font-size: 13px;
+    color: #8b9eff;
+    font-weight: 600;
+  }
+}
+
+// ── Individual story page ─────────────────────────────────────────────────────
+
+.ms-story {
+  &__back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #8b9eff;
+    font-size: 14px;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  &__avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+  }
+
+  &__name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  &__username {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__edit-link {
+    margin-left: auto;
+  }
+
+  &__photos {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 28px;
+    border-radius: 10px;
+    overflow: hidden;
+
+    &--1 { grid-template-columns: 1fr; }
+    &--2 { grid-template-columns: 1fr 1fr; }
+    &--3 { grid-template-columns: 1fr 1fr 1fr; }
+  }
+
+  &__photo-wrap {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #1a1b2e;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+
+      &:hover { transform: scale(1.03); }
+    }
+  }
+
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  &__section {
+    border-left: 3px solid #6364ff;
+    padding-left: 16px;
+  }
+
+  &__section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 8px;
+  }
+
+  &__section-body {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
+  &__empty {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+  }
+}
+
+// ── Edit form ─────────────────────────────────────────────────────────────────
+
+.ms-edit {
+  &__intro {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  &__field {
+    margin-bottom: 28px;
+  }
+
+  &__label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+  }
+
+  &__label-hint {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+  }
+
+  &__prompt {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.5;
+    margin: 0 0 10px;
+    font-style: italic;
+  }
+
+  &__textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 12px;
+    color: #ffffff;
+    font-size: 15px;
+    line-height: 1.6;
+    resize: vertical;
+    font-family: inherit;
+    transition: border-color 0.15s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #6364ff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &::placeholder { color: rgba(255, 255, 255, 0.3); }
+  }
+
+  &__photos {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__photo-slot {
+    flex: 0 0 auto;
+    width: 160px;
+  }
+
+  &__photo-preview {
+    position: relative;
+    width: 160px;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__photo-remove {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover { background: rgba(220, 50, 50, 0.85); }
+  }
+
+  &__photo-add {
+    width: 160px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+
+    &:hover:not(:disabled) {
+      border-color: #6364ff;
+      background: rgba(99, 100, 255, 0.1);
+      color: #ffffff;
+    }
+
+    &:disabled { opacity: 0.5; cursor: default; }
+  }
+
+  &__publish-row {
+    margin-bottom: 20px;
+  }
+
+  &__publish-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+
+    input[type='checkbox'] {
+      width: 18px;
+      height: 18px;
+      accent-color: #6364ff;
+      flex: 0 0 auto;
+    }
+  }
+
+  &__error {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  &__success {
+    color: #6bcb77;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+}
