@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 
 import { Link } from 'react-router-dom';
 
@@ -184,15 +185,16 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
         </div>
       </div>
 
-      {/* ── Lightbox overlay ── */}
-      {lightbox !== null && imageCount > 0 && (
+      {/* ── Lightbox overlay — portal to body so fixed positioning is viewport-relative ── */}
+      {lightbox !== null && imageCount > 0 && createPortal(
         <Lightbox
           images={images}
           index={lightbox}
           onClose={closeLightbox}
           onPrev={prevPhoto}
           onNext={nextPhoto(imageCount)}
-        />
+        />,
+        document.body,
       )}
     </Column>
   );
