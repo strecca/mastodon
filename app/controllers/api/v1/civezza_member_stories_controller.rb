@@ -39,6 +39,9 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
     else
       render json: { errors: story.errors.full_messages }, status: :unprocessable_entity
     end
+  rescue StandardError => e
+    Rails.logger.error("[MemberStories#upsert] #{e.class}: #{e.message}")
+    render json: { errors: [e.message] }, status: :internal_server_error
   end
 
   private
