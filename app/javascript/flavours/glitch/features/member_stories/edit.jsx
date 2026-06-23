@@ -99,10 +99,11 @@ const MemberStoriesEdit = ({ multiColumn }) => {
   const [form, setForm]     = useState({ about_me: '', civezza_story: '', shaping_moment: '', why_i_joined: '', published: false });
   const [mediaIds, setMediaIds]   = useState([null, null, null]);
   const [photoUrls, setPhotoUrls] = useState([null, null, null]);
-  const [loading, setSaving]  = useState(false);
+  const [loading, setSaving]      = useState(false);
   const [fetchDone, setFetchDone] = useState(false);
-  const [error, setError]   = useState(null);
-  const [saved, setSaved]   = useState(false);
+  const [error, setError]         = useState(null);
+  const [saved, setSaved]         = useState(false);
+  const [savedPublished, setSavedPublished] = useState(false);
 
   useEffect(() => {
     if (!signedIn) return;
@@ -120,6 +121,7 @@ const MemberStoriesEdit = ({ multiColumn }) => {
         const urls = (s.images          || []).concat([null, null, null]).slice(0, 3);
         setMediaIds(ids);
         setPhotoUrls(urls);
+        setSavedPublished(s.published || false);
       })
       .catch(() => {})
       .finally(() => setFetchDone(true));
@@ -153,6 +155,7 @@ const MemberStoriesEdit = ({ multiColumn }) => {
         media_ids: mediaIds.filter(Boolean),
       });
       setSaved(true);
+      setSavedPublished(form.published);
     } catch (err) {
       setError(err.response?.data?.errors?.join(', ') ?? 'Something went wrong. Please try again.');
     } finally {
@@ -230,6 +233,16 @@ const MemberStoriesEdit = ({ multiColumn }) => {
             </div>
           </div>
 
+          {/* ── How publishing works ── */}
+          <div className='ms-edit__workflow'>
+            <h3 className='ms-edit__workflow-title'>How it works</h3>
+            <ol className='ms-edit__workflow-steps'>
+              <li>Fill in as many sections as you like — you don&apos;t need to complete everything at once.</li>
+              <li>Click <strong>Save Story</strong> at any time to preserve your work. Your story stays private until you publish it.</li>
+              <li>When you&apos;re ready to share with other members: tick <strong>Publish my story</strong> below, then click <strong>Save Story</strong> again. That save is what makes it visible.</li>
+            </ol>
+          </div>
+
           {/* ── Publish toggle ── */}
           <div className='ms-edit__publish-row'>
             <label className='ms-edit__publish-label'>
@@ -240,27 +253,34 @@ const MemberStoriesEdit = ({ multiColumn }) => {
               />
               <span>Publish my story — make it visible to other members</span>
             </label>
+            {form.published !== savedPublished && (
+              <p className='ms-edit__publish-hint'>
+                {form.published
+                  ? '⬆ Click Save Story below to publish your story.'
+                  : '⬆ Click Save Story below to unpublish your story.'}
+              </p>
+            )}
           </div>
 
           {error && <p className='ms-edit__error'>{error}</p>}
-          {saved && <p className='ms-edit__success'>Story saved!</p>}
+          {saved && (
+            <p className='ms-edit__success'>
+              {savedPublished ? 'Story saved and published!' : 'Story saved as a draft.'}
+            </p>
+          )}
 
           <div className='ms-edit__actions'>
             <button type='submit' className='button' disabled={loading}>
               {loading ? 'Saving…' : 'Save Story'}
             </button>
-            {form.published && (
-              <Link
-                to={`/member_stories/me`}
+            {savedPublished && (
+              <button
+                type='button'
                 className='button button-secondary'
-                onClick={e => {
-                  // We don't have account_id here; redirect to list instead
-                  e.preventDefault();
-                  history.push('/member_stories');
-                }}
+                onClick={() => history.push('/member_stories')}
               >
-                View Stories
-              </Link>
+                View All Stories
+              </button>
             )}
           </div>
         </form>

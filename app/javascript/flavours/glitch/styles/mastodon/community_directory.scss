@@ -6785,6 +6785,44 @@
     &:disabled { opacity: 0.5; cursor: default; }
   }
 
+  &__workflow {
+    background: rgba(99, 100, 255, 0.1);
+    border: 1px solid rgba(99, 100, 255, 0.3);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+  }
+
+  &__workflow-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #8b9eff;
+    margin: 0 0 10px;
+  }
+
+  &__workflow-steps {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    li {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.5;
+    }
+  }
+
+  &__publish-hint {
+    margin: 8px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #f0c040;
+  }
+
   &__publish-row {
     margin-bottom: 20px;
   }
