@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Helmet } from '@unhead/react/helmet';
 
@@ -8,7 +8,6 @@ import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import api from 'flavours/glitch/api';
-import { withIdentity } from 'flavours/glitch/identity_context';
 
 const PROMPTS = {
   about_me:       'About Me',
@@ -17,22 +16,79 @@ const PROMPTS = {
   why_i_joined:   'Why I Joined MiaCivezza.com',
 };
 
-const MemberStoriesShow = ({ multiColumn, signedIn, params }) => {
+// ── Lightbox ────────────────────────────────────────────────────────────────
+
+const Lightbox = ({ images, index, onClose, onPrev, onNext }) => {
+  useEffect(() => {
+    const handle = (e) => {
+      if (e.key === 'Escape')     onClose();
+      if (e.key === 'ArrowLeft')  onPrev();
+      if (e.key === 'ArrowRight') onNext();
+    };
+    window.addEventListener('keydown', handle);
+    return () => window.removeEventListener('keydown', handle);
+  }, [onClose, onPrev, onNext]);
+
+  return (
+    <div className='ms-lightbox' onClick={onClose} role='dialog' aria-modal='true'>
+      <button className='ms-lightbox__close' onClick={onClose} aria-label='Close photo viewer'>✕</button>
+
+      <div className='ms-lightbox__content' onClick={e => e.stopPropagation()}>
+        <img
+          className='ms-lightbox__image'
+          src={images[index]}
+          alt={`Photo ${index + 1} of ${images.length}`}
+        />
+
+        {images.length > 1 && (
+          <>
+            <button
+              className='ms-lightbox__prev'
+              onClick={onPrev}
+              disabled={index === 0}
+              aria-label='Previous photo'
+            >
+              ‹
+            </button>
+            <button
+              className='ms-lightbox__next'
+              onClick={onNext}
+              disabled={index === images.length - 1}
+              aria-label='Next photo'
+            >
+              ›
+            </button>
+            <span className='ms-lightbox__counter'>{index + 1} / {images.length}</span>
+          </>
+        )}
+      </div>
+
+      <p className='ms-lightbox__hint'>Click outside or press Esc to return to the story</p>
+    </div>
+  );
+};
+
+// ── Story page ───────────────────────────────────────────────────────────────
+
+const MemberStoriesShow = ({ multiColumn, params }) => {
   const accountId = params?.account_id;
-  const [story, setStory]   = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [story, setStory]       = useState(null);
+  const [loading, setLoading]   = useState(true);
   const [notFound, setNotFound] = useState(false);
-  const history = useHistory();
+  const [lightbox, setLightbox] = useState(null); // null = closed, 0/1/2 = open
 
   useEffect(() => {
     if (!accountId) return;
     api().get(`/api/v1/civezza_member_stories/${accountId}`)
       .then(res => setStory(res.data))
-      .catch(err => {
-        if (err.response?.status === 404) setNotFound(true);
-      })
+      .catch(err => { if (err.response?.status === 404) setNotFound(true); })
       .finally(() => setLoading(false));
   }, [accountId]);
+
+  const openLightbox  = useCallback((i) => setLightbox(i), []);
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+  const prevPhoto     = useCallback(() => setLightbox(i => Math.max(0, i - 1)), []);
+  const nextPhoto     = useCallback((max) => () => setLightbox(i => Math.min(max - 1, i + 1)), []);
 
   if (loading) {
     return (
@@ -57,6 +113,7 @@ const MemberStoriesShow = ({ multiColumn, signedIn, params }) => {
 
   const { account, images, is_own } = story;
   const hasAnyText = Object.keys(PROMPTS).some(k => story[k]);
+  const imageCount = images?.length ?? 0;
 
   return (
     <Column>
@@ -82,13 +139,20 @@ const MemberStoriesShow = ({ multiColumn, signedIn, params }) => {
           )}
         </div>
 
-        {/* ── Photo gallery ── */}
-        {images?.length > 0 && (
-          <div className={`ms-story__photos ms-story__photos--${images.length}`}>
+        {/* ── Photo gallery — click opens lightbox ── */}
+        {imageCount > 0 && (
+          <div className={`ms-story__photos ms-story__photos--${imageCount}`}>
             {images.map((src, i) => (
-              <a key={i} href={src} target='_blank' rel='noopener noreferrer' className='ms-story__photo-wrap'>
+              <button
+                key={i}
+                type='button'
+                className='ms-story__photo-wrap'
+                onClick={() => openLightbox(i)}
+                aria-label={`View photo ${i + 1}`}
+              >
                 <img src={src} alt='' loading='lazy' />
-              </a>
+                <span className='ms-story__photo-zoom'>⤢</span>
+              </button>
             ))}
           </div>
         )}
@@ -108,9 +172,30 @@ const MemberStoriesShow = ({ multiColumn, signedIn, params }) => {
         ) : (
           <p className='ms-story__empty'>This member hasn&apos;t written their story yet.</p>
         )}
+
+        {/* ── Bottom nav ── */}
+        <div className='ms-story__footer'>
+          <Link to='/member_stories' className='ms-story__back'>← All Stories</Link>
+          {is_own && (
+            <Link to='/member_stories/edit' className='button button-secondary'>
+              Edit My Story
+            </Link>
+          )}
+        </div>
       </div>
+
+      {/* ── Lightbox overlay ── */}
+      {lightbox !== null && imageCount > 0 && (
+        <Lightbox
+          images={images}
+          index={lightbox}
+          onClose={closeLightbox}
+          onPrev={prevPhoto}
+          onNext={nextPhoto(imageCount)}
+        />
+      )}
     </Column>
   );
 };
 
-export default withIdentity(MemberStoriesShow);
+export default MemberStoriesShow;
