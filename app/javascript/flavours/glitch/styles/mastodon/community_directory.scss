@@ -5983,10 +5983,11 @@
 
   &__cta {
     padding: 32px 24px;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(145deg, #1a1d2e 0%, #2a2d4a 100%);
+    border: 1px solid rgba(99, 100, 255, 0.35);
     border-radius: 12px;
     text-align: center;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
   }
 
   &__cta-title {
