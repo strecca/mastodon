@@ -561,8 +561,9 @@ const CommunityVisits = ({ multiColumn }) => {
         <>
           {!signedIn && (
             <div className='cv-signin-cta'>
-              <a href='/auth/sign_in' className='button button-secondary'>Log in</a>
-              <span className='cv-signin-cta__text'>to add your dates and see who you know is visiting</span>
+              <a href='/auth/sign_in' className='cv-signin-cta__btn'>
+                Log in to add your dates and see who you know is visiting
+              </a>
             </div>
           )}
 
