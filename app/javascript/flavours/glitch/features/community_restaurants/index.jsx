@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Helmet } from '@unhead/react/helmet';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
@@ -8,7 +7,6 @@ import config from './config.json';
 const CommunityRestaurants = ({ multiColumn }) => (
   <Column bindToDocument={!multiColumn} label={'Community Restaurants'} className='col-restaurants'>
     <ColumnHeader title={'Community Restaurants'} icon='address-book' multiColumn={multiColumn} showBackButton />
-    <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
     <EntryList config={config} multiColumn={multiColumn} />
     <Helmet><title>Community Restaurants</title><meta name='robots' content='noindex' /></Helmet>
   </Column>

@@ -177,8 +177,8 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
       <div className='community-entry-detail'>
 
         {/* ── Persistent category banner ── */}
-        <Link to='/community' className='community-category-banner'>
-          🎨 Click here to See All Community Categories 🎨
+        <Link to='/landing' className='community-category-banner'>
+          Click here to see All Community Categories
         </Link>
 
         {/* ── Hero: hills landscape + name/badges/location ── */}

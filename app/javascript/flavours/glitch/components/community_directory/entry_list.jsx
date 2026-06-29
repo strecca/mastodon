@@ -107,8 +107,8 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
   return (
     <div className='scrollable community-entry-list'>
       {/* Persistent all-categories banner */}
-      <Link to='/community' className='community-category-banner'>
-        🎨 Click here to See All Community Categories 🎨
+      <Link to='/landing' className='community-category-banner'>
+        Click here to see All Community Categories
       </Link>
 
       {/* Search + filters bar */}
