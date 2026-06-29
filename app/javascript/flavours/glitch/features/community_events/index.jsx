@@ -531,7 +531,7 @@ const CommunityEvents = ({ multiColumn }) => {
   const hasActiveFilters = !!(activeFilter || searchQuery || dateFrom || dateTo);
 
   return (
-    <Column bindToDocument={!multiColumn} label='Community Events'>
+    <Column bindToDocument={!multiColumn} label='Community Events' className='col-events'>
       <ColumnHeader
         title='Community Events'
         icon='celebration'
@@ -545,15 +545,9 @@ const CommunityEvents = ({ multiColumn }) => {
         )}
       </ColumnHeader>
 
-      <div className='ce-page'>
+      <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
 
-        {/* ── Hero banner ──────────────────────────────────────────── */}
-        <div className='ce-hero'>
-          <Link to='/landing' className='ce-hero__back'>← Community Directory</Link>
-          <CelebrationIcon className='ce-hero__icon' />
-          <h2 className='ce-hero__title'>Community Events</h2>
-          <p className='ce-hero__subtitle'>Concerts · Festivals · Workshops · Gatherings</p>
-        </div>
+      <div className='ce-page'>
 
         {/* ── Search ───────────────────────────────────────────────── */}
         <div className='cv-search'>

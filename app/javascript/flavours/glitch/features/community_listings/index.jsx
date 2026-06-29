@@ -72,18 +72,17 @@ const CommunityListings = ({ multiColumn }) => {
   }, [listings, typeFilter, search]);
 
   return (
-    <Column>
+    <Column className='col-listings'>
       <ColumnHeader
         icon='tag'
         iconComponent={TagIcon}
         title='Community Listings'
         multiColumn={multiColumn}
+        showBackButton
       />
       <Helmet><title>Community Listings · miacivezza</title></Helmet>
 
-      <Link to='/community' className='community-category-banner'>
-        Click here to see All Community Categories
-      </Link>
+      <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
 
       <div className='cl-page'>
         <div className='cl-hero'>

@@ -93,7 +93,7 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
 
   if (loading) {
     return (
-      <Column>
+      <Column className='col-stories'>
         <ColumnHeader icon='book' title='Member Story' multiColumn={multiColumn} />
         <LoadingIndicator />
       </Column>
@@ -102,7 +102,7 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
 
   if (notFound || !story) {
     return (
-      <Column>
+      <Column className='col-stories'>
         <ColumnHeader icon='book' title='Member Story' multiColumn={multiColumn} />
         <div className='ms-page ms-page--not-found'>
           <p>This story isn&apos;t available.</p>

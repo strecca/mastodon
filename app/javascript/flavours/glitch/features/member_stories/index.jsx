@@ -25,7 +25,7 @@ const MemberStoriesList = ({ multiColumn }) => {
   }, []);
 
   return (
-    <Column>
+    <Column className='col-stories'>
       <ColumnHeader
         icon='book'
         iconComponent={GroupsIcon}

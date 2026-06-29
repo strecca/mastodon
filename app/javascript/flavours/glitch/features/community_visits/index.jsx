@@ -540,7 +540,7 @@ const CommunityVisits = ({ multiColumn }) => {
   const hasActiveFilters = !!(activeFilter || searchQuery || dateFrom || dateTo);
 
   return (
-    <Column bindToDocument={!multiColumn} label="When I'll Be In Town">
+    <Column bindToDocument={!multiColumn} label="When I'll Be In Town" className='col-visits'>
       <ColumnHeader
         title="When I'll Be In Town"
         icon='trip'
@@ -554,16 +554,10 @@ const CommunityVisits = ({ multiColumn }) => {
         )}
       </ColumnHeader>
 
+      <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
+
       <div className='cv-page'>
         <>
-          {/* ── Hero banner ───────────────────────────────────────── */}
-          <div className='cv-hero'>
-            <Link to='/landing' className='cv-hero__back'>← Community Directory</Link>
-            <TripIcon className='cv-hero__icon' />
-            <h2 className='cv-hero__title'>When I'll Be In Town</h2>
-            <p className='cv-hero__subtitle'>Share your dates · See who's arriving · Meet up</p>
-          </div>
-
           {!signedIn && (
             <div className='cv-signin-cta'>
               <a href='/auth/sign_in' className='button button-secondary'>Log in</a>
