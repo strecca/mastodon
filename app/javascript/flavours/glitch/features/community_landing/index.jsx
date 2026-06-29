@@ -6,6 +6,7 @@ import { Helmet } from '@unhead/react/helmet';
 
 import BrushIcon from '@/material-icons/400-24px/brush.svg?react';
 import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
+import GroupsIcon from '@/material-icons/400-24px/groups.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
 import ManufacturingIcon from '@/material-icons/400-24px/manufacturing.svg?react';
 import StarIcon from '@/material-icons/400-24px/star.svg?react';
@@ -72,6 +73,13 @@ const NAV_TILES = [
     label: "Community When I'm In Town",
     desc:  "See who's visiting · Share your dates",
     bg:    '#6B1A30',  // deep crimson (second Cinque Terre rose, shifted darker)
+  },
+  {
+    to:    '/member_stories',
+    Icon:  GroupsIcon,
+    label: 'Member Stories',
+    desc:  'Personal histories · Civezza connections',
+    bg:    '#2C3E7A',  // deep Mediterranean navy
   },
 ];
 

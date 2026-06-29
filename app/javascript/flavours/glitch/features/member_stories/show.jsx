@@ -122,6 +122,12 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
       <Helmet><title>{account?.display_name} · Member Story · miacivezza</title></Helmet>
 
       <div className='ms-page ms-story'>
+        <div className='ms-hero'>
+          <Link to='/landing' className='ms-hero__back'>← Community Directory</Link>
+          <h2 className='ms-hero__title'>Member Stories</h2>
+          <p className='ms-hero__subtitle'>Personal histories · Civezza connections</p>
+        </div>
+
         <Link to='/member_stories' className='ms-story__back'>← All Stories</Link>
 
         {/* ── Profile header ── */}

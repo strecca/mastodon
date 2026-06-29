@@ -35,6 +35,13 @@ const MemberStoriesList = ({ multiColumn }) => {
       <Helmet><title>Member Stories · miacivezza</title></Helmet>
 
       <div className='ms-page'>
+        <div className='ms-hero'>
+          <Link to='/landing' className='ms-hero__back'>← Community Directory</Link>
+          <GroupsIcon className='ms-hero__icon' />
+          <h2 className='ms-hero__title'>Member Stories</h2>
+          <p className='ms-hero__subtitle'>Personal histories · Civezza connections</p>
+        </div>
+
         <div className='ms-page__header'>
           <p className='ms-page__subtitle'>
             Stories from our Civezza community — personal histories, connections, and moments that matter.

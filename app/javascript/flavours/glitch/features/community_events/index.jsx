@@ -545,14 +545,11 @@ const CommunityEvents = ({ multiColumn }) => {
         )}
       </ColumnHeader>
 
-      <Link to='/community' className='community-category-banner'>
-        Click here to see All Community Categories
-      </Link>
-
       <div className='ce-page'>
 
         {/* ── Hero banner ──────────────────────────────────────────── */}
         <div className='ce-hero'>
+          <Link to='/landing' className='ce-hero__back'>← Community Directory</Link>
           <CelebrationIcon className='ce-hero__icon' />
           <h2 className='ce-hero__title'>Community Events</h2>
           <p className='ce-hero__subtitle'>Concerts · Festivals · Workshops · Gatherings</p>

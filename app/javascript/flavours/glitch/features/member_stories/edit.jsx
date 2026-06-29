@@ -189,6 +189,12 @@ const MemberStoriesEdit = ({ multiColumn }) => {
       <Helmet><title>My Story · miacivezza</title></Helmet>
 
       <div className='ms-page ms-edit'>
+        <div className='ms-hero'>
+          <Link to='/landing' className='ms-hero__back'>← Community Directory</Link>
+          <h2 className='ms-hero__title'>Member Stories</h2>
+          <p className='ms-hero__subtitle'>Write My Story</p>
+        </div>
+
         <Link to='/member_stories' className='ms-story__back'>← All Stories</Link>
 
         <p className='ms-edit__intro'>

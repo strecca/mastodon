@@ -34,7 +34,6 @@
   /search
   /start/(*any)
   /statuses/(*any)
-  /community
   /community_directory
   /community_directory/scraper_logs
   /community_directory/(*any)
@@ -60,3 +59,5 @@
   /member_stories
   /member_stories/(*any)
 ).each { |path| get path, to: 'home#index' }
+
+get '/community', to: redirect('/landing', status: 301)

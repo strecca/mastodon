@@ -558,6 +558,7 @@ const CommunityVisits = ({ multiColumn }) => {
         <>
           {/* ── Hero banner ───────────────────────────────────────── */}
           <div className='cv-hero'>
+            <Link to='/landing' className='cv-hero__back'>← Community Directory</Link>
             <TripIcon className='cv-hero__icon' />
             <h2 className='cv-hero__title'>When I'll Be In Town</h2>
             <p className='cv-hero__subtitle'>Share your dates · See who's arriving · Meet up</p>
