@@ -31,6 +31,8 @@ const MemberStoriesList = ({ multiColumn }) => {
         iconComponent={GroupsIcon}
         title='Member Stories'
         multiColumn={multiColumn}
+        showBackButton
+        className='ch-stories'
       />
       <Helmet><title>Member Stories · miacivezza</title></Helmet>
 

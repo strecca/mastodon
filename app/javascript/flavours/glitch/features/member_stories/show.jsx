@@ -94,7 +94,7 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
   if (loading) {
     return (
       <Column className='col-stories'>
-        <ColumnHeader icon='book' title='Member Story' multiColumn={multiColumn} />
+        <ColumnHeader icon='book' title='Member Story' multiColumn={multiColumn} showBackButton className='ch-stories' />
         <LoadingIndicator />
       </Column>
     );
@@ -103,7 +103,7 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
   if (notFound || !story) {
     return (
       <Column className='col-stories'>
-        <ColumnHeader icon='book' title='Member Story' multiColumn={multiColumn} />
+        <ColumnHeader icon='book' title='Member Story' multiColumn={multiColumn} showBackButton className='ch-stories' />
         <div className='ms-page ms-page--not-found'>
           <p>This story isn&apos;t available.</p>
           <Link to='/member_stories' className='button'>← All Stories</Link>

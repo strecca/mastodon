@@ -7074,35 +7074,36 @@
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  Category column-header colors — match each page's /landing card color
-//  Targets .column.col-{x} .column-header__wrapper so colors are scoped
+//  Category column-header colors — match each page's /landing card color.
+//  className is passed to <ColumnHeader> and lands on .column-header__wrapper
+//  directly, so this works in both mobile (portalled) and desktop layouts.
 // ─────────────────────────────────────────────────────────────────────────────
 
-.column.col-listings    .column-header__wrapper { background: #5A7A1A !important; }
-.column.col-events      .column-header__wrapper { background: #007A80 !important; }
-.column.col-properties  .column-header__wrapper { background: #8B2240 !important; }
-.column.col-services    .column-header__wrapper { background: #8B3E24 !important; }
-.column.col-restaurants .column-header__wrapper { background: #A8302A !important; }
-.column.col-artists     .column-header__wrapper { background: #7A5410 !important; }
-.column.col-visits      .column-header__wrapper { background: #6B1A30 !important; }
-.column.col-stories     .column-header__wrapper { background: #2C3E7A !important; }
+.column-header__wrapper.ch-listings    { background: #5A7A1A !important; }
+.column-header__wrapper.ch-events      { background: #007A80 !important; }
+.column-header__wrapper.ch-properties  { background: #8B2240 !important; }
+.column-header__wrapper.ch-services    { background: #8B3E24 !important; }
+.column-header__wrapper.ch-restaurants { background: #A8302A !important; }
+.column-header__wrapper.ch-artists     { background: #7A5410 !important; }
+.column-header__wrapper.ch-visits      { background: #6B1A30 !important; }
+.column-header__wrapper.ch-stories     { background: #2C3E7A !important; }
 
-// Keep text and icons white on colored header backgrounds
-.column.col-listings,
-.column.col-events,
-.column.col-properties,
-.column.col-services,
-.column.col-restaurants,
-.column.col-artists,
-.column.col-visits,
-.column.col-stories {
+// Keep text and icons white on all colored headers
+.column-header__wrapper.ch-listings,
+.column-header__wrapper.ch-events,
+.column-header__wrapper.ch-properties,
+.column-header__wrapper.ch-services,
+.column-header__wrapper.ch-restaurants,
+.column-header__wrapper.ch-artists,
+.column-header__wrapper.ch-visits,
+.column-header__wrapper.ch-stories {
   .column-header,
   .column-header__button,
   .column-header__back-button {
     color: #fff !important;
-
     svg, .icon { fill: #fff !important; }
   }
 
   .column-header__back-button:hover { background: rgba(255, 255, 255, 0.12) !important; }
+  .column-header__title             { color: #fff !important; }
 }

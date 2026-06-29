@@ -546,6 +546,7 @@ const CommunityVisits = ({ multiColumn }) => {
         icon='trip'
         multiColumn={multiColumn}
         showBackButton
+        className='ch-visits'
       >
         {signedIn && (
           <button className='button button--compact' onClick={openCreate}>

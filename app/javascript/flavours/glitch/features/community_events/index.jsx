@@ -537,6 +537,7 @@ const CommunityEvents = ({ multiColumn }) => {
         icon='celebration'
         multiColumn={multiColumn}
         showBackButton
+        className='ch-events'
       >
         {signedIn && (
           <Link to='/community_events/new' className='button button--compact'>

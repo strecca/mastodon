@@ -166,7 +166,7 @@ const MemberStoriesEdit = ({ multiColumn }) => {
   if (!signedIn) {
     return (
       <Column className='col-stories'>
-        <ColumnHeader icon='book' title='My Story' multiColumn={multiColumn} />
+        <ColumnHeader icon='book' title='My Story' multiColumn={multiColumn} showBackButton className='ch-stories' />
         <div className='ms-page'>
           <p>Please <a href='/auth/sign_in'>sign in</a> to write your story.</p>
         </div>
@@ -177,7 +177,7 @@ const MemberStoriesEdit = ({ multiColumn }) => {
   if (!fetchDone) {
     return (
       <Column className='col-stories'>
-        <ColumnHeader icon='book' title='My Story' multiColumn={multiColumn} />
+        <ColumnHeader icon='book' title='My Story' multiColumn={multiColumn} showBackButton className='ch-stories' />
         <LoadingIndicator />
       </Column>
     );

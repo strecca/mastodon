@@ -6,7 +6,7 @@ import config from './config.json';
 
 const CommunityServices = ({ multiColumn }) => (
   <Column bindToDocument={!multiColumn} label={'Community Services'} className='col-services'>
-    <ColumnHeader title={'Community Services'} icon='address-book' multiColumn={multiColumn} showBackButton />
+    <ColumnHeader title={'Community Services'} icon='address-book' multiColumn={multiColumn} showBackButton className='ch-services' />
     <EntryList config={config} multiColumn={multiColumn} />
     <Helmet><title>Community Services</title><meta name='robots' content='noindex' /></Helmet>
   </Column>
