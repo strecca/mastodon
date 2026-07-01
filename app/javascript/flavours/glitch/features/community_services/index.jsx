@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Helmet } from '@unhead/react/helmet';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
@@ -12,9 +11,9 @@ const CommunityServices = ({ multiColumn }) => {
     <Column bindToDocument={!multiColumn} label={'Community Services'} className='col-services'>
       <ColumnHeader title={'Community Services'} icon='address-book' multiColumn={multiColumn} showBackButton className='ch-services' />
       {!signedIn && (
-        <Link to='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#8B3E24' }}>
+        <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#8B3E24' }}>
           Log In or Join to add your own Community Services
-        </Link>
+        </a>
       )}
       <EntryList config={config} multiColumn={multiColumn} />
       <Helmet><title>Community Services</title><meta name='robots' content='noindex' /></Helmet>

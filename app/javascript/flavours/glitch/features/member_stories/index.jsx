@@ -45,9 +45,9 @@ const MemberStoriesList = ({ multiColumn }) => {
         </div>
 
         {!signedIn && (
-          <Link to='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#2C3E7A' }}>
+          <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#2C3E7A' }}>
             Log In or Join to write your own Member Story
-          </Link>
+          </a>
         )}
 
         <div className='ms-page__header'>
