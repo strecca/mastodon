@@ -41,8 +41,9 @@ class ServerBanner extends PureComponent {
 
     return (
       <div className='server-banner'>
-        <Link to='/about'>
+        <Link to='/landing'>
           <ServerHeroImage blurhash={server.getIn(['thumbnail', 'blurhash'])} src={server.getIn(['thumbnail', 'url'])} className='server-banner__hero' />
+          <p className='server-banner__hero-cta'>Click this image to see MiaCivezza.com in action!</p>
         </Link>
 
         <div className='server-banner__description'>

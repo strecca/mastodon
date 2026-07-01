@@ -547,6 +547,11 @@ const CommunityEvents = ({ multiColumn }) => {
       </ColumnHeader>
 
       <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
+      {!signedIn && (
+        <Link to='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#007A80' }}>
+          Log In or Join to add your own Community Events
+        </Link>
+      )}
 
       <div className='ce-page'>
 

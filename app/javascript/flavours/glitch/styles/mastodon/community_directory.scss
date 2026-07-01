@@ -520,6 +520,28 @@
   }
 }
 
+// ── Sign-in / Join CTA (visitor view, per-category) ──────────────────────────
+// Color comes from --cta-color inline style set per page (matches landing card)
+
+.community-join-cta {
+  display: block;
+  padding: 13px 20px;
+  background: var(--cta-color, #333);
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    filter: brightness(1.12);
+    color: #fff !important;
+    text-decoration: none;
+  }
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 .community-entry-detail {

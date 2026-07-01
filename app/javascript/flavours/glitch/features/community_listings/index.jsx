@@ -84,6 +84,11 @@ const CommunityListings = ({ multiColumn }) => {
       <Helmet><title>Community Listings · miacivezza</title></Helmet>
 
       <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
+      {!signedIn && (
+        <Link to='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#5A7A1A' }}>
+          Log In or Join to add your own Community Listings
+        </Link>
+      )}
 
       <div className='cl-page'>
         <div className='cl-hero'>

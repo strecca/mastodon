@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { injectIntl } from '@/flavours/glitch/components/intl';
 import { fetchServer, fetchExtendedDescription, fetchDomainBlocks  } from 'flavours/glitch/actions/server';
@@ -82,8 +83,17 @@ class About extends PureComponent {
       <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)}>
         <div className='scrollable about'>
           <div className='about__header'>
-            {server.getIn(['thumbnail', 'url']) && <ServerHeroImage blurhash={server.getIn(['thumbnail', 'blurhash'])} src={server.getIn(['thumbnail', 'url'])} srcSet={server.getIn(['thumbnail', 'versions'])?.map((value, key) => `${value} ${key.replace('@', '')}`).join(', ')} className='about__header__hero' />}
+            {server.getIn(['thumbnail', 'url']) && (
+              <Link to='/landing'>
+                <ServerHeroImage blurhash={server.getIn(['thumbnail', 'blurhash'])} src={server.getIn(['thumbnail', 'url'])} srcSet={server.getIn(['thumbnail', 'versions'])?.map((value, key) => `${value} ${key.replace('@', '')}`).join(', ')} className='about__header__hero' />
+                <p className='about__header__cta'>Click this image to see MiaCivezza.com in action!</p>
+              </Link>
+            )}
             <h1>{isLoading ? <Skeleton width='10ch' /> : server.get('domain')}</h1>
+            <div className='about__header__bio'>
+              <p>MiaCivezza.com is my attempt to provide an online Community Bulletin Board and Piazzetta meeting plaza. My Wife &amp; I would meet people at dinner or aperitivo time or at artistic or musical events, make friends and then say Goodbye and want to stay in contact with them. We&apos;d try to exchange contact information as the last process of saying &ldquo;We hope to see you again&rdquo;.</p>
+              <p>Now Visitors and Residents have immediate access to contact each other to renew friendships and to reunite.</p>
+            </div>
           </div>
 
           <div className='about__meta'>

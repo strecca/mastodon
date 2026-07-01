@@ -562,7 +562,7 @@ const CommunityVisits = ({ multiColumn }) => {
           {!signedIn && (
             <div className='cv-signin-cta'>
               <a href='/auth/sign_in' className='cv-signin-cta__btn'>
-                Log in to add your dates and see who you know is visiting
+                Log In or Join to add your own When I&apos;ll Be In Town dates
               </a>
             </div>
           )}

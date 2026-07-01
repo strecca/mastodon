@@ -44,6 +44,12 @@ const MemberStoriesList = ({ multiColumn }) => {
           <p className='ms-hero__subtitle'>Personal histories · Civezza connections</p>
         </div>
 
+        {!signedIn && (
+          <Link to='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#2C3E7A' }}>
+            Log In or Join to write your own Member Story
+          </Link>
+        )}
+
         <div className='ms-page__header'>
           <p className='ms-page__subtitle'>
             Stories from our Civezza community — personal histories, connections, and moments that matter.
