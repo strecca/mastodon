@@ -2,10 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 
 import api from 'flavours/glitch/api';
 
-// Module-level cache — shared across all hook instances, fetched once per page load
 let _cache = null;
 let _loading = false;
+let _fetchedAt = 0;
 let _listeners = new Set();
+
+const TTL_MS = 30_000; // re-fetch after 30 s — fast enough to see admin changes without constant polling
 
 function notifyListeners() {
   _listeners.forEach(fn => fn(_cache));
@@ -14,8 +16,9 @@ function notifyListeners() {
 /**
  * Returns a getter function: get(key, fallback) → string
  *
- * Content is fetched once from /api/v1/site_content and cached for the session.
- * All components using this hook share the same cache and update together on load.
+ * Fetches /api/v1/site_content once and caches for 30 seconds.
+ * All components share the cache; navigating back to a page after 30 s
+ * picks up any admin changes without a full browser reload.
  *
  * Usage:
  *   const sc = useSiteContent();
@@ -25,27 +28,35 @@ export function useSiteContent() {
   const [content, setContent] = useState(_cache);
 
   useEffect(() => {
-    if (_cache !== null) return;  // already loaded
+    const stale = !_cache || (Date.now() - _fetchedAt) > TTL_MS;
+
+    if (!stale) {
+      if (content !== _cache) setContent(_cache);
+      return;
+    }
 
     _listeners.add(setContent);
 
     if (!_loading) {
       _loading = true;
-      // Pass browser locale so server can return appropriate translations
       const locale = (document.documentElement.lang || 'en').split('-')[0];
       api().get('/api/v1/site_content', { params: { locale } })
         .then(res => {
-          _cache = res.data || {};
+          _cache    = res.data || {};
+          _fetchedAt = Date.now();
+          _loading  = false;
           notifyListeners();
         })
         .catch(() => {
-          _cache = {};
+          _cache    = {};
+          _fetchedAt = Date.now();
+          _loading  = false;
           notifyListeners();
         });
     }
 
     return () => { _listeners.delete(setContent); };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return useCallback(
     (key, fallback = '') => content?.[key] ?? fallback,

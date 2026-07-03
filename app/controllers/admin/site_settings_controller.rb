@@ -79,7 +79,7 @@ module Admin
           next unless SUPPORTED_LOCALES.include?(locale)
 
           value = value.to_s.strip
-          next if value.blank? && locale != 'en'
+          next if value.blank?  # empty field = keep existing DB value / use JSX fallback
 
           SiteContent.set(key, value, locale: locale)
           saved += 1
