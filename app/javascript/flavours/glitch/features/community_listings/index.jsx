@@ -9,6 +9,7 @@ import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import { useIdentity } from 'flavours/glitch/identity_context';
+import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import { fetchListings } from 'flavours/glitch/actions/community_listings';
 import { connectStream } from 'flavours/glitch/stream';
@@ -27,6 +28,7 @@ const TYPES = [
 const CommunityListings = ({ multiColumn }) => {
   const dispatch   = useAppDispatch();
   const { signedIn } = useIdentity();
+  const sc = useSiteContent();
 
   const listings = useAppSelector(s => s.getIn(['community_listings', 'items']));
   const loading  = useAppSelector(s => s.getIn(['community_listings', 'loading']));
@@ -76,7 +78,7 @@ const CommunityListings = ({ multiColumn }) => {
       <ColumnHeader
         icon='tag'
         iconComponent={TagIcon}
-        title='Community Listings'
+        title={sc('col_listings_title', 'Community Listings')}
         multiColumn={multiColumn}
         showBackButton
         className='ch-listings'

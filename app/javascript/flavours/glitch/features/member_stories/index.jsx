@@ -11,9 +11,11 @@ import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import api from 'flavours/glitch/api';
 import { useIdentity } from 'flavours/glitch/identity_context';
+import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 
 const MemberStoriesList = ({ multiColumn }) => {
   const { signedIn } = useIdentity();
+  const sc = useSiteContent();
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +31,7 @@ const MemberStoriesList = ({ multiColumn }) => {
       <ColumnHeader
         icon='book'
         iconComponent={GroupsIcon}
-        title='Member Stories'
+        title={sc('col_stories_title', 'Member Stories')}
         multiColumn={multiColumn}
         showBackButton
         className='ch-stories'

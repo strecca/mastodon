@@ -42,6 +42,20 @@ module Admin
       'Server Banner' => %w[
         server_hero_cta
       ],
+      'Category Column Headers' => %w[
+        col_listings_title
+        col_events_title
+        col_properties_title
+        col_services_title
+        col_restaurants_title
+        col_artists_title
+        col_visits_title
+        col_stories_title
+      ],
+      'Login Page' => %w[
+        login_title
+        login_preamble
+      ],
     }.freeze
 
     def edit

@@ -70,6 +70,20 @@ class SiteContent < ApplicationRecord
 
     # ── Server banner (home feed left panel) ──
     'server_hero_cta'         => 'Click this image to see MiaCivezza.com in action!',
+
+    # ── Category page column header titles ──
+    'col_listings_title'      => 'Community Listings',
+    'col_events_title'        => 'Community Events',
+    'col_properties_title'    => 'Community Properties',
+    'col_services_title'      => 'Community Services',
+    'col_restaurants_title'   => 'Community Restaurants',
+    'col_artists_title'       => 'Community Artists',
+    'col_visits_title'        => "When I'll Be In Town",
+    'col_stories_title'       => 'Member Stories',
+
+    # ── Login page ──
+    'login_title'             => 'Sign in to miacivezza.com',
+    'login_preamble'          => 'Welcome to the Civezza community. Log in with your email address and password.',
   }.freeze
 
   def self.seed!

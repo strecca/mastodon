@@ -8,6 +8,7 @@ import { Column }       from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import { useIdentity }  from 'flavours/glitch/identity_context';
+import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 import {
   fetchVisits, fetchMyVisits, fetchHeatmap, deleteVisit, fetchMyPeople,
 } from 'flavours/glitch/actions/community_visits';
@@ -376,6 +377,7 @@ const MyVisitCard = ({ visit, onEdit, onDelete, onNotify }) => {
 const CommunityVisits = ({ multiColumn }) => {
   const dispatch     = useAppDispatch();
   const { signedIn } = useIdentity();
+  const sc = useSiteContent();
 
   const visits        = useAppSelector(s => s.getIn(['community_visits', 'visits']));
   const myVisits      = useAppSelector(s => s.getIn(['community_visits', 'myVisits']));
@@ -542,7 +544,7 @@ const CommunityVisits = ({ multiColumn }) => {
   return (
     <Column bindToDocument={!multiColumn} label="When I'll Be In Town" className='col-visits'>
       <ColumnHeader
-        title="When I'll Be In Town"
+        title={sc('col_visits_title', "When I'll Be In Town")}
         icon='trip'
         multiColumn={multiColumn}
         showBackButton

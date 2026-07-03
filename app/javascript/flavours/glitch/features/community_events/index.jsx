@@ -8,6 +8,7 @@ import { Helmet } from '@unhead/react/helmet';
 import { Column }       from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { useIdentity }  from 'flavours/glitch/identity_context';
+import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 import { useAppDispatch } from 'flavours/glitch/store';
 import { connectStream } from 'flavours/glitch/stream';
 import api              from 'flavours/glitch/api';
@@ -347,6 +348,7 @@ const MyEventCard = ({ event }) => {
 
 const CommunityEvents = ({ multiColumn }) => {
   const { signedIn, accountId } = useIdentity();
+  const sc = useSiteContent();
   const dispatch = useAppDispatch();
 
   const [events,          setEvents]          = useState([]);
@@ -533,7 +535,7 @@ const CommunityEvents = ({ multiColumn }) => {
   return (
     <Column bindToDocument={!multiColumn} label='Community Events' className='col-events'>
       <ColumnHeader
-        title='Community Events'
+        title={sc('col_events_title', 'Community Events')}
         icon='celebration'
         multiColumn={multiColumn}
         showBackButton
