@@ -100,6 +100,9 @@ namespace :api, format: false do
     get   'community_landing',  to: 'community_landing#show'
     patch 'community_landing',  to: 'community_landing#update'
 
+    get   'site_content',       to: 'site_contents#index'
+    patch 'site_content',       to: 'site_contents#update'
+
     # Community maintenance console (admin only)
     get    'community_maintenance/stats',         to: 'community_maintenance#stats'
     delete 'community_maintenance/past_events',   to: 'community_maintenance#past_events'

@@ -2246,3 +2246,53 @@ a.sparkline {
     }
   }
 }
+
+.site-settings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 13px;
+
+  th, td {
+    padding: 8px 10px;
+    border: 1px solid var(--color-border-default, #444);
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--color-bg-elevated);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    width: 80px;
+    text-align: center;
+  }
+
+  &__key {
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    width: 220px;
+    white-space: nowrap;
+  }
+
+  &__input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 13px;
+    resize: vertical;
+    min-height: 42px;
+    padding: 6px 8px;
+    border: 1px solid var(--color-border-default, #555);
+    border-radius: 4px;
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+
+    &::placeholder {
+      color: var(--color-text-tertiary);
+      font-style: italic;
+      font-size: 11px;
+    }
+  }
+}

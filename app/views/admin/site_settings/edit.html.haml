@@ -1,0 +1,33 @@
+- content_for :page_title do
+  Site Content & Translations
+
+- content_for :heading do
+  %h1 Site Content &amp; Translations
+  %p.lead Edit the text shown on the landing page, about page, and server banner. Fill in additional languages to enable translations.
+
+= form_with url: admin_site_settings_path, method: :patch, local: true do |f|
+  - @groups.each do |group_name, keys|
+    .admin-wrapper
+      %h2.title= group_name
+
+      %table.table.site-settings-table
+        %thead
+          %tr
+            %th Key
+            - Admin::SiteSettingsController::SUPPORTED_LOCALES.each do |locale|
+              %th= locale.upcase
+
+        %tbody
+          - keys.each do |key|
+            %tr
+              %td.site-settings-table__key= key
+              - Admin::SiteSettingsController::SUPPORTED_LOCALES.each do |locale|
+                %td
+                  = text_area_tag "site_content[#{key}][#{locale}]",
+                                  @content.dig(locale, key),
+                                  rows: 2,
+                                  class: 'site-settings-table__input',
+                                  placeholder: locale == 'en' ? '(required)' : '(optional — falls back to EN)'
+
+  .actions
+    = f.submit 'Save All Changes', class: 'button'

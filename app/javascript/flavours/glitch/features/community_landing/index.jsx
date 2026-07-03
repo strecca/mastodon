@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 import { Link, useHistory } from 'react-router-dom';
 
@@ -12,90 +12,38 @@ import ManufacturingIcon from '@/material-icons/400-24px/manufacturing.svg?react
 import StarIcon from '@/material-icons/400-24px/star.svg?react';
 import TagIcon from '@/material-icons/400-24px/tag.svg?react';
 import TripIcon from '@/material-icons/400-24px/trip.svg?react';
-import api from 'flavours/glitch/api';
 import { withIdentity } from 'flavours/glitch/identity_context';
-
-const DEFAULTS = {
-  site_name:    'Centro Comunitario',
-  site_subtitle: 'Mia Civezza al Mare',
-  tagline:      'La nostra comunità online — eventi, scambi, artisti e molto altro.',
-  join_heading: 'Join the MiaCivezza.com Community',
-  join_body:    'You will be able to make your own posts to all of us as well as add your own Civezza Community Events, Favorite Restaurants, and List Items for Sale, Giveaway, Trade or Searching For & Properties for Sale, Rent or for short-term Vacation stays. Also in the Community Services section let us know your skills or pass along the names and contacts for Builders, Architects, Craftspeople, Cooks, Cleaning, Property Management, or where to go and who to see for various permits, regulations, etc. Additionally you can post for Members to see privately the dates when you will be returning to Civezza or the Imperia area and the details to alert us to know you\'re hoping to see other Members while you are back in Italy. Registration is Free. No Credit Card required. Come Join us!',
-};
+import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 
 // Backgrounds darkened from the Cinque Terre (Manarola) palette for WCAG AA white-text contrast
-const NAV_TILES = [
-  {
-    to:    '/community_listings',
-    Icon:  TagIcon,
-    label: 'Community Listings',
-    desc:  'Giveaway · Trade · Sell · ISO',
-    bg:    '#5A7A1A',  // darkened olive  (#7A9A2B)
-  },
-  {
-    to:    '/community_events',
-    Icon:  CelebrationIcon,
-    label: 'Community Events',
-    desc:  "What's happening nearby",
-    bg:    '#007A80',  // darkened turquoise  (#00C0C0)
-  },
-  {
-    to:    '/community_properties',
-    Icon:  HomeIcon,
-    label: 'Community Properties',
-    desc:  'Houses · Apartments · Rentals',
-    bg:    '#8B2240',  // darkened deep rose  (#C23B5A)
-  },
-  {
-    to:    '/community_services',
-    Icon:  ManufacturingIcon,
-    label: 'Community Services',
-    desc:  'Local businesses & services',
-    bg:    '#8B3E24',  // darkened terracotta  (#E87050)
-  },
-  {
-    to:    '/community_restaurants',
-    Icon:  StarIcon,
-    label: 'Community Restaurants',
-    desc:  'Dining · Cafés · Trattorias',
-    bg:    '#A8302A',  // darkened tomato red  (#E8453C)
-  },
-  {
-    to:    '/community_artists',
-    Icon:  BrushIcon,
-    label: 'Community Artists',
-    desc:  'Local talent & creatives',
-    bg:    '#7A5410',  // darkened warm sand/gold  (#F0C472)
-  },
-  {
-    to:    '/community_visits',
-    Icon:  TripIcon,
-    label: "Community When I'm In Town",
-    desc:  "See who's visiting · Share your dates",
-    bg:    '#6B1A30',  // deep crimson (second Cinque Terre rose, shifted darker)
-  },
-  {
-    to:    '/member_stories',
-    Icon:  GroupsIcon,
-    label: 'Member Stories',
-    desc:  'Personal histories · Civezza connections',
-    bg:    '#2C3E7A',  // deep Mediterranean navy
-  },
+const TILE_DEFS = [
+  { to: '/community_listings',   Icon: TagIcon,          key: 'listings',     bg: '#5A7A1A' },
+  { to: '/community_events',     Icon: CelebrationIcon,  key: 'events',       bg: '#007A80' },
+  { to: '/community_properties', Icon: HomeIcon,         key: 'properties',   bg: '#8B2240' },
+  { to: '/community_services',   Icon: ManufacturingIcon, key: 'services',    bg: '#8B3E24' },
+  { to: '/community_restaurants', Icon: StarIcon,        key: 'restaurants',  bg: '#A8302A' },
+  { to: '/community_artists',    Icon: BrushIcon,        key: 'artists',      bg: '#7A5410' },
+  { to: '/community_visits',     Icon: TripIcon,         key: 'visits',       bg: '#6B1A30' },
+  { to: '/member_stories',       Icon: GroupsIcon,       key: 'stories',      bg: '#2C3E7A' },
 ];
 
+// Default labels/descs used until the API responds (avoids empty tiles on first paint)
+const TILE_DEFAULTS = {
+  listings:    { label: 'Community Listings',          desc: 'Giveaway · Trade · Sell · ISO' },
+  events:      { label: 'Community Events',            desc: "What's happening nearby" },
+  properties:  { label: 'Community Properties',        desc: 'Houses · Apartments · Rentals' },
+  services:    { label: 'Community Services',          desc: 'Local businesses & services' },
+  restaurants: { label: 'Community Restaurants',       desc: 'Dining · Cafés · Trattorias' },
+  artists:     { label: 'Community Artists',           desc: 'Local talent & creatives' },
+  visits:      { label: "Community When I'm In Town",  desc: "See who's visiting · Share your dates" },
+  stories:     { label: 'Member Stories',              desc: 'Personal histories · Civezza connections' },
+};
 
 const CommunityLanding = ({ identity }) => {
   const history  = useHistory();
   const signedIn = identity?.signedIn;
   const isAdmin  = identity?.permissions === 1;
-
-  const [settings, setSettings] = useState(DEFAULTS);
-
-  useEffect(() => {
-    api().get('/api/v1/community_landing')
-      .then(res => setSettings({ ...DEFAULTS, ...res.data }))
-      .catch(() => {}); // fall back to defaults silently
-  }, []);
+  const sc       = useSiteContent();
 
   const handleSeePosts = useCallback(() => {
     history.push('/public/local');
@@ -104,31 +52,31 @@ const CommunityLanding = ({ identity }) => {
   return (
     <div className='cl-landing scrollable'>
       <Helmet>
-        <title>{settings.site_name} — {settings.site_subtitle}</title>
-        <meta name='description' content={settings.tagline} />
+        <title>{sc('landing_logo_text', 'Civezza Community Directory')}</title>
+        <meta name='description' content={sc('landing_hero_tagline', 'Explore everything our community has to offer')} />
       </Helmet>
 
       {/* ── Hero / Logo ── */}
       <header className='cl-landing__hero'>
         <div className='cl-landing__logo'>
-          <span className='cl-landing__logo-main'>Civezza Community Directory</span>
+          <span className='cl-landing__logo-main'>{sc('landing_logo_text', 'Civezza Community Directory')}</span>
         </div>
-        <p className='cl-landing__tagline'>Explore everything our community has to offer</p>
+        <p className='cl-landing__tagline'>{sc('landing_hero_tagline', 'Explore everything our community has to offer')}</p>
 
         <div className='cl-landing__hero-actions'>
           <button className='cl-landing__see-posts-btn' onClick={handleSeePosts}>
-            See Community Posts
+            {sc('landing_see_posts_btn', 'See Community Posts')}
           </button>
           {!signedIn && (
-            <a href='/auth/sign_in' className='cl-landing__login-link'>Log in →</a>
+            <a href='/auth/sign_in' className='cl-landing__login-link'>{sc('landing_login_link', 'Log in →')}</a>
           )}
         </div>
 
         {isAdmin && (
           <div className='cl-landing__admin-bar'>
-            <Link to='/community_directory/landing-settings' className='cl-landing__admin-link'>
-              ✏️ Edit landing page text
-            </Link>
+            <a href='/admin/site_settings/edit' className='cl-landing__admin-link'>
+              ✏️ Edit page text &amp; translations
+            </a>
           </div>
         )}
       </header>
@@ -136,7 +84,7 @@ const CommunityLanding = ({ identity }) => {
       {/* ── Community tiles ── */}
       <section className='cl-landing__section'>
         <div className='cl-landing__tiles'>
-          {NAV_TILES.map(({ to, Icon, label, desc, bg }) => (
+          {TILE_DEFS.map(({ to, Icon, key, bg }) => (
             <Link
               key={to}
               to={to}
@@ -146,37 +94,40 @@ const CommunityLanding = ({ identity }) => {
               <span className='cl-landing__tile-icon-wrap'>
                 <Icon />
               </span>
-              <span className='cl-landing__tile-label'>{label}</span>
-              <span className='cl-landing__tile-desc'>{desc}</span>
+              <span className='cl-landing__tile-label'>
+                {sc(`tile_${key}_label`, TILE_DEFAULTS[key].label)}
+              </span>
+              <span className='cl-landing__tile-desc'>
+                {sc(`tile_${key}_desc`, TILE_DEFAULTS[key].desc)}
+              </span>
               <span className='cl-landing__tile-arrow'>→</span>
             </Link>
           ))}
         </div>
       </section>
 
-
       {/* ── Sign-up CTA ── */}
       {!signedIn && (
         <section className='cl-landing__cta'>
-          <h2 className='cl-landing__cta-title'>{settings.join_heading}</h2>
+          <h2 className='cl-landing__cta-title'>{sc('landing_join_heading', 'Join the MiaCivezza.com Community')}</h2>
           <ul className='cl-landing__cta-features'>
             <li className='cl-landing__cta-feature'>
               <span className='cl-landing__cta-feature-icon'><CelebrationIcon /></span>
-              <span>Make your own posts, add Civezza Community Events, Favorite Restaurants, and list items for Sale, Giveaway, Trade or Searching For &mdash; plus Properties for Sale, Rent or short-term Vacation stays.</span>
+              <span>{sc('landing_join_feature_1', 'Make your own posts, add Civezza Community Events, Favorite Restaurants, and list items for Sale, Giveaway, Trade or Searching For — plus Properties for Sale, Rent or short-term Vacation stays.')}</span>
             </li>
             <li className='cl-landing__cta-feature'>
               <span className='cl-landing__cta-feature-icon'><ManufacturingIcon /></span>
-              <span>In the Community Services section, share your skills or recommend Builders, Architects, Craftspeople, Cooks, Cleaning services, Property Management, and guidance on permits, regulations, and local contacts.</span>
+              <span>{sc('landing_join_feature_2', 'In the Community Services section, share your skills or recommend Builders, Architects, Craftspeople, Cooks, Cleaning services, Property Management, and guidance on permits, regulations, and local contacts.')}</span>
             </li>
             <li className='cl-landing__cta-feature'>
               <span className='cl-landing__cta-feature-icon'><TripIcon /></span>
-              <span>Post <em>When I&apos;ll Be In Town</em> to privately share the dates you&apos;ll be returning to Civezza or the Imperia area &mdash; and let Members know you&apos;d love to connect while you&apos;re back in Italy.</span>
+              <span>{sc('landing_join_feature_3', "Post When I'll Be In Town to privately share the dates you'll be returning to Civezza or the Imperia area — and let Members know you'd love to connect while you're back in Italy.")}</span>
             </li>
           </ul>
-          <p className='cl-landing__cta-footer'>Registration is Free. No Credit Card required. Come Join us!</p>
+          <p className='cl-landing__cta-footer'>{sc('landing_join_footer', 'Registration is Free. No Credit Card required. Come Join us!')}</p>
           <div className='cl-landing__cta-actions'>
-            <a href='/auth/sign_up' className='button cl-landing__signup-btn'>Create Account</a>
-            <a href='/auth/sign_in' className='button button-secondary'>Log In</a>
+            <a href='/auth/sign_up' className='button cl-landing__signup-btn'>{sc('landing_create_account', 'Create Account')}</a>
+            <a href='/auth/sign_in' className='button button-secondary'>{sc('landing_login_link', 'Log In')}</a>
           </div>
         </section>
       )}

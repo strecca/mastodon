@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 
 import { injectIntl } from '@/flavours/glitch/components/intl';
 import { fetchServer, fetchExtendedDescription, fetchDomainBlocks  } from 'flavours/glitch/actions/server';
+import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 import { Account } from 'flavours/glitch/components/account';
 import Column from 'flavours/glitch/components/column';
 import { ServerHeroImage } from 'flavours/glitch/components/server_hero_image';
@@ -19,6 +20,25 @@ import { LinkFooter} from 'flavours/glitch/features/ui/components/link_footer';
 
 import { Section } from './components/section';
 import { RulesSection } from './components/rules';
+
+const AboutCTA = () => {
+  const sc = useSiteContent();
+  return (
+    <p className='about__header__cta'>
+      {sc('about_cta', 'Click this image to see MiaCivezza.com in action!')}
+    </p>
+  );
+};
+
+const AboutBio = () => {
+  const sc = useSiteContent();
+  return (
+    <div className='about__header__bio'>
+      <p>{sc('about_bio_p1', "MiaCivezza.com is my attempt to provide an online Community Bulletin Board and Piazzetta meeting plaza. My Wife & I would meet people at dinner or aperitivo time or at artistic or musical events, make friends and then say Goodbye and want to stay in contact with them. We'd try to exchange contact information as the last process of saying “We hope to see you again”.")}</p>
+      <p>{sc('about_bio_p2', 'Now Visitors and Residents have immediate access to contact each other to renew friendships and to reunite.')}</p>
+    </div>
+  );
+};
 
 const messages = defineMessages({
   title: { id: 'column.about', defaultMessage: 'About' },
@@ -86,14 +106,11 @@ class About extends PureComponent {
             {server.getIn(['thumbnail', 'url']) && (
               <Link to='/landing'>
                 <ServerHeroImage blurhash={server.getIn(['thumbnail', 'blurhash'])} src={server.getIn(['thumbnail', 'url'])} srcSet={server.getIn(['thumbnail', 'versions'])?.map((value, key) => `${value} ${key.replace('@', '')}`).join(', ')} className='about__header__hero' />
-                <p className='about__header__cta'>Click this image to see MiaCivezza.com in action!</p>
+                <AboutCTA />
               </Link>
             )}
             <h1>{isLoading ? <Skeleton width='10ch' /> : server.get('domain')}</h1>
-            <div className='about__header__bio'>
-              <p>MiaCivezza.com is my attempt to provide an online Community Bulletin Board and Piazzetta meeting plaza. My Wife &amp; I would meet people at dinner or aperitivo time or at artistic or musical events, make friends and then say Goodbye and want to stay in contact with them. We&apos;d try to exchange contact information as the last process of saying &ldquo;We hope to see you again&rdquo;.</p>
-              <p>Now Visitors and Residents have immediate access to contact each other to renew friendships and to reunite.</p>
-            </div>
+            <AboutBio />
           </div>
 
           <div className='about__meta'>

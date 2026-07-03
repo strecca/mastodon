@@ -3,6 +3,8 @@
 namespace :admin do
   get '/dashboard', to: 'dashboard#index'
 
+  resource :site_settings, only: [:edit, :update]
+
   concern :batch do
     collection { post :batch }
   end
