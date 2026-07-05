@@ -38,6 +38,7 @@ module Admin
         about_cta
         about_bio_p1
         about_bio_p2
+        about_photo_url
       ],
       'Server Banner' => %w[
         server_hero_cta

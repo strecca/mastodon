@@ -65,8 +65,9 @@ class SiteContent < ApplicationRecord
 
     # ── About page ──
     'about_cta'               => 'Click this image to see MiaCivezza.com in action!',
-    'about_bio_p1'            => "MiaCivezza.com is my attempt to provide an online Community Bulletin Board and Piazzetta meeting plaza. My Wife & I would meet people at dinner or aperitivo time or at artistic or musical events, make friends and then say Goodbye and want to stay in contact with them. We'd try to exchange contact information as the last process of saying “We hope to see you again”.",
+    'about_bio_p1'            => “MiaCivezza.com is my attempt to provide an online Community Bulletin Board and Piazzetta meeting plaza. My Wife & I would meet people at dinner or aperitivo time or at artistic or musical events, make friends and then say Goodbye and want to stay in contact with them. We'd try to exchange contact information as the last process of saying “We hope to see you again”.”,
     'about_bio_p2'            => 'Now Visitors and Residents have immediate access to contact each other to renew friendships and to reunite.',
+    'about_photo_url'         => '',
 
     # ── Server banner (home feed left panel) ──
     'server_hero_cta'         => 'Click this image to see MiaCivezza.com in action!',
