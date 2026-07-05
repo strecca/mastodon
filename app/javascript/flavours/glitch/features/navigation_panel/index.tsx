@@ -21,6 +21,7 @@ import CollectionsIcon from '@/material-icons/400-24px/category.svg?react';
 import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
 import InfoIcon from '@/material-icons/400-24px/info.svg?react';
+import EditNoteIcon from '@/material-icons/400-24px/edit_note.svg?react';
 import AdministrationIcon from '@/material-icons/400-24px/manufacturing.svg?react';
 import NotificationsActiveIcon from '@/material-icons/400-24px/notifications-fill.svg?react';
 import NotificationsIcon from '@/material-icons/400-24px/notifications.svg?react';
@@ -424,12 +425,13 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             {!!(permissions & 0x1) && (
               <>
                 <hr />
+                <div className='navigation-panel__admin-heading'>Admin Tools</div>
                 <ColumnLink
                   transparent
-                  to='/community_maintenance'
-                  icon='manufacturing'
-                  iconComponent={AdministrationIcon}
-                  text='Site Maintenance'
+                  href='/admin/site_settings/edit'
+                  icon='edit_note'
+                  iconComponent={EditNoteIcon}
+                  text='Site Content & Translations'
                 />
                 <ColumnLink
                   transparent
@@ -440,9 +442,30 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
                 />
                 <ColumnLink
                   transparent
+                  to='/community_directory/scraper_logs'
+                  icon='public'
+                  iconComponent={PublicIcon}
+                  text='Scraper Logs'
+                />
+                <ColumnLink
+                  transparent
+                  to='/community_maintenance'
+                  icon='manufacturing'
+                  iconComponent={AdministrationIcon}
+                  text='Site Maintenance'
+                />
+                <ColumnLink
+                  transparent
                   to='/community_visits/admin'
                   icon='manage_accounts'
-                  text={intl.formatMessage(messages.visitsAdmin)}
+                  text='Visits Admin'
+                />
+                <ColumnLink
+                  transparent
+                  href='/admin/dashboard'
+                  icon='settings'
+                  iconComponent={SettingsIcon}
+                  text='Mastodon Admin'
                 />
               </>
             )}

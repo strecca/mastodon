@@ -3765,6 +3765,15 @@ a.account__display-name {
     scrollbar-width: thin;
   }
 
+  &__admin-heading {
+    padding: 6px 15px 2px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-tertiary);
+  }
+
   &__list-panel {
     &__header {
       display: flex;
