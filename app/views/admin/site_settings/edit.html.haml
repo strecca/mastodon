@@ -9,25 +9,19 @@
   - @groups.each do |group_name, keys|
     .admin-wrapper
       %h2.title= group_name
-
-      %table.table.site-settings-table
-        %thead
-          %tr
-            %th Key
-            - Admin::SiteSettingsController::SUPPORTED_LOCALES.each do |locale|
-              %th= locale.upcase
-
-        %tbody
-          - keys.each do |key|
-            %tr
-              %td.site-settings-table__key= key
+      .site-settings-cards
+        - keys.each do |key|
+          .site-settings-card
+            .site-settings-card__key= key
+            .site-settings-card__fields
               - Admin::SiteSettingsController::SUPPORTED_LOCALES.each do |locale|
-                %td
+                .site-settings-card__field
+                  %label.site-settings-card__locale= locale.upcase
                   = text_area_tag "site_content[#{key}][#{locale}]",
                                   @content.dig(locale, key),
-                                  rows: 2,
-                                  class: 'site-settings-table__input',
-                                  placeholder: locale == 'en' ? '(required)' : '(optional — falls back to EN)'
+                                  rows: 3,
+                                  class: 'site-settings-card__input',
+                                  placeholder: locale == 'en' ? '(required)' : '(falls back to EN)'
 
   .actions
     = f.submit 'Save All Changes', class: 'button'
