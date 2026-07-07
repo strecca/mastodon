@@ -57,6 +57,23 @@ module Admin
         login_title
         login_preamble
       ],
+      'Join / Sign-up Page' => %w[
+        join_title
+        join_tagline
+        join_benefits_heading
+        join_benefit_1_title
+        join_benefit_1_desc
+        join_benefit_2_title
+        join_benefit_2_desc
+        join_benefit_3_title
+        join_benefit_3_desc
+        join_benefit_4_title
+        join_benefit_4_desc
+        join_cta_note
+        join_signup_btn
+        join_signin_note
+        join_signin_link
+      ],
     }.freeze
 
     def edit

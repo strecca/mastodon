@@ -85,6 +85,23 @@ class SiteContent < ApplicationRecord
     # ── Login page ──
     'login_title'             => 'Sign in to miacivezza.com',
     'login_preamble'          => 'Welcome to the Civezza community. Log in with your email address and password.',
+
+    # ── Join / Sign-up page ──
+    'join_title'              => 'Welcome to miacivezza.com!',
+    'join_tagline'            => "If you want all the benefits of miacivezza.com Membership, here's the place to start!",
+    'join_benefits_heading'   => 'What you get as a Member:',
+    'join_benefit_1_title'    => 'Add your own entries',
+    'join_benefit_1_desc'     => 'to all Community categories — Services, Artists, Restaurants, Properties and more',
+    'join_benefit_2_title'    => 'Make your own posts',
+    'join_benefit_2_desc'     => 'and connect with neighbours in the community feed',
+    'join_benefit_3_title'    => "Use the When I'll Be In Town",
+    'join_benefit_3_desc'     => 'calendar to coordinate visits with friends',
+    'join_benefit_4_title'    => "It's completely Free",
+    'join_benefit_4_desc'     => '— no credit card, no subscription, no catch',
+    'join_cta_note'           => 'Sign up as an authorized Member in just a few seconds. All we need is a username, email address and password.',
+    'join_signup_btn'         => 'Sign Up Free',
+    'join_signin_note'        => 'Already have an account?',
+    'join_signin_link'        => 'Sign in here',
   }.freeze
 
   def self.seed!

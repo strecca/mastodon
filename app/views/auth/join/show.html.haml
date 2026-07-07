@@ -1,42 +1,39 @@
 - content_for :page_title do
   = "Join #{site_hostname}"
 
-%h1.title Welcome to #{site_hostname}!
+%h1.title= SiteContent.for('join_title', locale: I18n.locale.to_s, fallback: "Welcome to #{site_hostname}!")
 
 .join-page
 
   .join-page__hero
     %p.join-page__tagline
-      If you want all the benefits of
-      %strong= site_hostname
-      Membership, here's the place to start!
+      = SiteContent.for('join_tagline', locale: I18n.locale.to_s, fallback: "If you want all the benefits of #{site_hostname} Membership, here's the place to start!")
 
   .join-page__benefits
-    %h2.join-page__benefits-title What you get as a Member:
+    %h2.join-page__benefits-title= SiteContent.for('join_benefits_heading', locale: I18n.locale.to_s, fallback: 'What you get as a Member:')
     %ul.join-page__benefits-list
       %li
         ✅
-        %strong Add your own entries
-        to all Community categories — Services, Artists, Restaurants, Properties and more
+        %strong= SiteContent.for('join_benefit_1_title', locale: I18n.locale.to_s, fallback: 'Add your own entries')
+        = SiteContent.for('join_benefit_1_desc', locale: I18n.locale.to_s, fallback: 'to all Community categories — Services, Artists, Restaurants, Properties and more')
       %li
         ✅
-        %strong Make your own posts
-        and connect with neighbours in the community feed
+        %strong= SiteContent.for('join_benefit_2_title', locale: I18n.locale.to_s, fallback: 'Make your own posts')
+        = SiteContent.for('join_benefit_2_desc', locale: I18n.locale.to_s, fallback: 'and connect with neighbours in the community feed')
       %li
         ✅
-        %strong Use the When I'll Be In Town
-        calendar to coordinate visits with friends
+        %strong= SiteContent.for('join_benefit_3_title', locale: I18n.locale.to_s, fallback: "Use the When I'll Be In Town")
+        = SiteContent.for('join_benefit_3_desc', locale: I18n.locale.to_s, fallback: 'calendar to coordinate visits with friends')
       %li
         ✅
-        %strong It's completely Free
-        — no credit card, no subscription, no catch
+        %strong= SiteContent.for('join_benefit_4_title', locale: I18n.locale.to_s, fallback: "It's completely Free")
+        = SiteContent.for('join_benefit_4_desc', locale: I18n.locale.to_s, fallback: '— no credit card, no subscription, no catch')
 
   .join-page__cta
     %p.join-page__cta-note
-      Sign up as an authorized Member in just a few seconds.
-      All we need is a username, email address and password.
-    = link_to 'Sign Up Free →', new_user_registration_path, class: 'button join-page__signup-btn'
+      = SiteContent.for('join_cta_note', locale: I18n.locale.to_s, fallback: 'Sign up as an authorized Member in just a few seconds. All we need is a username, email address and password.')
+    = link_to SiteContent.for('join_signup_btn', locale: I18n.locale.to_s, fallback: 'Sign Up Free →'), new_user_registration_path, class: 'button join-page__signup-btn'
 
   .join-page__signin
-    Already have an account?
-    = link_to 'Sign in here', new_user_session_path
+    = SiteContent.for('join_signin_note', locale: I18n.locale.to_s, fallback: 'Already have an account?')
+    = link_to SiteContent.for('join_signin_link', locale: I18n.locale.to_s, fallback: 'Sign in here'), new_user_session_path
