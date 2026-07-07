@@ -2247,6 +2247,25 @@ a.sparkline {
   }
 }
 
+.site-settings-section {
+  margin-bottom: 12px;
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary, #aaa);
+    margin: 0 0 6px;
+    padding: 0;
+  }
+}
+
+.site-settings-save {
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
 .site-settings-cards {
   display: flex;
   flex-direction: column;

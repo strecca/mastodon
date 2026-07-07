@@ -7,8 +7,8 @@
 
 = form_with url: admin_site_settings_path, method: :patch, local: true do |f|
   - @groups.each do |group_name, keys|
-    .admin-wrapper
-      %h2.title= group_name
+    .site-settings-section
+      %h2.site-settings-section__title= group_name
       .site-settings-cards
         - keys.each do |key|
           .site-settings-card
@@ -23,5 +23,5 @@
                                   class: 'site-settings-card__input',
                                   placeholder: locale == 'en' ? '(required)' : '(falls back to EN)'
 
-  .actions
+  .site-settings-save
     = f.submit 'Save All Changes', class: 'button'
