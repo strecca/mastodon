@@ -2247,6 +2247,49 @@ a.sparkline {
   }
 }
 
+.site-settings-auto-translate {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border-default, #444);
+  border-radius: 6px;
+
+  &__label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-secondary, #aaa);
+    white-space: nowrap;
+    margin-right: 4px;
+  }
+
+  // button_to wraps each button in its own <form>; make those forms invisible
+  // in the flex layout so only the <button> children participate
+  form {
+    display: contents;
+  }
+
+  &__btn {
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 4px;
+    border: 1px solid var(--color-border-default, #555);
+    background: transparent;
+    color: var(--color-text-primary);
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--color-text-secondary, #888);
+    }
+  }
+}
+
 .site-settings-section {
   margin-bottom: 12px;
 
@@ -2289,7 +2332,7 @@ a.sparkline {
 
   &__fields {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(7, 1fr);
   }
 
   &__field {

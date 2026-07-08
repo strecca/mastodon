@@ -36,6 +36,7 @@ import { initialState, me, owner, singleUserMode, trendsEnabled, landingPage, lo
 
 import BundleColumnError from './components/bundle_column_error';
 import { NavigationBar } from './components/navigation_bar';
+import { LanguageSwitcher } from 'flavours/glitch/components/language_switcher';
 import { UploadArea } from './components/upload_area';
 import { HashtagMenuController } from './components/hashtag_menu_controller';
 import { ColumnsArea } from './components/columns_area';
@@ -805,6 +806,7 @@ class UI extends PureComponent {
           </SwitchingColumnsArea>
 
           <NavigationBar />
+          {layout === 'mobile' && <LanguageSwitcher variant='fab' />}
           {layout !== 'mobile' && <PictureInPicture />}
           <AlertsController />
           {!disableHoverCards && <HoverCardController />}

@@ -5,6 +5,14 @@
   %h1 Site Content &amp; Translations
   %p.lead Edit the text shown on the landing page, about page, and server banner. Fill in additional languages to enable translations.
 
+.site-settings-auto-translate
+  %span.site-settings-auto-translate__label Auto-translate all from EN →
+  - (Admin::SiteSettingsController::SUPPORTED_LOCALES - ['en']).each do |locale|
+    = button_to locale.upcase, auto_translate_admin_site_settings_path,
+        params: { locale: locale },
+        method: :post,
+        class: 'site-settings-auto-translate__btn'
+
 = form_with url: admin_site_settings_path, method: :patch, local: true do |f|
   - @groups.each do |group_name, keys|
     .site-settings-section

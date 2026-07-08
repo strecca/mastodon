@@ -30,6 +30,26 @@ class CommunityTranslationService
     end
   end
 
+  # Translate many texts in one DeepL API call. Accepts { key => text } hash,
+  # returns { key => translated_text } hash. Keys with blank text are skipped.
+  def translate_batch(key_text_hash, target_locale:)
+    return {} if key_text_hash.blank?
+
+    filtered = key_text_hash.reject { |_, v| v.blank? }
+    return {} if filtered.empty?
+
+    config = Rails.configuration.x.translation
+    if config.deepl[:api_key].present?
+      translate_deepl_batch(filtered, target_locale)
+    else
+      filtered.each_with_object({}) do |(key, text), acc|
+        acc[key] = translate(text, target_locale: target_locale)
+      rescue Error
+        nil
+      end
+    end
+  end
+
   private
 
   def translate_deepl(text, target)
@@ -43,6 +63,29 @@ class CommunityTranslationService
 
     result = JSON.parse(response.body.to_s).dig('translations', 0, 'text')
     raise Error, 'DeepL returned empty translation' if result.blank?
+
+    result
+  end
+
+  # Batches all texts into ≤50-item DeepL requests (API limit per call).
+  def translate_deepl_batch(key_text_hash, target)
+    code   = DEEPL_LOCALE_MAP[target] || target.upcase
+    keys   = key_text_hash.keys
+    texts  = key_text_hash.values
+    result = {}
+
+    texts.each_slice(50).with_index do |slice_texts, chunk|
+      slice_keys = keys[chunk * 50, slice_texts.length]
+      response   = HTTP.auth("DeepL-Auth-Key #{deepl_api_key}")
+                       .post("#{deepl_endpoint}/translate", json: {
+                         text:        slice_texts,
+                         target_lang: code,
+                       })
+      raise Error, "DeepL returned #{response.status}" unless response.status.success?
+
+      translations = JSON.parse(response.body.to_s)['translations']
+      slice_keys.each_with_index { |k, i| result[k] = translations[i]['text'] }
+    end
 
     result
   end

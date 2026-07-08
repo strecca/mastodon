@@ -12,6 +12,7 @@ import { withIdentity } from 'flavours/glitch/identity_context';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
 import { fetchEntry, clearCurrentEntry, deleteEntry } from 'flavours/glitch/actions/community_entries';
+import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
 import { fieldLabel, translatedValue } from './translation_helpers';
 
 const messages = defineMessages({
@@ -35,9 +36,11 @@ const fmtFieldDate = (iso) => {
 const EntryDetailInner = ({ config, entryId, identity }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
+  const { viewingLocale } = useViewingLocale();
 
-  const history     = useHistory();
-  const locale      = intl.locale;
+  const history = useHistory();
+  // viewingLocale overrides the account locale for translation display only
+  const locale  = viewingLocale || intl.locale;
   const categoryKey = config.category_key;
   const apiEndpoint = config.api_endpoint;
   const featureKey  = `community_${categoryKey}`;

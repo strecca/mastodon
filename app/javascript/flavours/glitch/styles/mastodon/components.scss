@@ -6037,6 +6037,156 @@ a.status-card {
   }
 }
 
+// ── Language Switcher ─────────────────────────────────────────────────────────
+// Community-directory viewing locale selector. Works in nav panel (panel variant)
+// and as a floating action button on mobile (fab variant).
+
+.navigation-panel__language-switcher {
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 4px;
+}
+
+.language-switcher {
+  position: relative;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: 100%;
+    padding: 7px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    color: var(--color-text-primary, #fff);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    transition: background 0.15s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &__globe {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &__active-label {
+    flex: 1;
+    font-size: 13px;
+  }
+
+  &__override-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6364ff;
+    flex-shrink: 0;
+  }
+
+  &__chevron {
+    font-size: 9px;
+    color: var(--color-text-secondary, #aaa);
+    flex-shrink: 0;
+  }
+
+  &__panel {
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--color-bg-elevated, #1f1f2e);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    z-index: 300;
+  }
+
+  &__panel-hint {
+    padding: 7px 12px 5px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary, #aaa);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 9px 12px;
+    background: none;
+    border: none;
+    color: var(--color-text-primary, #fff);
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &--active {
+      background: rgba(99, 100, 255, 0.15);
+      font-weight: 600;
+    }
+
+    &--account &-tag {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-text-secondary, #aaa);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    &-name {
+      flex: 1;
+    }
+  }
+
+  // ── Floating Action Button variant (mobile only) ──
+  &--fab {
+    position: fixed;
+    bottom: 72px;  // clears the mobile tab bar
+    right: 16px;
+    z-index: 100;
+
+    .language-switcher__trigger {
+      width: auto;
+      border-radius: 24px;
+      padding: 9px 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      background: var(--color-bg-elevated, #1f1f2e);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .language-switcher__panel {
+      bottom: calc(100% + 8px);
+      left: auto;
+      right: 0;
+      width: 180px;
+    }
+  }
+}
+
+// ── End Language Switcher ──────────────────────────────────────────────────────
+
 .visibility-dropdown {
   &__overlay[data-popper-placement] {
     z-index: 9999;

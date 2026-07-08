@@ -7,7 +7,7 @@ module Admin
     before_action :authenticate_user!
     before_action :require_admin!
 
-    SUPPORTED_LOCALES = %w[en it fr de].freeze
+    SUPPORTED_LOCALES = %w[en it fr de sv nb es].freeze
 
     CONTENT_GROUPS = {
       'Landing Page — Hero' => %w[
@@ -106,6 +106,37 @@ module Admin
 
       redirect_to edit_admin_site_settings_path,
                   notice: "Saved #{saved} content values."
+    end
+
+    def auto_translate
+      locale = params[:locale].to_s.downcase
+      unless SUPPORTED_LOCALES.include?(locale) && locale != 'en'
+        return redirect_to edit_admin_site_settings_path, alert: 'Invalid target locale.'
+      end
+
+      all_keys  = CONTENT_GROUPS.values.flatten
+      en_values = SiteContent.where(key: all_keys, locale: 'en')
+                              .pluck(:key, :value)
+                              .to_h
+                              .reject { |_, v| v.blank? }
+
+      if en_values.empty?
+        return redirect_to edit_admin_site_settings_path, alert: 'No English content found to translate.'
+      end
+
+      service    = CommunityTranslationService.new
+      translated = service.translate_batch(en_values, target_locale: locale)
+      saved      = 0
+
+      translated.each do |key, value|
+        next if value.blank?
+        SiteContent.set(key, value, locale: locale)
+        saved += 1
+      end
+
+      redirect_to edit_admin_site_settings_path, notice: "Auto-translated #{saved} values to #{locale.upcase} via DeepL."
+    rescue CommunityTranslationService::Error => e
+      redirect_to edit_admin_site_settings_path, alert: "Translation failed: #{e.message}"
     end
 
     private
