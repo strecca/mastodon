@@ -7,7 +7,7 @@ en:
       send_paranoid_instructions: If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes. Please check your spam folder if you didn't receive this email.
     failure:
       already_authenticated: You are already signed in.
-      closed_registrations: "While we conduct testing to make sure our website works perfectly we ask your kind patience. We hope to open MiaCivezza.com to your Membership Requests by June 15, 2026. In the meantime you can see Posts and Community Categories to give you an idea of what you can post as a Member. Many of our tests may be ridiculous or amusing in the meantime 😊"
+      closed_registrations: "Registration is currently closed."
       inactive: Your account is not activated yet.
       invalid: Invalid %{authentication_keys} or password.
       last_attempt: You have one more attempt before your account is locked.

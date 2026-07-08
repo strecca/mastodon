@@ -89,7 +89,11 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   end
 
   def check_enabled_registrations
-    redirect_to new_user_session_path, alert: I18n.t('devise.failure.closed_registrations', email: Setting.site_contact_email) unless allowed_registration?(request.remote_ip, @invite)
+    return if allowed_registration?(request.remote_ip, @invite)
+
+    message = Setting.closed_registrations_message.presence
+    # When the admin clears the field, redirect silently (no alert shown).
+    redirect_to new_user_session_path, alert: message
   end
 
   def invite_code
