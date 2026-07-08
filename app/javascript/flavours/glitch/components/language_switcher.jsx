@@ -1,5 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 
+import { createPortal } from 'react-dom';
+
 import { useIntl } from 'react-intl';
 
 import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
@@ -14,14 +16,6 @@ const LANGUAGES = [
   { code: 'nb', label: 'Norsk',      nativeName: 'Norsk'     },
 ];
 
-/**
- * LanguageSwitcher — controls the "viewing locale" for community directory
- * translations without changing account settings. Useful for handing a phone
- * to someone who wants to read content in a different language.
- *
- * variant="panel"  — inline strip for use inside the navigation panel
- * variant="fab"    — floating action button for mobile (CSS positions it)
- */
 export const LanguageSwitcher = ({ variant = 'panel' }) => {
   const { viewingLocale, setViewingLocale } = useViewingLocale();
   const intl = useIntl();
@@ -43,14 +37,12 @@ export const LanguageSwitcher = ({ variant = 'panel' }) => {
 
   const handleSelect = useCallback(
     (code) => {
-      // If user picks their account locale, clear the override (revert to default)
       setViewingLocale(code === accountLocale ? null : code);
       setOpen(false);
     },
     [accountLocale, setViewingLocale],
   );
 
-  // Close panel when clicking outside
   useEffect(() => {
     if (!open) return;
     const handleClick = (e) => {
@@ -62,11 +54,9 @@ export const LanguageSwitcher = ({ variant = 'panel' }) => {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [open]);
 
-  const isFab = variant === 'fab';
-
-  return (
+  const content = (
     <div
-      className={`language-switcher${isFab ? ' language-switcher--fab' : ''}`}
+      className={`language-switcher${variant === 'fab' ? ' language-switcher--fab' : ''}`}
       ref={panelRef}
     >
       <button
@@ -116,4 +106,12 @@ export const LanguageSwitcher = ({ variant = 'panel' }) => {
       )}
     </div>
   );
+
+  // FAB variant uses a portal so position:fixed is relative to the viewport,
+  // not a transformed ancestor (Mastodon's column animations use transforms).
+  if (variant === 'fab') {
+    return createPortal(content, document.body);
+  }
+
+  return content;
 };
