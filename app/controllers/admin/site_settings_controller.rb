@@ -124,8 +124,21 @@ module Admin
         return redirect_to edit_admin_site_settings_path, alert: 'No English content found to translate.'
       end
 
+      # Skip keys that already have a saved translation in the target locale
+      already_done = SiteContent.where(key: all_keys, locale: locale)
+                                 .where.not(value: [nil, ''])
+                                 .pluck(:key)
+                                 .to_set
+
+      missing = en_values.reject { |key, _| already_done.include?(key) }
+
+      if missing.empty?
+        return redirect_to edit_admin_site_settings_path,
+                           notice: "All #{locale.upcase} translations are already filled in — nothing to do."
+      end
+
       service    = CommunityTranslationService.new
-      translated = service.translate_batch(en_values, target_locale: locale)
+      translated = service.translate_batch(missing, target_locale: locale)
       saved      = 0
 
       translated.each do |key, value|
@@ -134,7 +147,9 @@ module Admin
         saved += 1
       end
 
-      redirect_to edit_admin_site_settings_path, notice: "Auto-translated #{saved} values to #{locale.upcase} via DeepL."
+      skipped = already_done.size
+      redirect_to edit_admin_site_settings_path,
+                  notice: "Auto-translated #{saved} new values to #{locale.upcase} via DeepL#{skipped > 0 ? " (#{skipped} already had translations, skipped)" : ''}."
     rescue CommunityTranslationService::Error => e
       redirect_to edit_admin_site_settings_path, alert: "Translation failed: #{e.message}"
     end
