@@ -806,7 +806,7 @@ class UI extends PureComponent {
           </SwitchingColumnsArea>
 
           <NavigationBar />
-          {layout === 'mobile' && <LanguageSwitcher variant='fab' />}
+          <LanguageSwitcher variant='fab' />
           {layout !== 'mobile' && <PictureInPicture />}
           <AlertsController />
           {!disableHoverCards && <HoverCardController />}

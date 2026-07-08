@@ -68,7 +68,6 @@ import { ListPanel } from './components/list_panel';
 import { MoreLink } from './components/more_link';
 import { SignInBanner } from './components/sign_in_banner';
 import { Trends } from './components/trends';
-import { LanguageSwitcher } from 'flavours/glitch/components/language_switcher';
 
 const messages = defineMessages({
   home: { id: 'tabs_bar.home', defaultMessage: 'Home' },
@@ -285,11 +284,6 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             {disabledAccountId ? <DisabledAccountBanner /> : <SignInBanner />}
           </div>
         )}
-
-        {/* ── Language switcher — visible to everyone ── */}
-        <div className='navigation-panel__language-switcher'>
-          <LanguageSwitcher variant='panel' />
-        </div>
 
         {/* ── Primary community nav — visible to everyone ── */}
         <ColumnLink
