@@ -20,13 +20,13 @@ class CommunityTranslationService
   def translate(text, target_locale:)
     return nil if text.blank?
 
-    case Setting.translation_service
-    when 'deepl'
+    config = Rails.configuration.x.translation
+    if config.deepl[:api_key].present?
       translate_deepl(text, target_locale)
-    when 'libre_translate'
+    elsif config.libre_translate[:endpoint].present?
       translate_libre(text, target_locale)
     else
-      raise Error, 'No translation service configured — set Admin → Settings → translation_service'
+      raise Error, 'No translation service configured — set DEEPL_API_KEY in .env.production'
     end
   end
 
@@ -34,7 +34,7 @@ class CommunityTranslationService
 
   def translate_deepl(text, target)
     code = DEEPL_LOCALE_MAP[target] || target.upcase
-    response = HTTP.auth("DeepL-Auth-Key #{Setting.deepl_api_key}")
+    response = HTTP.auth("DeepL-Auth-Key #{deepl_api_key}")
                    .post("#{deepl_endpoint}/translate", json: {
                      text: [text],
                      target_lang: code,
@@ -62,9 +62,13 @@ class CommunityTranslationService
     result
   end
 
+  def deepl_api_key
+    Rails.configuration.x.translation.deepl[:api_key]
+  end
+
   def deepl_endpoint
     # Free-tier API keys end in :fx
-    Setting.deepl_api_key&.end_with?(':fx') ?
+    Rails.configuration.x.translation.deepl[:plan] == 'free' ?
       'https://api-free.deepl.com/v2' :
       'https://api.deepl.com/v2'
   end
