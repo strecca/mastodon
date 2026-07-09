@@ -7,7 +7,7 @@ module Admin
     before_action :authenticate_user!
     before_action :require_admin!
 
-    SUPPORTED_LOCALES = %w[en it fr de sv nb es].freeze
+    SUPPORTED_LOCALES = %w[en it fr de sv nb es nl].freeze
 
     CONTENT_GROUPS = {
       'Landing Page — Hero' => %w[

@@ -14,6 +14,7 @@ const LANGUAGES = [
   { code: 'sv', nativeName: 'Svenska'   },
   { code: 'es', nativeName: 'Español'   },
   { code: 'nb', nativeName: 'Norsk'     },
+  { code: 'nl', nativeName: 'Nederlands' },
 ];
 
 export const LanguageSwitcher = ({ variant = 'panel' }) => {
