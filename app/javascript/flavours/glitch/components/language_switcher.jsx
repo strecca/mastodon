@@ -7,19 +7,21 @@ import { useIntl } from 'react-intl';
 import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
 
 const LANGUAGES = [
-  { code: 'it', label: 'Italiano',   nativeName: 'Italiano'  },
-  { code: 'en', label: 'English',    nativeName: 'English'   },
-  { code: 'fr', label: 'Français',   nativeName: 'Français'  },
-  { code: 'de', label: 'Deutsch',    nativeName: 'Deutsch'   },
-  { code: 'sv', label: 'Svenska',    nativeName: 'Svenska'   },
-  { code: 'es', label: 'Español',    nativeName: 'Español'   },
-  { code: 'nb', label: 'Norsk',      nativeName: 'Norsk'     },
+  { code: 'it', nativeName: 'Italiano'  },
+  { code: 'en', nativeName: 'English'   },
+  { code: 'fr', nativeName: 'Français'  },
+  { code: 'de', nativeName: 'Deutsch'   },
+  { code: 'sv', nativeName: 'Svenska'   },
+  { code: 'es', nativeName: 'Español'   },
+  { code: 'nb', nativeName: 'Norsk'     },
 ];
 
 export const LanguageSwitcher = ({ variant = 'panel' }) => {
   const { viewingLocale, setViewingLocale } = useViewingLocale();
   const intl = useIntl();
   const [open, setOpen] = useState(false);
+  const [dropdownStyle, setDropdownStyle] = useState({});
+  const triggerRef = useRef(null);
   const panelRef = useRef(null);
 
   const accountLocale = (
@@ -32,7 +34,19 @@ export const LanguageSwitcher = ({ variant = 'panel' }) => {
     LANGUAGES.find((l) => l.code === 'en');
 
   const handleToggle = useCallback(() => {
-    setOpen((o) => !o);
+    setOpen((wasOpen) => {
+      if (!wasOpen && triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        setDropdownStyle({
+          position: 'fixed',
+          top: rect.bottom + 4,
+          left: rect.left,
+          width: rect.width,
+          zIndex: 9999,
+        });
+      }
+      return !wasOpen;
+    });
   }, []);
 
   const handleSelect = useCallback(
@@ -46,7 +60,12 @@ export const LanguageSwitcher = ({ variant = 'panel' }) => {
   useEffect(() => {
     if (!open) return;
     const handleClick = (e) => {
-      if (panelRef.current && !panelRef.current.contains(e.target)) {
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(e.target) &&
+        triggerRef.current &&
+        !triggerRef.current.contains(e.target)
+      ) {
         setOpen(false);
       }
     };
@@ -54,32 +73,15 @@ export const LanguageSwitcher = ({ variant = 'panel' }) => {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [open]);
 
-  const content = (
-    <div
-      className={`language-switcher${variant === 'fab' ? ' language-switcher--fab' : ''}`}
-      ref={panelRef}
-    >
-      <button
-        type='button'
-        className='language-switcher__trigger'
-        onClick={handleToggle}
-        aria-expanded={open}
-        aria-label={`Language: ${activeLang?.nativeName ?? activeLocale}. Tap to change.`}
-      >
-        <span className='language-switcher__globe'>🌐</span>
-        <span className='language-switcher__active-label'>
-          {activeLang?.nativeName ?? activeLocale.toUpperCase()}
-        </span>
-        {viewingLocale && (
-          <span className='language-switcher__override-dot' title='Viewing language differs from your account language' />
-        )}
-        <span className='language-switcher__chevron' aria-hidden='true'>
-          {open ? '▲' : '▼'}
-        </span>
-      </button>
-
-      {open && (
-        <div className='language-switcher__panel' role='listbox' aria-label='Select viewing language'>
+  const dropdown = open
+    ? createPortal(
+        <div
+          ref={panelRef}
+          className='language-switcher__panel'
+          role='listbox'
+          aria-label='Select viewing language'
+          style={dropdownStyle}
+        >
           <div className='language-switcher__panel-hint'>
             Viewing translations in:
           </div>
@@ -102,16 +104,41 @@ export const LanguageSwitcher = ({ variant = 'panel' }) => {
               )}
             </button>
           ))}
-        </div>
-      )}
+        </div>,
+        document.body,
+      )
+    : null;
+
+  const trigger = (
+    <div
+      className={`language-switcher${variant === 'fab' ? ' language-switcher--fab' : ''}`}
+    >
+      <button
+        ref={triggerRef}
+        type='button'
+        className='language-switcher__trigger'
+        onClick={handleToggle}
+        aria-expanded={open}
+        aria-label={`Language: ${activeLang?.nativeName ?? activeLocale}. Tap to change.`}
+      >
+        <span className='language-switcher__globe'>🌐</span>
+        <span className='language-switcher__active-label'>
+          {activeLang?.nativeName ?? activeLocale.toUpperCase()}
+        </span>
+        {viewingLocale && (
+          <span className='language-switcher__override-dot' title='Viewing language differs from your account language' />
+        )}
+        <span className='language-switcher__chevron' aria-hidden='true'>
+          {open ? '▲' : '▼'}
+        </span>
+      </button>
+      {dropdown}
     </div>
   );
 
-  // FAB variant uses a portal so position:fixed is relative to the viewport,
-  // not a transformed ancestor (Mastodon's column animations use transforms).
   if (variant === 'fab') {
-    return createPortal(content, document.body);
+    return createPortal(trigger, document.body);
   }
 
-  return content;
+  return trigger;
 };
