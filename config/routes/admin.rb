@@ -7,7 +7,7 @@ namespace :admin do
     post :auto_translate
   end
 
-  resource :translation_status, only: [:show] do
+  resource :translation_status, only: [:show], controller: 'translation_status' do
     post :backfill
   end
 
