@@ -7,6 +7,10 @@ namespace :admin do
     post :auto_translate
   end
 
+  resource :translation_status, only: [:show] do
+    post :backfill
+  end
+
   concern :batch do
     collection { post :batch }
   end

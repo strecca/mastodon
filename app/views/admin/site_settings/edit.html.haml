@@ -5,6 +5,10 @@
   %h1 Site Content &amp; Translations
   %p.lead Edit the text shown on the landing page, about page, and server banner. Fill in additional languages to enable translations.
 
+.admin-tabs-bar
+  %span.admin-tabs-bar__tab.admin-tabs-bar__tab--active Edit Content
+  = link_to 'Translation Status', admin_translation_status_path, class: 'admin-tabs-bar__tab'
+
 .site-settings-auto-translate
   %span.site-settings-auto-translate__label Auto-translate all from EN →
   - (Admin::SiteSettingsController::SUPPORTED_LOCALES - ['en']).each do |locale|

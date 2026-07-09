@@ -1,0 +1,83 @@
+- content_for :page_title do
+  Translation Status
+
+- content_for :heading do
+  %h1 Translation Status
+
+.admin-tabs-bar
+  = link_to 'Edit Content', edit_admin_site_settings_path, class: 'admin-tabs-bar__tab'
+  %span.admin-tabs-bar__tab.admin-tabs-bar__tab--active Translation Status
+
+.translation-status
+
+  .translation-status__summary
+    .translation-status__stat
+      %strong= @total_rows
+      %span total translation rows stored
+    .translation-status__stat
+      %strong= @sidekiq.processed
+      %span Sidekiq jobs processed (all time)
+    .translation-status__stat
+      %strong= @sidekiq.enqueued
+      %span jobs currently in queue
+    - if @sidekiq.failed > 0
+      .translation-status__stat.translation-status__stat--warn
+        %strong= @sidekiq.failed
+        %span failed jobs
+        = link_to '→ view in Sidekiq', '/sidekiq/retries', target: '_blank', rel: 'noopener'
+
+  %p.translation-status__target-locales
+    Target languages:
+    - @target_locales.each do |loc|
+      %span.locale-badge= loc.upcase
+
+  %table.translation-status__table
+    %thead
+      %tr
+        %th Category
+        %th Entries
+        %th Translation rows
+        %th Coverage
+        %th Locales present
+        %th Action
+
+    %tbody
+      - @stats.each do |row|
+        %tr{ class: row[:total].zero? ? 'translation-status__row--empty' : '' }
+          %td= row[:label]
+          %td= row[:total]
+          %td= row[:translation_rows]
+          %td
+            - pct = row[:coverage_pct]
+            .translation-status__bar
+              .translation-status__bar-fill{ style: "width:#{pct}%" }
+            %span.translation-status__pct #{pct}%
+          %td
+            - row[:locales].each do |loc|
+              %span.locale-badge.locale-badge--present= loc.upcase
+            - row[:missing].each do |loc|
+              %span.locale-badge.locale-badge--missing= loc.upcase
+          %td
+            - if row[:total] > 0
+              = button_to "Backfill",
+                          backfill_admin_translation_status_path,
+                          params: { klass: row[:klass] },
+                          method: :post,
+                          class: 'button button--secondary button--small',
+                          data: { confirm: "Queue all #{row[:total]} #{row[:label]} entries for DeepL translation?" }
+            - else
+              %span.translation-status__none —
+
+  .translation-status__actions
+    - total_entries = @stats.sum { |r| r[:total] }
+    - if total_entries > 0
+      = button_to "Backfill ALL categories (#{total_entries} entries)",
+                  nil,
+                  disabled: true,
+                  class: 'button button--secondary translation-status__backfill-all',
+                  title: 'Use the per-category buttons above'
+      %p.translation-status__hint
+        Use the per-category Backfill buttons above. Each queues that category's
+        entries to Sidekiq — DeepL processes them within seconds.
+        %br
+        To monitor jobs in real time: #{link_to 'open Sidekiq dashboard', '/sidekiq', target: '_blank', rel: 'noopener'}

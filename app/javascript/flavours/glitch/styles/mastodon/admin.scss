@@ -2247,6 +2247,200 @@ a.sparkline {
   }
 }
 
+// ── Admin tab bar (shared across Site Settings / Translation Status) ──────────
+
+.admin-tabs-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0;
+
+  &__tab {
+    display: inline-block;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-secondary, #9baec8);
+    text-decoration: none;
+    border-radius: 6px 6px 0 0;
+    border: 2px solid transparent;
+    border-bottom: none;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+    margin-bottom: -2px;
+
+    &:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &--active {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.1);
+      border-bottom-color: #1f232b;
+      background: #1f232b;
+    }
+  }
+}
+
+// ── Translation Status page ───────────────────────────────────────────────────
+
+.translation-status {
+  &__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px 20px;
+    min-width: 140px;
+    text-align: center;
+
+    strong {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    span {
+      font-size: 12px;
+      color: var(--color-text-secondary, #9baec8);
+      margin-top: 4px;
+    }
+
+    a {
+      font-size: 12px;
+      color: #6364ff;
+      margin-top: 4px;
+    }
+
+    &--warn {
+      border-color: rgba(255, 100, 100, 0.4);
+      background: rgba(255, 100, 100, 0.06);
+
+      strong { color: #ff6b6b; }
+    }
+  }
+
+  &__target-locales {
+    font-size: 13px;
+    color: var(--color-text-secondary, #9baec8);
+    margin-bottom: 16px;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 24px;
+
+    th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-secondary, #9baec8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  }
+
+  &__row--empty td { opacity: 0.45; }
+
+  &__bar {
+    width: 80px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
+  &__bar-fill {
+    height: 100%;
+    background: #6364ff;
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+
+  &__pct {
+    font-size: 12px;
+    color: var(--color-text-secondary, #9baec8);
+  }
+
+  &__none {
+    color: var(--color-text-secondary, #9baec8);
+  }
+
+  &__actions {
+    margin-top: 8px;
+  }
+
+  &__hint {
+    font-size: 12px;
+    color: var(--color-text-secondary, #9baec8);
+    margin-top: 8px;
+
+    a { color: #6364ff; }
+  }
+
+  &__backfill-all {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.locale-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 1px;
+  background: rgba(99, 100, 255, 0.2);
+  color: #a0a1ff;
+  border: 1px solid rgba(99, 100, 255, 0.3);
+
+  &--present {
+    background: rgba(40, 180, 100, 0.15);
+    color: #60c98a;
+    border-color: rgba(40, 180, 100, 0.3);
+  }
+
+  &--missing {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-secondary, #9baec8);
+    border-color: rgba(255, 255, 255, 0.1);
+    opacity: 0.5;
+  }
+}
+
+// ── End Translation Status ────────────────────────────────────────────────────
+
 .site-settings-auto-translate {
   display: flex;
   align-items: center;
