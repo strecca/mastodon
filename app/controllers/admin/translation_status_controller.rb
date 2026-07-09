@@ -52,6 +52,12 @@ module Admin
 
     private
 
+    def require_admin!
+      return if current_user&.can?(:administrator)
+
+      redirect_to root_path, alert: 'Not authorized.'
+    end
+
     def build_stats
       translation_counts = CommunityEntryTranslation
         .group(:translatable_type, :locale)
