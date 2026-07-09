@@ -74,6 +74,12 @@ module Admin
         join_signin_note
         join_signin_link
       ],
+      'Create Account Modal' => %w[
+        join_modal_title
+        join_modal_preamble
+        join_modal_signup_btn
+        join_modal_explore_btn
+      ],
     }.freeze
 
     def edit

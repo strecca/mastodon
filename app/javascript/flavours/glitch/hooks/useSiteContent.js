@@ -1,65 +1,83 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import api from 'flavours/glitch/api';
 
-let _cache = null;
-let _loading = false;
-let _fetchedAt = 0;
-let _listeners = new Set();
+import { useViewingLocale } from './useViewingLocale';
 
-const TTL_MS = 30_000; // re-fetch after 30 s — fast enough to see admin changes without constant polling
+// Per-locale module-level cache so all components share fetched data
+const _cache     = {};  // locale → { key: value }
+const _fetchedAt = {};  // locale → ms timestamp
+const _loading   = {};  // locale → bool
+const _listeners = {};  // locale → Set<setState fn>
 
-function notifyListeners() {
-  _listeners.forEach(fn => fn(_cache));
+const TTL_MS = 30_000;
+
+function getListeners(locale) {
+  if (!_listeners[locale]) _listeners[locale] = new Set();
+  return _listeners[locale];
+}
+
+function notifyListeners(locale) {
+  (_listeners[locale] || new Set()).forEach(fn => fn(_cache[locale] || {}));
+}
+
+function fetchLocale(locale) {
+  if (_loading[locale]) return;
+  _loading[locale] = true;
+  api()
+    .get('/api/v1/site_content', { params: { locale } })
+    .then(res => {
+      _cache[locale]     = res.data || {};
+      _fetchedAt[locale] = Date.now();
+      _loading[locale]   = false;
+      notifyListeners(locale);
+    })
+    .catch(() => {
+      _cache[locale]     = {};
+      _fetchedAt[locale] = Date.now();
+      _loading[locale]   = false;
+      notifyListeners(locale);
+    });
 }
 
 /**
- * Returns a getter function: get(key, fallback) → string
+ * Returns a getter: sc(key, fallback) → string
  *
- * Fetches /api/v1/site_content once and caches for 30 seconds.
- * All components share the cache; navigating back to a page after 30 s
- * picks up any admin changes without a full browser reload.
- *
- * Usage:
- *   const sc = useSiteContent();
- *   return <h1>{sc('landing_logo_text', 'Civezza Community Directory')}</h1>;
+ * Automatically uses the viewing locale override (set by the language
+ * switcher) — falls back to the account/browser locale when no override
+ * is active. Fetches /api/v1/site_content?locale=XX once per locale and
+ * caches for 30 s. Re-fetches automatically when the locale changes.
  */
 export function useSiteContent() {
-  const [content, setContent] = useState(_cache);
+  const intl = useIntl();
+  const { viewingLocale } = useViewingLocale();
+
+  const locale =
+    viewingLocale ||
+    (document.documentElement.lang || intl.locale || 'en').split('-')[0];
+
+  const [content, setContent] = useState(_cache[locale] ?? null);
 
   useEffect(() => {
-    const stale = !_cache || (Date.now() - _fetchedAt) > TTL_MS;
+    // Sync local state immediately when locale changes
+    setContent(_cache[locale] ?? null);
 
-    if (!stale) {
-      if (content !== _cache) setContent(_cache);
-      return;
-    }
+    const stale =
+      !_cache[locale] ||
+      Date.now() - (_fetchedAt[locale] || 0) > TTL_MS;
 
-    _listeners.add(setContent);
+    if (!stale) return;
 
-    if (!_loading) {
-      _loading = true;
-      const locale = (document.documentElement.lang || 'en').split('-')[0];
-      api().get('/api/v1/site_content', { params: { locale } })
-        .then(res => {
-          _cache    = res.data || {};
-          _fetchedAt = Date.now();
-          _loading  = false;
-          notifyListeners();
-        })
-        .catch(() => {
-          _cache    = {};
-          _fetchedAt = Date.now();
-          _loading  = false;
-          notifyListeners();
-        });
-    }
+    getListeners(locale).add(setContent);
+    fetchLocale(locale);
 
-    return () => { _listeners.delete(setContent); };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    return () => { getListeners(locale).delete(setContent); };
+  }, [locale]);
 
   return useCallback(
-    (key, fallback = '') => content?.[key] ?? fallback,
-    [content],
+    (key, fallback = '') => content?.[key] ?? _cache[locale]?.[key] ?? fallback,
+    [content, locale],
   );
 }

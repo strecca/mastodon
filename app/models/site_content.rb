@@ -102,6 +102,12 @@ class SiteContent < ApplicationRecord
     'join_signup_btn'         => 'Sign Up Free',
     'join_signin_note'        => 'Already have an account?',
     'join_signin_link'        => 'Sign in here',
+
+    # ── Create Account Modal ──
+    'join_modal_title'        => 'Signing up on MiaCivezza.com',
+    'join_modal_preamble'     => 'Create a free account to post, connect with neighbours, and participate in community events.',
+    'join_modal_signup_btn'   => 'Sign up here right now!',
+    'join_modal_explore_btn'  => 'Explore the Community',
   }.freeze
 
   def self.seed!
