@@ -10,6 +10,7 @@ import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
+import { CategoryBannerLink } from 'flavours/glitch/components/community_directory/category_banner_link';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import { fetchListings } from 'flavours/glitch/actions/community_listings';
 import { connectStream } from 'flavours/glitch/stream';
@@ -85,7 +86,7 @@ const CommunityListings = ({ multiColumn }) => {
       />
       <Helmet><title>Community Listings · miacivezza</title></Helmet>
 
-      <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
+      <CategoryBannerLink variant='back' />
       {!signedIn && (
         <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#5A7A1A' }}>
           Log In or Join to add your own Community Listings

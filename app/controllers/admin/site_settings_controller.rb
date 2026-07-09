@@ -81,6 +81,10 @@ module Admin
         join_modal_signup_btn
         join_modal_explore_btn
       ],
+      'Community Navigation' => %w[
+        nav_see_all_categories
+        nav_all_categories
+      ],
     }.freeze
 
     def edit

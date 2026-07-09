@@ -104,6 +104,10 @@ class SiteContent < ApplicationRecord
     'join_signin_note'        => 'Already have an account?',
     'join_signin_link'        => 'Sign in here',
 
+    # ── Community navigation links ──
+    'nav_see_all_categories'  => 'Click here to see All Community Categories',
+    'nav_all_categories'      => '← All Community Categories',
+
     # ── Create Account Modal ──
     'join_modal_title'        => 'Signing up on MiaCivezza.com',
     'join_modal_preamble'     => 'Create a free account to post, connect with neighbours, and participate in community events.',

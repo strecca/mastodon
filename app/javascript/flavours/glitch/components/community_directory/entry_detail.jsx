@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
 import { fetchEntry, clearCurrentEntry, deleteEntry } from 'flavours/glitch/actions/community_entries';
 import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
+import { CategoryBannerLink } from './category_banner_link';
 import { fieldLabel, translatedValue } from './translation_helpers';
 
 const messages = defineMessages({
@@ -180,9 +181,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
       <div className='community-entry-detail'>
 
         {/* ── Persistent category banner ── */}
-        <Link to='/landing' className='community-category-banner'>
-          Click here to see All Community Categories
-        </Link>
+        <CategoryBannerLink />
 
         {/* ── Hero: hills landscape + name/badges/location ── */}
         <div className='community-entry-detail__hero'>

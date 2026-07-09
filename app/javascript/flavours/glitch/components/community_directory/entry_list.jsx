@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
 import { fetchEntries } from 'flavours/glitch/actions/community_entries';
 
+import { CategoryBannerLink } from './category_banner_link';
 import { EntryCard } from './entry_card';
 import { SearchFilters } from './search_filters';
 
@@ -106,10 +107,7 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
 
   return (
     <div className='scrollable community-entry-list'>
-      {/* Persistent all-categories banner */}
-      <Link to='/landing' className='community-category-banner'>
-        Click here to see All Community Categories
-      </Link>
+      <CategoryBannerLink />
 
       {/* Search + filters bar */}
       <SearchFilters

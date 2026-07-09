@@ -9,6 +9,7 @@ import { Column }       from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { useIdentity }  from 'flavours/glitch/identity_context';
 import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
+import { CategoryBannerLink } from 'flavours/glitch/components/community_directory/category_banner_link';
 import { useAppDispatch } from 'flavours/glitch/store';
 import { connectStream } from 'flavours/glitch/stream';
 import api              from 'flavours/glitch/api';
@@ -548,7 +549,7 @@ const CommunityEvents = ({ multiColumn }) => {
         )}
       </ColumnHeader>
 
-      <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
+      <CategoryBannerLink variant='back' />
       {!signedIn && (
         <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#007A80' }}>
           Log In or Join to add your own Community Events

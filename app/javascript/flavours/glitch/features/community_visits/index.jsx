@@ -9,6 +9,7 @@ import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import { useIdentity }  from 'flavours/glitch/identity_context';
 import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
+import { CategoryBannerLink } from 'flavours/glitch/components/community_directory/category_banner_link';
 import {
   fetchVisits, fetchMyVisits, fetchHeatmap, deleteVisit, fetchMyPeople,
 } from 'flavours/glitch/actions/community_visits';
@@ -557,7 +558,7 @@ const CommunityVisits = ({ multiColumn }) => {
         )}
       </ColumnHeader>
 
-      <Link to='/landing' className='community-category-banner'>← All Community Categories</Link>
+      <CategoryBannerLink variant='back' />
 
       <div className='cv-page'>
         <>
