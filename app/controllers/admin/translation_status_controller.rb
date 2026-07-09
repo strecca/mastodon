@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'sidekiq/api'
+
 module Admin
   class TranslationStatusController < ApplicationController
     layout 'admin'
@@ -18,12 +20,13 @@ module Admin
     ].freeze
 
     ALLOWED_CLASSES = TRANSLATABLE_CATEGORIES.map { |c| c[:klass] }.freeze
+    TARGET_LOCALES  = CommunityTranslationWorker::TARGET_LOCALES
 
     def show
-      @stats       = build_stats
-      @total_rows  = CommunityEntryTranslation.count
-      @sidekiq     = Sidekiq::Stats.new
-      @target_locales = CommunityTranslationWorker::TARGET_LOCALES
+      @target_locales = TARGET_LOCALES
+      @stats          = build_stats
+      @total_rows     = CommunityEntryTranslation.count
+      @sidekiq        = Sidekiq::Stats.new
     end
 
     def backfill
@@ -65,16 +68,16 @@ module Admin
         total      = klass_name.constantize.count
         locales    = locale_sets[klass_name] || []
         rows       = locales.sum { |l| translation_counts[[klass_name, l]] || 0 }
-        missing    = (@target_locales - locales) rescue []
+        missing    = TARGET_LOCALES - locales
 
         {
-          label:         cat[:label],
-          klass:         klass_name,
-          total:         total,
+          label:            cat[:label],
+          klass:            klass_name,
+          total:            total,
           translation_rows: rows,
-          locales:       locales,
-          missing:       missing,
-          coverage_pct:  @target_locales.empty? ? 0 : (locales.size * 100 / @target_locales.size),
+          locales:          locales,
+          missing:          missing,
+          coverage_pct:     TARGET_LOCALES.empty? ? 0 : (locales.size * 100 / TARGET_LOCALES.size),
         }
       end
     end
