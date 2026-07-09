@@ -71,6 +71,7 @@ class SiteContent < ApplicationRecord
 
     # ── Server banner (home feed left panel) ──
     'server_hero_cta'         => 'Click this image to see MiaCivezza.com in action!',
+    'server_description'      => 'Civezza is a small community up in the hills overlooking the Ligurian coast in Imperia province. This website is a community bulletin board that also focuses on live User posts on most daily subjects.',
 
     # ── Category page column header titles ──
     'col_listings_title'      => 'Community Listings',

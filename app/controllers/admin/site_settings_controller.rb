@@ -42,6 +42,7 @@ module Admin
       ],
       'Server Banner' => %w[
         server_hero_cta
+        server_description
       ],
       'Category Column Headers' => %w[
         col_listings_title
