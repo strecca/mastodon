@@ -31,6 +31,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
     @listing.image_media_ids = validated_media_ids
 
     if @listing.save
+      CommunityTranslationWorker.perform_async('CommunityListing', @listing.id)
       CommunityDirectoryRefreshWorker.perform_in(30.seconds, 'community:listings')
       render json: serialize(@listing), status: :created
     else
@@ -44,6 +45,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
     attrs[:image_media_ids] = validated_media_ids if params.key?(:media_ids)
 
     if @listing.update(attrs)
+      CommunityTranslationWorker.perform_async('CommunityListing', @listing.id)
       CommunityDirectoryRefreshWorker.perform_in(30.seconds, 'community:listings')
       render json: serialize(@listing)
     else
@@ -147,11 +149,17 @@ class Api::V1::CommunityListingsController < Api::BaseController
       updated_at: listing.updated_at.iso8601,
     }
 
-    if detail && current_account&.id == listing.account_id
-      data[:interests] = listing.community_listing_interests
-                                .includes(:account)
-                                .order(created_at: :asc)
-                                .map { |i| serialize_interest(i) }
+    if detail
+      data[:translations] = CommunityEntryTranslation
+        .where(translatable_type: 'CommunityListing', translatable_id: listing.id)
+        .each_with_object({}) { |t, h| (h[t.locale] ||= {})[t.field_name] = t.translated_text }
+
+      if current_account&.id == listing.account_id
+        data[:interests] = listing.community_listing_interests
+                                  .includes(:account)
+                                  .order(created_at: :asc)
+                                  .map { |i| serialize_interest(i) }
+      end
     end
 
     data

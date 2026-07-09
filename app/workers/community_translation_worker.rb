@@ -18,6 +18,12 @@ class CommunityTranslationWorker
   # language and is excluded. Add/remove as the community grows.
   TARGET_LOCALES = %w[it de fr es pt nl da sv no sl sq].freeze
 
+  # Models that don't have a features/community_*/config.json — field names listed directly.
+  FIELD_OVERRIDES = {
+    'CommunityListing'   => %w[title description trade_for],
+    'CivezzaMemberStory' => %w[about_me civezza_story shaping_moment why_i_joined],
+  }.freeze
+
   def perform(translatable_type, translatable_id)
     entry = translatable_type.constantize.find_by(id: translatable_id)
     return unless entry
@@ -74,6 +80,12 @@ class CommunityTranslationWorker
   end
 
   def load_config(translatable_type)
+    # Models with hardcoded field lists (no config.json)
+    if FIELD_OVERRIDES.key?(translatable_type)
+      fields = FIELD_OVERRIDES[translatable_type].map { |n| { 'db_name' => n, 'translatable' => true } }
+      return { 'fields' => fields }
+    end
+
     # "CommunityArtist" → "artists" → config path community_artists/config.json
     category_key = translatable_type.delete_prefix('Community').underscore.pluralize
     config_path  = Rails.root.join(

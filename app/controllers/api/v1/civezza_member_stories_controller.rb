@@ -34,6 +34,7 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
     story.image_media_ids = validated_media_ids if params.key?(:media_ids)
 
     if story.save
+      CommunityTranslationWorker.perform_async('CivezzaMemberStory', story.id)
       status = story.previously_new_record? ? :created : :ok
       render json: serialize(story, own: true), status: status
     else
@@ -99,7 +100,10 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
         display_name: owner.display_name.presence || owner.username,
         avatar:       owner.avatar_original_url,
       } : nil,
-      is_own:     own,
+      is_own:       own,
+      translations: CommunityEntryTranslation
+        .where(translatable_type: 'CivezzaMemberStory', translatable_id: story.id)
+        .each_with_object({}) { |t, h| (h[t.locale] ||= {})[t.field_name] = t.translated_text },
       created_at: story.created_at&.iso8601,
       updated_at: story.updated_at&.iso8601,
     }
