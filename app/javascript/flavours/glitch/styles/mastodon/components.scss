@@ -12245,3 +12245,243 @@ noscript {
     }
   }
 }
+
+// ── Daily Digest — newspaper page ──────────────────────────────────────────
+
+.daily-digest {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 40px;
+
+  // Masthead ----------------------------------------------------------------
+  &__masthead {
+    padding: 24px 20px 0;
+    text-align: center;
+  }
+
+  &__masthead-rule {
+    border: none;
+    margin: 0;
+
+    &--top {
+      border-top: 3px double #c9a84c;
+      margin-bottom: 12px;
+    }
+
+    &--bottom {
+      border-top: 1px solid #c9a84c;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    &--thin {
+      border-top: 1px solid rgba(#c9a84c, 0.35);
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+  }
+
+  &__masthead-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  &__masthead-name {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #ffffff;
+    line-height: 1;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  &__masthead-subtitle {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #c9a84c;
+  }
+
+  &__masthead-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    gap: 8px;
+  }
+
+  &__date {
+    font-size: 12px;
+    color: rgba(#ffffff, 0.55);
+    font-style: italic;
+    flex: 1;
+  }
+
+  // Language toggle ---------------------------------------------------------
+  &__locale-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  &__locale-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(#ffffff, 0.4);
+    padding: 2px 4px;
+    transition: color 0.15s;
+
+    &.active {
+      color: #c9a84c;
+    }
+
+    &:hover:not(.active) {
+      color: rgba(#ffffff, 0.7);
+    }
+  }
+
+  &__locale-sep {
+    font-size: 11px;
+    color: rgba(#ffffff, 0.2);
+  }
+
+  // Body --------------------------------------------------------------------
+  &__body {
+    padding: 20px 20px 0;
+  }
+
+  &__loading {
+    padding: 40px 0;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(#ffffff, 0.4);
+    font-style: italic;
+  }
+
+  // Article -----------------------------------------------------------------
+  &__article {
+    background: #1a1a2e;
+    border: 1px solid rgba(#c9a84c, 0.2);
+    border-radius: 4px;
+    padding: 24px;
+  }
+
+  &__dateline {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c9a84c;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(#c9a84c, 0.2);
+  }
+
+  &__columns {
+    column-count: 2;
+    column-gap: 28px;
+    column-rule: 1px solid rgba(#ffffff, 0.08);
+
+    @media (max-width: 600px) {
+      column-count: 1;
+    }
+  }
+
+  &__paragraph {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(#ffffff, 0.88);
+    margin: 0 0 14px;
+    break-inside: avoid;
+
+    &:first-child::first-letter {
+      float: left;
+      font-size: 52px;
+      line-height: 0.85;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: 700;
+      color: #c9a84c;
+      margin: 4px 8px 0 0;
+      padding: 0;
+    }
+  }
+
+  &__footer {
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(#c9a84c, 0.15);
+    font-size: 11px;
+    color: rgba(#ffffff, 0.35);
+    text-align: right;
+    font-style: italic;
+  }
+
+  &__footer-link {
+    color: rgba(#c9a84c, 0.7);
+    text-decoration: none;
+
+    &:hover { color: #c9a84c; }
+  }
+
+  // Empty state -------------------------------------------------------------
+  &__empty {
+    padding: 32px 0;
+    text-align: center;
+  }
+
+  &__empty-headline {
+    font-size: 16px;
+    color: rgba(#ffffff, 0.6);
+    margin-bottom: 8px;
+  }
+
+  &__empty-note {
+    font-size: 13px;
+    color: rgba(#ffffff, 0.35);
+    font-style: italic;
+  }
+
+  // Date navigation ---------------------------------------------------------
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 0;
+  }
+
+  &__nav-btn {
+    background: none;
+    border: 1px solid rgba(#c9a84c, 0.3);
+    border-radius: 4px;
+    color: rgba(#ffffff, 0.6);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 6px 14px;
+    transition: all 0.15s;
+
+    &:hover:not(:disabled) {
+      border-color: #c9a84c;
+      color: #c9a84c;
+    }
+
+    &:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+  }
+
+  &__nav-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(#ffffff, 0.25);
+  }
+}

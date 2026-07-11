@@ -458,3 +458,7 @@ export function MemberStoriesEdit () {
 export function ContactPage () {
   return import('../../contact');
 }
+
+export function DailyDigest () {
+  return import('../../daily_digest');
+}

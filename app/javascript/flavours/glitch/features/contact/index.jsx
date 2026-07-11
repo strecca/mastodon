@@ -3,16 +3,18 @@ import { useState } from 'react';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { withIdentity } from 'flavours/glitch/identity_context';
+import { useAppSelector } from 'flavours/glitch/store';
 import api from 'flavours/glitch/api';
 
 const ContactPage = ({ identity, multiColumn }) => {
-  const { signedIn, account } = identity;
+  const { signedIn, accountId } = identity;
+  const account = useAppSelector(state => accountId ? state.accounts.get(accountId) : null);
 
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [name, setName]       = useState('');
   const [email, setEmail]     = useState('');
-  const [status, setStatus]   = useState('idle'); // idle | submitting | success | error
+  const [status, setStatus]   = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
   const displayName = account?.get('display_name') || account?.get('username') || '';

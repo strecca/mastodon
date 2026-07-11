@@ -67,3 +67,7 @@
       cron: '0 3 * * *'
       class: Scheduler::ExpireListingsScheduler
       queue: scheduler
+    daily_digest_scheduler:
+      cron: '0 5 * * *'
+      class: Scheduler::DailyDigestScheduler
+      queue: scheduler

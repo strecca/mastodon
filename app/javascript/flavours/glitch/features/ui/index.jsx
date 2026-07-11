@@ -131,6 +131,7 @@ import {
   MemberStoriesShow,
   MemberStoriesEdit,
   ContactPage,
+  DailyDigest,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
@@ -320,6 +321,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/member_stories/:account_id'   exact component={MemberStoriesShow} content={children} />
             <WrappedRoute path='/member_stories'               exact component={MemberStories}     content={children} />
             <WrappedRoute path='/contact'                      exact component={ContactPage}       content={children} />
+            <WrappedRoute path='/daily'                        exact component={DailyDigest}       content={children} />
             {/* [CD:ROUTES] */}
 
             <WrappedRoute path='/explore' component={Explore} content={children} />
