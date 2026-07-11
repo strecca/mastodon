@@ -454,3 +454,7 @@ export function MemberStoriesShow () {
 export function MemberStoriesEdit () {
   return import('../../member_stories/edit');
 }
+
+export function ContactPage () {
+  return import('../../contact');
+}

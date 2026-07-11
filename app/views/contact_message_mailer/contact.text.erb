@@ -1,0 +1,8 @@
+<% if @is_member %>Member message from @<%= @username %> (<%= @sender_name %>)<% else %>Public message from <%= @sender_name %><% end %>
+Reply-to: <%= @sender_email %>
+
+Subject: <%= @subject %>
+
+<%= @message %>
+
+— miacivezza.com contact form

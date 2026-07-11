@@ -58,6 +58,7 @@
   /community_properties/(*any)
   /member_stories
   /member_stories/(*any)
+  /contact
 ).each { |path| get path, to: 'home#index' }
 
 get '/community', to: redirect('/landing', status: 301)

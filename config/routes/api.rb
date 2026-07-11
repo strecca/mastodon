@@ -25,6 +25,8 @@ namespace :api, format: false do
   # JSON / REST API
   namespace :v1 do
     resources :community_artists,     only: [:index, :show, :create, :update, :destroy]
+    post '/contact_message', to: 'contact_messages#create'
+
     resources :community_services,    only: [:index, :show, :create, :update, :destroy]
     resources :community_restaurants, only: [:index, :show, :create, :update, :destroy]
     resources :community_properties,  only: [:index, :show, :create, :update, :destroy]
