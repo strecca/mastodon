@@ -7,6 +7,7 @@ import { NavLink, useRouteMatch } from 'react-router-dom';
 
 import AddIcon from '@/material-icons/400-24px/add.svg?react';
 import GroupsIcon from '@/material-icons/400-24px/group.svg?react';
+import MailIcon from '@/material-icons/400-24px/mail.svg?react';
 import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
 import MenuIcon from '@/material-icons/400-24px/menu.svg?react';
@@ -203,6 +204,11 @@ export const NavigationBar: React.FC = () => {
               icon={<Icon id='' icon={AddIcon} />}
             />
             <NotificationsButton />
+            <IconLabelButton
+              title='Contact Admin'
+              to='/contact'
+              icon={<Icon id='' icon={MailIcon} />}
+            />
           </>
         )}
 

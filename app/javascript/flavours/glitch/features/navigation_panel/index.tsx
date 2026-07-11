@@ -14,6 +14,7 @@ import { useDrag } from '@use-gesture/react';
 import { useAccount } from '@/flavours/glitch/hooks/useAccount';
 import AddIcon from '@/material-icons/400-24px/add.svg?react';
 import AlternateEmailIcon from '@/material-icons/400-24px/alternate_email.svg?react';
+import MailIcon from '@/material-icons/400-24px/mail.svg?react';
 import BookmarksActiveIcon from '@/material-icons/400-24px/bookmarks-fill.svg?react';
 import BookmarksIcon from '@/material-icons/400-24px/bookmarks.svg?react';
 import CollectionsActiveIcon from '@/material-icons/400-24px/category-fill.svg?react';
@@ -123,6 +124,7 @@ const messages = defineMessages({
   memberStories: { id: 'navigation_bar.member_stories', defaultMessage: 'Member Stories' },
   visitsAdmin: { id: 'navigation_bar.visits_admin', defaultMessage: 'Visits Admin' },
   compose: { id: 'tabs_bar.publish', defaultMessage: 'New Post' },
+  contactAdmin: { id: 'navigation_bar.contact_admin', defaultMessage: 'Contact Admin' },
   app_settings: {
     id: 'navigation_bar.app_settings',
     defaultMessage: 'App settings',
@@ -474,6 +476,14 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
                 />
               </>
             )}
+
+            <ColumnLink
+              transparent
+              to='/contact'
+              icon='mail'
+              iconComponent={MailIcon}
+              text={intl.formatMessage(messages.contactAdmin)}
+            />
 
             <MoreLink />
           </>
