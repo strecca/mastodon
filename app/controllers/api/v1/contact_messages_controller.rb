@@ -7,26 +7,26 @@ class Api::V1::ContactMessagesController < Api::BaseController
   RATE_LIMIT_MAX    = 3
 
   def create
-    sender_name  = params[:name].to_s.strip
-    sender_email = params[:email].to_s.strip
-    subject      = params[:subject].to_s.strip
-    message      = params[:message].to_s.strip
-
-    return render json: { error: 'Missing required fields.' }, status: :unprocessable_entity if
-      sender_name.blank? || subject.blank? || message.blank?
+    subject = params[:subject].to_s.strip
+    message = params[:message].to_s.strip
 
     if user_signed_in?
-      sender_email = current_user.email
       sender_name  = current_account.display_name.presence || current_account.username
+      sender_email = current_user.email
       username     = current_account.username
       is_member    = true
     else
+      sender_name  = params[:name].to_s.strip
+      sender_email = params[:email].to_s.strip
+      username     = nil
+      is_member    = false
+
       return render json: { error: 'Email is required.' }, status: :unprocessable_entity if sender_email.blank?
       return render json: { error: 'Invalid email address.' }, status: :unprocessable_entity unless sender_email.match?(URI::MailTo::EMAIL_REGEXP)
-
-      username  = nil
-      is_member = false
     end
+
+    return render json: { error: 'Missing required fields.' }, status: :unprocessable_entity if
+      sender_name.blank? || subject.blank? || message.blank?
 
     ContactMessageMailer.contact(
       sender_name:  sender_name,
