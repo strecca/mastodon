@@ -100,6 +100,11 @@ module Admin
         listings_post_btn
         listings_empty
       ],
+      'Welcome Email' => %w[
+        welcome_email_subject
+        welcome_email_body
+        welcome_email_cta_label
+      ],
     }.freeze
 
     def edit

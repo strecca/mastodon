@@ -28,7 +28,9 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    super
+    super do |resource|
+      WelcomeEmailWorker.perform_in(2.hours, resource.id) if resource.persisted?
+    end
   end
 
   def update

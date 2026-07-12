@@ -1,0 +1,11 @@
+= content_for :heading do
+  = render 'application/mailer/heading',
+           title: @subject,
+           subtitle: "#{@username} — miacivezza.com"
+
+%table.email-w-full{ cellspacing: 0, cellpadding: 0, border: 0, role: 'presentation' }
+  %tr
+    %td.email-body-huge-padding-td
+      - @body.split("\n\n").each do |paragraph|
+        %p= paragraph
+      = render 'application/mailer/button', text: @cta_label, url: @cta_url, has_arrow: true

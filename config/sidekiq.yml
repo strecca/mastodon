@@ -11,6 +11,7 @@
   - [default, 8]
   - [mailers, 2]
   - [scheduler]
+  - [low, 1]
 
 :scheduler:
   :listened_queues_only: true
@@ -70,4 +71,8 @@
     daily_digest_scheduler:
       cron: '0 5 * * *'
       class: Scheduler::DailyDigestScheduler
+      queue: scheduler
+    translation_catchup_scheduler:
+      cron: '0 1 * * *'
+      class: Scheduler::TranslationCatchupScheduler
       queue: scheduler

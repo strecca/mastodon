@@ -12,7 +12,7 @@
 class CommunityTranslationWorker
   include Sidekiq::Worker
 
-  sidekiq_options queue: 'default', retry: 5
+  sidekiq_options queue: 'low', retry: 5
 
   # All target locales. English is assumed to be the primary submission
   # language and is excluded. Add/remove as the community grows.

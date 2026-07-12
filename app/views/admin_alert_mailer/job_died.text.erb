@@ -1,0 +1,15 @@
+A Sidekiq job on miacivezza.com has exhausted all retries and moved to the dead queue.
+
+Worker:    <%= @worker %>
+Args:      <%= @args %>
+Failed at: <%= @failed_at %>
+
+Error:
+<%= @error %>
+
+Backtrace:
+<%= @backtrace %>
+
+View dead jobs: https://miacivezza.com/sidekiq/morgue
+
+— miacivezza.com automated alert

@@ -123,6 +123,11 @@ class SiteContent < ApplicationRecord
     'listings_post_btn'            => '+ Post a Listing',
     'listings_empty'               => 'No listings found.',
 
+    # ── Welcome email (sent 2 hours after registration) ──
+    'welcome_email_subject'   => 'Welcome to MiaCivezza.com!',
+    'welcome_email_body'      => "We're delighted you've joined the MiaCivezza.com community. Civezza and the Imperia coast are a special place, and so are the people who love it.\n\nTake a look around — browse Community Events, Restaurants, Services, and more. If you'd like to add your own entries or share your story, we'd love to hear from you.\n\nWe hope you enjoy being part of this little corner of Liguria online.",
+    'welcome_email_cta_label' => 'Explore the Community',
+
     # ── Create Account Modal ──
     'join_modal_title'        => 'Signing up on MiaCivezza.com',
     'join_modal_preamble'     => 'Create a free account to post, connect with neighbours, and participate in community events.',
