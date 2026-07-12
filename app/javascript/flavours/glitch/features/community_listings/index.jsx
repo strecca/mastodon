@@ -17,19 +17,19 @@ import { connectStream } from 'flavours/glitch/stream';
 
 import { ListingCard } from './components/listing_card';
 
-const TYPES = [
-  { key: '',         label: 'All' },
-  { key: 'giveaway', label: 'Giveaway' },
-  { key: 'trade',    label: 'Trade' },
-  { key: 'sell',     label: 'Sell' },
-  { key: 'rent',     label: 'Rent' },
-  { key: 'iso',      label: 'ISO' },
-];
-
 const CommunityListings = ({ multiColumn }) => {
   const dispatch   = useAppDispatch();
   const { signedIn } = useIdentity();
   const sc = useSiteContent();
+
+  const TYPES = [
+    { key: '',         label: sc('listings_filter_all',      'All') },
+    { key: 'giveaway', label: sc('listings_filter_giveaway', 'Giveaway') },
+    { key: 'trade',    label: sc('listings_filter_trade',    'Trade') },
+    { key: 'sell',     label: sc('listings_filter_sell',     'Sell') },
+    { key: 'rent',     label: sc('listings_filter_rent',     'Rent') },
+    { key: 'iso',      label: sc('listings_filter_iso',      'ISO') },
+  ];
 
   const listings = useAppSelector(s => s.getIn(['community_listings', 'items']));
   const loading  = useAppSelector(s => s.getIn(['community_listings', 'loading']));
@@ -89,14 +89,14 @@ const CommunityListings = ({ multiColumn }) => {
       <CategoryBannerLink variant='back' />
       {!signedIn && (
         <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#5A7A1A' }}>
-          Log In or Join to add your own Community Listings
+          {sc('listings_join_cta', 'Log In or Join to add your own Community Listings')}
         </a>
       )}
 
       <div className='cl-page'>
         <div className='cl-hero'>
-          <div className='cl-hero__title'>Exchange &amp; Find</div>
-          <div className='cl-hero__subtitle'>Giveaway · Trade · Sell · Rent · In Search Of</div>
+          <div className='cl-hero__title'>{sc('listings_hero_title', 'Exchange & Find')}</div>
+          <div className='cl-hero__subtitle'>{sc('listings_hero_subtitle', 'Giveaway · Trade · Sell · Rent · In Search Of')}</div>
         </div>
 
         <div className='cl-toolbar'>
@@ -116,15 +116,15 @@ const CommunityListings = ({ multiColumn }) => {
             <input
               className='cl-search__input'
               type='text'
-              placeholder='Search listings…'
+              placeholder={sc('listings_search_placeholder', 'Search listings…')}
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
             />
-            <button type='submit' className='cl-search__btn'>Search</button>
+            <button type='submit' className='cl-search__btn'>{sc('listings_search_btn', 'Search')}</button>
             {search && (
               <button type='button' className='cl-search__clear'
                 onClick={() => { setSearch(''); setSearchInput(''); }}>
-                Clear
+                {sc('listings_search_clear', 'Clear')}
               </button>
             )}
           </form>
@@ -133,7 +133,7 @@ const CommunityListings = ({ multiColumn }) => {
         {signedIn && (
           <div className='cl-new-btn-row'>
             <Link to='/community_listings/new' className='button'>
-              + Post a Listing
+              {sc('listings_post_btn', '+ Post a Listing')}
             </Link>
           </div>
         )}
@@ -141,7 +141,7 @@ const CommunityListings = ({ multiColumn }) => {
         {loading && !loaded && <LoadingIndicator />}
 
         {loaded && visibleListings.size === 0 && (
-          <div className='cl-empty'>No listings found.</div>
+          <div className='cl-empty'>{sc('listings_empty', 'No listings found.')}</div>
         )}
 
         {loaded && visibleListings.size > 0 && (
