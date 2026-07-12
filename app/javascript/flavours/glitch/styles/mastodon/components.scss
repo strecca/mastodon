@@ -12257,6 +12257,9 @@ noscript {
   &__masthead {
     padding: 24px 20px 0;
     text-align: center;
+    background: #1a1a2e;
+    border-radius: 4px 4px 0 0;
+    margin: 0 0 0;
   }
 
   &__masthead-rule {
@@ -12355,7 +12358,8 @@ noscript {
 
   // Body --------------------------------------------------------------------
   &__body {
-    padding: 20px 20px 0;
+    padding: 0 20px 0;
+    background: #1a1a2e;
   }
 
   &__loading {
@@ -12372,6 +12376,7 @@ noscript {
     border: 1px solid rgba(#c9a84c, 0.2);
     border-radius: 4px;
     padding: 24px;
+    margin-top: 16px;
   }
 
   &__dateline {
@@ -12454,7 +12459,10 @@ noscript {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 20px 0;
+    padding: 20px;
+    background: #1a1a2e;
+    border-radius: 0 0 4px 4px;
+    margin-top: 1px;
   }
 
   &__nav-btn {
