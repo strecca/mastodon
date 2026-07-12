@@ -35,12 +35,18 @@ class CommunityTranslationWorker
     return if translatable_fields.empty?
 
     service = CommunityTranslationService.new
+    failures = []
 
     TARGET_LOCALES.each do |locale|
       translatable_fields.each do |field|
-        translate_field(entry, translatable_type, field, locale, service)
+        error = translate_field(entry, translatable_type, field, locale, service)
+        failures << error if error
       end
     end
+
+    # Re-raise so Sidekiq retries the job for any locales that failed.
+    # Already-translated fields are skipped via SHA256 digest on retry — safe.
+    raise failures.first if failures.any?
   end
 
   private
@@ -74,9 +80,10 @@ class CommunityTranslationWorker
         updated_at:        Time.current },
       unique_by: %i[translatable_type translatable_id locale field_name]
     )
+    nil
   rescue CommunityTranslationService::Error, HTTP::Error => e
     Rails.logger.warn("[CommunityTranslation] #{translatable_type}##{entry.id} #{locale}/#{db_name}: #{e.message}")
-    # Continue — don't abort other fields or locales
+    e  # return the error so perform can decide whether to retry
   end
 
   def load_config(translatable_type)
