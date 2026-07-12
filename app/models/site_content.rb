@@ -108,6 +108,21 @@ class SiteContent < ApplicationRecord
     'nav_see_all_categories'  => 'Click here to see All Community Categories',
     'nav_all_categories'      => '← All Community Categories',
 
+    # ── Listings page ──
+    'listings_join_cta'            => 'Log In or Join to add your own Community Listings',
+    'listings_hero_title'          => 'Exchange & Find',
+    'listings_hero_subtitle'       => 'Giveaway · Trade · Sell · Rent · In Search Of',
+    'listings_filter_all'          => 'All',
+    'listings_filter_giveaway'     => 'Giveaway',
+    'listings_filter_trade'        => 'Trade',
+    'listings_filter_sell'         => 'Sell',
+    'listings_filter_rent'         => 'Rent',
+    'listings_filter_iso'          => 'ISO',
+    'listings_search_placeholder'  => 'Search listings…',
+    'listings_search_btn'          => 'Search',
+    'listings_post_btn'            => '+ Post a Listing',
+    'listings_empty'               => 'No listings found.',
+
     # ── Create Account Modal ──
     'join_modal_title'        => 'Signing up on MiaCivezza.com',
     'join_modal_preamble'     => 'Create a free account to post, connect with neighbours, and participate in community events.',

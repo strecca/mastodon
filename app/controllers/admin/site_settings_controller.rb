@@ -85,6 +85,21 @@ module Admin
         nav_see_all_categories
         nav_all_categories
       ],
+      'Listings Page' => %w[
+        listings_join_cta
+        listings_hero_title
+        listings_hero_subtitle
+        listings_filter_all
+        listings_filter_giveaway
+        listings_filter_trade
+        listings_filter_sell
+        listings_filter_rent
+        listings_filter_iso
+        listings_search_placeholder
+        listings_search_btn
+        listings_post_btn
+        listings_empty
+      ],
     }.freeze
 
     def edit
