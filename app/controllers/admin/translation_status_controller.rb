@@ -27,7 +27,7 @@ module Admin
       @stats          = build_stats
       @total_rows     = CommunityEntryTranslation.count
 
-      @translation_enqueued = Sidekiq::Queue.new('default').count { |j| j.klass == 'CommunityTranslationWorker' }
+      @translation_enqueued = Sidekiq::Queue.new('low').count { |j| j.klass == 'CommunityTranslationWorker' }
       @translation_retrying = Sidekiq::RetrySet.new.count         { |j| j.klass == 'CommunityTranslationWorker' }
       @translation_dead     = Sidekiq::DeadSet.new.count          { |j| j.klass == 'CommunityTranslationWorker' }
     end
