@@ -26,7 +26,10 @@ module Admin
       @target_locales = TARGET_LOCALES
       @stats          = build_stats
       @total_rows     = CommunityEntryTranslation.count
-      @sidekiq        = Sidekiq::Stats.new
+
+      @translation_enqueued = Sidekiq::Queue.new('default').count { |j| j.klass == 'CommunityTranslationWorker' }
+      @translation_retrying = Sidekiq::RetrySet.new.count         { |j| j.klass == 'CommunityTranslationWorker' }
+      @translation_dead     = Sidekiq::DeadSet.new.count          { |j| j.klass == 'CommunityTranslationWorker' }
     end
 
     def backfill

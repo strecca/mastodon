@@ -13,18 +13,28 @@
   .translation-status__summary
     .translation-status__stat
       %strong= @total_rows
-      %span total translation rows stored
-    .translation-status__stat
-      %strong= @sidekiq.processed
-      %span Sidekiq jobs processed (all time)
-    .translation-status__stat
-      %strong= @sidekiq.enqueued
-      %span jobs currently in queue
-    - if @sidekiq.failed > 0
+      %span translation rows stored
+    .translation-status__stat{ class: @translation_enqueued > 0 ? 'translation-status__stat--active' : '' }
+      %strong= @translation_enqueued
+      %span translation jobs queued now
+    - if @translation_retrying > 0
       .translation-status__stat.translation-status__stat--warn
-        %strong= @sidekiq.failed
-        %span failed jobs
-        = link_to '→ view in Sidekiq', '/sidekiq/retries', target: '_blank', rel: 'noopener'
+        %strong= @translation_retrying
+        %span jobs retrying (will retry automatically)
+        = link_to '→ view retries', '/sidekiq/retries', target: '_blank', rel: 'noopener'
+    - else
+      .translation-status__stat
+        %strong 0
+        %span jobs retrying
+    - if @translation_dead > 0
+      .translation-status__stat.translation-status__stat--error
+        %strong= @translation_dead
+        %span jobs dead (exhausted retries — needs attention)
+        = link_to '→ view dead jobs', '/sidekiq/morgue', target: '_blank', rel: 'noopener'
+    - else
+      .translation-status__stat
+        %strong 0
+        %span dead jobs
 
   %p.translation-status__target-locales
     Target languages:
