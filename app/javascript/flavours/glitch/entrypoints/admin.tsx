@@ -5,6 +5,9 @@ import { on } from 'delegated-events';
 
 import ready from 'flavours/glitch/ready';
 
+import '../styles/mastodon/admin.scss';
+import '../styles/mastodon/community_directory_admin.scss';
+
 const setAnnouncementEndsAttributes = (target: HTMLInputElement) => {
   const valid = target.value && target.validity.valid;
   const element = document.querySelector<HTMLInputElement>(
