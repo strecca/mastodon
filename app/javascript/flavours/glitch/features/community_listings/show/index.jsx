@@ -2,12 +2,15 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { Link, useHistory } from 'react-router-dom';
 
+import { useIntl } from 'react-intl';
+
 import { Helmet } from '@unhead/react/helmet';
 
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import { useIdentity } from 'flavours/glitch/identity_context';
+import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
 import api from 'flavours/glitch/api';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import {
@@ -145,6 +148,9 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
   const dispatch = useAppDispatch();
   const { signedIn } = useIdentity();
   const history = useHistory();
+  const intl = useIntl();
+  const { viewingLocale } = useViewingLocale();
+  const activeLocale = (viewingLocale || intl.locale || 'en').split('-')[0];
 
   const id = String(params?.id);
   const cached = useAppSelector(s => s.getIn(['community_listings', 'byId', id]));
@@ -194,6 +200,12 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
   const isOpen      = listing.status === 'open';
   const price       = fmtPrice(listing);
   const statusLabel = STATUS_LABELS[listing.status];
+
+  // Resolve translated text: viewing locale → base lang → original
+  const tr = (field) => {
+    const ts = listing.translations || {};
+    return ts[activeLocale]?.[field] || ts[activeLocale.split('-')[0]]?.[field] || listing[field];
+  };
 
   return (
     <Column>
@@ -248,13 +260,13 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
             {TYPE_LABELS[listing.listing_type]}
           </div>
 
-          <h1 className='cl-detail__title'>{listing.title}</h1>
+          <h1 className='cl-detail__title'>{tr('title')}</h1>
 
           {price && <div className='cl-detail__price'>{price}</div>}
 
           {listing.listing_type === 'trade' && listing.trade_for && (
             <div className='cl-detail__trade-for'>
-              <strong>Looking for:</strong> {listing.trade_for}
+              <strong>Looking for:</strong> {tr('trade_for')}
             </div>
           )}
 
@@ -265,7 +277,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
           )}
 
           {listing.description && (
-            <div className='cl-detail__description'>{listing.description}</div>
+            <div className='cl-detail__description'>{tr('description')}</div>
           )}
 
           {listing.location && (

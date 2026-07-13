@@ -6093,12 +6093,13 @@ a.status-card {
 
   &__chevron {
     font-size: 9px;
-    color: var(--color-text-secondary, #aaa);
+    color: rgba(255, 255, 255, 0.5);
     flex-shrink: 0;
   }
 
   &__panel {
     // position/top/left/width/z-index set via inline style (portal to document.body)
+    // Always dark — hardcode all descendant colors so light-theme CSS vars don't bleed in
     background: #1e1e2e;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 8px;
@@ -6112,7 +6113,7 @@ a.status-card {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--color-text-secondary, #aaa);
+    color: rgba(255, 255, 255, 0.5);
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   }
 
@@ -6124,7 +6125,7 @@ a.status-card {
     padding: 9px 12px;
     background: none;
     border: none;
-    color: var(--color-text-primary, #fff);
+    color: #fff;
     cursor: pointer;
     font-size: 14px;
     text-align: left;
@@ -6147,7 +6148,7 @@ a.status-card {
       margin-left: auto;
       font-size: 10px;
       font-weight: 600;
-      color: var(--color-text-secondary, #aaa);
+      color: rgba(255, 255, 255, 0.5);
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }

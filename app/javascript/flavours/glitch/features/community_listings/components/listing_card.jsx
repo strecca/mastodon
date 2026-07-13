@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom';
 
+import { useIntl } from 'react-intl';
+
+import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
+
 const TYPE_COLORS = {
   giveaway: { bg: '#e8f5e9', color: '#2e7d32', label: 'Giveaway' },
   trade:    { bg: '#e3f2fd', color: '#1565c0', label: 'Trade' },
@@ -17,15 +21,26 @@ const fmtPrice = (listing) => {
 };
 
 export const ListingCard = ({ listing }) => {
+  const intl = useIntl();
+  const { viewingLocale } = useViewingLocale();
+  const activeLocale = (viewingLocale || intl.locale || 'en').split('-')[0];
+
+  const tr = (field) => {
+    const ts = listing.translations || {};
+    return ts[activeLocale]?.[field] || ts[activeLocale.split('-')[0]]?.[field] || listing[field];
+  };
+
   const meta  = TYPE_COLORS[listing.listing_type] ?? { bg: '#f5f5f5', color: '#555', label: listing.listing_type };
   const price = fmtPrice(listing);
+  const title = tr('title');
+  const desc  = tr('description');
   const thumb = listing.image_previews?.[0] ?? listing.images?.[0];
 
   return (
     <Link to={`/community_listings/${listing.id}`} className='cl-card'>
       {thumb ? (
         <div className='cl-card__img-wrap'>
-          <img src={thumb} alt={listing.title} className='cl-card__img' loading='lazy' />
+          <img src={thumb} alt={title} className='cl-card__img' loading='lazy' />
         </div>
       ) : (
         <div className='cl-card__img-wrap cl-card__img-wrap--empty'>
@@ -42,13 +57,11 @@ export const ListingCard = ({ listing }) => {
           {price && <span className='cl-card__price'>{price}</span>}
         </div>
 
-        <div className='cl-card__title'>{listing.title}</div>
+        <div className='cl-card__title'>{title}</div>
 
-        {listing.description && (
+        {desc && (
           <div className='cl-card__desc'>
-            {listing.description.length > 80
-              ? listing.description.slice(0, 80) + '…'
-              : listing.description}
+            {desc.length > 80 ? desc.slice(0, 80) + '…' : desc}
           </div>
         )}
 

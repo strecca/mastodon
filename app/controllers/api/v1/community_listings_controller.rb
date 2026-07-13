@@ -15,7 +15,16 @@ class Api::V1::CommunityListingsController < Api::BaseController
     scope = scope.search(params[:q])
 
     @listings = scope.limit(60)
-    render json: @listings.map { |l| serialize(l) }
+
+    listing_ids = @listings.map(&:id)
+    translations_by_id = CommunityEntryTranslation
+      .where(translatable_type: 'CommunityListing', translatable_id: listing_ids)
+      .each_with_object({}) do |t, h|
+        (h[t.translatable_id] ||= {})[t.locale] ||= {}
+        h[t.translatable_id][t.locale][t.field_name] = t.translated_text
+      end
+
+    render json: @listings.map { |l| serialize(l).merge(translations: translations_by_id[l.id] || {}) }
   end
 
   # GET /api/v1/community_listings/:id
