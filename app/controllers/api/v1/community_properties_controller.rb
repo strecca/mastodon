@@ -30,6 +30,7 @@ class Api::V1::CommunityPropertiesController < Api::BaseController
         total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
     end
 
+    inject_list_translations(result, 'CommunityProperty')
     render json: result
   end
 

@@ -66,4 +66,21 @@ module CommunityCacheable
   def invalidate_list_cache
     Rails.cache.increment("community:#{self.class::CATEGORY_KEY}:list:v")
   end
+
+  # Injects fresh translation data into a cached list result.
+  # Called OUTSIDE cached_list so translations are always current even when
+  # the entry data is served from cache.
+  def inject_list_translations(result, translatable_type)
+    entry_ids = result[:entries].map { |e| e[:id] }
+    return if entry_ids.empty?
+
+    translations_by_id = CommunityEntryTranslation
+      .where(translatable_type: translatable_type, translatable_id: entry_ids)
+      .each_with_object({}) do |t, h|
+        (h[t.translatable_id] ||= {})[t.locale] ||= {}
+        h[t.translatable_id][t.locale][t.field_name] = t.translated_text
+      end
+
+    result[:entries].each { |e| e[:translations] = translations_by_id[e[:id]] || {} }
+  end
 end

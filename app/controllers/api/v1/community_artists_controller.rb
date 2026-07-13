@@ -29,6 +29,7 @@ class Api::V1::CommunityArtistsController < Api::BaseController
         total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
     end
 
+    inject_list_translations(result, 'CommunityArtist')
     render json: result
   end
 

@@ -2,12 +2,20 @@
 
 import { Link } from 'react-router-dom';
 
+import { useIntl } from 'react-intl';
+
 import { RelativeTimestamp } from 'flavours/glitch/components/relative_timestamp';
 import { Avatar } from 'flavours/glitch/components/avatar';
+import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
+import { translatedValue } from './translation_helpers';
 
 const humanize = (str) => str ? str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
 
 export const EntryCard = ({ entry, config, featureKey }) => {
+  const intl = useIntl();
+  const { viewingLocale } = useViewingLocale();
+  const locale = (viewingLocale || intl.locale || 'en').split('-')[0];
+
   if (!entry) return null;
 
   const id = entry.get('id');
@@ -25,7 +33,7 @@ export const EntryCard = ({ entry, config, featureKey }) => {
   const displayName = hasNameParts
     ? [firstName, lastName].filter(Boolean).join(' ')
     : nameField
-      ? (entry.get(nameField.db_name) || `${config.display_name} #${id}`)
+      ? (translatedValue(entry, nameField.db_name, locale) || `${config.display_name} #${id}`)
       : `${config.display_name} #${id}`;
 
   const badgeFields = config.fields.filter(f =>
@@ -123,16 +131,16 @@ export const EntryCard = ({ entry, config, featureKey }) => {
         {previewFields.length > 0 && (
           <div className='community-entry-card__fields'>
             {previewFields.map(field => {
-              const raw = entry.get(field.db_name);
-              if (raw == null || raw === '') return null;
-              const val = String(raw);
+              const val = translatedValue(entry, field.db_name, locale);
+              if (val == null || val === '') return null;
+              const str = String(val);
               return (
                 <div key={field.db_name} className='community-entry-card__field'>
                   <span className='community-entry-card__field-label'>
                     {field.label || humanize(field.db_name)}
                   </span>
                   <span className='community-entry-card__field-value'>
-                    {val.length > 60 ? val.slice(0, 57) + '…' : val}
+                    {str.length > 60 ? str.slice(0, 57) + '…' : str}
                   </span>
                 </div>
               );
