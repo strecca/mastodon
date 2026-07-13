@@ -13,7 +13,7 @@ const LANGUAGES = [
   { code: 'de', nativeName: 'Deutsch'   },
   { code: 'sv', nativeName: 'Svenska'   },
   { code: 'es', nativeName: 'Español'   },
-  { code: 'nb', nativeName: 'Norsk'     },
+  { code: 'no', nativeName: 'Norsk'     },
   { code: 'nl', nativeName: 'Nederlands' },
 ];
 
