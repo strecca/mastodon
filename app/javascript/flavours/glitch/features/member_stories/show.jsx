@@ -3,7 +3,11 @@ import { createPortal } from 'react-dom';
 
 import { Link } from 'react-router-dom';
 
+import { useIntl } from 'react-intl';
+
 import { Helmet } from '@unhead/react/helmet';
+
+import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
 
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
@@ -73,6 +77,10 @@ const Lightbox = ({ images, index, onClose, onPrev, onNext }) => {
 
 const MemberStoriesShow = ({ multiColumn, params }) => {
   const accountId = params?.account_id;
+  const intl = useIntl();
+  const { viewingLocale } = useViewingLocale();
+  const activeLocale = (viewingLocale || intl.locale || 'en').split('-')[0];
+
   const [story, setStory]       = useState(null);
   const [loading, setLoading]   = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -113,6 +121,10 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
   }
 
   const { account, images, is_own } = story;
+  const tr = (field) => {
+    const ts = story.translations || {};
+    return ts[activeLocale]?.[field] || ts[activeLocale.split('-')[0]]?.[field] || story[field];
+  };
   const hasAnyText = Object.keys(PROMPTS).some(k => story[k]);
   const imageCount = images?.length ?? 0;
 
@@ -171,7 +183,7 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
               story[key] ? (
                 <div key={key} className='ms-story__section'>
                   <h2 className='ms-story__section-title'>{label}</h2>
-                  <p className='ms-story__section-body'>{story[key]}</p>
+                  <p className='ms-story__section-body'>{tr(key)}</p>
                 </div>
               ) : null
             )}
