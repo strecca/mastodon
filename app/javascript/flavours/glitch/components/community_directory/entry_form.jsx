@@ -6,21 +6,31 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 
-// Resize + compress uploaded images to JPEG before sending to /api/v2/media.
-const compressImage = (file, maxPx = 1280, quality = 0.82) =>
-  new Promise((resolve) => {
+// Canvas draw always outputs sRGB, normalizing any input color profile (ACES, P3, AdobeRGB, etc.)
+const compressImage = (file, onStatus) =>
+  new Promise((resolve, reject) => {
+    const sizeMB = file.size / 1024 / 1024;
+    if (sizeMB > 80) {
+      reject(new Error(`Image is too large (${Math.round(sizeMB)} MB). Please resize it to under 80 MB before uploading.`));
+      return;
+    }
+    if (sizeMB > 10) onStatus?.(`Compressing large image (${Math.round(sizeMB)} MB) — please wait…`);
     const img = new Image();
     const blobUrl = URL.createObjectURL(file);
     img.onload = () => {
       URL.revokeObjectURL(blobUrl);
-      const scale = Math.min(1, maxPx / img.width, maxPx / img.height);
+      if (file.type === 'image/jpeg' && img.width <= 1280 && img.height <= 1280) {
+        resolve(file);
+        return;
+      }
+      const scale = Math.min(1, 1280 / img.width, 1280 / img.height);
       const canvas = document.createElement('canvas');
       canvas.width  = Math.round(img.width  * scale);
       canvas.height = Math.round(img.height * scale);
       canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
       canvas.toBlob(
         (blob) => resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' })),
-        'image/jpeg', quality,
+        'image/jpeg', 0.82,
       );
     };
     img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
@@ -96,6 +106,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
   const [images, setImages] = useState([]);  // [{ mediaId, previewUrl }]
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState(null);
   const fileRef = useRef(null);
 
   // In edit mode, fetch the entry and populate form
@@ -171,9 +182,11 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
 
     setUploading(true);
     setUploadError(null);
+    setUploadStatus(null);
     for (const file of toUpload) {
       try {
-        const compressed = await compressImage(file);
+        const compressed = await compressImage(file, setUploadStatus);
+        setUploadStatus(null);
         const fd = new FormData();
         fd.append('file', compressed);
         const res = await api().post('/api/v2/media', fd, {
@@ -183,8 +196,9 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
           mediaId:    String(res.data.id),
           previewUrl: res.data.url || res.data.preview_url,
         }]);
-      } catch {
-        setUploadError('Failed to upload image — please try again.');
+      } catch (err) {
+        setUploadStatus(null);
+        setUploadError(err?.message || 'Failed to upload image — please try again.');
       }
     }
     setUploading(false);
@@ -321,7 +335,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
                 onClick={() => fileRef.current?.click()}
                 disabled={uploading}
               >
-                {uploading ? 'Uploading…' : '+ Add Photo'}
+                {uploading ? (uploadStatus || 'Uploading…') : '+ Add Photo'}
               </button>
             )}
           </div>

@@ -11,20 +11,30 @@ import api from 'flavours/glitch/api';
 import { useIdentity } from 'flavours/glitch/identity_context';
 
 // Canvas draw always outputs sRGB, normalizing any input color profile (ACES, P3, AdobeRGB, etc.)
-const compressImage = (file, maxPx = 1280, quality = 0.82) =>
-  new Promise((resolve) => {
+const compressImage = (file, onStatus) =>
+  new Promise((resolve, reject) => {
+    const sizeMB = file.size / 1024 / 1024;
+    if (sizeMB > 80) {
+      reject(new Error(`Image is too large (${Math.round(sizeMB)} MB). Please resize it to under 80 MB before uploading.`));
+      return;
+    }
+    if (sizeMB > 10) onStatus?.(`Compressing large image (${Math.round(sizeMB)} MB) — please wait…`);
     const img = new Image();
     const blobUrl = URL.createObjectURL(file);
     img.onload = () => {
       URL.revokeObjectURL(blobUrl);
-      const scale = Math.min(1, maxPx / img.width, maxPx / img.height);
+      if (file.type === 'image/jpeg' && img.width <= 1280 && img.height <= 1280) {
+        resolve(file);
+        return;
+      }
+      const scale = Math.min(1, 1280 / img.width, 1280 / img.height);
       const canvas = document.createElement('canvas');
       canvas.width  = Math.round(img.width  * scale);
       canvas.height = Math.round(img.height * scale);
       canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
       canvas.toBlob(
         (blob) => resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' })),
-        'image/jpeg', quality,
+        'image/jpeg', 0.82,
       );
     };
     img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
@@ -61,19 +71,22 @@ const FIELDS = [
 const PhotoSlot = ({ index, currentUrl, currentMediaId, onUpload, onRemove }) => {
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState(null);
 
   const handleFile = useCallback(async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(true);
+    setStatusMsg(null);
     try {
-      const compressed = await compressImage(file);
+      const compressed = await compressImage(file, setStatusMsg);
+      setStatusMsg(null);
       const formData = new FormData();
       formData.append('file', compressed);
       const res = await api().post('/api/v1/media', formData);
       onUpload(index, res.data.id, res.data.url || res.data.preview_url);
-    } catch {
-      // keep slot as-is on failure
+    } catch (err) {
+      setStatusMsg(err?.message || 'Upload failed — please try another image.');
     } finally {
       setUploading(false);
       if (inputRef.current) inputRef.current.value = '';
@@ -101,7 +114,7 @@ const PhotoSlot = ({ index, currentUrl, currentMediaId, onUpload, onRemove }) =>
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
         >
-          {uploading ? 'Uploading…' : `+ Photo ${index + 1}`}
+          {uploading ? (statusMsg || 'Uploading…') : `+ Photo ${index + 1}`}
         </button>
       )}
       <input
@@ -111,6 +124,9 @@ const PhotoSlot = ({ index, currentUrl, currentMediaId, onUpload, onRemove }) =>
         style={{ display: 'none' }}
         onChange={handleFile}
       />
+      {!uploading && statusMsg && (
+        <p className='ms-edit__photo-error'>{statusMsg}</p>
+      )}
     </div>
   );
 };
