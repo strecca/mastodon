@@ -99,12 +99,27 @@ module Scrapers
                  end:   Date.new(year,   e_month, m[4].to_i) }
       end
 
-      # Single day: "29 maggio 2026" (optional weekday prefix)
+      # Single day with year: "29 maggio 2026" (optional weekday prefix)
       single_re = /(?:\w+\s+)?(\d{1,2})\s+(\w+)\s+(\d{4})/
       if (m = t.match(single_re))
         month = ITALIAN_MONTHS[m[2]] or return nil
         d = Date.new(m[3].to_i, month, m[1].to_i)
         return { start: d, end: d }
+      end
+
+      # Single day without year: "domenica 12 luglio", "12 luglio"
+      # Assume current year; roll to next year if the date is more than 7 days past.
+      month_names = ITALIAN_MONTHS.keys.join('|')
+      yearless_re = /(?:\w+\s+)?(\d{1,2})\s+(#{month_names})\b/
+      if (m = t.match(yearless_re))
+        month = ITALIAN_MONTHS[m[2]] or return nil
+        candidate = begin
+          Date.new(Date.today.year, month, m[1].to_i)
+        rescue ArgumentError
+          return nil
+        end
+        candidate = Date.new(Date.today.year + 1, month, m[1].to_i) if candidate < Date.today - 7
+        return { start: candidate, end: candidate }
       end
 
       nil

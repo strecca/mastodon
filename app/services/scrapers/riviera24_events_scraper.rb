@@ -80,7 +80,12 @@ module Scrapers
     def parse_item(item)
       title       = clean_text(item.at_xpath('title')&.text)
       description = clean_text(strip_html(item.at_xpath('description')&.text.to_s))
-      full_text   = strip_html(item.at_css('encoded')&.text.to_s)
+      # content:encoded requires an explicit namespace map in Nokogiri XML mode;
+      # at_css('encoded') silently returns nil for namespaced elements.
+      full_text   = strip_html(item.at_xpath(
+        'content:encoded',
+        'content' => 'http://purl.org/rss/1.0/modules/content/',
+      )&.text.to_s)
       link        = extract_link(item)
       pub_date    = parse_pub_date(item.at_xpath('pubDate')&.text)
 
