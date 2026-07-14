@@ -1,6 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+import { useIntl, defineMessages } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
+
+const messages = defineMessages({
+  compressingLarge: { id: 'community.upload.compressing', defaultMessage: 'Compressing large image ({mb} MB) — please wait…' },
+  imageTooLarge:    { id: 'community.upload.too_large', defaultMessage: 'Image is too large ({mb} MB). Please resize to under 80 MB before uploading.' },
+  uploadFailed:     { id: 'community.upload.failed', defaultMessage: 'Upload failed — please try again.' },
+});
 
 import { Helmet } from '@unhead/react/helmet';
 
@@ -11,14 +18,16 @@ import api from 'flavours/glitch/api';
 import { useIdentity } from 'flavours/glitch/identity_context';
 
 // Canvas draw always outputs sRGB, normalizing any input color profile (ACES, P3, AdobeRGB, etc.)
-const compressImage = (file, onStatus) =>
+const compressImage = (file, onLargeFile) =>
   new Promise((resolve, reject) => {
-    const sizeMB = file.size / 1024 / 1024;
+    const sizeMB = Math.round(file.size / 1024 / 1024);
     if (sizeMB > 80) {
-      reject(new Error(`Image is too large (${Math.round(sizeMB)} MB). Please resize it to under 80 MB before uploading.`));
+      const err = new Error('too_large');
+      err.sizeMB = sizeMB;
+      reject(err);
       return;
     }
-    if (sizeMB > 10) onStatus?.(`Compressing large image (${Math.round(sizeMB)} MB) — please wait…`);
+    if (sizeMB > 10) onLargeFile?.(sizeMB);
     const img = new Image();
     const blobUrl = URL.createObjectURL(file);
     img.onload = () => {
@@ -69,6 +78,7 @@ const FIELDS = [
 ];
 
 const PhotoSlot = ({ index, currentUrl, currentMediaId, onUpload, onRemove }) => {
+  const intl = useIntl();
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [statusMsg, setStatusMsg] = useState(null);
@@ -79,14 +89,16 @@ const PhotoSlot = ({ index, currentUrl, currentMediaId, onUpload, onRemove }) =>
     setUploading(true);
     setStatusMsg(null);
     try {
-      const compressed = await compressImage(file, setStatusMsg);
+      const compressed = await compressImage(file, (mb) => setStatusMsg(intl.formatMessage(messages.compressingLarge, { mb })));
       setStatusMsg(null);
       const formData = new FormData();
       formData.append('file', compressed);
       const res = await api().post('/api/v1/media', formData);
       onUpload(index, res.data.id, res.data.url || res.data.preview_url);
     } catch (err) {
-      setStatusMsg(err?.message || 'Upload failed — please try another image.');
+      setStatusMsg(err?.message === 'too_large'
+        ? intl.formatMessage(messages.imageTooLarge, { mb: err.sizeMB })
+        : intl.formatMessage(messages.uploadFailed));
     } finally {
       setUploading(false);
       if (inputRef.current) inputRef.current.value = '';

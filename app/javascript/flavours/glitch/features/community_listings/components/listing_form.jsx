@@ -1,16 +1,26 @@
 import { useState, useCallback, useRef } from 'react';
 
+import { useIntl, defineMessages } from 'react-intl';
+
 import api from 'flavours/glitch/api';
 
+const messages = defineMessages({
+  compressingLarge: { id: 'community.upload.compressing', defaultMessage: 'Compressing large image ({mb} MB) — please wait…' },
+  imageTooLarge:    { id: 'community.upload.too_large', defaultMessage: 'Image is too large ({mb} MB). Please resize to under 80 MB before uploading.' },
+  uploadFailed:     { id: 'community.upload.failed', defaultMessage: 'Upload failed — please try again.' },
+});
+
 // Canvas draw always outputs sRGB, normalizing any input color profile (ACES, P3, AdobeRGB, etc.)
-const compressImage = (file, onStatus) =>
+const compressImage = (file, onLargeFile) =>
   new Promise((resolve, reject) => {
-    const sizeMB = file.size / 1024 / 1024;
+    const sizeMB = Math.round(file.size / 1024 / 1024);
     if (sizeMB > 80) {
-      reject(new Error(`Image is too large (${Math.round(sizeMB)} MB). Please resize it to under 80 MB before uploading.`));
+      const err = new Error('too_large');
+      err.sizeMB = sizeMB;
+      reject(err);
       return;
     }
-    if (sizeMB > 10) onStatus?.(`Compressing large image (${Math.round(sizeMB)} MB) — please wait…`);
+    if (sizeMB > 10) onLargeFile?.(sizeMB);
     const img = new Image();
     const blobUrl = URL.createObjectURL(file);
     img.onload = () => {
@@ -57,6 +67,7 @@ const LISTING_TYPES = [
 const MAX_IMAGES = 4;
 
 export const ListingForm = ({ initial, onSubmit, saving }) => {
+  const intl = useIntl();
   const [listingType,   setListingType]   = useState(initial?.listing_type  ?? 'giveaway');
   const [title,         setTitle]         = useState(initial?.title         ?? '');
   const [description,   setDescription]   = useState(initial?.description   ?? '');
@@ -98,7 +109,7 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
     setUploadStatus(null);
     for (const file of toUpload) {
       try {
-        const compressed = await compressImage(file, setUploadStatus);
+        const compressed = await compressImage(file, (mb) => setUploadStatus(intl.formatMessage(messages.compressingLarge, { mb })));
         setUploadStatus(null);
         const fd = new FormData();
         fd.append('file', compressed);
@@ -111,7 +122,9 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
         }]);
       } catch (err) {
         setUploadStatus(null);
-        setUploadError(err?.message || 'Failed to upload one or more images — please try again.');
+        setUploadError(err?.message === 'too_large'
+          ? intl.formatMessage(messages.imageTooLarge, { mb: err.sizeMB })
+          : intl.formatMessage(messages.uploadFailed));
       }
     }
     setUploading(false);

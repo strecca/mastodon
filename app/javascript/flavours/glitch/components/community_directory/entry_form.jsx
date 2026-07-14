@@ -7,14 +7,16 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 
 // Canvas draw always outputs sRGB, normalizing any input color profile (ACES, P3, AdobeRGB, etc.)
-const compressImage = (file, onStatus) =>
+const compressImage = (file, onLargeFile) =>
   new Promise((resolve, reject) => {
-    const sizeMB = file.size / 1024 / 1024;
+    const sizeMB = Math.round(file.size / 1024 / 1024);
     if (sizeMB > 80) {
-      reject(new Error(`Image is too large (${Math.round(sizeMB)} MB). Please resize it to under 80 MB before uploading.`));
+      const err = new Error('too_large');
+      err.sizeMB = sizeMB;
+      reject(err);
       return;
     }
-    if (sizeMB > 10) onStatus?.(`Compressing large image (${Math.round(sizeMB)} MB) — please wait…`);
+    if (sizeMB > 10) onLargeFile?.(sizeMB);
     const img = new Image();
     const blobUrl = URL.createObjectURL(file);
     img.onload = () => {
@@ -69,13 +71,16 @@ const getLocations = () => {
 };
 
 const messages = defineMessages({
-  submitCreate: { id: 'community.form.submit_create', defaultMessage: 'Submit entry' },
-  submitEdit: { id: 'community.form.submit_edit', defaultMessage: 'Save changes' },
-  submitting: { id: 'community.form.submitting', defaultMessage: 'Saving…' },
-  success: { id: 'community.form.success', defaultMessage: 'Saved successfully! Redirecting…' },
-  required: { id: 'community.form.required', defaultMessage: 'This field is required' },
-  cancel: { id: 'community.form.cancel', defaultMessage: 'Cancel' },
-  selectPlaceholder: { id: 'community.form.select', defaultMessage: 'Select…' },
+  submitCreate:     { id: 'community.form.submit_create', defaultMessage: 'Submit entry' },
+  submitEdit:       { id: 'community.form.submit_edit', defaultMessage: 'Save changes' },
+  submitting:       { id: 'community.form.submitting', defaultMessage: 'Saving…' },
+  success:          { id: 'community.form.success', defaultMessage: 'Saved successfully! Redirecting…' },
+  required:         { id: 'community.form.required', defaultMessage: 'This field is required' },
+  cancel:           { id: 'community.form.cancel', defaultMessage: 'Cancel' },
+  selectPlaceholder:{ id: 'community.form.select', defaultMessage: 'Select…' },
+  compressingLarge: { id: 'community.upload.compressing', defaultMessage: 'Compressing large image ({mb} MB) — please wait…' },
+  imageTooLarge:    { id: 'community.upload.too_large', defaultMessage: 'Image is too large ({mb} MB). Please resize to under 80 MB before uploading.' },
+  uploadFailed:     { id: 'community.upload.failed', defaultMessage: 'Upload failed — please try again.' },
 });
 
 const humanize = (str) => str ? str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
@@ -185,7 +190,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
     setUploadStatus(null);
     for (const file of toUpload) {
       try {
-        const compressed = await compressImage(file, setUploadStatus);
+        const compressed = await compressImage(file, (mb) => setUploadStatus(intl.formatMessage(messages.compressingLarge, { mb })));
         setUploadStatus(null);
         const fd = new FormData();
         fd.append('file', compressed);
@@ -198,7 +203,9 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
         }]);
       } catch (err) {
         setUploadStatus(null);
-        setUploadError(err?.message || 'Failed to upload image — please try again.');
+        setUploadError(err?.message === 'too_large'
+          ? intl.formatMessage(messages.imageTooLarge, { mb: err.sizeMB })
+          : intl.formatMessage(messages.uploadFailed));
       }
     }
     setUploading(false);
