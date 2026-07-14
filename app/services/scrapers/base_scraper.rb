@@ -54,17 +54,28 @@ module Scrapers
     end
 
     # Returns a Nokogiri::XML::Document of the RSS feed, or nil on failure.
+    # Follows up to max_redirects 3xx responses (e.g. www → CDN redirects).
     # Callers access items via doc.css('item').
-    def fetch_rss(url)
+    def fetch_rss(url, max_redirects: 5)
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl      = (uri.scheme == 'https')
       http.open_timeout = TIMEOUT
       http.read_timeout = TIMEOUT
       response = http.get(uri.request_uri, 'User-Agent' => USER_AGENT)
-      return nil unless response.code.to_i == 200
 
-      Nokogiri::XML(response.body)
+      case response.code.to_i
+      when 200
+        Nokogiri::XML(response.body)
+      when 301, 302, 303, 307, 308
+        return nil if max_redirects.zero?
+        location = response['location']
+        location = URI.join(url, location).to_s if location && !location.start_with?('http')
+        fetch_rss(location, max_redirects: max_redirects - 1) if location
+      else
+        Rails.logger.warn("[#{self.class.name}] RSS HTTP #{response.code} for #{url}")
+        nil
+      end
     rescue StandardError => e
       Rails.logger.error("[#{self.class.name}] RSS error #{url}: #{e.message}")
       nil

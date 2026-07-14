@@ -9,6 +9,7 @@ class CommunityScraperWorker
     'CentroItaliaEventsScraper'  => Scrapers::CentroItaliaEventsScraper,
     'ComuneSanLorenzoScraper'    => Scrapers::ComuneSanLorenzoScraper,
     'LaVoceDiImperiaScraper'     => Scrapers::LaVoceDiImperiaScraper,
+    'Riviera24EventsScraper'     => Scrapers::Riviera24EventsScraper,
   }.freeze
 
   def perform(scraper_name)

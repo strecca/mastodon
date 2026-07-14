@@ -12,6 +12,7 @@ class Scheduler::EventImportScheduler
     Scrapers::CentroItaliaEventsScraper,
     Scrapers::ComuneSanLorenzoScraper,
     Scrapers::LaVoceDiImperiaScraper,
+    Scrapers::Riviera24EventsScraper,
   ].freeze
 
   def perform
