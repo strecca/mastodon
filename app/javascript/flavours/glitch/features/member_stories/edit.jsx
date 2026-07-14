@@ -10,6 +10,27 @@ import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import api from 'flavours/glitch/api';
 import { useIdentity } from 'flavours/glitch/identity_context';
 
+// Canvas draw always outputs sRGB, normalizing any input color profile (ACES, P3, AdobeRGB, etc.)
+const compressImage = (file, maxPx = 1280, quality = 0.82) =>
+  new Promise((resolve) => {
+    const img = new Image();
+    const blobUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(blobUrl);
+      const scale = Math.min(1, maxPx / img.width, maxPx / img.height);
+      const canvas = document.createElement('canvas');
+      canvas.width  = Math.round(img.width  * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(
+        (blob) => resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' })),
+        'image/jpeg', quality,
+      );
+    };
+    img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
+    img.src = blobUrl;
+  });
+
 const FIELDS = [
   {
     key:         'about_me',
@@ -46,8 +67,9 @@ const PhotoSlot = ({ index, currentUrl, currentMediaId, onUpload, onRemove }) =>
     if (!file) return;
     setUploading(true);
     try {
+      const compressed = await compressImage(file);
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', compressed);
       const res = await api().post('/api/v1/media', formData);
       onUpload(index, res.data.id, res.data.url || res.data.preview_url);
     } catch {
