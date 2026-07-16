@@ -71,16 +71,23 @@ const getLocations = () => {
 };
 
 const messages = defineMessages({
-  submitCreate:     { id: 'community.form.submit_create', defaultMessage: 'Submit entry' },
-  submitEdit:       { id: 'community.form.submit_edit', defaultMessage: 'Save changes' },
-  submitting:       { id: 'community.form.submitting', defaultMessage: 'Saving…' },
-  success:          { id: 'community.form.success', defaultMessage: 'Saved successfully! Redirecting…' },
-  required:         { id: 'community.form.required', defaultMessage: 'This field is required' },
-  cancel:           { id: 'community.form.cancel', defaultMessage: 'Cancel' },
-  selectPlaceholder:{ id: 'community.form.select', defaultMessage: 'Select…' },
-  compressingLarge: { id: 'community.upload.compressing', defaultMessage: 'Compressing large image ({mb} MB) — please wait…' },
-  imageTooLarge:    { id: 'community.upload.too_large', defaultMessage: 'Image is too large ({mb} MB). Please resize to under 80 MB before uploading.' },
-  uploadFailed:     { id: 'community.upload.failed', defaultMessage: 'Upload failed — please try again.' },
+  submitCreate:     { id: 'community.form.submit_create',    defaultMessage: 'Submit entry' },
+  submitEdit:       { id: 'community.form.submit_edit',      defaultMessage: 'Save changes' },
+  submitting:       { id: 'community.form.submitting',       defaultMessage: 'Saving…' },
+  success:          { id: 'community.form.success',          defaultMessage: 'Saved successfully! Redirecting…' },
+  required:         { id: 'community.form.required',         defaultMessage: 'This field is required' },
+  cancel:           { id: 'community.form.cancel',           defaultMessage: 'Cancel' },
+  selectPlaceholder:{ id: 'community.form.select',           defaultMessage: 'Select…' },
+  photosHeading:    { id: 'community.form.photos_heading',   defaultMessage: 'Photos (up to {max})' },
+  addPhoto:         { id: 'community.form.add_photo',        defaultMessage: '+ Add Photo' },
+  uploading:        { id: 'community.form.uploading',        defaultMessage: 'Uploading…' },
+  duplicateWarning: { id: 'community.form.duplicate_warning', defaultMessage: 'A similar entry already exists in this category — it may be a duplicate:' },
+  viewEntry:        { id: 'community.form.view_entry',       defaultMessage: 'View entry →' },
+  editMyEntry:      { id: 'community.form.edit_my_entry',    defaultMessage: 'Edit my entry' },
+  submitAnyway:     { id: 'community.form.submit_anyway',    defaultMessage: 'Submit anyway' },
+  compressingLarge: { id: 'community.upload.compressing',    defaultMessage: 'Compressing large image ({mb} MB) — please wait…' },
+  imageTooLarge:    { id: 'community.upload.too_large',      defaultMessage: 'Image is too large ({mb} MB). Please resize to under 80 MB before uploading.' },
+  uploadFailed:     { id: 'community.upload.failed',         defaultMessage: 'Upload failed — please try again.' },
 });
 
 const humanize = (str) => str ? str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
@@ -327,7 +334,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
       {/* Image upload — shown once above the field groups if config has images widget */}
       {hasImagesField && (
         <div className='community-entry-form__group'>
-          <legend className='community-entry-form__group-title'>Photos (up to {MAX_CATEGORY_IMAGES})</legend>
+          <legend className='community-entry-form__group-title'>{intl.formatMessage(messages.photosHeading, { max: MAX_CATEGORY_IMAGES })}</legend>
           <div className='community-entry-form__image-row'>
             {images.map((img, idx) => (
               <div key={img.mediaId} className='community-entry-form__image-thumb'>
@@ -342,7 +349,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
                 onClick={() => fileRef.current?.click()}
                 disabled={uploading}
               >
-                {uploading ? (uploadStatus || 'Uploading…') : '+ Add Photo'}
+                {uploading ? (uploadStatus || intl.formatMessage(messages.uploading)) : intl.formatMessage(messages.addPhoto)}
               </button>
             )}
           </div>
@@ -392,7 +399,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
       {duplicateWarning && (
         <div className='community-entry-form__duplicate-warning'>
           <p className='community-entry-form__duplicate-warning-text'>
-            A similar entry already exists in this category — it may be a duplicate:
+            {intl.formatMessage(messages.duplicateWarning)}
           </p>
           <ul className='community-entry-form__duplicate-list'>
             {duplicateWarning.map(match => (
@@ -405,7 +412,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  View entry →
+                  {intl.formatMessage(messages.viewEntry)}
                 </Link>
               </li>
             ))}
@@ -416,14 +423,14 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
               className='button button-secondary'
               onClick={() => setDuplicateWarning(null)}
             >
-              Edit my entry
+              {intl.formatMessage(messages.editMyEntry)}
             </button>
             <button
               type='button'
               className='button'
               onClick={handleSubmitAnyway}
             >
-              Submit anyway
+              {intl.formatMessage(messages.submitAnyway)}
             </button>
           </div>
         </div>

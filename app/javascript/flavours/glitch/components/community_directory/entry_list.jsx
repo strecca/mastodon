@@ -21,10 +21,11 @@ import { EntryCard } from './entry_card';
 import { SearchFilters } from './search_filters';
 
 const messages = defineMessages({
-  addEntry: { id: 'community.entry_list.add', defaultMessage: 'Add new entry' },
-  noResults: { id: 'community.entry_list.empty', defaultMessage: 'No entries found.' },
+  addEntry:       { id: 'community.entry_list.add',         defaultMessage: 'Add new entry' },
+  noResults:      { id: 'community.entry_list.empty',       defaultMessage: 'No entries found.' },
   noResultsQuery: { id: 'community.entry_list.empty_query', defaultMessage: 'No entries match your search.' },
-  beFirst: { id: 'community.entry_list.be_first', defaultMessage: 'Be the first to add an entry' },
+  beFirst:        { id: 'community.entry_list.be_first',    defaultMessage: 'Be the first to add an entry' },
+  count:          { id: 'community.entry_list.count',       defaultMessage: '{count, plural, one {# entry} other {# entries}}' },
 });
 
 const EntryListInner = ({ config, multiColumn, identity }) => {
@@ -163,7 +164,7 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
       {/* Total count */}
       {hasEntries && total > 0 && (
         <div className='community-entry-list__count'>
-          {total} {total === 1 ? 'entry' : 'entries'}
+          {intl.formatMessage(messages.count, { count: total })}
         </div>
       )}
     </div>

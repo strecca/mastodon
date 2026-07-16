@@ -17,12 +17,14 @@ import { CategoryBannerLink } from './category_banner_link';
 import { fieldLabel, translatedValue } from './translation_helpers';
 
 const messages = defineMessages({
-  edit:          { id: 'community.detail.edit',          defaultMessage: 'Edit this entry' },
-  delete:        { id: 'community.detail.delete',        defaultMessage: 'Delete' },
+  edit:          { id: 'community.detail.edit',           defaultMessage: 'Edit this entry' },
+  delete:        { id: 'community.detail.delete',         defaultMessage: 'Delete' },
   deleteConfirm: { id: 'community.detail.delete_confirm', defaultMessage: 'Permanently delete this entry? This cannot be undone.' },
-  back:          { id: 'community.detail.back',          defaultMessage: '← Back' },
-  added:         { id: 'community.detail.added',         defaultMessage: 'Added' },
-  updated:       { id: 'community.detail.updated',       defaultMessage: 'Updated' },
+  back:          { id: 'community.detail.back',           defaultMessage: '← Back' },
+  added:         { id: 'community.detail.added',          defaultMessage: 'Added' },
+  updated:       { id: 'community.detail.updated',        defaultMessage: 'Updated' },
+  viewFullSize:  { id: 'community.detail.view_full_size', defaultMessage: 'View full size' },
+  close:         { id: 'community.detail.close',          defaultMessage: 'Close' },
 });
 
 const humanize = (str) => str ? str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
@@ -244,7 +246,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
                   type='button'
                   className='community-entry-detail__gallery-item'
                   onClick={() => openLightbox(url)}
-                  aria-label='View full size'
+                  aria-label={intl.formatMessage(messages.viewFullSize)}
                 >
                   <img src={imagePreviews[i] || url} alt='' loading='lazy' />
                 </button>
@@ -327,7 +329,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
             type='button'
             className='cd-lightbox__close'
             onClick={closeLightbox}
-            aria-label='Close'
+            aria-label={intl.formatMessage(messages.close)}
           >
             ✕
           </button>

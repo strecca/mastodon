@@ -5,22 +5,26 @@ import { useCallback } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
-  searchPlaceholder: { id: 'community.search.placeholder', defaultMessage: 'Search {name}…' },
-  filtersLabel:      { id: 'community.search.filters',     defaultMessage: 'Filter:' },
-  sortLabel:         { id: 'community.search.sort',        defaultMessage: 'Sort' },
+  searchPlaceholder: { id: 'community.search.placeholder',    defaultMessage: 'Search {name}…' },
+  filtersLabel:      { id: 'community.search.filters',        defaultMessage: 'Filter:' },
+  sortLabel:         { id: 'community.search.sort',           defaultMessage: 'Sort' },
+  sortNewest:        { id: 'community.search.sort.newest',    defaultMessage: 'Newest' },
+  sortOldest:        { id: 'community.search.sort.oldest',    defaultMessage: 'Oldest' },
+  sortAz:            { id: 'community.search.sort.az',        defaultMessage: 'A–Z' },
+  sortUpdated:       { id: 'community.search.sort.updated',   defaultMessage: 'Recently updated' },
 });
-
-const SORT_OPTIONS = [
-  { value: 'newest',  label: 'Newest' },
-  { value: 'oldest',  label: 'Oldest' },
-  { value: 'az',      label: 'A–Z' },
-  { value: 'updated', label: 'Recently updated' },
-];
 
 const humanize = (str) => str ? str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
 
 export const SearchFilters = ({ query, onQueryChange, sort, onSortChange, fields, activeFilters, onFilterChange, disabled, categoryName }) => {
   const intl = useIntl();
+
+  const sortOptions = [
+    { value: 'newest',  label: intl.formatMessage(messages.sortNewest) },
+    { value: 'oldest',  label: intl.formatMessage(messages.sortOldest) },
+    { value: 'az',      label: intl.formatMessage(messages.sortAz) },
+    { value: 'updated', label: intl.formatMessage(messages.sortUpdated) },
+  ];
 
   const handleSearchInput = useCallback((e) => {
     onQueryChange(e.target.value);
@@ -53,7 +57,7 @@ export const SearchFilters = ({ query, onQueryChange, sort, onSortChange, fields
           disabled={disabled}
           aria-label={intl.formatMessage(messages.sortLabel)}
         >
-          {SORT_OPTIONS.map(o => (
+          {sortOptions.map(o => (
             <option key={o.value} value={o.value}>{o.label}</option>
           ))}
         </select>
