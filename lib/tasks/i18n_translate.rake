@@ -47,10 +47,15 @@ namespace :i18n do
     source_keys = en_source.select { |k, _| k.start_with?(prefix) }
     puts "Source keys with prefix '#{prefix}': #{source_keys.size}"
 
-    # ICU plural strings ({count, plural, one {…} other {…}}) cannot be round-
-    # tripped through DeepL safely — the structure must be preserved while only
-    # the embedded words change. Flag them for manual translation.
-    icu_re = /\{[^}]+,\s*plural,/
+    # Simple count plural pattern — the only ICU form used in community keys:
+    #   {count, plural, one {# WORD} other {# WORDS}}
+    #   {day} — {count, plural, one {# WORD} other {# WORDS}}
+    # We extract the embedded words, translate them with the same DeepL batch,
+    # and reassemble the ICU wrapper.
+    simple_plural_re = /^(\{day\} — )?\{count, plural, one \{# ([^}]+)\} other \{# ([^}]+)\}\}$/
+
+    # Any ICU pattern we can't auto-translate gets flagged for manual work.
+    other_icu_re = /\{[^}]+,\s*(plural|select|selectordinal),/
 
     # ── Placeholder protection ────────────────────────────────────────────────
     # Replace {simple_var} interpolations with <x id="N"/> XML elements.
@@ -100,44 +105,68 @@ namespace :i18n do
         next
       end
 
-      icu_keys, plain_keys = missing.partition { |_, v| v.match?(icu_re) }
+      # Three-way split: plain strings / simple-count-plural ICU / complex ICU
+      plain_keys   = []
+      simple_icu   = []   # [{ key:, prefix:, singular:, plural: }]
+      complex_icu  = []
 
-      if icu_keys.any?
-        puts "#{locale}: #{icu_keys.size} ICU plural key(s) need MANUAL translation:"
-        icu_keys.each do |k, v|
-          puts "    #{k}"
-          puts "    EN:  #{v}"
-          puts
+      missing.each do |key, val|
+        if (m = val.match(simple_plural_re))
+          simple_icu << { key: key, prefix: m[1].to_s, singular: m[2], plural: m[3] }
+        elsif val.match?(other_icu_re)
+          complex_icu << [key, val]
+        else
+          plain_keys << [key, val]
         end
       end
 
-      puts "#{locale}: #{plain_keys.size} keys → DeepL #{deepl_code.call(locale)}#{dry_run ? ' (DRY RUN)' : ''}"
-      next if dry_run || plain_keys.empty?
-
-      # Protect {var} placeholders in every string before sending
-      pairs = plain_keys.map do |key, val|
-        safe, store = protect_placeholders.call(val)
-        [key, safe, store]
+      if complex_icu.any?
+        puts "#{locale}: #{complex_icu.size} complex ICU key(s) need MANUAL translation:"
+        complex_icu.each { |k, v| puts "    #{k}\n    EN:  #{v}\n" }
       end
 
-      all_safe       = pairs.map { |_, s, _| s }
+      total_auto = plain_keys.size + simple_icu.size
+      puts "#{locale}: #{plain_keys.size} plain + #{simple_icu.size} count-plural → DeepL #{deepl_code.call(locale)}#{dry_run ? ' (DRY RUN)' : ''}"
+      next if dry_run || total_auto.zero?
+
+      # Build a single flat array: [plain_0, plain_1, …, icu_0_sg, icu_0_pl, icu_1_sg, icu_1_pl, …]
+      plain_pairs = plain_keys.map do |key, val|
+        safe, store = protect_placeholders.call(val)
+        { key: key, safe: safe, store: store }
+      end
+
+      icu_word_texts = simple_icu.flat_map { |e| [e[:singular], e[:plural]] }
+      all_texts      = plain_pairs.map { |p| p[:safe] } + icu_word_texts
       all_translated = []
 
-      all_safe.each_slice(50).with_index(1) do |batch, n|
-        print "  [#{locale}] batch #{n}/#{(all_safe.size / 50.0).ceil} (#{batch.size} strings)… "
+      all_texts.each_slice(50).with_index(1) do |batch, n|
+        total_batches = (all_texts.size / 50.0).ceil
+        print "  [#{locale}] batch #{n}/#{total_batches} (#{batch.size} strings)… "
         all_translated.concat(call_deepl.call(batch, deepl_code.call(locale)))
         puts 'ok'
-        sleep 0.25 unless n * 50 >= all_safe.size   # don't sleep after last batch
+        sleep 0.25 unless n * 50 >= all_texts.size
       end
 
-      # Restore placeholders and merge into the locale file
-      pairs.each_with_index do |(key, _, store), i|
-        existing[key] = restore_placeholders.call(all_translated[i], store)
+      # Restore plain strings
+      plain_pairs.each_with_index do |p, i|
+        existing[p[:key]] = restore_placeholders.call(all_translated[i], p[:store])
+      end
+
+      # Reassemble simple ICU plural strings
+      offset = plain_pairs.size
+      simple_icu.each_with_index do |entry, i|
+        sg = all_translated[offset + i * 2].strip
+        pl = all_translated[offset + i * 2 + 1].strip
+        existing[entry[:key]] = if entry[:prefix].empty?
+          "{count, plural, one {# #{sg}} other {# #{pl}}}"
+        else
+          "#{entry[:prefix]}{count, plural, one {# #{sg}} other {# #{pl}}}"
+        end
       end
 
       # Write sorted so git diffs stay clean
       File.write(locale_file, "#{JSON.pretty_generate(existing.sort.to_h)}\n")
-      puts "#{locale}: wrote #{plain_keys.size} new translation(s) → #{locale_file.basename}\n"
+      puts "#{locale}: wrote #{total_auto} new translation(s) → #{locale_file.basename}\n"
     end
 
     puts "\nAll done."
