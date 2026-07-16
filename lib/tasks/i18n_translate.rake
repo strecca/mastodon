@@ -82,7 +82,6 @@ namespace :i18n do
           text:         texts,
           target_lang:  target_lang,
           tag_handling: 'xml',
-          ignore_tags:  'x',
         })
 
       unless response.status.success?
