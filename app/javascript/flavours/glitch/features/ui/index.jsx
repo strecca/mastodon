@@ -221,6 +221,8 @@ class SwitchingColumnsArea extends PureComponent {
       rootRedirect = '/start';
     } else if (singleUserMode && owner && initialState?.accounts[owner]) {
       rootRedirect = `/@${initialState.accounts[owner].username}`;
+    } else if (singleColumn && !signedIn) {
+      rootRedirect = '/about';
     }
 
     return (
