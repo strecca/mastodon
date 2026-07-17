@@ -1,0 +1,50 @@
+miacivezza.com {
+	@healthcheck path /health
+	log_skip @healthcheck
+
+	# Serve uploaded media and compiled assets directly from disk — bypass Rails
+	handle /system/* {
+		root * /home/mastodon/live/public
+		file_server
+	}
+
+	handle /packs/* {
+		root * /home/mastodon/live/public
+		file_server
+		header Cache-Control "public, max-age=31536000, immutable"
+	}
+
+	handle /packs-dev/* {
+		root * /home/mastodon/live/public
+		file_server
+	}
+
+	handle /api/v1/streaming* {
+		reverse_proxy localhost:4000 {
+			header_up Upgrade {http.upgrade}
+			header_up Connection {http.upgrade}
+		}
+	}
+
+	handle /api/v2/streaming* {
+		reverse_proxy localhost:4000 {
+			header_up Upgrade {http.upgrade}
+			header_up Connection {http.upgrade}
+		}
+	}
+
+	# Service worker must never be cached — always re-fetch so stale clients
+	# get the updated SW that clears old asset caches after each deploy.
+	# Without this, Safari holds stale SW → old asset hashes → black page.
+	handle /sw.js {
+		root * /home/mastodon/live/public
+		file_server
+		header Cache-Control "no-store"
+	}
+
+	handle {
+		reverse_proxy localhost:3000 {
+			header_up X-Real-IP {remote_host}
+		}
+	}
+}
