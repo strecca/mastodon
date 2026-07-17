@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import {
   domain,
-  version,
   statusPageUrl,
   profile_directory as canProfileDirectory,
   termsOfServiceEnabled,
@@ -79,8 +78,6 @@ export const LinkFooter: React.FC<{
             defaultMessage='Keyboard shortcuts'
           />
         </Link>
-        <DividingCircle />
-        <span className='version'>v{version}</span>
       </p>
     </div>
   );
