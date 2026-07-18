@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
-# Parses a raw newsletter text (or PDF-extracted text) into structured
-# CommunityNewsletter fields using the Anthropic API, then optionally
-# extracts embedded images from a PDF via pdfimages.
-#
-# Usage (text only):
-#   result = NewsletterImportService.new.extract(source_text: raw_text)
-#   newsletter = CommunityNewsletter.new(result[:fields])
+# Parses a newsletter PDF or plain text into structured CommunityNewsletter fields
+# using the Anthropic API. PDFs are sent directly as base64-encoded documents
+# (works for both text-layer and image-based PDFs). Plain text files are sent as text.
 #
 # Usage (PDF):
 #   result = NewsletterImportService.new.extract(pdf_path: '/tmp/upload.pdf')
 #   newsletter = CommunityNewsletter.new(result[:fields])
-#   result[:image_paths].each { |path, meta| attach_asset(newsletter, path, meta) }
+#
+# Usage (plain text):
+#   result = NewsletterImportService.new.extract(source_text: raw_text)
+#   newsletter = CommunityNewsletter.new(result[:fields])
 
 class NewsletterImportService
   Error = Class.new(StandardError)
 
   ANTHROPIC_API = 'https://api.anthropic.com/v1/messages'
   MAX_TOKENS    = 4096
+  MAX_PDF_MB    = 25
 
   EXTRACTION_PROMPT = <<~PROMPT.freeze
     You are parsing a community newsletter from miacivezza.com - a bilingual (Italian/English)
@@ -59,33 +59,43 @@ class NewsletterImportService
     - published_on: infer from any date in the document; use ISO format
     - image_hints: list all graphics described or obviously present (photos, illustrations, decorative elements)
     - Never invent content not present in the source text
-
-    SOURCE TEXT:
   PROMPT
 
   def extract(source_text: nil, pdf_path: nil)
     raise Error, 'Provide source_text or pdf_path' if source_text.blank? && pdf_path.blank?
 
-    text = source_text.presence || extract_text_from_pdf(pdf_path)
-    fields = call_claude(text)
-    image_paths = pdf_path.present? ? extract_images_from_pdf(pdf_path) : []
+    if pdf_path.present?
+      fields      = extract_from_pdf(pdf_path)
+      image_paths = extract_images_from_pdf(pdf_path)
+      text_stored = 'Extracted via Claude Vision from PDF'
+    else
+      fields      = call_claude_text(source_text)
+      image_paths = []
+      text_stored = source_text
+    end
 
-    { fields: fields.merge(source_text: text), image_paths: image_paths }
+    { fields: fields.merge(source_text: text_stored), image_paths: image_paths }
   end
 
   private
 
-  def extract_text_from_pdf(pdf_path)
+  # Send the PDF directly to Claude as a base64-encoded document.
+  # This works for both text-layer PDFs and image-based (scanned/designed) PDFs.
+  def extract_from_pdf(pdf_path)
     raise Error, "PDF not found: #{pdf_path}" unless File.exist?(pdf_path)
 
-    # pdftotext is part of poppler-utils (standard on Ubuntu)
-    output = `pdftotext -layout "#{pdf_path}" -`
-    raise Error, 'pdftotext failed or returned empty output' if output.strip.blank?
+    size_mb = File.size(pdf_path) / 1_048_576.0
+    raise Error, "PDF is #{size_mb.round(1)}MB - maximum is #{MAX_PDF_MB}MB. Please reduce the file size." if size_mb > MAX_PDF_MB
 
-    output
+    pdf_data = Base64.strict_encode64(File.binread(pdf_path))
+    call_claude_pdf(pdf_data)
   end
 
+  # Extract embedded images from the PDF using pdfimages if available.
+  # Returns an empty array (silently) if poppler-utils is not installed.
   def extract_images_from_pdf(pdf_path)
+    return [] unless system('which pdfimages > /dev/null 2>&1')
+
     dir = Dir.mktmpdir('newsletter_assets_')
     `pdfimages -all "#{pdf_path}" "#{dir}/asset"`
 
@@ -101,7 +111,6 @@ class NewsletterImportService
   def classify_images(paths)
     return [] if paths.empty?
 
-    # Build a classification prompt listing each file by index
     file_list = paths.each_with_index.map { |p, i| "#{i}: #{File.basename(p)} (#{File.size(p)} bytes)" }.join("\n")
 
     prompt = <<~CLASSIFY
@@ -113,7 +122,7 @@ class NewsletterImportService
 
       Respond ONLY with JSON array:
       [
-        { "index": 0, "role": "sidebar_graphic|editorial_photo|footer_illustration|header_graphic|logo|unknown", "position": "left_column|right_column|footer|header", "alt_text": "brief description", "keep": true|false },
+        { "index": 0, "role": "sidebar_graphic|editorial_photo|footer_illustration|header_graphic|logo|unknown", "position": "left_column|right_column|footer|header", "alt_text": "brief description", "keep": true },
         ...
       ]
 
@@ -139,32 +148,57 @@ class NewsletterImportService
     []
   end
 
-  def call_claude(source_text)
-    prompt = "#{EXTRACTION_PROMPT}\n#{source_text.truncate(12_000)}"
-    raw = call_claude_raw(prompt)
+  # Claude API call with a base64-encoded PDF document as content
+  def call_claude_pdf(pdf_base64)
+    config  = Rails.configuration.x.daily_digest.anthropic
+    api_key = config[:api_key]
+    model   = config[:model].presence || 'claude-sonnet-4-6'
 
-    raw = raw.gsub(/\A```(?:json)?\s*/, '').gsub(/\s*```\z/, '').strip
-    match = raw.match(/\{.*\}/m)
-    raise Error, "Could not extract JSON from Claude response" if match.nil?
+    raise Error, 'ANTHROPIC_API_KEY not configured' if api_key.blank?
 
-    result = JSON.parse(match.to_s)
+    response = HTTP
+      .headers(
+        'x-api-key'         => api_key,
+        'anthropic-version' => '2023-06-01',
+        'content-type'      => 'application/json'
+      )
+      .timeout(180)
+      .post(ANTHROPIC_API, json: {
+        model:      model,
+        max_tokens: MAX_TOKENS,
+        messages:   [{
+          role:    'user',
+          content: [
+            {
+              type:   'document',
+              source: {
+                type:       'base64',
+                media_type: 'application/pdf',
+                data:       pdf_base64,
+              },
+            },
+            {
+              type: 'text',
+              text: EXTRACTION_PROMPT + "\n\nPlease read the attached newsletter PDF and extract the structured content as JSON.",
+            },
+          ],
+        }],
+      })
 
-    {
-      title:               result['title'].to_s.strip,
-      author_name:         result['author_name'].to_s.strip,
-      published_on:        parse_date(result['published_on']),
-      newsletter_template: result['newsletter_template'].presence || 'two_column',
-      masthead_location:   result['masthead_location'].to_s.strip,
-      footer_attribution:  result['footer_attribution'].to_s.strip,
-      left_column_it:      result['left_column_it'].to_s.strip,
-      left_column_en:      result['left_column_en'].to_s.strip,
-      right_column_it:     result['right_column_it'].to_s.strip,
-      right_column_en:     result['right_column_en'].to_s.strip,
-    }
-  rescue JSON::ParserError => e
-    raise Error, "JSON parse error: #{e.message}"
+    raise Error, "Anthropic API #{response.status}: #{response.body.to_s.truncate(200)}" unless response.status.success?
+
+    raw = JSON.parse(response.body.to_s).dig('content', 0, 'text').to_s.strip
+    parse_claude_json(raw)
   end
 
+  # Claude API call with plain text content
+  def call_claude_text(source_text)
+    prompt = "#{EXTRACTION_PROMPT}\n\nSOURCE TEXT:\n#{source_text.truncate(12_000)}"
+    raw    = call_claude_raw(prompt)
+    parse_claude_json(raw)
+  end
+
+  # Raw Claude API call returning the text response
   def call_claude_raw(prompt)
     config  = Rails.configuration.x.daily_digest.anthropic
     api_key = config[:api_key]
@@ -188,6 +222,29 @@ class NewsletterImportService
     raise Error, "Anthropic API #{response.status}: #{response.body.to_s.truncate(200)}" unless response.status.success?
 
     JSON.parse(response.body.to_s).dig('content', 0, 'text').to_s.strip
+  end
+
+  def parse_claude_json(raw)
+    clean = raw.gsub(/\A```(?:json)?\s*/, '').gsub(/\s*```\z/, '').strip
+    match = clean.match(/\{.*\}/m)
+    raise Error, 'Could not extract JSON from Claude response' if match.nil?
+
+    result = JSON.parse(match.to_s)
+
+    {
+      title:               result['title'].to_s.strip,
+      author_name:         result['author_name'].to_s.strip,
+      published_on:        parse_date(result['published_on']),
+      newsletter_template: result['newsletter_template'].presence || 'two_column',
+      masthead_location:   result['masthead_location'].to_s.strip,
+      footer_attribution:  result['footer_attribution'].to_s.strip,
+      left_column_it:      result['left_column_it'].to_s.strip,
+      left_column_en:      result['left_column_en'].to_s.strip,
+      right_column_it:     result['right_column_it'].to_s.strip,
+      right_column_en:     result['right_column_en'].to_s.strip,
+    }
+  rescue JSON::ParserError => e
+    raise Error, "JSON parse error: #{e.message}"
   end
 
   def parse_date(value)

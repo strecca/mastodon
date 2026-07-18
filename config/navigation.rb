@@ -73,6 +73,7 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     n.item :admin, safe_join([material_symbol('manufacturing'), t('admin.title')]), nil, if: -> { current_user.can?(:view_dashboard, :manage_settings, :manage_rules, :manage_announcements, :manage_custom_emojis, :manage_webhooks, :manage_federation) && !self_destruct } do |s|
+      s.item :newsletters, safe_join([material_symbol('newspaper'), 'Newsletters']), admin_newsletters_path, highlights_on: %r{/admin/newsletters}
       s.item :dashboard, safe_join([material_symbol('speed'), t('admin.dashboard.title')]), admin_dashboard_path, if: -> { current_user.can?(:view_dashboard) }
       s.item :settings, safe_join([material_symbol('tune'), t('admin.settings.title')]), admin_settings_path, if: -> { current_user.can?(:manage_settings) }, highlights_on: %r{/admin/settings}
       s.item :terms_of_service, safe_join([material_symbol('description'), t('admin.terms_of_service.title')]), admin_terms_of_service_index_path, highlights_on: %r{/admin/terms_of_service}, if: -> { current_user.can?(:manage_rules) }
