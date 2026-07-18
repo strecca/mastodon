@@ -8,6 +8,9 @@ module Localized
   end
 
   def set_locale(&block)
+    if (explicit_lang = available_locale_or_nil(params[:lang]))
+      cookies[:locale] = { value: explicit_lang.to_s, expires: 1.year.from_now, httponly: false, same_site: :lax }
+    end
     I18n.with_locale(requested_locale || I18n.default_locale, &block)
   end
 
@@ -16,6 +19,7 @@ module Localized
   def requested_locale
     requested_locale_name   = available_locale_or_nil(params[:lang])
     requested_locale_name ||= available_locale_or_nil(current_user.locale) if respond_to?(:user_signed_in?) && user_signed_in?
+    requested_locale_name ||= available_locale_or_nil(cookies[:locale])
     requested_locale_name ||= http_accept_language unless ENV['FORCE_DEFAULT_LOCALE'] == 'true'
     requested_locale_name
   end
