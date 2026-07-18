@@ -225,6 +225,30 @@ code {
     }
   }
 
+  .registration-reason-prompt {
+    margin-bottom: 20px;
+
+    .lead {
+      margin-bottom: 10px;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+  }
+
+  .registration-reason-langs {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+  }
+
   .rules-list {
     font-size: 17px;
     line-height: 22px;
