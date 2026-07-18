@@ -156,6 +156,7 @@ module ApplicationHelper
   def html_attributes
     base = {
       lang: I18n.locale,
+      translate: 'no',
       class: html_classes,
       'data-contrast': contrast.parameterize,
       'data-color-scheme': page_color_scheme.parameterize,
