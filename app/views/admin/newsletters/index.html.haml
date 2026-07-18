@@ -1,0 +1,48 @@
+- content_for :page_title do
+  Newsletters
+
+- content_for :heading do
+  %h1 Community Newsletters
+  %p.lead Manage newsletters from community contributors. Import from PDF or text file, review, then publish to the site and feed.
+
+.admin-newsletters-toolbar
+  = link_to 'New Newsletter', new_admin_newsletter_path, class: 'button'
+
+- if @newsletters.empty?
+  .empty-column-indicator
+    No newsletters yet. Import one to get started.
+- else
+  .table-wrapper
+    %table.table.table--newsletter
+      %thead
+        %tr
+          %th Date
+          %th Title
+          %th Author
+          %th Status
+          %th Assets
+          %th Actions
+      %tbody
+        - @newsletters.each do |nl|
+          %tr
+            %td= nl.published_on&.strftime('%-d %b %Y') || '-'
+            %td
+              = link_to nl.title, admin_newsletter_path(nl)
+              - if nl.mastodon_status_id.present?
+                %span.badge.badge--green posted
+            %td= nl.author_name
+            %td
+              - if nl.published?
+                %span.badge.badge--green published
+              - else
+                %span.badge.badge--grey draft
+            %td= nl.newsletter_assets.loaded? ? nl.newsletter_assets.size : nl.newsletter_assets.count
+            %td.nowrap
+              = link_to 'Edit', edit_admin_newsletter_path(nl), class: 'table-action-link'
+              - if nl.published?
+                = button_to 'Unpublish', unpublish_admin_newsletter_path(nl), method: :patch, class: 'table-action-link'
+              - else
+                = button_to 'Publish', publish_admin_newsletter_path(nl), method: :patch, class: 'table-action-link'
+              = button_to 'Delete', admin_newsletter_path(nl), method: :delete, data: { confirm: 'Delete this newsletter?' }, class: 'table-action-link danger'
+
+  = paginate @newsletters

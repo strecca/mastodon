@@ -1,0 +1,23 @@
+- content_for :page_title do
+  Import Newsletter
+
+- content_for :heading do
+  %h1 Import Newsletter
+  %p.lead Upload a PDF, .txt, .md, or .csv file. Claude will extract the title, author, date, and bilingual column content automatically. You can review and edit before publishing.
+
+.admin-newsletter-import
+  %section.admin-newsletter-import__upload
+    %h2 Import from file
+    %p.hint The import calls Claude and may take 20-40 seconds. You will be redirected to the review page when it completes.
+    = form_tag admin_newsletters_path, multipart: true, method: :post do
+      .fields-group
+        %label.label{ for: 'import_file' } Newsletter file (PDF, TXT, MD, CSV)
+        %input#import_file{ type: 'file', name: 'import_file', accept: '.pdf,.txt,.md,.csv,.text' }
+      .actions
+        = submit_tag 'Import and Extract with Claude', class: 'button', data: { disable_with: 'Extracting... please wait' }
+
+  %hr.admin-newsletter-import__divider
+
+  %section.admin-newsletter-import__manual
+    %h2 Or enter manually
+    = render 'form', newsletter: @newsletter

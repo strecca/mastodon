@@ -1,0 +1,25 @@
+- content_for :page_title do
+  Community Newsletters
+
+.public-layout
+  .container
+    .newsletter-index
+      %h1.newsletter-index__title Community Newsletters
+
+      - if @newsletters.empty?
+        %p.newsletter-index__empty No newsletters published yet.
+      - else
+        .newsletter-index__grid
+          - @newsletters.each do |nl|
+            = link_to newsletter_path(nl), class: 'newsletter-card' do
+              .newsletter-card__meta
+                %span.newsletter-card__location= nl.masthead_location.presence || 'Civezza'
+                %span.newsletter-card__date= nl.published_on&.strftime('%-d %B %Y')
+              %h2.newsletter-card__title= nl.title
+              %p.newsletter-card__author
+                By
+                %strong= nl.author_name
+              - if nl.right_column_en.present?
+                %p.newsletter-card__excerpt= nl.right_column_en.truncate(140)
+
+        = paginate @newsletters

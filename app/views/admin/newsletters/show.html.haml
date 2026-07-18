@@ -1,0 +1,25 @@
+- content_for :page_title do
+  = @newsletter.title
+
+- content_for :heading do
+  %h1= @newsletter.title
+  %p.lead
+    By #{@newsletter.author_name}
+    &middot;
+    = @newsletter.published_on&.strftime('%-d %B %Y')
+    &middot;
+    - if @newsletter.published?
+      %span.badge.badge--green Published
+      - if @newsletter.mastodon_status_id.present?
+        &middot; Posted to feed
+    - else
+      %span.badge.badge--grey Draft
+
+.admin-newsletter-actions
+  = link_to 'Edit', edit_admin_newsletter_path(@newsletter), class: 'button button-secondary'
+  - if @newsletter.published?
+    = button_to 'Unpublish', unpublish_admin_newsletter_path(@newsletter), method: :patch, class: 'button button-secondary'
+    = link_to 'View public page', newsletter_path(@newsletter), class: 'button', target: '_blank'
+  - else
+    = button_to 'Publish now', publish_admin_newsletter_path(@newsletter), method: :patch, class: 'button'
+  = button_to 'Delete', admin_newsletter_path(@newsletter), method: :delete, data: { confirm: 'Delete this newsletter?' }, class: 'button button-secondary danger'

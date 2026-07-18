@@ -11,6 +11,13 @@ namespace :admin do
     post :backfill
   end
 
+  resources :newsletters, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    member do
+      patch :publish
+      patch :unpublish
+    end
+  end
+
   concern :batch do
     collection { post :batch }
   end

@@ -1,0 +1,65 @@
+- content_for :page_title do
+  = @newsletter.title
+
+.public-layout
+  .container
+    %article.newsletter-show{ class: "newsletter-show--#{@newsletter.newsletter_template}" }
+
+      .newsletter-show__masthead
+        .newsletter-show__masthead-location= @newsletter.masthead_location
+        .newsletter-show__masthead-date= @newsletter.published_on&.strftime('%-d %B %Y')
+
+      %h1.newsletter-show__title= @newsletter.title
+
+      - footer_asset  = @assets.find { |a| a.role == 'footer_illustration' }
+      - sidebar_asset = @assets.find { |a| a.role == 'sidebar_graphic' }
+      - photo_assets  = @assets.select { |a| a.role == 'editorial_photo' }
+
+      - if @newsletter.two_column?
+        .newsletter-show__body.newsletter-show__body--two-col
+          .newsletter-show__left-col
+            - if sidebar_asset&.image&.attached?
+              .newsletter-show__asset
+                = image_tag rails_blob_path(sidebar_asset.image, disposition: 'inline'),
+                            alt: sidebar_asset.alt_text,
+                            class: 'newsletter-show__sidebar-graphic'
+            - if @newsletter.left_column_it.present?
+              .newsletter-show__col-content.newsletter-show__col-content--it
+                = simple_format(@newsletter.left_column_it)
+            - if @newsletter.left_column_en.present?
+              .newsletter-show__col-content.newsletter-show__col-content--en
+                = simple_format(@newsletter.left_column_en)
+
+          .newsletter-show__right-col
+            - photo_assets.each do |photo|
+              - if photo.image.attached?
+                .newsletter-show__asset
+                  = image_tag rails_blob_path(photo.image, disposition: 'inline'),
+                              alt: photo.alt_text,
+                              class: 'newsletter-show__editorial-photo'
+            - if @newsletter.right_column_it.present?
+              .newsletter-show__col-content.newsletter-show__col-content--it
+                = simple_format(@newsletter.right_column_it)
+            - if @newsletter.right_column_en.present?
+              .newsletter-show__col-content.newsletter-show__col-content--en
+                = simple_format(@newsletter.right_column_en)
+      - else
+        .newsletter-show__body
+          - if @newsletter.right_column_it.present?
+            .newsletter-show__col-content.newsletter-show__col-content--it
+              = simple_format(@newsletter.right_column_it)
+          - if @newsletter.right_column_en.present?
+            .newsletter-show__col-content.newsletter-show__col-content--en
+              = simple_format(@newsletter.right_column_en)
+
+      - if footer_asset&.image&.attached?
+        .newsletter-show__footer-illustration
+          = image_tag rails_blob_path(footer_asset.image, disposition: 'inline'),
+                      alt: footer_asset.alt_text,
+                      class: 'newsletter-show__footer-img'
+
+      .newsletter-show__footer
+        = @newsletter.footer_attribution
+
+    .newsletter-show__back
+      = link_to 'All newsletters', newsletters_path

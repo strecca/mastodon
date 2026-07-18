@@ -229,6 +229,7 @@ Rails.application.routes.draw do
   resource :authorize_interaction, only: [:show]
   resource :share, only: [:show]
 
+  resources :newsletters, only: [:index, :show], param: :slug
 
   draw(:admin)
 

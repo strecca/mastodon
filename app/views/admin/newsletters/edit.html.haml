@@ -1,0 +1,24 @@
+- content_for :page_title do
+  Edit Newsletter
+
+- content_for :heading do
+  %h1= @newsletter.title.presence || 'Edit Newsletter'
+  %p.lead
+    Review the imported content, make any corrections, then publish.
+    - if @newsletter.newsletter_assets.any?
+      %span= "#{@newsletter.newsletter_assets.count} image asset(s) extracted."
+
+- if @newsletter.newsletter_assets.any?
+  .admin-newsletter-assets
+    %h3 Extracted image assets
+    .admin-newsletter-assets__grid
+      - @newsletter.newsletter_assets.ordered.each do |asset|
+        .admin-newsletter-assets__item
+          - if asset.image.attached?
+            = image_tag rails_blob_path(asset.image, disposition: 'inline'), class: 'admin-newsletter-assets__thumb'
+          .admin-newsletter-assets__meta
+            %span.badge= asset.role
+            %span.badge.badge--grey= asset.position
+            %small= asset.alt_text
+
+= render 'form', newsletter: @newsletter

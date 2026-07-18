@@ -1,0 +1,51 @@
+= form_with model: [:admin, newsletter], local: true do |f|
+  = render 'shared/error_messages', object: newsletter
+
+  .fields-group
+    .input.with_label
+      = f.label :title, 'Display title'
+      = f.text_field :title, class: 'string', placeholder: 'Il Suono dell\'Estate di Civezza'
+  .fields-group
+    .input.with_label
+      = f.label :author_name, 'Author name'
+      = f.text_field :author_name, class: 'string', placeholder: 'Barbara Hunter-Lemke'
+  .fields-group.fields-group--half
+    .input.with_label
+      = f.label :published_on, 'Date'
+      = f.date_field :published_on, class: 'string'
+    .input.with_label
+      = f.label :newsletter_template, 'Layout template'
+      = f.select :newsletter_template, [['Two column', 'two_column'], ['Single column', 'single_column']], {}, class: 'string'
+  .fields-group.fields-group--half
+    .input.with_label
+      = f.label :masthead_location, 'Masthead location'
+      = f.text_field :masthead_location, class: 'string', placeholder: 'Civezza, La Piazzetta'
+    .input.with_label
+      = f.label :footer_attribution, 'Footer attribution'
+      = f.text_field :footer_attribution, class: 'string', placeholder: 'newsletter | Author | Civezza'
+
+  %h3.admin-newsletter-columns__heading Italian content
+  .admin-newsletter-columns
+    .admin-newsletter-columns__col
+      .input.with_label
+        = f.label :left_column_it, 'Left column (sidebar letter) - IT'
+        = f.text_area :left_column_it, rows: 12, class: 'string'
+    .admin-newsletter-columns__col
+      .input.with_label
+        = f.label :right_column_it, 'Right column (main article) - IT'
+        = f.text_area :right_column_it, rows: 12, class: 'string'
+
+  %h3.admin-newsletter-columns__heading English content
+  .admin-newsletter-columns
+    .admin-newsletter-columns__col
+      .input.with_label
+        = f.label :left_column_en, 'Left column (sidebar letter) - EN'
+        = f.text_area :left_column_en, rows: 12, class: 'string'
+    .admin-newsletter-columns__col
+      .input.with_label
+        = f.label :right_column_en, 'Right column (main article) - EN'
+        = f.text_area :right_column_en, rows: 12, class: 'string'
+
+  .actions
+    = f.submit newsletter.persisted? ? 'Save changes' : 'Create newsletter', class: 'button'
+    = link_to 'Cancel', admin_newsletters_path, class: 'button button-secondary'
