@@ -16,7 +16,7 @@ class DailyDigestService
   LOOKAHEAD_DAYS = 60
 
   SYSTEM_PROMPT = <<~SYSTEM.freeze
-    You are the editorial voice of MiaCivezza.com — a private, members-only community
+    You are the editorial voice of MiaCivezza.com - a private, members-only community
     platform for people with roots in, or deep ties to, the Imperia province and the
     Ligurian Riviera of northwestern Italy. "Mia Civezza" takes its name from the small
     hilltop village of Civezza, a few kilometres inland from San Lorenzo al Mare.
@@ -28,17 +28,17 @@ class DailyDigestService
     - Non-Italian partners, friends, and admirers of this corner of Liguria
 
     The site's character:
-    - Warm, welcoming, and genuinely local — not a generic news aggregator
+    - Warm, welcoming, and genuinely local - not a generic news aggregator
     - Bilingual (Italian primary, English secondary) because many members read both
     - Community-spirited: celebrates local culture, food, festivals, olive harvests,
       the sea, the hills, and the rhythms of Ligurian life
-    - Non-commercial and non-political — focused on connection, not controversy
+    - Non-commercial and non-political - focused on connection, not controversy
     - The tone of a knowledgeable local friend who loves the area deeply
 
     When writing the daily digest:
     - Write as if addressed to people who care about this specific place, not Italy in general
     - Reference local landmarks, traditions, and seasonal context naturally where relevant
-    - The Italian version should feel like a local would write it — not translated Italian
+    - The Italian version should feel like a local would write it - not translated Italian
     - The English version should help non-Italian-speaking members feel included
     - Never fabricate events, dates, or details beyond what is provided
   SYSTEM
@@ -68,6 +68,10 @@ class DailyDigestService
       .limit(30)
   end
 
+  def fetch_recent_newsletter(date)
+    CommunityNewsletter.for_digest.order(published_on: :desc).first
+  end
+
   def build_prompt(date, events)
     events_text = events.map do |e|
       lines = ["- #{e.event_name}"]
@@ -81,6 +85,23 @@ class DailyDigestService
       lines.join("\n")
     end.join("\n\n")
 
+    newsletter      = fetch_recent_newsletter(date)
+    newsletter_note = if newsletter
+      url = "https://#{Rails.configuration.x.web_domain}/newsletters/#{newsletter.slug}"
+      "NEWSLETTER DELLA COMUNITA': \"#{newsletter.title}\" di #{newsletter.author_name} (#{url})\nRiepilogo: #{newsletter.digest_summary}"
+    else
+      nil
+    end
+
+    newsletter_section = newsletter_note ? <<~NL : ''
+      C'e' anche una newsletter recente della comunita':
+
+      #{newsletter_note}
+
+      Apri il testo del digest con un paragrafo breve e caloroso che invita i lettori a leggere la newsletter, con il link incorporato. Usa una frase naturale come: "Questa settimana [autore] scrive di [tema] - [link]". Poi prosegui con gli eventi.
+
+    NL
+
     <<~PROMPT
       Sei il redattore di MiaCivezza.com, un sito di comunità dedicato alle persone con legami con la regione di Imperia e della Liguria nordoccidentale, e agli italiani che vivono all'estero.
 
@@ -88,17 +109,17 @@ class DailyDigestService
 
       Di seguito trovi gli eventi comunitari in arrivo, raccolti da fonti locali come Comune di San Lorenzo al Mare, CentroItalia e La Voce di Imperia.
 
-      EVENTI IN PROGRAMMA:
+      #{newsletter_section}EVENTI IN PROGRAMMA:
       #{events_text}
 
       Scrivi un caldo e coinvolgente notiziario quotidiano in stile giornale locale. Requisiti per la versione italiana:
-      - Scritto in italiano, 250–400 parole
+      - Scritto in italiano, 250-400 parole
       - Tono accogliente e spirito comunitario
       - Metti in risalto gli eventi più significativi
       - Raggruppa per tema o vicinanza di data se naturale
       - Concludi con un invito a visitare miacivezza.com per ulteriori dettagli
 
-      Poi scrivi la stessa notizia in inglese (stesso tono, stesso contenuto, 250–400 parole).
+      Poi scrivi la stessa notizia in inglese (stesso tono, stesso contenuto, 250-400 parole).
 
       Rispondi SOLO con JSON valido in questo formato esatto (nessun testo prima o dopo):
       {"it": "testo italiano qui...", "en": "english text here..."}
