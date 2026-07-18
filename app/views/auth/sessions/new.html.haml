@@ -5,7 +5,7 @@
   = render partial: 'shared/og'
 
 - unless omniauth_only?
-  = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name, lang: (I18n.locale unless I18n.locale == I18n.default_locale))) do |f|
     %h1.title= SiteContent.for('login_title', locale: I18n.locale.to_s, fallback: t('auth.sign_in.title', domain: site_hostname))
     %p.lead= SiteContent.for('login_preamble', locale: I18n.locale.to_s, fallback: t('auth.sign_in.preamble_html', domain: site_hostname))
     .fields-group

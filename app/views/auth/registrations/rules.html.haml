@@ -20,6 +20,7 @@
     = render collection: @rule_translations, partial: 'auth/rule_translations/rule_translation'
 
   .stacked-actions
-    - accept_path = @invite_code.present? ? public_invite_url(invite_code: @invite_code, accept: @accept_token) : new_user_registration_path(accept: @accept_token)
+    - lang_q = I18n.locale.to_s if I18n.locale != I18n.default_locale
+    - accept_path = @invite_code.present? ? public_invite_url(invite_code: @invite_code, accept: @accept_token, lang: lang_q) : new_user_registration_path(accept: @accept_token, lang: lang_q)
     = link_to t('auth.rules.accept'), accept_path, class: 'button'
     = link_to t('auth.rules.back'), root_path, class: 'button button-secondary'
