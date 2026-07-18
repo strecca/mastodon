@@ -3,9 +3,7 @@
 class NewsletterAsset < ApplicationRecord
   belongs_to :community_newsletter
 
-  has_one_attached :image
-
-  ROLES = %w[sidebar_graphic editorial_photo footer_illustration header_graphic].freeze
+  ROLES     = %w[sidebar_graphic editorial_photo footer_illustration header_graphic].freeze
   POSITIONS = %w[left_column right_column footer header].freeze
 
   validates :role,     inclusion: { in: ROLES }
@@ -13,13 +11,11 @@ class NewsletterAsset < ApplicationRecord
 
   scope :ordered, -> { order(:display_order) }
 
-  def image_url(variant = nil)
-    return nil unless image.attached?
+  def image_url
+    file_path.present? ? "/#{file_path.sub(%r{\A/}, '')}" : nil
+  end
 
-    if variant
-      rails_representation_url(image.variant(variant), host: Rails.configuration.x.web_domain)
-    else
-      rails_blob_url(image, host: Rails.configuration.x.web_domain)
-    end
+  def image_attached?
+    file_path.present? && File.exist?(Rails.root.join('public', file_path.sub(%r{\A/}, '')))
   end
 end

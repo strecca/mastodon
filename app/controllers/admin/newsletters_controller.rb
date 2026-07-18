@@ -117,17 +117,24 @@ module Admin
     end
 
     def attach_extracted_images(newsletter, image_paths)
+      store_dir = Rails.root.join('public', 'newsletter_assets', newsletter.id.to_s)
+      FileUtils.mkdir_p(store_dir)
+
       image_paths.each_with_index do |meta, i|
         next unless File.exist?(meta[:path])
 
-        asset = newsletter.newsletter_assets.build(
+        ext      = File.extname(meta[:path]).downcase
+        filename = "#{meta[:role]}_#{i}#{ext}"
+        dest     = store_dir.join(filename)
+        FileUtils.cp(meta[:path], dest)
+
+        newsletter.newsletter_assets.create!(
           role:          meta[:role],
           position:      meta[:position],
           alt_text:      meta[:alt_text],
-          display_order: i
+          display_order: i,
+          file_path:     "newsletter_assets/#{newsletter.id}/#{filename}"
         )
-        asset.image.attach(io: File.open(meta[:path]), filename: File.basename(meta[:path]))
-        asset.save
       end
     end
   end

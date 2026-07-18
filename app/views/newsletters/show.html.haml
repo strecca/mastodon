@@ -18,9 +18,9 @@
       - if @newsletter.two_column?
         .newsletter-show__body.newsletter-show__body--two-col
           .newsletter-show__left-col
-            - if sidebar_asset&.image&.attached?
+            - if sidebar_asset&.image_attached?
               .newsletter-show__asset
-                = image_tag rails_blob_path(sidebar_asset.image, disposition: 'inline'),
+                = image_tag sidebar_asset.image_url,
                             alt: sidebar_asset.alt_text,
                             class: 'newsletter-show__sidebar-graphic'
             - if @newsletter.left_column_it.present?
@@ -32,9 +32,9 @@
 
           .newsletter-show__right-col
             - photo_assets.each do |photo|
-              - if photo.image.attached?
+              - if photo.image_attached?
                 .newsletter-show__asset
-                  = image_tag rails_blob_path(photo.image, disposition: 'inline'),
+                  = image_tag photo.image_url,
                               alt: photo.alt_text,
                               class: 'newsletter-show__editorial-photo'
             - if @newsletter.right_column_it.present?
@@ -52,9 +52,9 @@
             .newsletter-show__col-content.newsletter-show__col-content--en
               = simple_format(@newsletter.right_column_en)
 
-      - if footer_asset&.image&.attached?
+      - if footer_asset&.image_attached?
         .newsletter-show__footer-illustration
-          = image_tag rails_blob_path(footer_asset.image, disposition: 'inline'),
+          = image_tag footer_asset.image_url,
                       alt: footer_asset.alt_text,
                       class: 'newsletter-show__footer-img'
 

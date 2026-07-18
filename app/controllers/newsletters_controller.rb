@@ -7,6 +7,6 @@ class NewslettersController < ApplicationController
 
   def show
     @newsletter = CommunityNewsletter.published.find_by!(slug: params[:slug])
-    @assets     = @newsletter.newsletter_assets.ordered.includes(image_attachment: :blob)
+    @assets     = @newsletter.newsletter_assets.ordered
   end
 end
