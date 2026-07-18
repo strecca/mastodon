@@ -1,0 +1,6 @@
+.auth-locale-switcher
+  - [['en','🇬🇧'],['it','🇮🇹'],['fr','🇫🇷'],['de','🇩🇪'],['sv','🇸🇪'],['es','🇪🇸'],['no','🇳🇴'],['nl','🇳🇱']].each do |code, flag|
+    - active = I18n.locale.to_s.start_with?(code)
+    - href = request.path + '?' + request.query_parameters.except('lang').merge('lang' => code).to_query
+    = link_to href, class: "auth-locale-btn#{active ? ' active' : ''}", title: code.upcase do
+      = "#{flag} #{code.upcase}"

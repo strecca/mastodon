@@ -1638,3 +1638,38 @@ code {
     }
   }
 }
+
+.auth-locale-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  .auth-locale-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    transition: background 0.1s, border-color 0.1s;
+
+    &:hover {
+      background: var(--color-bg-secondary);
+      border-color: var(--color-border-primary);
+      color: var(--color-text-primary);
+    }
+
+    &.active {
+      color: var(--color-text-brand);
+      border-color: var(--color-text-brand);
+      background: transparent;
+    }
+  }
+}
