@@ -289,6 +289,54 @@ module ApplicationHelper
     vite_typescript_tag("#{Themes.instance.flavour(flavour || current_flavour)['pack_directory'].delete_prefix('app/javascript/')}/#{pack_name}", **)
   end
 
+  CIVEZZA_JOIN_TEXTS = {
+    'en' => {
+      question:    'Are you a resident of Civezza or a surrounding community? Or a new visitor? Or a frequent visitor?',
+      hint:        'Please tell us a little about yourself. (max 500 characters)',
+      placeholder: 'Tell us about yourself…',
+    },
+    'it' => {
+      question:    'Sei residente di Civezza o di una comunità vicina? Sei un nuovo visitatore o un visitatore frequente?',
+      hint:        "Raccontaci un po' di te. (max 500 caratteri)",
+      placeholder: 'Raccontaci di te…',
+    },
+    'fr' => {
+      question:    "Êtes-vous résident de Civezza ou d'une communauté voisine? Nouveau visiteur ou visiteur fréquent?",
+      hint:        'Parlez-nous un peu de vous. (max 500 caractères)',
+      placeholder: 'Parlez-nous de vous…',
+    },
+    'de' => {
+      question:    'Sind Sie Einwohner von Civezza oder Umgebung? Neuer Besucher oder häufiger Besucher?',
+      hint:        'Erzählen Sie uns ein wenig über sich. (max 500 Zeichen)',
+      placeholder: 'Erzählen Sie uns von sich…',
+    },
+    'sv' => {
+      question:    'Är du bosatt i Civezza eller omgivningen? Ny besökare eller frekvent besökare?',
+      hint:        'Berätta lite om dig själv. (max 500 tecken)',
+      placeholder: 'Berätta om dig själv…',
+    },
+    'es' => {
+      question:    "¿Es usted residente de Civezza o de los alrededores? ¿Visitante nuevo o frecuente?",
+      hint:        'Cuéntenos un poco sobre usted. (max 500 caracteres)',
+      placeholder: 'Cuéntenos sobre usted…',
+    },
+    'no' => {
+      question:    'Er du bosatt i Civezza eller nærliggende område? Ny besøkende eller hyppig besøkende?',
+      hint:        'Fortell oss litt om deg selv. (max 500 tegn)',
+      placeholder: 'Fortell oss om deg selv…',
+    },
+    'nl' => {
+      question:    'Bent u inwoner van Civezza of omgeving? Nieuwe bezoeker of frequente bezoeker?',
+      hint:        'Vertel ons een beetje over uzelf. (max 500 tekens)',
+      placeholder: 'Vertel ons over uzelf…',
+    },
+  }.freeze
+
+  def civezza_join_texts
+    lang = I18n.locale.to_s.split(/[-_]/).first
+    CIVEZZA_JOIN_TEXTS[lang] || CIVEZZA_JOIN_TEXTS['en']
+  end
+
   private
 
   def storage_host_var

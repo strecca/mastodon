@@ -62,18 +62,11 @@
                 wrapper: :with_block_label
 
   - if approved_registrations? && @invite.blank?
+    - jt = civezza_join_texts
     .registration-reason-prompt
       %p.lead
-        %strong Are you a resident of Civezza or a surrounding community? Or a new visitor? Or a frequent visitor?
-      %ul.registration-reason-langs
-        %li 🇮🇹 Sei residente di Civezza o di una comunità vicina? Sei un nuovo visitatore o un visitatore frequente?
-        %li 🇫🇷 Êtes-vous résident de Civezza ou d'une communauté voisine? Nouveau visiteur ou visiteur fréquent?
-        %li 🇩🇪 Sind Sie Einwohner von Civezza oder Umgebung? Neuer Besucher oder häufiger Besucher?
-        %li 🇸🇪 Är du bosatt i Civezza eller omgivningen? Ny besökare eller frekvent besökare?
-        %li 🇪🇸 ¿Es usted residente de Civezza o de los alrededores? ¿Visitante nuevo o frecuente?
-        %li 🇳🇴 Er du bosatt i Civezza eller nærliggende område? Ny besøkende eller hyppig besøkende?
-        %li 🇳🇱 Bent u inwoner van Civezza of omgeving? Nieuwe bezoeker of frequente bezoeker?
-      %p.hint Please tell us a little about yourself. / Raccontaci un po' di te. (max 500 characters)
+        %strong= jt[:question]
+      %p.hint= jt[:hint]
 
     .fields-group
       = f.simple_fields_for :invite_request, resource.invite_request || resource.build_invite_request do |invite_request_fields|
@@ -81,7 +74,7 @@
                                       as: :text,
                                       hint: false,
                                       label: false,
-                                      input_html: { maxlength: UserInviteRequest::TEXT_SIZE_LIMIT, placeholder: 'Tell us about yourself / Raccontaci di te…', rows: 4 },
+                                      input_html: { maxlength: UserInviteRequest::TEXT_SIZE_LIMIT, placeholder: jt[:placeholder], rows: 4 },
                                       required: Setting.require_invite_text,
                                       wrapper: :with_block_label
 
