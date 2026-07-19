@@ -224,22 +224,30 @@
   }
 
   &__pdf-link {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--color-text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
     text-decoration: none;
-    padding: 4px 10px;
-    border: 1px solid var(--color-border, #38384a);
-    border-radius: 4px;
-    background: var(--color-bg-elevated, #1e1e2e);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    transition: color 0.15s, border-color 0.15s;
+    padding: 8px 18px;
+    border-radius: 6px;
+    background: #6364ff;
+    letter-spacing: 0.03em;
+    transition: background 0.15s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(99, 100, 255, 0.35);
+
+    &::before {
+      content: '\21E9';
+      font-size: 15px;
+    }
 
     &:hover {
-      color: var(--color-accent, #6364ff);
-      border-color: var(--color-accent, #6364ff);
+      background: #7b7eb8;
+      color: #ffffff;
       text-decoration: none;
+      transform: translateY(-1px);
     }
   }
 

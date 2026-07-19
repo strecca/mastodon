@@ -152,7 +152,7 @@ const NewsletterShow = ({ multiColumn }) => {
                     rel='noopener noreferrer'
                     download={`${newsletter.slug}.pdf`}
                   >
-                    Scarica PDF
+                    Scarica newsletter originale (PDF)
                   </a>
                 )}
               </div>
