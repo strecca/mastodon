@@ -15,7 +15,7 @@ class NewslettersController < ApplicationController
   # Print-to-PDF: renders a standalone styled HTML page the browser can save as PDF.
   def pdf
     @newsletter = CommunityNewsletter.published.find_by!(slug: params[:slug])
-    render layout: 'newsletter_print'
+    render layout: false
   rescue ActiveRecord::RecordNotFound
     render plain: 'Newsletter not found', status: :not_found
   end

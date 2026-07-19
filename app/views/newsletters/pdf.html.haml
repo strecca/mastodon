@@ -1,87 +1,248 @@
-- content_for :page_title, @newsletter.title
-- variant = @newsletter.layout_variant.presence || 'gazette'
-- content_for :layout_variant, variant
-- has_it = @newsletter.left_column_it.present? || @newsletter.right_column_it.present?
-- has_en = @newsletter.left_column_en.present? || @newsletter.right_column_en.present?
-- has_both = has_it && has_en
+!!! 5
+%html{ lang: 'it' }
+  %head
+    %meta{ charset: 'utf-8' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    %title= @newsletter.title
+    :css
+      *, *::before, *::after { box-sizing: border-box; }
+      body {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 13px;
+        line-height: 1.65;
+        color: #111;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+      }
+      .nl-print-wrap {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 40px 32px 60px;
+      }
+      .nl-print-controls {
+        text-align: right;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #ddd;
+      }
+      .nl-print-btn {
+        display: inline-block;
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 8px 20px;
+        font-size: 13px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: inherit;
+        margin-right: 8px;
+        text-decoration: none;
+      }
+      .nl-print-btn:hover { background: #555; }
+      .nl-print-btn--back {
+        background: transparent;
+        color: #333;
+        border: 1px solid #ccc;
+      }
+      .nl-masthead-rule { height: 3px; background: #111; margin-bottom: 10px; }
+      .nl-masthead-rule--thin { height: 1px; background: #ccc; margin: 14px 0 20px; }
+      .nl-masthead-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: #555;
+        margin-bottom: 12px;
+      }
+      .nl-title {
+        font-size: 30px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        line-height: 1.1;
+        margin-bottom: 6px;
+      }
+      .nl-byline {
+        font-size: 12px;
+        color: #555;
+        margin-bottom: 0;
+      }
+      .nl-locale-toggle {
+        display: inline-flex;
+        gap: 8px;
+        margin-top: 14px;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: sans-serif;
+      }
+      .nl-locale-btn {
+        background: none;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 2px 8px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .nl-locale-btn.active {
+        background: #111;
+        color: #fff;
+        border-color: #111;
+      }
+      .nl-body { margin-top: 24px; }
+      .nl-body--two-col {
+        display: grid;
+        grid-template-columns: 35fr 65fr;
+        gap: 32px;
+        align-items: start;
+      }
+      .nl-left-col {
+        font-size: 12px;
+        color: #333;
+        border-right: 1px solid #ddd;
+        padding-right: 24px;
+      }
+      .nl-right-col { font-size: 13px; }
+      .nl-para { margin-bottom: 12px; }
+      .nl-section-heading {
+        font-size: 14px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 4px;
+        margin: 20px 0 12px;
+      }
+      .nl-footer {
+        margin-top: 40px;
+        border-top: 1px solid #ccc;
+        padding-top: 12px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #777;
+      }
+      /* gazette variant */
+      body.nl-variant-gazette {
+        background: #fdfaf4;
+        color: #1a0f00;
+      }
+      body.nl-variant-gazette .nl-masthead-rule { background: #2a1a0a; }
+      body.nl-variant-gazette .nl-masthead-rule--thin { background: #c8b89a; }
+      body.nl-variant-gazette .nl-masthead-meta,
+      body.nl-variant-gazette .nl-byline,
+      body.nl-variant-gazette .nl-footer { color: #6b5a3e; }
+      body.nl-variant-gazette .nl-left-col { color: #3d2b1a; border-right-color: #c8b89a; }
+      body.nl-variant-gazette .nl-right-col { color: #1a0f00; }
+      body.nl-variant-gazette .nl-section-heading { border-bottom-color: #c8b89a; }
+      /* magazine variant */
+      body.nl-variant-magazine .nl-masthead-rule { background: #5555ff; height: 4px; }
+      body.nl-variant-magazine .nl-body--two-col { grid-template-columns: 25fr 75fr; }
+      body.nl-variant-magazine .nl-section-heading { font-size: 16px; font-weight: 900; border-bottom-color: #5555ff; }
+      @media print {
+        .nl-print-controls { display: none !important; }
+        body { font-size: 11px; }
+        .nl-title { font-size: 24px; }
+        .nl-body--two-col { grid-template-columns: 35fr 65fr; }
+      }
+  %body{ class: "nl-variant-#{@newsletter.layout_variant.presence || 'gazette'}" }
+    %script{ type: 'text/javascript' }
+      function setLocale(loc) {
+        document.querySelectorAll('.nl-col-it, .nl-col-en').forEach(function(el) {
+          el.style.display = 'none';
+        });
+        document.querySelectorAll('.nl-col-' + loc).forEach(function(el) {
+          el.style.display = '';
+        });
+        document.querySelectorAll('.nl-locale-btn').forEach(function(el) {
+          el.classList.toggle('active', el.dataset.locale === loc);
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function() { setLocale('it'); });
+    .nl-print-wrap
+      .nl-print-controls
+        - has_it = @newsletter.left_column_it.present? || @newsletter.right_column_it.present?
+        - has_en = @newsletter.left_column_en.present? || @newsletter.right_column_en.present?
+        - has_both = has_it && has_en
+        - if has_both
+          .nl-locale-toggle
+            %button.nl-locale-btn.active{ data: { locale: 'it' }, onclick: 'setLocale("it")' } IT
+            %button.nl-locale-btn{ data: { locale: 'en' }, onclick: 'setLocale("en")' } EN
+        %a.nl-print-btn.nl-print-btn--back{ href: "/newsletters/#{@newsletter.slug}" } Indietro
+        %button.nl-print-btn{ onclick: 'window.print()' } Stampa / Salva come PDF
 
-- if has_both
-  .nl-locale-toggle
-    %button.nl-locale-btn.active{ data: { locale: 'it' }, onclick: 'setLocale("it")' } IT
-    %button.nl-locale-btn{ data: { locale: 'en' }, onclick: 'setLocale("en")' } EN
+      .nl-masthead-rule
+      .nl-masthead-meta
+        %span.nl-masthead-location= @newsletter.masthead_location
+        %span.nl-masthead-date= @newsletter.published_on&.strftime('%-d %B %Y')
+      %h1.nl-title= @newsletter.title
+      %p.nl-byline
+        Di
+        %strong= @newsletter.author_name
+      .nl-masthead-rule.nl-masthead-rule--thin
 
-.nl-masthead-rule
-.nl-masthead-meta
-  %span.nl-masthead-location= @newsletter.masthead_location
-  %span.nl-masthead-date= @newsletter.published_on&.strftime('%-d %B %Y')
-%h1.nl-title= @newsletter.title
-%p.nl-byline
-  Di
-  %strong= @newsletter.author_name
-.nl-masthead-rule.nl-masthead-rule--thin
+      - if @newsletter.two_column?
+        .nl-body.nl-body--two-col
+          %aside.nl-left-col
+            - if has_it
+              .nl-col-it
+                - @newsletter.left_column_it.to_s.split(/\n+/).each do |para|
+                  - para.strip!
+                  - next if para.blank?
+                  - if para.match?(/^\*\*.+\*\*$/)
+                    %h3.nl-section-heading= para.gsub(/\*\*/, '')
+                  - else
+                    %p.nl-para= para
+            - if has_en
+              .nl-col-en{ style: 'display:none' }
+                - @newsletter.left_column_en.to_s.split(/\n+/).each do |para|
+                  - para.strip!
+                  - next if para.blank?
+                  - if para.match?(/^\*\*.+\*\*$/)
+                    %h3.nl-section-heading= para.gsub(/\*\*/, '')
+                  - else
+                    %p.nl-para= para
+          .nl-right-col
+            - if has_it
+              .nl-col-it
+                - @newsletter.right_column_it.to_s.split(/\n+/).each do |para|
+                  - para.strip!
+                  - next if para.blank?
+                  - if para.match?(/^\*\*.+\*\*$/)
+                    %h3.nl-section-heading= para.gsub(/\*\*/, '')
+                  - else
+                    %p.nl-para= para
+            - if has_en
+              .nl-col-en{ style: 'display:none' }
+                - @newsletter.right_column_en.to_s.split(/\n+/).each do |para|
+                  - para.strip!
+                  - next if para.blank?
+                  - if para.match?(/^\*\*.+\*\*$/)
+                    %h3.nl-section-heading= para.gsub(/\*\*/, '')
+                  - else
+                    %p.nl-para= para
+      - else
+        .nl-body
+          - if has_it
+            .nl-col-it
+              - (@newsletter.right_column_it.presence || @newsletter.left_column_it.to_s).split(/\n+/).each do |para|
+                - para.strip!
+                - next if para.blank?
+                - if para.match?(/^\*\*.+\*\*$/)
+                  %h3.nl-section-heading= para.gsub(/\*\*/, '')
+                - else
+                  %p.nl-para= para
+          - if has_en
+            .nl-col-en{ style: 'display:none' }
+              - (@newsletter.right_column_en.presence || @newsletter.left_column_en.to_s).split(/\n+/).each do |para|
+                - para.strip!
+                - next if para.blank?
+                - if para.match?(/^\*\*.+\*\*$/)
+                  %h3.nl-section-heading= para.gsub(/\*\*/, '')
+                - else
+                  %p.nl-para= para
 
-- if @newsletter.two_column?
-  .nl-body.nl-body--two-col
-    %aside.nl-left-col
-      - if has_it
-        .nl-col-it
-          - @newsletter.left_column_it.to_s.split(/\n+/).each do |para|
-            - para.strip!
-            - next if para.blank?
-            - if para.match?(/^\*\*.+\*\*$/)
-              %h3.nl-section-heading= para.gsub(/\*\*/, '')
-            - else
-              %p.nl-para= para
-      - if has_en
-        .nl-col-en{ style: 'display:none' }
-          - @newsletter.left_column_en.to_s.split(/\n+/).each do |para|
-            - para.strip!
-            - next if para.blank?
-            - if para.match?(/^\*\*.+\*\*$/)
-              %h3.nl-section-heading= para.gsub(/\*\*/, '')
-            - else
-              %p.nl-para= para
-
-    .nl-right-col
-      - if has_it
-        .nl-col-it
-          - @newsletter.right_column_it.to_s.split(/\n+/).each do |para|
-            - para.strip!
-            - next if para.blank?
-            - if para.match?(/^\*\*.+\*\*$/)
-              %h3.nl-section-heading= para.gsub(/\*\*/, '')
-            - else
-              %p.nl-para= para
-      - if has_en
-        .nl-col-en{ style: 'display:none' }
-          - @newsletter.right_column_en.to_s.split(/\n+/).each do |para|
-            - para.strip!
-            - next if para.blank?
-            - if para.match?(/^\*\*.+\*\*$/)
-              %h3.nl-section-heading= para.gsub(/\*\*/, '')
-            - else
-              %p.nl-para= para
-- else
-  .nl-body
-    - if has_it
-      .nl-col-it
-        - (@newsletter.right_column_it.presence || @newsletter.left_column_it.to_s).split(/\n+/).each do |para|
-          - para.strip!
-          - next if para.blank?
-          - if para.match?(/^\*\*.+\*\*$/)
-            %h3.nl-section-heading= para.gsub(/\*\*/, '')
-          - else
-            %p.nl-para= para
-    - if has_en
-      .nl-col-en{ style: 'display:none' }
-        - (@newsletter.right_column_en.presence || @newsletter.left_column_en.to_s).split(/\n+/).each do |para|
-          - para.strip!
-          - next if para.blank?
-          - if para.match?(/^\*\*.+\*\*$/)
-            %h3.nl-section-heading= para.gsub(/\*\*/, '')
-          - else
-            %p.nl-para= para
-
-- if @newsletter.footer_attribution.present?
-  %footer.nl-footer
-    = @newsletter.footer_attribution
+      - if @newsletter.footer_attribution.present?
+        %footer.nl-footer= @newsletter.footer_attribution
