@@ -11,7 +11,7 @@
       - else
         .newsletter-index__grid
           - @newsletters.each do |nl|
-            = link_to newsletter_path(nl), class: 'newsletter-card' do
+            = link_to "/newsletters/#{nl.slug}", class: 'newsletter-card' do
               .newsletter-card__meta
                 %span.newsletter-card__location= nl.masthead_location.presence || 'Civezza'
                 %span.newsletter-card__date= nl.published_on&.strftime('%-d %B %Y')
