@@ -22,26 +22,34 @@ const formatDateEn = (isoDate) => {
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
-// Render a paragraph, converting [text](url) markdown links to real elements.
-// Links to /newsletters/ get a prominent button style.
+// Render a paragraph, converting [text](url) markdown links and bare https:// URLs.
+// Links to /newsletters/ get a prominent gold button style.
+const LINK_RE = /(\[[^\]]+\]\(https?:\/\/[^)]+\)|https?:\/\/\S+)/;
+
 const renderParagraph = (text) => {
-  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/);
+  const parts = text.split(LINK_RE);
   return parts.map((part, i) => {
-    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    if (!m) return part;
-    const [, linkText, url] = m;
-    const isNewsletter = url.includes('/newsletters/');
-    return (
-      <a
-        key={i}
-        href={url}
-        className={isNewsletter ? 'daily-digest__newsletter-btn' : 'daily-digest__inline-link'}
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        {linkText}
-      </a>
-    );
+    const mdMatch = part.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/);
+    if (mdMatch) {
+      const [, linkText, url] = mdMatch;
+      const isNewsletter = url.includes('/newsletters/');
+      return (
+        <a key={i} href={url} className={isNewsletter ? 'daily-digest__newsletter-btn' : 'daily-digest__inline-link'} target='_blank' rel='noopener noreferrer'>
+          {linkText}
+        </a>
+      );
+    }
+    const plainMatch = part.match(/^https?:\/\/\S+$/);
+    if (plainMatch) {
+      const url = part;
+      const isNewsletter = url.includes('/newsletters/');
+      return (
+        <a key={i} href={url} className={isNewsletter ? 'daily-digest__newsletter-btn' : 'daily-digest__inline-link'} target='_blank' rel='noopener noreferrer'>
+          {isNewsletter ? 'Leggi la newsletter' : url}
+        </a>
+      );
+    }
+    return part;
   });
 };
 

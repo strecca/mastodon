@@ -98,7 +98,7 @@ class DailyDigestService
 
       #{newsletter_note}
 
-      Apri il testo del digest con un paragrafo breve e caloroso che invita i lettori a leggere la newsletter, con il link incorporato. Usa una frase naturale come: "Questa settimana [autore] scrive di [tema] - [link]". Poi prosegui con gli eventi.
+      Apri il testo del digest con un paragrafo breve e caloroso che invita i lettori a leggere la newsletter. Incorpora il link usando ESATTAMENTE il formato markdown: [Leggi la newsletter](#{url}) - non incollare l'URL come testo nudo. Poi prosegui con gli eventi.
 
     NL
 
