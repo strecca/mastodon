@@ -118,6 +118,11 @@ module Admin
       render :new
     end
 
+    def regenerate_digest
+      Scheduler::DailyDigestScheduler.perform_async
+      redirect_to admin_newsletters_path, notice: 'Daily digest regeneration queued - check /daily in ~30 seconds.'
+    end
+
     def store_original_pdf(newsletter, tmp_path)
       return unless File.exist?(tmp_path)
 

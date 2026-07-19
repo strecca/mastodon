@@ -22,6 +22,29 @@ const formatDateEn = (isoDate) => {
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
+// Render a paragraph, converting [text](url) markdown links to real elements.
+// Links to /newsletters/ get a prominent button style.
+const renderParagraph = (text) => {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/);
+  return parts.map((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (!m) return part;
+    const [, linkText, url] = m;
+    const isNewsletter = url.includes('/newsletters/');
+    return (
+      <a
+        key={i}
+        href={url}
+        className={isNewsletter ? 'daily-digest__newsletter-btn' : 'daily-digest__inline-link'}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        {linkText}
+      </a>
+    );
+  });
+};
+
 const DailyDigest = ({ multiColumn }) => {
   const [digest,   setDigest]   = useState(null);
   const [loading,  setLoading]  = useState(true);
@@ -166,7 +189,7 @@ const DailyDigest = ({ multiColumn }) => {
               <div className='daily-digest__columns'>
                 {paragraphs.map((p, i) => (
                   <p key={i} className='daily-digest__paragraph'>
-                    {p}
+                    {renderParagraph(p)}
                   </p>
                 ))}
               </div>

@@ -12420,6 +12420,32 @@ noscript {
     }
   }
 
+  &__inline-link {
+    color: #c9a84c;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover { color: lighten(#c9a84c, 15%); }
+  }
+
+  &__newsletter-btn {
+    display: inline-block;
+    background: #c9a84c;
+    color: #1a1a2e;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin: 0 2px;
+    vertical-align: baseline;
+    transition: background 0.15s;
+
+    &:hover { background: lighten(#c9a84c, 10%); color: #1a1a2e; }
+  }
+
   &__footer {
     margin-top: 20px;
     padding-top: 12px;

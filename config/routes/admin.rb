@@ -16,6 +16,9 @@ namespace :admin do
       patch :publish
       patch :unpublish
     end
+    collection do
+      post :regenerate_digest
+    end
   end
 
   concern :batch do

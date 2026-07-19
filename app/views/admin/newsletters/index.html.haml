@@ -7,6 +7,7 @@
 
 .admin-newsletters-toolbar
   = link_to 'New Newsletter', new_admin_newsletter_path, class: 'button'
+  = button_to 'Regenerate Daily Digest', regenerate_digest_admin_newsletters_path, method: :post, class: 'button button-secondary', data: { confirm: 'Regenerate today\'s digest now? This calls the Claude API and takes ~30 seconds.' }
 
 - if @newsletters.empty?
   .empty-column-indicator
