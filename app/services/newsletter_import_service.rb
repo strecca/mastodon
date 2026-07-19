@@ -66,7 +66,10 @@ class NewsletterImportService
     raise Error, 'Provide source_text or pdf_path' if source_text.blank? && pdf_path.blank?
 
     if pdf_path.present?
-      fields      = extract_from_pdf(pdf_path)
+      pdf_data    = read_pdf_base64(pdf_path)
+      fields      = call_claude_pdf(pdf_data)
+      tokens      = extract_design_tokens(pdf_data)
+      fields[:design_tokens] = tokens if tokens.present?
       image_paths = extract_images_from_pdf(pdf_path)
       text_stored = 'Extracted via Claude Vision from PDF'
     else
@@ -80,16 +83,92 @@ class NewsletterImportService
 
   private
 
-  # Send the PDF directly to Claude as a base64-encoded document.
-  # This works for both text-layer PDFs and image-based (scanned/designed) PDFs.
-  def extract_from_pdf(pdf_path)
+  def read_pdf_base64(pdf_path)
     raise Error, "PDF not found: #{pdf_path}" unless File.exist?(pdf_path)
 
     size_mb = File.size(pdf_path) / 1_048_576.0
-    raise Error, "PDF is #{size_mb.round(1)}MB - maximum is #{MAX_PDF_MB}MB. Please reduce the file size." if size_mb > MAX_PDF_MB
+    raise Error, "PDF is #{size_mb.round(1)}MB - maximum is #{MAX_PDF_MB}MB." if size_mb > MAX_PDF_MB
 
-    pdf_data = Base64.strict_encode64(File.binread(pdf_path))
-    call_claude_pdf(pdf_data)
+    Base64.strict_encode64(File.binread(pdf_path))
+  end
+
+  DESIGN_TOKEN_PROMPT = <<~PROMPT.freeze
+    You are a CSS design analyst. Look at this newsletter PDF and extract its visual design as precise CSS tokens.
+
+    Examine the actual rendered colors, typography choices, and layout proportions.
+    Respond ONLY with valid JSON - no text before or after:
+
+    {
+      "bg_color": "hex color of the main content background area (e.g. #fdfaf4)",
+      "ink_color": "hex color of the primary body text",
+      "accent_color": "hex color of decorative rules, thin borders, or secondary elements",
+      "rule_color": "hex color of the bold masthead dividing rules (top and bottom of header)",
+      "sidebar_ink": "hex color of text in the narrow left column",
+      "column_ratio": "left column width as integer percentage, e.g. 35 means 35/65 split",
+      "body_font": "serif or sans",
+      "heading_transform": "uppercase or none",
+      "heading_tracking": "letter-spacing as em value e.g. 0.08em",
+      "sidebar_italic_first": true or false,
+      "lede_size_boost": "font-size boost for the first section heading e.g. 1.2 means 20% larger than body headings"
+    }
+
+    Sample the actual pixel colors from the document. If the background appears to be
+    a warm off-white, give the closest hex. For column_ratio, estimate visually.
+  PROMPT
+
+  # Second Vision pass: extract CSS design tokens from the PDF's visual appearance.
+  # Returns nil silently on failure so a bad token call never blocks the import.
+  def extract_design_tokens(pdf_base64)
+    config  = Rails.configuration.x.daily_digest.anthropic
+    api_key = config[:api_key]
+    model   = config[:model].presence || 'claude-sonnet-4-6'
+
+    return nil if api_key.blank?
+
+    response = HTTP
+      .headers(
+        'x-api-key'         => api_key,
+        'anthropic-version' => '2023-06-01',
+        'content-type'      => 'application/json'
+      )
+      .timeout(60)
+      .post(ANTHROPIC_API, json: {
+        model:      model,
+        max_tokens: 512,
+        messages:   [{
+          role:    'user',
+          content: [
+            {
+              type:   'document',
+              source: {
+                type:       'base64',
+                media_type: 'application/pdf',
+                data:       pdf_base64,
+              },
+            },
+            { type: 'text', text: DESIGN_TOKEN_PROMPT },
+          ],
+        }],
+      })
+
+    return nil unless response.status.success?
+
+    raw = JSON.parse(response.body.to_s).dig('content', 0, 'text').to_s.strip
+    clean = raw.gsub(/\A```(?:json)?\s*/, '').gsub(/\s*```\z/, '').strip
+    match = clean.match(/\{.*\}/m)
+    return nil unless match
+
+    parsed = JSON.parse(match.to_s)
+
+    # Validate hex colors - reject obviously wrong values
+    %w[bg_color ink_color accent_color rule_color sidebar_ink].each do |key|
+      parsed.delete(key) unless parsed[key].to_s.match?(/\A#[0-9a-fA-F]{3,6}\z/)
+    end
+
+    parsed.presence
+  rescue StandardError => e
+    Rails.logger.warn("NewsletterImportService: design token extraction failed - #{e.message}")
+    nil
   end
 
   # Extract embedded images from the PDF using pdfimages if available.

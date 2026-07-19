@@ -58,6 +58,26 @@ const NewsletterShow = ({ multiColumn }) => {
   const rightColumn = newsletter ? (locale === 'it' ? newsletter.right_column_it : newsletter.right_column_en) : '';
   const hasBothLocales = newsletter && newsletter.left_column_en && newsletter.left_column_it;
 
+  // Build inline CSS custom properties from design tokens extracted by Claude Vision.
+  // These override the variant-level defaults with values sampled from the actual PDF.
+  const tokenStyle = (() => {
+    const t = newsletter?.design_tokens;
+    if (!t) return {};
+    const ratio = parseInt(t.column_ratio, 10);
+    const style = {};
+    if (t.bg_color)          style['--nl-bg']          = t.bg_color;
+    if (t.ink_color)         style['--nl-ink']         = t.ink_color;
+    if (t.accent_color)      style['--nl-accent']      = t.accent_color;
+    if (t.rule_color)        style['--nl-rule']        = t.rule_color;
+    if (t.sidebar_ink)       style['--nl-sidebar-ink'] = t.sidebar_ink;
+    if (t.heading_tracking)  style['--nl-h-tracking']  = t.heading_tracking;
+    if (!isNaN(ratio) && ratio > 10 && ratio < 90) {
+      style['--nl-col-left']  = `${ratio}fr`;
+      style['--nl-col-right'] = `${100 - ratio}fr`;
+    }
+    return style;
+  })();
+
   return (
     <Column>
       <ColumnHeader
@@ -79,7 +99,10 @@ const NewsletterShow = ({ multiColumn }) => {
         )}
 
         {newsletter && (
-          <article className={`newsletter-show__article newsletter-show__article--${newsletter.newsletter_template} newsletter-show__article--${newsletter.layout_variant || 'gazette'}`}>
+          <article
+            className={`newsletter-show__article newsletter-show__article--${newsletter.newsletter_template} newsletter-show__article--${newsletter.layout_variant || 'gazette'}`}
+            style={tokenStyle}
+          >
 
             {/* Masthead */}
             <div className='newsletter-show__masthead'>
