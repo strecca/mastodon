@@ -145,12 +145,13 @@ const NewsletterShow = ({ multiColumn }) => {
                   </div>
                 )}
                 <a
-                  href={`/newsletters/${newsletter.slug}/pdf`}
+                  href={newsletter.original_pdf_url || `/newsletters/${newsletter.slug}/pdf`}
                   className='newsletter-show__pdf-link'
                   target='_blank'
                   rel='noopener noreferrer'
+                  download={newsletter.original_pdf_url ? `${newsletter.slug}.pdf` : undefined}
                 >
-                  Scarica PDF
+                  {newsletter.original_pdf_url ? 'Scarica PDF originale' : 'Scarica PDF'}
                 </a>
               </div>
             </div>

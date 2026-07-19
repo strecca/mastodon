@@ -105,6 +105,7 @@ module Admin
 
       if @newsletter.save
         attach_extracted_images(@newsletter, result[:image_paths])
+        store_original_pdf(@newsletter, tmp_path) if suffix == '.pdf'
         redirect_to edit_admin_newsletter_path(@newsletter),
                     notice: "Imported \"#{@newsletter.title}\" - #{result[:image_paths].size} image(s) extracted. Review and publish when ready."
       else
@@ -115,6 +116,18 @@ module Admin
       flash.now[:alert] = "Import failed: #{e.message}"
       @newsletter = CommunityNewsletter.new
       render :new
+    end
+
+    def store_original_pdf(newsletter, tmp_path)
+      return unless File.exist?(tmp_path)
+
+      store_dir = Rails.root.join('public', 'newsletter_assets', newsletter.id.to_s)
+      FileUtils.mkdir_p(store_dir)
+      dest = store_dir.join('original.pdf')
+      FileUtils.cp(tmp_path, dest)
+      newsletter.update_column(:original_pdf_path, "newsletter_assets/#{newsletter.id}/original.pdf")
+    rescue StandardError => e
+      Rails.logger.warn("store_original_pdf failed: #{e.message}")
     end
 
     def attach_extracted_images(newsletter, image_paths)

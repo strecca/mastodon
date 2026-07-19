@@ -31,6 +31,7 @@ class Api::V1::CommunityNewslettersController < Api::BaseController
       newsletter_template: nl.newsletter_template,
       layout_variant:      nl.layout_variant,
       design_tokens:       nl.design_tokens,
+      original_pdf_url:    nl.original_pdf_path.present? ? "/#{nl.original_pdf_path}" : nil,
       excerpt_it:          nl.right_column_it.to_s.truncate(180),
       excerpt_en:          nl.right_column_en.to_s.truncate(180),
     }
