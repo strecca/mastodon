@@ -12425,7 +12425,7 @@ noscript {
     text-decoration: underline;
     text-underline-offset: 2px;
 
-    &:hover { color: lighten(#c9a84c, 15%); }
+    &:hover { color: #dac487; }
   }
 
   &__newsletter-btn {
@@ -12443,7 +12443,7 @@ noscript {
     vertical-align: baseline;
     transition: background 0.15s;
 
-    &:hover { background: lighten(#c9a84c, 10%); color: #1a1a2e; }
+    &:hover { background: #d5bb73; color: #1a1a2e; }
   }
 
   &__footer {
