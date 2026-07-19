@@ -26,6 +26,7 @@ namespace :api, format: false do
   namespace :v1 do
     resources :community_artists,     only: [:index, :show, :create, :update, :destroy]
     resources :community_daily_digests, only: [:index, :show]
+    resources :community_newsletters,   only: [:index, :show], param: :slug
     post '/contact_message', to: 'contact_messages#create'
 
     resources :community_services,    only: [:index, :show, :create, :update, :destroy]

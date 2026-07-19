@@ -60,6 +60,8 @@
   /member_stories/(*any)
   /contact
   /daily
+  /newsletters
+  /newsletters/(*any)
 ).each { |path| get path, to: 'home#index' }
 
 get '/community', to: redirect('/landing', status: 301)

@@ -1,0 +1,85 @@
+- content_for :page_title, @newsletter.title
+- has_it = @newsletter.left_column_it.present? || @newsletter.right_column_it.present?
+- has_en = @newsletter.left_column_en.present? || @newsletter.right_column_en.present?
+- has_both = has_it && has_en
+
+- if has_both
+  .nl-locale-toggle
+    %button.nl-locale-btn.active{ data: { locale: 'it' }, onclick: 'setLocale("it")' } IT
+    %button.nl-locale-btn{ data: { locale: 'en' }, onclick: 'setLocale("en")' } EN
+
+.nl-masthead-rule
+.nl-masthead-meta
+  %span.nl-masthead-location= @newsletter.masthead_location
+  %span.nl-masthead-date= @newsletter.published_on&.strftime('%-d %B %Y')
+%h1.nl-title= @newsletter.title
+%p.nl-byline
+  Di
+  %strong= @newsletter.author_name
+.nl-masthead-rule.nl-masthead-rule--thin
+
+- if @newsletter.two_column?
+  .nl-body.nl-body--two-col
+    %aside.nl-left-col
+      - if has_it
+        .nl-col-it
+          - @newsletter.left_column_it.to_s.split(/\n+/).each do |para|
+            - para.strip!
+            - next if para.blank?
+            - if para.match?(/^\*\*.+\*\*$/)
+              %h3.nl-section-heading= para.gsub(/\*\*/, '')
+            - else
+              %p.nl-para= para
+      - if has_en
+        .nl-col-en{ style: 'display:none' }
+          - @newsletter.left_column_en.to_s.split(/\n+/).each do |para|
+            - para.strip!
+            - next if para.blank?
+            - if para.match?(/^\*\*.+\*\*$/)
+              %h3.nl-section-heading= para.gsub(/\*\*/, '')
+            - else
+              %p.nl-para= para
+
+    .nl-right-col
+      - if has_it
+        .nl-col-it
+          - @newsletter.right_column_it.to_s.split(/\n+/).each do |para|
+            - para.strip!
+            - next if para.blank?
+            - if para.match?(/^\*\*.+\*\*$/)
+              %h3.nl-section-heading= para.gsub(/\*\*/, '')
+            - else
+              %p.nl-para= para
+      - if has_en
+        .nl-col-en{ style: 'display:none' }
+          - @newsletter.right_column_en.to_s.split(/\n+/).each do |para|
+            - para.strip!
+            - next if para.blank?
+            - if para.match?(/^\*\*.+\*\*$/)
+              %h3.nl-section-heading= para.gsub(/\*\*/, '')
+            - else
+              %p.nl-para= para
+- else
+  .nl-body
+    - if has_it
+      .nl-col-it
+        - (@newsletter.right_column_it.presence || @newsletter.left_column_it.to_s).split(/\n+/).each do |para|
+          - para.strip!
+          - next if para.blank?
+          - if para.match?(/^\*\*.+\*\*$/)
+            %h3.nl-section-heading= para.gsub(/\*\*/, '')
+          - else
+            %p.nl-para= para
+    - if has_en
+      .nl-col-en{ style: 'display:none' }
+        - (@newsletter.right_column_en.presence || @newsletter.left_column_en.to_s).split(/\n+/).each do |para|
+          - para.strip!
+          - next if para.blank?
+          - if para.match?(/^\*\*.+\*\*$/)
+            %h3.nl-section-heading= para.gsub(/\*\*/, '')
+          - else
+            %p.nl-para= para
+
+- if @newsletter.footer_attribution.present?
+  %footer.nl-footer
+    = @newsletter.footer_attribution

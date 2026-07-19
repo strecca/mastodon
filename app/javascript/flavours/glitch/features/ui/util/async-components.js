@@ -462,3 +462,11 @@ export function ContactPage () {
 export function DailyDigest () {
   return import('../../daily_digest');
 }
+
+export function NewsletterIndex () {
+  return import('../../newsletters');
+}
+
+export function NewsletterShow () {
+  return import('../../newsletters/show');
+}

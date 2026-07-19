@@ -44,7 +44,10 @@ class CommunityNewsletter < ApplicationRecord
 
     candidate = base
     n = 2
-    candidate = "#{base}-#{n}" && n += 1 while CommunityNewsletter.exists?(slug: candidate)
+    while CommunityNewsletter.exists?(slug: candidate)
+      candidate = "#{base}-#{n}"
+      n += 1
+    end
     self.slug = candidate
   end
 end
