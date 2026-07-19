@@ -429,7 +429,7 @@
   }
 
   .newsletter-show__left-col {
-    font-family: Georgia, serif;
+    font-family: var(--nl-body-font, Georgia, serif);
     font-size: 13px;
     color: var(--nl-sidebar-ink, #3d2b1a);
     line-height: 1.7;
@@ -441,14 +441,14 @@
   }
 
   .newsletter-show__right-col {
-    font-family: Georgia, serif;
+    font-family: var(--nl-body-font, Georgia, serif);
     font-size: 14px;
     color: var(--nl-ink, #1a0f00);
     line-height: 1.75;
   }
 
   .newsletter-show__section-heading {
-    font-family: Georgia, serif;
+    font-family: var(--nl-body-font, Georgia, serif);
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
@@ -458,8 +458,9 @@
     border-bottom-width: 1px;
     margin: 22px 0 12px;
 
+    // Lede heading scaled by extracted boost factor (Barbara's PDF: 1.4x)
     &:first-child {
-      font-size: 16px;
+      font-size: calc(14px * var(--nl-lede-boost, 1.15));
       border-bottom-width: 2px;
       border-bottom-color: var(--nl-rule, #2a1a0a);
     }
@@ -471,7 +472,7 @@
 
   .newsletter-show__footer-text {
     color: var(--nl-sidebar-ink, #6b5a3e);
-    font-family: Georgia, serif;
+    font-family: var(--nl-body-font, Georgia, serif);
     font-style: italic;
   }
 }

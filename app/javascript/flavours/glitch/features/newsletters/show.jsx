@@ -71,6 +71,8 @@ const NewsletterShow = ({ multiColumn }) => {
     if (t.rule_color)        style['--nl-rule']        = t.rule_color;
     if (t.sidebar_ink)       style['--nl-sidebar-ink'] = t.sidebar_ink;
     if (t.heading_tracking)  style['--nl-h-tracking']  = t.heading_tracking;
+    if (t.body_font)         style['--nl-body-font']   = t.body_font === 'sans' ? 'system-ui, sans-serif' : "Georgia, 'Palatino Linotype', serif";
+    if (t.lede_size_boost)   style['--nl-lede-boost']  = String(t.lede_size_boost);
     if (!isNaN(ratio) && ratio > 10 && ratio < 90) {
       style['--nl-col-left']  = `${ratio}fr`;
       style['--nl-col-right'] = `${100 - ratio}fr`;
