@@ -16,6 +16,9 @@
     .input.with_label
       = f.label :newsletter_template, 'Layout template'
       = f.select :newsletter_template, [['Two column', 'two_column'], ['Single column', 'single_column']], {}, class: 'string'
+    .input.with_label
+      = f.label :layout_variant, 'Visual style'
+      = f.select :layout_variant, [['Gazette (warm serif — community newsletter)', 'gazette'], ['Magazine (bold, image-forward)', 'magazine'], ['Letter (simple, single-voice)', 'letter']], {}, class: 'string'
   .fields-group.fields-group--half
     .input.with_label
       = f.label :masthead_location, 'Masthead location'

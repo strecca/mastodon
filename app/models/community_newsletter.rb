@@ -5,6 +5,9 @@ class CommunityNewsletter < ApplicationRecord
 
   enum :status, { draft: 0, published: 1 }
 
+  LAYOUT_VARIANTS = %w[gazette magazine letter].freeze
+  validates :layout_variant, inclusion: { in: LAYOUT_VARIANTS }
+
   validates :title,       presence: true
   validates :author_name, presence: true
   validates :slug,        presence: true, uniqueness: true,

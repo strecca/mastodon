@@ -101,7 +101,7 @@
 }
 
 // ----------------------------------------------------------------
-// Public: show (newsletter article — two-column PDF-mirroring layout)
+// Public: show (newsletter article - two-column PDF-mirroring layout)
 // ----------------------------------------------------------------
 
 .newsletter-show {
@@ -246,7 +246,7 @@
   // Body layouts
   &__body--two-col {
     display: grid;
-    // Left sidebar ~35%, main article ~65% — mirrors the PDF column split
+    // Left sidebar ~35%, main article ~65% - mirrors the PDF column split
     grid-template-columns: 35fr 65fr;
     gap: 32px;
     align-items: start;
@@ -342,7 +342,224 @@
 }
 
 // ----------------------------------------------------------------
-// Admin views (unchanged — server-rendered Haml)
+// Layout variants - applied as modifier class on newsletter-show__article
+// ----------------------------------------------------------------
+
+// ------ GAZETTE -------------------------------------------------------
+// Warm community gazette: think Italian village paper, 1990s Ligurian style.
+// Serif body, condensed bold title, warm off-white card, intimate left sidebar.
+// Matches Barbara Hunter-Lemke's "Il Suono dell'Estate di Civezza" PDF visual.
+// ----------------------------------------------------------------------
+.newsletter-show__article--gazette {
+  background: #fdfaf4;          // warm off-white paper
+  border: 1px solid #e8e0cf;
+  border-radius: 4px;
+  padding: 32px 28px 52px;
+
+  // Override the shared masthead to serif/warm palette
+  .newsletter-show__masthead-rule {
+    height: 2px;
+    background: #2a1a0a;        // dark espresso rule
+  }
+
+  .newsletter-show__masthead-rule--thin {
+    height: 1px;
+    background: #c8b89a;
+    margin-top: 18px;
+    margin-bottom: 22px;
+  }
+
+  .newsletter-show__masthead-meta {
+    color: #6b5a3e;
+    font-family: Georgia, serif;
+    letter-spacing: 0.1em;
+  }
+
+  // Title: heavy condensed all-caps - the dominant visual element in Barbara's PDF
+  .newsletter-show__title {
+    font-family: Georgia, 'Palatino Linotype', serif;
+    font-size: 34px;
+    font-weight: 900;
+    color: #1a0f00;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    margin-bottom: 10px;
+
+    @media (max-width: 600px) { font-size: 22px; }
+  }
+
+  .newsletter-show__byline {
+    font-family: Georgia, serif;
+    font-style: italic;
+    color: #6b5a3e;
+    font-size: 12.5px;
+  }
+
+  // Controls bar - subdued, matching the paper tone
+  .newsletter-show__locale-toggle {
+    background: #f0e8d5;
+    border-color: #c8b89a;
+  }
+
+  .newsletter-show__locale-btn {
+    color: #6b5a3e;
+
+    &.active {
+      color: #2a1a0a;
+      background: rgba(42, 26, 10, 0.1);
+    }
+  }
+
+  .newsletter-show__pdf-link {
+    color: #6b5a3e;
+    border-color: #c8b89a;
+    background: #f0e8d5;
+
+    &:hover {
+      color: #2a1a0a;
+      border-color: #2a1a0a;
+    }
+  }
+
+  // Left column: intimate letter - slightly smaller, warm muted ink
+  .newsletter-show__left-col {
+    font-family: Georgia, serif;
+    font-size: 13px;
+    color: #3d2b1a;
+    line-height: 1.7;
+    border-right-color: #c8b89a;
+
+    // Italic first paragraph - signals personal letter voice
+    > .newsletter-show__para:first-child {
+      font-style: italic;
+    }
+  }
+
+  // Right column: editorial body - readable serif, standard ink
+  .newsletter-show__right-col {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    color: #1a0f00;
+    line-height: 1.75;
+  }
+
+  // Section headings inside columns
+  .newsletter-show__section-heading {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #2a1a0a;
+    border-bottom-color: #c8b89a;
+    border-bottom-width: 1px;
+    margin: 22px 0 12px;
+
+    // First heading in right col (e.g. "124 cartoline...") is the lede - larger
+    &:first-child {
+      font-size: 16px;
+      border-bottom-width: 2px;
+      border-bottom-color: #2a1a0a;
+    }
+  }
+
+  .newsletter-show__footer-rule {
+    background: #c8b89a;
+  }
+
+  .newsletter-show__footer-text {
+    color: #6b5a3e;
+    font-family: Georgia, serif;
+    font-style: italic;
+  }
+}
+
+// ------ MAGAZINE -------------------------------------------------------
+// Bold, image-forward. Larger title, stronger contrast, wider right column.
+// For newsletters with strong photography and editorial punch.
+// ----------------------------------------------------------------------
+.newsletter-show__article--magazine {
+  background: var(--color-bg-base, #16161e);
+
+  .newsletter-show__title {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 1.0;
+
+    @media (max-width: 600px) { font-size: 28px; }
+  }
+
+  .newsletter-show__masthead-rule {
+    height: 4px;
+    background: var(--color-accent, #6364ff);
+  }
+
+  .newsletter-show__masthead-rule--thin {
+    height: 1px;
+    background: var(--color-accent, #6364ff);
+    opacity: 0.35;
+  }
+
+  // 25/75 split - much more weight on the main article
+  .newsletter-show__body--two-col {
+    grid-template-columns: 25fr 75fr;
+  }
+
+  .newsletter-show__section-heading {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0;
+    border-bottom-color: var(--color-accent, #6364ff);
+    border-bottom-width: 2px;
+  }
+}
+
+// ------ LETTER --------------------------------------------------------
+// Simple, single-voice, intimate. Centered narrow column, readable body.
+// For personal community updates, open letters, announcements.
+// ----------------------------------------------------------------------
+.newsletter-show__article--letter {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+
+  .newsletter-show__title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: none;           // no all-caps for a personal letter
+  }
+
+  .newsletter-show__masthead-rule {
+    height: 1px;
+    background: var(--color-border);
+  }
+
+  .newsletter-show__body--two-col {
+    // Collapse to single column regardless of template
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-show__left-col {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .newsletter-show__section-heading {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: none;
+    border-bottom: none;
+    color: var(--color-text-secondary);
+    margin: 18px 0 8px;
+  }
+}
+
+// ----------------------------------------------------------------
+// Admin views (unchanged - server-rendered Haml)
 // ----------------------------------------------------------------
 
 .admin-newsletters-toolbar {

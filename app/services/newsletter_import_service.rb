@@ -43,6 +43,7 @@ class NewsletterImportService
       "masthead_location": "location string from the header",
       "footer_attribution": "footer text e.g. newsletter | Author | Place",
 
+      "layout_variant": "gazette OR magazine OR letter - gazette: warm serif community newsletter with personal letter sidebar; magazine: bold image-forward layout; letter: simple single-voice prose",
       "left_column_it": "Italian text of the narrow left column / sidebar letter",
       "left_column_en": "English text of the narrow left column / sidebar letter",
       "right_column_it": "Italian text of the main article(s), preserving section headings with ** markers",
@@ -232,6 +233,7 @@ class NewsletterImportService
     result = JSON.parse(match.to_s)
 
     {
+      layout_variant:      result['layout_variant'].presence&.then { |v| CommunityNewsletter::LAYOUT_VARIANTS.include?(v) ? v : 'gazette' } || 'gazette',
       title:               result['title'].to_s.strip,
       author_name:         result['author_name'].to_s.strip,
       published_on:        parse_date(result['published_on']),

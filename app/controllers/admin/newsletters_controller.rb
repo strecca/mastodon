@@ -78,7 +78,7 @@ module Admin
     def newsletter_params
       params.require(:community_newsletter).permit(
         :title, :author_name, :published_on, :slug,
-        :newsletter_template, :masthead_location, :footer_attribution,
+        :newsletter_template, :layout_variant, :masthead_location, :footer_attribution,
         :left_column_it, :left_column_en,
         :right_column_it, :right_column_en,
         :source_text, :status

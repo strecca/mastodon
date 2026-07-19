@@ -127,6 +127,25 @@
         letter-spacing: 0.06em;
         color: #777;
       }
+      /* gazette variant warm overrides */
+      .nl-variant-gazette body, body.nl-variant-gazette {
+        background: #fdfaf4;
+        color: #1a0f00;
+      }
+      .nl-variant-gazette .nl-print-wrap { background: #fdfaf4; }
+      .nl-variant-gazette .nl-masthead-rule { background: #2a1a0a; }
+      .nl-variant-gazette .nl-masthead-rule.nl-masthead-rule--thin { background: #c8b89a; }
+      .nl-variant-gazette .nl-masthead-meta,
+      .nl-variant-gazette .nl-byline,
+      .nl-variant-gazette .nl-footer { color: #6b5a3e; }
+      .nl-variant-gazette .nl-left-col { color: #3d2b1a; border-right-color: #c8b89a; }
+      .nl-variant-gazette .nl-right-col { color: #1a0f00; }
+      .nl-variant-gazette .nl-section-heading { border-bottom-color: #c8b89a; }
+      .nl-variant-gazette .nl-section-heading:first-child { border-bottom-color: #2a1a0a; border-bottom-width: 2px; }
+      /* magazine variant */
+      .nl-variant-magazine .nl-masthead-rule { background: #5555ff; height: 4px; }
+      .nl-variant-magazine .nl-body--two-col { grid-template-columns: 25fr 75fr; }
+      .nl-variant-magazine .nl-section-heading { font-size: 16px; font-weight: 900; border-bottom-color: #5555ff; }
       @media print {
         .nl-print-controls { display: none !important; }
         body { font-size: 11px; }
@@ -134,7 +153,7 @@
         .nl-body--two-col { grid-template-columns: 35fr 65fr; }
         .nl-wrap { padding: 0; }
       }
-  %body
+  %body{ class: "nl-variant-#{content_for(:layout_variant) || 'gazette'}" }
     .nl-print-wrap
       .nl-print-controls
         = javascript_tag do

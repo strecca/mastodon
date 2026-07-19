@@ -1,4 +1,6 @@
 - content_for :page_title, @newsletter.title
+- variant = @newsletter.layout_variant.presence || 'gazette'
+- content_for :layout_variant, variant
 - has_it = @newsletter.left_column_it.present? || @newsletter.right_column_it.present?
 - has_en = @newsletter.left_column_en.present? || @newsletter.right_column_en.present?
 - has_both = has_it && has_en

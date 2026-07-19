@@ -29,6 +29,7 @@ class Api::V1::CommunityNewslettersController < Api::BaseController
       masthead_location:   nl.masthead_location,
       footer_attribution:  nl.footer_attribution,
       newsletter_template: nl.newsletter_template,
+      layout_variant:      nl.layout_variant,
       excerpt_it:          nl.right_column_it.to_s.truncate(180),
       excerpt_en:          nl.right_column_en.to_s.truncate(180),
     }

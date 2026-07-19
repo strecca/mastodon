@@ -79,7 +79,7 @@ const NewsletterShow = ({ multiColumn }) => {
         )}
 
         {newsletter && (
-          <article className={`newsletter-show__article newsletter-show__article--${newsletter.newsletter_template}`}>
+          <article className={`newsletter-show__article newsletter-show__article--${newsletter.newsletter_template} newsletter-show__article--${newsletter.layout_variant || 'gazette'}`}>
 
             {/* Masthead */}
             <div className='newsletter-show__masthead'>
