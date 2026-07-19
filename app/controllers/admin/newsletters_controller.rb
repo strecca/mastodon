@@ -64,6 +64,11 @@ module Admin
       redirect_to admin_newsletters_path, notice: "\"#{@newsletter.title}\" moved back to draft."
     end
 
+    def regenerate_digest
+      Scheduler::DailyDigestScheduler.perform_async
+      redirect_to admin_newsletters_path, notice: 'Daily digest regeneration queued - check /daily in ~30 seconds.'
+    end
+
     private
 
     def set_newsletter
@@ -116,11 +121,6 @@ module Admin
       flash.now[:alert] = "Import failed: #{e.message}"
       @newsletter = CommunityNewsletter.new
       render :new
-    end
-
-    def regenerate_digest
-      Scheduler::DailyDigestScheduler.perform_async
-      redirect_to admin_newsletters_path, notice: 'Daily digest regeneration queued - check /daily in ~30 seconds.'
     end
 
     def store_original_pdf(newsletter, tmp_path)
