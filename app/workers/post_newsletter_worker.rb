@@ -13,7 +13,20 @@ class PostNewsletterWorker
     admin_account = Account.find_local(Setting.site_contact_username.strip.gsub(/\A@/, ''))
     return unless admin_account
 
-    url  = "https://#{Rails.configuration.x.web_domain}/newsletters/#{newsletter.slug}"
+    url = "https://#{Rails.configuration.x.web_domain}/newsletters/#{newsletter.slug}"
+
+    # newsletter.mastodon_status_id only guards THIS database row. If the
+    # newsletter was deleted and re-imported (e.g. to backfill a new
+    # column), the fresh row has a blank mastodon_status_id even though a
+    # status for this exact slug was already posted and never cleaned up.
+    # Guard by slug too, since the URL embedded in the post text is unique
+    # per newsletter regardless of which row posted it.
+    existing = admin_account.statuses.where('text LIKE ?', "%#{url}%").first
+    if existing
+      newsletter.update_column(:mastodon_status_id, existing.id.to_s)
+      return
+    end
+
     text = "#{newsletter.title}\n\nDi #{newsletter.author_name} | #{newsletter.masthead_location.presence || 'Civezza'}\n\n#{url}"
 
     status = PostStatusService.new.call(
