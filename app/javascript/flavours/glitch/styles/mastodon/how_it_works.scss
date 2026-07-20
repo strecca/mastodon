@@ -1,34 +1,29 @@
 // ─────────────────────────────────────────────────────────────────────────────
 //  How It Works / Guide page  (.hiw-page)
 // ─────────────────────────────────────────────────────────────────────────────
-//  Two deliberately different color strategies below, not a stray mix:
-//  1. Elements with NO background of their own (hero/title/intro,
-//     admin-link) sit directly on the page's ambient background, which
-//     correctly follows the site's light/dark theme. These use the real
-//     var(--color-text-*) / var(--color-border-primary) tokens so the
-//     text always matches whatever that ambient background actually is.
-//     (Earlier version hardcoded these to dark hex assuming a light
-//     background — broke in dark mode/Firefox dark preference, since the
-//     ambient bg went dark but the text stayed hardcoded dark too.)
-//  2. Elements that ARE their own card (__tip, __intro-card, __section)
-//     get a fully opaque, explicit hex background *and* explicit hex
-//     text, deliberately not var(--color-*) tokens — so that specific
-//     card reads the same regardless of site theme. This is safe only
-//     because the background is hardcoded right alongside the text; do
-//     not pair a hardcoded background with a theme-variable text token
-//     (or vice versa) — that mismatch is the newsletter-card /
-//     locale-toggle bug from earlier today.
+//  The whole page is a fixed, self-contained light document -- explicit
+//  background on .hiw-page itself, explicit hex text throughout, no
+//  var(--color-*) tokens anywhere in this file. Two earlier attempts at
+//  theme-adaptive text (hardcoded dark text with no page background, then
+//  real --color-text-* tokens still with no page background) both broke
+//  because .hiw-page never had a background of its own -- text was always
+//  at the mercy of whatever ambient surface happened to sit behind it.
+//  Committing the whole page to always-light removes that ambiguity
+//  entirely, matching the card sections below which have worked
+//  correctly every time because background and text are hardcoded
+//  together as a unit.
 
 .hiw-page {
   max-width: 680px;
   margin: 0 auto;
   padding: 0 16px 48px;
   overflow-y: auto;
+  background: #fff;
 
   &__hero {
     text-align: center;
     padding: 48px 16px 32px;
-    border-bottom: 1px solid var(--color-border-primary);
+    border-bottom: 1px solid #e0e0e0;
     margin-bottom: 24px;
   }
 
@@ -36,7 +31,7 @@
     font-size: 26px;
     font-weight: 800;
     line-height: 1.2;
-    color: var(--color-text-primary);
+    color: #1a1a1a;
     margin: 0 0 12px;
 
     @media (width <=480px) { font-size: 21px; }
@@ -44,7 +39,7 @@
 
   &__intro {
     font-size: 15px;
-    color: var(--color-text-secondary);
+    color: #444;
     line-height: 1.6;
     max-width: 520px;
     margin: 0 auto;
@@ -56,7 +51,7 @@
 
   &__admin-link {
     font-size: 12px;
-    color: var(--color-text-tertiary);
+    color: #888;
     text-decoration: none;
 
     &:hover { text-decoration: underline; }
