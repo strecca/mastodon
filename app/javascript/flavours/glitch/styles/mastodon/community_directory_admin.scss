@@ -194,7 +194,7 @@
   margin-bottom: 12px;
   border: 1px solid var(--color-border-primary);
   border-radius: 8px;
-  background: var(--color-bg-elevated);
+  background: var(--color-bg-secondary);
   overflow: hidden;
 
   &__header {
@@ -358,7 +358,7 @@
 .cd-preview {
   border: 1px solid var(--color-border-primary);
   border-radius: 8px;
-  background: var(--color-bg-elevated);
+  background: var(--color-bg-secondary);
   padding: 16px;
 
   &--empty {
@@ -487,7 +487,7 @@
     padding: 3px 8px;
     border: 1px solid var(--color-border-primary);
     border-radius: 4px;
-    background: var(--color-bg-elevated);
+    background: var(--color-bg-secondary);
   }
 
   &__checkbox-box,
@@ -524,7 +524,7 @@
   }
 
   &__card {
-    background: var(--color-bg-elevated);
+    background: var(--color-bg-secondary);
     border: 1px solid var(--color-border-primary);
     border-radius: 8px;
     padding: 16px;
@@ -636,7 +636,7 @@
   }
 
   &__item {
-    background: var(--color-bg-elevated);
+    background: var(--color-bg-secondary);
     border: 1px solid var(--color-border-primary);
     border-radius: 8px;
     padding: 16px;
@@ -754,7 +754,7 @@
   }
 
   &__error {
-    color: var(--color-danger);
+    color: var(--color-text-error);
     font-size: 13px;
     margin-bottom: 10px;
   }
@@ -805,7 +805,7 @@
     align-items: center;
     gap: 12px;
     padding: 10px 14px;
-    background: var(--color-bg-elevated);
+    background: var(--color-bg-secondary);
     border: 1px solid var(--color-border-primary);
     border-radius: 8px;
   }

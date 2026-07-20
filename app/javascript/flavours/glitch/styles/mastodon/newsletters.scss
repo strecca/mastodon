@@ -193,12 +193,18 @@
     flex-wrap: wrap;
   }
 
+  // Hardcoded dark chip (not var(--color-*) tokens): background always
+  // falls back to a dark navy regardless of site theme, so its text must
+  // be a fixed light color too -- same fix as the newsletter-card bug.
+  // Layout variants below (gazette/magazine) override these with
+  // --nl-* design tokens; this is the fallback for the "letter" variant
+  // and any newsletter with no matching variant class.
   &__locale-toggle {
     display: flex;
     align-items: center;
     gap: 6px;
-    background: var(--color-bg-elevated, #1e1e2e);
-    border: 1px solid var(--color-border, #38384a);
+    background: #1e1e2e;
+    border: 1px solid #38384a;
     border-radius: 4px;
     padding: 4px 10px;
     font-size: 12px;
@@ -208,7 +214,7 @@
   &__locale-btn {
     background: none;
     border: none;
-    color: var(--color-text-secondary);
+    color: #b8b8c8;
     cursor: pointer;
     padding: 2px 4px;
     font-size: 12px;
@@ -218,7 +224,7 @@
     transition: color 0.1s, background 0.1s;
 
     &:hover {
-      color: var(--color-text-primary);
+      color: #fff;
     }
 
     &.active {
@@ -228,7 +234,7 @@
   }
 
   &__locale-sep {
-    color: var(--color-border);
+    color: #555;
   }
 
   &__pdf-link {
@@ -498,13 +504,19 @@
 // For newsletters with strong photography and editorial punch.
 // ----------------------------------------------------------------------
 .newsletter-show__article--magazine {
+  // Dark card by design (bold, image-forward). Text below is hardcoded
+  // light instead of the ambient --color-text-* tokens, which are tuned
+  // for whatever the SITE theme is, not for this always-dark card -- same
+  // mismatch class as the newsletter-card contrast bug.
   background: var(--color-bg-base, #16161e);
+  color: var(--nl-ink, #f0f0f0);
 
   .newsletter-show__title {
     font-size: 42px;
     font-weight: 900;
     letter-spacing: -0.01em;
     line-height: 1.0;
+    color: var(--nl-ink, #fff);
 
     @media (max-width: 600px) { font-size: 28px; }
   }
@@ -520,15 +532,36 @@
     opacity: 0.35;
   }
 
+  .newsletter-show__masthead-meta,
+  .newsletter-show__byline,
+  .newsletter-show__footer-text {
+    color: var(--nl-sidebar-ink, #b8b8c8);
+  }
+
   // 25/75 split - much more weight on the main article
   .newsletter-show__body--two-col {
     grid-template-columns: 25fr 75fr;
+  }
+
+  .newsletter-show__left-col {
+    color: var(--nl-sidebar-ink, #b8b8c8);
+    border-right-color: var(--color-accent, #6364ff);
+
+    @media (max-width: 600px) {
+      border-bottom-color: var(--color-accent, #6364ff);
+      color: var(--nl-ink, #f0f0f0);
+    }
+  }
+
+  .newsletter-show__right-col {
+    color: var(--nl-ink, #f0f0f0);
   }
 
   .newsletter-show__section-heading {
     font-size: 18px;
     font-weight: 900;
     letter-spacing: 0;
+    color: var(--nl-ink, #fff);
     border-bottom-color: var(--color-accent, #6364ff);
     border-bottom-width: 2px;
   }
@@ -552,7 +585,7 @@
 
   .newsletter-show__masthead-rule {
     height: 1px;
-    background: var(--color-border);
+    background: var(--color-border-primary);
   }
 
   .newsletter-show__body--two-col {
@@ -562,7 +595,7 @@
 
   .newsletter-show__left-col {
     border-right: none;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border-primary);
     padding-bottom: 20px;
     margin-bottom: 20px;
   }
@@ -605,7 +638,7 @@
 
   &__divider {
     border: none;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border-primary);
     margin: 32px 0;
   }
 }
@@ -649,9 +682,9 @@
 .admin-newsletter-assets {
   margin-bottom: 32px;
   padding: 16px;
-  background: var(--color-bg-elevated);
+  background: var(--color-bg-secondary);
   border-radius: 8px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-primary);
 
   &__grid {
     display: flex;
@@ -672,7 +705,7 @@
     height: 100px;
     object-fit: cover;
     border-radius: 4px;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-primary);
   }
 
   &__meta {
