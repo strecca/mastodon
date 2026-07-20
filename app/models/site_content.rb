@@ -138,6 +138,9 @@ class SiteContent < ApplicationRecord
     'guide_page_title'        => 'How MiaCivezza.com Works',
     'guide_page_intro'        => "MiaCivezza.com is more than a social network — it's a digital piazza for the Civezza and Imperia coast community. Here's a quick tour of everything you can do.",
 
+    'guide_tip_title'         => '💡 Tip: Start on a computer, if you can',
+    'guide_tip_body'          => "The richest way to get familiar with MiaCivezza.com — browsing every category, writing your first posts, and uploading photos — is easiest on a desktop or laptop. Once you've added your entries and found your way around, your phone's browser is perfect for everyday use: checking events, browsing listings, and staying in touch while you're out and about.",
+
     'guide_intro_title'       => 'What is MiaCivezza.com?',
     'guide_intro_body'        => "MiaCivezza.com is a private community bulletin board for residents, visitors, and friends of Civezza and the Imperia coast. It's built on the same technology as social networks like Mastodon, but closed to our community — you won't find strangers from around the world here, just neighbours and friends. Use it to find local services, discover events, coordinate visits, read community news, and stay connected between trips.",
 

@@ -108,6 +108,8 @@ module Admin
       'How It Works / Guide Page' => %w[
         guide_page_title
         guide_page_intro
+        guide_tip_title
+        guide_tip_body
         guide_intro_title
         guide_intro_body
         guide_join_title

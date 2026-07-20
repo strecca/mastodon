@@ -67,6 +67,11 @@ const HowItWorks = ({ identity }) => {
         )}
       </header>
 
+      <div className='hiw-page__tip'>
+        <h2 className='hiw-page__tip-title'>{sc('guide_tip_title', '💡 Tip: Start on a computer, if you can')}</h2>
+        <p className='hiw-page__tip-body'>{sc('guide_tip_body', "The richest way to get familiar with MiaCivezza.com — browsing every category, writing your first posts, and uploading photos — is easiest on a desktop or laptop. Once you've added your entries and found your way around, your phone's browser is perfect for everyday use: checking events, browsing listings, and staying in touch while you're out and about.")}</p>
+      </div>
+
       <div className='hiw-page__intro-card'>
         <h2 className='hiw-page__intro-title'>{sc('guide_intro_title', 'What is MiaCivezza.com?')}</h2>
         <p className='hiw-page__intro-body'>{sc('guide_intro_body', "MiaCivezza.com is a private community bulletin board for residents, visitors, and friends of Civezza and the Imperia coast.")}</p>

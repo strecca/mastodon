@@ -45,6 +45,28 @@
     &:hover { text-decoration: underline; }
   }
 
+  &__tip {
+    padding: 18px 22px;
+    background: rgb(245 166 35 / 12%);
+    border: 1px solid rgb(245 166 35 / 40%);
+    border-radius: 10px;
+    margin-bottom: 24px;
+  }
+
+  &__tip-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 8px;
+  }
+
+  &__tip-body {
+    font-size: 14px;
+    color: var(--color-text-secondary, var(--color-text-muted));
+    line-height: 1.6;
+    margin: 0;
+  }
+
   &__intro-card {
     padding: 20px 24px;
     background: var(--color-bg-elevated, #f9f9f9);
