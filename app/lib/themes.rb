@@ -11,6 +11,15 @@ class Themes
     light: '#ffffff',
   }.freeze
 
+  # miacivezza.com is glitch-flavour only -- hide vanilla Mastodon's
+  # flavour from the Settings > Appearance picker (and everything else
+  # that reads Themes.instance.flavours). Site default is already
+  # 'glitch' (config/settings.yml), and current_flavour's fallback
+  # chain in theme_helper.rb skips any flavour not in this list, so a
+  # user whose saved setting was somehow 'vanilla' just falls through
+  # to glitch instead of erroring.
+  EXCLUDED_FLAVOURS = %w(vanilla).freeze
+
   def initialize
     @flavours = {}
 
@@ -20,6 +29,8 @@ class Themes
 
       dir = pathname.dirname
       name = dir.basename.to_s
+      next if EXCLUDED_FLAVOURS.include?(name)
+
       locales = []
       screenshots = []
 
