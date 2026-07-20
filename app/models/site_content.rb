@@ -139,10 +139,18 @@ class SiteContent < ApplicationRecord
     'guide_page_intro'        => "MiaCivezza.com is more than a social network — it's a digital piazza for the Civezza and Imperia coast community. Here's a quick tour of everything you can do.",
 
     'guide_tip_title'         => '💡 Tip: Start on a computer, if you can',
-    'guide_tip_body'          => "The richest way to get familiar with MiaCivezza.com — browsing every category, writing your first posts, and uploading photos — is easiest on a desktop or laptop. Once you've added your entries and found your way around, your phone's browser is perfect for everyday use: checking events, browsing listings, and staying in touch while you're out and about.",
+    'guide_tip_body'          => [
+      'The richest way to get familiar with MiaCivezza.com — browsing every category, writing your first posts, and uploading photos — is easiest on a desktop computer or laptop.',
+      'You will see all three columns of miacivezza.com at once and can easily get acquainted with all its features.',
+      "Once you've added your entries and found your way around, your phone's browser is perfect for everyday use: checking events, browsing listings, and staying in touch while you're out and about.",
+    ].join("\n"),
 
     'guide_intro_title'       => 'What is MiaCivezza.com?',
-    'guide_intro_body'        => "MiaCivezza.com is a private community bulletin board for residents, visitors, and friends of Civezza and the Imperia coast. It's built on the same technology as social networks like Mastodon, but closed to our community — you won't find strangers from around the world here, just neighbours and friends. Use it to find local services, discover events, coordinate visits, read community news, and stay connected between trips.",
+    'guide_intro_body'        => [
+      "MiaCivezza.com is a private community bulletin board for residents, visitors, and friends of Civezza and the Imperia coast. It's built on the same technology as social networks like X or Whatsapp, but closed, exclusive to our community — you won't find strangers from around the world here, just neighbours and friends.",
+      'Use it to find local services, discover events, coordinate visits, read community news, and stay connected between trips.',
+      'We are building this website by inviting YOU to start filling it up with your own content. As more people join and begin to post in our different categories you will see MiaCivezza.com become more beautiful, useful and we hope indispensable to your daily Civezza centered experiences!',
+    ].join("\n"),
 
     'guide_join_title'        => 'Joining & Signing In',
     'guide_join_body'         => "Registration is free — just click \"Join\" or \"Create Account\" from the home page and fill in a username, email, and password. Because this is a closed community, new accounts may need a moment of admin approval before you're fully signed in. Once approved, use \"Log In\" anytime with your email and password. If you forget your password, use the \"Forgot password?\" link on the sign-in page.",
