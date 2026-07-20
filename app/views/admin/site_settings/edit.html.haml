@@ -31,7 +31,7 @@
                   %label.site-settings-card__locale= locale.upcase
                   = text_area_tag "site_content[#{key}][#{locale}]",
                                   @content.dig(locale, key),
-                                  rows: 3,
+                                  rows: key.end_with?('_body') ? 6 : 3,
                                   class: 'site-settings-card__input',
                                   placeholder: locale == 'en' ? '(required)' : '(falls back to EN)'
 

@@ -134,6 +134,7 @@ import {
   DailyDigest,
   NewsletterIndex,
   NewsletterShow,
+  HowItWorks,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
@@ -328,6 +329,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/daily'                        exact component={DailyDigest}       content={children} />
             <WrappedRoute path='/newsletters/:slug'            exact component={NewsletterShow}    content={children} />
             <WrappedRoute path='/newsletters'                  exact component={NewsletterIndex}   content={children} />
+            <WrappedRoute path='/guide'                        exact component={HowItWorks}        content={children} />
             {/* [CD:ROUTES] */}
 
             <WrappedRoute path='/explore' component={Explore} content={children} />

@@ -62,6 +62,7 @@
   /daily
   /newsletters
   /newsletters/(*any)
+  /guide
 ).each { |path| get path, to: 'home#index' }
 
 get '/community', to: redirect('/landing', status: 301)

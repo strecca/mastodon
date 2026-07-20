@@ -133,6 +133,43 @@ class SiteContent < ApplicationRecord
     'join_modal_preamble'     => 'Create a free account to post, connect with neighbours, and participate in community events.',
     'join_modal_signup_btn'   => 'Sign up here right now!',
     'join_modal_explore_btn'  => 'Explore the Community',
+
+    # ── How It Works / Guide page ──
+    'guide_page_title'        => 'How MiaCivezza.com Works',
+    'guide_page_intro'        => "MiaCivezza.com is more than a social network — it's a digital piazza for the Civezza and Imperia coast community. Here's a quick tour of everything you can do.",
+
+    'guide_intro_title'       => 'What is MiaCivezza.com?',
+    'guide_intro_body'        => "MiaCivezza.com is a private community bulletin board for residents, visitors, and friends of Civezza and the Imperia coast. It's built on the same technology as social networks like Mastodon, but closed to our community — you won't find strangers from around the world here, just neighbours and friends. Use it to find local services, discover events, coordinate visits, read community news, and stay connected between trips.",
+
+    'guide_join_title'        => 'Joining & Signing In',
+    'guide_join_body'         => "Registration is free — just click \"Join\" or \"Create Account\" from the home page and fill in a username, email, and password. Because this is a closed community, new accounts may need a moment of admin approval before you're fully signed in. Once approved, use \"Log In\" anytime with your email and password. If you forget your password, use the \"Forgot password?\" link on the sign-in page.",
+
+    'guide_community_title'   => 'The Community Hub',
+    'guide_community_body'    => 'Click "Community" in the menu to see the full directory as a grid of colourful tiles — Listings, Events, Properties, Services, Restaurants, Artists, When I\'m In Town, and Member Stories. Tap any tile to jump straight to that section.',
+
+    'guide_listings_title'    => 'Browsing Listings & Categories',
+    'guide_listings_body'     => '"Listings" is where members buy, sell, trade, or give away items, and where you\'ll find dedicated categories for Community Services (local businesses, tradespeople, professionals), Restaurants, Properties (for sale, rent, or vacation stays), and Artists. Use the filter buttons to narrow by type, or the search bar to find something specific. Signed-in members can post their own entries with the "+" button — add photos, a description, and contact details.',
+
+    'guide_visits_title'      => "When I'm In Town",
+    'guide_visits_body'       => "This calendar lets you privately share the dates you'll be visiting Civezza, so friends can plan to meet up while you're both around. Add your travel dates and choose who can see them — just you, your connections, a hand-picked group, or all members. You'll get a notification if your dates overlap with someone you know, so you never miss a chance to catch up.",
+
+    'guide_events_title'      => 'Community Events',
+    'guide_events_body'       => 'Browse a live calendar of concerts, festivals, markets, and gatherings happening around Civezza and the Imperia coast — including events our team automatically finds from local news sources, and events posted directly by members. Click any highlighted day to see what\'s on, or use the filter chips (This Week, This Month, etc.) to jump ahead. Members can post their own events with the "Post an Event" button.',
+
+    'guide_digest_title'      => 'The Daily Digest',
+    'guide_digest_body'       => 'Every morning, MiaCivezza.com publishes a bilingual (Italian & English) newspaper-style digest of upcoming local events and community news — a quick way to catch up without scrolling through everything yourself. Find it at "Daily Digest" in the menu, and use the language toggle at the top of the page to switch between Italian and English.',
+
+    'guide_newsletters_title' => 'Newsletters',
+    'guide_newsletters_body'  => "From time to time, community members publish longer newsletters — stories, reflections, and updates from around Civezza. You'll find them linked from the Daily Digest, or browse the full archive anytime. Many newsletters also offer the original PDF for download.",
+
+    'guide_stories_title'     => 'Member Stories',
+    'guide_stories_body'      => 'Member Stories is where residents and regular visitors share their own connection to Civezza — how they arrived, a moment that shaped them, and why they joined the community. Signed-in members can write their own story with up to three photos, and choose when to publish it for others to read.',
+
+    'guide_language_title'    => 'Switching Languages',
+    'guide_language_body'     => "Tap the globe icon at the top of the menu to change the language you're viewing the site in — handy if you're showing the site to a visiting friend who doesn't read Italian, or vice versa. This only changes what you see; it doesn't change your account settings.",
+
+    'guide_contact_title'     => 'Getting Help',
+    'guide_contact_body'      => 'Have a question, found a problem, or want to suggest something? Use "Contact Admin" in the menu to send a message directly to the team — we read every one.',
   }.freeze
 
   def self.seed!

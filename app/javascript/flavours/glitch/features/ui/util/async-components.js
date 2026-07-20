@@ -470,3 +470,7 @@ export function NewsletterIndex () {
 export function NewsletterShow () {
   return import('../../newsletters/show');
 }
+
+export function HowItWorks () {
+  return import('../../how_it_works');
+}

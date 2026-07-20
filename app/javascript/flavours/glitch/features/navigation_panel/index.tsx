@@ -20,6 +20,7 @@ import BookmarksActiveIcon from '@/material-icons/400-24px/bookmarks-fill.svg?re
 import BookmarksIcon from '@/material-icons/400-24px/bookmarks.svg?react';
 import CollectionsActiveIcon from '@/material-icons/400-24px/category-fill.svg?react';
 import CollectionsIcon from '@/material-icons/400-24px/category.svg?react';
+import HelpIcon from '@/material-icons/400-24px/help.svg?react';
 import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
 import InfoIcon from '@/material-icons/400-24px/info.svg?react';
@@ -127,6 +128,7 @@ const messages = defineMessages({
   compose: { id: 'tabs_bar.publish', defaultMessage: 'New Post' },
   contactAdmin: { id: 'navigation_bar.contact_admin', defaultMessage: 'Contact Admin' },
   dailyDigest: { id: 'navigation_bar.daily_digest', defaultMessage: 'Daily Digest' },
+  howItWorks: { id: 'navigation_bar.how_it_works', defaultMessage: 'How It Works' },
   app_settings: {
     id: 'navigation_bar.app_settings',
     defaultMessage: 'App settings',
@@ -303,6 +305,13 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
           activeIconComponent={HomeActiveIcon}
           text={intl.formatMessage(messages.home)}
           id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
+        />
+        <ColumnLink
+          transparent
+          to='/guide'
+          icon='help'
+          iconComponent={HelpIcon}
+          text={intl.formatMessage(messages.howItWorks)}
         />
         <ColumnLink
           transparent

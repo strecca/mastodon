@@ -1,0 +1,132 @@
+// ─────────────────────────────────────────────────────────────────────────────
+//  How It Works / Guide page  (.hiw-page)
+// ─────────────────────────────────────────────────────────────────────────────
+
+.hiw-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+  overflow-y: auto;
+
+  &__hero {
+    text-align: center;
+    padding: 48px 16px 32px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-text);
+    margin: 0 0 12px;
+
+    @media (width <=480px) { font-size: 21px; }
+  }
+
+  &__intro {
+    font-size: 15px;
+    color: var(--color-text-secondary, var(--color-text-muted));
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  &__admin-bar {
+    margin-top: 16px;
+  }
+
+  &__admin-link {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+  }
+
+  &__intro-card {
+    padding: 20px 24px;
+    background: var(--color-bg-elevated, #f9f9f9);
+    border-radius: 10px;
+    margin-bottom: 24px;
+  }
+
+  &__intro-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 8px;
+  }
+
+  &__intro-body {
+    font-size: 14px;
+    color: var(--color-text-secondary, var(--color-text-muted));
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__section {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    border-inline-start: 4px solid var(--section-bg, #6364ff);
+    background: var(--color-bg, transparent);
+  }
+
+  &__section-icon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--section-bg, #6364ff);
+    color: #fff;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: currentcolor;
+    }
+  }
+
+  &__section-body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 6px;
+  }
+
+  &__section-text {
+    font-size: 14px;
+    color: var(--color-text-secondary, var(--color-text-muted));
+    line-height: 1.6;
+    margin: 0 0 8px;
+  }
+
+  &__section-link {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6364ff;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+  }
+}

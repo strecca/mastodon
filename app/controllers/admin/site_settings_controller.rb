@@ -105,6 +105,32 @@ module Admin
         welcome_email_body
         welcome_email_cta_label
       ],
+      'How It Works / Guide Page' => %w[
+        guide_page_title
+        guide_page_intro
+        guide_intro_title
+        guide_intro_body
+        guide_join_title
+        guide_join_body
+        guide_community_title
+        guide_community_body
+        guide_listings_title
+        guide_listings_body
+        guide_visits_title
+        guide_visits_body
+        guide_events_title
+        guide_events_body
+        guide_digest_title
+        guide_digest_body
+        guide_newsletters_title
+        guide_newsletters_body
+        guide_stories_title
+        guide_stories_body
+        guide_language_title
+        guide_language_body
+        guide_contact_title
+        guide_contact_body
+      ],
     }.freeze
 
     def edit
