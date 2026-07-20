@@ -27,17 +27,18 @@
     margin-bottom: 24px;
   }
 
-  &__logo {
-    margin-bottom: 12px;
-  }
+  // Admin-configured server thumbnail (Admin > Server Settings) -- the
+  // same golden hero image shown in ServerBanner's left-column widget,
+  // which isn't visible at all in single-column mobile layout. Explicit
+  // aspect-ratio here since ServerHeroImage's own base ".image" class has
+  // no intrinsic size of its own -- it needs a sized ancestor.
+  &__logo-image {
+    aspect-ratio: 3 / 1;
+    max-width: 480px;
+    margin: 0 auto 16px;
+    border-radius: 10px;
 
-  &__logo-main {
-    font-size: 28px;
-    font-weight: 800;
-    line-height: 1.1;
-    color: #1a1a1a;
-
-    @media (width <=480px) { font-size: 22px; }
+    @media (width <=480px) { aspect-ratio: 2 / 1; }
   }
 
   &__title {

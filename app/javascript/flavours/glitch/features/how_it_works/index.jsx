@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { Helmet } from '@unhead/react/helmet';
 import { Link } from 'react-router-dom';
 
@@ -11,8 +13,11 @@ import PersonAddIcon from '@/material-icons/400-24px/person_add.svg?react';
 import PublicIcon from '@/material-icons/400-24px/public.svg?react';
 import TagIcon from '@/material-icons/400-24px/tag.svg?react';
 import TripIcon from '@/material-icons/400-24px/trip.svg?react';
+import { fetchServer } from 'flavours/glitch/actions/server';
+import { ServerHeroImage } from 'flavours/glitch/components/server_hero_image';
 import { withIdentity } from 'flavours/glitch/identity_context';
 import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
+import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
 
 // Ordered to match the golden path: join → hub → each nav item → language → help.
 // Colors reuse the community_landing tile palette where a section maps to a tile,
@@ -63,6 +68,12 @@ const SECTION_DEFAULTS = {
 const HowItWorks = ({ identity }) => {
   const isAdmin = identity?.permissions === 1;
   const sc = useSiteContent();
+  const dispatch = useAppDispatch();
+  const server = useAppSelector((state) => state.getIn(['server', 'server']));
+
+  useEffect(() => {
+    dispatch(fetchServer());
+  }, [dispatch]);
 
   return (
     <div className='hiw-page scrollable'>
@@ -72,9 +83,13 @@ const HowItWorks = ({ identity }) => {
       </Helmet>
 
       <header className='hiw-page__hero'>
-        <div className='hiw-page__logo'>
-          <span className='hiw-page__logo-main'>{sc('landing_logo_text', 'Civezza Community Directory')}</span>
-        </div>
+        {server?.getIn(['thumbnail', 'url']) && (
+          <ServerHeroImage
+            blurhash={server.getIn(['thumbnail', 'blurhash'])}
+            src={server.getIn(['thumbnail', 'url'])}
+            className='hiw-page__logo-image'
+          />
+        )}
         <h1 className='hiw-page__title'>{sc('guide_page_title', 'How MiaCivezza.com Works')}</h1>
         <p className='hiw-page__intro'>{sc('guide_page_intro', "MiaCivezza.com is more than a social network — it's a digital piazza for the Civezza and Imperia coast community. Here's a quick tour of everything you can do.")}</p>
 
