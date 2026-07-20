@@ -883,6 +883,7 @@ en:
       landing_page:
         values:
           about: About
+          guide: How It Works Guide
           local_feed: Local feed
           trends: Trends
       registrations:

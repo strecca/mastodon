@@ -224,7 +224,18 @@ class SwitchingColumnsArea extends PureComponent {
     } else if (singleUserMode && owner && initialState?.accounts[owner]) {
       rootRedirect = `/@${initialState.accounts[owner].username}`;
     } else if (singleColumn && !signedIn) {
-      rootRedirect = '/guide';
+      // Reads the real "Index page" admin setting (Admin > Server Settings >
+      // Branding) instead of a hardcoded path, so it's admin-editable and
+      // persisted through Mastodon's own Setting.landing_page, not just
+      // hardcoded here. 'about' and any unrecognized/default value fall
+      // through to /guide, since /about itself now redirects there anyway.
+      if (trendsEnabled && landingPage === 'trends') {
+        rootRedirect = '/explore';
+      } else if (localLiveFeedAccess === 'public' && landingPage === 'local_feed') {
+        rootRedirect = '/public/local';
+      } else {
+        rootRedirect = '/guide';
+      }
     }
 
     return (
