@@ -72,6 +72,9 @@ const HowItWorks = ({ identity }) => {
       </Helmet>
 
       <header className='hiw-page__hero'>
+        <div className='hiw-page__logo'>
+          <span className='hiw-page__logo-main'>{sc('landing_logo_text', 'Civezza Community Directory')}</span>
+        </div>
         <h1 className='hiw-page__title'>{sc('guide_page_title', 'How MiaCivezza.com Works')}</h1>
         <p className='hiw-page__intro'>{sc('guide_page_intro', "MiaCivezza.com is more than a social network — it's a digital piazza for the Civezza and Imperia coast community. Here's a quick tour of everything you can do.")}</p>
 
@@ -83,6 +86,17 @@ const HowItWorks = ({ identity }) => {
           </div>
         )}
       </header>
+
+      <div className='hiw-page__bio'>
+        {sc('about_photo_url', '') && (
+          <img src={sc('about_photo_url', '')} alt='' className='hiw-page__bio-photo' />
+        )}
+        <div className='hiw-page__bio-text'>
+          <h2 className='hiw-page__bio-title'>{sc('guide_bio_title', 'Why I Built This')}</h2>
+          <p className='hiw-page__bio-body'>{sc('about_bio_p1', "MiaCivezza.com is my attempt to provide an online Community Bulletin Board and Piazzetta meeting plaza. My Wife & I would meet people at dinner or aperitivo time or at artistic or musical events, make friends and then say Goodbye and want to stay in contact with them. We'd try to exchange contact information as the last process of saying \"We hope to see you again\".")}</p>
+          <p className='hiw-page__bio-body'>{sc('about_bio_p2', 'Now Visitors and Residents have immediate access to contact each other to renew friendships and to reunite.')}</p>
+        </div>
+      </div>
 
       <div className='hiw-page__intro-card'>
         <h2 className='hiw-page__intro-title'>{sc('guide_intro_title', 'What is MiaCivezza.com?')}</h2>

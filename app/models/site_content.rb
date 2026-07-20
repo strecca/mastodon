@@ -138,6 +138,8 @@ class SiteContent < ApplicationRecord
     'guide_page_title'        => 'How MiaCivezza.com Works',
     'guide_page_intro'        => "MiaCivezza.com is more than a social network — it's a digital piazza for the Civezza and Imperia coast community. Here's a quick tour of everything you can do.",
 
+    'guide_bio_title'         => 'Why I Built This',
+
     'guide_tip_title'         => '💡 Tip: Start on a computer, if you can',
     'guide_tip_body'          => [
       'The richest way to get familiar with MiaCivezza.com — browsing every category, writing your first posts, and uploading photos — is easiest on a desktop computer or laptop.',

@@ -23,7 +23,6 @@ import CollectionsIcon from '@/material-icons/400-24px/category.svg?react';
 import HelpIcon from '@/material-icons/400-24px/help.svg?react';
 import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
-import InfoIcon from '@/material-icons/400-24px/info.svg?react';
 import EditNoteIcon from '@/material-icons/400-24px/edit_note.svg?react';
 import AdministrationIcon from '@/material-icons/400-24px/manufacturing.svg?react';
 import NotificationsActiveIcon from '@/material-icons/400-24px/notifications-fill.svg?react';
@@ -100,7 +99,6 @@ const messages = defineMessages({
     id: 'navigation_bar.follows_and_followers',
     defaultMessage: 'Follows and followers',
   },
-  about: { id: 'navigation_bar.about', defaultMessage: 'About' },
   search: { id: 'navigation_bar.search', defaultMessage: 'Search' },
   searchTrends: {
     id: 'navigation_bar.search_trends',
@@ -506,17 +504,6 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             <MoreLink />
           </>
         )}
-
-        <div className='navigation-panel__legal'>
-          <ColumnLink
-            transparent
-            to='/about'
-            icon='ellipsis-h'
-            iconComponent={InfoIcon}
-            text={intl.formatMessage(messages.about)}
-            id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
-          />
-        </div>
       </div>
 
       <div className='flex-spacer' />

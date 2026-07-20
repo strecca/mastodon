@@ -3124,6 +3124,10 @@ a.account__display-name {
     grid-auto-flow: column;
     padding: 0 16px;
 
+    // Guaranteed visible/tappable -- the home icon and hamburger menu
+    // toggle must never lose the flex-shrink race against __sign-up.
+    flex-shrink: 0;
+
     &.active {
       flex: 1;
       padding: 0;
@@ -3135,6 +3139,18 @@ a.account__display-name {
     align-items: center;
     gap: 4px;
     padding-inline-start: 16px;
+
+    // Lets this shrink instead of pushing __items (home + hamburger) past
+    // the viewport edge on narrow phones. .button already supports
+    // shrinking with ellipsis (overflow: hidden; text-overflow: ellipsis)
+    // -- it just needed an ancestor willing to constrain it below content
+    // size, which flex items don't do by default.
+    min-width: 0;
+    flex-shrink: 1;
+
+    .button {
+      min-width: 0;
+    }
   }
 
   &__item {

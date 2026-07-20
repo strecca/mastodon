@@ -81,7 +81,6 @@ import {
   OnboardingFollows,
   Explore,
   Search,
-  About,
   PrivacyPolicy,
   TermsOfService,
   AccountFeatured,
@@ -225,7 +224,7 @@ class SwitchingColumnsArea extends PureComponent {
     } else if (singleUserMode && owner && initialState?.accounts[owner]) {
       rootRedirect = `/@${initialState.accounts[owner].username}`;
     } else if (singleColumn && !signedIn) {
-      rootRedirect = '/about';
+      rootRedirect = '/guide';
     }
 
     return (
@@ -245,7 +244,7 @@ class SwitchingColumnsArea extends PureComponent {
 
             <WrappedRoute path='/getting-started' component={GettingStarted} content={children} />
             <WrappedRoute path='/keyboard-shortcuts' component={KeyboardShortcuts} content={children} />
-            <WrappedRoute path='/about' component={About} content={children} />
+            <Redirect from='/about' to='/guide' exact />
             <WrappedRoute path='/privacy-policy' component={PrivacyPolicy} content={children} />
             <WrappedRoute path='/terms-of-service/:date?' component={TermsOfService} content={children} />
 

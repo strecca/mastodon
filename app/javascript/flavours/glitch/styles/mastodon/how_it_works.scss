@@ -27,6 +27,19 @@
     margin-bottom: 24px;
   }
 
+  &__logo {
+    margin-bottom: 12px;
+  }
+
+  &__logo-main {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #1a1a1a;
+
+    @media (width <=480px) { font-size: 22px; }
+  }
+
   &__title {
     font-size: 26px;
     font-weight: 800;
@@ -55,6 +68,51 @@
     text-decoration: none;
 
     &:hover { text-decoration: underline; }
+  }
+
+  &__bio {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 24px;
+    background: #f7f7f7;
+    border-radius: 10px;
+    margin-bottom: 24px;
+
+    @media (width <=480px) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  &__bio-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+  }
+
+  &__bio-text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__bio-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+  }
+
+  &__bio-body {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+    margin: 0 0 8px;
+
+    &:last-child { margin-bottom: 0; }
   }
 
   // Self-contained card: opaque background, not a tint over the ambient

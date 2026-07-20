@@ -242,8 +242,12 @@ Rails.application.routes.draw do
   draw(:web_app)
 
   get '/web/(*any)', to: redirect(path: '/%{any}', status: 302), as: :web, defaults: { any: '' }, format: false
-  get '/about',      to: 'about#show'
-  get '/about/more', to: redirect('/about')
+  # /about now shows the same content as /guide (personal bio moved into
+  # a guide section) -- keeps the about_path/about_url route helpers used
+  # elsewhere (REST instance serializer, auth safe-redirect allowlist)
+  # working, just changes the destination.
+  get '/about',      to: redirect('/guide', status: 301)
+  get '/about/more', to: redirect('/guide', status: 301)
 
   get '/privacy-policy',   to: 'privacy#show', as: :privacy_policy
   get '/terms-of-service', to: 'terms_of_service#show', as: :terms_of_service
