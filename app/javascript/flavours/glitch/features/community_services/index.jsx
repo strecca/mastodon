@@ -1,5 +1,6 @@
 import { Helmet } from '@unhead/react/helmet';
 import { useIntl, defineMessages } from 'react-intl';
+import ManufacturingIcon from '@/material-icons/400-24px/manufacturing.svg?react';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { EntryList } from 'flavours/glitch/components/community_directory/entry_list';
@@ -18,7 +19,7 @@ const CommunityServices = ({ multiColumn }) => {
   const sc = useSiteContent();
   return (
     <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)} className='col-services'>
-      <ColumnHeader title={sc('col_services_title', intl.formatMessage(messages.title))} icon='address-book' multiColumn={multiColumn} className='ch-services' />
+      <ColumnHeader title={sc('col_services_title', intl.formatMessage(messages.title))} icon='manufacturing' iconComponent={ManufacturingIcon} multiColumn={multiColumn} className='ch-services' />
       {!signedIn && (
         <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#8B3E24' }}>
           {intl.formatMessage(messages.cta)}

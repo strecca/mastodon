@@ -1,5 +1,6 @@
 import { Helmet } from '@unhead/react/helmet';
 import { useIntl, defineMessages } from 'react-intl';
+import StarIcon from '@/material-icons/400-24px/star.svg?react';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { EntryList } from 'flavours/glitch/components/community_directory/entry_list';
@@ -18,7 +19,7 @@ const CommunityRestaurants = ({ multiColumn }) => {
   const sc = useSiteContent();
   return (
     <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)} className='col-restaurants'>
-      <ColumnHeader title={sc('col_restaurants_title', intl.formatMessage(messages.title))} icon='address-book' multiColumn={multiColumn} className='ch-restaurants' />
+      <ColumnHeader title={sc('col_restaurants_title', intl.formatMessage(messages.title))} icon='star' iconComponent={StarIcon} multiColumn={multiColumn} className='ch-restaurants' />
       {!signedIn && (
         <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#A8302A' }}>
           {intl.formatMessage(messages.cta)}

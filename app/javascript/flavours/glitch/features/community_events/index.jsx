@@ -15,6 +15,7 @@ import { useAppDispatch } from 'flavours/glitch/store';
 import { connectStream } from 'flavours/glitch/stream';
 import api              from 'flavours/glitch/api';
 import AddIcon          from '@/material-icons/400-24px/add.svg?react';
+import CelebrationIcon  from '@/material-icons/400-24px/celebration.svg?react';
 import ChevronLeftIcon  from '@/material-icons/400-24px/chevron_left.svg?react';
 import ChevronRightIcon from '@/material-icons/400-24px/chevron_right.svg?react';
 import ExpandMoreIcon   from '@/material-icons/400-24px/expand_more.svg?react';
@@ -608,6 +609,7 @@ const CommunityEvents = ({ multiColumn }) => {
       <ColumnHeader
         title={sc('col_events_title', intl.formatMessage(messages.title))}
         icon='celebration'
+        iconComponent={CelebrationIcon}
         multiColumn={multiColumn}
         className='ch-events'
       >

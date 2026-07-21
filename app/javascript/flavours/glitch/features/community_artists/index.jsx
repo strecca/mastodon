@@ -1,5 +1,6 @@
 import { Helmet } from '@unhead/react/helmet';
 import { useIntl, defineMessages } from 'react-intl';
+import BrushIcon from '@/material-icons/400-24px/brush.svg?react';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { EntryList } from 'flavours/glitch/components/community_directory/entry_list';
@@ -18,7 +19,7 @@ const CommunityArtists = ({ multiColumn }) => {
   const sc = useSiteContent();
   return (
     <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)} className='col-artists'>
-      <ColumnHeader title={sc('col_artists_title', intl.formatMessage(messages.title))} icon='address-book' multiColumn={multiColumn} className='ch-artists' />
+      <ColumnHeader title={sc('col_artists_title', intl.formatMessage(messages.title))} icon='brush' iconComponent={BrushIcon} multiColumn={multiColumn} className='ch-artists' />
       {!signedIn && (
         <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#7A5410' }}>
           {intl.formatMessage(messages.cta)}
