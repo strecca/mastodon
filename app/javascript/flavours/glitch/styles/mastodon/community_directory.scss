@@ -519,16 +519,23 @@
     color: var(--color-text-brand);
   }
 
+  // Same brand color as the list page's .ch-* ColumnHeader — this banner
+  // is a continuation of that one, carried onto the detail page, not a
+  // separate element, so it deliberately duplicates that styling here
+  // rather than depending on ColumnHeader (whose own back-button always
+  // navigates to "/", not to this category's list — see column_header.tsx).
   &--specific {
-    background: var(--color-bg-primary);
-    color: var(--color-text-secondary);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 8px 20px;
+    background: var(--category-color, var(--color-bg-secondary));
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-bottom: none;
 
     &:hover {
-      background: var(--color-bg-hover, rgba(0, 0, 0, 0.05));
-      color: var(--color-text-secondary);
+      background: var(--category-color, var(--color-bg-secondary));
+      color: #fff;
+      filter: brightness(1.12);
     }
   }
 }

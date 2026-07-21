@@ -21,7 +21,6 @@ const messages = defineMessages({
   delete:        { id: 'community.detail.delete',         defaultMessage: 'Delete' },
   deleteConfirm: { id: 'community.detail.delete_confirm', defaultMessage: 'Permanently delete this entry? This cannot be undone.' },
   back:          { id: 'community.detail.back',           defaultMessage: '← Back' },
-  backToCategory: { id: 'community.detail.back_to_category', defaultMessage: 'Back to All {category}' },
   added:         { id: 'community.detail.added',          defaultMessage: 'Added' },
   updated:       { id: 'community.detail.updated',        defaultMessage: 'Updated' },
   viewFullSize:  { id: 'community.detail.view_full_size', defaultMessage: 'View full size' },
@@ -29,6 +28,17 @@ const messages = defineMessages({
 });
 
 const humanize = (str) => str ? str.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
+
+// Matches each category's /landing card color and .ch-* ColumnHeader color
+// (community_directory.scss) so the banner reads as the same element,
+// carried over from the list page rather than a new/different one.
+const CATEGORY_COLORS = {
+  artists:     '#7A5410',
+  events:      '#007A80',
+  properties:  '#8B2240',
+  restaurants: '#A8302A',
+  services:    '#8B3E24',
+};
 
 const fmtFieldDate = (iso) => {
   if (!iso) return iso;
@@ -183,10 +193,17 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
     <div className='scrollable'>
       <div className='community-entry-detail'>
 
-        {/* ── Persistent category banners: generic first, then this category ── */}
+        {/* ── Persistent category banners: generic first, then this category ──
+             The specific banner reuses the same brand color as the list
+             page's ColumnHeader so it reads as one continuous element that
+             gained a working back-link, not a new/different banner. ── */}
         <CategoryBannerLink />
-        <Link to={`/${featureKey}`} className='community-category-banner community-category-banner--specific'>
-          {intl.formatMessage(messages.backToCategory, { category: config.display_name })}
+        <Link
+          to={`/${featureKey}`}
+          className='community-category-banner community-category-banner--specific'
+          style={{ '--category-color': CATEGORY_COLORS[categoryKey] }}
+        >
+          ← {config.display_name}
         </Link>
 
         {/* ── Hero: hills landscape + name/badges/location ── */}

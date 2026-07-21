@@ -18,7 +18,7 @@ const CommunityRestaurants = ({ multiColumn }) => {
   const sc = useSiteContent();
   return (
     <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)} className='col-restaurants'>
-      <ColumnHeader title={sc('col_restaurants_title', intl.formatMessage(messages.title))} icon='address-book' multiColumn={multiColumn} showBackButton className='ch-restaurants' />
+      <ColumnHeader title={sc('col_restaurants_title', intl.formatMessage(messages.title))} icon='address-book' multiColumn={multiColumn} className='ch-restaurants' />
       {!signedIn && (
         <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#A8302A' }}>
           {intl.formatMessage(messages.cta)}

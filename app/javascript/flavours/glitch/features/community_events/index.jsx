@@ -609,7 +609,6 @@ const CommunityEvents = ({ multiColumn }) => {
         title={sc('col_events_title', intl.formatMessage(messages.title))}
         icon='celebration'
         multiColumn={multiColumn}
-        showBackButton
         className='ch-events'
       >
         {signedIn && (

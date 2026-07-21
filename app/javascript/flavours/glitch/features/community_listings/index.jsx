@@ -81,7 +81,6 @@ const CommunityListings = ({ multiColumn }) => {
         iconComponent={TagIcon}
         title={sc('col_listings_title', 'Community Listings')}
         multiColumn={multiColumn}
-        showBackButton
         className='ch-listings'
       />
       <Helmet><title>Community Listings · miacivezza</title></Helmet>
