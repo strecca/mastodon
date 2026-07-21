@@ -163,7 +163,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
         .where(translatable_type: 'CommunityListing', translatable_id: listing.id)
         .each_with_object({}) { |t, h| (h[t.locale] ||= {})[t.field_name] = t.translated_text }
 
-      if current_account&.id == listing.account_id
+      if current_account&.id == listing.account_id || current_user&.can?(:administrator)
         data[:interests] = listing.community_listing_interests
                                   .includes(:account)
                                   .order(created_at: :asc)

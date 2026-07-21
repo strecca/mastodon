@@ -318,7 +318,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
             </div>
           </div>
 
-          {signedIn && !canManage && isOpen && (
+          {signedIn && !isOwn && isOpen && (
             <div className='cl-detail__actions'>
               {listing.interested ? (
                 <>
