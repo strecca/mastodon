@@ -178,10 +178,17 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
 
   const handleInterestSubmitted = useCallback(() => {
     setShowInterest(false);
-  }, []);
+    // LISTING_INTEREST_ADD only optimistically patches interested/interest_count
+    // -- it has no way to append the new interest (with its message/account) to
+    // the cached interests array the queue below reads from. Without this,
+    // "You expressed interest" flips on instantly but the queue keeps showing
+    // stale (often empty) data until a full page reload.
+    dispatch(refreshListing(id));
+  }, [dispatch, id]);
 
   const handleWithdraw = useCallback(async () => {
     await dispatch(removeInterest(id));
+    dispatch(refreshListing(id));
   }, [dispatch, id]);
 
   // The old "Send DM" link pointed at /compose, which isn't a registered
