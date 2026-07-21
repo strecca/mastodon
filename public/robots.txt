@@ -1,0 +1,23 @@
+User-agent: *
+Disallow: /auth/
+Disallow: /admin/
+Disallow: /settings/
+Disallow: /oauth/
+Disallow: /api/
+Disallow: /community_directory/
+Disallow: /community_maintenance
+Disallow: /community_visits/
+Disallow: /notifications
+Disallow: /notifications_v2/
+Disallow: /home
+Disallow: /explore
+Disallow: /public
+Disallow: /search
+Disallow: /lists/
+Disallow: /statuses/
+Disallow: /media_proxy/
+Disallow: /publish
+Disallow: /deck/
+Disallow: /start/
+
+Sitemap: https://miacivezza.com/sitemap.xml

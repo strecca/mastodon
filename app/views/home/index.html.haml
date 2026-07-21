@@ -1,7 +1,11 @@
 - content_for :header_tags do
-  - unless request.path == '/'
+  - unless indexable_path?
     %meta{ name: 'robots', content: 'noindex' }/
 
-  = render partial: 'shared/og'
+  - preview = community_og_preview
+  - if preview
+    = render partial: 'shared/og', locals: { title: preview[:title], description: preview[:description], image_url: preview[:image_url] }
+  - else
+    = render partial: 'shared/og'
 
 = render 'shared/web_app'

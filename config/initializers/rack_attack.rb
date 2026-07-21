@@ -90,6 +90,10 @@ class Rack::Attack
     req.throttleable_remote_ip if req.post? && req.path == '/api/v1/accounts'
   end
 
+  throttle('throttle_contact_message', limit: 5, period: 30.minutes) do |req|
+    req.throttleable_remote_ip if req.post? && req.path == '/api/v1/contact_message'
+  end
+
   throttle('throttle_authenticated_paging', limit: 300, period: 15.minutes) do |req|
     req.authenticated_user_id if req.paging_request?
   end

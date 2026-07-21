@@ -16,6 +16,8 @@ const ContactPage = ({ identity, multiColumn }) => {
   const [email, setEmail]     = useState('');
   const [status, setStatus]   = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const [website, setWebsite] = useState(''); // honeypot — real users never see/fill this
+  const [renderedAt] = useState(() => Math.floor(Date.now() / 1000));
 
   const displayName = account?.get('display_name') || account?.get('username') || '';
   const username    = account?.get('username') || '';
@@ -31,6 +33,8 @@ const ContactPage = ({ identity, multiColumn }) => {
         email:   signedIn ? undefined   : email,
         subject,
         message,
+        website,
+        form_rendered_at: renderedAt,
       });
       setStatus('success');
     } catch (err) {
@@ -63,6 +67,18 @@ const ContactPage = ({ identity, multiColumn }) => {
           </div>
         ) : (
           <form className='contact-page__form' onSubmit={handleSubmit}>
+            <div className='contact-page__hp-field' aria-hidden='true'>
+              <label htmlFor='contact-website'>Website</label>
+              <input
+                id='contact-website'
+                type='text'
+                name='website'
+                value={website}
+                onChange={e => setWebsite(e.target.value)}
+                tabIndex={-1}
+                autoComplete='off'
+              />
+            </div>
             {signedIn ? (
               <div className='contact-page__member-badge'>
                 Sending as Member: <strong>@{username}</strong>

@@ -12203,6 +12203,16 @@ noscript {
     }
   }
 
+  // Honeypot spam trap — off-screen, not display:none, so naive bots that
+  // skip hidden elements still find and fill it. Real users never see it.
+  &__hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   &__input {
     background: var(--color-bg-secondary, #1f232b);
     border: 1px solid var(--color-border, #393f4f);
