@@ -43,6 +43,7 @@ class Api::V1::CommunityEventsController < Api::BaseController
 
     entry = CommunityEvent.new(entry_params)
     entry.account = current_account
+    entry.image_media_ids = validated_media_ids
     entry.status  = auto_approve? ? :approved : :pending
 
     if entry.save
@@ -57,6 +58,7 @@ class Api::V1::CommunityEventsController < Api::BaseController
   end
 
   def update
+    @entry.image_media_ids = validated_media_ids if params.key?(:media_ids)
     if @entry.update(entry_params)
       invalidate_list_cache
       CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
@@ -118,11 +120,46 @@ class Api::V1::CommunityEventsController < Api::BaseController
                                   :website, :telephone, category: [])
   end
 
+  def list_columns
+    super + [:image_media_ids]
+  end
+
+  def image_data_for(entry)
+    return [] unless Array(entry.image_media_ids).any?
+    MediaAttachment.where(id: entry.image_media_ids)
+                   .filter_map do |ma|
+                     original = attachment_url(ma, :original)
+                     next if original.blank?
+                     { original: original, preview: attachment_url(ma, :small) || original }
+                   end
+  rescue StandardError
+    []
+  end
+
+  def attachment_url(ma, style)
+    raw = style == :original && ma.remote_url.present? ? ma.remote_url : ma.file.url(style)
+    return nil if raw.blank?
+    raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
+  rescue StandardError
+    nil
+  end
+
+  # Capped at 2, not the usual 3 -- Events intentionally allows fewer photos
+  # per entry than other categories.
+  def validated_media_ids
+    ids = Array(params[:media_ids]).reject(&:blank?).first(2).map(&:to_i).select(&:positive?)
+    MediaAttachment.where(id: ids, account: current_account).pluck(:id)
+  end
+
   def serialize(e, detail: true)
+    imgs = image_data_for(e)
     base = {
       id: e.id, account_id: e.account_id, status: e.status,
       account: { id: e.account.id, username: e.account.username,
                  display_name: e.account.display_name, avatar: e.account.avatar_original_url },
+      images:             imgs.map { |i| i[:original] },
+      image_previews:     imgs.map { |i| i[:preview] },
+      image_media_ids:    e.image_media_ids,
       category:           e.category,
       event_name:         e.event_name,
       event_date:         e.event_date&.iso8601,

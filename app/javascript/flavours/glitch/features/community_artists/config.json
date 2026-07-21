@@ -316,7 +316,7 @@
       "label_sl": "Telefon",
       "label_sq": "Telefoni",
       "placeholder": "",
-      "widget": "number",
+      "widget": "text",
       "required": false,
       "searchable": false,
       "translatable": false,

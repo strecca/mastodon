@@ -39,7 +39,7 @@ const compressImage = (file, onLargeFile) =>
     img.src = blobUrl;
   });
 
-const MAX_CATEGORY_IMAGES = 3;
+const DEFAULT_MAX_IMAGES = 3;
 
 import { useIntl, defineMessages } from 'react-intl';
 import { useHistory, Link } from 'react-router-dom';
@@ -114,7 +114,9 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
   const checkingDuplicate = useRef(false);
 
   // Images — populated in edit mode from currentEntry
-  const hasImagesField = useMemo(() => config.fields.some(f => f.widget === 'images'), [config.fields]);
+  const imagesField = useMemo(() => config.fields.find(f => f.widget === 'images'), [config.fields]);
+  const hasImagesField = !!imagesField;
+  const MAX_CATEGORY_IMAGES = imagesField?.max ?? DEFAULT_MAX_IMAGES;
   const [images, setImages] = useState([]);  // [{ mediaId, previewUrl }]
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
@@ -216,7 +218,7 @@ export const EntryForm = ({ config, mode, entryId, multiColumn }) => {
       }
     }
     setUploading(false);
-  }, [images.length]);
+  }, [images.length, MAX_CATEGORY_IMAGES]);
 
   const removeImage = useCallback((idx) => {
     setImages(prev => prev.filter((_, i) => i !== idx));

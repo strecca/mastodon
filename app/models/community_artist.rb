@@ -12,7 +12,7 @@
 #  last_name          :string           not null
 #  location_town_city :string           not null
 #  status             :integer          default("pending"), not null
-#  telephone          :integer
+#  telephone          :string
 #  website            :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null

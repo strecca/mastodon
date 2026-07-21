@@ -11,8 +11,9 @@
 #  event_name         :string           not null
 #  location_town_city :string           not null
 #  status             :integer          default("pending"), not null
-#  telephone          :integer
+#  telephone          :string
 #  website            :string
+#  image_media_ids    :bigint           default([]), is an Array
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  account_id         :bigint           not null
@@ -40,6 +41,10 @@ class CommunityEvent < ApplicationRecord
            as: :translatable, dependent: :destroy
 
   enum :status, { pending: 0, approved: 1, rejected: 2 }, default: :pending
+
+  def image_media_attachments
+    MediaAttachment.where(id: Array(image_media_ids))
+  end
 
   validates :category, presence: true
   validates :event_name, presence: true
