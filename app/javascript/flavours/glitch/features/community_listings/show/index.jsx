@@ -4,6 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { useIntl } from 'react-intl';
 
+import { Map as ImmutableMap } from 'immutable';
+
 import { Helmet } from '@unhead/react/helmet';
 
 import { Column } from 'flavours/glitch/components/column';
@@ -13,6 +15,7 @@ import { useIdentity } from 'flavours/glitch/identity_context';
 import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
 import api from 'flavours/glitch/api';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import { directCompose } from 'flavours/glitch/actions/compose';
 import {
   fetchListing, refreshListing, deleteListing,
   fulfillListing, closeListing,
@@ -82,6 +85,7 @@ const InterestModal = ({ listing, onClose, onSubmitted }) => {
 };
 
 const InterestQueue = ({ interests, listingId, onRefresh }) => {
+  const dispatch = useAppDispatch();
   const [working, setWorking] = useState(null);
 
   const handle = useCallback(async (action, interestId) => {
@@ -93,6 +97,10 @@ const InterestQueue = ({ interests, listingId, onRefresh }) => {
       setWorking(null);
     }
   }, [onRefresh]);
+
+  const handleSendDm = useCallback((username) => {
+    dispatch(directCompose(ImmutableMap({ acct: username })));
+  }, [dispatch]);
 
   if (!interests?.length) return <div className='cl-interests__empty'>No one has expressed interest yet.</div>;
 
@@ -110,13 +118,13 @@ const InterestQueue = ({ interests, listingId, onRefresh }) => {
             {i.message && <div className='cl-interests__msg'>"{i.message}"</div>}
           </div>
           <div className='cl-interests__actions'>
-            <a
-              href={`/compose?text=@${i.account.username}%20`}
+            <button
+              type='button'
+              onClick={() => handleSendDm(i.account.username)}
               className='button button-secondary cl-interests__dm-btn'
-              target='_blank' rel='noreferrer'
             >
               Send DM
-            </a>
+            </button>
             {i.status === 'pending' && (
               <>
                 <button
@@ -175,6 +183,17 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
   const handleWithdraw = useCallback(async () => {
     await dispatch(removeInterest(id));
   }, [dispatch, id]);
+
+  // The old "Send DM" link pointed at /compose, which isn't a registered
+  // route (the real compose route is /publish) -- and even if it had been,
+  // text=@username alone doesn't set visibility, so it would have posted
+  // publicly rather than sending an actual direct message. directCompose
+  // is the same action Mastodon's own "Mention"/"Message" buttons use
+  // elsewhere -- it sets privacy: 'direct' and navigates to the compose UI.
+  const handleSendDm = useCallback(() => {
+    if (!listing?.account?.username) return;
+    dispatch(directCompose(ImmutableMap({ acct: listing.account.username })));
+  }, [dispatch, listing?.account?.username]);
 
   const handleFulfill = useCallback(async () => {
     await dispatch(fulfillListing(id));
@@ -311,13 +330,9 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
                   I'm Interested
                 </button>
               )}
-              <a
-                href={`/compose?text=@${listing.account.username}%20`}
-                className='button button-secondary'
-                target='_blank' rel='noreferrer'
-              >
+              <button type='button' onClick={handleSendDm} className='button button-secondary'>
                 Send DM
-              </a>
+              </button>
             </div>
           )}
 
