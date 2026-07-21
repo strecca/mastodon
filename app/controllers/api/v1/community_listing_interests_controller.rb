@@ -6,7 +6,7 @@ class Api::V1::CommunityListingInterestsController < Api::BaseController
   before_action :set_interest, only: [:dismiss, :select]
   before_action :authorize_listing_owner!, only: [:dismiss, :select]
 
-  # POST /api/v1/community_listings/:listing_id/interests
+  # POST /api/v1/community_listings/:community_listing_id/interests
   def create
     return render json: { error: 'Cannot express interest in your own listing' }, status: :unprocessable_entity \
       if @listing.account_id == current_account.id
@@ -31,7 +31,7 @@ class Api::V1::CommunityListingInterestsController < Api::BaseController
     end
   end
 
-  # DELETE /api/v1/community_listings/:listing_id/interests
+  # DELETE /api/v1/community_listings/:community_listing_id/interests
   # Lets a user withdraw their own interest
   def destroy
     interest = @listing.community_listing_interests.find_by(account: current_account)
@@ -43,13 +43,13 @@ class Api::V1::CommunityListingInterestsController < Api::BaseController
     end
   end
 
-  # PUT /api/v1/community_listings/:listing_id/interests/:id/select
+  # PUT /api/v1/community_listings/:community_listing_id/interests/:id/select
   def select
     @interest.update!(status: :selected)
     render json: { id: @interest.id, status: @interest.status }
   end
 
-  # PUT /api/v1/community_listings/:listing_id/interests/:id/dismiss
+  # PUT /api/v1/community_listings/:community_listing_id/interests/:id/dismiss
   def dismiss
     @interest.update!(status: :dismissed)
     render json: { id: @interest.id, status: @interest.status }
@@ -58,7 +58,7 @@ class Api::V1::CommunityListingInterestsController < Api::BaseController
   private
 
   def set_listing
-    @listing = CommunityListing.find(params[:listing_id])
+    @listing = CommunityListing.find(params[:community_listing_id])
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'Listing not found' }, status: :not_found
   end
