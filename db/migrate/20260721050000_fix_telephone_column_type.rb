@@ -7,12 +7,20 @@
 # string column -- conforming telephone to that same type here.
 class FixTelephoneColumnType < ActiveRecord::Migration[7.2]
   def up
-    change_column :community_artists, :telephone, :string
-    change_column :community_events, :telephone, :string
+    safety_assured do
+      # community_artists/community_events are small community-content
+      # tables (tens of rows), not user-facing Mastodon core tables --
+      # the table-rewrite/lock strong_migrations warns about is
+      # negligible at this scale.
+      change_column :community_artists, :telephone, :string
+      change_column :community_events, :telephone, :string
+    end
   end
 
   def down
-    change_column :community_artists, :telephone, :integer, using: 'telephone::integer'
-    change_column :community_events, :telephone, :integer, using: 'telephone::integer'
+    safety_assured do
+      change_column :community_artists, :telephone, :integer, using: 'telephone::integer'
+      change_column :community_events, :telephone, :integer, using: 'telephone::integer'
+    end
   end
 end
