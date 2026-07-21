@@ -146,7 +146,8 @@ const InterestQueue = ({ interests, listingId, onRefresh }) => {
 
 const CommunityListingsShow = ({ multiColumn, params }) => {
   const dispatch = useAppDispatch();
-  const { signedIn } = useIdentity();
+  const { signedIn, permissions } = useIdentity();
+  const isAdmin = !!(permissions & 0x1);
   const history = useHistory();
   const intl = useIntl();
   const { viewingLocale } = useViewingLocale();
@@ -197,6 +198,10 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
   if (!listing) return <Column><div style={{ padding: 20 }}>Listing not found.</div></Column>;
 
   const isOwn       = listing.is_own;
+  // Admins can manage (edit/fulfill/close/delete) any entry, matching the
+  // authorize_owner! bypass already present server-side -- the UI just
+  // never surfaced it before.
+  const canManage   = isOwn || isAdmin;
   const isOpen      = listing.status === 'open';
   const price       = fmtPrice(listing);
   const statusLabel = STATUS_LABELS[listing.status];
@@ -294,7 +299,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
             </div>
           </div>
 
-          {signedIn && !isOwn && isOpen && (
+          {signedIn && !canManage && isOpen && (
             <div className='cl-detail__actions'>
               {listing.interested ? (
                 <>
@@ -316,7 +321,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
             </div>
           )}
 
-          {isOwn && (
+          {canManage && (
             <div className='cl-detail__owner-actions'>
               {isOpen && (
                 <>
@@ -330,7 +335,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
           )}
         </div>
 
-        {isOwn && (
+        {canManage && (
           <InterestQueue
             interests={listing.interests}
             listingId={listing.id}
