@@ -14,7 +14,7 @@ const CommunityEventsShow = ({ params, multiColumn }) => {
   const t = intl.formatMessage(messages.title);
   return (
     <Column bindToDocument={!multiColumn} label={t}>
-      <ColumnHeader title={t} icon='calendar' multiColumn={multiColumn} showBackButton />
+      <ColumnHeader title={t} icon='calendar' multiColumn={multiColumn} />
       <EntryDetail config={config} entryId={params?.id} multiColumn={multiColumn} />
       <Helmet><title>{t}</title><meta name='robots' content='noindex' /></Helmet>
     </Column>

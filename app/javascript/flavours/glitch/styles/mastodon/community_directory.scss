@@ -518,6 +518,19 @@
     text-decoration: none;
     color: var(--color-text-brand);
   }
+
+  &--specific {
+    background: var(--color-bg-primary);
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 20px;
+
+    &:hover {
+      background: var(--color-bg-hover, rgba(0, 0, 0, 0.05));
+      color: var(--color-text-secondary);
+    }
+  }
 }
 
 // ── Sign-in / Join CTA (visitor view, per-category) ──────────────────────────
@@ -591,39 +604,6 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.06);
     z-index: 3;
-  }
-
-  // ── "← Back" nav link overlaid top-left of the hero ──────────────────────
-
-  &__hero-nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 6;
-
-    a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-height: 44px;
-      padding: 0 24px;
-      font-size: 15px;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-      letter-spacing: 0.01em;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   // ── Name / badges / location centred at the bottom of the hero ───────────

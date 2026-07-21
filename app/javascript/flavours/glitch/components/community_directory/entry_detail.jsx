@@ -21,6 +21,7 @@ const messages = defineMessages({
   delete:        { id: 'community.detail.delete',         defaultMessage: 'Delete' },
   deleteConfirm: { id: 'community.detail.delete_confirm', defaultMessage: 'Permanently delete this entry? This cannot be undone.' },
   back:          { id: 'community.detail.back',           defaultMessage: '← Back' },
+  backToCategory: { id: 'community.detail.back_to_category', defaultMessage: 'Back to All {category}' },
   added:         { id: 'community.detail.added',          defaultMessage: 'Added' },
   updated:       { id: 'community.detail.updated',        defaultMessage: 'Updated' },
   viewFullSize:  { id: 'community.detail.view_full_size', defaultMessage: 'View full size' },
@@ -182,8 +183,11 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
     <div className='scrollable'>
       <div className='community-entry-detail'>
 
-        {/* ── Persistent category banner ── */}
+        {/* ── Persistent category banners: generic first, then this category ── */}
         <CategoryBannerLink />
+        <Link to={`/${featureKey}`} className='community-category-banner community-category-banner--specific'>
+          {intl.formatMessage(messages.backToCategory, { category: config.display_name })}
+        </Link>
 
         {/* ── Hero: hills landscape + name/badges/location ── */}
         <div className='community-entry-detail__hero'>
@@ -195,10 +199,6 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
             <div className='community-entry-detail__hill community-entry-detail__hill--4' />
           </div>
           <div className='community-entry-detail__filter' />
-
-          <div className='community-entry-detail__hero-nav'>
-            <Link to={`/${featureKey}`}>{intl.formatMessage(messages.back)}</Link>
-          </div>
 
           <div className='community-entry-detail__hero-content'>
             {badges.length > 0 && (
