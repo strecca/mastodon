@@ -496,6 +496,25 @@
 // ═══════════════════════════════════════════════════════════════
 
 // ── Category return banner (top of entry detail page) ────────────────────────
+// Rendered as a row: generic "see all categories" link + a companion link to
+// the live Mastodon feed, so the feed is always one tap away from anywhere
+// in the Community section (previously only reachable via /landing).
+
+.community-category-banner-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--color-border-primary);
+
+  .community-category-banner {
+    flex: 1 1 50%;
+    border-bottom: none;
+    min-width: 0;
+  }
+
+  .community-category-banner:first-child {
+    border-right: 1px solid var(--color-border-primary);
+  }
+}
 
 .community-category-banner {
   display: flex;
@@ -517,6 +536,17 @@
     background: var(--color-bg-hover, rgba(0, 0, 0, 0.05));
     text-decoration: none;
     color: var(--color-text-brand);
+  }
+
+  // Distinct accent (this app's own established brand-purple variable, used
+  // throughout this file) so it reads as "the other half of the app" — the
+  // live social feed — not just another directory link.
+  &--posts {
+    color: var(--color-accent, #6364ff);
+
+    &:hover {
+      color: var(--color-accent, #6364ff);
+    }
   }
 
   // Same brand color as the list page's .ch-* ColumnHeader — this banner

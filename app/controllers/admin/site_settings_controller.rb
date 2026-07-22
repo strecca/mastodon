@@ -84,6 +84,7 @@ module Admin
       'Community Navigation' => %w[
         nav_see_all_categories
         nav_all_categories
+        nav_see_live_posts
       ],
       'Listings Page' => %w[
         listings_join_cta

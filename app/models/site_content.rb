@@ -107,6 +107,7 @@ class SiteContent < ApplicationRecord
     # ── Community navigation links ──
     'nav_see_all_categories'  => 'Click here to see All Community Categories',
     'nav_all_categories'      => '← All Community Categories',
+    'nav_see_live_posts'      => 'See Live Posts',
 
     # ── Listings page ──
     'listings_join_cta'            => 'Log In or Join to add your own Community Listings',
