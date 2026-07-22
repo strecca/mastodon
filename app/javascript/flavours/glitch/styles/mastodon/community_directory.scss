@@ -538,14 +538,20 @@
     color: var(--color-text-brand);
   }
 
-  // Distinct accent (this app's own established brand-purple variable, used
-  // throughout this file) so it reads as "the other half of the app" — the
-  // live social feed — not just another directory link.
+  // Solid background + explicit white text — not colored text on a themed
+  // background — so this reads clearly on the plainer light-theme mobile
+  // rendering too, not just the dark theme it was designed against. Same
+  // reasoning as .community-category-banner--specific below.
   &--posts {
-    color: var(--color-accent, #6364ff);
+    background: var(--color-accent, #6364ff);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
 
     &:hover {
-      color: var(--color-accent, #6364ff);
+      background: var(--color-accent, #6364ff);
+      color: #fff;
+      filter: brightness(1.12);
     }
   }
 
