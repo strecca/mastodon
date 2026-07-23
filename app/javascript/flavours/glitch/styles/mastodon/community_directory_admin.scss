@@ -103,6 +103,90 @@
     margin-top: 2px;
   }
 
+  &__existing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__existing-row {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  &__existing-btn {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--color-border-primary);
+    border-radius: 6px;
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    font-family: inherit;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--color-border-brand);
+    }
+
+    &--active {
+      border-color: var(--color-border-brand);
+      background: var(--color-bg-brand-softest, var(--color-bg-secondary));
+    }
+  }
+
+  &__existing-name {
+    font-weight: 600;
+  }
+
+  &__existing-key {
+    color: var(--color-text-tertiary);
+    font-size: 12px;
+    font-family: monospace;
+  }
+
+  &__existing-count {
+    margin-left: auto;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  &__existing-badge {
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--color-text-brand);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  &__existing-manage-link {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    border: 1px solid var(--color-border-primary);
+    border-radius: 6px;
+    color: var(--color-text-brand);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--color-bg-secondary);
+      text-decoration: none;
+    }
+  }
+
   &__input {
     width: 100%;
     padding: 10px 14px;
@@ -726,6 +810,125 @@
     gap: 8px;
     border-top: 1px solid var(--color-border-primary);
     padding-top: 12px;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  Entries manager — browse/delete all entries in one category,
+//  reached via /community_directory/entries/:categoryKey
+// ═══════════════════════════════════════════════════════════════
+
+.cd-entries {
+  padding: 16px;
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  &__total {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  &__filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  &__filter-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--color-border-primary);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--color-border-brand);
+    }
+
+    &--active {
+      background: var(--color-text-brand);
+      border-color: var(--color-text-brand);
+      color: #fff;
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__row {
+    border-bottom: 1px solid var(--color-border-primary);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__cell {
+    padding: 12px 8px;
+    vertical-align: top;
+
+    &--status {
+      white-space: nowrap;
+    }
+
+    &--actions {
+      text-align: right;
+      white-space: nowrap;
+    }
+  }
+
+  &__entry-link {
+    display: block;
+    color: var(--color-text-primary);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-text-brand);
+      text-decoration: underline;
+    }
+  }
+
+  &__meta {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+
+    &--approved {
+      background: var(--color-bg-success-softest);
+      color: var(--color-text-success);
+    }
+
+    &--pending {
+      background: var(--color-bg-warning-softest, rgba(202, 138, 4, 0.15));
+      color: var(--color-text-warning, #ca8a04);
+    }
+
+    &--rejected {
+      background: var(--color-bg-error-softest);
+      color: var(--color-text-error);
+    }
   }
 }
 

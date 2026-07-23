@@ -39,6 +39,7 @@ const messages = defineMessages({
   previewSection:    { id: 'community_directory.admin.preview_section', defaultMessage: 'Form Preview' },
   back:              { id: 'community_directory.admin.back',         defaultMessage: 'Back to directory admin' },
   existingSection:   { id: 'community_directory.admin.existing',     defaultMessage: 'Existing Categories' },
+  manageEntries:     { id: 'community_directory.admin.manage_entries', defaultMessage: 'Manage Entries →' },
   noExisting:        { id: 'community_directory.admin.no_existing',  defaultMessage: 'No categories yet. Build your first one below.' },
   createNew:         { id: 'community_directory.admin.create_new',   defaultMessage: '+ Create New Category' },
   editingBadge:      { id: 'community_directory.admin.editing_badge', defaultMessage: 'editing' },
@@ -287,17 +288,21 @@ const CommunityDirectoryFormBuilder = ({ multiColumn }) => {
                   const count = cat.get('entries_count') || 0;
                   const isActive = editingCategory === name;
                   return (
-                    <button
-                      key={name || i}
-                      type='button'
-                      className={`cd-builder__existing-btn${isActive ? ' cd-builder__existing-btn--active' : ''}`}
-                      onClick={() => isActive ? handleCreateNew() : handleLoadCategory(name)}
-                    >
-                      <span className='cd-builder__existing-name'>{catDisplayName}</span>
-                      <span className='cd-builder__existing-key'>/community_{name}</span>
-                      <span className='cd-builder__existing-count'>{count} {count === 1 ? 'entry' : 'entries'}</span>
-                      {isActive && <span className='cd-builder__existing-badge'>{intl.formatMessage(messages.editingBadge)}</span>}
-                    </button>
+                    <div key={name || i} className='cd-builder__existing-row'>
+                      <button
+                        type='button'
+                        className={`cd-builder__existing-btn${isActive ? ' cd-builder__existing-btn--active' : ''}`}
+                        onClick={() => isActive ? handleCreateNew() : handleLoadCategory(name)}
+                      >
+                        <span className='cd-builder__existing-name'>{catDisplayName}</span>
+                        <span className='cd-builder__existing-key'>/community_{name}</span>
+                        <span className='cd-builder__existing-count'>{count} {count === 1 ? 'entry' : 'entries'}</span>
+                        {isActive && <span className='cd-builder__existing-badge'>{intl.formatMessage(messages.editingBadge)}</span>}
+                      </button>
+                      <Link to={`/community_directory/entries/${name}`} className='cd-builder__existing-manage-link'>
+                        {intl.formatMessage(messages.manageEntries)}
+                      </Link>
+                    </div>
                   );
                 })}
               </div>

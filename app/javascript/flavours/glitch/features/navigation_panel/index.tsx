@@ -24,6 +24,7 @@ import HelpIcon from '@/material-icons/400-24px/help.svg?react';
 import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
 import EditNoteIcon from '@/material-icons/400-24px/edit_note.svg?react';
+import GavelIcon from '@/material-icons/400-24px/gavel.svg?react';
 import AdministrationIcon from '@/material-icons/400-24px/manufacturing.svg?react';
 import NotificationsActiveIcon from '@/material-icons/400-24px/notifications-fill.svg?react';
 import NotificationsIcon from '@/material-icons/400-24px/notifications.svg?react';
@@ -462,6 +463,13 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
                   icon='category'
                   iconComponent={CollectionsIcon}
                   text='Community Admin'
+                />
+                <ColumnLink
+                  transparent
+                  to='/community_directory/moderation'
+                  icon='gavel'
+                  iconComponent={GavelIcon}
+                  text='Moderation Queue'
                 />
                 <ColumnLink
                   transparent
