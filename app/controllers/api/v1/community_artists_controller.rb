@@ -150,8 +150,8 @@ class Api::V1::CommunityArtistsController < Api::BaseController
   def serialize(e, detail: true)
     imgs = image_data_for(e)
     base = {
-      id: e.id, account_id: e.account_id, status: e.status,
-      account: { id: e.account.id, username: e.account.username,
+      id: e.id, account_id: e.account_id.to_s, status: e.status,
+      account: { id: e.account.id.to_s, username: e.account.username,
                  display_name: e.account.display_name, avatar: e.account.avatar_original_url },
       images:             imgs.map { |i| i[:original] },
       image_previews:     imgs.map { |i| i[:preview] },
