@@ -1,10 +1,10 @@
 ---
 en:
   about:
-    about_mastodon_html: 'The social network of the future: No ads, no corporate surveillance, ethical design, and decentralization! Own your data with Mastodon!'
+    about_mastodon_html: 'A private community bulletin board for Civezza and the Imperia coast — for residents, visitors, and friends.'
     contact_missing: Not set
     contact_unavailable: N/A
-    hosted_on: Mastodon hosted on %{domain}
+    hosted_on: Hosted on %{domain}
     title: About
   accounts:
     errors:
