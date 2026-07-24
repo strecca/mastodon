@@ -150,7 +150,8 @@ class Api::V1::CommunityRestaurantsController < Api::BaseController
     base = {
       id: e.id, account_id: e.account_id.to_s, status: e.status,
       account: { id: e.account.id.to_s, username: e.account.username,
-                 display_name: e.account.display_name, avatar: e.account.avatar_original_url },
+                 display_name: e.account.display_name, avatar: e.account.avatar_original_url,
+                 avatar_static: e.account.avatar_static_url },
       images:          imgs.map { |i| i[:original] },
       image_previews:  imgs.map { |i| i[:preview] },
       image_media_ids: e.image_media_ids,
