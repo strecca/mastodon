@@ -256,6 +256,13 @@ Rails.application.routes.draw do
 
   get '/sitemap.xml', to: 'sitemaps#index', as: :sitemap, defaults: { format: 'xml' }
 
+  # Short vanity URL for printed materials (QR codes, flyers) — a fixed,
+  # memorable path that's easy to hand-copy or scan, redirecting to
+  # whichever newsletter is currently the announcement of the moment.
+  # Uses 302 (temporary), not 301, so it can be repointed to a different
+  # newsletter slug later without browsers caching the old destination.
+  get '/barbara', to: redirect('/newsletters/barbara-spotify-playlist', status: 302)
+
   match '/', via: [:post, :put, :patch, :delete], to: 'application#raise_not_found', format: false
   match '*unmatched_route', via: :all, to: 'application#raise_not_found', format: false
 end

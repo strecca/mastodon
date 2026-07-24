@@ -9,6 +9,15 @@
     .input.with_label
       = f.label :author_name, 'Author name'
       = f.text_field :author_name, class: 'string', placeholder: 'Barbara Hunter-Lemke'
+  .fields-group
+    .input.with_label
+      = f.label :slug, 'URL slug'
+      = f.text_field :slug, class: 'string', placeholder: 'auto-generated from title if left blank'
+      %span.hint Becomes the URL: miacivezza.com/newsletters/&lt;slug&gt;
+  .fields-group
+    .input.boolean
+      = f.check_box :exclude_from_digest
+      = f.label :exclude_from_digest, 'Exclude from Daily Digest (keep this newsletter published on its own page, but do not let it become the Digest\'s featured link)'
   .fields-group.fields-group--half
     .input.with_label
       = f.label :published_on, 'Date'

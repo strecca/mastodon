@@ -84,7 +84,7 @@ module Admin
       params.require(:community_newsletter).permit(
         :title, :author_name, :published_on, :slug,
         :newsletter_template, :layout_variant, :masthead_location, :footer_attribution,
-        :design_tokens,
+        :design_tokens, :exclude_from_digest,
         :left_column_it, :left_column_en,
         :right_column_it, :right_column_en,
         :source_text, :status

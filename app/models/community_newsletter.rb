@@ -16,7 +16,7 @@ class CommunityNewsletter < ApplicationRecord
   before_validation :generate_slug, on: :create, if: -> { slug.blank? && title.present? }
 
   scope :published_recent, -> { published.order(published_on: :desc) }
-  scope :for_digest,       -> { published.where(published_on: 7.days.ago..) }
+  scope :for_digest,       -> { published.where(published_on: 7.days.ago..).where(exclude_from_digest: false) }
 
   def asset_for(role)
     newsletter_assets.find { |a| a.role == role.to_s }
