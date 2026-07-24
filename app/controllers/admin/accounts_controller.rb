@@ -27,6 +27,8 @@ module Admin
       @form.save
     rescue ActionController::ParameterMissing
       flash[:alert] = I18n.t('admin.accounts.no_account_selected')
+    rescue Mastodon::NotPermittedError
+      flash[:alert] = I18n.t('admin.accounts.not_permitted_action')
     ensure
       redirect_to admin_accounts_path(filter_params)
     end

@@ -110,6 +110,7 @@ en:
       no_account_selected: No accounts were changed as none were selected
       no_limits_imposed: No limits imposed
       no_role_assigned: No role assigned
+      not_permitted_action: That action couldn't be completed — the account may already be in that state, or you may not have permission to change it.
       not_subscribed: Not subscribed
       pending: Pending review
       perform_full_suspension: Suspend
