@@ -114,6 +114,12 @@ const buildGrid = (year, month) => {
   return days;
 };
 
+// Barbara's account — her events rise to the top within each day's list,
+// in both the main list view and the calendar's day panel. Add more ids
+// here if other organizers should get the same treatment later.
+const PRIORITY_ACCOUNT_IDS = ['116974845699127584'];
+const isPriorityEvent = (evt) => PRIORITY_ACCOUNT_IDS.includes(String(evt.account_id));
+
 const buildEventsByDay = (events) => {
   const map = {};
   events.forEach(evt => {
@@ -121,6 +127,9 @@ const buildEventsByDay = (events) => {
     if (!key) return;
     if (!map[key]) map[key] = [];
     map[key].push(evt);
+  });
+  Object.values(map).forEach(dayEvents => {
+    dayEvents.sort((a, b) => Number(isPriorityEvent(b)) - Number(isPriorityEvent(a)));
   });
   return map;
 };
@@ -525,7 +534,10 @@ const CommunityEvents = ({ multiColumn }) => {
       : filteredEvents;
     return [...base].sort((a, b) => {
       const da = a.event_date ?? ''; const db = b.event_date ?? '';
-      return da < db ? -1 : da > db ? 1 : 0;
+      if (da !== db) return da < db ? -1 : 1;
+      const pa = isPriorityEvent(a), pb = isPriorityEvent(b);
+      if (pa !== pb) return pa ? -1 : 1;
+      return 0;
     });
   }, [filteredEvents, activeFilter, dateFrom, dateTo]);
 
