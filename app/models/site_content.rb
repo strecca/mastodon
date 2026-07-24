@@ -5,9 +5,16 @@ class SiteContent < ApplicationRecord
   validates :locale, presence: true
   validates :key,    uniqueness: { scope: :locale }
 
+  # Rails' own I18n locale codes (config/initializers/i18n.rb, e.g. from a
+  # `?lang=` param on server-rendered Devise pages) don't always match the
+  # codes this table's rows were saved under via the admin translator and
+  # the in-app language switcher. Norwegian is the one known mismatch:
+  # Rails/config/locales uses "no", this table uses "nb" throughout.
+  LOCALE_ALIASES = { 'no' => 'nb' }.freeze
+
   # Returns value for a single key, falling back to English if locale not found
   def self.for(key, locale: 'en', fallback: '')
-    locale = locale.to_s.split('-').first  # 'it-IT' → 'it'
+    locale = normalize_locale(locale)
     record = find_by(key: key, locale: locale)
     record ||= find_by(key: key, locale: 'en') if locale != 'en'
     record&.value.presence || fallback
@@ -15,12 +22,17 @@ class SiteContent < ApplicationRecord
 
   # Returns { key => value } hash for all keys in a locale, falling back to English
   def self.bulk_for(locale: 'en')
-    locale = locale.to_s.split('-').first
+    locale = normalize_locale(locale)
     en_rows = where(locale: 'en').pluck(:key, :value).to_h
     return en_rows if locale == 'en'
 
     locale_rows = where(locale: locale).pluck(:key, :value).to_h
     en_rows.merge(locale_rows)
+  end
+
+  def self.normalize_locale(locale)
+    locale = locale.to_s.split('-').first  # 'it-IT' → 'it'
+    LOCALE_ALIASES[locale] || locale
   end
 
   # Upsert a single key/locale value
