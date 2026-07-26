@@ -812,6 +812,44 @@
     }
   }
 
+  // ── Photo gallery ────────────────────────────────────────────────────────
+  // These classes previously had NO CSS anywhere in this file — the gallery
+  // <img> rendered at its raw native pixel size with no responsive scaling
+  // at all, which is why it overflowed/got clipped on a phone regardless of
+  // the actual image file being completely fine. (A near-identical, correctly
+  // styled block already existed for community_listings' own hand-built
+  // gallery under .cl-detail below — this mirrors that, minus the
+  // overflow:hidden wrapper-clipping risk described there.)
+
+  &__gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  &__gallery-item {
+    display: block;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: zoom-in;
+    padding: 0;
+    border: none;
+    background: none;
+    width: 100%;
+    height: auto;
+    line-height: 0;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+  }
+
   // ── Edit / owner actions ───────────────────────────────────────────────────
 
   &__actions {
