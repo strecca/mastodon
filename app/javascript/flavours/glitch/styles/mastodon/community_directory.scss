@@ -690,6 +690,18 @@
     letter-spacing: -0.2px;
     text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
     margin: 0 0 4px;
+
+    // Events only — same vibrant green used for the selected row on the
+    // list page, so the highlight carries through from list to detail.
+    // Solid background of its own, so no text-shadow needed for contrast.
+    &--event-highlight {
+      display: inline-block;
+      color: #000;
+      text-shadow: none;
+      background: #00e676;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
   }
 
   &__location {
@@ -3074,7 +3086,12 @@
   }
 
   // ── Event row (accordion) ───────────────────────────────────
-  // Rule: collapsed = white bg + dark text; expanded = dark bg + white text.
+  // Selected/expanded row: solid vibrant-green background, black text.
+  // One rule, driven entirely by React's isExpanded state (the --expanded
+  // class) — no separate :active pseudo-class override. That's what broke
+  // this before: a :active rule set its own dark background + white text
+  // independently of --expanded, so the two could fall out of sync and
+  // leave white title text with no matching dark background under it.
   // !important required — Mastodon's theme button selectors have higher specificity.
 
   &__row {
@@ -3082,23 +3099,23 @@
     &:last-child { border-bottom: none; }
 
     &--expanded > .ce-list__row-main {
-      background: #1a1a1a !important;
-      border-left: 3px solid #E87D0D !important;
-      color: #fff !important;
+      background: #00e676 !important;
+      border-left: 3px solid #00a152 !important;
+      color: #000 !important;
 
-      .ce-list__title      { color: #fff !important; }
-      .ce-list__location   { color: rgba(255, 255, 255, 0.72) !important; }
+      .ce-list__title      { color: #000 !important; }
+      .ce-list__location   { color: rgba(0, 0, 0, 0.72) !important; }
       .ce-list__cat-preview {
-        background: rgba(255, 255, 255, 0.12) !important;
-        border-color: rgba(255, 255, 255, 0.25) !important;
-        color: #fff !important;
+        background: rgba(0, 0, 0, 0.1) !important;
+        border-color: rgba(0, 0, 0, 0.25) !important;
+        color: #000 !important;
       }
       .ce-list__source-badge {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border-color: rgba(255, 255, 255, 0.25) !important;
-        color: #80cbc4 !important;
+        background: rgba(0, 0, 0, 0.08) !important;
+        border-color: rgba(0, 0, 0, 0.25) !important;
+        color: #00543a !important;
       }
-      .ce-list__chevron    { color: #E87D0D !important; }
+      .ce-list__chevron    { color: #000 !important; }
     }
   }
 
@@ -3116,8 +3133,7 @@
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 
-    &:hover  { background: #f5f5f5 !important; color: #1a1a1a !important; }
-    &:active { background: #1a1a1a !important; color: #fff !important; }
+    &:hover { background: #f5f5f5 !important; color: #1a1a1a !important; }
 
     &:focus-visible {
       outline: 2px solid rgba(232, 125, 13, 0.5);

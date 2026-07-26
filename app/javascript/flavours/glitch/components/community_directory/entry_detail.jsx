@@ -226,7 +226,11 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
                 ))}
               </div>
             )}
-            <h1 className='community-entry-detail__display-name'>{displayName}</h1>
+            <h1
+              className={`community-entry-detail__display-name${categoryKey === 'events' ? ' community-entry-detail__display-name--event-highlight' : ''}`}
+            >
+              {displayName}
+            </h1>
             {locationVal && (
               <div className='community-entry-detail__location'>{String(locationVal)}</div>
             )}
