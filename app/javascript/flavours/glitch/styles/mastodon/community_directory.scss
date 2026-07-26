@@ -3103,6 +3103,14 @@
       border-left: 3px solid #00a152 !important;
       color: #000 !important;
 
+      // iOS Safari simulates :hover on tap and it can stick until the next
+      // tap elsewhere. .ce-list__row-main:hover (below) has equal
+      // specificity and would otherwise win on tie-break by source order,
+      // masking this green state with grey until the tap moves elsewhere.
+      // Matching :hover here explicitly (higher specificity: 2 classes +
+      // pseudo vs. 1 class + pseudo) keeps green regardless of hover state.
+      &:hover { background: #00e676 !important; color: #000 !important; }
+
       .ce-list__title      { color: #000 !important; }
       .ce-list__location   { color: rgba(0, 0, 0, 0.72) !important; }
       .ce-list__cat-preview {
