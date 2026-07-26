@@ -115,7 +115,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
   const hasNameParts = firstName || lastName;
 
   const nameField = !hasNameParts && config.fields.find(f =>
-    ['display_name', 'name', 'title'].includes(f.db_name),
+    ['display_name', 'name', 'title', 'event_name'].includes(f.db_name),
   );
 
   const displayName = hasNameParts

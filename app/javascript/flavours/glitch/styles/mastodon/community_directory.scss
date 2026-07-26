@@ -3131,6 +3131,8 @@
     border-left: 3px solid transparent;
     text-align: left;
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
     transition: background 0.15s, color 0.15s;
 
     &:hover { background: #f5f5f5 !important; color: #1a1a1a !important; }
