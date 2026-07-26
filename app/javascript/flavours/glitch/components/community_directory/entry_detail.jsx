@@ -1,6 +1,7 @@
 // app/javascript/flavours/glitch/components/community_directory/entry_detail.jsx
 
 import { useEffect, useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { useIntl, defineMessages } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
@@ -332,8 +333,15 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
         </div>
       </div>
 
-      {/* Lightbox overlay */}
-      {lightboxUrl && (
+      {/* Lightbox overlay — portalled straight to document.body. Rendering
+          it as a nested child of .scrollable instead (as before) put it
+          under an ancestor with `contain: strict`, which — like a CSS
+          transform — makes that ancestor the containing block for any
+          position: fixed descendant. The lightbox was then "full screen"
+          relative to the whole scrollable page height instead of the
+          actual viewport, so on a tall entry it rendered far below the
+          visible fold instead of centered on screen. */}
+      {lightboxUrl && createPortal(
         <div
           className='cd-lightbox'
           role='dialog'
@@ -356,7 +364,8 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
             alt=''
             onClick={(e) => e.stopPropagation()}
           />
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   );
