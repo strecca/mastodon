@@ -4153,16 +4153,24 @@
     gap: 8px;
   }
 
+  // No overflow:hidden here — the rounded corners live on the <img> itself
+  // (below) instead of being clipped by the wrapper. A wrapper clip means
+  // the image silently gets cropped any time the wrapper's own height
+  // comes out shorter than the image wants to be, for whatever reason
+  // (a native <button> lacking an appearance reset can do exactly this on
+  // iOS Safari) — putting the radius on the img removes that failure mode
+  // entirely rather than chasing why the wrapper's height was ever wrong.
   &__gallery-item {
     display: block;
-    border-radius: 10px;
-    overflow: hidden;
+    appearance: none;
+    -webkit-appearance: none;
     line-height: 0;
     cursor: zoom-in;
     padding: 0;
     border: none;
     background: none;
     width: 100%;
+    height: auto;
 
     img {
       display: block;
@@ -4170,6 +4178,7 @@
       max-width: 100%;
       height: auto;
       object-fit: contain;
+      border-radius: 10px;
     }
   }
 
