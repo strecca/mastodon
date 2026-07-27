@@ -4024,8 +4024,16 @@ a.account__display-name {
   }
 
   @supports (display: grid) {
-    // hack to fix Chrome <57
-    contain: strict;
+    // Legacy hack to fix Chrome <57 (long extinct). Deliberately excludes
+    // `size` -- upstream 4.6.x added `container: column / inline-size`
+    // above, nested inside an ancestor (.columns-area__panels__main) with
+    // the same container-query setup. `contain: size` blocks an element
+    // from reporting its content's natural size to its own flex parent;
+    // with two nested same-axis container contexts, that breaks the
+    // parent's content-based width (flex-basis: auto) circularly, and the
+    // whole column collapses toward zero width while its content still
+    // renders at full size, overflowing/overlapping visibly.
+    contain: layout style paint;
   }
 
   &--flex {
