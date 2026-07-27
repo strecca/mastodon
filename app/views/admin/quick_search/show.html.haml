@@ -1,0 +1,16 @@
+- content_for :page_title do
+  Quick Search
+
+- content_for :heading do
+  %h1 Quick Search
+
+%p.quick-search__intro
+  Type a few words to find an admin action — you'll get the link, what it does, and anything to watch out for before you click.
+
+.quick-search
+  %input#quick-search-input.quick-search__input{ type: 'search', placeholder: 'Try "moderator", "delete a restaurant", "regenerate digest"…', autofocus: true, autocomplete: 'off' }
+
+  #quick-search-results.quick-search__results
+
+%script#quick-search-data{ type: 'application/json' }
+  != @admin_actions.to_json.gsub('/', '\/')

@@ -2,11 +2,93 @@ import { createRoot } from 'react-dom/client';
 
 import { decode, ValidationError } from 'blurhash';
 import { on } from 'delegated-events';
+import fuzzysort from 'fuzzysort';
 
 import ready from 'flavours/glitch/ready';
 
 import '../styles/mastodon/admin.scss';
 import '../styles/mastodon/community_directory_admin.scss';
+
+interface QuickSearchAction {
+  label: string;
+  url: string;
+  category: string;
+  description: string;
+  caveat: string | null;
+  keywords: string;
+}
+
+let quickSearchActions: QuickSearchAction[] = [];
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderQuickSearchCard(action: QuickSearchAction) {
+  const caveatHtml = action.caveat
+    ? `<p class="quick-search__caveat">⚠ ${escapeHtml(action.caveat)}</p>`
+    : '';
+
+  return `
+    <a class="quick-search__card" href="${escapeHtml(action.url)}">
+      <span class="quick-search__card-category">${escapeHtml(action.category)}</span>
+      <span class="quick-search__card-label">${escapeHtml(action.label)}</span>
+      <p class="quick-search__card-description">${escapeHtml(action.description)}</p>
+      ${caveatHtml}
+    </a>
+  `;
+}
+
+function renderQuickSearchResults(query: string) {
+  const container = document.querySelector<HTMLDivElement>(
+    '#quick-search-results',
+  );
+  if (!container) return;
+
+  const trimmed = query.trim();
+
+  if (!trimmed) {
+    const categories = [
+      ...new Set(quickSearchActions.map((action) => action.category)),
+    ];
+    container.innerHTML = categories
+      .map((category) => {
+        const items = quickSearchActions.filter(
+          (action) => action.category === category,
+        );
+        return `
+          <div class="quick-search__group">
+            <h2 class="quick-search__group-title">${escapeHtml(category)}</h2>
+            ${items.map(renderQuickSearchCard).join('')}
+          </div>
+        `;
+      })
+      .join('');
+    return;
+  }
+
+  const results = fuzzysort
+    .go(trimmed, quickSearchActions, {
+      keys: ['label', 'keywords', 'description'],
+      limit: 20,
+      threshold: -10000,
+    })
+    .map((result) => result.obj);
+
+  container.innerHTML = results.length
+    ? results.map(renderQuickSearchCard).join('')
+    : '<p class="quick-search__empty">No matching admin action found. Try different words.</p>';
+}
+
+on('input', '#quick-search-input', ({ target }) => {
+  if (target instanceof HTMLInputElement) {
+    renderQuickSearchResults(target.value);
+  }
+});
 
 const setAnnouncementEndsAttributes = (target: HTMLInputElement) => {
   const valid = target.value && target.validity.valid;
@@ -308,6 +390,16 @@ async function mountReactComponent(element: Element) {
 }
 
 ready(() => {
+  const quickSearchDataElement = document.querySelector<HTMLScriptElement>(
+    '#quick-search-data',
+  );
+  if (quickSearchDataElement?.textContent) {
+    quickSearchActions = JSON.parse(
+      quickSearchDataElement.textContent,
+    ) as QuickSearchAction[];
+    renderQuickSearchResults('');
+  }
+
   const domainBlockSeveritySelect = document.querySelector<HTMLSelectElement>(
     'select#domain_block_severity',
   );

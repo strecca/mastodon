@@ -11,6 +11,8 @@ namespace :admin do
     post :backfill
   end
 
+  resource :quick_search, only: [:show], controller: 'quick_search'
+
   resources :newsletters, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     member do
       patch :publish

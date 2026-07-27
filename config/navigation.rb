@@ -12,6 +12,11 @@ SimpleNavigation::Configuration.run do |navigation|
            if: -> { Rails.configuration.x.mastodon.software_update_url.present? && current_user.can?(:view_devops) && SoftwareUpdate.urgent_pending? },
            html: { class: 'warning' }
 
+    n.item :quick_search,
+           safe_join([material_symbol('search'), 'Quick Search']),
+           admin_quick_search_path,
+           if: -> { current_user.can?(:administrator) }
+
     n.item :profile, safe_join([material_symbol('person'), t('settings.profile')]), settings_profile_path, if: -> { current_user.functional? && !self_destruct }, highlights_on: %r{/settings/profile|/settings/featured_tags|/settings/verification}
     n.item :privacy, safe_join([material_symbol('globe'), t('privacy.title')]), settings_privacy_path, if: -> { current_user.functional? && !self_destruct }, highlights_on: %r{/settings/privacy}
 
