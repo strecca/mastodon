@@ -13,6 +13,7 @@
 ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "account_aliases", force: :cascade do |t|
     t.bigint "account_id", null: false
@@ -163,7 +164,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.integer "avatar_storage_schema_version"
     t.datetime "avatar_updated_at", precision: nil
     t.string "collections_url"
-    t.datetime "created_at", precision: nil, null: false
+    t.datetime "created_at", null: false
     t.boolean "discoverable"
     t.string "display_name", default: "", null: false
     t.string "domain"
@@ -203,7 +204,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.datetime "suspended_at", precision: nil
     t.integer "suspension_origin"
     t.boolean "trendable"
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "updated_at", null: false
     t.string "uri", default: "", null: false
     t.string "url"
     t.string "username", default: "", null: false
@@ -359,6 +360,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.index ["reference_account_id"], name: "index_canonical_email_blocks_on_reference_account_id"
   end
 
+  create_table "civezza_member_stories", force: :cascade do |t|
+    t.text "about_me"
+    t.bigint "account_id", null: false
+    t.text "civezza_story"
+    t.datetime "created_at", null: false
+    t.bigint "image_media_ids", default: [], array: true
+    t.boolean "published", default: false, null: false
+    t.text "shaping_moment"
+    t.datetime "updated_at", null: false
+    t.text "why_i_joined"
+    t.index ["account_id"], name: "index_civezza_member_stories_on_account_id", unique: true
+  end
+
   create_table "collection_items", id: :bigint, default: -> { "timestamp_id('collection_items'::text)" }, force: :cascade do |t|
     t.bigint "account_id"
     t.string "activity_uri"
@@ -417,18 +431,35 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.datetime "created_at", null: false
     t.string "first_name", null: false
     t.string "hours_schedule"
+    t.bigint "image_media_ids", default: [], array: true
     t.string "last_name", null: false
     t.string "location_town_city", null: false
     t.integer "status", default: 0, null: false
-    t.integer "telephone"
+    t.string "telephone"
     t.datetime "updated_at", null: false
     t.string "website"
+    t.index "lower((((((((COALESCE(first_name, ''::character varying))::text || ' '::text) || (COALESCE(last_name, ''::character varying))::text) || ' '::text) || (COALESCE(location_town_city, ''::character varying))::text) || ' '::text) || COALESCE(artist_description, ''::text))) gin_trgm_ops", name: "idx_community_artists_search_trgm", where: "(status = 1)", using: :gin
     t.index ["account_id"], name: "index_community_artists_on_account_id"
     t.index ["category"], name: "index_community_artists_on_category", using: :gin
+    t.index ["created_at"], name: "idx_community_artists_approved_newest", order: :desc, where: "(status = 1)"
+    t.index ["created_at"], name: "idx_community_artists_approved_oldest", where: "(status = 1)"
     t.index ["created_at"], name: "index_community_artists_on_created_at"
+    t.index ["first_name"], name: "idx_community_artists_approved_az", where: "(status = 1)"
     t.index ["last_name"], name: "index_community_artists_on_last_name"
     t.index ["location_town_city"], name: "index_community_artists_on_location_town_city"
     t.index ["status"], name: "index_community_artists_on_status"
+    t.index ["updated_at"], name: "idx_community_artists_approved_updated", order: :desc, where: "(status = 1)"
+  end
+
+  create_table "community_daily_digests", force: :cascade do |t|
+    t.integer "article_count", default: 0, null: false
+    t.text "content_en"
+    t.text "content_it"
+    t.datetime "created_at", null: false
+    t.date "digest_date", null: false
+    t.datetime "generated_at"
+    t.datetime "updated_at", null: false
+    t.index ["digest_date"], name: "index_community_daily_digests_on_digest_date", unique: true
   end
 
   create_table "community_directory_category_settings", force: :cascade do |t|
@@ -476,22 +507,124 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.datetime "event_date", null: false
     t.text "event_description"
     t.string "event_name", null: false
+    t.bigint "image_media_ids", default: [], array: true
     t.string "location_town_city", null: false
     t.string "source_name"
     t.string "source_url"
     t.integer "status", default: 0, null: false
-    t.integer "telephone"
+    t.string "telephone"
     t.datetime "updated_at", null: false
     t.string "website"
+    t.index "lower((((((COALESCE(event_name, ''::character varying))::text || ' '::text) || (COALESCE(location_town_city, ''::character varying))::text) || ' '::text) || COALESCE(event_description, ''::text))) gin_trgm_ops", name: "idx_community_events_search_trgm", where: "(status = 1)", using: :gin
     t.index ["account_id"], name: "index_community_events_on_account_id"
     t.index ["auto_imported"], name: "index_community_events_on_auto_imported"
     t.index ["category"], name: "index_community_events_on_category", using: :gin
+    t.index ["created_at"], name: "idx_community_events_approved_newest", order: :desc, where: "(status = 1)"
     t.index ["created_at"], name: "index_community_events_on_created_at"
     t.index ["end_date"], name: "index_community_events_on_end_date"
+    t.index ["event_date"], name: "idx_community_events_approved_past", order: :desc, where: "(status = 1)"
+    t.index ["event_date"], name: "idx_community_events_approved_upcoming", where: "(status = 1)"
     t.index ["event_date"], name: "index_community_events_on_event_date"
+    t.index ["event_name"], name: "idx_community_events_approved_az", where: "(status = 1)"
     t.index ["location_town_city"], name: "index_community_events_on_location_town_city"
     t.index ["source_url"], name: "index_community_events_on_source_url", unique: true, where: "(source_url IS NOT NULL)"
     t.index ["status"], name: "index_community_events_on_status"
+  end
+
+  create_table "community_landing_settings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "join_body", default: "Mastodon is an open, decentralised social network. Your posts belong to you, not an algorithm. Sign up to post, interact and connect with your neighbours.", null: false
+    t.text "join_heading", default: "Join the community", null: false
+    t.string "site_name", default: "Centro Comunitario", null: false
+    t.string "site_subtitle", default: "Mia Civezza al Mare", null: false
+    t.text "tagline", default: "La nostra comunità online — eventi, scambi, artisti e molto altro.", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "community_listing_interests", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "community_listing_id", null: false
+    t.datetime "created_at", null: false
+    t.text "message"
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_community_listing_interests_on_account_id"
+    t.index ["community_listing_id", "account_id"], name: "index_cli_on_listing_and_account", unique: true
+    t.index ["community_listing_id"], name: "index_community_listing_interests_on_community_listing_id"
+  end
+
+  create_table "community_listings", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.jsonb "category", default: [], null: false
+    t.integer "condition_value"
+    t.datetime "created_at", null: false
+    t.string "currency", default: "EUR"
+    t.text "description"
+    t.datetime "expires_at"
+    t.bigint "image_media_ids", default: [], array: true
+    t.integer "listing_type", default: 0, null: false
+    t.string "location", default: "Civezza"
+    t.decimal "price", precision: 10, scale: 2
+    t.string "rental_period"
+    t.integer "status", default: 0, null: false
+    t.string "title", null: false
+    t.text "trade_for"
+    t.datetime "updated_at", null: false
+    t.index "lower((((COALESCE(title, ''::character varying))::text || ' '::text) || COALESCE(description, ''::text))) gin_trgm_ops", name: "idx_community_listings_search_trgm", where: "(status = 0)", using: :gin
+    t.index ["account_id", "status"], name: "index_community_listings_on_account_id_and_status"
+    t.index ["account_id"], name: "index_community_listings_on_account_id"
+    t.index ["category"], name: "index_community_listings_on_category", using: :gin
+    t.index ["created_at"], name: "idx_community_listings_open_recent", order: :desc, where: "(status = 0)"
+    t.index ["expires_at"], name: "index_community_listings_on_expires_at"
+    t.index ["listing_type"], name: "index_community_listings_on_listing_type"
+    t.index ["status"], name: "index_community_listings_on_status"
+  end
+
+  create_table "community_locations", force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.integer "sort_order", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["active"], name: "index_community_locations_on_active"
+    t.index ["name"], name: "index_community_locations_on_name", unique: true
+    t.index ["sort_order"], name: "index_community_locations_on_sort_order"
+  end
+
+  create_table "community_my_people", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "member_account_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "member_account_id"], name: "idx_community_my_people_unique", unique: true
+    t.index ["account_id"], name: "index_community_my_people_on_account_id"
+    t.index ["member_account_id"], name: "index_community_my_people_on_member_account_id"
+  end
+
+  create_table "community_newsletters", force: :cascade do |t|
+    t.string "author_name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.jsonb "design_tokens"
+    t.boolean "exclude_from_digest", default: false, null: false
+    t.string "footer_attribution"
+    t.string "layout_variant", default: "gazette", null: false
+    t.text "left_column_en"
+    t.text "left_column_it"
+    t.string "masthead_location"
+    t.string "mastodon_status_id"
+    t.string "newsletter_template", default: "two_column", null: false
+    t.string "original_pdf_path"
+    t.date "published_on"
+    t.text "right_column_en"
+    t.text "right_column_it"
+    t.string "slug", default: "", null: false
+    t.text "source_text"
+    t.integer "status", default: 0, null: false
+    t.string "title", default: "", null: false
+    t.datetime "updated_at", null: false
+    t.index ["published_on"], name: "index_community_newsletters_on_published_on"
+    t.index ["slug"], name: "index_community_newsletters_on_slug", unique: true
+    t.index ["status"], name: "index_community_newsletters_on_status"
   end
 
   create_table "community_notification_preferences", force: :cascade do |t|
@@ -504,6 +637,93 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.boolean "on_visit_overlap", default: true, null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "idx_community_notif_prefs_account", unique: true
+  end
+
+  create_table "community_properties", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "agency_name"
+    t.date "available_from"
+    t.string "bathrooms"
+    t.string "bedrooms"
+    t.string "condition"
+    t.datetime "created_at", null: false
+    t.text "description", null: false
+    t.string "email"
+    t.jsonb "features", default: []
+    t.string "floor"
+    t.string "furnished"
+    t.bigint "image_media_ids", default: [], array: true
+    t.string "listing_type", null: false
+    t.string "phone"
+    t.string "price"
+    t.string "price_period"
+    t.string "property_type", null: false
+    t.integer "size_sqm"
+    t.integer "status", default: 0, null: false
+    t.string "title", null: false
+    t.string "town", null: false
+    t.datetime "updated_at", null: false
+    t.index "lower((((COALESCE(title, ''::character varying))::text || ' '::text) || COALESCE(description, ''::text))) gin_trgm_ops", name: "idx_community_properties_search_trgm", where: "(status = 1)", using: :gin
+    t.index ["account_id"], name: "index_community_properties_on_account_id"
+    t.index ["created_at"], name: "idx_community_properties_approved_newest", order: :desc, where: "(status = 1)"
+    t.index ["created_at"], name: "idx_community_properties_approved_oldest", where: "(status = 1)"
+    t.index ["features"], name: "index_community_properties_on_features", using: :gin
+    t.index ["status"], name: "index_community_properties_on_status"
+    t.index ["title"], name: "idx_community_properties_approved_az", where: "(status = 1)"
+    t.index ["updated_at"], name: "idx_community_properties_approved_updated", order: :desc, where: "(status = 1)"
+  end
+
+  create_table "community_restaurants", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.jsonb "cuisine_type", default: [], null: false
+    t.text "description"
+    t.jsonb "features", default: []
+    t.bigint "image_media_ids", default: [], array: true
+    t.string "name", null: false
+    t.string "opening_hours"
+    t.string "phone"
+    t.string "price_range"
+    t.integer "status", default: 0, null: false
+    t.string "town", null: false
+    t.datetime "updated_at", null: false
+    t.string "website"
+    t.index "lower((((COALESCE(name, ''::character varying))::text || ' '::text) || COALESCE(description, ''::text))) gin_trgm_ops", name: "idx_community_restaurants_search_trgm", where: "(status = 1)", using: :gin
+    t.index ["account_id"], name: "index_community_restaurants_on_account_id"
+    t.index ["created_at"], name: "idx_community_restaurants_approved_newest", order: :desc, where: "(status = 1)"
+    t.index ["created_at"], name: "idx_community_restaurants_approved_oldest", where: "(status = 1)"
+    t.index ["cuisine_type"], name: "index_community_restaurants_on_cuisine_type", using: :gin
+    t.index ["features"], name: "index_community_restaurants_on_features", using: :gin
+    t.index ["name"], name: "idx_community_restaurants_approved_az", where: "(status = 1)"
+    t.index ["status"], name: "index_community_restaurants_on_status"
+    t.index ["updated_at"], name: "idx_community_restaurants_approved_updated", order: :desc, where: "(status = 1)"
+  end
+
+  create_table "community_services", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "business_hours"
+    t.jsonb "category", default: [], null: false
+    t.datetime "created_at", null: false
+    t.text "description", null: false
+    t.string "email"
+    t.bigint "image_media_ids", default: [], array: true
+    t.jsonb "languages_spoken", default: []
+    t.string "name", null: false
+    t.string "phone"
+    t.string "price_range"
+    t.integer "status", default: 0, null: false
+    t.string "town", null: false
+    t.datetime "updated_at", null: false
+    t.string "website"
+    t.index "lower((((COALESCE(name, ''::character varying))::text || ' '::text) || COALESCE(description, ''::text))) gin_trgm_ops", name: "idx_community_services_search_trgm", where: "(status = 1)", using: :gin
+    t.index ["account_id"], name: "index_community_services_on_account_id"
+    t.index ["category"], name: "index_community_services_on_category", using: :gin
+    t.index ["created_at"], name: "idx_community_services_approved_newest", order: :desc, where: "(status = 1)"
+    t.index ["created_at"], name: "idx_community_services_approved_oldest", where: "(status = 1)"
+    t.index ["languages_spoken"], name: "index_community_services_on_languages_spoken", using: :gin
+    t.index ["name"], name: "idx_community_services_approved_az", where: "(status = 1)"
+    t.index ["status"], name: "index_community_services_on_status"
+    t.index ["updated_at"], name: "idx_community_services_approved_updated", order: :desc, where: "(status = 1)"
   end
 
   create_table "community_visit_notifications", force: :cascade do |t|
@@ -764,12 +984,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
 
   create_table "follows", force: :cascade do |t|
     t.bigint "account_id", null: false
-    t.datetime "created_at", precision: nil, null: false
+    t.datetime "created_at", null: false
     t.string "languages", array: true
     t.boolean "notify", default: false, null: false
     t.boolean "show_reblogs", default: true, null: false
     t.bigint "target_account_id", null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "updated_at", null: false
     t.string "uri"
     t.index ["account_id", "target_account_id"], name: "index_follows_on_account_id_and_target_account_id", unique: true
     t.index ["target_account_id", "account_id"], name: "index_follows_on_target_account_id_and_account_id"
@@ -936,6 +1156,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["account_id", "target_account_id"], name: "index_mutes_on_account_id_and_target_account_id", unique: true
     t.index ["target_account_id"], name: "index_mutes_on_target_account_id"
+  end
+
+  create_table "newsletter_assets", force: :cascade do |t|
+    t.string "alt_text"
+    t.bigint "community_newsletter_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "display_order", default: 0, null: false
+    t.string "file_path"
+    t.string "position", default: "", null: false
+    t.string "role", default: "", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_newsletter_id", "role"], name: "index_newsletter_assets_on_community_newsletter_id_and_role"
+    t.index ["community_newsletter_id"], name: "index_newsletter_assets_on_community_newsletter_id"
   end
 
   create_table "notification_permissions", force: :cascade do |t|
@@ -1234,6 +1467,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.index ["scheduled_at"], name: "index_scheduled_statuses_on_scheduled_at"
   end
 
+  create_table "scraper_run_logs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "error_count", default: 0, null: false
+    t.text "error_message"
+    t.integer "fetched", default: 0, null: false
+    t.integer "imported", default: 0, null: false
+    t.datetime "ran_at", null: false
+    t.integer "skipped", default: 0, null: false
+    t.string "source_name", null: false
+    t.string "status", default: "ok", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_name", "ran_at"], name: "index_scraper_run_logs_on_source_name_and_ran_at"
+  end
+
   create_table "session_activations", force: :cascade do |t|
     t.bigint "access_token_id"
     t.datetime "created_at", precision: nil, null: false
@@ -1269,6 +1516,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.index ["local_account_id", "relationship_severance_event_id"], name: "index_severed_relationships_on_local_account_and_event"
     t.index ["relationship_severance_event_id", "local_account_id", "direction", "remote_account_id"], name: "index_severed_relationships_on_unique_tuples", unique: true
     t.index ["remote_account_id"], name: "index_severed_relationships_on_remote_account_id"
+  end
+
+  create_table "site_contents", force: :cascade do |t|
+    t.string "content_type", default: "text", null: false
+    t.datetime "created_at", null: false
+    t.string "key", null: false
+    t.string "locale", default: "en", null: false
+    t.datetime "updated_at", null: false
+    t.text "value", default: "", null: false
+    t.index ["key", "locale"], name: "index_site_contents_on_key_and_locale", unique: true
   end
 
   create_table "site_uploads", force: :cascade do |t|
@@ -1349,7 +1606,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.bigint "application_id"
     t.string "content_type"
     t.bigint "conversation_id"
-    t.datetime "created_at", precision: nil, null: false
+    t.datetime "created_at", null: false
     t.datetime "deleted_at", precision: nil
     t.datetime "edited_at", precision: nil
     t.datetime "fetched_replies_at"
@@ -1367,7 +1624,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.text "spoiler_text", default: "", null: false
     t.text "text", default: "", null: false
     t.boolean "trendable"
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "updated_at", null: false
     t.string "uri"
     t.string "url"
     t.integer "visibility", default: 0, null: false
@@ -1632,6 +1889,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
   add_foreign_key "bulk_import_rows", "bulk_imports", on_delete: :cascade
   add_foreign_key "bulk_imports", "accounts", on_delete: :cascade
   add_foreign_key "canonical_email_blocks", "accounts", column: "reference_account_id", on_delete: :cascade
+  add_foreign_key "civezza_member_stories", "accounts"
   add_foreign_key "collection_items", "accounts"
   add_foreign_key "collection_items", "collections", on_delete: :cascade
   add_foreign_key "collection_reports", "collections", on_delete: :cascade
@@ -1641,7 +1899,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
   add_foreign_key "community_artists", "accounts"
   add_foreign_key "community_directory_permissions", "accounts"
   add_foreign_key "community_events", "accounts"
+  add_foreign_key "community_listing_interests", "accounts"
+  add_foreign_key "community_listing_interests", "community_listings"
+  add_foreign_key "community_listings", "accounts"
+  add_foreign_key "community_my_people", "accounts"
+  add_foreign_key "community_my_people", "accounts", column: "member_account_id"
   add_foreign_key "community_notification_preferences", "accounts"
+  add_foreign_key "community_properties", "accounts"
+  add_foreign_key "community_restaurants", "accounts"
+  add_foreign_key "community_services", "accounts"
   add_foreign_key "community_visit_notifications", "accounts", column: "recipient_account_id"
   add_foreign_key "community_visit_notifications", "accounts", column: "sender_account_id"
   add_foreign_key "community_visit_notifications", "community_visits"
@@ -1690,6 +1956,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
   add_foreign_key "mentions", "statuses", on_delete: :cascade
   add_foreign_key "mutes", "accounts", column: "target_account_id", name: "fk_eecff219ea", on_delete: :cascade
   add_foreign_key "mutes", "accounts", name: "fk_b8d8daf315", on_delete: :cascade
+  add_foreign_key "newsletter_assets", "community_newsletters"
   add_foreign_key "notification_permissions", "accounts", column: "from_account_id", on_delete: :cascade
   add_foreign_key "notification_permissions", "accounts", on_delete: :cascade
   add_foreign_key "notification_policies", "accounts", on_delete: :cascade
@@ -1730,7 +1997,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
   add_foreign_key "severed_relationships", "relationship_severance_events", on_delete: :cascade
   add_foreign_key "status_edits", "accounts", on_delete: :nullify
   add_foreign_key "status_edits", "statuses", on_delete: :cascade
-  add_foreign_key "status_pins", "accounts", name: "fk_d4cb435b62", on_delete: :cascade
+  add_foreign_key "status_pins", "accounts", on_delete: :cascade
   add_foreign_key "status_pins", "statuses", on_delete: :cascade
   add_foreign_key "status_stats", "statuses", on_delete: :cascade
   add_foreign_key "status_trends", "accounts", on_delete: :cascade
@@ -1776,9 +2043,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
   add_index "account_summaries", ["account_id"], name: "index_account_summaries_on_account_id", unique: true
 
   create_view "global_follow_recommendations", materialized: true, sql_definition: <<-SQL
-      SELECT t0.account_id,
-      sum(t0.rank) AS rank,
-      array_agg(t0.reason) AS reason
+      SELECT account_id,
+      sum(rank) AS rank,
+      array_agg(reason) AS reason
      FROM ( SELECT account_summaries.account_id,
               ((count(follows.id))::numeric / (1.0 + (count(follows.id))::numeric)) AS rank,
               'most_followed'::text AS reason
@@ -1802,8 +2069,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
                     WHERE (follow_recommendation_suppressions.account_id = statuses.account_id)))))
             GROUP BY account_summaries.account_id
            HAVING (sum((status_stats.reblogs_count + status_stats.favourites_count)) >= (5)::numeric)) t0
-    GROUP BY t0.account_id
-    ORDER BY (sum(t0.rank)) DESC;
+    GROUP BY account_id
+    ORDER BY (sum(rank)) DESC;
   SQL
   add_index "global_follow_recommendations", ["account_id"], name: "index_global_follow_recommendations_on_account_id", unique: true
 
@@ -1833,9 +2100,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
   add_index "instances", ["domain"], name: "index_instances_on_domain", unique: true
 
   create_view "user_ips", sql_definition: <<-SQL
-      SELECT t0.user_id,
-      t0.ip,
-      max(t0.used_at) AS used_at
+      SELECT user_id,
+      ip,
+      max(used_at) AS used_at
      FROM ( SELECT users.id AS user_id,
               users.sign_up_ip AS ip,
               users.created_at AS used_at
@@ -1852,6 +2119,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
               login_activities.created_at
              FROM login_activities
             WHERE (login_activities.success = true)) t0
-    GROUP BY t0.user_id, t0.ip;
+    GROUP BY user_id, ip;
   SQL
 end
