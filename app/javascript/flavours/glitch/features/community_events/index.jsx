@@ -318,7 +318,7 @@ const EventListRow = ({ event, isExpanded, onToggle, accountId }) => {
             )}
 
             <div className='ce-list__detail-actions'>
-              <Link to={`/community_events/${event.id}`} className='button button--compact ce-list__action-btn'>
+              <Link to={`/community_events/${event.id}`} className='button button--compact ce-list__action-btn ce-list__action-btn--primary'>
                 {intl.formatMessage(messages.viewDetails)}
               </Link>
               {isOwn && (

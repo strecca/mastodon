@@ -41,11 +41,11 @@ const CATEGORY_COLORS = {
   services:    '#8B3E24',
 };
 
-const fmtFieldDate = (iso) => {
+const fmtFieldDate = (iso, locale) => {
   if (!iso) return iso;
   const d = new Date(iso.slice(0, 10) + 'T00:00:00');
   if (isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  return d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 };
 
 const EntryDetailInner = ({ config, entryId, identity }) => {
@@ -295,7 +295,7 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
                     const rawDisplayVal = field.translatable
                       ? (translatedValue(entry, field.db_name, locale) || storedVal)
                       : storedVal;
-                    const val = field.widget === 'date' ? fmtFieldDate(rawDisplayVal) : rawDisplayVal;
+                    const val = field.widget === 'date' ? fmtFieldDate(rawDisplayVal, locale) : rawDisplayVal;
                     const isLink = field.widget === 'url' || /^https?:\/\//.test(val);
                     const href = isLink && !/^https?:\/\//.test(val) ? `https://${val}` : val;
                     return (

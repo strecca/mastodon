@@ -3274,6 +3274,15 @@
     &:hover  { background: #f0f0f0 !important; color: #1a1a1a !important; }
     &:active { background: #1a1a1a !important; color: #fff !important; border-color: #1a1a1a !important; }
 
+    // "View Details" is the primary action in this row and the one most
+    // often tapped on a phone — doubled from the base size as a bigger,
+    // easier touch target.
+    &--primary {
+      font-size: 24px !important;
+      padding: 8px 24px !important;
+      font-weight: 600;
+    }
+
     &--edit {
       background: rgba(232, 125, 13, 0.1) !important;
       color: #C65900 !important;
