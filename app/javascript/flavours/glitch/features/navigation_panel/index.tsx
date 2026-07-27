@@ -31,6 +31,7 @@ import NotificationsIcon from '@/material-icons/400-24px/notifications.svg?react
 import PersonAddActiveIcon from '@/material-icons/400-24px/person_add-fill.svg?react';
 import PersonAddIcon from '@/material-icons/400-24px/person_add.svg?react';
 import PublicIcon from '@/material-icons/400-24px/public.svg?react';
+import SearchIcon from '@/material-icons/400-24px/search.svg?react';
 import SettingsIcon from '@/material-icons/400-24px/settings.svg?react';
 import StarActiveIcon from '@/material-icons/400-24px/star-fill.svg?react';
 import StarIcon from '@/material-icons/400-24px/star.svg?react';
@@ -358,6 +359,69 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
           />
         )}
 
+        {signedIn && !!(permissions & 0x1) && (
+          <>
+            <hr />
+            <div className='navigation-panel__admin-heading'>Admin Tools</div>
+            <ColumnLink
+              transparent
+              id='admin-quick-search-link'
+              href='/admin/quick_search'
+              icon='search'
+              iconComponent={SearchIcon}
+              text='Admin Quick Search'
+            />
+            <ColumnLink
+              transparent
+              href='/admin/site_settings/edit'
+              icon='edit_note'
+              iconComponent={EditNoteIcon}
+              text='Site Content & Translations'
+            />
+            <ColumnLink
+              transparent
+              to='/community_directory/admin'
+              icon='category'
+              iconComponent={CollectionsIcon}
+              text='Community Admin'
+            />
+            <ColumnLink
+              transparent
+              to='/community_directory/moderation'
+              icon='gavel'
+              iconComponent={GavelIcon}
+              text='Moderation Queue'
+            />
+            <ColumnLink
+              transparent
+              to='/community_directory/scraper_logs'
+              icon='public'
+              iconComponent={PublicIcon}
+              text='Scraper Logs'
+            />
+            <ColumnLink
+              transparent
+              to='/community_maintenance'
+              icon='manufacturing'
+              iconComponent={AdministrationIcon}
+              text='Site Maintenance'
+            />
+            <ColumnLink
+              transparent
+              to='/community_visits/admin'
+              icon='manage_accounts'
+              text='Visits Admin'
+            />
+            <ColumnLink
+              transparent
+              href='/admin/dashboard'
+              icon='settings'
+              iconComponent={SettingsIcon}
+              text='Mastodon Admin'
+            />
+          </>
+        )}
+
         {/* ── Social features — signed-in only ── */}
         {signedIn && (
           <>
@@ -445,61 +509,6 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
               iconComponent={AdministrationIcon}
               text={intl.formatMessage(messages.app_settings)}
             />
-
-            {!!(permissions & 0x1) && (
-              <>
-                <hr />
-                <div className='navigation-panel__admin-heading'>Admin Tools</div>
-                <ColumnLink
-                  transparent
-                  href='/admin/site_settings/edit'
-                  icon='edit_note'
-                  iconComponent={EditNoteIcon}
-                  text='Site Content & Translations'
-                />
-                <ColumnLink
-                  transparent
-                  to='/community_directory/admin'
-                  icon='category'
-                  iconComponent={CollectionsIcon}
-                  text='Community Admin'
-                />
-                <ColumnLink
-                  transparent
-                  to='/community_directory/moderation'
-                  icon='gavel'
-                  iconComponent={GavelIcon}
-                  text='Moderation Queue'
-                />
-                <ColumnLink
-                  transparent
-                  to='/community_directory/scraper_logs'
-                  icon='public'
-                  iconComponent={PublicIcon}
-                  text='Scraper Logs'
-                />
-                <ColumnLink
-                  transparent
-                  to='/community_maintenance'
-                  icon='manufacturing'
-                  iconComponent={AdministrationIcon}
-                  text='Site Maintenance'
-                />
-                <ColumnLink
-                  transparent
-                  to='/community_visits/admin'
-                  icon='manage_accounts'
-                  text='Visits Admin'
-                />
-                <ColumnLink
-                  transparent
-                  href='/admin/dashboard'
-                  icon='settings'
-                  iconComponent={SettingsIcon}
-                  text='Mastodon Admin'
-                />
-              </>
-            )}
 
             <ColumnLink
               transparent

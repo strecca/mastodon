@@ -4219,6 +4219,24 @@ a.account__display-name {
   margin: -6px 10px;
 }
 
+// Direct, unmissable link to /admin/quick_search at the top of the Admin
+// Tools nav block — red so it stands out from every other (default-colored)
+// admin link, since it's meant to be the one-click starting point instead
+// of hunting through the rest of the block.
+#admin-quick-search-link {
+  color: #e0142c !important;
+  font-weight: 700;
+  background: rgba(224, 20, 44, 8%);
+  border-radius: 4px;
+
+  &:hover,
+  &:active,
+  &:focus-visible {
+    color: #ff2d47 !important;
+    background: rgba(224, 20, 44, 14%);
+  }
+}
+
 .getting-started__wrapper {
   flex: 0 0 auto;
 }
