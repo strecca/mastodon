@@ -1411,7 +1411,7 @@ nl:
       title: Inloggen op %{domain}
     sign_up:
       manual_review: Inschrijvingen op %{domain} worden handmatig door onze moderatoren beoordeeld. Schrijf wat over jezelf en waarom je een account op %{domain} wilt. Hiermee help je ons om de aanvraag van jouw account goed te kunnen verwerken.
-      preamble: Met een account op deze Mastodon-server kun je iedereen in de fediverse volgen, ongeacht waar deze persoon een account heeft.
+      preamble: Maak gratis je account aan op het communityplatform miacivezza.com. Maak contact met buren, ontdek lokale evenementen, diensten, kunstenaars en cultuur in Civezza en de omliggende regio Ligurië.
       title: Laten we je account op %{domain} instellen.
     status:
       account_status: Accountstatus

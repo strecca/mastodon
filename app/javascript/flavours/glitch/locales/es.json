@@ -91,7 +91,7 @@
   "community.restaurants.title_add": "Añadir a «Restaurantes de la comunidad»",
   "community.restaurants.title_edit": "Editar — Restaurantes comunitarios",
   "community.search.filters": "Filtro:",
-  "community.search.placeholder": "{name}Buscar…",
+  "community.search.placeholder": "Buscar {name}…",
   "community.search.sort": "Suerte",
   "community.search.sort.az": "A–Z",
   "community.search.sort.newest": "Más recientes",

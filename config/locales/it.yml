@@ -1411,7 +1411,7 @@ it:
       title: Accedi a %{domain}
     sign_up:
       manual_review: Le registrazioni su %{domain} vengono sottoposte a revisione manuale da parte dei nostri moderatori. Per aiutarci a elaborare la tua registrazione, scrivi qualcosa su di te e sul motivo per cui desideri un account su %{domain}.
-      preamble: Con un account su questo server Mastodon, potrai seguire qualsiasi altra persona sul fediverso, indipendentemente da dove sia ospitato il suo account.
+      preamble: Crea gratuitamente il tuo account sulla piattaforma comunitaria di miacivezza.com. Entra in contatto con i vicini, scopri eventi locali, servizi, artisti e cultura a Civezza e nella regione Liguria circostante.
       title: Lascia che ti configuriamo su %{domain}.
     status:
       account_status: Stato dell'account
