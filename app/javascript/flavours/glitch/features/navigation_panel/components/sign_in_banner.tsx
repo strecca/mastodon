@@ -18,10 +18,7 @@ export const SignInBanner: React.FC = () => {
   );
 
   const signupUrl = useAppSelector(
-    (state) =>
-      (state.server.getIn(['server', 'registrations', 'url'], null) as
-        | string
-        | null) ?? '/auth/sign_up',
+    (state) => state.server.server.item?.registrations.url ?? '/auth/sign_up',
   );
 
   if (sso_redirect) {

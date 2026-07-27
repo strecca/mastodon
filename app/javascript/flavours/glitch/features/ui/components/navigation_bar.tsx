@@ -19,6 +19,7 @@ import { toggleNavigation } from 'flavours/glitch/actions/navigation';
 import { fetchServer } from 'flavours/glitch/actions/server';
 import { Icon } from 'flavours/glitch/components/icon';
 import { IconWithBadge } from 'flavours/glitch/components/icon_with_badge';
+import type { MastodonLocationDescriptor } from 'flavours/glitch/components/router';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import { registrationsOpen, sso_redirect } from 'flavours/glitch/initial_state';
 import { selectUnreadNotificationGroupsCount } from 'flavours/glitch/selectors/notifications';
@@ -33,15 +34,21 @@ export const messages = defineMessages({
     defaultMessage: 'Notifications',
   },
   menu: { id: 'tabs_bar.menu', defaultMessage: 'Menu' },
+  advancedUiQuickLinks: {
+    id: 'tabs_bar.quick_links',
+    defaultMessage: 'Quick links',
+  },
 });
 
 const IconLabelButton: React.FC<{
-  to: string;
+  to: MastodonLocationDescriptor;
   icon?: React.ReactNode;
   activeIcon?: React.ReactNode;
   title: string;
 }> = ({ to, icon, activeIcon, title }) => {
-  const match = useRouteMatch(to);
+  const match = useRouteMatch(
+    typeof to === 'string' ? to : (to.pathname ?? ''),
+  );
 
   return (
     <NavLink
@@ -86,10 +93,7 @@ const NotificationsButton = () => {
 const LoginOrSignUp: React.FC = () => {
   const dispatch = useAppDispatch();
   const signupUrl = useAppSelector(
-    (state) =>
-      (state.server.getIn(['server', 'registrations', 'url'], null) as
-        | string
-        | null) ?? '/auth/sign_up',
+    (state) => state.server.server.item?.registrations.url ?? '/auth/sign_up',
   );
 
   const openClosedRegistrationsModal = useCallback(() => {
@@ -97,7 +101,7 @@ const LoginOrSignUp: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchServer());
+    void dispatch(fetchServer());
   }, [dispatch]);
 
   if (sso_redirect) {
@@ -200,7 +204,7 @@ export const NavigationBar: React.FC = () => {
             />
             <IconLabelButton
               title={intl.formatMessage(messages.publish)}
-              to='/publish'
+              to={{ pathname: '/publish', state: { focusTarget: false } }}
               icon={<Icon id='' icon={AddIcon} />}
             />
             <NotificationsButton />

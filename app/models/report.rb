@@ -37,8 +37,6 @@
 #
 
 class Report < ApplicationRecord
-  self.ignored_columns += %w(action_taken)
-
   include Paginable
   include RateLimitable
 

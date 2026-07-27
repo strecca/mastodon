@@ -64,7 +64,6 @@ import { selectUnreadNotificationGroupsCount } from 'flavours/glitch/selectors/n
 import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
 
 import { AnnualReportNavItem } from '../annual_report/nav_item';
-import { areCollectionsEnabled } from '../collections/utils';
 
 import { DisabledAccountBanner } from './components/disabled_account_banner';
 import { FollowedTagsPanel } from './components/followed_tags_panel';
@@ -85,6 +84,12 @@ const messages = defineMessages({
   firehose_singular: {
     id: 'column.firehose_singular',
     defaultMessage: 'Live feed',
+  },
+  main: {
+    id: 'navigation_bar.main',
+    defaultMessage: 'Main',
+    description:
+      'Label for the main navigation; should not contain the word "navigation".',
   },
   direct: { id: 'navigation_bar.direct', defaultMessage: 'Private mentions' },
   favourites: { id: 'navigation_bar.favourites', defaultMessage: 'Favorites' },
@@ -279,7 +284,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
   );
 
   return (
-    <div className='navigation-panel'>
+    <nav className='navigation-panel' aria-label={intl.formatMessage(messages.main)}>
       {!multiColumn && <ProfileCard />}
 
       {banner && <div className='navigation-panel__banner'>{banner}</div>}
@@ -429,7 +434,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
 
             {!multiColumn && (
               <ColumnLink
-                to='/publish'
+                to={{ pathname: '/publish', state: { focusTarget: false } }}
                 icon='plus'
                 iconComponent={AddIcon}
                 activeIconComponent={AddIcon}
@@ -438,20 +443,42 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
               />
             )}
 
-            <ColumnLink
-              transparent
-              to='/home'
-              icon='home'
-              iconComponent={HomeIcon}
-              activeIconComponent={HomeActiveIcon}
-              text='Timeline'
-            />
-
             <NotificationsLink />
 
             <FollowRequestsLink />
 
             <AnnualReportNavItem />
+
+            {trendsEnabled && (
+              <ColumnLink
+                transparent
+                to='/explore'
+                icon='explore'
+                iconComponent={TrendingUpIcon}
+                text={intl.formatMessage(messages.explore)}
+              />
+            )}
+
+            {(canViewFeed(signedIn, permissions, localLiveFeedAccess) ||
+              canViewFeed(signedIn, permissions, remoteLiveFeedAccess)) && (
+              <ColumnLink
+                transparent
+                to={
+                  canViewFeed(signedIn, permissions, localLiveFeedAccess)
+                    ? '/public/local'
+                    : '/public/remote'
+                }
+                icon='globe'
+                iconComponent={PublicIcon}
+                isActive={isFirehoseActive}
+                text={intl.formatMessage(
+                  canViewFeed(signedIn, permissions, localLiveFeedAccess) &&
+                    canViewFeed(signedIn, permissions, remoteLiveFeedAccess)
+                    ? messages.firehose
+                    : messages.firehose_singular,
+                )}
+              />
+            )}
 
             <hr />
 
@@ -475,16 +502,14 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
               activeIconComponent={BookmarksActiveIcon}
               text={intl.formatMessage(messages.bookmarks)}
             />
-            {areCollectionsEnabled() && (
-              <ColumnLink
-                transparent
-                to={`/@${account?.acct}/collections`}
-                icon='collections'
-                iconComponent={CollectionsIcon}
-                activeIconComponent={CollectionsActiveIcon}
-                text={intl.formatMessage(messages.collections)}
-              />
-            )}
+            <ColumnLink
+              transparent
+              to={`/@${account?.acct}/collections`}
+              icon='collections'
+              iconComponent={CollectionsIcon}
+              activeIconComponent={CollectionsActiveIcon}
+              text={intl.formatMessage(messages.collections)}
+            />
             <ColumnLink
               transparent
               to='/conversations'
@@ -526,7 +551,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
       <div className='flex-spacer' />
 
       <Trends />
-    </div>
+    </nav>
   );
 };
 

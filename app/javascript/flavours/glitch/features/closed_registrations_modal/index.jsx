@@ -1,32 +1,80 @@
-import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
+import { FormattedMessage } from 'react-intl';
 
-const ClosedRegistrationsModal = () => {
-  const sc = useSiteContent();
+import ImmutablePureComponent from 'react-immutable-pure-component';
+import { connect } from 'react-redux';
 
-  return (
-    <div className='modal-root__modal interaction-modal'>
-      <div className='interaction-modal__lead'>
-        <img
-          src='/miacivezza-sun-small.png'
-          alt='Mia Civezza'
-          style={{ width: '100%', maxWidth: '220px', height: 'auto', display: 'block', margin: '0 auto 16px' }}
+import { fetchServer } from 'flavours/glitch/actions/server';
+import { domain } from 'flavours/glitch/initial_state';
+import { NavigationFocusTarget } from '@/flavours/glitch/components/navigation_focus_target';
+
+const mapStateToProps = state => ({
+  message: state.getIn(['server', 'server', 'item', 'registrations', 'message']),
+});
+
+class ClosedRegistrationsModal extends ImmutablePureComponent {
+
+  componentDidMount () {
+    const { dispatch } = this.props;
+    dispatch(fetchServer());
+  }
+
+  render () {
+    let closedRegistrationsMessage;
+
+    if (this.props.message) {
+      closedRegistrationsMessage = (
+        <p
+          className='prose'
+          dangerouslySetInnerHTML={{ __html: this.props.message }}
         />
-        <h3>{sc('join_modal_title', 'Signing up on MiaCivezza.com')}</h3>
-        <p>{sc('join_modal_preamble', 'Create a free account to post, connect with neighbours, and participate in community events.')}</p>
-      </div>
+      );
+    } else {
+      closedRegistrationsMessage = (
+        <p className='prose'>
+          <FormattedMessage
+            id='closed_registrations_modal.description'
+            defaultMessage='Creating an account on {domain} is currently not possible, but please keep in mind that you do not need an account specifically on {domain} to use Mastodon.'
+            values={{ domain: <strong>{domain}</strong> }}
+          />
+        </p>
+      );
+    }
 
-      <div className='interaction-modal__choices'>
-        <div className='interaction-modal__choices__choice'>
-          <a href='/auth/sign_up' className='button button--block'>
-            {sc('join_modal_signup_btn', 'Sign up here right now!')}
-          </a>
-          <a href='/community' className='button button--block button-secondary' style={{ marginTop: '8px' }}>
-            {sc('join_modal_explore_btn', 'Explore the Community')}
-          </a>
+    return (
+      <div className='modal-root__modal interaction-modal'>
+        <div className='interaction-modal__lead'>
+          <NavigationFocusTarget as='h1'>
+            <FormattedMessage id='closed_registrations_modal.title' defaultMessage='Signing up on Mastodon' />
+          </NavigationFocusTarget>
+          <p>
+            <FormattedMessage
+              id='closed_registrations_modal.preamble'
+              defaultMessage='Mastodon is decentralized, so no matter where you create your account, you will be able to follow and interact with anyone on this server. You can even self-host it!'
+            />
+          </p>
+        </div>
+
+        <div className='interaction-modal__choices'>
+          <div className='interaction-modal__choices__choice'>
+            <h2><FormattedMessage id='interaction_modal.on_this_server' defaultMessage='On this server' /></h2>
+            {closedRegistrationsMessage}
+          </div>
+
+          <div className='interaction-modal__choices__choice'>
+            <h2><FormattedMessage id='interaction_modal.on_another_server' defaultMessage='On a different server' /></h2>
+            <p className='prose'>
+              <FormattedMessage
+                id='closed_registrations.other_server_instructions'
+                defaultMessage='Since Mastodon is decentralized, you can create an account on another server and still interact with this one.'
+              />
+            </p>
+            <a href='https://joinmastodon.org/servers' className='button button--block'><FormattedMessage id='closed_registrations_modal.find_another_server' defaultMessage='Find another server' /></a>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
 
-export default ClosedRegistrationsModal;
+}
+
+export default connect(mapStateToProps)(ClosedRegistrationsModal);

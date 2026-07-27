@@ -15,6 +15,7 @@ import type { MenuItem } from 'flavours/glitch/models/dropdown_menu';
 import { useAppDispatch } from 'flavours/glitch/store';
 
 import { messages as editorMessages } from '../editor';
+import { getCollectionPath } from '../utils';
 
 const messages = defineMessages({
   view: {
@@ -120,7 +121,7 @@ export const CollectionMenu: React.FC<{
   const menu = useMemo(() => {
     const viewCollectionItem: MenuItem = {
       text: intl.formatMessage(messages.view),
-      to: `/collections/${id}`,
+      to: getCollectionPath(id),
     };
     const shareItems: MenuItem[] = [
       {
@@ -130,7 +131,7 @@ export const CollectionMenu: React.FC<{
       {
         text: intl.formatMessage(messages.copyLink),
         action: () => {
-          void navigator.clipboard.writeText(`/collections/${id}`);
+          void navigator.clipboard.writeText(collection.url);
           dispatch(showAlert({ message: messages.copyLinkConfirmation }));
         },
       },
@@ -162,11 +163,7 @@ export const CollectionMenu: React.FC<{
         return ownerItems;
       }
     } else {
-      const nonOwnerItems: MenuItem[] = [
-        viewCollectionItem,
-        ...shareItems,
-        null,
-      ];
+      const nonOwnerItems: MenuItem[] = [...shareItems, null];
 
       // Collection notifications already have a prominent 'Remove me' button
       if (currentAccountInCollection && context !== 'notifications') {
@@ -188,6 +185,10 @@ export const CollectionMenu: React.FC<{
         });
       }
 
+      if (context !== 'collection') {
+        return [viewCollectionItem, ...nonOwnerItems];
+      }
+
       return nonOwnerItems;
     }
   }, [
@@ -195,13 +196,14 @@ export const CollectionMenu: React.FC<{
     id,
     openShareModal,
     isOwnCollection,
+    collection.url,
     dispatch,
     openDeleteConfirmation,
     context,
     currentAccountInCollection,
     openReportModal,
-    openBlockModal,
     openRevokeConfirmation,
+    openBlockModal,
   ]);
 
   return (
