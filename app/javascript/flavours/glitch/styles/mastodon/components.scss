@@ -3124,7 +3124,18 @@ a.account__display-name {
     &__main {
       box-sizing: border-box;
       width: 100%;
-      flex: 0 1 auto;
+      // flex-basis was `auto` (content-based) -- with a container-query
+      // descendant (.scrollable, see below) nested inside this element's
+      // own `container: column / inline-size` context, an `auto` basis
+      // makes this element's width depend on measuring its content's
+      // natural size, which itself depends on this element's own size
+      // being resolved first. That circular dependency can get stuck on
+      // the very first paint (rendering as a collapsed sliver) and only
+      // self-corrects on a later reflow/re-render -- confirmed empirically:
+      // switching the language switcher (which forces a full React
+      // re-render) fixed the layout without any other change. An explicit
+      // basis removes the circularity entirely.
+      flex: 0 1 600px;
       display: flex;
       flex-direction: column;
       contain: inline-size layout paint style;
