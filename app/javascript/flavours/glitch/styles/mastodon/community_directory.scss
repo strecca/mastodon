@@ -4776,6 +4776,14 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 .cl-landing {
+  // Explicit width, not the default flex-item `stretch` cross-size --
+  // this element is also a container-query context (via .scrollable's
+  // `container: column / inline-size`), and `container-type` on a flex
+  // item is a known trigger for browsers to fall back to shrink-to-fit
+  // sizing instead of stretching to the flex container's cross-size,
+  // collapsing this element to its widest unbreakable word.
+  width: 100%;
+  box-sizing: border-box;
   max-width: 680px;
   margin: 0 auto;
   padding: 0 16px 48px;
