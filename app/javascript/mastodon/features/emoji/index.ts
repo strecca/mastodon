@@ -1,4 +1,8 @@
-import { initialState } from '@/mastodon/initial_state';
+import {
+  getAccessToken,
+  initialState,
+  limitedFederationMode,
+} from '@/mastodon/initial_state';
 
 import { EMOJI_DB_RELOAD_EVENT } from './constants';
 import { toSupportedLocale } from './locale';
@@ -6,6 +10,11 @@ import type { EmojiWorkerMessage } from './types';
 import { emojiLogger } from './utils';
 
 const userLocale = toSupportedLocale(initialState?.meta.locale ?? 'en');
+
+// On a closed/limited-federation instance, /api/v1/custom_emojis always
+// 401s for signed-out visitors (see Api::BaseController#disallow_unauthenticated_api_access?)
+// -- skip firing that request at all rather than firing-and-failing it.
+const canFetchCustomEmojis = !limitedFederationMode || !!getAccessToken();
 
 let worker: Worker | null = null;
 
@@ -73,7 +82,9 @@ export async function initializeEmoji() {
 
       workerLog('loading data');
       messageWorker(userLocale);
-      messageWorker('custom');
+      if (canFetchCustomEmojis) {
+        messageWorker('custom');
+      }
       messageWorker('shortcodes');
       void loadEmojisToStore();
     },
@@ -86,9 +97,11 @@ async function fallbackLoad() {
   const { importCustomEmojiData, importLegacyShortcodes, importEmojiData } =
     await import('./loader');
 
-  const customEmojis = await importCustomEmojiData();
-  if (customEmojis && customEmojis.length > 0) {
-    log('loaded %d custom emojis', customEmojis.length);
+  if (canFetchCustomEmojis) {
+    const customEmojis = await importCustomEmojiData();
+    if (customEmojis && customEmojis.length > 0) {
+      log('loaded %d custom emojis', customEmojis.length);
+    }
   }
 
   const shortcodes = await importLegacyShortcodes();
@@ -104,6 +117,9 @@ async function fallbackLoad() {
 }
 
 export async function loadCustomEmoji() {
+  if (!canFetchCustomEmojis) {
+    return;
+  }
   if (worker) {
     messageWorker('custom');
   } else {
