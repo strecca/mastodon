@@ -4023,6 +4023,16 @@ a.account__display-name {
 }
 
 .scrollable {
+  // Explicit width, not the default flex-item `stretch` cross-size -- this
+  // element is a container-query context (via `container:` below), and
+  // `container-type` on a flex item is a documented trigger for browsers
+  // to fall back to shrink-to-fit sizing instead of stretching to the
+  // flex parent's cross-size. Discovered twice independently (the
+  // /landing and /guide pages, each with their own inner wrapper class
+  // adding the same missing width) before tracing it to this shared root
+  // cause -- fixing it here instead of on every individual page wrapper.
+  width: 100%;
+  box-sizing: border-box;
   container: column / inline-size;
   overflow-y: scroll;
   overflow-x: hidden;
