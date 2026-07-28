@@ -34,6 +34,11 @@ export const ColumnLink: React.FC<{
   method,
   badge,
   transparent,
+  // Destructured explicitly (upstream leaves this in `...other`, where it
+  // gets spread after the computed `className` below and silently replaces
+  // it instead of merging -- see GitHub issue filed against glitch-soc/mastodon.
+  // Re-check this patch against upstream on the next glitch-soc merge.
+  className: customClassName,
   ...other
 }) => {
   const match = useRouteMatch(
@@ -41,7 +46,7 @@ export const ColumnLink: React.FC<{
   );
   const className = classNames('column-link', {
     'column-link--transparent': transparent,
-  });
+  }, customClassName);
   const badgeElement =
     typeof badge !== 'undefined' ? (
       <span className='column-link__badge'>{badge}</span>
