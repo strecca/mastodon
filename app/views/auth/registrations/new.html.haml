@@ -27,12 +27,12 @@
                  wrapper: :with_label
     = f.input :email,
               hint: false,
-              input_html: { autocomplete: 'username', placeholder: ' ' },
+              input_html: { autocomplete: 'username' },
               required: true,
               wrapper: :with_label
     = f.input :password,
               hint: false,
-              input_html: { autocomplete: 'new-password', minlength: User.password_length.first, maxlength: User.password_length.last, placeholder: ' ' },
+              input_html: { autocomplete: 'new-password', minlength: User.password_length.first, maxlength: User.password_length.last },
               required: true,
               wrapper: :with_label
     = f.input :password_confirmation,

@@ -91,7 +91,7 @@
   "community.restaurants.title_add": "Ajouter à la liste des restaurants communautaires",
   "community.restaurants.title_edit": "Modifier — Restaurants communautaires",
   "community.search.filters": "Filtre :",
-  "community.search.placeholder": "{name}Rechercher…",
+  "community.search.placeholder": "Rechercher {name}…",
   "community.search.sort": "Sort",
   "community.search.sort.az": "A–Z",
   "community.search.sort.newest": "Les plus récents",

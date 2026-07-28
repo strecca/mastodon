@@ -5,6 +5,7 @@ import { useRouteMatch, NavLink } from 'react-router-dom';
 
 import { Icon } from 'flavours/glitch/components/icon';
 import type { IconProp } from 'flavours/glitch/components/icon';
+import type { MastodonLocationDescriptor } from 'flavours/glitch/components/router';
 
 export const ColumnLink: React.FC<{
   icon: React.ReactNode;
@@ -13,7 +14,7 @@ export const ColumnLink: React.FC<{
   activeIconComponent?: IconProp;
   isActive?: (match: unknown, location: { pathname: string }) => boolean;
   text: string;
-  to?: string;
+  to?: MastodonLocationDescriptor;
   onClick?: MouseEventHandler;
   href?: string;
   method?: string;
@@ -33,12 +34,19 @@ export const ColumnLink: React.FC<{
   method,
   badge,
   transparent,
+  // Destructured explicitly (upstream leaves this in `...other`, where it
+  // gets spread after the computed `className` below and silently replaces
+  // it instead of merging -- see GitHub issue filed against glitch-soc/mastodon.
+  // Re-check this patch against upstream on the next glitch-soc merge.
+  className: customClassName,
   ...other
 }) => {
-  const match = useRouteMatch(to ?? '');
+  const match = useRouteMatch(
+    (typeof to === 'string' ? to : to?.pathname) ?? '',
+  );
   const className = classNames('column-link', {
     'column-link--transparent': transparent,
-  });
+  }, customClassName);
   const badgeElement =
     typeof badge !== 'undefined' ? (
       <span className='column-link__badge'>{badge}</span>

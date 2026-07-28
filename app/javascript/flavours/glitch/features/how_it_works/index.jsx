@@ -69,7 +69,7 @@ const HowItWorks = ({ identity }) => {
   const isAdmin = identity?.permissions === 1;
   const sc = useSiteContent();
   const dispatch = useAppDispatch();
-  const server = useAppSelector((state) => state.getIn(['server', 'server']));
+  const server = useAppSelector((state) => state.server.server);
 
   useEffect(() => {
     dispatch(fetchServer());
@@ -83,10 +83,11 @@ const HowItWorks = ({ identity }) => {
       </Helmet>
 
       <header className='hiw-page__hero'>
-        {server?.getIn(['thumbnail', 'url']) && (
+        {server?.item?.thumbnail?.url && (
           <ServerHeroImage
-            blurhash={server.getIn(['thumbnail', 'blurhash'])}
-            src={server.getIn(['thumbnail', 'url'])}
+            blurhash={server.item.thumbnail.blurhash}
+            src={server.item.thumbnail.url}
+            alt=''
             className='hiw-page__logo-image'
           />
         )}

@@ -6,6 +6,7 @@ import { optimizeLodashImports } from '@optimize-lodash/rollup-plugin';
 import babel from '@rolldown/plugin-babel';
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
+import browserslist from 'browserslist';
 import postcssPresetEnv from 'postcss-preset-env';
 import Compress from 'rollup-plugin-gzip';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -16,13 +17,12 @@ import {
   UserConfig,
 } from 'vite';
 import manifestSRI from 'vite-plugin-manifest-sri';
-import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 
 import { MastodonAssetsManifest } from './config/vite/plugin-assets-manifest';
-import { MastodonEmojiCompressed } from './config/vite/plugin-emoji-compressed';
 import { GlitchThemes as MastodonThemes } from './config/vite/plugin-glitch-themes';
 import { MastodonNameLookup } from './config/vite/plugin-name-lookup';
+import { MastodonServiceWorkerChunkPaths } from './config/vite/plugin-sw-chunk-paths';
 import { MastodonServiceWorkerLocales } from './config/vite/plugin-sw-locales';
 
 const jsRoot = path.resolve(__dirname, 'app/javascript');
@@ -33,9 +33,7 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
   const isProdBuild = mode === 'production' && command === 'build';
 
   let outDirName = 'packs-dev';
-  if (mode === 'test') {
-    outDirName = 'packs-test';
-  } else if (mode === 'production') {
+  if (mode === 'test' || mode === 'production') {
     outDirName = 'packs';
   }
   const outDir = path.resolve('public', outDirName);
@@ -133,6 +131,14 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
             }
             return '[name]-[hash].js';
           },
+          entryFileNames({ name }) {
+            // If this is the service worker, don't add the hash to the name.
+            if (name === 'sw') {
+              return '[name].js';
+            }
+            // Otherwise, use the same value as chunkFileNames.
+            return '[name]-[hash].js';
+          },
         },
       },
     },
@@ -151,10 +157,11 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
       MastodonThemes(),
       MastodonAssetsManifest(),
       MastodonServiceWorkerLocales(),
-      MastodonEmojiCompressed(),
+      MastodonServiceWorkerChunkPaths(),
       legacy({
         renderLegacyChunks: false,
         modernPolyfills: true,
+        modernTargets: browserslist.loadConfig({ path: process.cwd() }),
       }),
       isProdBuild && (Compress() as PluginOption),
 
@@ -163,32 +170,6 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
         manifestSRI({
           manifestPaths: ['.vite/manifest.json'],
         }),
-
-      VitePWA({
-        srcDir: path.resolve(jsRoot, 'mastodon/service_worker'),
-        strategies: 'injectManifest',
-        manifest: false,
-        injectRegister: false,
-        injectManifest: {
-          injectionPoint: undefined,
-          buildPlugins: {
-            vite: [
-              MastodonServiceWorkerLocales(),
-              MastodonEmojiCompressed(),
-            ],
-          },
-        },
-        workbox: {
-          // @ts-expect-error codeSplitting exists in workbox-build ≥7 but is absent from the bundled GenerateSWOptions types
-          codeSplitting: false,
-        },
-        outDir: path.resolve(__dirname, 'public/packs'),
-        devOptions: {
-          enabled: true,
-          type: 'module',
-        },
-      }),
-
       svgr(),
       optimizeLodashImports() as PluginOption,
       !!process.env.ANALYZE_BUNDLE_SIZE &&
@@ -201,7 +182,9 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
 };
 
 async function findEntrypoints() {
-  const entrypoints: Record<string, string> = {};
+  const entrypoints: Record<string, string> = {
+    sw: path.resolve(jsRoot, 'mastodon/service_worker/sw.ts'),
+  };
 
   // JS entrypoints
   const jsEntrypointsDir = path.resolve(jsRoot, 'entrypoints');

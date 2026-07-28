@@ -15,26 +15,28 @@ import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 
 const messages = defineMessages({
   aboutActiveUsers: { id: 'server_banner.about_active_users', defaultMessage: 'People using this server during the last 30 days (Monthly Active Users)' },
+  aboutThisServer: { id: 'server_banner.more_about_this_server', defaultMessage: 'More about this server'},
 });
 
 const ServerBanner = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const server = useSelector(state => state.getIn(['server', 'server']));
+  const server = useSelector(state => state.server.server);
   const sc = useSiteContent();
 
   useEffect(() => {
     dispatch(fetchServer());
   }, [dispatch]);
 
-  const isLoading = server.get('isLoading');
+  const isLoading = server.isLoading;
 
   return (
     <div className='server-banner'>
       <Link to='/landing'>
         <ServerHeroImage
-          blurhash={server.getIn(['thumbnail', 'blurhash'])}
-          src={server.getIn(['thumbnail', 'url'])}
+          blurhash={server.item?.thumbnail.blurhash}
+          src={server.item?.thumbnail.url}
+          alt={intl.formatMessage(messages.aboutThisServer)}
           className='server-banner__hero'
         />
         <p className='server-banner__hero-cta'>
@@ -51,17 +53,19 @@ const ServerBanner = () => {
             <br />
             <Skeleton width='70%' />
           </>
-        ) : sc('server_description', server.get('description'))}
+        ) : sc('server_description', server.item?.description)}
       </div>
 
       <div className='server-banner__meta'>
         <div className='server-banner__meta__column'>
           <h4><FormattedMessage id='server_banner.administered_by' defaultMessage='Administered by:' /></h4>
-          <Account id={server.getIn(['contact', 'account', 'id'])} size={36} minimal />
+
+          <Account id={server.item?.contact.account?.id} size={36} minimal />
         </div>
 
         <div className='server-banner__meta__column'>
           <h4><FormattedMessage id='server_banner.server_stats' defaultMessage='Server stats:' /></h4>
+
           {isLoading ? (
             <>
               <strong className='server-banner__number'><Skeleton width='10ch' /></strong>
@@ -70,16 +74,9 @@ const ServerBanner = () => {
             </>
           ) : (
             <>
-              <strong className='server-banner__number'>
-                <ShortNumber value={server.getIn(['usage', 'users', 'active_month'])} />
-              </strong>
+              <strong className='server-banner__number'><ShortNumber value={server.item?.usage.users.active_month} /></strong>
               <br />
-              <span
-                className='server-banner__number-label'
-                title={intl.formatMessage(messages.aboutActiveUsers)}
-              >
-                <FormattedMessage id='server_banner.active_users' defaultMessage='active users' />
-              </span>
+              <span className='server-banner__number-label' title={intl.formatMessage(messages.aboutActiveUsers)}><FormattedMessage id='server_banner.active_users' defaultMessage='active users' /></span>
             </>
           )}
         </div>

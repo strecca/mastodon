@@ -1,37 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: collections
-#
-#  id                       :bigint           not null, primary key
-#  description              :text
-#  description_html         :text
-#  discoverable             :boolean          not null
-#  item_count               :integer          default(0), not null
-#  language                 :string
-#  local                    :boolean          not null
-#  name                     :string           not null
-#  original_number_of_items :integer
-#  sensitive                :boolean          not null
-#  uri                      :string
-#  url                      :string
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  account_id               :bigint           not null
-#  tag_id                   :bigint
-#
-# Indexes
-#
-#  index_collections_on_account_id  (account_id)
-#  index_collections_on_tag_id      (tag_id)
-#  index_collections_on_uri         (uri) UNIQUE WHERE (uri IS NOT NULL)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (tag_id => tags.id)
-#
 require 'rails_helper'
 
 RSpec.describe Collection do
@@ -90,6 +58,32 @@ RSpec.describe Collection do
       let(:collection_items) { Fabricate.build_times(described_class::MAX_ITEMS + 1, :collection_item, collection: nil) }
 
       it { is_expected.to_not be_valid }
+
+      context 'when the limit is only exceeded due to `rejected` and `revoked` items' do
+        let(:collection_items) do
+          items = Fabricate.build_times(described_class::MAX_ITEMS - 2, :collection_item, collection: nil, state: :accepted)
+          items << Fabricate.build(:collection_item, collection: nil, state: :pending)
+          items << Fabricate.build(:collection_item, collection: nil, state: :rejected)
+          items << Fabricate.build(:collection_item, collection: nil, state: :revoked)
+          items
+        end
+
+        it { is_expected.to be_valid }
+      end
+    end
+
+    context 'when the user is already at the per-user limit of collections' do
+      subject { Fabricate.build(:collection, account:) }
+
+      let(:role) { Fabricate(:user_role, collection_limit: 2) }
+      let(:user) { Fabricate(:user, role:) }
+      let(:account) { user.account }
+
+      before do
+        Fabricate.times(2, :collection, account:)
+      end
+
+      it { is_expected.to_not be_valid }
     end
   end
 
@@ -128,6 +122,28 @@ RSpec.describe Collection do
 
       it 'returns accepted and pending items' do
         expect(subject.items_for(account)).to match_array(accepted_items + [pending_item])
+      end
+    end
+
+    context 'when `include_accounts` is set to `true`' do
+      it 'preloads accounts' do
+        items = subject.items_for(include_accounts: true).to_a
+
+        expect { items.first.account }.to_not execute_queries
+      end
+    end
+
+    context 'when called multiple times' do
+      let(:account) { subject.account }
+
+      it 'memoizes results' do
+        subject.items_for.to_a
+
+        expect { subject.items_for.to_a }.to_not execute_queries
+
+        expect { subject.items_for(account).to_a }.to execute_queries
+
+        expect { subject.items_for(account).to_a }.to_not execute_queries
       end
     end
   end
@@ -203,6 +219,21 @@ RSpec.describe Collection do
   describe '#to_log_permalink' do
     it 'includes the URI of the collection' do
       expect(subject.to_log_permalink).to eq ActivityPub::TagManager.instance.uri_for(subject)
+    end
+  end
+
+  describe '#destroy' do
+    let(:collection) { Fabricate(:collection) }
+
+    before do
+      Fabricate(:notification, activity: collection, type: :added_to_collection)
+      Fabricate(:notification, activity: collection, type: :collection_update)
+    end
+
+    it 'removes the collection and all notifications that reference it' do
+      expect { collection.destroy }
+        .to change(described_class, :count).by(-1)
+        .and change(Notification, :count).by(-2)
     end
   end
 end
