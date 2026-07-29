@@ -143,6 +143,7 @@ const fmtDateRange = (a, b) => {
 // ── HeatmapTeaser — shown to non-members ──────────────────────────────────────
 
 const HeatmapTeaser = ({ heatmap }) => {
+  const sc = useSiteContent();
   const months = useMemo(() => {
     const now   = new Date();
     const items = [];
@@ -160,8 +161,8 @@ const HeatmapTeaser = ({ heatmap }) => {
     <div className='cv-teaser'>
       <div className='cv-teaser__hero'>
         <TripIcon />
-        <h2>When I'll Be In Town</h2>
-        <p>Members share their visit dates so connections can meet up. Sign in to see who's coming and add your own dates.</p>
+        <h2>{sc('col_visits_title', "When I'll Be In Town")}</h2>
+        <p>{sc('visits_teaser_body', "Members share their visit dates so connections can meet up. Sign in to see who's coming and add your own dates.")}</p>
       </div>
       <div className='cv-teaser__heatmap'>
         {months.map(m => (
@@ -565,7 +566,7 @@ const CommunityVisits = ({ multiColumn }) => {
           {!signedIn && (
             <div className='cv-signin-cta'>
               <a href='/auth/sign_in' className='cv-signin-cta__btn'>
-                Log In or Join to add your own When I&apos;ll Be In Town dates
+                {sc('visits_join_cta', "Log In or Join to add your own When I'll Be In Town dates")}
               </a>
             </div>
           )}

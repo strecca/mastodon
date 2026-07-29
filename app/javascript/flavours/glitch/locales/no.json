@@ -1,6 +1,9 @@
 {
   "about.contact_form": "Bruk vårt kontaktskjema",
   "about.fork_disclaimer": "Glitch-soc er fri programvare med åpen kildekode, forgrenet fra Mastodon.",
+  "alert.member_required.action": "Registrer deg gratis →",
+  "alert.member_required.message": "For å se denne fellesskapsinformasjonen må du være et registrert medlem. Det er enkelt, raskt og gratis.",
+  "alert.member_required.title": "Kun for medlemmer",
   "community.artists.cta": "Logg inn eller registrer deg for å legge til dine egne kunstnere i fellesskapet",
   "community.artists.title": "Lokale kunstnere",
   "community.artists.title_add": "Legg til i «Community Artists»",

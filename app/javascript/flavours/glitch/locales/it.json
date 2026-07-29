@@ -1,6 +1,9 @@
 {
   "about.contact_form": "Utilizza il nostro modulo di contatto",
   "about.fork_disclaimer": "Glitch-soc è un software gratuito e open source derivato da Mastodon.",
+  "alert.member_required.action": "Iscriviti gratis →",
+  "alert.member_required.message": "Per vedere queste informazioni della comunità devi essere un Membro registrato. È facile, veloce e gratuito.",
+  "alert.member_required.title": "Solo Membri",
   "community.artists.cta": "Accedi o registrati per aggiungere i tuoi artisti della community",
   "community.artists.title": "Artisti della comunità",
   "community.artists.title_add": "Aggiungi agli artisti della community",
