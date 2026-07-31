@@ -8708,9 +8708,16 @@ img.modal-warning {
 
     &:hover {
       background: rgb(255 255 255 / 85%);
-      text-decoration: none;
     }
   }
+}
+
+.directory__order-chips {
+  margin: 16px;
+}
+
+.directory__member-badge + .directory__order-chips {
+  margin-top: 0;
 }
 
 .filter-form {

@@ -1,4 +1,3 @@
-import type { ChangeEventHandler } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 
 import { defineMessages, useIntl } from 'react-intl';
@@ -18,12 +17,12 @@ import {
   fetchDirectory,
   expandDirectory,
 } from 'flavours/glitch/actions/directory';
+import { CategoryBannerLink } from 'flavours/glitch/components/community_directory/category_banner_link';
 import { Column } from 'flavours/glitch/components/column';
 import type { ColumnRef } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadMore } from 'flavours/glitch/components/load_more';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { RadioButton } from 'flavours/glitch/components/radio_button';
 import { ScrollContainer } from 'flavours/glitch/containers/scroll_container';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import { useSearchParam } from 'flavours/glitch/hooks/useSearchParam';
@@ -99,12 +98,14 @@ export const Directory: React.FC<{
     column.current?.scrollTop();
   }, []);
 
-  const handleChangeOrder = useCallback<ChangeEventHandler<HTMLInputElement>>(
-    (e) => {
+  const handleChangeOrder = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const value = e.currentTarget.dataset.orderValue;
+      if (!value) return;
       if (columnId) {
-        dispatch(changeColumnParams(columnId, ['order'], e.target.value));
+        dispatch(changeColumnParams(columnId, ['order'], value));
       } else {
-        setOrderParam(e.target.value);
+        setOrderParam(value);
       }
     },
     [dispatch, columnId, setOrderParam],
@@ -117,8 +118,15 @@ export const Directory: React.FC<{
   const pinned = !!columnId;
   const initialLoad = isLoading && accountIds.size === 0;
 
+  const orderOptions = [
+    { key: 'active', label: intl.formatMessage(messages.recentlyActive) },
+    { key: 'new', label: intl.formatMessage(messages.newArrivals) },
+  ];
+
   const scrollableArea = (
     <div className='scrollable'>
+      <CategoryBannerLink variant='back' />
+
       {!signedIn && (
         <div className='directory__member-badge'>
           <strong className='directory__member-badge__title'>
@@ -133,23 +141,18 @@ export const Directory: React.FC<{
         </div>
       )}
 
-      <div className='filter-form'>
-        <div className='filter-form__column' role='group'>
-          <RadioButton
-            name='order'
-            value='active'
-            label={intl.formatMessage(messages.recentlyActive)}
-            checked={order === 'active'}
-            onChange={handleChangeOrder}
-          />
-          <RadioButton
-            name='order'
-            value='new'
-            label={intl.formatMessage(messages.newArrivals)}
-            checked={order === 'new'}
-            onChange={handleChangeOrder}
-          />
-        </div>
+      <div className='cl-type-chips directory__order-chips' role='group'>
+        {orderOptions.map((opt) => (
+          <button
+            key={opt.key}
+            type='button'
+            data-order-value={opt.key}
+            className={`cl-type-chip${order === opt.key ? ' cl-type-chip--active' : ''}`}
+            onClick={handleChangeOrder}
+          >
+            {opt.label}
+          </button>
+        ))}
       </div>
 
       <div className='directory__list'>
