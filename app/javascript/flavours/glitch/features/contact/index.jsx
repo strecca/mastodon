@@ -4,9 +4,11 @@ import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { withIdentity } from 'flavours/glitch/identity_context';
 import { useAppSelector } from 'flavours/glitch/store';
+import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 import api from 'flavours/glitch/api';
 
 const ContactPage = ({ identity, multiColumn }) => {
+  const sc = useSiteContent();
   const { signedIn, accountId } = identity;
   const account = useAppSelector(state => accountId ? state.accounts.get(accountId) : null);
 
@@ -38,15 +40,15 @@ const ContactPage = ({ identity, multiColumn }) => {
       });
       setStatus('success');
     } catch (err) {
-      const msg = err?.response?.data?.error || 'Something went wrong. Please try again.';
+      const msg = err?.response?.data?.error || sc('contact_error_fallback', 'Something went wrong. Please try again.');
       setErrorMsg(msg);
       setStatus('error');
     }
   };
 
   const headerLabel = signedIn
-    ? `Message to Admin${username ? ' — Member: @' + username : ''}`
-    : 'Contact the Admin';
+    ? `${sc('contact_header_signed_in', 'Message to Admin — Member:')}${username ? ' @' + username : ''}`
+    : sc('contact_header_anon', 'Contact the Admin');
 
   return (
     <Column>
@@ -59,10 +61,9 @@ const ContactPage = ({ identity, multiColumn }) => {
       <div className='contact-page scrollable'>
         {status === 'success' ? (
           <div className='contact-page__success'>
-            <h2>Thank you for reaching out!</h2>
+            <h2>{sc('contact_success_title', 'Thank you for reaching out!')}</h2>
             <p>
-              Your message has been received. We appreciate you taking the time
-              to write to us and will get back to you as soon as possible.
+              {sc('contact_success_body', 'Your message has been received. We appreciate you taking the time to write to us and will get back to you as soon as possible.')}
             </p>
           </div>
         ) : (
@@ -81,7 +82,7 @@ const ContactPage = ({ identity, multiColumn }) => {
             </div>
             {signedIn ? (
               <div className='contact-page__member-badge'>
-                Sending as Member: <strong>@{username}</strong>
+                {sc('contact_sending_as', 'Sending as Member:')} <strong>@{username}</strong>
                 {displayName && displayName !== username && (
                   <span> ({displayName})</span>
                 )}
@@ -89,26 +90,26 @@ const ContactPage = ({ identity, multiColumn }) => {
             ) : (
               <>
                 <div className='contact-page__field'>
-                  <label htmlFor='contact-name'>Your name</label>
+                  <label htmlFor='contact-name'>{sc('contact_name_label', 'Your name')}</label>
                   <input
                     id='contact-name'
                     type='text'
                     value={name}
                     onChange={e => setName(e.target.value)}
                     required
-                    placeholder='Your name'
+                    placeholder={sc('contact_name_placeholder', 'Your name')}
                     className='contact-page__input'
                   />
                 </div>
                 <div className='contact-page__field'>
-                  <label htmlFor='contact-email'>Your email address</label>
+                  <label htmlFor='contact-email'>{sc('contact_email_label', 'Your email address')}</label>
                   <input
                     id='contact-email'
                     type='email'
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     required
-                    placeholder='so we can reply to you'
+                    placeholder={sc('contact_email_placeholder', 'so we can reply to you')}
                     className='contact-page__input'
                   />
                 </div>
@@ -116,27 +117,27 @@ const ContactPage = ({ identity, multiColumn }) => {
             )}
 
             <div className='contact-page__field'>
-              <label htmlFor='contact-subject'>Subject</label>
+              <label htmlFor='contact-subject'>{sc('contact_subject_label', 'Subject')}</label>
               <input
                 id='contact-subject'
                 type='text'
                 value={subject}
                 onChange={e => setSubject(e.target.value)}
                 required
-                placeholder='What is this about?'
+                placeholder={sc('contact_subject_placeholder', 'What is this about?')}
                 className='contact-page__input'
               />
             </div>
 
             <div className='contact-page__field'>
-              <label htmlFor='contact-message'>Message</label>
+              <label htmlFor='contact-message'>{sc('contact_message_label', 'Message')}</label>
               <textarea
                 id='contact-message'
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 required
                 rows={7}
-                placeholder='Write your message here...'
+                placeholder={sc('contact_message_placeholder', 'Write your message here...')}
                 className='contact-page__input contact-page__textarea'
               />
             </div>
@@ -150,7 +151,7 @@ const ContactPage = ({ identity, multiColumn }) => {
               className='contact-page__submit button'
               disabled={status === 'submitting'}
             >
-              {status === 'submitting' ? 'Sending…' : 'Send Message'}
+              {status === 'submitting' ? sc('contact_submit_sending', 'Sending…') : sc('contact_submit_btn', 'Send Message')}
             </button>
           </form>
         )}
