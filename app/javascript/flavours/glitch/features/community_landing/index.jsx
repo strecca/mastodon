@@ -67,6 +67,9 @@ const CommunityLanding = ({ identity }) => {
           <button className='cl-landing__see-posts-btn' onClick={handleSeePosts}>
             {sc('landing_see_posts_btn', 'See Community Posts')}
           </button>
+          <Link to='/directory' className='cl-landing__see-posts-btn cl-landing__see-posts-btn--secondary'>
+            {sc('landing_browse_profiles_btn', 'Browse Profiles')}
+          </Link>
           {!signedIn && (
             <a href='/auth/sign_in' className='cl-landing__login-link'>{sc('landing_login_link', 'Log in →')}</a>
           )}

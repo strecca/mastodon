@@ -25,6 +25,7 @@ import { LoadMore } from 'flavours/glitch/components/load_more';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import { RadioButton } from 'flavours/glitch/components/radio_button';
 import { ScrollContainer } from 'flavours/glitch/containers/scroll_container';
+import { useIdentity } from 'flavours/glitch/identity_context';
 import { useSearchParam } from 'flavours/glitch/hooks/useSearchParam';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
@@ -37,44 +38,37 @@ const messages = defineMessages({
     defaultMessage: 'Recently active',
   },
   newArrivals: { id: 'directory.new_arrivals', defaultMessage: 'New arrivals' },
-  local: { id: 'directory.local', defaultMessage: 'From {domain} only' },
-  federated: {
-    id: 'directory.federated',
-    defaultMessage: 'From known fediverse',
+  memberRequiredTitle: { id: 'alert.member_required.title', defaultMessage: 'Members Only' },
+  memberRequiredMessage: {
+    id: 'alert.member_required.message',
+    defaultMessage: "To see this Community Information you must be a Subscribed Member. It's easy, quick and Free.",
   },
+  memberRequiredAction: { id: 'alert.member_required.action', defaultMessage: 'Sign Up Free →' },
 });
 
 export const Directory: React.FC<{
   columnId?: string;
   multiColumn?: boolean;
-  params?: { order: string; local?: boolean };
+  params?: { order: string };
 }> = ({ columnId, multiColumn, params }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
+  const { signedIn } = useIdentity();
 
   const column = useRef<ColumnRef>(null);
 
   const [orderParam, setOrderParam] = useSearchParam('order');
-  const [localParam, setLocalParam] = useSearchParam('local');
-
-  let localParamBool: boolean | undefined;
-
-  if (localParam === 'false') {
-    localParamBool = false;
-  }
 
   const order = orderParam ?? params?.order ?? 'active';
-  const local = localParamBool ?? params?.local ?? true;
 
   const handlePin = useCallback(() => {
     if (columnId) {
       dispatch(removeColumn(columnId));
     } else {
-      dispatch(addColumn('DIRECTORY', { order, local }));
+      dispatch(addColumn('DIRECTORY', { order }));
     }
-  }, [dispatch, columnId, order, local]);
+  }, [dispatch, columnId, order]);
 
-  const domain = useAppSelector((s) => s.meta.get('domain') as string);
   const accountIds = useAppSelector(
     (state) =>
       state.user_lists.getIn(
@@ -91,8 +85,8 @@ export const Directory: React.FC<{
   );
 
   useEffect(() => {
-    void dispatch(fetchDirectory({ order, local }));
-  }, [dispatch, order, local]);
+    void dispatch(fetchDirectory({ order }));
+  }, [dispatch, order]);
 
   const handleMove = useCallback(
     (dir: number) => {
@@ -116,30 +110,29 @@ export const Directory: React.FC<{
     [dispatch, columnId, setOrderParam],
   );
 
-  const handleChangeLocal = useCallback<ChangeEventHandler<HTMLInputElement>>(
-    (e) => {
-      if (columnId) {
-        dispatch(
-          changeColumnParams(columnId, ['local'], e.target.value === '1'),
-        );
-      } else if (e.target.value === '1') {
-        setLocalParam('true');
-      } else {
-        setLocalParam('false');
-      }
-    },
-    [dispatch, columnId, setLocalParam],
-  );
-
   const handleLoadMore = useCallback(() => {
-    void dispatch(expandDirectory({ order, local }));
-  }, [dispatch, order, local]);
+    void dispatch(expandDirectory({ order }));
+  }, [dispatch, order]);
 
   const pinned = !!columnId;
   const initialLoad = isLoading && accountIds.size === 0;
 
   const scrollableArea = (
     <div className='scrollable'>
+      {!signedIn && (
+        <div className='directory__member-badge'>
+          <strong className='directory__member-badge__title'>
+            {intl.formatMessage(messages.memberRequiredTitle)}
+          </strong>
+          <p className='directory__member-badge__message'>
+            {intl.formatMessage(messages.memberRequiredMessage)}
+          </p>
+          <a href='/join' className='directory__member-badge__action'>
+            {intl.formatMessage(messages.memberRequiredAction)}
+          </a>
+        </div>
+      )}
+
       <div className='filter-form'>
         <div className='filter-form__column' role='group'>
           <RadioButton
@@ -155,23 +148,6 @@ export const Directory: React.FC<{
             label={intl.formatMessage(messages.newArrivals)}
             checked={order === 'new'}
             onChange={handleChangeOrder}
-          />
-        </div>
-
-        <div className='filter-form__column' role='group'>
-          <RadioButton
-            name='local'
-            value='1'
-            label={intl.formatMessage(messages.local, { domain })}
-            checked={local}
-            onChange={handleChangeLocal}
-          />
-          <RadioButton
-            name='local'
-            value='0'
-            label={intl.formatMessage(messages.federated)}
-            checked={!local}
-            onChange={handleChangeLocal}
           />
         </div>
       </div>

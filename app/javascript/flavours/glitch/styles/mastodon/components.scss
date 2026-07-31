@@ -8675,6 +8675,44 @@ img.modal-warning {
   }
 }
 
+// ── Members-only badge (persistent, top of page -- not the auto-dismiss
+// .notification-bar--member toast). Same established green palette. ──
+.directory__member-badge {
+  margin: 16px;
+  padding: 16px 20px;
+  background: #2e7d32;
+  border: 1px solid #1b5e20;
+  border-radius: 8px;
+  color: #fff;
+
+  &__title {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  &__message {
+    margin: 0 0 12px;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+
+  &__action {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #fff;
+    color: #1b5e20 !important;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 6px;
+
+    &:hover {
+      background: rgb(255 255 255 / 85%);
+      text-decoration: none;
+    }
+  }
+}
+
 .filter-form {
   border-bottom: 1px solid var(--color-border-primary);
 
