@@ -7,6 +7,7 @@ import ArticleIcon from '@/material-icons/400-24px/article.svg?react';
 import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
 import CollectionsIcon from '@/material-icons/400-24px/category.svg?react';
 import DescriptionIcon from '@/material-icons/400-24px/description.svg?react';
+import DownloadIcon from '@/material-icons/400-24px/download.svg?react';
 import GroupsIcon from '@/material-icons/400-24px/groups.svg?react';
 import MailIcon from '@/material-icons/400-24px/mail.svg?react';
 import PersonAddIcon from '@/material-icons/400-24px/person_add.svg?react';
@@ -126,6 +127,48 @@ const HowItWorks = ({ identity }) => {
         <ul className='hiw-page__tip-body'>
           {toBullets(sc('guide_tip_body', TIP_BODY_FALLBACK)).map((line) => <li key={line}>{line}</li>)}
         </ul>
+      </div>
+
+      <div className='hiw-page__install'>
+        <div className='hiw-page__install-text'>
+          <span className='hiw-page__install-icon'><DownloadIcon /></span>
+          <h2 className='hiw-page__install-title'>{sc('guide_install_title', 'Add MiaCivezza to Your Phone')}</h2>
+          <p className='hiw-page__install-body'>
+            {sc('guide_install_body', "On iPhone, open miacivezza.com in Safari, tap the Share button, then \"Add to Home Screen.\" You'll get an icon that opens straight to MiaCivezza — no bookmarks or extra taps needed. (Other browsers may not support this the same way — Safari is the one we've confirmed works.)")}
+          </p>
+        </div>
+
+        <div className='hiw-page__install-illustrations'>
+          <div className='hiw-phone-mock'>
+            <div className='hiw-phone-mock__screen'>
+              <div className='hiw-phone-mock__app hiw-phone-mock__app--dim' />
+              <div className='hiw-phone-mock__app hiw-phone-mock__app--dim' />
+              <div className='hiw-phone-mock__app hiw-phone-mock__app--dim' />
+              <div className='hiw-phone-mock__app hiw-phone-mock__app--real'>
+                {server?.item?.thumbnail?.url && (
+                  <img src={server.item.thumbnail.url} alt='' className='hiw-phone-mock__app-icon' />
+                )}
+                <span className='hiw-phone-mock__app-label'>MiaCivezza</span>
+              </div>
+              <div className='hiw-phone-mock__app hiw-phone-mock__app--dim' />
+              <div className='hiw-phone-mock__app hiw-phone-mock__app--dim' />
+            </div>
+          </div>
+
+          <div className='hiw-tap-illustration'>
+            <div className='hiw-tap-illustration__icon-wrap'>
+              {server?.item?.thumbnail?.url && (
+                <img src={server.item.thumbnail.url} alt='' className='hiw-tap-illustration__icon' />
+              )}
+              <span className='hiw-tap-illustration__ripple' />
+            </div>
+            <span className='hiw-tap-illustration__arrow'>→</span>
+            <div className='hiw-tap-illustration__app-view'>
+              <span className='hiw-tap-illustration__app-view-label'>MiaCivezza.com</span>
+            </div>
+          </div>
+        </div>
+        <p className='hiw-page__install-caption'>{sc('guide_install_tap_caption', 'One tap, straight in — no browser tabs to dig through.')}</p>
       </div>
 
       <div className='hiw-page__sections'>
