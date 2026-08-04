@@ -76,6 +76,12 @@ const HowItWorks = ({ identity }) => {
     dispatch(fetchServer());
   }, [dispatch]);
 
+  // The real home-screen icon (the actual apple-touch-icon/manifest source)
+  // -- not server.item.thumbnail, which is a different, unrelated banner
+  // image used elsewhere on this page.
+  const appIconUrl = server?.item?.icon?.find((i) => i.size === '192x192')?.src
+    ?? server?.item?.icon?.at(-1)?.src;
+
   return (
     <div className='hiw-page scrollable'>
       <Helmet>
@@ -145,8 +151,8 @@ const HowItWorks = ({ identity }) => {
               <div className='hiw-phone-mock__app hiw-phone-mock__app--dim' />
               <div className='hiw-phone-mock__app hiw-phone-mock__app--dim' />
               <div className='hiw-phone-mock__app hiw-phone-mock__app--real'>
-                {server?.item?.thumbnail?.url && (
-                  <img src={server.item.thumbnail.url} alt='' className='hiw-phone-mock__app-icon' />
+                {appIconUrl && (
+                  <img src={appIconUrl} alt='' className='hiw-phone-mock__app-icon' />
                 )}
                 <span className='hiw-phone-mock__app-label'>MiaCivezza</span>
               </div>
@@ -157,8 +163,8 @@ const HowItWorks = ({ identity }) => {
 
           <div className='hiw-tap-illustration'>
             <div className='hiw-tap-illustration__icon-wrap'>
-              {server?.item?.thumbnail?.url && (
-                <img src={server.item.thumbnail.url} alt='' className='hiw-tap-illustration__icon' />
+              {appIconUrl && (
+                <img src={appIconUrl} alt='' className='hiw-tap-illustration__icon' />
               )}
               <span className='hiw-tap-illustration__ripple' />
             </div>

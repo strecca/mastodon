@@ -56,6 +56,10 @@ export interface ApiInstanceJSON {
     description: string;
     versions?: Record<string, string>;
   };
+  icon: {
+    src: string;
+    size: string;
+  }[];
   contact: {
     email: string | null;
     account: ApiAccountJSON | null;
