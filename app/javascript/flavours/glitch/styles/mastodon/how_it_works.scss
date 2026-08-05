@@ -33,12 +33,12 @@
   // aspect-ratio here since ServerHeroImage's own base ".image" class has
   // no intrinsic size of its own -- it needs a sized ancestor.
   &__logo-image {
-    aspect-ratio: 3 / 1;
+    // Matches SiteUpload::STYLES[:thumbnail] server-side crop (1200x630)
+    // exactly, so the browser never crops the already-cropped image further.
+    aspect-ratio: 1200 / 630;
     max-width: 480px;
     margin: 0 auto 16px;
     border-radius: 10px;
-
-    @media (width <=480px) { aspect-ratio: 2 / 1; }
   }
 
   &__title {
