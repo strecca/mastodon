@@ -143,8 +143,8 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
   const imageCount = images?.length ?? 0;
 
   return (
-    <Column>
-      <ColumnHeader icon='book' title='Member Story' multiColumn={multiColumn} />
+    <Column className='col-stories'>
+      <ColumnHeader icon='book' title='Member Story' multiColumn={multiColumn} showBackButton className='ch-stories' />
       <Helmet><title>{account?.display_name} · Member Story · miacivezza</title></Helmet>
 
       <div className='ms-page ms-story'>

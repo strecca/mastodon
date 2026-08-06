@@ -234,8 +234,8 @@ const MemberStoriesEdit = ({ multiColumn }) => {
   }
 
   return (
-    <Column>
-      <ColumnHeader icon='book' title='My Story' multiColumn={multiColumn} />
+    <Column className='col-stories'>
+      <ColumnHeader icon='book' title='My Story' multiColumn={multiColumn} showBackButton className='ch-stories' />
       <Helmet><title>My Story · miacivezza</title></Helmet>
 
       <div className='ms-page ms-edit'>
