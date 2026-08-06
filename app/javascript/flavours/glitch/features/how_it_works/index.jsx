@@ -91,15 +91,20 @@ const HowItWorks = ({ identity }) => {
 
       <header className='hiw-page__hero'>
         {server?.item?.thumbnail?.url && (
-          <ServerHeroImage
-            blurhash={server.item.thumbnail.blurhash}
-            src={server.item.thumbnail.url}
-            alt=''
-            className='hiw-page__logo-image'
-          />
+          <Link to='/landing' className='hiw-page__logo-link'>
+            <ServerHeroImage
+              blurhash={server.item.thumbnail.blurhash}
+              src={server.item.thumbnail.url}
+              alt=''
+              className='hiw-page__logo-image'
+            />
+          </Link>
         )}
         <h1 className='hiw-page__title'>{sc('guide_page_title', 'How MiaCivezza.com Works')}</h1>
         <p className='hiw-page__intro'>{sc('guide_page_intro', "MiaCivezza.com is more than a social network — it's a digital piazza for the Civezza and Imperia coast community. Here's a quick tour of everything you can do.")}</p>
+        <Link to='/landing' className='hiw-page__hero-cta'>
+          {sc('guide_hero_cta', 'Click Here to Get Started →')}
+        </Link>
 
         {isAdmin && (
           <div className='hiw-page__admin-bar'>

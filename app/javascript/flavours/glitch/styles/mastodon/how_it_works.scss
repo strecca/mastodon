@@ -32,13 +32,22 @@
   // which isn't visible at all in single-column mobile layout. Explicit
   // aspect-ratio here since ServerHeroImage's own base ".image" class has
   // no intrinsic size of its own -- it needs a sized ancestor.
+  &__logo-link {
+    display: block;
+    max-width: 480px;
+    margin: 0 auto 16px;
+    border-radius: 10px;
+    transition: opacity 0.15s ease;
+
+    &:hover, &:focus-visible { opacity: 0.85; }
+  }
+
   &__logo-image {
     // Matches SiteUpload::STYLES[:thumbnail] server-side crop (1200x630)
     // exactly, so the browser never crops the already-cropped image further.
     aspect-ratio: 1200 / 630;
-    max-width: 480px;
-    margin: 0 auto 16px;
     border-radius: 10px;
+    margin: 0;
   }
 
   &__title {
@@ -57,6 +66,20 @@
     line-height: 1.6;
     max-width: 520px;
     margin: 0 auto;
+  }
+
+  &__hero-cta {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 12px 28px;
+    background: #6364ff;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 999px;
+    text-decoration: none;
+
+    &:hover { background: #5152e0; }
   }
 
   &__admin-bar {
