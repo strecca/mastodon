@@ -12,6 +12,7 @@ import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
+import { useIdentity } from 'flavours/glitch/identity_context';
 import api from 'flavours/glitch/api';
 
 const PROMPTS = {
@@ -80,11 +81,13 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
   const intl = useIntl();
   const { viewingLocale } = useViewingLocale();
   const activeLocale = (viewingLocale || intl.locale || 'en').split('-')[0];
+  const { signedIn } = useIdentity();
 
   const [story, setStory]       = useState(null);
   const [loading, setLoading]   = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [lightbox, setLightbox] = useState(null); // null = closed, 0/1/2 = open
+  const [hasOwnStory, setHasOwnStory] = useState(null);
 
   useEffect(() => {
     if (!accountId) return;
@@ -93,6 +96,17 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
       .catch(err => { if (err.response?.status === 404) setNotFound(true); })
       .finally(() => setLoading(false));
   }, [accountId]);
+
+  useEffect(() => {
+    if (!signedIn) return;
+    // Same check as the index page: distinguishes "you have a story to
+    // edit" from "you haven't written one yet" for a viewer looking at
+    // someone else's page -- previously there was no invitation at all
+    // here for that case, only an "Edit My Story" link gated to is_own.
+    api().get('/api/v1/civezza_member_stories/me')
+      .then(res => setHasOwnStory(!!res.data?.id))
+      .catch(() => {});
+  }, [signedIn]);
 
   const openLightbox  = useCallback((i) => setLightbox(i), []);
   const closeLightbox = useCallback(() => setLightbox(null), []);
@@ -142,6 +156,12 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
 
         <Link to='/member_stories' className='ms-story__back'>← All Stories</Link>
 
+        {!signedIn && (
+          <a href='/auth/sign_in' className='community-join-cta' style={{ '--cta-color': '#2C3E7A' }}>
+            Log In or Join to write your own Member Story
+          </a>
+        )}
+
         {/* ── Profile header ── */}
         <div className='ms-story__header'>
           {account?.avatar && (
@@ -151,9 +171,13 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
             <h1 className='ms-story__name'>{account?.display_name}</h1>
             <span className='ms-story__username'>@{account?.username}</span>
           </div>
-          {is_own && (
+          {is_own ? (
             <Link to='/member_stories/edit' className='button button-secondary ms-story__edit-link'>
               Edit My Story
+            </Link>
+          ) : signedIn && hasOwnStory === false && (
+            <Link to='/member_stories/edit' className='button ms-story__edit-link'>
+              + Add Your Own Story
             </Link>
           )}
         </div>
@@ -195,9 +219,13 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
         {/* ── Bottom nav ── */}
         <div className='ms-story__footer'>
           <Link to='/member_stories' className='ms-story__back'>← All Stories</Link>
-          {is_own && (
+          {is_own ? (
             <Link to='/member_stories/edit' className='button button-secondary'>
               Edit My Story
+            </Link>
+          ) : signedIn && hasOwnStory === false && (
+            <Link to='/member_stories/edit' className='button'>
+              + Add Your Own Story
             </Link>
           )}
         </div>

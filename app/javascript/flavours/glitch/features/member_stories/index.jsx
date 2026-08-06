@@ -18,6 +18,7 @@ const MemberStoriesList = ({ multiColumn }) => {
   const sc = useSiteContent();
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasOwnStory, setHasOwnStory] = useState(null);
 
   useEffect(() => {
     api().get('/api/v1/civezza_member_stories')
@@ -25,6 +26,16 @@ const MemberStoriesList = ({ multiColumn }) => {
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!signedIn) return;
+    // /me always 200s (find_or_initialize_by) -- id is only present once
+    // the member has actually saved a story, whether published or still
+    // a draft. That's what distinguishes "edit mine" from "start one".
+    api().get('/api/v1/civezza_member_stories/me')
+      .then(res => setHasOwnStory(!!res.data?.id))
+      .catch(() => {});
+  }, [signedIn]);
 
   return (
     <Column className='col-stories'>
@@ -56,9 +67,11 @@ const MemberStoriesList = ({ multiColumn }) => {
           <p className='ms-page__subtitle'>
             Stories from our Civezza community — personal histories, connections, and moments that matter.
           </p>
-          <Link to='/member_stories/edit' className='button ms-page__edit-btn'>
-            My Story
-          </Link>
+          {signedIn && hasOwnStory !== null && (
+            <Link to='/member_stories/edit' className='button ms-page__edit-btn'>
+              {hasOwnStory ? 'My Story' : '+ Add Your Own Story'}
+            </Link>
+          )}
         </div>
 
         {loading ? (
