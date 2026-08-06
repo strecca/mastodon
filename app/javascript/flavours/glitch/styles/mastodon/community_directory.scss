@@ -5261,9 +5261,19 @@
 }
 
 .ms-page {
+  // Self-contained dark background, matching .ms-hero's own palette --
+  // every text color in .ms-story/.ms-card below is hardcoded white or
+  // near-white with no background of its own, so it was relying entirely
+  // on the ambient theme background staying dark. That's only true in
+  // dark theme -- in light theme (or any browser/OS resolving to light,
+  // e.g. Safari on a Mac set to light appearance) --color-bg-primary
+  // legitimately becomes white, making all of this text invisible.
+  // Same bug class as hiw-page (how_it_works.scss) -- commit the whole
+  // page to one look instead of assuming the ambient background matches.
   padding: 16px;
   max-width: 860px;
   margin: 0 auto;
+  background: #1a1b2e;
 
   > .ms-hero {
     margin: -16px -16px 16px;
