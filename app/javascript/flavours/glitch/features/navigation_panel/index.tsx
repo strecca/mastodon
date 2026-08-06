@@ -445,6 +445,13 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
               iconComponent={DescriptionIcon}
               text='Newsletters Admin'
             />
+            <ColumnLink
+              transparent
+              to='/shared/new'
+              icon='description'
+              iconComponent={DescriptionIcon}
+              text='Quick Share a PDF'
+            />
           </>
         )}
 

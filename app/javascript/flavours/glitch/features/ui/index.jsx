@@ -133,6 +133,8 @@ import {
   DailyDigest,
   NewsletterIndex,
   NewsletterShow,
+  QuickShareNew,
+  QuickShareShow,
   HowItWorks,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
@@ -339,6 +341,8 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/daily'                        exact component={DailyDigest}       content={children} />
             <WrappedRoute path='/newsletters/:slug'            exact component={NewsletterShow}    content={children} />
             <WrappedRoute path='/newsletters'                  exact component={NewsletterIndex}   content={children} />
+            <WrappedRoute path='/shared/new'                   exact component={QuickShareNew}     content={children} />
+            <WrappedRoute path='/shared/:slug'                 exact component={QuickShareShow}    content={children} />
             <WrappedRoute path='/guide'                        exact component={HowItWorks}        content={children} />
             {/* [CD:ROUTES] */}
 

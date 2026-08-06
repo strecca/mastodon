@@ -62,6 +62,8 @@
   /daily
   /newsletters
   /newsletters/(*any)
+  /shared
+  /shared/(*any)
   /guide
   /overview
   /overview/about
