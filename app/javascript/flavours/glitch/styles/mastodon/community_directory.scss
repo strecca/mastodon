@@ -5289,7 +5289,12 @@
   }
 
   &__subtitle {
-    color: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
+    // Hardcoded, not var(--color-text-secondary) -- that var is
+    // theme-adaptive (dark text in light theme) but .ms-page's own
+    // background is now always dark, so a theme-following color here
+    // would go invisible in light theme. Same reasoning applies to
+    // __empty and --not-found p below.
+    color: rgba(255, 255, 255, 0.7);
     font-size: 14px;
     margin: 0;
     max-width: 520px;
@@ -5302,7 +5307,7 @@
   &__empty {
     text-align: center;
     padding: 48px 24px;
-    color: var(--color-text-secondary, rgba(255, 255, 255, 0.6));
+    color: rgba(255, 255, 255, 0.6);
 
     .button { margin-top: 16px; }
   }
@@ -5310,6 +5315,7 @@
   &--not-found {
     text-align: center;
     padding: 48px 24px;
+    color: rgba(255, 255, 255, 0.6);
   }
 }
 
