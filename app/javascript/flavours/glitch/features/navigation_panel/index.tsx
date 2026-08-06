@@ -23,6 +23,7 @@ import CollectionsIcon from '@/material-icons/400-24px/category.svg?react';
 import HelpIcon from '@/material-icons/400-24px/help.svg?react';
 import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
+import DescriptionIcon from '@/material-icons/400-24px/description.svg?react';
 import EditNoteIcon from '@/material-icons/400-24px/edit_note.svg?react';
 import GavelIcon from '@/material-icons/400-24px/gavel.svg?react';
 import AdministrationIcon from '@/material-icons/400-24px/manufacturing.svg?react';
@@ -423,6 +424,26 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
               icon='settings'
               iconComponent={SettingsIcon}
               text='Mastodon Admin'
+            />
+          </>
+        )}
+
+        {/* Newsletters: administrator (0x1) or manage_reports (0x10) --
+            matches Admin::NewslettersController#require_admin!. Kept as
+            its own block (not folded into Admin Tools above) so
+            Moderator-role accounts (e.g. Barbara) see it too, without
+            opening up the rest of Admin Tools to them. Previously this
+            page had no link anywhere in the app at all, for any role. */}
+        {signedIn && !!(permissions & 0x11) && (
+          <>
+            <hr />
+            <div className='navigation-panel__admin-heading'>Newsletters</div>
+            <ColumnLink
+              transparent
+              href='/admin/newsletters'
+              icon='description'
+              iconComponent={DescriptionIcon}
+              text='Newsletters Admin'
             />
           </>
         )}

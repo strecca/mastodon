@@ -76,7 +76,7 @@ module Admin
     end
 
     def require_admin!
-      return if current_user&.can?(:administrator)
+      return if current_user&.can?(:administrator) || current_user&.can?(:manage_reports)
       redirect_to root_path, alert: 'Not authorized.'
     end
 
