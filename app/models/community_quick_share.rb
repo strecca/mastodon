@@ -3,10 +3,14 @@
 class CommunityQuickShare < ApplicationRecord
   belongs_to :account
 
-  validates :caption,  presence: true
-  validates :pdf_path, presence: true
-  validates :slug,     presence: true, uniqueness: true,
-                       format: { with: /\A[a-z0-9-]+\z/, message: 'only lowercase letters, numbers, hyphens' }
+  validates :caption, presence: true
+  validates :slug,    presence: true, uniqueness: true,
+                      format: { with: /\A[a-z0-9-]+\z/, message: 'only lowercase letters, numbers, hyphens' }
+  # pdf_path is deliberately not validated here -- it's only set via
+  # update_column after the record already has an id (needed for the
+  # storage path), same two-phase pattern as CommunityNewsletter's
+  # original_pdf_path. The controller already rejects requests with no
+  # uploaded file before a record is even built.
 
   before_validation :generate_slug, on: :create, if: -> { slug.blank? && caption.present? }
 
