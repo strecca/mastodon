@@ -30,7 +30,7 @@ namespace :api, format: false do
     resources :community_artists,     only: [:index, :show, :create, :update, :destroy]
     resources :community_daily_digests, only: [:index, :show]
     resources :community_newsletters,   only: [:index, :show], param: :slug
-    resources :community_quick_shares,  only: [:show, :create, :destroy], param: :slug do
+    resources :community_quick_shares,  only: [:index, :show, :create, :destroy], param: :slug do
       member do
         post :share_as_post
       end

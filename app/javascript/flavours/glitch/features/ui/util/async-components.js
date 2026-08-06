@@ -471,6 +471,10 @@ export function NewsletterShow () {
   return import('../../newsletters/show');
 }
 
+export function QuickShareIndex () {
+  return import('../../quick_shares');
+}
+
 export function QuickShareNew () {
   return import('../../quick_shares/new');
 }

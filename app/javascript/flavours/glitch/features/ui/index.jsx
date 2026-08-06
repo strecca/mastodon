@@ -133,6 +133,7 @@ import {
   DailyDigest,
   NewsletterIndex,
   NewsletterShow,
+  QuickShareIndex,
   QuickShareNew,
   QuickShareShow,
   HowItWorks,
@@ -343,6 +344,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/newsletters'                  exact component={NewsletterIndex}   content={children} />
             <WrappedRoute path='/shared/new'                   exact component={QuickShareNew}     content={children} />
             <WrappedRoute path='/shared/:slug'                 exact component={QuickShareShow}    content={children} />
+            <WrappedRoute path='/shared'                       exact component={QuickShareIndex}   content={children} />
             <WrappedRoute path='/guide'                        exact component={HowItWorks}        content={children} />
             {/* [CD:ROUTES] */}
 

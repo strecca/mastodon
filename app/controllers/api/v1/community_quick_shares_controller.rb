@@ -1,12 +1,21 @@
 # frozen_string_literal: true
 
 class Api::V1::CommunityQuickSharesController < Api::BaseController
-  skip_before_action :require_authenticated_user!, only: [:show]
+  skip_before_action :require_authenticated_user!, only: [:index, :show]
 
   before_action :require_user!, only: [:create, :destroy, :share_as_post]
   before_action :require_moderator!, only: [:create]
   before_action :set_quick_share, only: [:show, :destroy, :share_as_post]
   before_action :authorize_owner!, only: [:destroy, :share_as_post]
+
+  # GET /api/v1/community_quick_shares
+  # Public, newest first. Filtering (by poster) and search (by caption) are
+  # done client-side -- volume here is inherently small (creation is
+  # Moderator+ only), so a second query param surface isn't worth it yet.
+  def index
+    @shares = CommunityQuickShare.order(created_at: :desc).limit(60).includes(:account)
+    render json: @shares.map { |s| serialize(s) }
+  end
 
   # GET /api/v1/community_quick_shares/:slug
   def show
