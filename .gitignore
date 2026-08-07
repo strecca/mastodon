@@ -28,6 +28,19 @@ public/assets/
 # ActiveStorage uploads
 storage/
 
+# Paperclip uploads (avatars, media attachments, SiteUpload icons/
+# thumbnails, and the hand-rolled PDF stores for Newsletters/Quick Share) —
+# real user data, never commit. Was a real gap until 2026-08-07: these
+# directories had been accumulating live uploads for months, untracked
+# but never actually gitignored.
+public/system/
+public/newsletter_assets/
+public/quick_share_assets/
+
+# Bundler local config (which gem groups are installed) — machine/
+# deployment-specific, not something to commit
+.bundle/
+
 # Yarn
 yarn-error.log
 .yarn/cache/

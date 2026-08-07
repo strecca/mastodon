@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_094703) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -671,6 +671,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
     t.index ["status"], name: "index_community_properties_on_status"
     t.index ["title"], name: "idx_community_properties_approved_az", where: "(status = 1)"
     t.index ["updated_at"], name: "idx_community_properties_approved_updated", order: :desc, where: "(status = 1)"
+  end
+
+  create_table "community_quick_shares", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.text "caption", default: "", null: false
+    t.datetime "created_at", null: false
+    t.string "mastodon_status_id"
+    t.string "pdf_path", default: "", null: false
+    t.string "slug", default: "", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_community_quick_shares_on_account_id"
+    t.index ["slug"], name: "index_community_quick_shares_on_slug", unique: true
   end
 
   create_table "community_restaurants", force: :cascade do |t|
@@ -1906,6 +1918,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_100000) do
   add_foreign_key "community_my_people", "accounts", column: "member_account_id"
   add_foreign_key "community_notification_preferences", "accounts"
   add_foreign_key "community_properties", "accounts"
+  add_foreign_key "community_quick_shares", "accounts"
   add_foreign_key "community_restaurants", "accounts"
   add_foreign_key "community_services", "accounts"
   add_foreign_key "community_visit_notifications", "accounts", column: "recipient_account_id"
