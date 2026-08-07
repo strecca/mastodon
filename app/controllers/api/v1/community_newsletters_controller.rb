@@ -1,13 +1,23 @@
 # frozen_string_literal: true
 
 class Api::V1::CommunityNewslettersController < Api::BaseController
+  CATEGORY_KEY = 'newsletters'
+
+  include CommunityCacheable
+
   skip_before_action :require_authenticated_user!
 
+  # cached_list only depends on CATEGORY_KEY -- no config.json for this
+  # hand-built feature, so list_columns/list_field_names are never called.
+  # Writes happen in Admin::NewslettersController (separate controller,
+  # same CATEGORY_KEY), which calls invalidate_list_cache on the shared
+  # Redis key -- cache invalidation isn't tied to which controller wrote it.
   def index
-    newsletters = CommunityNewsletter.published_recent.limit(40)
-    render json: {
-      newsletters: newsletters.map { |nl| serialize_newsletter(nl) },
-    }
+    result = cached_list do
+      newsletters = CommunityNewsletter.published_recent.limit(40)
+      { newsletters: newsletters.map { |nl| serialize_newsletter(nl) } }
+    end
+    render json: result
   end
 
   def show

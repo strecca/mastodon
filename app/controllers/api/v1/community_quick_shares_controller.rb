@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Api::V1::CommunityQuickSharesController < Api::BaseController
+  CATEGORY_KEY = 'quick_shares'
+
+  include CommunityCacheable
+
   skip_before_action :require_authenticated_user!, only: [:index, :show]
 
   before_action :require_user!, only: [:create, :destroy, :share_as_post]
@@ -12,9 +16,15 @@ class Api::V1::CommunityQuickSharesController < Api::BaseController
   # Public, newest first. Filtering (by poster) and search (by caption) are
   # done client-side -- volume here is inherently small (creation is
   # Moderator+ only), so a second query param surface isn't worth it yet.
+  # cached_list only depends on CATEGORY_KEY (no config.json for this
+  # hand-built feature, so list_columns/list_field_names are never called --
+  # this concern's SELECT-optimization half is opt-in, not required).
   def index
-    @shares = CommunityQuickShare.order(created_at: :desc).limit(60).includes(:account)
-    render json: @shares.map { |s| serialize(s) }
+    result = cached_list do
+      shares = CommunityQuickShare.order(created_at: :desc).limit(60).includes(:account)
+      shares.map { |s| serialize(s) }
+    end
+    render json: result
   end
 
   # GET /api/v1/community_quick_shares/:slug
@@ -40,6 +50,7 @@ class Api::V1::CommunityQuickSharesController < Api::BaseController
 
     if @quick_share.save
       store_pdf(@quick_share, uploaded.tempfile.path)
+      invalidate_list_cache
       render json: serialize(@quick_share), status: :created
     else
       render json: { error: @quick_share.errors.full_messages.to_sentence }, status: :unprocessable_entity
@@ -49,6 +60,7 @@ class Api::V1::CommunityQuickSharesController < Api::BaseController
   # DELETE /api/v1/community_quick_shares/:slug
   def destroy
     @quick_share.destroy
+    invalidate_list_cache
     render json: {}
   end
 
@@ -72,6 +84,7 @@ class Api::V1::CommunityQuickSharesController < Api::BaseController
       visibility: :public
     )
     @quick_share.update_column(:mastodon_status_id, status.id.to_s)
+    invalidate_list_cache
 
     render json: serialize(@quick_share)
   end

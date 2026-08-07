@@ -4,6 +4,10 @@ module Admin
   class NewslettersController < ApplicationController
     layout 'admin'
 
+    CATEGORY_KEY = 'newsletters'
+
+    include CommunityCacheable
+
     before_action :authenticate_user!
     before_action :require_admin!
     before_action :set_newsletter, only: [:show, :edit, :update, :destroy, :publish, :unpublish]
@@ -37,6 +41,7 @@ module Admin
 
     def update
       if @newsletter.update(newsletter_params)
+        invalidate_list_cache
         redirect_to admin_newsletters_path, notice: 'Newsletter updated.'
       else
         render :edit
@@ -45,6 +50,7 @@ module Admin
 
     def destroy
       @newsletter.destroy
+      invalidate_list_cache
       redirect_to admin_newsletters_path, notice: 'Newsletter deleted.'
     end
 
@@ -55,12 +61,14 @@ module Admin
       end
 
       @newsletter.update!(status: :published, published_on: @newsletter.published_on || Date.today)
+      invalidate_list_cache
       PostNewsletterWorker.perform_async(@newsletter.id)
       redirect_to admin_newsletters_path, notice: "\"#{@newsletter.title}\" published and queued for posting to the feed."
     end
 
     def unpublish
       @newsletter.update!(status: :draft)
+      invalidate_list_cache
       redirect_to admin_newsletters_path, notice: "\"#{@newsletter.title}\" moved back to draft."
     end
 
