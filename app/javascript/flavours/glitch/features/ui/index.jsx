@@ -36,6 +36,7 @@ import { initialState, me, owner, singleUserMode, trendsEnabled, landingPage, lo
 
 import BundleColumnError from './components/bundle_column_error';
 import { NavigationBar } from './components/navigation_bar';
+import { NavPanelFab } from './components/nav_panel_fab';
 import { UploadArea } from './components/upload_area';
 import { HashtagMenuController } from './components/hashtag_menu_controller';
 import { ColumnsArea } from './components/columns_area';
@@ -836,6 +837,7 @@ class UI extends PureComponent {
           </SwitchingColumnsArea>
 
           {!minimalShell && <NavigationBar />}
+          {!minimalShell && <NavPanelFab />}
           {layout !== 'mobile' && <PictureInPicture />}
           <AlertsController />
           {!disableHoverCards && <HoverCardController />}

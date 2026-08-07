@@ -135,6 +135,7 @@
   "keyboard_shortcuts.secondary_toot": "para enviar un toot usando lac onfiguración de privacidad secundaria",
   "moved_to_warning": "Esta cuenta está marcada como movida a {moved_to_link}, y por lo tanto no aceptará nuevos seguimientos.",
   "navigation_bar.app_settings": "Ajustes de la aplicación",
+  "navigation_bar.language_and_more": "Idioma y más enlaces",
   "settings.always_show_spoilers_field": "Siempre mostrar el campo de advertencia de contenido",
   "settings.close": "Cerrar",
   "settings.compose_box_opts": "Cuadro de redacción",

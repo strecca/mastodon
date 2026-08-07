@@ -3587,6 +3587,52 @@ a.account__display-name {
   }
 }
 
+// Floating "Language & More Links" button -- a second, more obvious entry
+// point into the same drawer the hamburger icon (.ui__navigation-bar) opens,
+// for visitors who might not recognize a hamburger icon. Deliberately a
+// solid, hardcoded color (not a var(--color-*) token) since it needs
+// guaranteed white-text contrast regardless of theme -- see
+// feedback-css-var-audit memory for why theme-adaptive text/background
+// pairing is the wrong choice for a single fixed-color element like this.
+// z-index: 2 is intentionally BELOW .columns-area__panels__pane--overlay's
+// z-index: 3, so the drawer visually slides over this button when opened.
+.nav-panel-fab {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top));
+  inset-inline-end: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #1565c0;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 30%);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+    flex-shrink: 0;
+  }
+
+  &:hover, &:focus-visible {
+    background: #0d47a1;
+  }
+}
+
+@media screen and (width >= 760px) {
+  .nav-panel-fab {
+    display: none;
+  }
+}
+
 .explore-suggestions-card {
   padding: 12px 16px;
   gap: 8px;

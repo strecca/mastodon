@@ -99,6 +99,7 @@
   "community.upload.compressing": "Compressione di un'immagine di grandi dimensioni ({mb}MB) — attendere, per favore…",
   "community.upload.failed": "Caricamento non riuscito — riprova.",
   "community.upload.too_large": "L'immagine è troppo grande ({mb}MB). Ridimensionarla a meno di 80 MB prima di caricarla.",
+  "navigation_bar.language_and_more": "Lingua e altri link",
   "settings.content_warnings": "Content warnings",
   "settings.preferences": "Preferences"
 }
