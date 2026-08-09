@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 import { fetchEntry, clearCurrentEntry, deleteEntry } from 'flavours/glitch/actions/community_entries';
 import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
 import { CategoryBannerLink } from './category_banner_link';
-import { fieldLabel, translatedValue } from './translation_helpers';
+import { fieldLabel, translatedValue, optionLabel } from './translation_helpers';
 
 const messages = defineMessages({
   edit:          { id: 'community.detail.edit',           defaultMessage: 'Edit this entry' },
@@ -133,9 +133,9 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
     const raw = entry.get(field.db_name);
     if (!raw) return;
     if (raw && typeof raw.toJS === 'function') {
-      raw.toJS().forEach(v => v && badges.push(v));
+      raw.toJS().forEach(v => v && badges.push(optionLabel(field, v, locale)));
     } else if (raw) {
-      badges.push(String(raw));
+      badges.push(optionLabel(field, String(raw), locale));
     }
   });
 
@@ -289,9 +289,10 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
                   {groupFields.map(field => {
                     const rawVal = entry.get(field.db_name);
                     if (rawVal == null || rawVal === '') return null;
+                    const isOptionField = ['select', 'checkboxes', 'radio'].includes(field.widget);
                     const storedVal = rawVal && typeof rawVal.toJS === 'function'
-                      ? rawVal.toJS().join(', ')
-                      : String(rawVal);
+                      ? rawVal.toJS().map(v => isOptionField ? optionLabel(field, v, locale) : v).join(', ')
+                      : isOptionField ? optionLabel(field, String(rawVal), locale) : String(rawVal);
                     const rawDisplayVal = field.translatable
                       ? (translatedValue(entry, field.db_name, locale) || storedVal)
                       : storedVal;

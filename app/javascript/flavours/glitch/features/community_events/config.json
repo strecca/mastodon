@@ -39,6 +39,17 @@
         "Literary Event",
         "Sports Event"
       ],
+      "options_it": ["Concerto musicale", "Mostra d'arte", "Spettacolo teatrale", "Spettacolo di danza", "Laboratorio", "Festival", "Raduno comunitario", "Proiezione cinematografica", "Evento letterario", "Evento sportivo"],
+      "options_de": ["Musikkonzert", "Kunstausstellung", "Theateraufführung", "Tanzaufführung", "Workshop", "Festival", "Gemeinschaftstreffen", "Filmvorführung", "Literarische Veranstaltung", "Sportveranstaltung"],
+      "options_fr": ["Concert de musique", "Exposition d'art", "Représentation théâtrale", "Spectacle de danse", "Atelier", "Festival", "Rassemblement communautaire", "Projection de film", "Événement littéraire", "Événement sportif"],
+      "options_es": ["Concierto de música", "Exposición de arte", "Representación teatral", "Espectáculo de danza", "Taller", "Festival", "Encuentro comunitario", "Proyección de película", "Evento literario", "Evento deportivo"],
+      "options_pt": ["Concerto de música", "Exposição de arte", "Espetáculo teatral", "Espetáculo de dança", "Workshop", "Festival", "Encontro comunitário", "Exibição de filme", "Evento literário", "Evento desportivo"],
+      "options_nl": ["Muziekconcert", "Kunsttentoonstelling", "Theatervoorstelling", "Dansvoorstelling", "Workshop", "Festival", "Gemeenschapsbijeenkomst", "Filmvertoning", "Literair evenement", "Sportevenement"],
+      "options_da": ["Musikkoncert", "Kunstudstilling", "Teaterforestilling", "Danseforestilling", "Workshop", "Festival", "Fællesskabssammenkomst", "Filmvisning", "Litterært arrangement", "Sportsbegivenhed"],
+      "options_sv": ["Musikkonsert", "Konstutställning", "Teaterföreställning", "Dansföreställning", "Workshop", "Festival", "Gemenskapsträff", "Filmvisning", "Litterärt evenemang", "Sportevenemang"],
+      "options_no": ["Musikkonsert", "Kunstutstilling", "Teaterforestilling", "Danseforestilling", "Workshop", "Festival", "Fellesskapssamling", "Filmvisning", "Litterært arrangement", "Sportsarrangement"],
+      "options_sl": ["Glasbeni koncert", "Umetniška razstava", "Gledališka predstava", "Plesna predstava", "Delavnica", "Festival", "Skupnostno srečanje", "Filmska projekcija", "Literarni dogodek", "Športni dogodek"],
+      "options_sq": ["Koncert muzikor", "Ekspozitë arti", "Shfaqje teatrale", "Shfaqje vallëzimi", "Punëtori", "Festival", "Mbledhje komunitare", "Shfaqje filmi", "Ngjarje letrare", "Ngjarje sportive"],
       "column": "full",
       "group": "basic"
     },

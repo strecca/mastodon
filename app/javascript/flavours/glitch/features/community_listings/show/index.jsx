@@ -21,14 +21,7 @@ import {
   fulfillListing, closeListing,
   addInterest, removeInterest,
 } from 'flavours/glitch/actions/community_listings';
-
-const TYPE_LABELS = {
-  giveaway: 'Giveaway', trade: 'Trade', sell: 'Sell', rent: 'Rent', iso: 'ISO',
-};
-
-const STATUS_LABELS = {
-  open: null, fulfilled: 'Fulfilled', closed: 'Closed',
-};
+import { TYPE_LABELS, STATUS_LABELS, CONDITION_LABELS, listingOptionLabel } from '../option_labels';
 
 const fmtDate = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -230,7 +223,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
   const canManage   = isOwn || isAdmin;
   const isOpen      = listing.status === 'open';
   const price       = fmtPrice(listing);
-  const statusLabel = STATUS_LABELS[listing.status];
+  const statusLabel = listing.status === 'open' ? null : listingOptionLabel(STATUS_LABELS, listing.status, activeLocale);
 
   // Resolve translated text: viewing locale → base lang → original
   const tr = (field) => {
@@ -288,7 +281,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
 
         <div className='cl-detail__body'>
           <div className={`cl-detail__type-badge cl-detail__type-badge--${listing.listing_type}`}>
-            {TYPE_LABELS[listing.listing_type]}
+            {listingOptionLabel(TYPE_LABELS, listing.listing_type, activeLocale)}
           </div>
 
           <h1 className='cl-detail__title'>{tr('title')}</h1>
@@ -303,7 +296,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
 
           {listing.condition && (
             <div className='cl-detail__condition'>
-              Condition: <strong>{listing.condition.replace('_', ' ')}</strong>
+              Condition: <strong>{listingOptionLabel(CONDITION_LABELS, listing.condition, activeLocale)}</strong>
             </div>
           )}
 

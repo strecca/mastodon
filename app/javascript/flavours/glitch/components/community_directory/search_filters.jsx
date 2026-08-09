@@ -4,6 +4,8 @@ import { useCallback } from 'react';
 
 import { useIntl, defineMessages } from 'react-intl';
 
+import { fieldLabel, optionLabel } from './translation_helpers';
+
 const messages = defineMessages({
   searchPlaceholder: { id: 'community.search.placeholder',    defaultMessage: 'Search {name}…' },
   filtersLabel:      { id: 'community.search.filters',        defaultMessage: 'Filter:' },
@@ -71,6 +73,7 @@ export const SearchFilters = ({ query, onQueryChange, sort, onSortChange, fields
               field={field}
               activeValues={activeFilters[field.db_name] || []}
               onChange={onFilterChange}
+              intl={intl}
             />
           ))}
         </div>
@@ -79,7 +82,8 @@ export const SearchFilters = ({ query, onQueryChange, sort, onSortChange, fields
   );
 };
 
-const FilterPillGroup = ({ field, activeValues, onChange }) => {
+const FilterPillGroup = ({ field, activeValues, onChange, intl }) => {
+  const locale = intl.locale;
   const handleSelect = useCallback((option) => {
     const current = Array.isArray(activeValues) ? activeValues : [];
     const next = current.includes(option) ? [] : [option];
@@ -89,7 +93,7 @@ const FilterPillGroup = ({ field, activeValues, onChange }) => {
   return (
     <div className='community-search-filters__group'>
       <span className='community-search-filters__group-label'>
-        {field.label || humanize(field.db_name)}
+        {fieldLabel(field, locale) || humanize(field.db_name)}
       </span>
       <div className='community-search-filters__pills'>
         {field.options.map(option => {
@@ -102,7 +106,7 @@ const FilterPillGroup = ({ field, activeValues, onChange }) => {
               onClick={() => handleSelect(option)}
               aria-pressed={active}
             >
-              {option}
+              {optionLabel(field, option, locale)}
             </button>
           );
         })}

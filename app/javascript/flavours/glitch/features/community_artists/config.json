@@ -40,6 +40,17 @@
         "Dance Performer/Instructor",
         "Writer"
       ],
+      "options_it": ["Pittura Olio/Acrilico/Tempera", "Arte encaustica", "Insegnante di canto", "Cantante", "Spettacolo teatrale", "Scultore", "Lavorazione del legno", "Musicista esecutore", "Compositore musicale", "Ballerino/Istruttore di danza", "Scrittore"],
+      "options_de": ["Malerei Öl/Acryl/Tempera", "Enkaustik-Kunst", "Gesangslehrer", "Sänger", "Theateraufführung", "Bildhauer", "Holzbearbeitung", "Musikinterpret", "Komponist", "Tänzer/Tanzlehrer", "Schriftsteller"],
+      "options_fr": ["Peinture Huile/Acrylique/Tempera", "Art encaustique", "Professeur de chant", "Chanteur", "Représentation théâtrale", "Sculpteur", "Travail du bois", "Interprète musical", "Compositeur", "Danseur/Instructeur de danse", "Écrivain"],
+      "options_es": ["Pintura Óleo/Acrílico/Temple", "Arte encáustico", "Profesor de canto", "Cantante", "Representación teatral", "Escultor", "Trabajo en madera", "Intérprete musical", "Compositor", "Bailarín/Instructor de danza", "Escritor"],
+      "options_pt": ["Pintura Óleo/Acrílico/Têmpera", "Arte encáustica", "Professor de canto", "Cantor", "Espetáculo teatral", "Escultor", "Marcenaria", "Intérprete musical", "Compositor", "Bailarino/Instrutor de dança", "Escritor"],
+      "options_nl": ["Schilderen Olieverf/Acryl/Tempera", "Encaustische kunst", "Zangdocent", "Zanger", "Theatervoorstelling", "Beeldhouwer", "Houtbewerking", "Muzikaal uitvoerder", "Componist", "Danser/Dansinstructeur", "Schrijver"],
+      "options_da": ["Maleri Olie/Akryl/Tempera", "Enkaustisk kunst", "Sanglærer", "Sanger", "Teaterforestilling", "Billedhugger", "Træarbejde", "Musikudøver", "Komponist", "Danser/Danseinstruktør", "Forfatter"],
+      "options_sv": ["Måleri Olja/Akryl/Tempera", "Enkaustisk konst", "Sånglärare", "Sångare", "Teaterföreställning", "Skulptör", "Träarbete", "Musikutövare", "Kompositör", "Dansare/Dansinstruktör", "Författare"],
+      "options_no": ["Maleri Olje/Akryl/Tempera", "Enkaustisk kunst", "Sanglærer", "Sanger", "Teaterforestilling", "Billedhugger", "Trearbeid", "Musikkutøver", "Komponist", "Danser/Danseinstruktør", "Forfatter"],
+      "options_sl": ["Slikarstvo Olje/Akril/Tempera", "Enkavstična umetnost", "Učitelj petja", "Pevec", "Gledališka predstava", "Kipar", "Obdelava lesa", "Glasbeni izvajalec", "Skladatelj", "Plesalec/Učitelj plesa", "Pisatelj"],
+      "options_sq": ["Pikturë Vaj/Akrilik/Tempera", "Art enkaustik", "Mësues këndimi", "Këngëtar", "Shfaqje teatrale", "Skulptor", "Punime druri", "Interpretues muzikor", "Kompozitor", "Kërcimtar/Instruktor vallëzimi", "Shkrimtar"],
       "column": "full",
       "group": "basic"
     },

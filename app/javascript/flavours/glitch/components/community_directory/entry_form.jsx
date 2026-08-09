@@ -46,7 +46,7 @@ import { useHistory, Link } from 'react-router-dom';
 
 import api from 'flavours/glitch/api';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { fieldLabel, fieldPlaceholder } from './translation_helpers';
+import { fieldLabel, fieldPlaceholder, optionLabel } from './translation_helpers';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
 import {
@@ -496,7 +496,7 @@ const FormField = ({ field, value, error, onChange, intl }) => {
         className={inputClass} required={field.required}
         aria-invalid={!!error} aria-describedby={errorId}>
         <option value=''>{intl.formatMessage({ id: 'community.form.select', defaultMessage: 'Select…' })}</option>
-        {(field.options || []).map(opt => <option key={opt} value={opt}>{opt}</option>)}
+        {(field.options || []).map(opt => <option key={opt} value={opt}>{optionLabel(field, opt, locale)}</option>)}
       </select>
     );
     break;
@@ -517,7 +517,7 @@ const FormField = ({ field, value, error, onChange, intl }) => {
 
   case 'checkboxes':
     input = (
-      <CheckboxField field={field} value={value} onChange={onChange} error={error} errorId={errorId} />
+      <CheckboxField field={field} value={value} onChange={onChange} error={error} errorId={errorId} intl={intl} />
     );
     return (
       <div className={`community-entry-form__field ${colClass}`}>
@@ -527,7 +527,7 @@ const FormField = ({ field, value, error, onChange, intl }) => {
 
   case 'radio':
     input = (
-      <RadioField field={field} value={value} onChange={onChange} error={error} errorId={errorId} />
+      <RadioField field={field} value={value} onChange={onChange} error={error} errorId={errorId} intl={intl} />
     );
     return (
       <div className={`community-entry-form__field ${colClass}`}>
@@ -605,9 +605,10 @@ const LocationSelectField = ({ field, value, onChange, error, errorId, intl }) =
 
 // ── Checkbox / Radio sub-components ───────────────────────────
 
-const CheckboxField = ({ field, value, onChange, error, errorId }) => {
+const CheckboxField = ({ field, value, onChange, error, errorId, intl }) => {
   const arr = Array.isArray(value) ? value : [];
-  const label = field.label || humanize(field.db_name);
+  const locale = intl.locale;
+  const label = fieldLabel(field, locale) || humanize(field.db_name);
 
   const toggle = useCallback((opt) => {
     const next = arr.includes(opt)
@@ -625,7 +626,7 @@ const CheckboxField = ({ field, value, onChange, error, errorId }) => {
         {(field.options || []).map(opt => (
           <label key={opt} className='community-entry-form__option'>
             <input type='checkbox' checked={arr.includes(opt)} onChange={() => toggle(opt)} />
-            <span>{opt}</span>
+            <span>{optionLabel(field, opt, locale)}</span>
           </label>
         ))}
       </div>
@@ -634,8 +635,9 @@ const CheckboxField = ({ field, value, onChange, error, errorId }) => {
   );
 };
 
-const RadioField = ({ field, value, onChange, error, errorId }) => {
-  const label = field.label || humanize(field.db_name);
+const RadioField = ({ field, value, onChange, error, errorId, intl }) => {
+  const locale = intl.locale;
+  const label = fieldLabel(field, locale) || humanize(field.db_name);
 
   const select = useCallback((e) => onChange(field.db_name, e.target.value), [onChange, field.db_name]);
 
@@ -648,7 +650,7 @@ const RadioField = ({ field, value, onChange, error, errorId }) => {
         {(field.options || []).map(opt => (
           <label key={opt} className='community-entry-form__option'>
             <input type='radio' name={field.db_name} value={opt} checked={value === opt} onChange={select} />
-            <span>{opt}</span>
+            <span>{optionLabel(field, opt, locale)}</span>
           </label>
         ))}
       </div>

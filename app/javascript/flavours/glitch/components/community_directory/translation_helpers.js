@@ -30,3 +30,17 @@ export const translatedValue = (entry, fieldName, locale) => {
     entry?.get(fieldName)
   );
 };
+
+// Resolve a translated label for one select/checkboxes/radio OPTION VALUE
+// (e.g. the stored string "Medical" -> displayed "Medico" in Italian).
+// The stored value in `field.options` is always the canonical/English
+// string -- never translated or migrated -- this only changes what's
+// displayed. Mirrors fieldLabel's fallback chain, but positional: options
+// and options_<locale> are parallel arrays, same order, same length.
+// Falls back to the raw stored value if no translation exists for it.
+export const optionLabel = (field, rawValue, locale) => {
+  const lang = locale?.split('-')[0];
+  const idx = field?.options?.indexOf(rawValue);
+  if (idx == null || idx < 0) return rawValue;
+  return field[`options_${locale}`]?.[idx] || field[`options_${lang}`]?.[idx] || rawValue;
+};

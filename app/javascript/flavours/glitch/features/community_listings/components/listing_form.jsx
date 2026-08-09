@@ -3,6 +3,7 @@ import { useState, useCallback, useRef } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 
 import api from 'flavours/glitch/api';
+import { TYPE_LABELS, TYPE_DESCRIPTIONS, CONDITION_LABELS, listingOptionLabel } from '../option_labels';
 
 const messages = defineMessages({
   compressingLarge: { id: 'community.upload.compressing', defaultMessage: 'Compressing large image ({mb} MB) — please wait…' },
@@ -45,24 +46,13 @@ const compressImage = (file, onLargeFile) =>
     img.src = blobUrl;
   });
 
-const CONDITIONS = [
-  { value: 'new_item',  label: 'New' },
-  { value: 'like_new',  label: 'Like New' },
-  { value: 'used',      label: 'Used' },
-  { value: 'damaged',   label: 'Damaged' },
-];
+const CONDITIONS = ['new_item', 'like_new', 'used', 'damaged'];
 
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'CHF'];
 
 const RENTAL_PERIODS = ['day', 'week', 'month', 'year'];
 
-const LISTING_TYPES = [
-  { value: 'giveaway', label: 'Giveaway', desc: 'Free to a good home' },
-  { value: 'trade',    label: 'Trade',    desc: 'Exchange for something else' },
-  { value: 'sell',     label: 'Sell',     desc: 'For sale at a price' },
-  { value: 'rent',     label: 'Rent',     desc: 'Available to rent' },
-  { value: 'iso',      label: 'ISO',      desc: 'In Search Of — looking to find' },
-];
+const LISTING_TYPES = ['giveaway', 'trade', 'sell', 'rent', 'iso'];
 
 const MAX_IMAGES = 4;
 
@@ -170,13 +160,13 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
         <div className='cl-form__type-grid'>
           {LISTING_TYPES.map(t => (
             <button
-              key={t.value}
+              key={t}
               type='button'
-              className={`cl-form__type-btn${listingType === t.value ? ' cl-form__type-btn--active' : ''}`}
-              onClick={() => setListingType(t.value)}
+              className={`cl-form__type-btn${listingType === t ? ' cl-form__type-btn--active' : ''}`}
+              onClick={() => setListingType(t)}
             >
-              <span className='cl-form__type-btn-label'>{t.label}</span>
-              <span className='cl-form__type-btn-desc'>{t.desc}</span>
+              <span className='cl-form__type-btn-label'>{listingOptionLabel(TYPE_LABELS, t, intl.locale)}</span>
+              <span className='cl-form__type-btn-desc'>{listingOptionLabel(TYPE_DESCRIPTIONS, t, intl.locale)}</span>
             </button>
           ))}
         </div>
@@ -253,15 +243,15 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
           <label className='cl-form__label'>Condition</label>
           <div className='cl-form__condition-row'>
             {CONDITIONS.map(c => (
-              <label key={c.value} className={`cl-form__condition-opt${condition === c.value ? ' cl-form__condition-opt--active' : ''}`}>
+              <label key={c} className={`cl-form__condition-opt${condition === c ? ' cl-form__condition-opt--active' : ''}`}>
                 <input
                   type='radio'
                   name='condition'
-                  value={c.value}
-                  checked={condition === c.value}
-                  onChange={() => setCondition(c.value)}
+                  value={c}
+                  checked={condition === c}
+                  onChange={() => setCondition(c)}
                 />
-                {c.label}
+                {listingOptionLabel(CONDITION_LABELS, c, intl.locale)}
               </label>
             ))}
           </div>
