@@ -14,9 +14,13 @@ class CommunityTranslationWorker
 
   sidekiq_options queue: 'low', retry: 5
 
-  # All target locales. English is assumed to be the primary submission
-  # language and is excluded. Add/remove as the community grows.
-  TARGET_LOCALES = %w[it de fr es pt nl da sv no sl sq].freeze
+  # All target locales. English was originally excluded on the (wrong)
+  # assumption that every member posts in English -- real members post in
+  # German, Italian, etc. and their content never got an English
+  # translation as a result. English translation into itself is a
+  # harmless no-op for DeepL (no source-language detection exists here to
+  # skip it conditionally). Add/remove as the community grows.
+  TARGET_LOCALES = %w[en it de fr es pt nl da sv no sl sq].freeze
 
   # Models that don't have a features/community_*/config.json — field names listed directly.
   FIELD_OVERRIDES = {
