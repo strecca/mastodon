@@ -16,7 +16,7 @@ class CommunityEntryPushWorker
     @notification = CommunityEntryNotification.find(community_entry_notification_id)
     return if @notification.browser_pushed_at.present?
 
-    subscriptions = Web::PushSubscription.where(user_id: @notification.recipient.user_id)
+    subscriptions = Web::PushSubscription.where(user_id: @notification.recipient.user&.id)
     return if subscriptions.none?
 
     subscriptions.find_each { |subscription| deliver(subscription) }
