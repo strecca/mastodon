@@ -10,7 +10,7 @@ RSpec.describe CommunityEntryPushWorker do
   let(:sender)       { Fabricate(:account) }
   let(:listing)      { Fabricate(:community_listing, account: sender) }
   let(:notification) do
-    Fabricate(:community_entry_notification, recipient_account: recipient, sender_account: sender,
+    Fabricate(:community_entry_notification, recipient: recipient, sender: sender,
                                               notifiable: listing, category_key: 'listings', kind: :new_entry)
   end
 
