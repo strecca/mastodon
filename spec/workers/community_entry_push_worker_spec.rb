@@ -16,7 +16,7 @@ RSpec.describe CommunityEntryPushWorker do
 
   describe '#perform' do
     context 'when the recipient has an active push subscription' do
-      let!(:subscription) { Fabricate(:web_push_subscription, user_id: user.id) }
+      let!(:subscription) { Fabricate(:web_push_subscription, user: user) }
 
       it 'delivers via WebPushDeliveryService and marks browser_pushed_at' do
         delivery = instance_double(WebPushDeliveryService, call: nil)
@@ -53,7 +53,7 @@ RSpec.describe CommunityEntryPushWorker do
     end
 
     context 'when already pushed' do
-      let!(:subscription) { Fabricate(:web_push_subscription, user_id: user.id) }
+      let!(:subscription) { Fabricate(:web_push_subscription, user: user) }
 
       it 'does not push again' do
         notification.update_column(:browser_pushed_at, Time.current)
