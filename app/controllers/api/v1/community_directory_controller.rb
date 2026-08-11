@@ -13,7 +13,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   end
 
   def show_category
-    config_path = category_config_path(params[:name])
+    config_path = CommunityDirectoryConfig.config_path(params[:name])
     if File.exist?(config_path)
       render json: JSON.parse(File.read(config_path))
     else
@@ -58,6 +58,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
 
     entry.update!(status: :approved)
     CommunityDirectoryMailer.entry_approved(entry, category_key).deliver_later
+    CommunityEntryNotifyWorker.perform_async('new_entry', entry.class.name, entry.id, category_key)
     render json: { success: true, id: entry.id, status: 'approved' }
   end
 
@@ -109,10 +110,9 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     model = model_for_category(category_key)
     return render json: { matches: [] } unless model
 
-    config_path = category_config_path(category_key)
-    return render json: { matches: [] } unless File.exist?(config_path)
+    config = CommunityDirectoryConfig.config_for(category_key)
+    return render json: { matches: [] } if config.blank?
 
-    config = JSON.parse(File.read(config_path))
     all_text = (config['fields'] || []).select { |f| f['widget'] == 'text' && f['required'] }
     text_fields = all_text.select { |f| f['duplicate_key'] }
     text_fields = all_text.first(2) if text_fields.empty?
@@ -182,13 +182,12 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
 
     page_entries = scope.page(params[:page]).per(50)
 
-    config_path = category_config_path(category_key)
-    config = File.exist?(config_path) ? JSON.parse(File.read(config_path)) : {}
+    config = CommunityDirectoryConfig.config_for(category_key)
     name_field = (config['fields'] || []).find { |f| %w[name title first_name].include?(f['db_name']) }
 
     render json: {
       category_key:  category_key,
-      display_name:  config['display_name'] || category_key.titleize,
+      display_name:  CommunityDirectoryConfig.display_name_for(category_key),
       entries:       page_entries.map { |e| admin_entry_serialize(e, category_key, name_field) },
       total:         page_entries.total_count,
       pages:         page_entries.total_pages,
@@ -279,9 +278,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   end
 
   def moderation_serialize(entry, category_key)
-    config_path = Rails.root.join('app', 'javascript', 'flavours', 'glitch', 'features',
-                                   "community_#{category_key}", 'config.json')
-    config = File.exist?(config_path) ? JSON.parse(File.read(config_path)) : {}
+    config = CommunityDirectoryConfig.config_for(category_key)
 
     preview_fields = (config['fields'] || []).first(4).filter_map do |f|
       val = entry.respond_to?(f['db_name']) ? entry.send(f['db_name']).to_s : nil
@@ -290,7 +287,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
 
     { id: entry.id,
       category_key: category_key,
-      category_display_name: config['display_name'] || category_key.titleize,
+      category_display_name: CommunityDirectoryConfig.display_name_for(category_key),
       status: entry.status,
       submitted_at: entry.created_at.iso8601,
       account: { id: entry.account.id, username: entry.account.username,
@@ -365,13 +362,8 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     p
   end
 
-  def category_config_path(name)
-    safe = name.to_s.strip.downcase.gsub(/[^a-z0-9_]/, '')
-    Rails.root.join('app', 'javascript', 'flavours', 'glitch', 'features', "community_#{safe}", 'config.json')
-  end
-
   def build_category_info(table_name)
-    config_path = Rails.root.join('app', 'javascript', 'flavours', 'glitch', 'features', table_name, 'config.json')
+    category_key = table_name.delete_prefix('community_')
     count = begin
       conn      = ActiveRecord::Base.connection
       quoted    = conn.quote_table_name(table_name)
@@ -383,13 +375,13 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
       0
     end
 
-    if File.exist?(config_path)
-      config = JSON.parse(File.read(config_path))
-      { name: config['category_key'], display_name: config['display_name'],
+    config = CommunityDirectoryConfig.config_for(category_key)
+    if config.present?
+      { name: config['category_key'] || category_key, display_name: config['display_name'],
         description: config['description'], icon: config['icon'],
         table_name: table_name, entries_count: count }
     else
-      { name: table_name.delete_prefix('community_'), display_name: table_name.titleize,
+      { name: category_key, display_name: CommunityDirectoryConfig.display_name_for(category_key),
         description: '', icon: 'category', table_name: table_name, entries_count: count }
     end
   end

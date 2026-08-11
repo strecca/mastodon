@@ -79,7 +79,25 @@ const htmlToPlainText = html =>
   unescape(html.replace(/<br\s*\/?>/g, '\n').replace(/<\/p><p>/g, '\n\n').replace(/<[^>]*>/g, ''));
 
 export const handlePush = (event) => {
-  const { access_token, notification_id, preferred_locale, title, body, icon } = event.data.json();
+  const data = event.data.json();
+  const { access_token, notification_id, preferred_locale, title, body, icon } = data;
+
+  // Community Directory notifications carry their own complete payload —
+  // unlike native notifications, there's no /api/v1/notifications/:id to
+  // fetch, so show it directly instead of falling into the native branch
+  // below (which would 404 against a community_entry_notification id).
+  if (data.community_entry_notification_id) {
+    event.waitUntil(notify({
+      title,
+      body,
+      icon,
+      tag: `community-entry-${data.community_entry_notification_id}`,
+      timestamp: new Date(),
+      badge: '/badge.png',
+      data: { access_token, preferred_locale, url: data.url },
+    }));
+    return;
+  }
 
   // Placeholder until more information can be loaded
   event.waitUntil(

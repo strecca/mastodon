@@ -99,10 +99,7 @@ class CommunityTranslationWorker
 
     # "CommunityArtist" → "artists" → config path community_artists/config.json
     category_key = translatable_type.delete_prefix('Community').underscore.pluralize
-    config_path  = Rails.root.join(
-      'app', 'javascript', 'flavours', 'glitch', 'features',
-      "community_#{category_key}", 'config.json'
-    )
+    config_path  = CommunityDirectoryConfig.config_path(category_key)
     return nil unless File.exist?(config_path)
 
     JSON.parse(File.read(config_path))

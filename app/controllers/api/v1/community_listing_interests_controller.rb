@@ -25,6 +25,7 @@ class Api::V1::CommunityListingInterestsController < Api::BaseController
 
     if interest.save
       CommunityListingNotifyWorker.perform_async(@listing.id, current_account.id)
+      CommunityEntryNotifyWorker.perform_async('entry_response', 'CommunityListingInterest', interest.id)
       render json: { id: interest.id, status: interest.status }, status: :created
     else
       render json: { errors: interest.errors.full_messages }, status: :unprocessable_entity

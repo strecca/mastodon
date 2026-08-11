@@ -1864,6 +1864,11 @@ en:
     severed_relationships:
       summary_html: An admin from %{from} has suspended %{target}, which means you can no longer receive updates from them or interact with them. %{link} to retrieve a list of the lost relationships.
       title: Lost connections with %{name}
+  community_entry_notification:
+    new_entry_title: "New in %{category}"
+    entry_response_title: "You got a response"
+    body: "%{name} posted something you might be interested in."
+    default_body: "There's a new update on something you're watching."
   notification_mailer:
     admin:
       report:

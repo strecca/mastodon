@@ -50,6 +50,7 @@ class Api::V1::CommunityEventsController < Api::BaseController
       invalidate_list_cache
       CommunityDirectoryMailer.entry_submitted(entry, CATEGORY_KEY).deliver_later unless entry.approved?
       CommunityTranslationWorker.perform_async(entry.class.name, entry.id)
+      CommunityEntryNotifyWorker.perform_async('new_entry', entry.class.name, entry.id, CATEGORY_KEY) if entry.approved?
       CommunityDirectoryRefreshWorker.perform_in(30.seconds, 'community:events') if entry.approved?
       render json: serialize(entry, detail: true), status: :created
     else

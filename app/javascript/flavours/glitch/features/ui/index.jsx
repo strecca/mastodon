@@ -137,6 +137,8 @@ import {
   QuickShareIndex,
   QuickShareNew,
   QuickShareShow,
+  NotificationSettings,
+  CommunityEntryNotifications,
   HowItWorks,
   // [CD:ASYNC_IMPORTS]
 } from './util/async-components';
@@ -347,6 +349,8 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/shared/:slug'                 exact component={QuickShareShow}    content={children} />
             <WrappedRoute path='/shared'                       exact component={QuickShareIndex}   content={children} />
             <WrappedRoute path='/guide'                        exact component={HowItWorks}        content={children} />
+            <WrappedRoute path='/notification_settings'        exact component={NotificationSettings}         content={children} />
+            <WrappedRoute path='/community_notifications'      exact component={CommunityEntryNotifications}  content={children} />
             {/* [CD:ROUTES] */}
 
             <WrappedRoute path='/explore' component={Explore} content={children} />

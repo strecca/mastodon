@@ -35,6 +35,7 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
 
     if story.save
       CommunityTranslationWorker.perform_async('CivezzaMemberStory', story.id)
+      CommunityEntryNotifyWorker.perform_async('new_entry', 'CivezzaMemberStory', story.id, 'member_stories') if story.previously_new_record?
       status = story.previously_new_record? ? :created : :ok
       render json: serialize(story, own: true), status: status
     else

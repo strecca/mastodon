@@ -64,6 +64,8 @@
   /newsletters/(*any)
   /shared
   /shared/(*any)
+  /notification_settings
+  /community_notifications
   /guide
   /overview
   /overview/about

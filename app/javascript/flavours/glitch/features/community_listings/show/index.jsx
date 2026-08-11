@@ -195,6 +195,15 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
     dispatch(directCompose(ImmutableMap({ acct: listing.account.username })));
   }, [dispatch, listing?.account?.username]);
 
+  const handleToggleWatch = useCallback(async () => {
+    if (listing?.watching) {
+      await api().delete(`/api/v1/community_listings/${id}/watch`);
+    } else {
+      await api().post(`/api/v1/community_listings/${id}/watch`);
+    }
+    dispatch(refreshListing(id));
+  }, [dispatch, id, listing?.watching]);
+
   const handleFulfill = useCallback(async () => {
     await dispatch(fulfillListing(id));
   }, [dispatch, id]);
@@ -332,6 +341,9 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
               )}
               <button type='button' onClick={handleSendDm} className='button button-secondary'>
                 Send DM
+              </button>
+              <button type='button' onClick={handleToggleWatch} className='button button-secondary cl-detail__watch-btn'>
+                {listing.watching ? '🔔 Notifying you of responses' : '🔔 Notify me of responses'}
               </button>
             </div>
           )}

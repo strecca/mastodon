@@ -3,8 +3,8 @@
 class Api::V1::CommunityListingsController < Api::BaseController
   skip_before_action :require_authenticated_user!, only: [:index, :show]
 
-  before_action :require_user!, only: [:create, :update, :destroy, :fulfill, :close]
-  before_action :set_listing,   only: [:show, :update, :destroy, :fulfill, :close]
+  before_action :require_user!, only: [:create, :update, :destroy, :fulfill, :close, :watch, :unwatch]
+  before_action :set_listing,   only: [:show, :update, :destroy, :fulfill, :close, :watch, :unwatch]
   before_action :authorize_owner!, only: [:update, :fulfill, :close]
 
   # GET /api/v1/community_listings
@@ -41,6 +41,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
 
     if @listing.save
       CommunityTranslationWorker.perform_async('CommunityListing', @listing.id)
+      CommunityEntryNotifyWorker.perform_async('new_entry', 'CommunityListing', @listing.id, 'listings')
       CommunityDirectoryRefreshWorker.perform_in(30.seconds, 'community:listings')
       render json: serialize(@listing), status: :created
     else
@@ -78,6 +79,22 @@ class Api::V1::CommunityListingsController < Api::BaseController
   def close
     @listing.update!(status: :closed)
     render json: serialize(@listing)
+  end
+
+  # POST /api/v1/community_listings/:id/watch
+  # "Notify me if this listing gets a response."
+  def watch
+    return render json: { error: 'Cannot watch your own listing' }, status: :unprocessable_entity \
+      if @listing.account_id == current_account.id
+
+    CommunityEntryWatch.find_or_create_by!(account: current_account, watchable: @listing)
+    render json: { watching: true }
+  end
+
+  # DELETE /api/v1/community_listings/:id/watch
+  def unwatch
+    CommunityEntryWatch.where(account: current_account, watchable: @listing).destroy_all
+    render json: { watching: false }
   end
 
   private
@@ -154,6 +171,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
       },
       is_own:     current_account&.id == listing.account_id,
       interested: current_account ? listing.interested?(current_account) : false,
+      watching:   current_account ? CommunityEntryWatch.exists?(account: current_account, watchable: listing) : false,
       created_at: listing.created_at.iso8601,
       updated_at: listing.updated_at.iso8601,
     }

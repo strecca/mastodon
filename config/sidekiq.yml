@@ -60,6 +60,10 @@
       interval: 1 hour
       class: Scheduler::CommunityVisitDigestScheduler
       queue: scheduler
+    member_notification_flush_scheduler:
+      every: '15m'
+      class: Scheduler::MemberNotificationFlushScheduler
+      queue: scheduler
     event_import_scheduler:
       cron: '0 2 * * *'
       class: Scheduler::EventImportScheduler

@@ -45,6 +45,8 @@ namespace :api, format: false do
       member do
         post :fulfill
         post :close
+        post :watch
+        delete :watch, action: :unwatch
       end
       resources :interests, only: [:create, :destroy],
                             controller: 'community_listing_interests' do
@@ -85,6 +87,21 @@ namespace :api, format: false do
       end
       member do
         post :read
+      end
+    end
+
+    # ── Community Directory-wide notification preferences ───────────────────
+    resource  :member_notification_preferences, only: [:show, :update]
+    resources :member_notification_category_subscriptions, only: [:index, :create, :destroy]
+    resources :member_notification_targets, only: [:index, :create, :destroy]
+    resources :community_entry_notifications, only: [:index] do
+      collection do
+        get  :unread_count
+        post :read_all
+      end
+      member do
+        post :read
+        post :mute
       end
     end
     # Community Directory admin API

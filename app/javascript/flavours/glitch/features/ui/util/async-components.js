@@ -483,6 +483,14 @@ export function QuickShareShow () {
   return import('../../quick_shares/show');
 }
 
+export function NotificationSettings () {
+  return import('../../notification_settings');
+}
+
+export function CommunityEntryNotifications () {
+  return import('../../community_entry_notifications');
+}
+
 export function HowItWorks () {
   return import('../../how_it_works');
 }

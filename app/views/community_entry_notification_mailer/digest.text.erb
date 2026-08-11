@@ -1,0 +1,12 @@
+Hi @<%= @recipient.username %>,
+
+Here's what's new in the categories and members you're following:
+
+<% @notifications.group_by(&:category_key).each do |category_key, group| %>
+<%= CommunityDirectoryConfig.display_name_for(category_key).upcase %> (<%= group.size %>)
+<% group.each do |n| %>
+  • <%= n.sender&.display_name&.presence || "@#{n.sender&.username}" %> (@<%= n.sender&.username %>) — <%= n.entry_response? ? 'responded to a listing you\'re watching' : 'posted something new' %>
+<% end %>
+
+<% end %>
+To change what you're notified about, visit your notification settings.
