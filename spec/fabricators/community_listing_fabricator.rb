@@ -3,6 +3,6 @@
 Fabricator(:community_listing) do
   account
   title 'A test listing'
-  listing_type 'sell'
+  listing_type 'giveaway'
   description 'A test description'
 end
