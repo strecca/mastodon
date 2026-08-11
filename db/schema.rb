@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_094703) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_11_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -484,6 +484,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_094703) do
     t.index ["account_id", "category_key"], name: "idx_cd_permissions_account_category", unique: true
   end
 
+  create_table "community_entry_notifications", force: :cascade do |t|
+    t.datetime "browser_pushed_at"
+    t.string "category_key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "emailed_at"
+    t.integer "kind", null: false
+    t.bigint "notifiable_id", null: false
+    t.string "notifiable_type", null: false
+    t.datetime "read_at"
+    t.bigint "recipient_account_id", null: false
+    t.bigint "sender_account_id"
+    t.datetime "updated_at", null: false
+    t.index ["browser_pushed_at"], name: "idx_community_entry_notifs_needs_push"
+    t.index ["emailed_at"], name: "idx_community_entry_notifs_needs_email"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_community_entry_notifications_on_notifiable"
+    t.index ["recipient_account_id", "created_at"], name: "idx_community_entry_notifs_inbox"
+    t.index ["recipient_account_id", "read_at"], name: "idx_community_entry_notifs_unread"
+    t.index ["recipient_account_id"], name: "index_community_entry_notifications_on_recipient_account_id"
+    t.index ["sender_account_id"], name: "index_community_entry_notifications_on_sender_account_id"
+  end
+
   create_table "community_entry_translations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "field_name", null: false
@@ -494,6 +515,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_094703) do
     t.text "translated_text", null: false
     t.datetime "updated_at", null: false
     t.index ["translatable_type", "translatable_id", "locale", "field_name"], name: "idx_community_translations_unique", unique: true
+  end
+
+  create_table "community_entry_watches", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "watchable_id", null: false
+    t.string "watchable_type", null: false
+    t.index ["account_id", "watchable_type", "watchable_id"], name: "idx_community_entry_watches_unique", unique: true
+    t.index ["account_id"], name: "index_community_entry_watches_on_account_id"
+    t.index ["watchable_type", "watchable_id"], name: "index_community_entry_watches_on_watchable"
   end
 
   create_table "community_events", force: :cascade do |t|
@@ -1147,6 +1179,39 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_094703) do
     t.index ["scheduled_status_id"], name: "index_media_attachments_on_scheduled_status_id", where: "(scheduled_status_id IS NOT NULL)"
     t.index ["shortcode"], name: "index_media_attachments_on_shortcode", unique: true, opclass: :text_pattern_ops, where: "(shortcode IS NOT NULL)"
     t.index ["status_id"], name: "index_media_attachments_on_status_id"
+  end
+
+  create_table "member_notification_category_subscriptions", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "category_key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "category_key"], name: "idx_member_notif_category_subs_unique", unique: true
+    t.index ["account_id"], name: "index_member_notification_category_subscriptions_on_account_id"
+    t.index ["category_key"], name: "idx_member_notif_category_subs_by_category"
+  end
+
+  create_table "member_notification_preferences", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "email_frequency", default: 2, null: false
+    t.boolean "quiet_hours_enabled", default: false, null: false
+    t.time "quiet_hours_end"
+    t.time "quiet_hours_start"
+    t.string "quiet_hours_timezone", default: "UTC", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_member_notification_preferences_on_account_id", unique: true
+  end
+
+  create_table "member_notification_targets", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "target_account_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "target_account_id"], name: "idx_member_notif_targets_unique", unique: true
+    t.index ["account_id"], name: "index_member_notification_targets_on_account_id"
+    t.index ["target_account_id"], name: "idx_member_notif_targets_by_target"
+    t.index ["target_account_id"], name: "index_member_notification_targets_on_target_account_id"
   end
 
   create_table "mentions", force: :cascade do |t|
@@ -1910,6 +1975,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_094703) do
   add_foreign_key "collections", "tags"
   add_foreign_key "community_artists", "accounts"
   add_foreign_key "community_directory_permissions", "accounts"
+  add_foreign_key "community_entry_notifications", "accounts", column: "recipient_account_id"
+  add_foreign_key "community_entry_notifications", "accounts", column: "sender_account_id"
+  add_foreign_key "community_entry_watches", "accounts"
   add_foreign_key "community_events", "accounts"
   add_foreign_key "community_listing_interests", "accounts"
   add_foreign_key "community_listing_interests", "community_listings"
@@ -1965,6 +2033,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_094703) do
   add_foreign_key "media_attachments", "accounts", name: "fk_96dd81e81b", on_delete: :nullify
   add_foreign_key "media_attachments", "scheduled_statuses", on_delete: :nullify
   add_foreign_key "media_attachments", "statuses", on_delete: :nullify
+  add_foreign_key "member_notification_category_subscriptions", "accounts"
+  add_foreign_key "member_notification_preferences", "accounts"
+  add_foreign_key "member_notification_targets", "accounts"
+  add_foreign_key "member_notification_targets", "accounts", column: "target_account_id"
   add_foreign_key "mentions", "accounts", name: "fk_970d43f9d1", on_delete: :cascade
   add_foreign_key "mentions", "statuses", on_delete: :cascade
   add_foreign_key "mutes", "accounts", column: "target_account_id", name: "fk_eecff219ea", on_delete: :cascade
