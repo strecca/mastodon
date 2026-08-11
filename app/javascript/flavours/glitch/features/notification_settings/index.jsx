@@ -1,10 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { Helmet } from '@unhead/react/helmet';
 
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import api from 'flavours/glitch/api';
+import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
 
 const EMAIL_FREQUENCIES = [
   { value: 'never', label: 'Never' },
@@ -13,6 +16,7 @@ const EMAIL_FREQUENCIES = [
 ];
 
 const NotificationSettings = ({ multiColumn }) => {
+  const sc = useSiteContent();
   const [categories, setCategories] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
   const [targets, setTargets] = useState([]);
@@ -105,6 +109,38 @@ const NotificationSettings = ({ multiColumn }) => {
       <ColumnHeader icon='notifications' title='Notification Settings' multiColumn={multiColumn} />
       <Helmet><title>Notification Settings · miacivezza</title></Helmet>
       <div className='ns-page'>
+        <div className='ns-callout'>
+          <div className='ns-callout__title'>
+            {sc('notification_settings_callout_title', '🔔 Why turn this on?')}
+          </div>
+          <p>
+            {sc(
+              'notification_settings_callout_value',
+              "Right now, a new listing, event, or post in a category you care about doesn't show up anywhere unless you happen to check the site. Turning on notifications means you find out the moment it's posted — nothing to refresh, nothing to miss.",
+            )}
+          </p>
+          <p className='ns-callout__control'>
+            {sc(
+              'notification_settings_callout_control',
+              "You're always in control. Nothing here is on by default — you choose exactly which categories and which members you want to hear from, and you can set quiet hours so nothing buzzes your phone overnight. If a notification ever isn't useful, tap \"Stop notifications like this\" right on it — no digging through settings required.",
+            )}
+          </p>
+          <div className='ns-callout__ios'>
+            <strong>{sc('notification_settings_callout_ios_title', '📱 On iPhone or iPad?')}</strong>{' '}
+            {sc(
+              'notification_settings_callout_ios_body',
+              'Apple only delivers notifications to a site that\'s been added to your Home Screen first — a regular Safari tab can\'t receive them, no matter how long you leave it open. It takes under a minute: open miacivezza.com in Safari, tap the Share button, then "Add to Home Screen." After that, notifications arrive instantly, just like a regular app.',
+            )}{' '}
+            <Link to='/guide'>{sc('notification_settings_callout_ios_link', 'See the step-by-step guide')}</Link>
+          </div>
+          <p className='ns-callout__other'>
+            {sc(
+              'notification_settings_callout_other',
+              'On Android or a computer, this works right away in your regular browser — nothing else to install.',
+            )}
+          </p>
+        </div>
+
         <section className='ns-section'>
           <h3>What would you like to hear about?</h3>
           <p className='ns-section__hint'>Choose which Community Directory categories notify you when someone posts something new.</p>

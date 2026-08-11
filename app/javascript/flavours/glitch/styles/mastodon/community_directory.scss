@@ -6123,3 +6123,49 @@
 .cl-detail__watch-btn {
   white-space: nowrap;
 }
+
+// Explainer callout at the top of /notification_settings — same visual
+// language as .cv-my-card (blue accent bar + subtle gradient), the
+// established "highlighted info card" pattern in this app.
+.ns-callout {
+  background: linear-gradient(135deg, rgba(21, 101, 192, 0.07) 0%, var(--color-bg-secondary) 100%);
+  border: 1px solid rgba(21, 101, 192, 0.2);
+  border-left: 4px solid #1565c0;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 28px;
+
+  p {
+    margin: 10px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+  }
+}
+
+.ns-callout__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.ns-callout__control {
+  color: var(--color-text-secondary);
+}
+
+.ns-callout__ios {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(21, 101, 192, 0.08);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+
+  a { font-weight: 600; }
+}
+
+.ns-callout__other {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
