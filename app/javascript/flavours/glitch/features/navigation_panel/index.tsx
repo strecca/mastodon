@@ -130,6 +130,8 @@ const messages = defineMessages({
   communityEvents: { id: 'navigation_bar.community_events', defaultMessage: 'Community Events' },
   communityListings: { id: 'navigation_bar.community_listings', defaultMessage: 'Listings' },
   memberStories: { id: 'navigation_bar.member_stories', defaultMessage: 'Member Stories' },
+  notificationSettings: { id: 'navigation_bar.notification_settings', defaultMessage: 'Notification Settings' },
+  communityNotifications: { id: 'navigation_bar.community_notifications', defaultMessage: 'Community Notifications' },
   visitsAdmin: { id: 'navigation_bar.visits_admin', defaultMessage: 'Visits Admin' },
   compose: { id: 'tabs_bar.publish', defaultMessage: 'New Post' },
   contactAdmin: { id: 'navigation_bar.contact_admin', defaultMessage: 'Contact Admin' },
@@ -369,6 +371,26 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             icon='groups'
             iconComponent={GroupsIcon}
             text={intl.formatMessage(messages.memberStories)}
+          />
+        )}
+
+        {signedIn && (
+          <ColumnLink
+            transparent
+            to='/community_notifications'
+            icon='notifications'
+            iconComponent={NotificationsIcon}
+            text={intl.formatMessage(messages.communityNotifications)}
+          />
+        )}
+
+        {signedIn && (
+          <ColumnLink
+            transparent
+            to='/notification_settings'
+            icon='settings'
+            iconComponent={SettingsIcon}
+            text={intl.formatMessage(messages.notificationSettings)}
           />
         )}
 
