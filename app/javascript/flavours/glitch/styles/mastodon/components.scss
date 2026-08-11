@@ -5096,15 +5096,22 @@ a.status-card {
 }
 
 .pillbar-button {
-  border: 0;
+  // Was `background-color: var(--color-bg-elevated)` -- that custom
+  // property is never defined anywhere in the theme, so the "off" state
+  // silently fell back to fully transparent (CSS spec behavior for an
+  // undefined var() with no fallback), making it indistinguishable from
+  // plain text. Border added too so on/off is legible by shape, not just
+  // color, for anyone who can't rely on the color difference alone.
+  border: 1px solid var(--color-border-primary);
   color: var(--color-text-primary);
   padding: 2px;
   margin: 0;
   font-size: inherit;
+  font-weight: 500;
   flex: auto;
-  background-color: var(--color-bg-elevated);
+  background-color: var(--color-bg-tertiary);
   transition: all 0.2s ease;
-  transition-property: background-color, box-shadow;
+  transition-property: background-color, border-color, box-shadow;
 
   &[disabled] {
     cursor: not-allowed;
@@ -5119,7 +5126,9 @@ a.status-card {
 
     &.active {
       background-color: var(--color-bg-brand-base);
+      border-color: var(--color-border-brand);
       color: var(--color-text-on-brand-base);
+      font-weight: 700;
     }
 
     &:focus-visible {
