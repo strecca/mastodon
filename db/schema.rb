@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_11_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -1214,6 +1214,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_11_120000) do
     t.index ["target_account_id"], name: "index_member_notification_targets_on_target_account_id"
   end
 
+  create_table "member_welcome_digests", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.date "digest_date", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "viewed_at"
+    t.index ["account_id", "digest_date"], name: "idx_member_welcome_digests_unique", unique: true
+    t.index ["account_id"], name: "index_member_welcome_digests_on_account_id"
+  end
+
   create_table "mentions", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -2037,6 +2048,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_11_120000) do
   add_foreign_key "member_notification_preferences", "accounts"
   add_foreign_key "member_notification_targets", "accounts"
   add_foreign_key "member_notification_targets", "accounts", column: "target_account_id"
+  add_foreign_key "member_welcome_digests", "accounts"
   add_foreign_key "mentions", "accounts", name: "fk_970d43f9d1", on_delete: :cascade
   add_foreign_key "mentions", "statuses", on_delete: :cascade
   add_foreign_key "mutes", "accounts", column: "target_account_id", name: "fk_eecff219ea", on_delete: :cascade
