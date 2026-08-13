@@ -8,8 +8,6 @@
 class Api::V1::MemberWelcomeDigestsController < Api::BaseController
   include AsyncRefreshesConcern
 
-  before_action -> { doorkeeper_authorize! :read, :'read:accounts' }, only: [:show]
-  before_action -> { doorkeeper_authorize! :write, :'write:accounts' }, only: [:read]
   before_action :require_user!
 
   def show
