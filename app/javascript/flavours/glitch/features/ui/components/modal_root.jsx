@@ -99,6 +99,7 @@ export const MODAL_COMPONENTS = {
   'CLOSED_REGISTRATIONS': ClosedRegistrationsModal,
   'IGNORE_NOTIFICATIONS': IgnoreNotificationsModal,
   'ANNUAL_REPORT': AnnualReportModal,
+  'WELCOME_DIGEST': () => import('@/flavours/glitch/features/ui/components/welcome_digest_modal').then(module => ({ default: module.WelcomeDigestModal })),
   'COMPOSE_PRIVACY': () => Promise.resolve({ default: VisibilityModal }),
   'ACCOUNT_NOTE': () => import('@/flavours/glitch/features/account_timeline/modals/note_modal').then(module => ({ default: module.AccountNoteModal })),
   'ACCOUNT_FIELD_OVERFLOW': () => import('@/flavours/glitch/features/account_timeline/modals/field_modal').then(module => ({ default: module.AccountFieldModal })),

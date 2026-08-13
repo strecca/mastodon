@@ -87,5 +87,44 @@ RSpec.describe UserTrackingConcern do
     def expect_updated_sign_in_at(user)
       expect(user.reload.current_sign_in_at).to be_within(1.0).of(Time.now.utc)
     end
+
+    describe 'welcome digest enqueue' do
+      it 'enqueues the worker when the sign-in throttle actually fires with a prior sign-in time' do
+        user.update(current_sign_in_at: 2.days.ago)
+        sign_in user, scope: :user
+
+        expect(MemberWelcomeDigestWorker).to receive(:perform_async).with(user.account_id, kind_of(String)) # rubocop:disable RSpec/MessageSpies
+
+        get :show
+      end
+
+      it 'does not enqueue on a brand-new account with no prior sign-in' do
+        user.update(current_sign_in_at: nil)
+        sign_in user, scope: :user
+
+        expect(MemberWelcomeDigestWorker).not_to receive(:perform_async) # rubocop:disable RSpec/MessageSpies
+
+        get :show
+      end
+
+      it 'does not enqueue a second time the same day' do
+        user.update(current_sign_in_at: 2.days.ago)
+        sign_in user, scope: :user
+        Fabricate(:member_welcome_digest, account: user.account, digest_date: Date.current)
+
+        expect(MemberWelcomeDigestWorker).not_to receive(:perform_async) # rubocop:disable RSpec/MessageSpies
+
+        get :show
+      end
+
+      it 'does not track when there is no recent sign in and skips enqueueing' do
+        user.update(current_sign_in_at: 60.minutes.ago)
+        sign_in user, scope: :user
+
+        expect(MemberWelcomeDigestWorker).not_to receive(:perform_async) # rubocop:disable RSpec/MessageSpies
+
+        get :show
+      end
+    end
   end
 end

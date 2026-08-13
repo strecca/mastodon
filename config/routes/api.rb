@@ -206,6 +206,10 @@ namespace :api, format: false do
       end
     end
 
+    resource :member_welcome_digest, only: [:show] do
+      post :read
+    end
+
     resources :announcements, only: [:index] do
       scope module: :announcements do
         resources :reactions, only: [:update, :destroy]
