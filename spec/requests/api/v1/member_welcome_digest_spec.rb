@@ -50,6 +50,17 @@ RSpec.describe 'Member Welcome Digest' do
       end
     end
 
+    context "when today's digest has content but was already viewed" do
+      before { Fabricate(:member_welcome_digest, account: user.account, digest_date: Date.current, content: 'Hi there!', viewed_at: Time.current) }
+
+      it 'returns state none, not available again — the popup only shows once' do
+        subject
+
+        expect(response.parsed_body['state']).to eq('none')
+        expect(response.parsed_body['content']).to be_nil
+      end
+    end
+
     context "when another account's digest exists for today" do
       before { Fabricate(:member_welcome_digest, digest_date: Date.current, content: 'Not yours') }
 
