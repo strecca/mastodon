@@ -11,7 +11,5 @@ class Scheduler::DailyDigestScheduler
   def perform
     DailyDigestService.new.generate(date: Date.today)
     Rails.logger.info('[DailyDigest] Digest generated successfully')
-  rescue DailyDigestService::Error => e
-    Rails.logger.error("[DailyDigest] Generation failed: #{e.message}")
   end
 end
