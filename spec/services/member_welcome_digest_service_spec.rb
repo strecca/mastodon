@@ -21,7 +21,7 @@ RSpec.describe MemberWelcomeDigestService do
     messages      = instance_double(Anthropic::Resources::Messages, create: response)
     client        = instance_double(Anthropic::Client, messages: messages)
     allow(Anthropic::Client).to receive(:new).and_return(client)
-    client
+    messages
   end
 
   describe '#generate' do
@@ -57,6 +57,47 @@ RSpec.describe MemberWelcomeDigestService do
         stub_claude_response('not json')
 
         expect { subject.generate(since: since) }.to raise_error(described_class::Error)
+      end
+
+      it 'includes a working internal status URL in the prompt sent to Claude' do
+        messages = stub_claude_response({ has_update: true, summary: 'x' }.to_json)
+        status = Status.where(account: followed).first
+
+        subject.generate(since: since)
+
+        expect(messages).to have_received(:create) do |**kwargs|
+          prompt = kwargs[:messages].first[:content]
+          expect(prompt).to include("/@#{followed.acct}/#{status.id}")
+        end
+      end
+    end
+
+    context 'when there is a community directory notification since the given time' do
+      let(:sender) { Fabricate(:account) }
+      let(:listing) { Fabricate(:community_listing, account: sender) }
+
+      before do
+        Fabricate(:community_entry_notification, recipient: account, sender: sender,
+                                                   notifiable: listing, category_key: 'listings', kind: :new_entry)
+      end
+
+      it 'includes the specific category name and a real entry URL, never a vague placeholder' do
+        messages = stub_claude_response({ has_update: true, summary: 'x' }.to_json)
+
+        subject.generate(since: since)
+
+        expect(messages).to have_received(:create) do |**kwargs|
+          prompt = kwargs[:messages].first[:content]
+          expect(prompt).to include("/community_listings/#{listing.id}")
+          expect(prompt).to include(CommunityDirectoryConfig.display_name_for('listings'))
+        end
+      end
+
+      it 'instructs Claude in the system prompt to be specific and to use markdown links' do
+        stub_claude_response({ has_update: true, summary: 'x' }.to_json)
+
+        expect(described_class::SYSTEM_PROMPT).to include('never vague')
+        expect(described_class::SYSTEM_PROMPT).to include('markdown link')
       end
     end
 

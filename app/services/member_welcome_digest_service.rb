@@ -42,7 +42,8 @@ class MemberWelcomeDigestService
     visit: posts from people they follow, mentions/favourites/follows they
     received, and Community Directory notifications (new listings, events,
     restaurants, properties, artists, or member stories in categories they
-    subscribed to, or posts from members they specifically follow there).
+    subscribed to, or posts from members they specifically follow there). Each
+    item includes a URL in parentheses at the end of its line.
 
     Write 2-3 warm, natural sentences summarizing the most interesting or
     relevant items — like a friend catching them up, not a system log. Address
@@ -50,6 +51,14 @@ class MemberWelcomeDigestService
     what's genuinely worth mentioning and mention specific people and what they
     did. Never invent details beyond what's given. If nothing is worth
     mentioning, say so plainly and briefly instead.
+
+    Be specific, never vague: name the exact category (e.g. "Restaurants", not
+    "a category you follow"), the exact person, the exact place. For every item
+    you mention, turn it into a markdown link using EXACTLY the URL given for
+    that item — for example "a new Restaurants listing" becomes
+    "[a new Restaurants listing](/community_restaurants/42)". Do not invent or
+    alter a URL, and do not paste a bare URL as plain text — always wrap it in
+    markdown link syntax with real link text.
   SYSTEM
 
   def initialize(account)
@@ -160,11 +169,12 @@ class MemberWelcomeDigestService
     notifications.map do |n|
       category = CommunityDirectoryConfig.display_name_for(n.category_key)
       sender   = n.sender ? (n.sender.display_name.presence || n.sender.username) : nil
+      url      = "/community_#{n.category_key}/#{n.notifiable_id}"
 
       if n.new_entry?
-        sender ? "- #{sender} posted a new #{category} entry" : "- A new #{category} entry was posted"
+        sender ? "- #{sender} posted a new #{category} entry (#{url})" : "- A new #{category} entry was posted (#{url})"
       else
-        "- Someone responded to your #{category} listing"
+        "- Someone responded to your #{category} listing (#{url})"
       end
     end.join("\n")
   end
@@ -174,13 +184,20 @@ class MemberWelcomeDigestService
 
     notifications.map do |n|
       actor = n.from_account.display_name.presence || n.from_account.username
+
       case n.type
       when :mention
-        "- #{actor} mentioned you"
+        status = n.target_status
+        next unless status
+
+        "- #{actor} mentioned you (#{status_url(status)})"
       when :favourite
-        "- #{actor} favourited your post"
+        status = n.target_status
+        next unless status
+
+        "- #{actor} favourited your post (#{status_url(status)})"
       when :follow
-        "- #{actor} started following you"
+        "- #{actor} started following you (#{account_url(n.from_account)})"
       end
     end.compact.join("\n")
   end
@@ -189,9 +206,17 @@ class MemberWelcomeDigestService
     return '(none)' if statuses.empty?
 
     statuses.map do |status|
-      author = status.account.display_name.presence || status.account.username
+      author  = status.account.display_name.presence || status.account.username
       snippet = ActionController::Base.helpers.strip_tags(status.text).squish.truncate(160)
-      "- #{author} posted: #{snippet}"
+      "- #{author} posted: #{snippet} (#{status_url(status)})"
     end.join("\n")
+  end
+
+  def status_url(status)
+    "/@#{status.account.acct}/#{status.id}"
+  end
+
+  def account_url(account)
+    "/@#{account.acct}"
   end
 end
