@@ -11,7 +11,7 @@
 class DailyDigestService
   Error = Class.new(StandardError)
 
-  MAX_TOKENS     = 2048
+  MAX_TOKENS     = 4096
   LOOKAHEAD_DAYS = 60
 
   OUTPUT_SCHEMA = {
