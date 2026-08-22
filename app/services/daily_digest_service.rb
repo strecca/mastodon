@@ -14,6 +14,14 @@ class DailyDigestService
   MAX_TOKENS     = 4096
   LOOKAHEAD_DAYS = 60
 
+  # A genuine 250-400 word article is comfortably north of this even in a
+  # terse style. Anything shorter is far more likely a truncated response
+  # than an intentionally brief one.
+  MIN_ARTICLE_CHARS = 500
+
+  # Italian accented vowels essentially never appear in English prose.
+  ITALIAN_ACCENTED_CHARS = /[àèìòùÀÈÌÒÙ]/
+
   OUTPUT_SCHEMA = {
     type: 'object',
     properties: {
@@ -157,8 +165,24 @@ class DailyDigestService
   def parse_response(response)
     text   = response.content.first&.text.to_s
     result = JSON.parse(text)
-    { it: result['it'].to_s.strip, en: result['en'].to_s.strip }
+    it     = result['it'].to_s.strip
+    en     = result['en'].to_s.strip
+
+    validate_output!(it, en)
+
+    { it: it, en: en }
   rescue JSON::ParserError => e
     raise Error, "JSON parse error: #{e.message}"
+  end
+
+  # Guards against a truncated response being saved as if it were a real
+  # digest. Seen live 2026-08-22: MAX_TOKENS ran out mid-article on a
+  # 20-event day, the schema closed "it" early, and the model dumped its
+  # unfinished Italian continuation into "en" instead of an English
+  # translation — a result that parses as valid JSON but is silently wrong.
+  def validate_output!(it, en)
+    raise Error, "Italian article too short (#{it.length} chars) - response likely truncated" if it.length < MIN_ARTICLE_CHARS
+    raise Error, "English article too short (#{en.length} chars) - response likely truncated" if en.length < MIN_ARTICLE_CHARS
+    raise Error, 'English article contains Italian text - response likely truncated mid-translation' if en.match?(ITALIAN_ACCENTED_CHARS)
   end
 end
