@@ -11,9 +11,18 @@
 class DailyDigestService
   Error = Class.new(StandardError)
 
-  ANTHROPIC_API  = 'https://api.anthropic.com/v1/messages'
   MAX_TOKENS     = 2048
   LOOKAHEAD_DAYS = 60
+
+  OUTPUT_SCHEMA = {
+    type: 'object',
+    properties: {
+      it: { type: 'string' },
+      en: { type: 'string' },
+    },
+    required: %w(it en),
+    additionalProperties: false,
+  }.freeze
 
   SYSTEM_PROMPT = <<~SYSTEM.freeze
     You are the editorial voice of MiaCivezza.com - a private, members-only community
@@ -120,9 +129,6 @@ class DailyDigestService
       - Concludi con un invito a visitare miacivezza.com per ulteriori dettagli
 
       Poi scrivi la stessa notizia in inglese (stesso tono, stesso contenuto, 250-400 parole).
-
-      Rispondi SOLO con JSON valido in questo formato esatto (nessun testo prima o dopo):
-      {"it": "testo italiano qui...", "en": "english text here..."}
     PROMPT
   end
 
@@ -133,32 +139,24 @@ class DailyDigestService
 
     raise Error, 'ANTHROPIC_API_KEY not configured in .env.production' if api_key.blank?
 
-    response = HTTP
-      .headers(
-        'x-api-key'         => api_key,
-        'anthropic-version' => '2023-06-01',
-        'content-type'      => 'application/json'
-      )
-      .timeout(60)
-      .post(ANTHROPIC_API, json: {
-        model:      model,
-        max_tokens: MAX_TOKENS,
-        system:     SYSTEM_PROMPT,
-        messages:   [{ role: 'user', content: prompt }],
-      })
+    client = Anthropic::Client.new(api_key: api_key)
 
-    raise Error, "Anthropic API returned #{response.status}: #{response.body}" unless response.status.success?
+    response = client.messages.create(
+      model: model,
+      max_tokens: MAX_TOKENS,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: prompt }],
+      output_config: { format: { type: 'json_schema', schema: OUTPUT_SCHEMA } }
+    )
 
-    body = JSON.parse(response.body.to_s)
-    text = body.dig('content', 0, 'text').to_s.strip
+    parse_response(response)
+  rescue Anthropic::Errors::APIStatusError, Anthropic::Errors::APIConnectionError => e
+    raise Error, "Anthropic API error: #{e.message}"
+  end
 
-    # Strip markdown code fences if Claude wrapped the JSON
-    text = text.gsub(/\A```(?:json)?\s*/, '').gsub(/\s*```\z/, '').strip
-
-    json_match = text.match(/\{.*\}/m)
-    raise Error, "Could not extract JSON from response: #{text.truncate(200)}" if json_match.nil?
-
-    result = JSON.parse(json_match.to_s)
+  def parse_response(response)
+    text   = response.content.first&.text.to_s
+    result = JSON.parse(text)
     { it: result['it'].to_s.strip, en: result['en'].to_s.strip }
   rescue JSON::ParserError => e
     raise Error, "JSON parse error: #{e.message}"

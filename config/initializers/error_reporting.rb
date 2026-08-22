@@ -14,10 +14,18 @@ class AdminExceptionNotifier
   DEDUPE_WINDOW = 15.minutes
 
   # Routing/record-lookup noise from bad URLs and bots — not real defects.
+  # Sidekiq's own internal control-flow exceptions are also ignored here:
+  # Sidekiq reports job failures to Rails.error itself, wrapped in classes
+  # like Sidekiq::JobRetry::Handled, which aren't real StandardErrors and
+  # aren't ActiveJob-serializable (deliver_later blows up trying to pass one
+  # as a mailer argument). Job-death alerting already happens with better
+  # context via the death_handlers lambda in sidekiq_callbacks.rb.
   IGNORED_CLASSES = %w[
     ActiveRecord::RecordNotFound
     ActionController::RoutingError
     ActionController::InvalidAuthenticityToken
+    Sidekiq::JobRetry::Handled
+    Sidekiq::JobRetry::Skip
   ].freeze
 
   def report(error, handled:, severity:, context:, source: nil)
