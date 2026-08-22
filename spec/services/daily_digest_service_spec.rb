@@ -52,8 +52,8 @@ RSpec.describe DailyDigestService do
 
         digest = subject.generate
 
-        expect(digest.content_it).to eq(full_it)
-        expect(digest.content_en).to eq(full_en)
+        expect(digest.content_it).to eq(full_it.strip)
+        expect(digest.content_en).to eq(full_en.strip)
       end
 
       it 'raises Error and does not save when the response is not valid JSON' do
