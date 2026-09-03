@@ -21,6 +21,58 @@ let fetchComposeSuggestionsAccountsController;
 /** @type {AbortController | undefined} */
 let fetchComposeSuggestionsTagsController;
 
+// Resize + compress images client-side before upload, same proven approach
+// as community_listings/components/listing_form.jsx (verified 2026-05-31),
+// scoped here to the main compose upload path which never had it -- upstream
+// glitch-soc removed its own built-in resizing in April 2025 (#3051) and it
+// was never reinstated for this flow.
+//
+// 1920px cap (vs Listings' 1280px -- compose images are viewed larger).
+// PNGs are resized but kept as PNG, not re-encoded to JPEG, to preserve
+// transparency. GIFs and non-image files (video, audio) pass through
+// untouched -- re-encoding a GIF would destroy its animation. Falls back to
+// the original file if canvas processing fails, or if the "compressed"
+// result isn't actually smaller.
+const MAX_UPLOAD_DIMENSION = 1920;
+const JPEG_QUALITY = 0.85;
+
+const compressImage = (file) => new Promise((resolve) => {
+  if (!file.type.startsWith('image/') || file.type === 'image/gif') {
+    resolve(file);
+    return;
+  }
+
+  const img = new Image();
+  const blobUrl = URL.createObjectURL(file);
+
+  img.onload = () => {
+    URL.revokeObjectURL(blobUrl);
+
+    const scale  = Math.min(1, MAX_UPLOAD_DIMENSION / img.width, MAX_UPLOAD_DIMENSION / img.height);
+    const width  = Math.round(img.width * scale);
+    const height = Math.round(img.height * scale);
+
+    const canvas = document.createElement('canvas');
+    canvas.width  = width;
+    canvas.height = height;
+    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+
+    const isPng = file.type === 'image/png';
+
+    canvas.toBlob((blob) => {
+      if (!blob || blob.size >= file.size) {
+        resolve(file); // compression didn't help (or failed) -- use original
+        return;
+      }
+      const extension = isPng ? '.png' : '.jpg';
+      resolve(new File([blob], file.name.replace(/\.[^.]+$/, extension), { type: blob.type }));
+    }, isPng ? 'image/png' : 'image/jpeg', isPng ? undefined : JPEG_QUALITY);
+  };
+
+  img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
+  img.src = blobUrl;
+});
+
 export const COMPOSE_CHANGE          = 'COMPOSE_CHANGE';
 export const COMPOSE_SUBMIT_REQUEST  = 'COMPOSE_SUBMIT_REQUEST';
 export const COMPOSE_SUBMIT_SUCCESS  = 'COMPOSE_SUBMIT_SUCCESS';
@@ -363,9 +415,6 @@ export function uploadCompose(files) {
     const uploadLimit = getState().getIn(['server', 'server', 'item', 'configuration', 'statuses', 'max_media_attachments']);
     const media = getState().getIn(['compose', 'media_attachments']);
     const pending = getState().getIn(['compose', 'pending_media_attachments']);
-    const progress = new Array(files.length).fill(0);
-
-    let total = Array.from(files).reduce((a, v) => a + v.size, 0);
 
     if (files.length + media.size + pending > uploadLimit) {
       dispatch(showAlert({ message: messages.uploadErrorLimit }));
@@ -374,44 +423,51 @@ export function uploadCompose(files) {
 
     dispatch(uploadComposeRequest());
 
-    for (const [i, file] of Array.from(files).entries()) {
-      if (media.size + i > (uploadLimit - 1)) break;
+    // Compress images before computing the progress total and uploading, so
+    // the progress bar reflects what's actually being sent over the wire.
+    Promise.all(Array.from(files).map(compressImage)).then((compressedFiles) => {
+      const progress = new Array(compressedFiles.length).fill(0);
+      const total = compressedFiles.reduce((a, v) => a + v.size, 0);
 
-      const data = new FormData();
-      data.append('file', file);
+      compressedFiles.forEach((file, i) => {
+        if (media.size + i > (uploadLimit - 1)) return;
 
-      api().post('/api/v2/media', data, {
-        onUploadProgress: function({ loaded }){
-          progress[i] = loaded;
-          dispatch(uploadComposeProgress(progress.reduce((a, v) => a + v, 0), total));
-        },
-      }).then(({ status, data }) => {
-        // If server-side processing of the media attachment has not completed yet,
-        // poll the server until it is, before showing the media attachment as uploaded
+        const data = new FormData();
+        data.append('file', file);
 
-        if (status === 200) {
-          dispatch(uploadComposeSuccess(data, file));
-        } else if (status === 202) {
-          dispatch(uploadComposeProcessing());
+        api().post('/api/v2/media', data, {
+          onUploadProgress: function({ loaded }){
+            progress[i] = loaded;
+            dispatch(uploadComposeProgress(progress.reduce((a, v) => a + v, 0), total));
+          },
+        }).then(({ status, data }) => {
+          // If server-side processing of the media attachment has not completed yet,
+          // poll the server until it is, before showing the media attachment as uploaded
 
-          let tryCount = 1;
+          if (status === 200) {
+            dispatch(uploadComposeSuccess(data, file));
+          } else if (status === 202) {
+            dispatch(uploadComposeProcessing());
 
-          const poll = () => {
-            api().get(`/api/v1/media/${data.id}`).then(response => {
-              if (response.status === 200) {
-                dispatch(uploadComposeSuccess(response.data, file));
-              } else if (response.status === 206) {
-                const retryAfter = (Math.log2(tryCount) || 1) * 1000;
-                tryCount += 1;
-                setTimeout(() => poll(), retryAfter);
-              }
-            }).catch(error => dispatch(uploadComposeFail(error)));
-          };
+            let tryCount = 1;
 
-          poll();
-        }
-      }).catch(error => dispatch(uploadComposeFail(error)));
-    }
+            const poll = () => {
+              api().get(`/api/v1/media/${data.id}`).then(response => {
+                if (response.status === 200) {
+                  dispatch(uploadComposeSuccess(response.data, file));
+                } else if (response.status === 206) {
+                  const retryAfter = (Math.log2(tryCount) || 1) * 1000;
+                  tryCount += 1;
+                  setTimeout(() => poll(), retryAfter);
+                }
+              }).catch(error => dispatch(uploadComposeFail(error)));
+            };
+
+            poll();
+          }
+        }).catch(error => dispatch(uploadComposeFail(error)));
+      });
+    }).catch(error => dispatch(uploadComposeFail(error)));
   };
 }
 
