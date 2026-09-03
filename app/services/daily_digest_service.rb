@@ -33,13 +33,17 @@ class DailyDigestService
   # Italian accented vowels essentially never appear in English prose.
   ITALIAN_ACCENTED_CHARS = /[àèìòùÀÈÌÒÙ]/
 
-  OUTPUT_SCHEMA = {
+  # Single-field schema, reused for both the Italian article and the English
+  # translation -- two separate calls now, see #generate. 2026-09-03: the
+  # combined {it, en} schema let the model conflate the two fields (dump
+  # unfinished Italian into "en") often enough that 3 retries in a row still
+  # failed, repeatedly, on multiple different days. Asking for one language
+  # per call removes that failure mode structurally instead of hoping a
+  # retry avoids it.
+  TEXT_OUTPUT_SCHEMA = {
     type: 'object',
-    properties: {
-      it: { type: 'string' },
-      en: { type: 'string' },
-    },
-    required: %w(it en),
+    properties: { text: { type: 'string' } },
+    required: %w(text),
     additionalProperties: false,
   }.freeze
 
@@ -75,11 +79,12 @@ class DailyDigestService
     events = fetch_events(date)
     return nil if events.empty?
 
-    result = call_claude_with_retries(build_prompt(date, events))
+    it_text = call_claude_with_retries(italian_prompt(date, events)) { |text| validate_article!(text, language: 'Italian') }
+    en_text = call_claude_with_retries(translation_prompt(it_text)) { |text| validate_translation!(text) }
 
     digest = CommunityDailyDigest.find_or_initialize_by(digest_date: date)
-    digest.content_it    = result[:it]
-    digest.content_en    = result[:en]
+    digest.content_it    = it_text
+    digest.content_en    = en_text
     digest.article_count = events.size
     digest.generated_at  = Time.current
     digest.save!
@@ -100,7 +105,7 @@ class DailyDigestService
     CommunityNewsletter.for_digest.order(published_on: :desc).first
   end
 
-  def build_prompt(date, events)
+  def italian_prompt(date, events)
     events_text = events.map do |e|
       lines = ["- #{e.event_name}"]
       lines << "  Data: #{e.event_date.strftime('%-d %B %Y')}"
@@ -140,22 +145,28 @@ class DailyDigestService
       #{newsletter_section}EVENTI IN PROGRAMMA:
       #{events_text}
 
-      Scrivi un caldo e coinvolgente notiziario quotidiano in stile giornale locale. Requisiti per la versione italiana:
+      Scrivi un caldo e coinvolgente notiziario quotidiano in stile giornale locale. Requisiti:
       - Scritto in italiano, 250-400 parole
       - Tono accogliente e spirito comunitario
       - Metti in risalto gli eventi più significativi
       - Raggruppa per tema o vicinanza di data se naturale
       - Concludi con un invito a visitare miacivezza.com per ulteriori dettagli
-
-      Poi scrivi la stessa notizia in inglese (stesso tono, stesso contenuto, 250-400 parole).
     PROMPT
   end
 
-  def call_claude_with_retries(prompt)
+  def translation_prompt(italian_text)
+    <<~PROMPT
+      Translate the following Italian community newspaper article into English. This is a faithful translation, not a rewrite or summary -- keep the same warm, community-newspaper tone, the same content, the same length, and the same paragraph structure. Preserve any markdown links exactly as they appear (do not translate the URL, only the link text if appropriate).
+
+      #{italian_text}
+    PROMPT
+  end
+
+  def call_claude_with_retries(prompt, &validator)
     attempt = 0
     begin
       attempt += 1
-      call_claude(prompt)
+      call_claude(prompt, &validator)
     rescue Error => e
       if attempt < MAX_ATTEMPTS
         Rails.logger.warn("[DailyDigest] Attempt #{attempt} failed (#{e.message}), retrying...")
@@ -179,35 +190,33 @@ class DailyDigestService
       max_tokens: MAX_TOKENS,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
-      output_config: { format: { type: 'json_schema', schema: OUTPUT_SCHEMA } }
+      output_config: { format: { type: 'json_schema', schema: TEXT_OUTPUT_SCHEMA } }
     )
 
-    parse_response(response)
+    text = parse_response(response)
+    yield text
+    text
   rescue Anthropic::Errors::APIStatusError, Anthropic::Errors::APIConnectionError => e
     raise Error, "Anthropic API error: #{e.message}"
   end
 
   def parse_response(response)
-    text   = response.content.first&.text.to_s
-    result = JSON.parse(text)
-    it     = result['it'].to_s.strip
-    en     = result['en'].to_s.strip
-
-    validate_output!(it, en)
-
-    { it: it, en: en }
+    raw    = response.content.first&.text.to_s
+    result = JSON.parse(raw)
+    result['text'].to_s.strip
   rescue JSON::ParserError => e
     raise Error, "JSON parse error: #{e.message}"
   end
 
   # Guards against a truncated response being saved as if it were a real
-  # digest. Seen live 2026-08-22: MAX_TOKENS ran out mid-article on a
-  # 20-event day, the schema closed "it" early, and the model dumped its
-  # unfinished Italian continuation into "en" instead of an English
-  # translation — a result that parses as valid JSON but is silently wrong.
-  def validate_output!(it, en)
-    raise Error, "Italian article too short (#{it.length} chars) - response likely truncated" if it.length < MIN_ARTICLE_CHARS
-    raise Error, "English article too short (#{en.length} chars) - response likely truncated" if en.length < MIN_ARTICLE_CHARS
-    raise Error, 'English article contains Italian text - response likely truncated mid-translation' if en.match?(ITALIAN_ACCENTED_CHARS)
+  # digest. Seen live 2026-08-22: MAX_TOKENS ran out mid-article, producing
+  # a response that parses as valid JSON but is silently wrong.
+  def validate_article!(text, language:)
+    raise Error, "#{language} article too short (#{text.length} chars) - response likely truncated" if text.length < MIN_ARTICLE_CHARS
+  end
+
+  def validate_translation!(text)
+    raise Error, "English article too short (#{text.length} chars) - response likely truncated" if text.length < MIN_ARTICLE_CHARS
+    raise Error, 'English article contains Italian text - translation likely failed' if text.match?(ITALIAN_ACCENTED_CHARS)
   end
 end
