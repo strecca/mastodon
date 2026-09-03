@@ -14,6 +14,17 @@ class DailyDigestService
   MAX_TOKENS     = 4096
   LOOKAHEAD_DAYS = 60
 
+  # Live evidence 2026-09-03: a rejected response (validate_output! failing)
+  # is not reliably a token-budget problem -- reproducing a same-day failure
+  # with identical input succeeded cleanly on the next call, using well under
+  # half of MAX_TOKENS (stop_reason: end_turn, not max_tokens). This is
+  # sampling variance in the model occasionally conflating the two language
+  # fields, not something more tokens fixes. A same-request retry is the
+  # right defense; MAX_ATTEMPTS bounds it so a persistent problem (bad API
+  # key, systemic issue) still reaches the dead-job alert instead of retrying
+  # forever.
+  MAX_ATTEMPTS = 3
+
   # A genuine 250-400 word article is comfortably north of this even in a
   # terse style. Anything shorter is far more likely a truncated response
   # than an intentionally brief one.
@@ -64,7 +75,7 @@ class DailyDigestService
     events = fetch_events(date)
     return nil if events.empty?
 
-    result = call_claude(build_prompt(date, events))
+    result = call_claude_with_retries(build_prompt(date, events))
 
     digest = CommunityDailyDigest.find_or_initialize_by(digest_date: date)
     digest.content_it    = result[:it]
@@ -138,6 +149,20 @@ class DailyDigestService
 
       Poi scrivi la stessa notizia in inglese (stesso tono, stesso contenuto, 250-400 parole).
     PROMPT
+  end
+
+  def call_claude_with_retries(prompt)
+    attempt = 0
+    begin
+      attempt += 1
+      call_claude(prompt)
+    rescue Error => e
+      if attempt < MAX_ATTEMPTS
+        Rails.logger.warn("[DailyDigest] Attempt #{attempt} failed (#{e.message}), retrying...")
+        retry
+      end
+      raise
+    end
   end
 
   def call_claude(prompt)
