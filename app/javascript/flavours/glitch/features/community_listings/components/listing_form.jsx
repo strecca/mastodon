@@ -3,6 +3,7 @@ import { useState, useCallback, useRef } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 
 import api from 'flavours/glitch/api';
+import { compressImage } from 'flavours/glitch/utils/compress_image';
 import { TYPE_LABELS, TYPE_DESCRIPTIONS, CONDITION_LABELS, listingOptionLabel } from '../option_labels';
 
 const messages = defineMessages({
@@ -10,41 +11,6 @@ const messages = defineMessages({
   imageTooLarge:    { id: 'community.upload.too_large', defaultMessage: 'Image is too large ({mb} MB). Please resize to under 80 MB before uploading.' },
   uploadFailed:     { id: 'community.upload.failed', defaultMessage: 'Upload failed — please try again.' },
 });
-
-// Canvas draw always outputs sRGB, normalizing any input color profile (ACES, P3, AdobeRGB, etc.)
-const compressImage = (file, onLargeFile) =>
-  new Promise((resolve, reject) => {
-    const sizeMB = Math.round(file.size / 1024 / 1024);
-    if (sizeMB > 80) {
-      const err = new Error('too_large');
-      err.sizeMB = sizeMB;
-      reject(err);
-      return;
-    }
-    if (sizeMB > 10) onLargeFile?.(sizeMB);
-    const img = new Image();
-    const blobUrl = URL.createObjectURL(file);
-    img.onload = () => {
-      URL.revokeObjectURL(blobUrl);
-      if (file.type === 'image/jpeg' && img.width <= 1280 && img.height <= 1280) {
-        resolve(file);
-        return;
-      }
-      const scale = Math.min(1, 1280 / img.width, 1280 / img.height);
-      const w = Math.round(img.width  * scale);
-      const h = Math.round(img.height * scale);
-      const canvas = document.createElement('canvas');
-      canvas.width  = w;
-      canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      canvas.toBlob(
-        (blob) => resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' })),
-        'image/jpeg', 0.82,
-      );
-    };
-    img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
-    img.src = blobUrl;
-  });
 
 const CONDITIONS = ['new_item', 'like_new', 'used', 'damaged'];
 
@@ -99,7 +65,7 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
     setUploadStatus(null);
     for (const file of toUpload) {
       try {
-        const compressed = await compressImage(file, (mb) => setUploadStatus(intl.formatMessage(messages.compressingLarge, { mb })));
+        const compressed = await compressImage(file, { onLargeFile: (mb) => setUploadStatus(intl.formatMessage(messages.compressingLarge, { mb })) });
         setUploadStatus(null);
         const fd = new FormData();
         fd.append('file', compressed);

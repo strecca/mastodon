@@ -9,6 +9,7 @@ import { countableText } from 'flavours/glitch/features/compose/util/counter';
 import { tagHistory } from 'flavours/glitch/settings';
 import { emojiMartSearch } from '@/flavours/glitch/features/emoji/picker';
 import { recoverHashtags } from 'flavours/glitch/utils/hashtag';
+import { compressImage } from 'flavours/glitch/utils/compress_image';
 
 import { showAlert, showAlertForError } from './alerts';
 import { useEmoji } from './emojis';
@@ -21,57 +22,11 @@ let fetchComposeSuggestionsAccountsController;
 /** @type {AbortController | undefined} */
 let fetchComposeSuggestionsTagsController;
 
-// Resize + compress images client-side before upload, same proven approach
-// as community_listings/components/listing_form.jsx (verified 2026-05-31),
-// scoped here to the main compose upload path which never had it -- upstream
-// glitch-soc removed its own built-in resizing in April 2025 (#3051) and it
-// was never reinstated for this flow.
-//
-// 1920px cap (vs Listings' 1280px -- compose images are viewed larger).
-// PNGs are resized but kept as PNG, not re-encoded to JPEG, to preserve
-// transparency. GIFs and non-image files (video, audio) pass through
-// untouched -- re-encoding a GIF would destroy its animation. Falls back to
-// the original file if canvas processing fails, or if the "compressed"
-// result isn't actually smaller.
-const MAX_UPLOAD_DIMENSION = 1920;
-const JPEG_QUALITY = 0.85;
-
-const compressImage = (file) => new Promise((resolve) => {
-  if (!file.type.startsWith('image/') || file.type === 'image/gif') {
-    resolve(file);
-    return;
-  }
-
-  const img = new Image();
-  const blobUrl = URL.createObjectURL(file);
-
-  img.onload = () => {
-    URL.revokeObjectURL(blobUrl);
-
-    const scale  = Math.min(1, MAX_UPLOAD_DIMENSION / img.width, MAX_UPLOAD_DIMENSION / img.height);
-    const width  = Math.round(img.width * scale);
-    const height = Math.round(img.height * scale);
-
-    const canvas = document.createElement('canvas');
-    canvas.width  = width;
-    canvas.height = height;
-    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-
-    const isPng = file.type === 'image/png';
-
-    canvas.toBlob((blob) => {
-      if (!blob || blob.size >= file.size) {
-        resolve(file); // compression didn't help (or failed) -- use original
-        return;
-      }
-      const extension = isPng ? '.png' : '.jpg';
-      resolve(new File([blob], file.name.replace(/\.[^.]+$/, extension), { type: blob.type }));
-    }, isPng ? 'image/png' : 'image/jpeg', isPng ? undefined : JPEG_QUALITY);
-  };
-
-  img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
-  img.src = blobUrl;
-});
+// 1920px cap for the main compose path, vs 1280px used elsewhere (Community
+// Directory, Member Stories, Listings) -- compose images are viewed larger
+// in the timeline than those thumbnails. See utils/compress_image.js.
+const COMPOSE_MAX_UPLOAD_DIMENSION = 1920;
+const COMPOSE_JPEG_QUALITY = 0.85;
 
 export const COMPOSE_CHANGE          = 'COMPOSE_CHANGE';
 export const COMPOSE_SUBMIT_REQUEST  = 'COMPOSE_SUBMIT_REQUEST';
@@ -425,7 +380,9 @@ export function uploadCompose(files) {
 
     // Compress images before computing the progress total and uploading, so
     // the progress bar reflects what's actually being sent over the wire.
-    Promise.all(Array.from(files).map(compressImage)).then((compressedFiles) => {
+    const compressOptions = { maxPx: COMPOSE_MAX_UPLOAD_DIMENSION, quality: COMPOSE_JPEG_QUALITY };
+
+    Promise.all(Array.from(files).map((file) => compressImage(file, compressOptions))).then((compressedFiles) => {
       const progress = new Array(compressedFiles.length).fill(0);
       const total = compressedFiles.reduce((a, v) => a + v.size, 0);
 

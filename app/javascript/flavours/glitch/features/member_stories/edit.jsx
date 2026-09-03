@@ -16,39 +16,7 @@ import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import api from 'flavours/glitch/api';
 import { useIdentity } from 'flavours/glitch/identity_context';
-
-// Canvas draw always outputs sRGB, normalizing any input color profile (ACES, P3, AdobeRGB, etc.)
-const compressImage = (file, onLargeFile) =>
-  new Promise((resolve, reject) => {
-    const sizeMB = Math.round(file.size / 1024 / 1024);
-    if (sizeMB > 80) {
-      const err = new Error('too_large');
-      err.sizeMB = sizeMB;
-      reject(err);
-      return;
-    }
-    if (sizeMB > 10) onLargeFile?.(sizeMB);
-    const img = new Image();
-    const blobUrl = URL.createObjectURL(file);
-    img.onload = () => {
-      URL.revokeObjectURL(blobUrl);
-      if (file.type === 'image/jpeg' && img.width <= 1280 && img.height <= 1280) {
-        resolve(file);
-        return;
-      }
-      const scale = Math.min(1, 1280 / img.width, 1280 / img.height);
-      const canvas = document.createElement('canvas');
-      canvas.width  = Math.round(img.width  * scale);
-      canvas.height = Math.round(img.height * scale);
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob(
-        (blob) => resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' })),
-        'image/jpeg', 0.82,
-      );
-    };
-    img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
-    img.src = blobUrl;
-  });
+import { compressImage } from 'flavours/glitch/utils/compress_image';
 
 const FIELDS = [
   {
@@ -89,7 +57,7 @@ const PhotoSlot = ({ index, currentUrl, currentMediaId, onUpload, onRemove }) =>
     setUploading(true);
     setStatusMsg(null);
     try {
-      const compressed = await compressImage(file, (mb) => setStatusMsg(intl.formatMessage(messages.compressingLarge, { mb })));
+      const compressed = await compressImage(file, { onLargeFile: (mb) => setStatusMsg(intl.formatMessage(messages.compressingLarge, { mb })) });
       setStatusMsg(null);
       const formData = new FormData();
       formData.append('file', compressed);
