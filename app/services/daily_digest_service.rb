@@ -80,7 +80,7 @@ class DailyDigestService
     return nil if events.empty?
 
     it_text = call_claude_with_retries(italian_prompt(date, events)) { |text| validate_article!(text, language: 'Italian') }
-    en_text = call_claude_with_retries(translation_prompt(it_text)) { |text| validate_translation!(text) }
+    en_text = call_claude_with_retries(translation_prompt(it_text)) { |text| validate_translation!(text, source_length: it_text.length) }
 
     digest = CommunityDailyDigest.find_or_initialize_by(digest_date: date)
     digest.content_it    = it_text
@@ -215,8 +215,19 @@ class DailyDigestService
     raise Error, "#{language} article too short (#{text.length} chars) - response likely truncated" if text.length < MIN_ARTICLE_CHARS
   end
 
-  def validate_translation!(text)
+  # Live evidence 2026-09-03: a translation can clear MIN_ARTICLE_CHARS on
+  # its own (555 chars) while still being cut off mid-sentence -- it was
+  # only 23% the length of the Italian source it was translating. A real
+  # translation should land in the same ballpark as its source, not just
+  # above some absolute floor.
+  MIN_TRANSLATION_RATIO = 0.6
+
+  def validate_translation!(text, source_length:)
     raise Error, "English article too short (#{text.length} chars) - response likely truncated" if text.length < MIN_ARTICLE_CHARS
     raise Error, 'English article contains Italian text - translation likely failed' if text.match?(ITALIAN_ACCENTED_CHARS)
+
+    if text.length < source_length * MIN_TRANSLATION_RATIO
+      raise Error, "English translation too short relative to its source (#{text.length} chars vs #{source_length} chars Italian) - response likely truncated"
+    end
   end
 end

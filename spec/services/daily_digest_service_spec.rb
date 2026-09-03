@@ -91,6 +91,18 @@ RSpec.describe DailyDigestService do
         expect { subject.generate }.to raise_error(described_class::Error, /contains Italian text/)
       end
 
+      it 'raises Error when the translation clears the absolute floor but is truncated relative to its source' do
+        # Reproduces the live 2026-09-03 finding: a 555-char translation of a
+        # 2428-char Italian source passed the flat 500-char floor while
+        # actually being cut off mid-sentence.
+        long_it = full_it * 5
+        short_but_over_floor_en = 'A' * 550
+
+        stub_claude_responses(long_it, short_but_over_floor_en)
+
+        expect { subject.generate }.to raise_error(described_class::Error, /too short relative to its source/)
+      end
+
       it 'does not save a digest row when validation rejects a response' do
         stub_claude_responses(too_short)
 
