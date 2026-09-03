@@ -45,7 +45,28 @@ const messages = defineMessages({
     id: 'account_edit.upload_modal.step_crop.zoom',
     defaultMessage: 'Zoom',
   },
+  avatarHint: {
+    id: 'account_edit.upload_modal.step_upload.hint.avatar',
+    defaultMessage:
+      "WEBP, PNG, GIF or JPG format, up to {limit}MB.{br}You'll crop it to a square — scaled to {width}x{height}px.",
+  },
+  headerHint: {
+    id: 'account_edit.upload_modal.step_upload.hint.header',
+    defaultMessage:
+      "WEBP, PNG, GIF or JPG format, up to {limit}MB.{br}You'll crop it to a wide banner — scaled to {width}x{height}px.",
+  },
 });
+
+// Target output dimensions -- single source of truth for both the hint text
+// below and the actual resize in calculateCroppedImage, so the promise made
+// to the user and the real behavior can't drift apart. Previously they had:
+// the hint claimed "scaled to 400x400px" but calculateCroppedImage never
+// resized anything, so a cropped photo could come out larger than the
+// original (canvas.convertToBlob() with no options defaults to lossless
+// PNG at the crop's native resolution).
+const AVATAR_TARGET_PX = 400;
+const HEADER_TARGET_SIZE = { width: 1500, height: 500 };
+const CROP_JPEG_QUALITY = 0.85;
 
 export const ImageUploadModal: FC<
   DialogModalProps & { location: ImageLocation }
@@ -61,11 +82,13 @@ export const ImageUploadModal: FC<
   // State for individual steps.
   const [step, setStep] = useState<'select' | 'crop' | 'alt'>('select');
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [imageMimeType, setImageMimeType] = useState<string | null>(null);
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
 
   const handleFile = useCallback((file: File) => {
     try {
-      // If the image is animated, skip cropping and go straight to alt text.
+      // If the image is animated, skip cropping and go straight to alt text
+      // -- cropping/re-encoding via canvas would destroy the animation.
       if (file.type === 'image/gif') {
         setImageBlob(file);
         setStep('alt');
@@ -79,6 +102,7 @@ export const ImageUploadModal: FC<
           throw new Error('Expected a string');
         }
         setImageSrc(dataUri);
+        setImageMimeType(file.type);
         setStep('crop');
       };
       reader.readAsDataURL(file);
@@ -94,12 +118,14 @@ export const ImageUploadModal: FC<
         setStep('select');
         return;
       }
-      void calculateCroppedImage(imageSrc, crop).then((blob) => {
-        setImageBlob(blob);
-        setStep('alt');
-      });
+      void calculateCroppedImage(imageSrc, crop, location, imageMimeType).then(
+        (blob) => {
+          setImageBlob(blob);
+          setStep('alt');
+        },
+      );
     },
-    [imageSrc],
+    [imageSrc, imageMimeType, location],
   );
 
   const dispatch = useAppDispatch();
@@ -271,14 +297,12 @@ const StepUpload: FC<{
         tagName='h2'
       />
       <FormattedMessage
-        id='account_edit.upload_modal.step_upload.hint'
-        defaultMessage='WEBP, PNG, GIF or JPG format, up to {limit}MB.{br}Image will be scaled to {width}x{height}px.'
-        description='Guideline for avatar and header images.'
+        {...messages[location === 'avatar' ? 'avatarHint' : 'headerHint']}
         values={{
           br: <br />,
           limit: 8,
-          width: location === 'avatar' ? 400 : 1500,
-          height: location === 'avatar' ? 400 : 500,
+          width: location === 'avatar' ? AVATAR_TARGET_PX : HEADER_TARGET_SIZE.width,
+          height: location === 'avatar' ? AVATAR_TARGET_PX : HEADER_TARGET_SIZE.height,
         }}
         tagName='p'
       />
@@ -418,9 +442,23 @@ const StepAlt: FC<{
 async function calculateCroppedImage(
   imageSrc: string,
   crop: Area,
+  location: ImageLocation,
+  sourceMimeType: string | null,
 ): Promise<Blob> {
   const image = await dataUriToImage(imageSrc);
-  const canvas = new OffscreenCanvas(crop.width, crop.height);
+
+  const target =
+    location === 'avatar'
+      ? { width: AVATAR_TARGET_PX, height: AVATAR_TARGET_PX }
+      : HEADER_TARGET_SIZE;
+
+  // Scale the crop down to the target size -- never up, so cropping a
+  // smaller image doesn't upscale/blur it.
+  const scale = Math.min(1, target.width / crop.width, target.height / crop.height);
+  const outWidth = Math.round(crop.width * scale);
+  const outHeight = Math.round(crop.height * scale);
+
+  const canvas = new OffscreenCanvas(outWidth, outHeight);
   const ctx = canvas.getContext('2d');
   if (!ctx) {
     throw new Error('Failed to get canvas context');
@@ -428,7 +466,7 @@ async function calculateCroppedImage(
 
   ctx.imageSmoothingQuality = 'high';
 
-  // Draw the image
+  // Draw the cropped region, scaled down to the target output size.
   ctx.drawImage(
     image,
     crop.x,
@@ -437,11 +475,22 @@ async function calculateCroppedImage(
     crop.height,
     0,
     0,
-    crop.width,
-    crop.height,
+    outWidth,
+    outHeight,
   );
 
-  return canvas.convertToBlob();
+  // PNGs are kept as PNG to preserve transparency (e.g. a logo used as an
+  // avatar); everything else is re-encoded as JPEG, which is dramatically
+  // smaller for photographic content than the canvas default of lossless
+  // PNG -- previously every cropped image, JPEG source or not, came out as
+  // an uncompressed PNG at the crop's native (often much larger than
+  // {width}x{height}) resolution.
+  const isPng = sourceMimeType === 'image/png';
+  return canvas.convertToBlob(
+    isPng
+      ? { type: 'image/png' }
+      : { type: 'image/jpeg', quality: CROP_JPEG_QUALITY },
+  );
 }
 
 function dataUriToImage(dataUri: string) {
