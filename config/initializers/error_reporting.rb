@@ -20,12 +20,22 @@ class AdminExceptionNotifier
   # job-death alerting already happens with better context via the
   # death_handlers lambda in sidekiq_callbacks.rb — so alerting on them here
   # too would just be redundant noise.
+  #
+  # ActionDispatch::RemoteIp::IpSpoofAttackError: raised when a request sends
+  # conflicting Client-Ip/X-Forwarded-For headers (e.g. a forged
+  # "Client-Ip: 127.0.0.1" trying to slip past IP-based rate limiting).
+  # Confirmed live 2026-09-04: 180 of these in one day from 4 rotating IPs on
+  # generic scanning-hosting infrastructure -- routine automated internet
+  # scanning, not a targeted attack. Rails' own anti-spoofing check is doing
+  # exactly its job by raising instead of guessing; the request fails safely
+  # either way, so there's nothing actionable per occurrence.
   IGNORED_CLASSES = %w[
     ActiveRecord::RecordNotFound
     ActionController::RoutingError
     ActionController::InvalidAuthenticityToken
     Sidekiq::JobRetry::Handled
     Sidekiq::JobRetry::Skip
+    ActionDispatch::RemoteIp::IpSpoofAttackError
   ].freeze
 
   def report(error, handled:, severity:, context:, source: nil)
