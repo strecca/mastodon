@@ -2,6 +2,21 @@ miacivezza.com {
 	@healthcheck path /health
 	log_skip @healthcheck
 
+	# Access logging, added 2026-09-06 -- closes an observability gap found
+	# during a scanning investigation: Rails' own request log never records
+	# remote_ip, so there was no way to attribute web traffic to a source IP
+	# unless it happened to crash and leak one into an error message. Uses
+	# Caddy's own built-in rotation (no external logrotate needed): rolls at
+	# 10MB, keeps at most 10 rotated files, deletes anything older than 30
+	# days -- bounds growth without needing separate maintenance.
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MB
+			roll_keep 10
+			roll_keep_for 720h
+		}
+	}
+
 	# Serve uploaded media and compiled assets directly from disk — bypass Rails
 	handle /system/* {
 		root * /home/mastodon/live/public
