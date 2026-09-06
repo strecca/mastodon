@@ -145,7 +145,7 @@ const HowItWorks = ({ identity }) => {
           <span className='hiw-page__install-icon'><DownloadIcon /></span>
           <h2 className='hiw-page__install-title'>{sc('guide_install_title', 'Add MiaCivezza to Your Phone')}</h2>
           <p className='hiw-page__install-body'>
-            {sc('guide_install_body', "On iPhone, open miacivezza.com in Safari, tap the Share button, then \"Add to Home Screen.\" You'll get an icon that opens straight to MiaCivezza — no bookmarks or extra taps needed. (Other browsers may not support this the same way — Safari is the one we've confirmed works.)")}
+            {sc('guide_install_body', "On iPhone or iPad, open miacivezza.com in Safari or Firefox (both work the same way there), tap the Share button, then \"Add to Home Screen.\" On Android, look for an \"Install\" option in your browser's menu if one doesn't pop up automatically. You'll get an icon that opens straight to MiaCivezza — no bookmarks or extra taps needed.")}
           </p>
         </div>
 
