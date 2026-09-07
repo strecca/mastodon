@@ -27,16 +27,24 @@ class ManifestSerializer < ActiveModel::Serializer
   end
 
   def icons
-    SiteUpload::ANDROID_ICON_SIZES.map do |size|
+    # Separate 'any' and 'maskable' entries per size, rather than the
+    # combined 'any maskable' value on one entry -- a maskable icon needs
+    # safe-zone padding for OS-level shape cropping, which isn't the same
+    # image as a plain icon; browsers that treat these as distinct purposes
+    # get more consistent results from separate entries.
+    SiteUpload::ANDROID_ICON_SIZES.flat_map do |size|
       src = app_icon_path(size.to_i)
       src = URI.join(root_url, src).to_s if src.present?
+      src ||= frontend_asset_url("icons/android-chrome-#{size}x#{size}.png")
 
-      {
-        src: src || frontend_asset_url("icons/android-chrome-#{size}x#{size}.png"),
-        sizes: "#{size}x#{size}",
-        type: 'image/png',
-        purpose: 'any maskable',
-      }
+      %w(any maskable).map do |purpose|
+        {
+          src: src,
+          sizes: "#{size}x#{size}",
+          type: 'image/png',
+          purpose: purpose,
+        }
+      end
     end
   end
 
