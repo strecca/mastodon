@@ -3638,11 +3638,22 @@ a.account__display-name {
 // install prompt -- see install_app_banner.tsx for the detection logic.
 // Same fixed-color rationale as .nav-panel-fab above: guaranteed contrast
 // regardless of theme, not a themed surface.
+//
+// Real bug found 2026-09-07: originally sat at bottom:12px, z-index:2,
+// directly underneath .ui__navigation-bar (the mobile bottom nav -- Home
+// icon, hamburger menu), which is bottom:0, opaque, and z-index:3 -- it has
+// no fixed/documented height, so this banner was rendering fully hidden
+// behind it on every real device. No amount of correct detection logic
+// mattered; it was invisible by construction. Fixed by clearing the nav
+// bar's footprint with real margin (72px, since its height isn't a known
+// constant to calculate against precisely) and using a higher z-index so
+// it's guaranteed to render in front even if that clearance is imprecise
+// on some device/font-size combination.
 .install-app-banner {
   position: fixed;
   inset-inline: 12px;
-  bottom: calc(12px + env(safe-area-inset-bottom));
-  z-index: 2;
+  bottom: calc(72px + env(safe-area-inset-bottom));
+  z-index: 4;
   display: flex;
   align-items: center;
   gap: 10px;
