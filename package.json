@@ -187,7 +187,7 @@
     "typescript": "~6.0.0",
     "typescript-eslint": "^8.55.0",
     "typescript-plugin-css-modules": "^5.2.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "resolutions": {
     "@types/react": "^18.2.7",
