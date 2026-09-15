@@ -6,14 +6,21 @@
 %table.email-w-full{ cellspacing: 0, cellpadding: 0, border: 0, role: 'presentation' }
   %tr
     %td.email-body-huge-padding-td
-      %p= @intro
+      .email-prose
+        %p= @intro
 
-      %p
-        = t('new_member_announcement_mailer.current_members')
-        %br
-        = @member_usernames.map { |u| "@#{u}" }.join(', ')
+        = render 'application/mailer/button', text: t('new_member_announcement_mailer.view_profile'), url: @new_account_url, has_arrow: true
 
-      - @reminder.split("\n\n").each do |paragraph|
-        %p= paragraph
+  %tr
+    %td.email-padding-24.email-padding-top-0
+      %p.email-h-sub= t('new_member_announcement_mailer.current_members')
+      .email-prose
+        %ul
+          - @member_usernames.each do |username|
+            %li= "@#{username}"
 
-      = render 'application/mailer/button', text: t('new_member_announcement_mailer.view_profile'), url: @new_account_url, has_arrow: true
+  %tr
+    %td.email-border-top.email-padding-24
+      .email-prose
+        - @reminder.split("\n\n").each do |paragraph|
+          %p.email-p= paragraph

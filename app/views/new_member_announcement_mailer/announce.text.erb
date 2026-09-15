@@ -2,11 +2,17 @@
 
 <%= @intro %>
 
+<%= t('new_member_announcement_mailer.view_profile') %>: <%= @new_account_url %>
+
+---
+
 <%= t('new_member_announcement_mailer.current_members') %>
-<%= @member_usernames.map { |u| "@#{u}" }.join(', ') %>
+<% @member_usernames.each do |username| -%>
+  - @<%= username %>
+<% end -%>
+
+---
 
 <%= @reminder %>
-
-<%= t('new_member_announcement_mailer.view_profile') %>: <%= @new_account_url %>
 
 — The MiaCivezza.com community
