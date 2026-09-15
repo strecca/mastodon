@@ -29,7 +29,10 @@ class Auth::RegistrationsController < Devise::RegistrationsController
 
   def create
     super do |resource|
-      WelcomeEmailWorker.perform_in(2.hours, resource.id) if resource.persisted?
+      if resource.persisted?
+        WelcomeEmailWorker.perform_in(2.hours, resource.id)
+        NewMemberAnnouncementWorker.perform_in(2.hours, resource.id)
+      end
     end
   end
 

@@ -1,0 +1,12 @@
+<%= @subject %>
+
+<%= @intro %>
+
+<%= t('new_member_announcement_mailer.current_members') %>
+<%= @member_usernames.map { |u| "@#{u}" }.join(', ') %>
+
+<%= @reminder %>
+
+<%= t('new_member_announcement_mailer.view_profile') %>: <%= @new_account_url %>
+
+— The MiaCivezza.com community

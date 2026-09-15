@@ -1869,6 +1869,9 @@ en:
     entry_response_title: "You got a response"
     body: "%{name} posted something you might be interested in."
     default_body: "There's a new update on something you're watching."
+  new_member_announcement_mailer:
+    current_members: "Current members:"
+    view_profile: "View their profile"
   notification_mailer:
     admin:
       report:

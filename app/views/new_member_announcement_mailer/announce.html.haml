@@ -1,0 +1,19 @@
+= content_for :heading do
+  = render 'application/mailer/heading',
+           title: @subject,
+           subtitle: 'miacivezza.com'
+
+%table.email-w-full{ cellspacing: 0, cellpadding: 0, border: 0, role: 'presentation' }
+  %tr
+    %td.email-body-huge-padding-td
+      %p= @intro
+
+      %p
+        = t('new_member_announcement_mailer.current_members')
+        %br
+        = @member_usernames.map { |u| "@#{u}" }.join(', ')
+
+      - @reminder.split("\n\n").each do |paragraph|
+        %p= paragraph
+
+      = render 'application/mailer/button', text: t('new_member_announcement_mailer.view_profile'), url: @new_account_url, has_arrow: true
