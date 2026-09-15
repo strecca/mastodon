@@ -6,10 +6,9 @@
 %table.email-w-full{ cellspacing: 0, cellpadding: 0, border: 0, role: 'presentation' }
   %tr
     %td.email-body-huge-padding-td
-      .email-prose
-        %p= @intro
+      %p{ style: 'margin: 0 0 20px; color: #17063b; font-size: 24px; font-weight: 700; line-height: 32px;' }= @intro
 
-        = render 'application/mailer/button', text: t('new_member_announcement_mailer.view_profile'), url: @new_account_url, has_arrow: true
+      = render 'application/mailer/button', text: t('new_member_announcement_mailer.view_profile'), url: @new_account_url, has_arrow: true
 
   %tr
     %td.email-padding-24.email-padding-top-0
