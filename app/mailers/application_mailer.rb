@@ -6,6 +6,7 @@ class ApplicationMailer < ActionMailer::Base
   helper :application
   helper :instance
   helper :formatting
+  helper :routing
 
   after_action :set_autoreply_headers!
 
