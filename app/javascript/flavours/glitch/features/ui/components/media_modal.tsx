@@ -103,7 +103,11 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
         const prevKey = isLtrDir ? 'ArrowLeft' : 'ArrowRight';
         const nextKey = isLtrDir ? 'ArrowRight' : 'ArrowLeft';
 
-        if (event.key === prevKey) {
+        if (event.key === 'Escape') {
+          onClose();
+          event.preventDefault();
+          event.stopPropagation();
+        } else if (event.key === prevKey) {
           handlePrevClick();
           event.preventDefault();
           event.stopPropagation();
@@ -113,7 +117,7 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
           event.stopPropagation();
         }
       },
-      [handleNextClick, handlePrevClick],
+      [handleNextClick, handlePrevClick, onClose],
     );
 
     const bind = useDrag(
@@ -318,6 +322,15 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
           {content}
         </animated.div>
 
+        <div className='media-modal__persistent-close'>
+          <IconButton
+            title={intl.formatMessage(messages.close)}
+            icon='times'
+            iconComponent={CloseIcon}
+            onClick={onClose}
+          />
+        </div>
+
         <div
           className={classNames('media-modal__navigation', {
             'media-modal__navigation--hidden': navigationHidden,
@@ -334,12 +347,6 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
                 onClick={handleZoomClick}
               />
             )}
-            <IconButton
-              title={intl.formatMessage(messages.close)}
-              icon='times'
-              iconComponent={CloseIcon}
-              onClick={onClose}
-            />
           </div>
 
           {prevNav}

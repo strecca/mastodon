@@ -6806,6 +6806,28 @@ a.status-card {
   }
 }
 
+// A close button that is never affected by media-modal__navigation's
+// hide/show toggle — it lives outside that element in the DOM specifically
+// so the parent's `opacity: 0` (which overrides any child's own opacity)
+// can't take it down too. Without this, a single tap on the image hides the
+// only way to dismiss the modal; a mistimed or dropped second tap (common
+// when the browser is busy decoding a large image) can leave the viewer
+// stuck with no way out at all.
+.media-modal__persistent-close {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  z-index: 100;
+  padding: 30px;
+
+  .icon-button {
+    color: var(--color-text-on-media);
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    padding: 8px;
+  }
+}
+
 .media-modal__nav {
   background: transparent;
   box-sizing: border-box;
