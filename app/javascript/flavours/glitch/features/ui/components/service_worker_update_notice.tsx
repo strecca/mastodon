@@ -3,6 +3,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { Alert } from 'flavours/glitch/components/alert';
+import { useInterval } from 'flavours/glitch/hooks/useInterval';
+
+// Browsers only check for a new service worker on a fresh page navigation,
+// or when explicitly told to via registration.update() -- they do NOT
+// proactively re-check while a tab just sits open and idle. Without this,
+// someone browsing for a while (exactly the case this feature is for) would
+// never see an update prompt no matter how long they waited, since nothing
+// would ever prompt the browser to go look.
+const UPDATE_CHECK_INTERVAL = 60_000;
 
 const messages = defineMessages({
   title: {
@@ -35,6 +44,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
   );
   const [updating, setUpdating] = useState(false);
   const hasReloaded = useRef(false);
+  const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
 
   useEffect(() => {
     if (!('serviceWorker' in navigator)) {
@@ -65,6 +75,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
       if (!registration) {
         return;
       }
+      registrationRef.current = registration;
 
       // An update may already have finished installing and be waiting from
       // before this component mounted.
@@ -75,6 +86,10 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
       registration.addEventListener('updatefound', () => {
         handleUpdateFound(registration);
       });
+
+      // Ask immediately too, in case something was deployed between page
+      // load and this component mounting.
+      void registration.update();
     });
 
     const handleControllerChange = () => {
@@ -97,6 +112,13 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
       );
     };
   }, []);
+
+  useInterval(
+    () => {
+      void registrationRef.current?.update();
+    },
+    { delay: UPDATE_CHECK_INTERVAL, isEnabled: !waitingWorker },
+  );
 
   const handleUpdateClick = useCallback(() => {
     if (!waitingWorker) {
