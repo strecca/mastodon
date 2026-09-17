@@ -105,10 +105,25 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
       handleControllerChange,
     );
 
+    // iOS throttles background JS timers unreliably, so don't depend on the
+    // interval alone -- also check the moment the page becomes visible
+    // again (switching back from another app, reopening from the home
+    // screen), which is driven by an actual event, not a timer.
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        void registrationRef.current?.update();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     return () => {
       navigator.serviceWorker.removeEventListener(
         'controllerchange',
         handleControllerChange,
+      );
+      document.removeEventListener(
+        'visibilitychange',
+        handleVisibilityChange,
       );
     };
   }, []);
