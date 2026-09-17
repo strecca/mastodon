@@ -6,8 +6,10 @@ import { handleNotificationClick, handlePush } from './web_push_notifications';
 
 declare const self: ServiceWorkerGlobalScope;
 
-// Cause a new version of a registered Service Worker to replace an existing one
-// that is already installed, and replace the currently active worker on open pages.
+// Cache the app shell on install. Note this worker does NOT auto-replace an
+// already-active one on open pages -- see the 'message' handler below for
+// why, and ServiceWorkerUpdateNotice for the user-facing prompt that
+// triggers it.
 self.addEventListener('install', (event) => {
   event.waitUntil(cacheRoot());
 });
