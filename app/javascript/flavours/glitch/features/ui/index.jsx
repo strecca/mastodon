@@ -37,6 +37,7 @@ import { initialState, me, owner, singleUserMode, trendsEnabled, landingPage, lo
 
 import BundleColumnError from './components/bundle_column_error';
 import { InstallAppBanner } from './components/install_app_banner';
+import { ServiceWorkerUpdateNotice } from './components/service_worker_update_notice';
 import { NavigationBar } from './components/navigation_bar';
 import { NavPanelFab } from './components/nav_panel_fab';
 import { UploadArea } from './components/upload_area';
@@ -846,6 +847,7 @@ class UI extends PureComponent {
           {!minimalShell && <NavigationBar />}
           {!minimalShell && <NavPanelFab />}
           {!minimalShell && <InstallAppBanner />}
+          <ServiceWorkerUpdateNotice />
           {layout !== 'mobile' && <PictureInPicture />}
           <AlertsController />
           {!disableHoverCards && <HoverCardController />}

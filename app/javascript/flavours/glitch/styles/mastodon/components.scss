@@ -3649,6 +3649,26 @@ a.account__display-name {
 // constant to calculate against precisely) and using a higher z-index so
 // it's guaranteed to render in front even if that clearance is imprecise
 // on some device/font-size combination.
+
+// Root-level (not inside a scrolling column, unlike .column__alert), so this
+// uses position: fixed with the same bottom offset already proven above to
+// clear the mobile nav bar.
+.service-worker-update-notice {
+  position: fixed;
+  inset-inline: 12px;
+  bottom: calc(72px + env(safe-area-inset-bottom));
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+
+  .notification-bar {
+    pointer-events: initial;
+    max-width: 360px;
+    translate: none;
+  }
+}
+
 .install-app-banner {
   position: fixed;
   inset-inline: 12px;
