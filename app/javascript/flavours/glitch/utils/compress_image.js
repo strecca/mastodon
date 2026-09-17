@@ -5,8 +5,11 @@
 //
 // - GIFs and non-image files (video, audio) pass through untouched --
 //   re-encoding a GIF to JPEG would destroy its animation.
-// - PNGs are resized but kept as PNG, not forced to JPEG, to preserve
-//   transparency.
+// - PNGs are resized and kept as PNG only if they actually use transparency
+//   (checked via the canvas alpha channel) -- an opaque PNG (very common
+//   from phone screenshots/saved photos) is converted to JPEG instead,
+//   since PNG's lossless format is dramatically larger than JPEG for
+//   photographic content with nothing to gain from it.
 // - Canvas draw always outputs sRGB, which as a side effect normalizes any
 //   unusual input color profile (ACES, P3, AdobeRGB, etc.).
 // - Falls back to the original file if canvas processing fails, or if the
@@ -18,6 +21,30 @@
 //   "this may take a moment" message while compression runs.
 const MAX_REJECT_MB = 80;
 const WARN_ABOVE_MB = 10;
+
+// How many pixels apart to sample when checking a PNG's alpha channel for
+// real transparency. Transparency in a real image is always a sizeable
+// region (a logo's background, a cutout shape) -- never an isolated pixel --
+// so sampling instead of scanning every pixel stays reliable while keeping
+// this fast even on multi-megapixel photos, where a full scan is the
+// expensive path precisely because it can't early-exit (nothing to find).
+const ALPHA_SAMPLE_STRIDE_PX = 25;
+
+const hasRealTransparency = (ctx, width, height) => {
+  let data;
+  try {
+    data = ctx.getImageData(0, 0, width, height).data;
+  } catch {
+    // getImageData can throw on a tainted canvas (e.g. cross-origin source);
+    // treat as "has transparency" so we fall back to the always-safe PNG path.
+    return true;
+  }
+  const strideBytes = ALPHA_SAMPLE_STRIDE_PX * 4;
+  for (let i = 3; i < data.length; i += strideBytes) {
+    if (data[i] < 255) return true;
+  }
+  return false;
+};
 
 export const compressImage = (file, { maxPx = 1280, quality = 0.82, onLargeFile } = {}) =>
   new Promise((resolve, reject) => {
@@ -54,18 +81,19 @@ export const compressImage = (file, { maxPx = 1280, quality = 0.82, onLargeFile 
       const canvas = document.createElement('canvas');
       canvas.width  = width;
       canvas.height = height;
-      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
 
-      const isPng = file.type === 'image/png';
+      const keepAsPng = file.type === 'image/png' && hasRealTransparency(ctx, width, height);
 
       canvas.toBlob((blob) => {
         if (!blob || blob.size >= file.size) {
           resolve(file); // compression didn't help (or failed) -- use original
           return;
         }
-        const extension = isPng ? '.png' : '.jpg';
+        const extension = keepAsPng ? '.png' : '.jpg';
         resolve(new File([blob], file.name.replace(/\.[^.]+$/, extension), { type: blob.type }));
-      }, isPng ? 'image/png' : 'image/jpeg', isPng ? undefined : quality);
+      }, keepAsPng ? 'image/png' : 'image/jpeg', keepAsPng ? undefined : quality);
     };
 
     img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
