@@ -275,11 +275,9 @@ export function ListMembers () {
   return import('../../lists/members');
 }
 export function CommunityDirectoryAdmin() {
-  console.log("CommunityDirectoryAdmin lazy loader called"); // for debugging
   return Promise.resolve(
     import('../../community_directory/admin/index')
   ).then((module) => {
-    console.log("CommunityDirectoryAdmin module loaded:", module);
     return {
       default: module.default || module.CommunityDirectoryAdmin || module
     };
