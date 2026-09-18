@@ -11,14 +11,15 @@ declare const self: ServiceWorkerGlobalScope;
 // why, and ServiceWorkerUpdateNotice for the user-facing prompt that
 // triggers it.
 self.addEventListener('install', (event) => {
-  // Real (not comment-only) marker so each build produces genuinely
-  // different compiled output -- comments get stripped by minification,
-  // so a comment-only edit here is invisible to the browser's own
-  // update-detection byte comparison. Confirmed 2026-09-18: two earlier
-  // comment-only "test build" commits never actually changed sw.js at all.
-  console.warn('[sw] install, build marker:', 'v3');
   event.waitUntil(cacheRoot());
 });
+// Note for testing a future update-ready prompt: a comment-only edit here
+// is invisible to the browser's own update-detection byte comparison,
+// since comments get stripped by minification -- confirmed 2026-09-18,
+// two comment-only "test build" commits never actually changed the
+// compiled sw.js at all. Use a real code change (e.g. a temporary
+// console.warn in the 'install' handler above) instead, then remove it
+// once confirmed.
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(self.clients.claim());
