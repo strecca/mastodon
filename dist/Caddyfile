@@ -51,8 +51,17 @@ miacivezza.com {
 	# Service worker must never be cached — always re-fetch so stale clients
 	# get the updated SW that clears old asset caches after each deploy.
 	# Without this, Safari holds stale SW → old asset hashes → black page.
+	#
+	# root is /public/packs, not /public -- Vite's build config (vite.config.mts,
+	# entryFileNames) intentionally outputs the sw entry unhashed as
+	# packs/sw.js, but the app registers it from the site root ('/sw.js', in
+	# main.tsx) so its scope covers the whole site, not just /packs/. This
+	# block bridges that gap. Found 2026-09-18: this was pointed at the wrong
+	# root (plain /public) since whenever it was first added, meaning /sw.js
+	# 404'd for every visitor the whole time -- the service worker never
+	# actually registered for anyone, regardless of any app-side code.
 	handle /sw.js {
-		root * /home/mastodon/live/public
+		root * /home/mastodon/live/public/packs
 		file_server
 		header Cache-Control "no-store"
 	}
