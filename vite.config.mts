@@ -183,7 +183,13 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
 
 async function findEntrypoints() {
   const entrypoints: Record<string, string> = {
-    sw: path.resolve(jsRoot, 'mastodon/service_worker/sw.ts'),
+    // Every other entrypoint here already builds from the glitch-flavoured
+    // source (see the loop below), but this one line was hardcoded to the
+    // vanilla file -- found 2026-09-18 while adding SKIP_WAITING handling
+    // to flavours/glitch/service_worker/sw.ts for the update-ready prompt:
+    // it was silently building and shipping the unmodified vanilla worker
+    // instead the whole time.
+    sw: path.resolve(jsRoot, 'flavours/glitch/service_worker/sw.ts'),
   };
 
   // JS entrypoints
