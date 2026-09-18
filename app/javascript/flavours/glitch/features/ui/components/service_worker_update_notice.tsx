@@ -58,14 +58,20 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
       }
 
       newWorker.addEventListener('statechange', () => {
-        // 'installed' with an existing controller means this is a genuine
-        // update to an already-running session -- not the very first
-        // install on a fresh visit, which also passes through 'installed'
-        // but has no controller yet to replace.
-        if (
-          newWorker.state === 'installed' &&
-          navigator.serviceWorker.controller
-        ) {
+        // 'installed' with registration.active already populated means an
+        // older worker was already running -- a genuine update, not the
+        // very first install on a fresh visit (which also passes through
+        // 'installed' but has no prior active worker to replace).
+        //
+        // Deliberately checking registration.active here, not
+        // navigator.serviceWorker.controller: a page can have a fully
+        // active, activated worker without yet controlling THIS particular
+        // page load (a normal timing gap right after first registration --
+        // confirmed live, 2026-09-18: active/activated but controller was
+        // still undefined on the very page that registered it). Checking
+        // the worker's own lifecycle state instead of this page's
+        // controller relationship is the more reliable signal.
+        if (newWorker.state === 'installed' && registration.active) {
           setWaitingWorker(newWorker);
         }
       });
@@ -78,8 +84,9 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
       registrationRef.current = registration;
 
       // An update may already have finished installing and be waiting from
-      // before this component mounted.
-      if (registration.waiting && navigator.serviceWorker.controller) {
+      // before this component mounted. Same reasoning as above: check
+      // registration.active, not navigator.serviceWorker.controller.
+      if (registration.waiting && registration.active) {
         setWaitingWorker(registration.waiting);
       }
 

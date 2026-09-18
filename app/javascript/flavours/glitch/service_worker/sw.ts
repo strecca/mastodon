@@ -1,8 +1,5 @@
 /// <reference lib="WebWorker" />
 /// <reference types="vite/client" />
-// Live test build, 2026-09-18 -- confirms the update-ready prompt fires
-// end-to-end now that /sw.js and its glitch-flavoured source are both
-// correctly wired up. Safe to remove this comment on a future edit.
 
 import { cacheRoot, handleFetch } from './caching';
 import { handleNotificationClick, handlePush } from './web_push_notifications';
@@ -14,6 +11,12 @@ declare const self: ServiceWorkerGlobalScope;
 // why, and ServiceWorkerUpdateNotice for the user-facing prompt that
 // triggers it.
 self.addEventListener('install', (event) => {
+  // Real (not comment-only) marker so each build produces genuinely
+  // different compiled output -- comments get stripped by minification,
+  // so a comment-only edit here is invisible to the browser's own
+  // update-detection byte comparison. Confirmed 2026-09-18: two earlier
+  // comment-only "test build" commits never actually changed sw.js at all.
+  console.warn('[sw] install, build marker:', 'v2');
   event.waitUntil(cacheRoot());
 });
 
