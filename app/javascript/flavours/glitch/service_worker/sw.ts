@@ -1,5 +1,8 @@
 /// <reference lib="WebWorker" />
 /// <reference types="vite/client" />
+// Live test build, 2026-09-18 -- confirms the update-ready prompt fires
+// end-to-end now that /sw.js and its glitch-flavoured source are both
+// correctly wired up. Safe to remove this comment on a future edit.
 
 import { cacheRoot, handleFetch } from './caching';
 import { handleNotificationClick, handlePush } from './web_push_notifications';
