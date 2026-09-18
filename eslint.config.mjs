@@ -145,6 +145,10 @@ export default tseslint.config([
     'streaming/**/*',
     '.bundle/**/*',
     'storybook-static/**/*',
+    // A standalone, distributable copy of the feature meant to be copied
+    // into another Mastodon repo (see its own install_community_directory.sh)
+    // -- its relative imports only resolve once installed there, not in place.
+    'community_directory_v2/**/*',
   ]),
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],

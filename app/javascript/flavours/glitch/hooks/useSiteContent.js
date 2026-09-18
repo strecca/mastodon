@@ -59,21 +59,30 @@ export function useSiteContent() {
     (document.documentElement.lang || intl.locale || 'en').split('-')[0];
 
   const [content, setContent] = useState(_cache[locale] ?? null);
+  const [renderedLocale, setRenderedLocale] = useState(locale);
+
+  // Resync local state to the new locale's cached value during render, not
+  // in an effect -- this is React's documented pattern for adjusting state
+  // when a derived value changes: it bails out into an immediate re-render
+  // instead of the extra commit-then-effect-then-render cascade a
+  // setState-in-effect would cause.
+  if (locale !== renderedLocale) {
+    setRenderedLocale(locale);
+    setContent(_cache[locale] ?? null);
+  }
 
   useEffect(() => {
-    // Sync local state immediately when locale changes
-    setContent(_cache[locale] ?? null);
-
     const stale =
       !_cache[locale] ||
       Date.now() - (_fetchedAt[locale] || 0) > TTL_MS;
 
-    if (!stale) return;
+    if (stale) {
+      getListeners(locale).add(setContent);
+      fetchLocale(locale);
+      return () => { getListeners(locale).delete(setContent); };
+    }
 
-    getListeners(locale).add(setContent);
-    fetchLocale(locale);
-
-    return () => { getListeners(locale).delete(setContent); };
+    return undefined;
   }, [locale]);
 
   return useCallback(

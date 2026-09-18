@@ -22,7 +22,7 @@ export const LISTING_INTEREST_REMOVE  = 'COMMUNITY_LISTINGS/INTEREST_REMOVE';
 // Fetches all listings unfiltered. Only dispatched when !loaded so navigation
 // back to the list page is instant without a network round-trip.
 export const fetchListings = () => (dispatch, getState) => {
-  if (getState().getIn(['community_listings', 'loaded'])) return;
+  if (getState().getIn(['community_listings', 'loaded'])) return Promise.resolve();
 
   dispatch({ type: LISTINGS_FETCH_REQUEST });
   return api().get('/api/v1/community_listings')
