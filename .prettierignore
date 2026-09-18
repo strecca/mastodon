@@ -1,0 +1,7 @@
+# config/email.yml embeds a ternary (`? true : nil`) inside an ERB tag on
+# consecutive lines; oxfmt's YAML parser misreads the `: ` inside the ERB
+# as a nested mapping key and aborts with a SyntaxError instead of just
+# leaving the file unformatted. The YAML itself is valid, working Rails
+# config -- excluding it here so `format:check` can finish scanning the
+# rest of the repo instead of crashing on this one file.
+config/email.yml
