@@ -16,7 +16,7 @@ self.addEventListener('install', (event) => {
   // so a comment-only edit here is invisible to the browser's own
   // update-detection byte comparison. Confirmed 2026-09-18: two earlier
   // comment-only "test build" commits never actually changed sw.js at all.
-  console.warn('[sw] install, build marker:', 'v2');
+  console.warn('[sw] install, build marker:', 'v3');
   event.waitUntil(cacheRoot());
 });
 
