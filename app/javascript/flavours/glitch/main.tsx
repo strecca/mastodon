@@ -41,8 +41,11 @@ function main() {
     );
     store.dispatch(setupBrowserNotifications());
 
+    // Registered for every visitor, signed in or not -- caching and the
+    // update-ready prompt benefit anyone using the site or its installed
+    // PWA icon, not just members. Push notifications specifically need an
+    // account, so that part alone stays gated on `me` below.
     if (
-      me &&
       'serviceWorker' in navigator &&
       (isDevelopment() || isProduction()) // Disallow testing environment
     ) {
@@ -58,13 +61,17 @@ function main() {
         type: 'module',
       });
 
-      if (isProduction()) {
-        if ('Notification' in window && Notification.permission === 'granted') {
-          const registerPushNotifications =
-            await import('flavours/glitch/actions/push_notifications');
+      if (
+        me &&
+        isProduction() &&
+        'Notification' in window &&
+        Notification.permission === 'granted'
+      ) {
+        const registerPushNotifications = await import(
+          'flavours/glitch/actions/push_notifications'
+        );
 
-          store.dispatch(registerPushNotifications.register());
-        }
+        store.dispatch(registerPushNotifications.register());
       }
     }
 
