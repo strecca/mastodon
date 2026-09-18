@@ -200,6 +200,8 @@
   "settings.tag_misleading_links.hint": "Añadir una indicación visual indicando el destino de los enlace que no los mencionen explícitamente",
   "settings.wide_view": "Vista amplia (solo modo de escritorio)",
   "settings.wide_view_hint": "Expande las columnas para llenar mejor el espacio disponible.",
+  "sign_in_banner.create_account_community": "Unirse",
+  "sign_in_banner.sign_in_community": "Iniciar sesión",
   "status.has_audio": "Contiene archivos de audio",
   "status.has_pictures": "Contiene imágenes adjuntas",
   "status.has_preview_card": "Contiene una tarjeta de vista previa adjunta",

@@ -207,6 +207,8 @@
   "settings.tag_misleading_links.hint": "Ajouter une indication visuelle avec l'hôte cible du lien à chaque lien ne le mentionnant pas explicitement",
   "settings.wide_view": "Vue élargie (mode ordinateur uniquement)",
   "settings.wide_view_hint": "Étire les colonnes pour mieux remplir l'espace disponible.",
+  "sign_in_banner.create_account_community": "Rejoindre",
+  "sign_in_banner.sign_in_community": "Connexion",
   "status.filtered": "Filtré",
   "status.has_audio": "Contient des fichiers audio attachés",
   "status.has_pictures": "Contient des images attachées",

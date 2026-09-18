@@ -152,5 +152,7 @@
   "settings.content_warnings.regexp": "Reguljärt uttryck",
   "settings.content_warnings_filter": "Innehållsvarningar att inte öppna automatiskt",
   "settings.content_warnings_shared_state": "Visa/gömma innehållet för alla kopior på en gång",
-  "settings.preferences": "Preferences"
+  "settings.preferences": "Preferences",
+  "sign_in_banner.create_account_community": "Gå med",
+  "sign_in_banner.sign_in_community": "Logga in"
 }

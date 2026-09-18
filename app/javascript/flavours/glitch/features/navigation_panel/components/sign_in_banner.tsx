@@ -41,12 +41,12 @@ export const SignInBanner: React.FC = () => {
   return (
     <div className='sign-in-banner sign-in-banner--compact'>
       <a href='/auth/sign_in' className='button button--block button-secondary'>
-        <FormattedMessage id='sign_in_banner.sign_in' defaultMessage='Log in' />
+        <FormattedMessage id='sign_in_banner.sign_in_community' defaultMessage='Log in' />
       </a>
       {registrationsOpen ? (
         <a href={signupUrl} className='button button--block'>
           <FormattedMessage
-            id='sign_in_banner.create_account'
+            id='sign_in_banner.create_account_community'
             defaultMessage='Join'
           />
         </a>
@@ -57,7 +57,7 @@ export const SignInBanner: React.FC = () => {
           type='button'
         >
           <FormattedMessage
-            id='sign_in_banner.create_account'
+            id='sign_in_banner.create_account_community'
             defaultMessage='Join'
           />
         </button>

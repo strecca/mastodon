@@ -104,5 +104,7 @@
   "service_worker_update_notice.message": "Una versione nuova e migliorata di MiaCivezza.com è pronta per te. Tornerai a navigare e pubblicare in meno di un minuto.",
   "service_worker_update_notice.title": "Aggiornamento pronto",
   "settings.content_warnings": "Content warnings",
-  "settings.preferences": "Preferences"
+  "settings.preferences": "Preferences",
+  "sign_in_banner.create_account_community": "Iscriviti",
+  "sign_in_banner.sign_in_community": "Accedi"
 }

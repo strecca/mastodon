@@ -122,5 +122,7 @@
   "settings.pop_in_player": "Aktiver flytende avspiller",
   "settings.pop_in_right": "Høyre",
   "settings.preferences": "Brukerinnstillinger",
-  "settings.side_arm.none": "Ingen"
+  "settings.side_arm.none": "Ingen",
+  "sign_in_banner.create_account_community": "Bli med",
+  "sign_in_banner.sign_in_community": "Logg inn"
 }

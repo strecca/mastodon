@@ -24,13 +24,13 @@ import SettingToggle from '../notifications/components/setting_toggle';
 import StatusListContainer from '../ui/containers/status_list_container';
 
 const messages = defineMessages({
-  title: { id: 'column.firehose', defaultMessage: 'Live feeds of Community Posts' },
+  title: { id: 'column.firehose_community', defaultMessage: 'Live feeds of Community Posts' },
   title_local: {
-    id: 'column.firehose_local',
+    id: 'column.firehose_community_local',
     defaultMessage: 'Live feeds of Community Posts',
   },
   title_singular: {
-    id: 'column.firehose_singular',
+    id: 'column.firehose_community_singular',
     defaultMessage: 'Live feeds of Community Posts',
   },
   filter_regex: { id: 'home.column_settings.filter_regex', defaultMessage: 'Filter out by regular expressions' },
@@ -167,7 +167,7 @@ const Firehose = ({ feedType, multiColumn }) => {
   ) : (
     <DismissableBanner id='public_timeline'>
       <FormattedMessage
-        id='dismissable_banner.public_timeline'
+        id='dismissable_banner.public_timeline_community'
         defaultMessage='These are the most recent public posts shared on {domain}.'
         values={{ domain }}
       />

@@ -112,6 +112,8 @@
   "settings.tag_misleading_links.hint": "Voeg een visuele indicatie toe met de link van de doelhost naar elke link die die niet expliciet vermeldt",
   "settings.wide_view": "Brede weergave (alleen bureaubladmodus)",
   "settings.wide_view_hint": "Rek kolommen uit om alle beschikbare ruimte te vullen.",
+  "sign_in_banner.create_account_community": "Meedoen",
+  "sign_in_banner.sign_in_community": "Inloggen",
   "status.filtered": "Gefilterd",
   "status.has_audio": "Functies bijgevoegde audiobestanden",
   "status.has_pictures": "Functies bijgevoegde afbeeldingen",

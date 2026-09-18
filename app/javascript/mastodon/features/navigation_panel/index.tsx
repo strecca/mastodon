@@ -60,7 +60,7 @@ import { SignInBanner } from './components/sign_in_banner';
 import { Trends } from './components/trends';
 
 const messages = defineMessages({
-  home: { id: 'tabs_bar.home', defaultMessage: 'Glitch-soc Civezza Home' },
+  home: { id: 'tabs_bar.home', defaultMessage: 'Home' },
   notifications: {
     id: 'tabs_bar.notifications',
     defaultMessage: 'Notifications',

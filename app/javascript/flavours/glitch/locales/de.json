@@ -205,6 +205,8 @@
   "settings.tag_misleading_links.hint": "Füge eine visuelle Indikation mit dem Ziel-Host des Links zu jedem Link hinzu, bei dem dieser nicht explizit genannt wird",
   "settings.wide_view": "Breite Ansicht (nur für den Desktop-Modus)",
   "settings.wide_view_hint": "Verbreitert Spalten, um den verfügbaren Platz besser zu füllen.",
+  "sign_in_banner.create_account_community": "Beitreten",
+  "sign_in_banner.sign_in_community": "Anmelden",
   "status.filtered": "Gefiltert",
   "status.has_audio": "Hat angehängte Audiodateien",
   "status.has_pictures": "Hat angehängte Bilder",
