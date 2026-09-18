@@ -100,6 +100,9 @@
   "community.upload.failed": "Caricamento non riuscito — riprova.",
   "community.upload.too_large": "L'immagine è troppo grande ({mb}MB). Ridimensionarla a meno di 80 MB prima di caricarla.",
   "navigation_bar.language_and_more": "Lingua e altri link",
+  "service_worker_update_notice.action": "Aggiorna ora",
+  "service_worker_update_notice.message": "Una versione nuova e migliorata di MiaCivezza.com è pronta per te. Tornerai a navigare e pubblicare in meno di un minuto.",
+  "service_worker_update_notice.title": "Aggiornamento pronto",
   "settings.content_warnings": "Content warnings",
   "settings.preferences": "Preferences"
 }
