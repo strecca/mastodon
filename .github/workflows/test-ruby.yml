@@ -215,7 +215,7 @@ jobs:
       RAILS_ENV: test
       BUNDLE_WITH: test
       LOCAL_DOMAIN: localhost:3000
-      LOCAL_HTTPS: false
+      LOCAL_HTTPS: true
 
     strategy:
       fail-fast: false
