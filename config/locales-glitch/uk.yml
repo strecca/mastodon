@@ -2,8 +2,8 @@
 uk:
   admin:
     custom_emojis:
-      batch_copy_error: "Виникла помилка при копіюванні деяких вибраних емодзі: %{message}"
-      batch_error: "Сталася помилка: %{message}"
+      batch_copy_error: 'Виникла помилка при копіюванні деяких вибраних емодзі: %{message}'
+      batch_error: 'Сталася помилка: %{message}'
     settings:
       captcha_enabled:
         title: Вимагати нових користувачів проходити CAPTCHA для підтвердження свого облікового запису

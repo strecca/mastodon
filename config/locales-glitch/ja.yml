@@ -2,8 +2,8 @@
 ja:
   admin:
     custom_emojis:
-      batch_copy_error: "選択したいくつかの絵文字のコピー中にエラーが発生しました: %{message}"
-      batch_error: "エラーが発生しました: %{message}"
+      batch_copy_error: '選択したいくつかの絵文字のコピー中にエラーが発生しました: %{message}'
+      batch_error: 'エラーが発生しました: %{message}'
     settings:
       captcha_enabled:
         desc_html: |-

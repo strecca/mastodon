@@ -2,8 +2,8 @@
 cs:
   admin:
     custom_emojis:
-      batch_copy_error: "Při kopírování některých emoji došlo k chybě: %{message}"
-      batch_error: "Došlo k chybě: %{message}"
+      batch_copy_error: 'Při kopírování některých emoji došlo k chybě: %{message}'
+      batch_error: 'Došlo k chybě: %{message}'
     settings:
       captcha_enabled:
         desc_html: Tato funkce používá externí skripty služby hCaptcha, což může být problém z hlediska bezpečí a ochrany dat. Také to může <strong>některým (hlavně postiženým) lidem registrační proces výrazně zkomplikovat</strong>. Z tohoto důvodu prosím raději zvažte jiné možnosti, jako je schvalování registrací nebo registrace pouze pro zvané.<br>Uživatelům pozvaným skrze omezenou pozvánku se CAPTCHA nezobrazí.
