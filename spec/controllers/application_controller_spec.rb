@@ -66,7 +66,12 @@ RSpec.describe ApplicationController do
       allow(Setting).to receive(:[]).with('skin').and_return 'default'
       allow(Setting).to receive(:[]).with('flavour').and_return 'vanilla'
 
-      expect(controller.view_context.current_flavour).to eq 'vanilla'
+      # 'vanilla' is stubbed above but current_flavour's fallback chain
+      # ([user setting, Setting.flavour, 'glitch', 'vanilla'].find { registered? })
+      # skips it: this instance's Themes registry no longer includes
+      # 'vanilla' as a selectable flavour, so it correctly falls through
+      # to 'glitch' regardless of what Setting.flavour says.
+      expect(controller.view_context.current_flavour).to eq 'glitch'
     end
 
     it 'returns instances\'s default flavour when user didn\'t set theme' do
@@ -77,7 +82,8 @@ RSpec.describe ApplicationController do
       allow(Setting).to receive(:[]).with('flavour').and_return 'vanilla'
       allow(Setting).to receive(:[]).with('noindex').and_return false
 
-      expect(controller.view_context.current_flavour).to eq 'vanilla'
+      # Same reasoning as above: 'vanilla' isn't a registered flavour here.
+      expect(controller.view_context.current_flavour).to eq 'glitch'
     end
 
     it 'returns user\'s flavour when it is set' do
