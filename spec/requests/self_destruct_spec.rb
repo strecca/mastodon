@@ -49,7 +49,11 @@ RSpec.describe 'Self-destruct mode' do
 
   context 'when requesting various unavailable endpoints' do
     it_behaves_like 'generic logged out request', '/'
-    it_behaves_like 'generic logged out request', '/about'
+    # /about now 301s to /guide at the route level (config/routes.rb),
+    # before any self-destruct check runs, so it can never return 410 --
+    # testing /guide directly instead, which maps to the same
+    # HomeController#index action as every other SPA page here.
+    it_behaves_like 'generic logged out request', '/guide'
     it_behaves_like 'generic logged out request', '/public'
   end
 

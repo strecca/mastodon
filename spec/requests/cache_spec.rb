@@ -22,11 +22,13 @@ module TestEndpoints
 
   # Endpoints that should be cachable when accessed anonymously but have a Vary
   # on Cookie to prevent logged-in users from getting values from logged-out cache.
+  # Deliberately excludes /about: it now 301s to /guide (see config/routes.rb),
+  # so it's no longer a real cacheable content page -- it carries no-store/no-cache
+  # headers appropriate to a redirect, not the page-cache headers this list checks.
   COOKIE_DEPENDENT_CACHABLE = %w(
     /
     /explore
     /public
-    /about
     /privacy-policy
     /directory
     /@alice
@@ -98,7 +100,6 @@ module TestEndpoints
   LANGUAGE_DEPENDENT = %w(
     /
     /explore
-    /about
     /api/v1/trends/statuses
   ).freeze
 

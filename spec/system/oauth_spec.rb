@@ -299,7 +299,11 @@ RSpec.describe 'Using OAuth from an external app' do
   end
 
   def redirect_to_callback_url
-    have_current_path(/\A#{client_app.redirect_uri}/, url: true)
+    # client_app.redirect_uri is about_url, which now 301s to /guide
+    # (see config/routes.rb -- about_url/about_path are deliberately kept
+    # working as a redirect rather than removed), so the final landed
+    # page is one hop past the registered callback URL itself.
+    have_current_path(/\A#{Regexp.escape(client_app.redirect_uri.sub('/about', '/guide'))}/, url: true)
   end
 
   def user_has_grant_with_client_app?

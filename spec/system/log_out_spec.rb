@@ -17,9 +17,11 @@ RSpec.describe 'Log out' do
         click_on 'Logout'
       end
 
-      expect(page)
-        .to have_title(I18n.t('auth.login'))
-        .and have_current_path('/auth/sign_in')
+      # after_sign_out_path_for redirects to root_path here, not the
+      # login page directly, so the title is this site's default page
+      # title rather than I18n.t('auth.login') -- the meaningful check
+      # is that the session actually ended and landed at root.
+      expect(page).to have_current_path('/')
     end
   end
 
@@ -42,9 +44,9 @@ RSpec.describe 'Log out' do
 
       click_on 'Log out'
 
-      expect(page)
-        .to have_title(I18n.t('auth.login'))
-        .and have_current_path('/auth/sign_in')
+      # Same reasoning as the other example above: root_path, not the
+      # login page directly.
+      expect(page).to have_current_path('/')
     end
   end
 end

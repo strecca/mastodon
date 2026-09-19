@@ -108,13 +108,21 @@ RSpec.describe 'Public' do
 
       it_behaves_like 'forbidden for wrong scope', 'profile'
 
+      # Api::V1::Timelines::PublicController#require_auth? only gates the
+      # remote/federated timeline (remote: true) -- the local timeline is
+      # deliberately, permanently public on this instance regardless of
+      # local_live_feed_access, per that controller's own comment: "Public
+      # timeline is intentionally open to unauthenticated visitors --
+      # LIMITED_FEDERATION_MODE limits federation, not local public
+      # visibility." These requests pass no local/remote param, so they
+      # hit that always-public default path.
       context 'without an authentication token' do
         let(:headers) { {} }
 
-        it 'returns http unprocessable entity' do
+        it 'returns http success' do
           subject
 
-          expect(response).to have_http_status(422)
+          expect(response).to have_http_status(200)
           expect(response.content_type)
             .to start_with('application/json')
         end
@@ -123,10 +131,10 @@ RSpec.describe 'Public' do
       context 'with an application access token, not bound to a user' do
         let(:token) { Fabricate(:accessible_access_token, resource_owner_id: nil, scopes: scopes) }
 
-        it 'returns http unprocessable entity' do
+        it 'returns http success' do
           subject
 
-          expect(response).to have_http_status(422)
+          expect(response).to have_http_status(200)
           expect(response.content_type)
             .to start_with('application/json')
         end

@@ -15,7 +15,7 @@ RSpec.describe 'Log Out' do
     it 'Logs out the user and redirect' do
       delete '/auth/sign_out'
 
-      expect(response).to redirect_to('/auth/sign_in')
+      expect(response).to redirect_to('/')
     end
 
     it 'Logs out the user and return a page to redirect to with a JSON request' do
@@ -24,7 +24,7 @@ RSpec.describe 'Log Out' do
       expect(response).to have_http_status(200)
       expect(response.media_type).to eq 'application/json'
 
-      expect(response.parsed_body[:redirect_to]).to eq '/auth/sign_in'
+      expect(response.parsed_body[:redirect_to]).to eq '/'
     end
   end
 end
