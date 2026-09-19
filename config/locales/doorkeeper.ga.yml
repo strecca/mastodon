@@ -52,7 +52,7 @@ ga:
         callback_urls: URLanna aisghlaoch
         scopes: Scóip
         secret: Rún cliaint
-        title: 'Ainm feidhmchláir: %{name}'
+        title: "Ainm feidhmchláir: %{name}"
     authorizations:
       buttons:
         authorize: Ceadaigh
@@ -92,7 +92,7 @@ ga:
         invalid_grant: Tá an deonú údaraithe ar choinníoll neamhbhailí, imithe in éag, cúlghairthe, nach ionann é agus an URI atreoraithe a úsáideadh san iarratas ar údarú, nó gur eisíodh é chuig cliant eile.
         invalid_redirect_uri: Níl an uri atreoraithe atá san áireamh bailí.
         invalid_request:
-          missing_param: 'Paraiméadar riachtanach in easnamh: %{value}.'
+          missing_param: "Paraiméadar riachtanach in easnamh: %{value}."
           request_not_authorized: Ní mór an t-iarratas a údarú. Tá an paraiméadar riachtanach chun iarratas a údarú in easnamh nó neamhbhailí.
           unknown: Tá paraiméadar riachtanach in easnamh ar an iarratas, folaíonn sé luach paraiméadar nach dtacaítear leis, nó tá sé míchumtha ar shlí eile.
         invalid_resource_owner: Níl na dintiúir úinéara acmhainne a soláthraíodh bailí, nó ní féidir úinéir na hacmhainne a aimsiú

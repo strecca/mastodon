@@ -3,8 +3,8 @@ import {
   EMOJI_MODE_NATIVE_WITH_FLAGS,
   EMOJI_TYPE_UNICODE,
   EMOJI_TYPE_CUSTOM,
-} from './constants';
-import { emojiToInversionClassName, unicodeHexToUrl } from './normalize';
+} from "./constants";
+import { emojiToInversionClassName, unicodeHexToUrl } from "./normalize";
 import type {
   EmojiAppState,
   EmojiLoadedState,
@@ -13,7 +13,7 @@ import type {
   EmojiStateCustom,
   EmojiStateUnicode,
   ExtraCustomEmojiMap,
-} from './types';
+} from "./types";
 import {
   anyEmojiRegex,
   emojiLogger,
@@ -21,9 +21,9 @@ import {
   isCustomEmoji,
   isUnicodeEmoji,
   stringHasUnicodeFlags,
-} from './utils';
+} from "./utils";
 
-const log = emojiLogger('render');
+const log = emojiLogger("render");
 
 type TokenizedText = (string | EmojiState)[];
 
@@ -46,7 +46,7 @@ export function tokenizeText(text: string): TokenizedText {
 
     const code = match[0];
 
-    if (code.startsWith(':') && code.endsWith(':')) {
+    if (code.startsWith(":") && code.endsWith(":")) {
       // Custom emoji
       tokens.push({
         code,
@@ -109,7 +109,7 @@ export async function updateHtmlWithEmoji({
 }: {
   element: Element;
   locale: string;
-} & Omit<EmojiAppState, 'currentLocale'>) {
+} & Omit<EmojiAppState, "currentLocale">) {
   if (mode === EMOJI_MODE_NATIVE) {
     return;
   }
@@ -117,7 +117,7 @@ export async function updateHtmlWithEmoji({
   const tokens = tokenizeText(element.innerHTML);
   const newChildren: (string | Element)[] = [];
   for (const token of tokens) {
-    if (typeof token === 'string') {
+    if (typeof token === "string") {
       newChildren.push(token);
       continue;
     }
@@ -134,7 +134,7 @@ export async function updateHtmlWithEmoji({
       continue;
     }
 
-    const img = document.createElement('img');
+    const img = document.createElement("img");
     img.src = unicodeHexToUrl({
       assetHost,
       darkTheme,
@@ -142,7 +142,7 @@ export async function updateHtmlWithEmoji({
     });
     img.alt = state.data.unicode;
     img.title = state.data.label;
-    img.classList.add('emojione');
+    img.classList.add("emojione");
 
     const inversionClass = emojiToInversionClassName(state.data.unicode);
     if (inversionClass) {
@@ -153,9 +153,8 @@ export async function updateHtmlWithEmoji({
   }
 
   element.innerHTML = newChildren.reduce<string>(
-    (prev, curr) =>
-      typeof curr === 'string' ? prev + curr : prev + curr.outerHTML,
-    '',
+    (prev, curr) => (typeof curr === "string" ? prev + curr : prev + curr.outerHTML),
+    "",
   );
 }
 
@@ -179,15 +178,10 @@ export async function loadEmojiDataToState(
     return null;
   }
 
-  const {
-    loadLegacyShortcodesByShortcode,
-    loadEmojiByHexcode,
-    LocaleNotLoadedError,
-  } = await import('./database');
+  const { loadLegacyShortcodesByShortcode, loadEmojiByHexcode, LocaleNotLoadedError } =
+    await import("./database");
 
-  const code = isUnicodeEmoji(state.code)
-    ? emojiToUnicodeHex(state.code)
-    : state.code;
+  const code = isUnicodeEmoji(state.code) ? emojiToUnicodeHex(state.code) : state.code;
 
   // First, try to load the data from IndexedDB.
   try {
@@ -206,22 +200,18 @@ export async function loadEmojiDataToState(
     }
 
     // If not found, assume it's not an emoji and return null.
-    log('Could not find emoji %s for locale %s', code, locale);
+    log("Could not find emoji %s for locale %s", code, locale);
     return null;
   } catch (err: unknown) {
     // If the locale is not loaded, load it and retry once.
     if (!retry && err instanceof LocaleNotLoadedError) {
-      log(
-        'Error loading emoji %s for locale %s, loading locale and retrying.',
-        code,
-        locale,
-      );
-      const { importEmojiData } = await import('./loader');
+      log("Error loading emoji %s for locale %s, loading locale and retrying.", code, locale);
+      const { importEmojiData } = await import("./loader");
       await importEmojiData(locale); // Use this from the loader file as it can be awaited.
       return loadEmojiDataToState(state, locale, true);
     }
 
-    console.warn('Error loading emoji data, not retrying:', state, locale, err);
+    console.warn("Error loading emoji data, not retrying:", state, locale, err);
     return null;
   }
 }
@@ -242,8 +232,7 @@ export function shouldRenderImage(state: EmojiState, mode: EmojiMode): boolean {
     // we can just append the text node directly.
     if (
       mode === EMOJI_MODE_NATIVE ||
-      (mode === EMOJI_MODE_NATIVE_WITH_FLAGS &&
-        !stringHasUnicodeFlags(state.code))
+      (mode === EMOJI_MODE_NATIVE_WITH_FLAGS && !stringHasUnicodeFlags(state.code))
     ) {
       return false;
     }

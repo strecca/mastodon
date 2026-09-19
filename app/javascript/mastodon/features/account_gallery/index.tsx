@@ -1,28 +1,24 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { List as ImmutableList, isList } from 'immutable';
+import { List as ImmutableList, isList } from "immutable";
 
-import { openModal } from '@/mastodon/actions/modal';
-import { expandAccountMediaTimeline } from '@/mastodon/actions/timelines';
-import { AccountHeader } from '@/mastodon/components/account_header';
-import { ColumnBackButton } from '@/mastodon/components/column_back_button';
-import { LimitedAccountHint } from '@/mastodon/components/limited_account_hint';
-import { RemoteHint } from '@/mastodon/components/remote_hint';
-import ScrollableList from '@/mastodon/components/scrollable_list';
-import { BundleColumnError } from '@/mastodon/features/ui/components/bundle_column_error';
-import Column from '@/mastodon/features/ui/components/column';
-import { useAccountId } from '@/mastodon/hooks/useAccountId';
-import { useAccountVisibility } from '@/mastodon/hooks/useAccountVisibility';
-import type { MediaAttachment } from '@/mastodon/models/media_attachment';
-import {
-  useAppSelector,
-  useAppDispatch,
-  createAppSelector,
-} from '@/mastodon/store';
+import { openModal } from "@/mastodon/actions/modal";
+import { expandAccountMediaTimeline } from "@/mastodon/actions/timelines";
+import { AccountHeader } from "@/mastodon/components/account_header";
+import { ColumnBackButton } from "@/mastodon/components/column_back_button";
+import { LimitedAccountHint } from "@/mastodon/components/limited_account_hint";
+import { RemoteHint } from "@/mastodon/components/remote_hint";
+import ScrollableList from "@/mastodon/components/scrollable_list";
+import { BundleColumnError } from "@/mastodon/features/ui/components/bundle_column_error";
+import Column from "@/mastodon/features/ui/components/column";
+import { useAccountId } from "@/mastodon/hooks/useAccountId";
+import { useAccountVisibility } from "@/mastodon/hooks/useAccountVisibility";
+import type { MediaAttachment } from "@/mastodon/models/media_attachment";
+import { useAppSelector, useAppDispatch, createAppSelector } from "@/mastodon/store";
 
-import { MediaItem } from './components/media_item';
+import { MediaItem } from "./components/media_item";
 
 const emptyList = ImmutableList<MediaAttachment>();
 
@@ -66,25 +62,25 @@ const selectGalleryTimeline = createAppSelector(
 
     const withReplies = show_media_replies;
     const timeline = timelines.get(
-      `account:${accountId}:media${withReplies ? ':with_replies' : ''}`,
+      `account:${accountId}:media${withReplies ? ":with_replies" : ""}`,
     );
-    const statusIds = timeline?.get('items');
+    const statusIds = timeline?.get("items");
 
     if (isList(statusIds)) {
       for (const statusId of statusIds) {
         const status = statuses.get(statusId);
         items = items.concat(
-          (
-            status?.get('media_attachments') as ImmutableList<MediaAttachment>
-          ).map((media) => media.set('status', status)),
+          (status?.get("media_attachments") as ImmutableList<MediaAttachment>).map((media) =>
+            media.set("status", status),
+          ),
         );
       }
     }
 
     return {
       items,
-      hasMore: !!timeline?.get('hasMore'),
-      isLoading: timeline?.get('isLoading') ? true : false,
+      hasMore: !!timeline?.get("hasMore"),
+      isLoading: timeline?.get("isLoading") ? true : false,
       withReplies,
     };
   },
@@ -104,9 +100,7 @@ export const AccountGallery: React.FC<{
 
   const { suspended, blockedBy, hidden } = useAccountVisibility(accountId);
 
-  const maxId = attachments.last()?.getIn(['status', 'id']) as
-    | string
-    | undefined;
+  const maxId = attachments.last()?.getIn(["status", "id"]) as string | undefined;
 
   useEffect(() => {
     if (accountId) {
@@ -116,21 +110,19 @@ export const AccountGallery: React.FC<{
 
   const handleLoadMore = useCallback(() => {
     if (maxId) {
-      void dispatch(
-        expandAccountMediaTimeline(accountId, { maxId, withReplies }),
-      );
+      void dispatch(expandAccountMediaTimeline(accountId, { maxId, withReplies }));
     }
   }, [maxId, dispatch, accountId, withReplies]);
 
   const handleOpenMedia = useCallback(
     (attachment: MediaAttachment) => {
-      const statusId = attachment.getIn(['status', 'id']);
-      const lang = attachment.getIn(['status', 'language']);
+      const statusId = attachment.getIn(["status", "id"]);
+      const lang = attachment.getIn(["status", "language"]);
 
-      if (attachment.get('type') === 'video') {
+      if (attachment.get("type") === "video") {
         dispatch(
           openModal({
-            modalType: 'VIDEO',
+            modalType: "VIDEO",
             modalProps: {
               media: attachment,
               statusId,
@@ -139,10 +131,10 @@ export const AccountGallery: React.FC<{
             },
           }),
         );
-      } else if (attachment.get('type') === 'audio') {
+      } else if (attachment.get("type") === "audio") {
         dispatch(
           openModal({
-            modalType: 'AUDIO',
+            modalType: "AUDIO",
             modalProps: {
               media: attachment,
               statusId,
@@ -153,16 +145,14 @@ export const AccountGallery: React.FC<{
         );
       } else {
         const media = attachment.getIn([
-          'status',
-          'media_attachments',
+          "status",
+          "media_attachments",
         ]) as ImmutableList<MediaAttachment>;
-        const index = media.findIndex(
-          (x) => x.get('id') === attachment.get('id'),
-        );
+        const index = media.findIndex((x) => x.get("id") === attachment.get("id"));
 
         dispatch(
           openModal({
-            modalType: 'MEDIA',
+            modalType: "MEDIA",
             modalProps: { media, index, statusId, lang },
           }),
         );
@@ -172,7 +162,7 @@ export const AccountGallery: React.FC<{
   );
 
   if (accountId === null) {
-    return <BundleColumnError multiColumn={multiColumn} errorType='routing' />;
+    return <BundleColumnError multiColumn={multiColumn} errorType="routing" />;
   }
 
   let emptyMessage;
@@ -180,28 +170,22 @@ export const AccountGallery: React.FC<{
   if (accountId) {
     if (suspended) {
       emptyMessage = (
-        <FormattedMessage
-          id='empty_column.account_suspended'
-          defaultMessage='Account suspended'
-        />
+        <FormattedMessage id="empty_column.account_suspended" defaultMessage="Account suspended" />
       );
     } else if (hidden) {
       emptyMessage = <LimitedAccountHint accountId={accountId} />;
     } else if (blockedBy) {
       emptyMessage = (
         <FormattedMessage
-          id='empty_column.account_unavailable'
-          defaultMessage='Profile unavailable'
+          id="empty_column.account_unavailable"
+          defaultMessage="Profile unavailable"
         />
       );
     } else if (attachments.isEmpty()) {
       emptyMessage = <RemoteHint accountId={accountId} />;
     } else {
       emptyMessage = (
-        <FormattedMessage
-          id='empty_column.account_timeline'
-          defaultMessage='No posts found'
-        />
+        <FormattedMessage id="empty_column.account_timeline" defaultMessage="No posts found" />
       );
     }
   }
@@ -213,15 +197,11 @@ export const AccountGallery: React.FC<{
       <ColumnBackButton />
 
       <ScrollableList
-        className='account-gallery__container'
-        prepend={
-          accountId && (
-            <AccountHeader accountId={accountId} hideTabs={forceEmptyState} />
-          )
-        }
+        className="account-gallery__container"
+        prepend={accountId && <AccountHeader accountId={accountId} hideTabs={forceEmptyState} />}
         alwaysPrepend
         append={accountId && <RemoteHint accountId={accountId} />}
-        scrollKey='account_gallery'
+        scrollKey="account_gallery"
         isLoading={isLoading}
         hasMore={!forceEmptyState && hasMore}
         onLoadMore={handleLoadMore}
@@ -230,7 +210,7 @@ export const AccountGallery: React.FC<{
       >
         {attachments.map((attachment) => (
           <MediaItem
-            key={attachment.get('id') as string}
+            key={attachment.get("id") as string}
             attachment={attachment}
             onOpenMedia={handleOpenMedia}
           />

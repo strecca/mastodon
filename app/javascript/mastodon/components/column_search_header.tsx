@@ -1,6 +1,6 @@
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
 export const ColumnSearchHeader: React.FC<{
   onBack: () => void;
@@ -10,7 +10,7 @@ export const ColumnSearchHeader: React.FC<{
   active: boolean;
 }> = ({ onBack, onActivate, onSubmit, placeholder, active }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   // Reset the component when it turns from active to inactive.
   // [More on this pattern](https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes)
@@ -18,7 +18,7 @@ export const ColumnSearchHeader: React.FC<{
   if (active !== previousActive) {
     setPreviousActive(active);
     if (!active) {
-      setValue('');
+      setValue("");
     }
   }
 
@@ -32,7 +32,7 @@ export const ColumnSearchHeader: React.FC<{
 
   const handleKeyUp = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         e.preventDefault();
         onBack();
         inputRef.current?.blur();
@@ -50,10 +50,10 @@ export const ColumnSearchHeader: React.FC<{
   }, [onSubmit, value]);
 
   return (
-    <form className='column-search-header' onSubmit={handleSubmit}>
+    <form className="column-search-header" onSubmit={handleSubmit}>
       <input
         ref={inputRef}
-        type='search'
+        type="search"
         value={value}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
@@ -62,8 +62,8 @@ export const ColumnSearchHeader: React.FC<{
       />
 
       {active && (
-        <button type='button' className='link-button' onClick={onBack}>
-          <FormattedMessage id='column_search.cancel' defaultMessage='Cancel' />
+        <button type="button" className="link-button" onClick={onBack}>
+          <FormattedMessage id="column_search.cancel" defaultMessage="Cancel" />
         </button>
       )}
     </form>

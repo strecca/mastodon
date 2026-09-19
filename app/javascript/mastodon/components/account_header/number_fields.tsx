@@ -1,21 +1,19 @@
-import { useCallback, useMemo } from 'react';
-import type { FC } from 'react';
+import { useCallback, useMemo } from "react";
+import type { FC } from "react";
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { openModal } from '@/mastodon/actions/modal';
-import { useAccount } from '@/mastodon/hooks/useAccount';
-import { useAppDispatch } from '@/mastodon/store';
+import { openModal } from "@/mastodon/actions/modal";
+import { useAccount } from "@/mastodon/hooks/useAccount";
+import { useAppDispatch } from "@/mastodon/store";
 
-import { FormattedDateWrapper } from '../formatted_date';
-import { NumberFields, NumberFieldsItem } from '../number_fields';
-import { ShortNumber } from '../short_number';
+import { FormattedDateWrapper } from "../formatted_date";
+import { NumberFields, NumberFieldsItem } from "../number_fields";
+import { ShortNumber } from "../short_number";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
-export const AccountNumberFields: FC<{ accountId: string }> = ({
-  accountId,
-}) => {
+export const AccountNumberFields: FC<{ accountId: string }> = ({ accountId }) => {
   const intl = useIntl();
   const account = useAccount(accountId);
   const createdThisYear = useMemo(
@@ -25,9 +23,7 @@ export const AccountNumberFields: FC<{ accountId: string }> = ({
 
   const dispatch = useAppDispatch();
   const showJoinModal = useCallback(() => {
-    dispatch(
-      openModal({ modalType: 'ACCOUNT_JOIN_DATE', modalProps: { accountId } }),
-    );
+    dispatch(openModal({ modalType: "ACCOUNT_JOIN_DATE", modalProps: { accountId } }));
   }, [accountId, dispatch]);
 
   if (!account) {
@@ -37,9 +33,7 @@ export const AccountNumberFields: FC<{ accountId: string }> = ({
   return (
     <NumberFields className={classes.numberFields}>
       <NumberFieldsItem
-        label={
-          <FormattedMessage id='account.followers' defaultMessage='Followers' />
-        }
+        label={<FormattedMessage id="account.followers" defaultMessage="Followers" />}
         hint={intl.formatNumber(account.followers_count)}
         link={`/@${account.acct}/followers`}
       >
@@ -47,9 +41,7 @@ export const AccountNumberFields: FC<{ accountId: string }> = ({
       </NumberFieldsItem>
 
       <NumberFieldsItem
-        label={
-          <FormattedMessage id='account.following' defaultMessage='Following' />
-        }
+        label={<FormattedMessage id="account.following" defaultMessage="Following" />}
         hint={intl.formatNumber(account.following_count)}
         link={`/@${account.acct}/following`}
       >
@@ -57,27 +49,21 @@ export const AccountNumberFields: FC<{ accountId: string }> = ({
       </NumberFieldsItem>
 
       <NumberFieldsItem
-        label={<FormattedMessage id='account.posts' defaultMessage='Posts' />}
+        label={<FormattedMessage id="account.posts" defaultMessage="Posts" />}
         hint={intl.formatNumber(account.statuses_count)}
       >
         <ShortNumber value={account.statuses_count} />
       </NumberFieldsItem>
 
       <NumberFieldsItem
-        label={
-          <FormattedMessage id='account.joined_short' defaultMessage='Joined' />
-        }
+        label={<FormattedMessage id="account.joined_short" defaultMessage="Joined" />}
         hint={intl.formatDate(account.created_at)}
       >
-        <button type='button' onClick={showJoinModal}>
+        <button type="button" onClick={showJoinModal}>
           {createdThisYear ? (
-            <FormattedDateWrapper
-              value={account.created_at}
-              month='short'
-              day='2-digit'
-            />
+            <FormattedDateWrapper value={account.created_at} month="short" day="2-digit" />
           ) : (
-            <FormattedDateWrapper value={account.created_at} year='numeric' />
+            <FormattedDateWrapper value={account.created_at} year="numeric" />
           )}
         </button>
       </NumberFieldsItem>

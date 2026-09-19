@@ -1,23 +1,18 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from "react-router-dom";
 
-import type { LocationBase } from 'scroll-behavior';
-import ScrollBehavior from 'scroll-behavior';
+import type { LocationBase } from "scroll-behavior";
+import ScrollBehavior from "scroll-behavior";
 
-import type {
-  LocationState,
-  MastodonLocation,
-} from 'mastodon/components/router';
-import { usePrevious } from 'mastodon/hooks/usePrevious';
+import type { LocationState, MastodonLocation } from "mastodon/components/router";
+import { usePrevious } from "mastodon/hooks/usePrevious";
 
-import { defaultShouldUpdateScroll } from './default_should_update_scroll';
-import type { ShouldUpdateScrollFn } from './default_should_update_scroll';
-import { SessionStorage } from './state_storage';
+import { defaultShouldUpdateScroll } from "./default_should_update_scroll";
+import type { ShouldUpdateScrollFn } from "./default_should_update_scroll";
+import { SessionStorage } from "./state_storage";
 
-type ScrollBehaviorInstance = InstanceType<
-  typeof ScrollBehavior<LocationBase, MastodonLocation>
->;
+type ScrollBehaviorInstance = InstanceType<typeof ScrollBehavior<LocationBase, MastodonLocation>>;
 
 export interface ScrollBehaviorContextType {
   registerElement: (
@@ -32,8 +27,7 @@ export interface ScrollBehaviorContextType {
   scrollBehavior?: ScrollBehaviorInstance;
 }
 
-export const ScrollBehaviorContext =
-  React.createContext<ScrollBehaviorContextType | null>(null);
+export const ScrollBehaviorContext = React.createContext<ScrollBehaviorContextType | null>(null);
 
 interface ScrollContextProps {
   shouldUpdateScroll?: ShouldUpdateScrollFn;
@@ -78,8 +72,7 @@ export const ScrollContext: React.FC<ScrollContextProps> = ({
       new ScrollBehavior({
         addNavigationListener: history.listen.bind(history),
         stateStorage: new SessionStorage(),
-        getCurrentLocation: () =>
-          currentLocationRef.current as unknown as LocationBase,
+        getCurrentLocation: () => currentLocationRef.current as unknown as LocationBase,
         shouldUpdateScroll: (
           prevLocationContext: MastodonLocation | null,
           locationContext: MastodonLocation,
@@ -119,12 +112,7 @@ export const ScrollContext: React.FC<ScrollContextProps> = ({
   const contextValue = useMemo<ScrollBehaviorContextType>(
     () => ({
       registerElement: (key, element, shouldUpdateScroll) => {
-        scrollBehavior.registerElement(
-          key,
-          element,
-          shouldUpdateScroll,
-          location,
-        );
+        scrollBehavior.registerElement(key, element, shouldUpdateScroll, location);
       },
       unregisterElement: (key) => {
         scrollBehavior.unregisterElement(key);

@@ -1,19 +1,19 @@
-import { useCallback, useMemo, useRef } from 'react';
-import type { FC, ReactNode } from 'react';
+import { useCallback, useMemo, useRef } from "react";
+import type { FC, ReactNode } from "react";
 
-import { AccountListItem } from '@/flavours/glitch/components/account_list_item';
-import type { ColumnRef } from '@/flavours/glitch/components/column';
-import { Column } from '@/flavours/glitch/components/column';
-import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
-import ScrollableList from '@/flavours/glitch/components/scrollable_list';
-import { BundleColumnError } from '@/flavours/glitch/features/ui/components/bundle_column_error';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import { useAccountVisibility } from '@/flavours/glitch/hooks/useAccountVisibility';
-import { useLayout } from '@/flavours/glitch/hooks/useLayout';
+import { AccountListItem } from "@/flavours/glitch/components/account_list_item";
+import type { ColumnRef } from "@/flavours/glitch/components/column";
+import { Column } from "@/flavours/glitch/components/column";
+import { LoadingIndicator } from "@/flavours/glitch/components/loading_indicator";
+import ScrollableList from "@/flavours/glitch/components/scrollable_list";
+import { BundleColumnError } from "@/flavours/glitch/features/ui/components/bundle_column_error";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import { useAccountVisibility } from "@/flavours/glitch/hooks/useAccountVisibility";
+import { useLayout } from "@/flavours/glitch/hooks/useLayout";
 
-import { ProfileColumnHeader } from '../../account/components/profile_column_header';
+import { ProfileColumnHeader } from "../../account/components/profile_column_header";
 
-import { RemoteHint } from './remote';
+import { RemoteHint } from "./remote";
 
 export interface AccountList {
   hasMore: boolean;
@@ -87,7 +87,7 @@ export const AccountList: FC<AccountListProps> = ({
 
   // Null means accountId does not exist (e.g. invalid acct). Undefined means loading.
   if (accountId === null) {
-    return <BundleColumnError multiColumn={multiColumn} errorType='routing' />;
+    return <BundleColumnError multiColumn={multiColumn} errorType="routing" />;
   }
 
   if (!accountId || !account) {
@@ -98,14 +98,11 @@ export const AccountList: FC<AccountListProps> = ({
     );
   }
 
-  const domain = account.acct.split('@')[1];
+  const domain = account.acct.split("@")[1];
 
   return (
     <Column ref={columnRef}>
-      <ProfileColumnHeader
-        onClick={handleHeaderClick}
-        multiColumn={multiColumn}
-      />
+      <ProfileColumnHeader onClick={handleHeaderClick} multiColumn={multiColumn} />
 
       <ScrollableList
         scrollKey={scrollKey}

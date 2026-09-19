@@ -1,3 +1,3 @@
-import { start } from 'mastodon/common';
+import { start } from "mastodon/common";
 
 start();

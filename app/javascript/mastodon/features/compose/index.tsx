@@ -1,61 +1,59 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from "react";
 
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import type { Map as ImmutableMap, List as ImmutableList } from 'immutable';
+import type { Map as ImmutableMap, List as ImmutableList } from "immutable";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import elephantUIPlane from '@/images/elephant_ui_plane.svg';
-import EditIcon from '@/material-icons/400-24px/edit_square.svg?react';
-import PeopleIcon from '@/material-icons/400-24px/group.svg?react';
-import HomeIcon from '@/material-icons/400-24px/home-fill.svg?react';
-import LogoutIcon from '@/material-icons/400-24px/logout.svg?react';
-import MenuIcon from '@/material-icons/400-24px/menu.svg?react';
-import NotificationsIcon from '@/material-icons/400-24px/notifications-fill.svg?react';
-import PublicIcon from '@/material-icons/400-24px/public.svg?react';
-import SettingsIcon from '@/material-icons/400-24px/settings.svg?react';
-import { mountCompose, unmountCompose } from 'mastodon/actions/compose';
-import { openModal } from 'mastodon/actions/modal';
-import { Column } from 'mastodon/components/column';
-import { ColumnHeader } from 'mastodon/components/column_header';
-import { Icon } from 'mastodon/components/icon';
-import { mascot, reduceMotion } from 'mastodon/initial_state';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+import elephantUIPlane from "@/images/elephant_ui_plane.svg";
+import EditIcon from "@/material-icons/400-24px/edit_square.svg?react";
+import PeopleIcon from "@/material-icons/400-24px/group.svg?react";
+import HomeIcon from "@/material-icons/400-24px/home-fill.svg?react";
+import LogoutIcon from "@/material-icons/400-24px/logout.svg?react";
+import MenuIcon from "@/material-icons/400-24px/menu.svg?react";
+import NotificationsIcon from "@/material-icons/400-24px/notifications-fill.svg?react";
+import PublicIcon from "@/material-icons/400-24px/public.svg?react";
+import SettingsIcon from "@/material-icons/400-24px/settings.svg?react";
+import { mountCompose, unmountCompose } from "mastodon/actions/compose";
+import { openModal } from "mastodon/actions/modal";
+import { Column } from "mastodon/components/column";
+import { ColumnHeader } from "mastodon/components/column_header";
+import { Icon } from "mastodon/components/icon";
+import { mascot, reduceMotion } from "mastodon/initial_state";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
-import { messages as navbarMessages } from '../ui/components/navigation_bar';
+import { messages as navbarMessages } from "../ui/components/navigation_bar";
 
-import { Search } from './components/search';
-import ComposeFormContainer from './containers/compose_form_container';
+import { Search } from "./components/search";
+import ComposeFormContainer from "./containers/compose_form_container";
 
 const messages = defineMessages({
   live_feed_public: {
-    id: 'navigation_bar.live_feed_public',
-    defaultMessage: 'Live feed (public)',
+    id: "navigation_bar.live_feed_public",
+    defaultMessage: "Live feed (public)",
   },
   live_feed_local: {
-    id: 'navigation_bar.live_feed_local',
-    defaultMessage: 'Live feed (local)',
+    id: "navigation_bar.live_feed_local",
+    defaultMessage: "Live feed (local)",
   },
   preferences: {
-    id: 'navigation_bar.preferences',
-    defaultMessage: 'Preferences',
+    id: "navigation_bar.preferences",
+    defaultMessage: "Preferences",
   },
-  logout: { id: 'navigation_bar.logout', defaultMessage: 'Logout' },
+  logout: { id: "navigation_bar.logout", defaultMessage: "Logout" },
 });
 
-type ColumnMap = ImmutableMap<'id' | 'uuid' | 'params', string>;
+type ColumnMap = ImmutableMap<"id" | "uuid" | "params", string>;
 
 const Compose: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const columns = useAppSelector(
     (state) =>
-      (state.settings as ImmutableMap<string, unknown>).get(
-        'columns',
-      ) as ImmutableList<ColumnMap>,
+      (state.settings as ImmutableMap<string, unknown>).get("columns") as ImmutableList<ColumnMap>,
   );
 
   useEffect(() => {
@@ -71,7 +69,7 @@ const Compose: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
       e.preventDefault();
       e.stopPropagation();
 
-      dispatch(openModal({ modalType: 'CONFIRM_LOG_OUT', modalProps: {} }));
+      dispatch(openModal({ modalType: "CONFIRM_LOG_OUT", modalProps: {} }));
 
       return false;
     },
@@ -79,99 +77,99 @@ const Compose: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
   );
 
   const scrollNavbarIntoView = useCallback(() => {
-    const navbar = document.querySelector('.navigation-panel');
+    const navbar = document.querySelector(".navigation-panel");
     navbar?.scrollIntoView({
-      behavior: reduceMotion ? 'auto' : 'smooth',
+      behavior: reduceMotion ? "auto" : "smooth",
     });
   }, []);
 
   if (multiColumn) {
     return (
-      <div className='drawer'>
+      <div className="drawer">
         <nav
-          className='drawer__header'
+          className="drawer__header"
           aria-label={intl.formatMessage(navbarMessages.advancedUiQuickLinks)}
         >
           <Link
-            to='/getting-started'
-            className='drawer__tab'
+            to="/getting-started"
+            className="drawer__tab"
             title={intl.formatMessage(navbarMessages.menu)}
             aria-label={intl.formatMessage(navbarMessages.menu)}
             onClick={scrollNavbarIntoView}
           >
-            <Icon id='bars' icon={MenuIcon} />
+            <Icon id="bars" icon={MenuIcon} />
           </Link>
-          {!columns.some((column) => column.get('id') === 'HOME') && (
+          {!columns.some((column) => column.get("id") === "HOME") && (
             <Link
-              to='/home'
-              className='drawer__tab'
+              to="/home"
+              className="drawer__tab"
               title={intl.formatMessage(navbarMessages.home)}
               aria-label={intl.formatMessage(navbarMessages.home)}
             >
-              <Icon id='home' icon={HomeIcon} />
+              <Icon id="home" icon={HomeIcon} />
             </Link>
           )}
-          {!columns.some((column) => column.get('id') === 'NOTIFICATIONS') && (
+          {!columns.some((column) => column.get("id") === "NOTIFICATIONS") && (
             <Link
-              to='/notifications'
-              className='drawer__tab'
+              to="/notifications"
+              className="drawer__tab"
               title={intl.formatMessage(navbarMessages.notifications)}
               aria-label={intl.formatMessage(navbarMessages.notifications)}
             >
-              <Icon id='bell' icon={NotificationsIcon} />
+              <Icon id="bell" icon={NotificationsIcon} />
             </Link>
           )}
-          {!columns.some((column) => column.get('id') === 'COMMUNITY') && (
+          {!columns.some((column) => column.get("id") === "COMMUNITY") && (
             <Link
-              to='/public/local'
-              className='drawer__tab'
+              to="/public/local"
+              className="drawer__tab"
               title={intl.formatMessage(messages.live_feed_local)}
               aria-label={intl.formatMessage(messages.live_feed_local)}
             >
-              <Icon id='users' icon={PeopleIcon} />
+              <Icon id="users" icon={PeopleIcon} />
             </Link>
           )}
-          {!columns.some((column) => column.get('id') === 'PUBLIC') && (
+          {!columns.some((column) => column.get("id") === "PUBLIC") && (
             <Link
-              to='/public'
-              className='drawer__tab'
+              to="/public"
+              className="drawer__tab"
               title={intl.formatMessage(messages.live_feed_public)}
               aria-label={intl.formatMessage(messages.live_feed_public)}
             >
-              <Icon id='globe' icon={PublicIcon} />
+              <Icon id="globe" icon={PublicIcon} />
             </Link>
           )}
           <a
-            href='/settings/preferences'
-            className='drawer__tab'
+            href="/settings/preferences"
+            className="drawer__tab"
             title={intl.formatMessage(messages.preferences)}
             aria-label={intl.formatMessage(messages.preferences)}
           >
-            <Icon id='cog' icon={SettingsIcon} />
+            <Icon id="cog" icon={SettingsIcon} />
           </a>
           <a
-            href='/auth/sign_out'
-            className='drawer__tab'
+            href="/auth/sign_out"
+            className="drawer__tab"
             title={intl.formatMessage(messages.logout)}
             aria-label={intl.formatMessage(messages.logout)}
             onClick={handleLogoutClick}
           >
-            <Icon id='sign-out' icon={LogoutIcon} />
+            <Icon id="sign-out" icon={LogoutIcon} />
           </a>
         </nav>
 
         <Search singleColumn={false} />
 
         <div
-          className='drawer__pager'
-          role='region'
+          className="drawer__pager"
+          role="region"
           aria-label={intl.formatMessage(navbarMessages.publish)}
         >
-          <div className='drawer__inner'>
+          <div className="drawer__inner">
             <ComposeFormContainer />
 
-            <div className='drawer__inner__mastodon with-zig-zag-decoration'>
-              <img alt='' draggable='false' src={mascot ?? elephantUIPlane} />
+            <div className="drawer__inner__mastodon with-zig-zag-decoration">
+              <img alt="" draggable="false" src={mascot ?? elephantUIPlane} />
             </div>
           </div>
         </div>
@@ -180,19 +178,16 @@ const Compose: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
   }
 
   return (
-    <Column
-      bindToDocument={!multiColumn}
-      label={intl.formatMessage(navbarMessages.publish)}
-    >
+    <Column bindToDocument={!multiColumn} label={intl.formatMessage(navbarMessages.publish)}>
       <ColumnHeader
-        icon='pencil'
+        icon="pencil"
         iconComponent={EditIcon}
         title={intl.formatMessage(navbarMessages.publish)}
         multiColumn={multiColumn}
         showBackButton
       />
 
-      <div className='scrollable'>
+      <div className="scrollable">
         <ComposeFormContainer
           // This is fine on this single-purpose view
           // eslint-disable-next-line jsx-a11y/no-autofocus
@@ -201,7 +196,7 @@ const Compose: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
       </div>
 
       <Helmet>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

@@ -1,18 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { useAppHistory } from './router';
+import { useAppHistory } from "./router";
 
 interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string;
 }
 
-export const Permalink: React.FC<Props> = ({
-  className,
-  href,
-  to,
-  children,
-  ...props
-}) => {
+export const Permalink: React.FC<Props> = ({ className, href, to, children, ...props }) => {
   const history = useAppHistory();
 
   const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
@@ -28,11 +22,11 @@ export const Permalink: React.FC<Props> = ({
 
   return (
     <a
-      target='_blank'
-      rel='noreferrer'
+      target="_blank"
+      rel="noreferrer"
       href={href}
       onClick={handleClick}
-      className={`permalink${className ? ' ' + className : ''}`}
+      className={`permalink${className ? " " + className : ""}`}
       {...props}
     >
       {children}

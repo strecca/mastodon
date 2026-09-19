@@ -1,18 +1,16 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import { useHovering } from 'flavours/glitch/hooks/useHovering';
-import { autoPlayGif } from 'flavours/glitch/initial_state';
-import type { Account } from 'flavours/glitch/models/account';
+import { useHovering } from "flavours/glitch/hooks/useHovering";
+import { autoPlayGif } from "flavours/glitch/initial_state";
+import type { Account } from "flavours/glitch/models/account";
 
-import { useAccount } from '../hooks/useAccount';
+import { useAccount } from "../hooks/useAccount";
 
 interface Props {
-  account:
-    | Pick<Account, 'id' | 'acct' | 'avatar' | 'avatar_static'>
-    | undefined; // FIXME: remove `undefined` once we know for sure its always there
+  account: Pick<Account, "id" | "acct" | "avatar" | "avatar_static"> | undefined; // FIXME: remove `undefined` once we know for sure its always there
   alt?: string;
   size?: number;
   style?: React.CSSProperties;
@@ -26,7 +24,7 @@ interface Props {
 
 export const Avatar: React.FC<Props> = ({
   account,
-  alt = '',
+  alt = "",
   animate = autoPlayGif,
   size = 20,
   inline = false,
@@ -58,24 +56,19 @@ export const Avatar: React.FC<Props> = ({
 
   const avatar = (
     <span
-      className={classNames(className, 'account__avatar', {
-        'account__avatar--inline': inline,
-        'account__avatar--loading': loading,
+      className={classNames(className, "account__avatar", {
+        "account__avatar--inline": inline,
+        "account__avatar--loading": loading,
       })}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={style}
       data-avatar-of={account && `@${account.acct}`}
     >
-      {src && !error && (
-        <img src={src} alt={alt} onLoad={handleLoad} onError={handleError} />
-      )}
+      {src && !error && <img src={src} alt={alt} onLoad={handleLoad} onError={handleError} />}
 
       {counter && (
-        <span
-          className='account__avatar__counter'
-          style={{ borderColor: counterBorderColor }}
-        >
+        <span className="account__avatar__counter" style={{ borderColor: counterBorderColor }}>
           {counter}
         </span>
       )}
@@ -97,9 +90,10 @@ export const Avatar: React.FC<Props> = ({
   return avatar;
 };
 
-export const AvatarById: React.FC<
-  { accountId: string | undefined } & Omit<Props, 'account'>
-> = ({ accountId, ...otherProps }) => {
+export const AvatarById: React.FC<{ accountId: string | undefined } & Omit<Props, "account">> = ({
+  accountId,
+  ...otherProps
+}) => {
   const account = useAccount(accountId);
   return <Avatar account={account} {...otherProps} />;
 };

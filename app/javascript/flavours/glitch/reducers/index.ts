@@ -1,50 +1,50 @@
-import { Record as ImmutableRecord, mergeDeep } from 'immutable';
+import { Record as ImmutableRecord, mergeDeep } from "immutable";
 
-import { loadingBarReducer } from 'react-redux-loading-bar';
-import { combineReducers } from 'redux-immutable';
+import { loadingBarReducer } from "react-redux-loading-bar";
+import { combineReducers } from "redux-immutable";
 
-import { accountsReducer } from './accounts';
-import { accountsFamiliarFollowersReducer } from './accounts_familiar_followers';
-import { accountsMapReducer } from './accounts_map';
-import { alertsReducer } from './alerts';
-import announcements from './announcements';
-import { composeReducer } from './compose';
-import { contextsReducer } from './contexts';
-import conversations from './conversations';
-import { dropdownMenuReducer } from './dropdown_menu';
-import filters from './filters';
-import height_cache from './height_cache';
-import history from './history';
-import { listsReducer } from './lists';
-import local_settings from './local_settings';
-import { markersReducer } from './markers';
-import media_attachments from './media_attachments';
-import meta from './meta';
-import { modalReducer } from './modal';
-import { navigationReducer } from './navigation';
-import { notificationGroupsReducer } from './notification_groups';
-import { notificationPolicyReducer } from './notification_policy';
-import { notificationRequestsReducer } from './notification_requests';
-import notifications from './notifications';
-import { pictureInPictureReducer } from './picture_in_picture';
-import { pollsReducer } from './polls';
-import push_notifications from './push_notifications';
-import { relationshipsReducer } from './relationships';
-import { searchReducer } from './search';
-import { serverReducer } from './server';
-import settings from './settings';
-import { sliceReducers } from './slices';
-import status_lists from './status_lists';
-import statuses from './statuses';
-import { suggestionsReducer } from './suggestions';
-import { followedTagsReducer } from './tags';
-import timelines from './timelines';
-import trends from './trends';
-import user_lists from './user_lists';
-import community_directory from './community_directory';
-import community_entries from './community_entries';
-import community_listings from './community_listings';
-import community_visits from './community_visits';
+import { accountsReducer } from "./accounts";
+import { accountsFamiliarFollowersReducer } from "./accounts_familiar_followers";
+import { accountsMapReducer } from "./accounts_map";
+import { alertsReducer } from "./alerts";
+import announcements from "./announcements";
+import { composeReducer } from "./compose";
+import { contextsReducer } from "./contexts";
+import conversations from "./conversations";
+import { dropdownMenuReducer } from "./dropdown_menu";
+import filters from "./filters";
+import height_cache from "./height_cache";
+import history from "./history";
+import { listsReducer } from "./lists";
+import local_settings from "./local_settings";
+import { markersReducer } from "./markers";
+import media_attachments from "./media_attachments";
+import meta from "./meta";
+import { modalReducer } from "./modal";
+import { navigationReducer } from "./navigation";
+import { notificationGroupsReducer } from "./notification_groups";
+import { notificationPolicyReducer } from "./notification_policy";
+import { notificationRequestsReducer } from "./notification_requests";
+import notifications from "./notifications";
+import { pictureInPictureReducer } from "./picture_in_picture";
+import { pollsReducer } from "./polls";
+import push_notifications from "./push_notifications";
+import { relationshipsReducer } from "./relationships";
+import { searchReducer } from "./search";
+import { serverReducer } from "./server";
+import settings from "./settings";
+import { sliceReducers } from "./slices";
+import status_lists from "./status_lists";
+import statuses from "./statuses";
+import { suggestionsReducer } from "./suggestions";
+import { followedTagsReducer } from "./tags";
+import timelines from "./timelines";
+import trends from "./trends";
+import user_lists from "./user_lists";
+import community_directory from "./community_directory";
+import community_entries from "./community_entries";
+import community_listings from "./community_listings";
+import community_visits from "./community_visits";
 
 const reducers = {
   announcements,
@@ -106,17 +106,12 @@ const initialRootState = Object.fromEntries(
   ]),
 );
 
-const RootStateRecord = ImmutableRecord(initialRootState, 'RootState');
+const RootStateRecord = ImmutableRecord(initialRootState, "RootState");
 
 export const rootReducer = combineReducers(reducers, RootStateRecord);
 
-export function reducerWithInitialState(
-  ...stateOverrides: Record<string, unknown>[]
-) {
+export function reducerWithInitialState(...stateOverrides: Record<string, unknown>[]) {
   const initialStateRecord = mergeDeep(initialRootState, ...stateOverrides);
-  const PatchedRootStateRecord = ImmutableRecord(
-    initialStateRecord,
-    'RootState',
-  );
+  const PatchedRootStateRecord = ImmutableRecord(initialStateRecord, "RootState");
   return combineReducers(reducers, PatchedRootStateRecord);
 }

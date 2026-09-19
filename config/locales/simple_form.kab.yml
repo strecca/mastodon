@@ -5,7 +5,7 @@ kab:
       account:
         display_name: Isem-ik·im ummid neɣ isem-ik·im n uqeṣṣer.
         fields: Asebter-ik·im agejdan, imqimen, leεmer, ayen tebɣiḍ.
-        note: 'Tzemreḍ ad d-@tbedreḍ imdanen niḍen neɣ #ihacṭagen.'
+        note: "Tzemreḍ ad d-@tbedreḍ imdanen niḍen neɣ #ihacṭagen."
       account_alias:
         acct: Sekcem isem n umseqdac@domain n umiḍan s wansa itebγiḍ ad gujjeḍ
       account_migration:
@@ -23,7 +23,7 @@ kab:
         setting_always_send_emails: S umata, ilɣa s yimayl ur d-ttwaceyyεen ara mi ara tesseqdaceḍ Mastodon s wudem urmid
         username: Tzemreḍ ad tesqedceḍ isekkilen, uṭṭunen akked yijerriden n wadda
       featured_tag:
-        name: 'Ha-t-an kra seg ihacṭagen i tesseqdaceḍ ussan-a ineggura maḍi :'
+        name: "Ha-t-an kra seg ihacṭagen i tesseqdaceḍ ussan-a ineggura maḍi :"
       form_admin_settings:
         min_age: Ad ttwasutren yiseqdacen ad sentemen azemz-nsen n tlalit deg ujerred
         site_contact_username: Amek i zemren ad ak·em-id-afen medden ɣef Mastodon.
@@ -177,11 +177,11 @@ kab:
         permissions_as_keys: Tisirag
       webhook:
         events: Tidyanin turmidin
-    'no': Ala
+    "no": Ala
     not_recommended: Ur yettuwelleh ara
     overridden: Yeččur
     recommended: Yettuwelleh
     required:
       mark: "*"
       text: ilaq
-    'yes': Ih
+    "yes": Ih

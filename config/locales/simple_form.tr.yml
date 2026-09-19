@@ -8,7 +8,7 @@ tr:
         display_name: Tam adınız veya kullanıcı adınız.
         fields: Ana sayfanız, zamirleriniz, yaşınız, istediğiniz herhangi bir şey.
         indexable: Herkese açık gönderileriniz Mastodon arama sonuçlarında görünebilir. Gönderilerinizle etkileşen kullanıcılar her halükarda onları arayabilirler.
-        note: 'Diğer insanlara @değinebilir veya #etiketler kullanabilirsiniz.'
+        note: "Diğer insanlara @değinebilir veya #etiketler kullanabilirsiniz."
         show_collections: İnsanlar takip ettiklerinize ve takipçilerinize göz gezdirebilir. Takip ettiğiniz kişiler sizin onları takip ettiğinizi her halükarda görecektir.
         unlocked: İnsanlar sizi onayınızı almadan takip edebileceklerdir. Takip isteklerini gözden geçirmek ve yeni takipçileri kabul veya reddetmek istiyorsanız seçimi kaldırın.
       account_alias:
@@ -76,7 +76,7 @@ tr:
         domain: Bu e-posta adresinde görünen veya kullanılan MX kaydındaki alan adı olabilir. Kayıt sırasında denetleneceklerdir.
         with_dns_records: Belirli bir alanın DNS kayıtlarını çözmeyi deneyecek ve sonuçlar kara listeye eklenecek
       featured_tag:
-        name: 'Son zamanlarda sıkça kullandığınız etiketlerin bazıları:'
+        name: "Son zamanlarda sıkça kullandığınız etiketlerin bazıları:"
       filters:
         action: Bir gönderi filtreyle eşleştiğinde hangi eylemin yapılacağını seçin
         actions:
@@ -132,7 +132,7 @@ tr:
         hint: İsteğe bağlı. Kural hakkında daha fazla ayrıntı verin
         text: Bu sunucu üzerindeki kullanıcılar için bir kural veya gereksinimi tanımlayın. Kuralı kısa ve yalın tutmaya çalışın
       sessions:
-        otp: 'Telefonunuzdaki two-factor kodunuzu giriniz veya kurtarma kodlarınızdan birini giriniz:'
+        otp: "Telefonunuzdaki two-factor kodunuzu giriniz veya kurtarma kodlarınızdan birini giriniz:"
         webauthn: Bir USB anahtarıysa, taktığınızdan ve gerekirse üzerine tıkladığınızdan emin olun.
       settings:
         email_subscriptions: Devre dışı bırakma işlemi mevcut aboneleri korur ancak e-posta gönderimini durdurur.
@@ -408,7 +408,7 @@ tr:
         events: Etkin olaylar
         template: Yük şablonu
         url: Uç nokta URL’si
-    'no': Hayır
+    "no": Hayır
     not_recommended: Önerilmez
     overridden: Geçersiz kılındı
     recommended: Önerilen
@@ -418,4 +418,4 @@ tr:
     title:
       sessions:
         webauthn: Oturum açmak için güvenlik anahtarlarınızdan birini kullanın
-    'yes': Evet
+    "yes": Evet

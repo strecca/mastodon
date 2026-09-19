@@ -1,11 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { AltTextBadge } from '../alt_text_badge';
-import { Blurhash } from '../blurhash';
+import { AltTextBadge } from "../alt_text_badge";
+import { Blurhash } from "../blurhash";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 interface Props {
   withAltBadge?: boolean;
@@ -31,12 +31,10 @@ export const ServerHeroImage: React.FC<Props> = ({
   }, [setLoaded]);
 
   return (
-    <div className={classNames('image', { loaded }, className)}>
-      {blurhash && <Blurhash hash={blurhash} className='image__preview' />}
+    <div className={classNames("image", { loaded }, className)}>
+      {blurhash && <Blurhash hash={blurhash} className="image__preview" />}
       <img src={src} srcSet={srcSet} alt={alt} onLoad={handleLoad} />
-      {withAltBadge && alt && (
-        <AltTextBadge description={alt} className={classes.altBadge} />
-      )}
+      {withAltBadge && alt && <AltTextBadge description={alt} className={classes.altBadge} />}
     </div>
   );
 };

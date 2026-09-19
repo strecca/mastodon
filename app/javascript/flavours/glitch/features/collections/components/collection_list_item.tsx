@@ -1,18 +1,15 @@
-import { useId } from 'react';
+import { useId } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { Article } from 'flavours/glitch/components/scrollable_list/components';
-import type { CollectionLockupProps } from 'flavours/glitch/features/collections/components/collection_lockup';
-import { CollectionLockup } from 'flavours/glitch/features/collections/components/collection_lockup';
-import { CollectionMenu } from 'flavours/glitch/features/collections/components/collection_menu';
+import { Article } from "flavours/glitch/components/scrollable_list/components";
+import type { CollectionLockupProps } from "flavours/glitch/features/collections/components/collection_lockup";
+import { CollectionLockup } from "flavours/glitch/features/collections/components/collection_lockup";
+import { CollectionMenu } from "flavours/glitch/features/collections/components/collection_menu";
 
-import classes from './collection_list_item.module.scss';
+import classes from "./collection_list_item.module.scss";
 
-interface CollectionListItemProps extends Omit<
-  CollectionLockupProps,
-  'sideContent'
-> {
+interface CollectionListItemProps extends Omit<CollectionLockupProps, "sideContent"> {
   withoutBorder?: boolean;
   positionInList: number;
   listSize: number;
@@ -46,11 +43,7 @@ export const CollectionListItem: React.FC<CollectionListItemProps> = ({
           className,
         )}
         sideContent={
-          <CollectionMenu
-            context='list'
-            collection={collection}
-            className={classes.menuButton}
-          />
+          <CollectionMenu context="list" collection={collection} className={classes.menuButton} />
         }
         titleId={titleId}
         subtitleId={subtitleId}

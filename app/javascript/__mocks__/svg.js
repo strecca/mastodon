@@ -1,3 +1,3 @@
-const ReactComponent = 'div';
+const ReactComponent = "div";
 
 export default ReactComponent;

@@ -67,7 +67,7 @@ sc:
       rule:
         text: Descrie una règula o unu rechisitu pro utentes de custu serbidore. Chirca de dda fàghere curtza e simpre
       sessions:
-        otp: 'Inserta su còdighe de atzessu in duos passos generadu dae s''aplicatzione mòbile tua o imprea unu de custos còdighes de recùperu:'
+        otp: "Inserta su còdighe de atzessu in duos passos generadu dae s'aplicatzione mòbile tua o imprea unu de custos còdighes de recùperu:"
         webauthn: Si est unu dispositivu USB, assegura·ti de ddu insertare e, si serbit, toca inoghe.
       tag:
         name: Podes isceti cambiare sa minùscula/maiùscula de is lìteras, pro esèmpiu, pro fàghere in manera chi siant prus fàtziles de lèghere
@@ -199,7 +199,7 @@ sc:
       user_role:
         name: Nòmine
         permissions_as_keys: Permissos
-    'no': Nono
+    "no": Nono
     recommended: Cussigiadu
     required:
       mark: "*"
@@ -207,4 +207,4 @@ sc:
     title:
       sessions:
         webauthn: Imprea una de is craes de seguresa tuas pro intrare
-    'yes': Eja
+    "yes": Eja

@@ -1,13 +1,9 @@
-import api, { apiRequestGet, getAsyncRefreshHeader } from '../api';
-import type { ApiAccountJSON } from '../api_types/accounts';
-import type { ApiStatusJSON } from '../api_types/statuses';
-import type { AnnualReport } from '../models/annual_report';
+import api, { apiRequestGet, getAsyncRefreshHeader } from "../api";
+import type { ApiAccountJSON } from "../api_types/accounts";
+import type { ApiStatusJSON } from "../api_types/statuses";
+import type { AnnualReport } from "../models/annual_report";
 
-export type ApiAnnualReportState =
-  | 'available'
-  | 'generating'
-  | 'eligible'
-  | 'ineligible';
+export type ApiAnnualReportState = "available" | "generating" | "eligible" | "ineligible";
 
 export const apiGetAnnualReportState = async (year: number) => {
   const response = await api().get<{ state: ApiAnnualReportState }>(

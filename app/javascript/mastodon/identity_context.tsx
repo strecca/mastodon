@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-import { createContext, useContext } from 'react';
+import PropTypes from "prop-types";
+import { createContext, useContext } from "react";
 
-import hoistStatics from 'hoist-non-react-statics';
+import hoistStatics from "hoist-non-react-statics";
 
-import type { InitialState } from 'mastodon/initial_state';
+import type { InitialState } from "mastodon/initial_state";
 
 export interface IdentityContextType {
   signedIn: boolean;
@@ -40,9 +40,9 @@ export interface IdentityProps {
 }
 
 /* Injects an `identity` props into the wrapped component to be able to use the new context in class components */
-export function withIdentity<
-  ComponentType extends React.ComponentType<IdentityProps>,
->(Component: ComponentType) {
+export function withIdentity<ComponentType extends React.ComponentType<IdentityProps>>(
+  Component: ComponentType,
+) {
   const displayName = `withIdentity(${Component.displayName ?? Component.name})`;
   const C = (props: React.ComponentProps<ComponentType>) => {
     const { wrappedComponentRef, ...remainingProps } = props;
@@ -52,11 +52,7 @@ export function withIdentity<
         {(context) => {
           return (
             // @ts-expect-error - Dynamic covariant generic components are tough to type.
-            <Component
-              {...remainingProps}
-              identity={context}
-              ref={wrappedComponentRef}
-            />
+            <Component {...remainingProps} identity={context} ref={wrappedComponentRef} />
           );
         }}
       </IdentityContext.Consumer>

@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { TextAreaField, TextArea } from './text_area_field';
+import { TextAreaField, TextArea } from "./text_area_field";
 
 const meta = {
-  title: 'Components/Form Fields/TextAreaField',
+  title: "Components/Form Fields/TextAreaField",
   component: TextAreaField,
   args: {
-    label: 'Label',
-    hint: 'This is a description of this form field',
+    label: "Label",
+    hint: "This is a description of this form field",
   },
 } satisfies Meta<typeof TextAreaField>;
 
@@ -38,7 +38,7 @@ export const Optional: Story = {
 export const WithError: Story = {
   args: {
     required: false,
-    status: { variant: 'error', message: "This field can't be empty" },
+    status: { variant: "error", message: "This field can't be empty" },
   },
 };
 
@@ -46,8 +46,8 @@ export const WithWarning: Story = {
   args: {
     required: false,
     status: {
-      variant: 'warning',
-      message: 'Special characters are not allowed',
+      variant: "warning",
+      message: "Special characters are not allowed",
     },
   },
 };
@@ -55,7 +55,7 @@ export const WithWarning: Story = {
 export const AutoSize: Story = {
   args: {
     autoSize: true,
-    defaultValue: 'This textarea will grow as you type more lines.',
+    defaultValue: "This textarea will grow as you type more lines.",
   },
 };
 

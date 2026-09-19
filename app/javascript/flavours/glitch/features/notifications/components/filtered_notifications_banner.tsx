@@ -1,19 +1,19 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
-import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, useIntl, defineMessages } from "react-intl";
 
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
 
-import InventoryIcon from '@/material-icons/400-24px/inventory_2.svg?react';
-import { fetchNotificationPolicy } from 'flavours/glitch/actions/notification_policies';
-import { Icon } from 'flavours/glitch/components/icon';
-import { selectSettingsNotificationsMinimizeFilteredBanner } from 'flavours/glitch/selectors/settings';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
+import InventoryIcon from "@/material-icons/400-24px/inventory_2.svg?react";
+import { fetchNotificationPolicy } from "flavours/glitch/actions/notification_policies";
+import { Icon } from "flavours/glitch/components/icon";
+import { selectSettingsNotificationsMinimizeFilteredBanner } from "flavours/glitch/selectors/settings";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
 const messages = defineMessages({
   filteredNotifications: {
-    id: 'notification_requests.title',
-    defaultMessage: 'Filtered notifications',
+    id: "notification_requests.title",
+    defaultMessage: "Filtered notifications",
   },
 });
 
@@ -23,12 +23,10 @@ export const FilteredNotificationsIconButton: React.FC<{
   const intl = useIntl();
   const history = useHistory();
   const policy = useAppSelector((state) => state.notificationPolicy);
-  const minimizeSetting = useAppSelector(
-    selectSettingsNotificationsMinimizeFilteredBanner,
-  );
+  const minimizeSetting = useAppSelector(selectSettingsNotificationsMinimizeFilteredBanner);
 
   const handleClick = useCallback(() => {
-    history.push('/notifications/requests');
+    history.push("/notifications/requests");
   }, [history]);
 
   if (policy === null || policy.summary.pending_requests_count <= 0) {
@@ -45,9 +43,9 @@ export const FilteredNotificationsIconButton: React.FC<{
       title={intl.formatMessage(messages.filteredNotifications)}
       onClick={handleClick}
       className={className}
-      type='button'
+      type="button"
     >
-      <Icon id='filtered-notifications' icon={InventoryIcon} />
+      <Icon id="filtered-notifications" icon={InventoryIcon} />
     </button>
   );
 };
@@ -55,9 +53,7 @@ export const FilteredNotificationsIconButton: React.FC<{
 export const FilteredNotificationsBanner: React.FC = () => {
   const dispatch = useAppDispatch();
   const policy = useAppSelector((state) => state.notificationPolicy);
-  const minimizeSetting = useAppSelector(
-    selectSettingsNotificationsMinimizeFilteredBanner,
-  );
+  const minimizeSetting = useAppSelector(selectSettingsNotificationsMinimizeFilteredBanner);
 
   useEffect(() => {
     void dispatch(fetchNotificationPolicy());
@@ -80,25 +76,22 @@ export const FilteredNotificationsBanner: React.FC = () => {
   }
 
   return (
-    <Link
-      className='filtered-notifications-banner'
-      to='/notifications/requests'
-    >
-      <div className='notification-group__icon'>
-        <Icon icon={InventoryIcon} id='filtered-notifications' />
+    <Link className="filtered-notifications-banner" to="/notifications/requests">
+      <div className="notification-group__icon">
+        <Icon icon={InventoryIcon} id="filtered-notifications" />
       </div>
 
-      <div className='filtered-notifications-banner__text'>
+      <div className="filtered-notifications-banner__text">
         <strong>
           <FormattedMessage
-            id='filtered_notifications_banner.title'
-            defaultMessage='Filtered notifications'
+            id="filtered_notifications_banner.title"
+            defaultMessage="Filtered notifications"
           />
         </strong>
         <span>
           <FormattedMessage
-            id='filtered_notifications_banner.pending_requests'
-            defaultMessage='From {count, plural, =0 {no one} one {one person} other {# people}} you may know'
+            id="filtered_notifications_banner.pending_requests"
+            defaultMessage="From {count, plural, =0 {no one} one {one person} other {# people}} you may know"
             values={{ count: policy.summary.pending_requests_count }}
           />
         </span>

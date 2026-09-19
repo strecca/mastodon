@@ -1,7 +1,7 @@
 // See app/serializers/rest/announcement_serializer.rb
 
-import type { ApiCustomEmojiJSON } from './custom_emoji';
-import type { ApiMentionJSON, ApiStatusJSON, ApiTagJSON } from './statuses';
+import type { ApiCustomEmojiJSON } from "./custom_emoji";
+import type { ApiMentionJSON, ApiStatusJSON, ApiTagJSON } from "./statuses";
 
 export interface ApiAnnouncementJSON {
   id: string;

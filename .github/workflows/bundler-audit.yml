@@ -3,21 +3,21 @@ on:
   merge_group:
   push:
     branches:
-      - 'main'
-      - 'stable-*'
+      - "main"
+      - "stable-*"
     paths:
-      - 'Gemfile*'
-      - '.ruby-version'
-      - '.github/workflows/bundler-audit.yml'
+      - "Gemfile*"
+      - ".ruby-version"
+      - ".github/workflows/bundler-audit.yml"
 
   pull_request:
     paths:
-      - 'Gemfile*'
-      - '.ruby-version'
-      - '.github/workflows/bundler-audit.yml'
+      - "Gemfile*"
+      - ".ruby-version"
+      - ".github/workflows/bundler-audit.yml"
 
   schedule:
-    - cron: '0 5 * * 1'
+    - cron: "0 5 * * 1"
 
 jobs:
   security:

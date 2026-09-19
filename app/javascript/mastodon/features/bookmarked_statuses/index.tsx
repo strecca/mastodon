@@ -1,24 +1,21 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import BookmarksIcon from '@/material-icons/400-24px/bookmarks-fill.svg?react';
-import {
-  fetchBookmarkedStatuses,
-  expandBookmarkedStatuses,
-} from 'mastodon/actions/bookmarks';
-import { addColumn, removeColumn, moveColumn } from 'mastodon/actions/columns';
-import { Column } from 'mastodon/components/column';
-import type { ColumnRef } from 'mastodon/components/column';
-import { ColumnHeader } from 'mastodon/components/column_header';
-import StatusList from 'mastodon/components/status_list';
-import { getStatusList } from 'mastodon/selectors';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+import BookmarksIcon from "@/material-icons/400-24px/bookmarks-fill.svg?react";
+import { fetchBookmarkedStatuses, expandBookmarkedStatuses } from "mastodon/actions/bookmarks";
+import { addColumn, removeColumn, moveColumn } from "mastodon/actions/columns";
+import { Column } from "mastodon/components/column";
+import type { ColumnRef } from "mastodon/components/column";
+import { ColumnHeader } from "mastodon/components/column_header";
+import StatusList from "mastodon/components/status_list";
+import { getStatusList } from "mastodon/selectors";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
 const messages = defineMessages({
-  heading: { id: 'column.bookmarks', defaultMessage: 'Bookmarks' },
+  heading: { id: "column.bookmarks", defaultMessage: "Bookmarks" },
 });
 
 const Bookmarks: React.FC<{
@@ -28,16 +25,11 @@ const Bookmarks: React.FC<{
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const columnRef = useRef<ColumnRef>(null);
-  const statusIds = useAppSelector((state) =>
-    getStatusList(state, 'bookmarks'),
-  );
+  const statusIds = useAppSelector((state) => getStatusList(state, "bookmarks"));
   const isLoading = useAppSelector(
-    (state) =>
-      state.status_lists.getIn(['bookmarks', 'isLoading'], true) as boolean,
+    (state) => state.status_lists.getIn(["bookmarks", "isLoading"], true) as boolean,
   );
-  const hasMore = useAppSelector(
-    (state) => !!state.status_lists.getIn(['bookmarks', 'next']),
-  );
+  const hasMore = useAppSelector((state) => !!state.status_lists.getIn(["bookmarks", "next"]));
 
   useEffect(() => {
     dispatch(fetchBookmarkedStatuses());
@@ -47,7 +39,7 @@ const Bookmarks: React.FC<{
     if (columnId) {
       dispatch(removeColumn(columnId));
     } else {
-      dispatch(addColumn('BOOKMARKS', {}));
+      dispatch(addColumn("BOOKMARKS", {}));
     }
   }, [dispatch, columnId]);
 
@@ -70,7 +62,7 @@ const Bookmarks: React.FC<{
 
   const emptyMessage = (
     <FormattedMessage
-      id='empty_column.bookmarked_statuses'
+      id="empty_column.bookmarked_statuses"
       defaultMessage="You don't have any bookmarked posts yet. When you bookmark one, it will show up here."
     />
   );
@@ -82,7 +74,7 @@ const Bookmarks: React.FC<{
       label={intl.formatMessage(messages.heading)}
     >
       <ColumnHeader
-        icon='bookmarks'
+        icon="bookmarks"
         iconComponent={BookmarksIcon}
         title={intl.formatMessage(messages.heading)}
         onPin={handlePin}
@@ -101,12 +93,12 @@ const Bookmarks: React.FC<{
         onLoadMore={handleLoadMore}
         emptyMessage={emptyMessage}
         bindToDocument={!multiColumn}
-        timelineId='bookmarks'
+        timelineId="bookmarks"
       />
 
       <Helmet>
         <title>{intl.formatMessage(messages.heading)}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

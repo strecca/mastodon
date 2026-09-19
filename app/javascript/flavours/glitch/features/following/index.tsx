@@ -1,40 +1,37 @@
-import { useEffect } from 'react';
-import type { FC } from 'react';
+import { useEffect } from "react";
+import type { FC } from "react";
 
-import { defineMessage, FormattedMessage } from 'react-intl';
+import { defineMessage, FormattedMessage } from "react-intl";
 
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 
-import {
-  expandFollowing,
-  fetchFollowing,
-} from '@/flavours/glitch/actions/accounts';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import { useAccountId } from '@/flavours/glitch/hooks/useAccountId';
-import { useRelationship } from '@/flavours/glitch/hooks/useRelationship';
-import { selectUserListWithoutMe } from '@/flavours/glitch/selectors/user_lists';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import { expandFollowing, fetchFollowing } from "@/flavours/glitch/actions/accounts";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import { useAccountId } from "@/flavours/glitch/hooks/useAccountId";
+import { useRelationship } from "@/flavours/glitch/hooks/useRelationship";
+import { selectUserListWithoutMe } from "@/flavours/glitch/selectors/user_lists";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
 
-import type { EmptyMessageProps } from '../followers/components/empty';
-import { BaseEmptyMessage } from '../followers/components/empty';
-import { AccountListHeader } from '../followers/components/header';
-import { AccountList } from '../followers/components/list';
+import type { EmptyMessageProps } from "../followers/components/empty";
+import { BaseEmptyMessage } from "../followers/components/empty";
+import { AccountListHeader } from "../followers/components/header";
+import { AccountList } from "../followers/components/list";
 
-import { RemoteHint } from './components/remote';
+import { RemoteHint } from "./components/remote";
 
 const titleText = defineMessage({
-  id: 'following.title',
-  defaultMessage: 'Followed by {name}',
+  id: "following.title",
+  defaultMessage: "Followed by {name}",
 });
 
 const Followers: FC = () => {
   const accountId = useAccountId();
   const account = useAccount(accountId);
   const currentAccountId = useAppSelector(
-    (state) => (state.meta.get('me') as string | null) ?? null,
+    (state) => (state.meta.get("me") as string | null) ?? null,
   );
   const followingList = useAppSelector((state) =>
-    selectUserListWithoutMe(state, 'following', accountId),
+    selectUserListWithoutMe(state, "following", accountId),
   );
 
   const dispatch = useAppDispatch();
@@ -64,16 +61,16 @@ const Followers: FC = () => {
   );
 
   const footer = followingExceptMeHidden && (
-    <div className='empty-column-indicator'>
+    <div className="empty-column-indicator">
       <FormattedMessage
-        id='following.hide_other_following'
-        defaultMessage='This user has chosen to not make the rest of who they follow visible'
-        tagName='span'
+        id="following.hide_other_following"
+        defaultMessage="This user has chosen to not make the rest of who they follow visible"
+        tagName="span"
       />
     </div>
   );
 
-  const domain = account?.acct.split('@')[1];
+  const domain = account?.acct.split("@")[1];
   return (
     <AccountList
       accountId={accountId}
@@ -92,7 +89,7 @@ const Followers: FC = () => {
       list={followingList}
       loadMore={loadMore}
       prependAccountId={followedId}
-      scrollKey='following'
+      scrollKey="following"
     />
   );
 };
@@ -102,7 +99,7 @@ const EmptyMessage: FC<EmptyMessageProps> = (props) => (
     {...props}
     defaultMessage={
       <FormattedMessage
-        id='account.follows.empty'
+        id="account.follows.empty"
         defaultMessage="This user doesn't follow anyone yet."
       />
     }

@@ -1,40 +1,40 @@
-import { useCallback, useMemo } from 'react';
-import type { FC } from 'react';
+import { useCallback, useMemo } from "react";
+import type { FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
 import {
   changeComposeVisibility,
   setComposeQuotePolicy,
-} from '@/flavours/glitch/actions/compose_typed';
-import { openModal } from '@/flavours/glitch/actions/modal';
-import type { ApiQuotePolicy } from '@/flavours/glitch/api_types/quotes';
-import type { StatusVisibility } from '@/flavours/glitch/api_types/statuses';
-import { Icon } from '@/flavours/glitch/components/icon';
-import { useAppSelector, useAppDispatch } from '@/flavours/glitch/store';
-import AlternateEmailIcon from '@/material-icons/400-24px/alternate_email.svg?react';
-import LockIcon from '@/material-icons/400-24px/lock.svg?react';
-import PublicIcon from '@/material-icons/400-24px/public.svg?react';
-import QuietTimeIcon from '@/material-icons/400-24px/quiet_time.svg?react';
+} from "@/flavours/glitch/actions/compose_typed";
+import { openModal } from "@/flavours/glitch/actions/modal";
+import type { ApiQuotePolicy } from "@/flavours/glitch/api_types/quotes";
+import type { StatusVisibility } from "@/flavours/glitch/api_types/statuses";
+import { Icon } from "@/flavours/glitch/components/icon";
+import { useAppSelector, useAppDispatch } from "@/flavours/glitch/store";
+import AlternateEmailIcon from "@/material-icons/400-24px/alternate_email.svg?react";
+import LockIcon from "@/material-icons/400-24px/lock.svg?react";
+import PublicIcon from "@/material-icons/400-24px/public.svg?react";
+import QuietTimeIcon from "@/material-icons/400-24px/quiet_time.svg?react";
 
-import type { VisibilityModalCallback } from '../../ui/components/visibility_modal';
+import type { VisibilityModalCallback } from "../../ui/components/visibility_modal";
 
-import { messages as privacyMessages } from './privacy_dropdown';
+import { messages as privacyMessages } from "./privacy_dropdown";
 
 const messages = defineMessages({
   anyone_quote: {
-    id: 'privacy.quote.anyone',
-    defaultMessage: '{visibility}, anyone can quote',
+    id: "privacy.quote.anyone",
+    defaultMessage: "{visibility}, anyone can quote",
   },
   limited_quote: {
-    id: 'privacy.quote.limited',
-    defaultMessage: '{visibility}, quotes limited',
+    id: "privacy.quote.limited",
+    defaultMessage: "{visibility}, quotes limited",
   },
   disabled_quote: {
-    id: 'privacy.quote.disabled',
-    defaultMessage: '{visibility}, quotes disabled',
+    id: "privacy.quote.disabled",
+    defaultMessage: "{visibility}, quotes disabled",
   },
 });
 
@@ -48,27 +48,27 @@ export const VisibilityButton: FC<PrivacyDropdownProps> = (props) => {
 
 const visibilityOptions = {
   public: {
-    icon: 'globe',
+    icon: "globe",
     iconComponent: PublicIcon,
-    value: 'public',
+    value: "public",
     text: privacyMessages.public_short,
   },
   unlisted: {
-    icon: 'unlock',
+    icon: "unlock",
     iconComponent: QuietTimeIcon,
-    value: 'unlisted',
+    value: "unlisted",
     text: privacyMessages.unlisted_short,
   },
   private: {
-    icon: 'lock',
+    icon: "lock",
     iconComponent: LockIcon,
-    value: 'private',
+    value: "private",
     text: privacyMessages.private_short,
   },
   direct: {
-    icon: 'at',
+    icon: "at",
     iconComponent: AlternateEmailIcon,
-    value: 'direct',
+    value: "direct",
     text: privacyMessages.direct_short,
   },
 };
@@ -77,29 +77,25 @@ const PrivacyModalButton: FC<PrivacyDropdownProps> = ({ disabled = false }) => {
   const intl = useIntl();
 
   const quotePolicy = useAppSelector(
-    (state) => state.compose.get('quote_policy') as ApiQuotePolicy,
+    (state) => state.compose.get("quote_policy") as ApiQuotePolicy,
   );
-  const visibility = useAppSelector(
-    (state) => state.compose.get('privacy') as StatusVisibility,
-  );
+  const visibility = useAppSelector((state) => state.compose.get("privacy") as StatusVisibility);
 
   const { icon, iconComponent } = useMemo(() => {
     const option = visibilityOptions[visibility];
     return { icon: option.icon, iconComponent: option.iconComponent };
   }, [visibility]);
   const text = useMemo(() => {
-    const visibilityText = intl.formatMessage(
-      visibilityOptions[visibility].text,
-    );
-    if (visibility === 'private' || visibility === 'direct') {
+    const visibilityText = intl.formatMessage(visibilityOptions[visibility].text);
+    if (visibility === "private" || visibility === "direct") {
       return visibilityText;
     }
-    if (quotePolicy === 'nobody') {
+    if (quotePolicy === "nobody") {
       return intl.formatMessage(messages.disabled_quote, {
         visibility: visibilityText,
       });
     }
-    if (quotePolicy !== 'public') {
+    if (quotePolicy !== "public") {
       return intl.formatMessage(messages.limited_quote, {
         visibility: visibilityText,
       });
@@ -126,7 +122,7 @@ const PrivacyModalButton: FC<PrivacyDropdownProps> = ({ disabled = false }) => {
   const handleOpen = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'COMPOSE_PRIVACY',
+        modalType: "COMPOSE_PRIVACY",
         modalProps: { onChange: handleChange },
       }),
     );
@@ -134,14 +130,14 @@ const PrivacyModalButton: FC<PrivacyDropdownProps> = ({ disabled = false }) => {
 
   return (
     <button
-      type='button'
+      type="button"
       title={intl.formatMessage(privacyMessages.change_privacy)}
       onClick={handleOpen}
       disabled={disabled}
-      className={classNames('dropdown-button')}
+      className={classNames("dropdown-button")}
     >
       <Icon id={icon} icon={iconComponent} />
-      <span className='dropdown-button__label'>{text}</span>
+      <span className="dropdown-button__label">{text}</span>
     </button>
   );
 };

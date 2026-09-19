@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import classes from '../styles.module.scss';
+import classes from "../styles.module.scss";
 
-import { DeleteIconButton, EditButton } from './edit_button';
+import { DeleteIconButton, EditButton } from "./edit_button";
 
 interface AnyItem {
   id: string;
@@ -49,17 +49,17 @@ export const AccountEditItemList = <Item extends AnyItem>({
 
 type AccountEditItemButtonsProps<Item extends AnyItem = AnyItem> = Pick<
   AccountEditItemListProps<Item>,
-  'onEdit' | 'onDelete' | 'disabled'
+  "onEdit" | "onDelete" | "disabled"
 > & { item: Item };
 
 const messages = defineMessages({
   edit: {
-    id: 'account_edit.item_list.edit',
-    defaultMessage: 'Edit {name}',
+    id: "account_edit.item_list.edit",
+    defaultMessage: "Edit {name}",
   },
   delete: {
-    id: 'account_edit.item_list.delete',
-    defaultMessage: 'Delete {name}',
+    id: "account_edit.item_list.delete",
+    defaultMessage: "Delete {name}",
   },
 });
 

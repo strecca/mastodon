@@ -3,42 +3,42 @@
                   @typescript-eslint/no-explicit-any,
                   @typescript-eslint/no-unsafe-assignment */
 
-import type { CSSProperties } from 'react';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import type { CSSProperties } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import { AnimatedNumber } from 'flavours/glitch/components/animated_number';
-import AttachmentList from 'flavours/glitch/components/attachment_list';
-import { Avatar } from 'flavours/glitch/components/avatar';
-import { ContentWarning } from 'flavours/glitch/components/content_warning';
-import { DisplayName } from 'flavours/glitch/components/display_name';
-import { EditedTimestamp } from 'flavours/glitch/components/edited_timestamp';
-import { FilterWarning } from 'flavours/glitch/components/filter_warning';
-import { FormattedDateWrapper } from 'flavours/glitch/components/formatted_date';
-import type { StatusLike } from 'flavours/glitch/components/hashtag_bar';
-import { getHashtagBarForStatus } from 'flavours/glitch/components/hashtag_bar';
-import { IconLogo } from 'flavours/glitch/components/logo';
-import MediaGallery from 'flavours/glitch/components/media_gallery';
-import { MentionsPlaceholder } from 'flavours/glitch/components/mentions_placeholder';
-import { Permalink } from 'flavours/glitch/components/permalink';
-import { PictureInPicturePlaceholder } from 'flavours/glitch/components/picture_in_picture_placeholder';
-import StatusContent from 'flavours/glitch/components/status_content';
-import { QuotedStatus } from 'flavours/glitch/components/status_quoted';
-import { VisibilityIcon } from 'flavours/glitch/components/visibility_icon';
-import { Audio } from 'flavours/glitch/features/audio';
-import { CollectionPreviewCard } from 'flavours/glitch/features/collections/components/collection_preview_card';
-import scheduleIdleTask from 'flavours/glitch/features/ui/util/schedule_idle_task';
-import { Video } from 'flavours/glitch/features/video';
-import { useIdentity } from 'flavours/glitch/identity_context';
-import type { CollectionAttachment } from 'flavours/glitch/models/status';
-import { useAppSelector } from 'flavours/glitch/store';
-import { compareUrls } from 'flavours/glitch/utils/compare_urls';
+import { AnimatedNumber } from "flavours/glitch/components/animated_number";
+import AttachmentList from "flavours/glitch/components/attachment_list";
+import { Avatar } from "flavours/glitch/components/avatar";
+import { ContentWarning } from "flavours/glitch/components/content_warning";
+import { DisplayName } from "flavours/glitch/components/display_name";
+import { EditedTimestamp } from "flavours/glitch/components/edited_timestamp";
+import { FilterWarning } from "flavours/glitch/components/filter_warning";
+import { FormattedDateWrapper } from "flavours/glitch/components/formatted_date";
+import type { StatusLike } from "flavours/glitch/components/hashtag_bar";
+import { getHashtagBarForStatus } from "flavours/glitch/components/hashtag_bar";
+import { IconLogo } from "flavours/glitch/components/logo";
+import MediaGallery from "flavours/glitch/components/media_gallery";
+import { MentionsPlaceholder } from "flavours/glitch/components/mentions_placeholder";
+import { Permalink } from "flavours/glitch/components/permalink";
+import { PictureInPicturePlaceholder } from "flavours/glitch/components/picture_in_picture_placeholder";
+import StatusContent from "flavours/glitch/components/status_content";
+import { QuotedStatus } from "flavours/glitch/components/status_quoted";
+import { VisibilityIcon } from "flavours/glitch/components/visibility_icon";
+import { Audio } from "flavours/glitch/features/audio";
+import { CollectionPreviewCard } from "flavours/glitch/features/collections/components/collection_preview_card";
+import scheduleIdleTask from "flavours/glitch/features/ui/util/schedule_idle_task";
+import { Video } from "flavours/glitch/features/video";
+import { useIdentity } from "flavours/glitch/identity_context";
+import type { CollectionAttachment } from "flavours/glitch/models/status";
+import { useAppSelector } from "flavours/glitch/store";
+import { compareUrls } from "flavours/glitch/utils/compare_urls";
 
-import Card from './card';
+import Card from "./card";
 
 interface VideoModalOptions {
   startTime: number;
@@ -81,28 +81,24 @@ export const DetailedStatus: React.FC<{
   multiColumn = false,
   expanded,
 }) => {
-  const properStatus = status?.get('reblog') ?? status;
+  const properStatus = status?.get("reblog") ?? status;
   const [height, setHeight] = useState(0);
   const [showDespiteFilter, setShowDespiteFilter] = useState(false);
   const nodeRef = useRef<HTMLDivElement>();
 
   const letterboxMedia = useAppSelector(
-    (state) =>
-      state.local_settings.getIn(['media', 'letterbox'], false) as boolean,
+    (state) => state.local_settings.getIn(["media", "letterbox"], false) as boolean,
   );
   const fullwidthMedia = useAppSelector(
-    (state) =>
-      state.local_settings.getIn(['media', 'fullwidth'], false) as boolean,
+    (state) => state.local_settings.getIn(["media", "fullwidth"], false) as boolean,
   );
 
   const { signedIn } = useIdentity();
 
   const handleOpenVideo = useCallback(
     (options: VideoModalOptions) => {
-      const lang = (status.getIn(['translation', 'language']) ||
-        status.get('language')) as string;
-      if (onOpenVideo)
-        onOpenVideo(status.getIn(['media_attachments', 0]), lang, options);
+      const lang = (status.getIn(["translation", "language"]) || status.get("language")) as string;
+      if (onOpenVideo) onOpenVideo(status.getIn(["media_attachments", 0]), lang, options);
     },
     [onOpenVideo, status],
   );
@@ -119,8 +115,7 @@ export const DetailedStatus: React.FC<{
     (heightJustChanged?: boolean) => {
       if (measureHeight && nodeRef.current) {
         scheduleIdleTask(() => {
-          if (nodeRef.current)
-            setHeight(Math.ceil(nodeRef.current.scrollHeight) + 1);
+          if (nodeRef.current) setHeight(Math.ceil(nodeRef.current.scrollHeight) + 1);
         });
 
         if (onHeightChange && heightJustChanged) {
@@ -154,7 +149,7 @@ export const DetailedStatus: React.FC<{
       // In the single-column interface, `scrollIntoView` will put the post behind the header, so compensate for that.
       if (!multiColumn) {
         const offset = document
-          .querySelector('.column-header__wrapper')
+          .querySelector(".column-header__wrapper")
           ?.getBoundingClientRect().bottom;
 
         if (offset) {
@@ -177,58 +172,49 @@ export const DetailedStatus: React.FC<{
   let quotesLink;
   let attachmentAspectRatio;
 
-  if (properStatus.get('media_attachments').getIn([0, 'type']) === 'video') {
-    attachmentAspectRatio = `${properStatus.get('media_attachments').getIn([0, 'meta', 'original', 'width'])} / ${properStatus.get('media_attachments').getIn([0, 'meta', 'original', 'height'])}`;
-  } else if (
-    properStatus.get('media_attachments').getIn([0, 'type']) === 'audio'
-  ) {
-    attachmentAspectRatio = '16 / 9';
+  if (properStatus.get("media_attachments").getIn([0, "type"]) === "video") {
+    attachmentAspectRatio = `${properStatus.get("media_attachments").getIn([0, "meta", "original", "width"])} / ${properStatus.get("media_attachments").getIn([0, "meta", "original", "height"])}`;
+  } else if (properStatus.get("media_attachments").getIn([0, "type"]) === "audio") {
+    attachmentAspectRatio = "16 / 9";
   } else {
     attachmentAspectRatio =
-      properStatus.get('media_attachments').size === 1 &&
-      properStatus
-        .get('media_attachments')
-        .getIn([0, 'meta', 'small', 'aspect'])
-        ? properStatus
-            .get('media_attachments')
-            .getIn([0, 'meta', 'small', 'aspect'])
-        : '3 / 2';
+      properStatus.get("media_attachments").size === 1 &&
+      properStatus.get("media_attachments").getIn([0, "meta", "small", "aspect"])
+        ? properStatus.get("media_attachments").getIn([0, "meta", "small", "aspect"])
+        : "3 / 2";
   }
 
   const mediaIcons: string[] = [];
 
-  const outerStyle = { boxSizing: 'border-box' } as CSSProperties;
+  const outerStyle = { boxSizing: "border-box" } as CSSProperties;
 
   if (measureHeight) {
     outerStyle.height = height;
   }
 
-  const language =
-    status.getIn(['translation', 'language']) || status.get('language');
+  const language = status.getIn(["translation", "language"]) || status.get("language");
 
-  if (pictureInPicture.get('inUse')) {
+  if (pictureInPicture.get("inUse")) {
     media = <PictureInPicturePlaceholder aspectRatio={attachmentAspectRatio} />;
-    mediaIcons.push('video-camera');
-  } else if (status.get('media_attachments').size > 0) {
+    mediaIcons.push("video-camera");
+  } else if (status.get("media_attachments").size > 0) {
     if (
       status
-        .get('media_attachments')
-        .some(
-          (item: Immutable.Map<string, any>) => item.get('type') === 'unknown',
-        )
+        .get("media_attachments")
+        .some((item: Immutable.Map<string, any>) => item.get("type") === "unknown")
     ) {
-      media = <AttachmentList media={status.get('media_attachments')} />;
+      media = <AttachmentList media={status.get("media_attachments")} />;
     } else if (
-      ['image', 'gifv', 'unknown'].includes(
-        status.getIn(['media_attachments', 0, 'type']) as string,
+      ["image", "gifv", "unknown"].includes(
+        status.getIn(["media_attachments", 0, "type"]) as string,
       ) ||
-      status.get('media_attachments').size > 1
+      status.get("media_attachments").size > 1
     ) {
       media = (
         <MediaGallery
           standalone
-          sensitive={status.get('sensitive')}
-          media={status.get('media_attachments')}
+          sensitive={status.get("sensitive")}
+          media={status.get("media_attachments")}
           lang={language}
           height={300}
           letterbox={letterboxMedia}
@@ -237,117 +223,100 @@ export const DetailedStatus: React.FC<{
           onOpenMedia={onOpenMedia}
           visible={showMedia}
           onToggleVisibility={onToggleMediaVisibility}
-          matchedFilters={status.get('matched_media_filters')}
+          matchedFilters={status.get("matched_media_filters")}
         />
       );
-      mediaIcons.push('picture-o');
-    } else if (status.getIn(['media_attachments', 0, 'type']) === 'audio') {
-      const attachment = status.getIn(['media_attachments', 0]);
+      mediaIcons.push("picture-o");
+    } else if (status.getIn(["media_attachments", 0, "type"]) === "audio") {
+      const attachment = status.getIn(["media_attachments", 0]);
       const description =
-        attachment.getIn(['translation', 'description']) ||
-        attachment.get('description');
+        attachment.getIn(["translation", "description"]) || attachment.get("description");
 
       media = (
         <Audio
-          src={attachment.get('url')}
+          src={attachment.get("url")}
           alt={description}
           lang={language}
-          poster={
-            attachment.get('preview_url') ||
-            status.getIn(['account', 'avatar_static'])
-          }
-          duration={attachment.getIn(['meta', 'original', 'duration'], 0)}
-          backgroundColor={attachment.getIn(['meta', 'colors', 'background'])}
-          foregroundColor={attachment.getIn(['meta', 'colors', 'foreground'])}
-          accentColor={attachment.getIn(['meta', 'colors', 'accent'])}
-          sensitive={status.get('sensitive')}
+          poster={attachment.get("preview_url") || status.getIn(["account", "avatar_static"])}
+          duration={attachment.getIn(["meta", "original", "duration"], 0)}
+          backgroundColor={attachment.getIn(["meta", "colors", "background"])}
+          foregroundColor={attachment.getIn(["meta", "colors", "foreground"])}
+          accentColor={attachment.getIn(["meta", "colors", "accent"])}
+          sensitive={status.get("sensitive")}
           visible={showMedia}
-          blurhash={attachment.get('blurhash')}
+          blurhash={attachment.get("blurhash")}
           onToggleVisibility={onToggleMediaVisibility}
-          matchedFilters={status.get('matched_media_filters')}
+          matchedFilters={status.get("matched_media_filters")}
         />
       );
-      mediaIcons.push('music');
-    } else if (status.getIn(['media_attachments', 0, 'type']) === 'video') {
-      const attachment = status.getIn(['media_attachments', 0]);
+      mediaIcons.push("music");
+    } else if (status.getIn(["media_attachments", 0, "type"]) === "video") {
+      const attachment = status.getIn(["media_attachments", 0]);
       const description =
-        attachment.getIn(['translation', 'description']) ||
-        attachment.get('description');
+        attachment.getIn(["translation", "description"]) || attachment.get("description");
 
       media = (
         <Video
-          preview={attachment.get('preview_url')}
-          frameRate={attachment.getIn(['meta', 'original', 'frame_rate'])}
-          aspectRatio={`${attachment.getIn(['meta', 'original', 'width'])} / ${attachment.getIn(['meta', 'original', 'height'])}`}
-          blurhash={attachment.get('blurhash')}
-          src={attachment.get('url')}
+          preview={attachment.get("preview_url")}
+          frameRate={attachment.getIn(["meta", "original", "frame_rate"])}
+          aspectRatio={`${attachment.getIn(["meta", "original", "width"])} / ${attachment.getIn(["meta", "original", "height"])}`}
+          blurhash={attachment.get("blurhash")}
+          src={attachment.get("url")}
           alt={description}
           lang={language}
           onOpenVideo={handleOpenVideo}
-          sensitive={status.get('sensitive')}
+          sensitive={status.get("sensitive")}
           visible={showMedia}
           onToggleVisibility={onToggleMediaVisibility}
-          matchedFilters={status.get('matched_media_filters')}
+          matchedFilters={status.get("matched_media_filters")}
           letterbox={letterboxMedia}
           fullwidth={fullwidthMedia}
         />
       );
-      mediaIcons.push('video-camera');
+      mediaIcons.push("video-camera");
     }
-  } else if (status.get('card') && !status.get('quote')) {
-    const cardUrl: string = status.getIn(['card', 'url']);
+  } else if (status.get("card") && !status.get("quote")) {
+    const cardUrl: string = status.getIn(["card", "url"]);
 
     const taggedCollection = status
-      .get('tagged_collections')
-      .find((item: CollectionAttachment) =>
-        compareUrls(item.get('url'), cardUrl),
-      );
+      .get("tagged_collections")
+      .find((item: CollectionAttachment) => compareUrls(item.get("url"), cardUrl));
 
     if (taggedCollection) {
-      media = (
-        <CollectionPreviewCard
-          collection={taggedCollection.toJS()}
-          headingLevel='h2'
-        />
-      );
+      media = <CollectionPreviewCard collection={taggedCollection.toJS()} headingLevel="h2" />;
     } else {
       media = (
         <Card
-          key={`${status.get('id')}-${status.get('edited_at')}`}
-          sensitive={status.get('sensitive')}
-          card={status.get('card')}
+          key={`${status.get("id")}-${status.get("edited_at")}`}
+          sensitive={status.get("sensitive")}
+          card={status.get("card")}
         />
       );
     }
 
-    mediaIcons.push('link');
-  } else if (status.get('tagged_collections').size) {
-    const firstLinkedCollection = status.get('tagged_collections').first();
+    mediaIcons.push("link");
+  } else if (status.get("tagged_collections").size) {
+    const firstLinkedCollection = status.get("tagged_collections").first();
     if (firstLinkedCollection) {
-      media = (
-        <CollectionPreviewCard
-          collection={firstLinkedCollection.toJS()}
-          headingLevel='h2'
-        />
-      );
+      media = <CollectionPreviewCard collection={firstLinkedCollection.toJS()} headingLevel="h2" />;
     }
   }
 
-  if (status.get('poll')) {
-    mediaIcons.push('tasks');
+  if (status.get("poll")) {
+    mediaIcons.push("tasks");
   }
 
-  if (status.get('application')) {
+  if (status.get("application")) {
     applicationLink = (
       <>
         ·
         <a
-          className='detailed-status__application'
-          href={status.getIn(['application', 'website'])}
-          target='_blank'
-          rel='noopener noreferrer'
+          className="detailed-status__application"
+          href={status.getIn(["application", "website"])}
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          {status.getIn(['application', 'name'])}
+          {status.getIn(["application", "name"])}
         </a>
       </>
     );
@@ -355,26 +324,26 @@ export const DetailedStatus: React.FC<{
 
   const visibilityLink = (
     <>
-      ·<VisibilityIcon visibility={status.get('visibility')} />
+      ·<VisibilityIcon visibility={status.get("visibility")} />
     </>
   );
 
-  if (['private', 'direct'].includes(status.get('visibility') as string)) {
-    reblogLink = '';
+  if (["private", "direct"].includes(status.get("visibility") as string)) {
+    reblogLink = "";
   } else {
     reblogLink = (
       <Link
-        to={`/@${status.getIn(['account', 'acct'])}/${status.get('id')}/reblogs`}
-        className='detailed-status__link'
+        to={`/@${status.getIn(["account", "acct"])}/${status.get("id")}/reblogs`}
+        className="detailed-status__link"
       >
         <FormattedMessage
-          id='status.reblogs_count'
-          defaultMessage='{count, plural, one {{counter} boost} other {{counter} boosts}}'
+          id="status.reblogs_count"
+          defaultMessage="{count, plural, one {{counter} boost} other {{counter} boosts}}"
           values={{
-            count: status.get('reblogs_count'),
+            count: status.get("reblogs_count"),
             counter: (
-              <span className='detailed-status__reblogs'>
-                <AnimatedNumber value={status.get('reblogs_count')} />
+              <span className="detailed-status__reblogs">
+                <AnimatedNumber value={status.get("reblogs_count")} />
               </span>
             ),
           }}
@@ -383,22 +352,22 @@ export const DetailedStatus: React.FC<{
     );
   }
 
-  if (['private', 'direct'].includes(status.get('visibility') as string)) {
-    quotesLink = '';
+  if (["private", "direct"].includes(status.get("visibility") as string)) {
+    quotesLink = "";
   } else if (signedIn) {
     quotesLink = (
       <Link
-        to={`/@${status.getIn(['account', 'acct'])}/${status.get('id')}/quotes`}
-        className='detailed-status__link'
+        to={`/@${status.getIn(["account", "acct"])}/${status.get("id")}/quotes`}
+        className="detailed-status__link"
       >
         <FormattedMessage
-          id='status.quotes_count'
-          defaultMessage='{count, plural, one {{counter} quote} other {{counter} quotes}}'
+          id="status.quotes_count"
+          defaultMessage="{count, plural, one {{counter} quote} other {{counter} quotes}}"
           values={{
-            count: status.get('quotes_count'),
+            count: status.get("quotes_count"),
             counter: (
-              <span className='detailed-status__quotes'>
-                <AnimatedNumber value={status.get('quotes_count')} />
+              <span className="detailed-status__quotes">
+                <AnimatedNumber value={status.get("quotes_count")} />
               </span>
             ),
           }}
@@ -407,15 +376,15 @@ export const DetailedStatus: React.FC<{
     );
   } else {
     quotesLink = (
-      <span className='detailed-status__link'>
+      <span className="detailed-status__link">
         <FormattedMessage
-          id='status.quotes_count'
-          defaultMessage='{count, plural, one {{counter} quote} other {{counter} quotes}}'
+          id="status.quotes_count"
+          defaultMessage="{count, plural, one {{counter} quote} other {{counter} quotes}}"
           values={{
-            count: status.get('quotes_count'),
+            count: status.get("quotes_count"),
             counter: (
-              <span className='detailed-status__quotes'>
-                <AnimatedNumber value={status.get('quotes_count')} />
+              <span className="detailed-status__quotes">
+                <AnimatedNumber value={status.get("quotes_count")} />
               </span>
             ),
           }}
@@ -426,17 +395,17 @@ export const DetailedStatus: React.FC<{
 
   const favouriteLink = (
     <Link
-      to={`/@${status.getIn(['account', 'acct'])}/${status.get('id')}/favourites`}
-      className='detailed-status__link'
+      to={`/@${status.getIn(["account", "acct"])}/${status.get("id")}/favourites`}
+      className="detailed-status__link"
     >
       <FormattedMessage
-        id='status.favourites_count'
-        defaultMessage='{count, plural, one {{counter} favorite} other {{counter} favorites}}'
+        id="status.favourites_count"
+        defaultMessage="{count, plural, one {{counter} favorite} other {{counter} favorites}}"
         values={{
-          count: status.get('favourites_count'),
+          count: status.get("favourites_count"),
           counter: (
-            <span className='detailed-status__favorites'>
-              <AnimatedNumber value={status.get('favourites_count')} />
+            <span className="detailed-status__favorites">
+              <AnimatedNumber value={status.get("favourites_count")} />
             </span>
           ),
         }}
@@ -444,46 +413,39 @@ export const DetailedStatus: React.FC<{
     </Link>
   );
 
-  const { statusContentProps, hashtagBar } = getHashtagBarForStatus(
-    status as StatusLike,
-  );
+  const { statusContentProps, hashtagBar } = getHashtagBarForStatus(status as StatusLike);
 
-  const matchedFilters = status.get('matched_filters');
+  const matchedFilters = status.get("matched_filters");
 
   expanded =
-    (!matchedFilters || showDespiteFilter) &&
-    (expanded || status.get('spoiler_text').length === 0);
+    (!matchedFilters || showDespiteFilter) && (expanded || status.get("spoiler_text").length === 0);
 
   return (
     <div style={outerStyle}>
       <div
         ref={handleRef}
-        className={classNames(
-          'detailed-status',
-          `detailed-status-${status.get('visibility')}`,
-          {
-            'status--has-quote': !!status.get('quote'),
-          },
-        )}
-        data-status-by={status.getIn(['account', 'acct'])}
+        className={classNames("detailed-status", `detailed-status-${status.get("visibility")}`, {
+          "status--has-quote": !!status.get("quote"),
+        })}
+        data-status-by={status.getIn(["account", "acct"])}
       >
         <Permalink
-          to={`/@${status.getIn(['account', 'acct'])}`}
-          href={status.getIn(['account', 'url'])}
-          data-hover-card-account={status.getIn(['account', 'id'])}
-          className='detailed-status__display-name'
+          to={`/@${status.getIn(["account", "acct"])}`}
+          href={status.getIn(["account", "url"])}
+          data-hover-card-account={status.getIn(["account", "id"])}
+          className="detailed-status__display-name"
         >
-          <div className='detailed-status__display-avatar'>
-            <Avatar account={status.get('account')} size={46} />
+          <div className="detailed-status__display-avatar">
+            <Avatar account={status.get("account")} size={46} />
           </div>
 
           {overrideDisplayName ?? (
-            <DisplayName account={status.get('account')} localDomain={domain} />
+            <DisplayName account={status.get("account")} localDomain={domain} />
           )}
 
           {withLogo && (
             <>
-              <div className='spacer' />
+              <div className="spacer" />
               <IconLogo />
             </>
           )}
@@ -491,18 +453,14 @@ export const DetailedStatus: React.FC<{
 
         {matchedFilters && (
           <FilterWarning
-            title={matchedFilters.join(', ')}
+            title={matchedFilters.join(", ")}
             expanded={showDespiteFilter}
             onClick={handleFilterToggle}
           />
         )}
 
         {(!matchedFilters || showDespiteFilter) && (
-          <ContentWarning
-            status={status}
-            expanded={expanded}
-            onClick={handleExpandedToggle}
-          />
+          <ContentWarning status={status} expanded={expanded} onClick={handleExpandedToggle} />
         )}
 
         {expanded && (
@@ -516,11 +474,11 @@ export const DetailedStatus: React.FC<{
             {media}
             {hashtagBar}
 
-            {status.get('quote') && (
+            {status.get("quote") && (
               <QuotedStatus
-                quote={status.get('quote')}
-                parentQuotePostId={status.get('id')}
-                contextType='thread'
+                quote={status.get("quote")}
+                parentQuotePostId={status.get("id")}
+                contextType="thread"
               />
             )}
           </>
@@ -529,21 +487,21 @@ export const DetailedStatus: React.FC<{
         {/* This is a glitch-soc addition to have a placeholder */}
         {!expanded && <MentionsPlaceholder status={status} />}
 
-        <div className='detailed-status__meta'>
-          <div className='detailed-status__meta__line'>
+        <div className="detailed-status__meta">
+          <div className="detailed-status__meta__line">
             <a
-              className='detailed-status__datetime'
-              href={status.get('url')}
-              target='_blank'
-              rel='noopener noreferrer'
+              className="detailed-status__datetime"
+              href={status.get("url")}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <FormattedDateWrapper
-                value={new Date(status.get('created_at') as string)}
-                year='numeric'
-                month='short'
-                day='2-digit'
-                hour='2-digit'
-                minute='2-digit'
+                value={new Date(status.get("created_at") as string)}
+                year="numeric"
+                month="short"
+                day="2-digit"
+                hour="2-digit"
+                minute="2-digit"
               />
             </a>
 
@@ -551,16 +509,13 @@ export const DetailedStatus: React.FC<{
             {applicationLink}
           </div>
 
-          {status.get('edited_at') && (
-            <div className='detailed-status__meta__line'>
-              <EditedTimestamp
-                statusId={status.get('id')}
-                timestamp={status.get('edited_at')}
-              />
+          {status.get("edited_at") && (
+            <div className="detailed-status__meta__line">
+              <EditedTimestamp statusId={status.get("id")} timestamp={status.get("edited_at")} />
             </div>
           )}
 
-          <div className='detailed-status__meta__line'>
+          <div className="detailed-status__meta__line">
             {reblogLink}
             {reblogLink && <>·</>}
             {quotesLink}

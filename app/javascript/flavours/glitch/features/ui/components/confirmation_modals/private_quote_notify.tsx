@@ -1,43 +1,40 @@
-import { forwardRef, useCallback, useState } from 'react';
+import { forwardRef, useCallback, useState } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { submitCompose } from '@/flavours/glitch/actions/compose';
-import { changeSetting } from '@/flavours/glitch/actions/settings';
-import { CheckBox } from '@/flavours/glitch/components/check_box';
-import { useAppDispatch } from '@/flavours/glitch/store';
+import { submitCompose } from "@/flavours/glitch/actions/compose";
+import { changeSetting } from "@/flavours/glitch/actions/settings";
+import { CheckBox } from "@/flavours/glitch/components/check_box";
+import { useAppDispatch } from "@/flavours/glitch/store";
 
-import { ConfirmationModal } from './confirmation_modal';
-import type { BaseConfirmationModalProps } from './confirmation_modal';
-import classes from './styles.module.css';
+import { ConfirmationModal } from "./confirmation_modal";
+import type { BaseConfirmationModalProps } from "./confirmation_modal";
+import classes from "./styles.module.css";
 
-export const PRIVATE_QUOTE_MODAL_ID = 'quote/private_notify';
+export const PRIVATE_QUOTE_MODAL_ID = "quote/private_notify";
 
 const messages = defineMessages({
   title: {
-    id: 'confirmations.private_quote_notify.title',
-    defaultMessage: 'Share with followers and mentioned users?',
+    id: "confirmations.private_quote_notify.title",
+    defaultMessage: "Share with followers and mentioned users?",
   },
   message: {
-    id: 'confirmations.private_quote_notify.message',
+    id: "confirmations.private_quote_notify.message",
     defaultMessage:
-      'The person you are quoting and other mentions ' +
+      "The person you are quoting and other mentions " +
       "will be notified and will be able to view your post, even if they're not following you.",
   },
   confirm: {
-    id: 'confirmations.private_quote_notify.confirm',
-    defaultMessage: 'Publish post',
+    id: "confirmations.private_quote_notify.confirm",
+    defaultMessage: "Publish post",
   },
   cancel: {
-    id: 'confirmations.private_quote_notify.cancel',
-    defaultMessage: 'Back to editing',
+    id: "confirmations.private_quote_notify.cancel",
+    defaultMessage: "Back to editing",
   },
 });
 
-export const PrivateQuoteNotify = forwardRef<
-  HTMLDivElement,
-  BaseConfirmationModalProps
->(
+export const PrivateQuoteNotify = forwardRef<HTMLDivElement, BaseConfirmationModalProps>(
   (
     { onClose },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -54,9 +51,7 @@ export const PrivateQuoteNotify = forwardRef<
     const handleConfirm = useCallback(() => {
       dispatch(submitCompose());
       if (dismiss) {
-        dispatch(
-          changeSetting(['dismissed_banners', PRIVATE_QUOTE_MODAL_ID], true),
-        );
+        dispatch(changeSetting(["dismissed_banners", PRIVATE_QUOTE_MODAL_ID], true));
       }
     }, [dismiss, dispatch]);
 
@@ -70,13 +65,9 @@ export const PrivateQuoteNotify = forwardRef<
         onClose={onClose}
         extraContent={
           <label className={classes.checkbox_wrapper}>
-            <CheckBox
-              value='hide'
-              checked={dismiss}
-              onChange={handleDismissToggle}
-            />{' '}
+            <CheckBox value="hide" checked={dismiss} onChange={handleDismissToggle} />{" "}
             <FormattedMessage
-              id='confirmations.private_quote_notify.do_not_show_again'
+              id="confirmations.private_quote_notify.do_not_show_again"
               defaultMessage="Don't show me this message again"
             />
           </label>
@@ -85,4 +76,4 @@ export const PrivateQuoteNotify = forwardRef<
     );
   },
 );
-PrivateQuoteNotify.displayName = 'PrivateQuoteNotify';
+PrivateQuoteNotify.displayName = "PrivateQuoteNotify";

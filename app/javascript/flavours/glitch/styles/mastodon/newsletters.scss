@@ -63,7 +63,9 @@
   padding: 18px;
   text-decoration: none;
   color: #fff;
-  transition: box-shadow 0.15s, border-color 0.15s;
+  transition:
+    box-shadow 0.15s,
+    border-color 0.15s;
 
   &:hover {
     box-shadow: 0 4px 20px rgb(0 0 0 / 25%);
@@ -221,7 +223,9 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     border-radius: 3px;
-    transition: color 0.1s, background 0.1s;
+    transition:
+      color 0.1s,
+      background 0.1s;
 
     &:hover {
       color: #fff;
@@ -249,11 +253,13 @@
     border-radius: 6px;
     background: #6364ff;
     letter-spacing: 0.03em;
-    transition: background 0.15s, transform 0.1s;
+    transition:
+      background 0.15s,
+      transform 0.1s;
     box-shadow: 0 2px 8px rgba(99, 100, 255, 0.35);
 
     &::before {
-      content: '\21E9';
+      content: "\21E9";
       font-size: 15px;
     }
 
@@ -402,7 +408,7 @@
   }
 
   .newsletter-show__title {
-    font-family: Georgia, 'Palatino Linotype', serif;
+    font-family: Georgia, "Palatino Linotype", serif;
     font-size: 34px;
     font-weight: 900;
     color: var(--nl-ink, #1a0f00);
@@ -410,7 +416,9 @@
     line-height: 1.05;
     margin-bottom: 10px;
 
-    @media (max-width: 600px) { font-size: 22px; }
+    @media (max-width: 600px) {
+      font-size: 22px;
+    }
   }
 
   .newsletter-show__byline {
@@ -515,10 +523,12 @@
     font-size: 42px;
     font-weight: 900;
     letter-spacing: -0.01em;
-    line-height: 1.0;
+    line-height: 1;
     color: var(--nl-ink, #fff);
 
-    @media (max-width: 600px) { font-size: 28px; }
+    @media (max-width: 600px) {
+      font-size: 28px;
+    }
   }
 
   .newsletter-show__masthead-rule {
@@ -580,7 +590,7 @@
     font-size: 26px;
     font-weight: 700;
     letter-spacing: 0.01em;
-    text-transform: none;           // no all-caps for a personal letter
+    text-transform: none; // no all-caps for a personal letter
   }
 
   .newsletter-show__masthead-rule {
@@ -630,7 +640,7 @@
       margin-bottom: 6px;
     }
 
-    input[type='file'] {
+    input[type="file"] {
       display: block;
       margin: 8px 0 16px;
     }

@@ -1,16 +1,18 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import 'wicg-inert';
+import "wicg-inert";
 
-import { multiply } from 'color-blend';
-import { createBrowserHistory } from 'history';
+import { multiply } from "color-blend";
+import { createBrowserHistory } from "history";
 
-import { WithOptionalRouterPropTypes, withOptionalRouter } from 'flavours/glitch/utils/react_router';
-import { IGNORE_FOCUS_ON_OPEN } from '../reducers/modal';
+import {
+  WithOptionalRouterPropTypes,
+  withOptionalRouter,
+} from "flavours/glitch/utils/react_router";
+import { IGNORE_FOCUS_ON_OPEN } from "../reducers/modal";
 
 class ModalRoot extends PureComponent {
-
   static propTypes = {
     children: PropTypes.node,
     onClose: PropTypes.func.isRequired,
@@ -33,15 +35,22 @@ class ModalRoot extends PureComponent {
   activeElement = this.props.children ? document.activeElement : null;
 
   handleKeyUp = (e) => {
-    if ((e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27)
-         && !!this.props.children && !this.props.noEsc) {
+    if (
+      (e.key === "Escape" || e.key === "Esc" || e.keyCode === 27) &&
+      !!this.props.children &&
+      !this.props.noEsc
+    ) {
       this.props.onClose();
     }
   };
 
   handleKeyDown = (e) => {
-    if (e.key === 'Tab') {
-      const focusable = Array.from(this.node.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter((x) => window.getComputedStyle(x).display !== 'none');
+    if (e.key === "Tab") {
+      const focusable = Array.from(
+        this.node.querySelectorAll(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((x) => window.getComputedStyle(x).display !== "none");
       const index = focusable.indexOf(e.target);
 
       let element;
@@ -60,9 +69,9 @@ class ModalRoot extends PureComponent {
     }
   };
 
-  componentDidMount () {
-    window.addEventListener('keyup', this.handleKeyUp, false);
-    window.addEventListener('keydown', this.handleKeyDown, false);
+  componentDidMount() {
+    window.addEventListener("keyup", this.handleKeyUp, false);
+    window.addEventListener("keydown", this.handleKeyDown, false);
     this.history = this.props.history || createBrowserHistory();
 
     if (this.props.children) {
@@ -70,19 +79,21 @@ class ModalRoot extends PureComponent {
     }
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (!this.props.children && !!prevProps.children) {
-      this.getSiblings().forEach(sibling => sibling.removeAttribute('inert'));
+      this.getSiblings().forEach((sibling) => sibling.removeAttribute("inert"));
 
       // Because of the wicg-inert polyfill, the activeElement may not be
       // immediately selectable, we have to wait for observers to run, as
       // described in https://github.com/WICG/inert#performance-and-gotchas
-      Promise.resolve().then(() => {
-        if (!this.props.ignoreFocus) {
-          this.activeElement.focus({ preventScroll: true });
-        }
-        this.activeElement = null;
-      }).catch(console.error);
+      Promise.resolve()
+        .then(() => {
+          if (!this.props.ignoreFocus) {
+            this.activeElement.focus({ preventScroll: true });
+          }
+          this.activeElement = null;
+        })
+        .catch(console.error);
 
       this._handleModalClose();
     }
@@ -90,7 +101,7 @@ class ModalRoot extends PureComponent {
     if (this.props.children && !prevProps.children) {
       this.activeElement = document.activeElement;
 
-      this.getSiblings().forEach(sibling => sibling.setAttribute('inert', true));
+      this.getSiblings().forEach((sibling) => sibling.setAttribute("inert", true));
 
       this._handleModalOpen();
     }
@@ -100,21 +111,21 @@ class ModalRoot extends PureComponent {
     }
   }
 
-  componentWillUnmount () {
-    window.removeEventListener('keyup', this.handleKeyUp);
-    window.removeEventListener('keydown', this.handleKeyDown);
+  componentWillUnmount() {
+    window.removeEventListener("keyup", this.handleKeyUp);
+    window.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  _handleModalOpen () {
+  _handleModalOpen() {
     this._modalHistoryKey = Date.now();
     this.unlistenHistory = this.history.listen((_, action) => {
-      if (action === 'POP') {
+      if (action === "POP") {
         this.props.onClose();
       }
     });
   }
 
-  _handleModalClose () {
+  _handleModalClose() {
     if (this.unlistenHistory) {
       this.unlistenHistory();
     }
@@ -124,54 +135,64 @@ class ModalRoot extends PureComponent {
     }
   }
 
-  _ensureHistoryBuffer () {
+  _ensureHistoryBuffer() {
     const { pathname, search, hash, state } = this.history.location;
     if (!state || state.mastodonModalKey !== this._modalHistoryKey) {
-      this.history.push({ pathname, search, hash }, {
-        ...state,
-        focusTarget: this.props.ignoreFocus !== IGNORE_FOCUS_ON_OPEN,
-        mastodonModalKey: this._modalHistoryKey,
-      });
+      this.history.push(
+        { pathname, search, hash },
+        {
+          ...state,
+          focusTarget: this.props.ignoreFocus !== IGNORE_FOCUS_ON_OPEN,
+          mastodonModalKey: this._modalHistoryKey,
+        },
+      );
     }
   }
 
   getSiblings = () => {
-    return Array(...this.node.parentElement.childNodes).filter(node => node !== this.node);
+    return Array(...this.node.parentElement.childNodes).filter((node) => node !== this.node);
   };
 
-  setRef = ref => {
+  setRef = (ref) => {
     this.node = ref;
   };
 
-  render () {
+  render() {
     const { children, onClose } = this.props;
     const visible = !!children;
 
     if (!visible) {
-      return (
-        <div className='modal-root' ref={this.setRef} style={{ opacity: 0 }} />
-      );
+      return <div className="modal-root" ref={this.setRef} style={{ opacity: 0 }} />;
     }
 
     let backgroundColor = null;
 
-    if (this.props.backgroundColor && typeof this.props.backgroundColor === 'string') {
+    if (this.props.backgroundColor && typeof this.props.backgroundColor === "string") {
       backgroundColor = this.props.backgroundColor;
     } else if (this.props.backgroundColor) {
-      const darkenedColor = multiply({ ...this.props.backgroundColor, a: 1 }, { r: 0, g: 0, b: 0, a: 0.7 });
+      const darkenedColor = multiply(
+        { ...this.props.backgroundColor, a: 1 },
+        { r: 0, g: 0, b: 0, a: 0.7 },
+      );
       backgroundColor = `rgb(${darkenedColor.r}, ${darkenedColor.g}, ${darkenedColor.b})`;
     }
 
     return (
-      <div className='modal-root' ref={this.setRef}>
-        <div style={{ pointerEvents: visible ? 'auto' : 'none' }}>
-          <div role='presentation' className='modal-root__overlay' onClick={onClose} style={{ backgroundColor }} />
-          <div role='dialog' className='modal-root__container'>{children}</div>
+      <div className="modal-root" ref={this.setRef}>
+        <div style={{ pointerEvents: visible ? "auto" : "none" }}>
+          <div
+            role="presentation"
+            className="modal-root__overlay"
+            onClick={onClose}
+            style={{ backgroundColor }}
+          />
+          <div role="dialog" className="modal-root__container">
+            {children}
+          </div>
         </div>
       </div>
     );
   }
-
 }
 
 export default withOptionalRouter(ModalRoot);

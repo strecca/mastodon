@@ -1,31 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import {
-  accountFactoryState,
-  annualReportFactory,
-  statusFactoryState,
-} from '@/testing/factories';
+import { accountFactoryState, annualReportFactory, statusFactoryState } from "@/testing/factories";
 
-import { AnnualReport } from '.';
+import { AnnualReport } from ".";
 
 const SAMPLE_HASHTAG = {
-  name: 'Mastodon',
+  name: "Mastodon",
   count: 14,
 };
 
 const meta = {
-  title: 'Components/AnnualReport',
+  title: "Components/AnnualReport",
   component: AnnualReport,
   args: {
-    context: 'standalone',
+    context: "standalone",
   },
   parameters: {
     state: {
       accounts: {
-        '1': accountFactoryState({ display_name: 'Freddie Fruitbat' }),
+        "1": accountFactoryState({ display_name: "Freddie Fruitbat" }),
       },
       statuses: {
-        '1': statusFactoryState(),
+        "1": statusFactoryState(),
       },
       annualReport: annualReportFactory({
         top_hashtag: SAMPLE_HASHTAG,
@@ -40,13 +36,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Standalone: Story = {
   args: {
-    context: 'standalone',
+    context: "standalone",
   },
 };
 
 export const InModal: Story = {
   args: {
-    context: 'modal',
+    context: "modal",
   },
 };
 
@@ -55,7 +51,7 @@ export const ArchetypeOracle: Story = {
   parameters: {
     state: {
       annualReport: annualReportFactory({
-        archetype: 'oracle',
+        archetype: "oracle",
         top_hashtag: SAMPLE_HASHTAG,
       }),
     },
@@ -67,7 +63,7 @@ export const NoHashtag: Story = {
   parameters: {
     state: {
       annualReport: annualReportFactory({
-        archetype: 'booster',
+        archetype: "booster",
       }),
     },
   },
@@ -78,7 +74,7 @@ export const NoNewPosts: Story = {
   parameters: {
     state: {
       annualReport: annualReportFactory({
-        archetype: 'pollster',
+        archetype: "pollster",
         top_hashtag: SAMPLE_HASHTAG,
         without_posts: true,
       }),
@@ -91,7 +87,7 @@ export const NoNewPostsNoHashtag: Story = {
   parameters: {
     state: {
       annualReport: annualReportFactory({
-        archetype: 'replier',
+        archetype: "replier",
         without_posts: true,
       }),
     },

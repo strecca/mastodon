@@ -1,26 +1,26 @@
-import { useCallback, useId, useState } from 'react';
-import type { FC } from 'react';
+import { useCallback, useId, useState } from "react";
+import type { FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { EmojiTextInputField } from '@/flavours/glitch/components/form_fields';
-import type { BaseConfirmationModalProps } from '@/flavours/glitch/features/ui/components/confirmation_modals';
-import { ConfirmationModal } from '@/flavours/glitch/features/ui/components/confirmation_modals';
-import { patchProfile } from '@/flavours/glitch/reducers/slices/profile_edit';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import { EmojiTextInputField } from "@/flavours/glitch/components/form_fields";
+import type { BaseConfirmationModalProps } from "@/flavours/glitch/features/ui/components/confirmation_modals";
+import { ConfirmationModal } from "@/flavours/glitch/features/ui/components/confirmation_modals";
+import { patchProfile } from "@/flavours/glitch/reducers/slices/profile_edit";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
 
 const messages = defineMessages({
   addTitle: {
-    id: 'account_edit.name_modal.add_title',
-    defaultMessage: 'Add display name',
+    id: "account_edit.name_modal.add_title",
+    defaultMessage: "Add display name",
   },
   editTitle: {
-    id: 'account_edit.name_modal.edit_title',
-    defaultMessage: 'Edit display name',
+    id: "account_edit.name_modal.edit_title",
+    defaultMessage: "Edit display name",
   },
   save: {
-    id: 'account_edit.save',
-    defaultMessage: 'Save',
+    id: "account_edit.save",
+    defaultMessage: "Save",
   },
 });
 
@@ -28,15 +28,12 @@ export const NameModal: FC<BaseConfirmationModalProps> = ({ onClose }) => {
   const intl = useIntl();
   const titleId = useId();
 
-  const { profile: { displayName } = {}, isPending } = useAppSelector(
-    (state) => state.profileEdit,
-  );
+  const { profile: { displayName } = {}, isPending } = useAppSelector((state) => state.profileEdit);
   const maxLength = useAppSelector(
-    (state) =>
-      state.server.server.item?.configuration.accounts.max_display_name_length,
+    (state) => state.server.server.item?.configuration.accounts.max_display_name_length,
   );
 
-  const [newName, setNewName] = useState(displayName ?? '');
+  const [newName, setNewName] = useState(displayName ?? "");
 
   const dispatch = useAppDispatch();
   const handleSave = useCallback(() => {
@@ -62,7 +59,7 @@ export const NameModal: FC<BaseConfirmationModalProps> = ({ onClose }) => {
         onChange={setNewName}
         aria-labelledby={titleId}
         counterMax={maxLength}
-        label=''
+        label=""
         // eslint-disable-next-line jsx-a11y/no-autofocus -- This is a modal, it's fine.
         autoFocus
       />

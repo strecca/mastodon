@@ -62,7 +62,7 @@ oc:
           sign_up_requires_approval: Las inscripcions novèlas requeriràn vòstra validacion
         severity: Causissètz que far amb las requèstas d’aquesta IP
       sessions:
-        otp: 'Picatz lo còdi d’autentificacion en dos temps (Two factor code) de vòstra aplicacion mobil o utilizatz un de vòstres còdis de recuperacion :'
+        otp: "Picatz lo còdi d’autentificacion en dos temps (Two factor code) de vòstra aplicacion mobil o utilizatz un de vòstres còdis de recuperacion :"
         webauthn: S’es una clau USB asseguratz-vos de l’inserir, e se cal de la picanhejar.
       tag:
         name: Podètz pas que cambiar la talha de las letras, per exemple, per que sián de melhor legir
@@ -219,7 +219,7 @@ oc:
       webhook:
         events: Eveniments activats
         url: URL de ponch de terminason
-    'no': Non
+    "no": Non
     not_recommended: Pas recomandat
     recommended: Recomandat
     required:
@@ -228,4 +228,4 @@ oc:
     title:
       sessions:
         webauthn: Utilizatz una de vòstras clau de seguretat per vos identificar
-    'yes': Òc
+    "yes": Òc

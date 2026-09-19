@@ -1,13 +1,13 @@
-import type { FC, MouseEventHandler } from 'react';
+import type { FC, MouseEventHandler } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { Button } from '@/mastodon/components/button';
-import { IconButton } from '@/mastodon/components/icon_button';
-import DeleteIcon from '@/material-icons/400-24px/delete.svg?react';
-import EditIcon from '@/material-icons/400-24px/edit.svg?react';
+import { Button } from "@/mastodon/components/button";
+import { IconButton } from "@/mastodon/components/icon_button";
+import DeleteIcon from "@/material-icons/400-24px/delete.svg?react";
+import EditIcon from "@/material-icons/400-24px/edit.svg?react";
 
-import classes from '../styles.module.scss';
+import classes from "../styles.module.scss";
 
 export interface EditButtonProps {
   onClick: MouseEventHandler;
@@ -16,24 +16,13 @@ export interface EditButtonProps {
   disabled?: boolean;
 }
 
-export const EditButton: FC<EditButtonProps> = ({
-  onClick,
-  label,
-  icon = false,
-  disabled,
-}) => {
+export const EditButton: FC<EditButtonProps> = ({ onClick, label, icon = false, disabled }) => {
   if (icon) {
-    return (
-      <EditIconButton title={label} onClick={onClick} disabled={disabled} />
-    );
+    return <EditIconButton title={label} onClick={onClick} disabled={disabled} />;
   }
 
   return (
-    <Button
-      className={classes.editButton}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <Button className={classes.editButton} onClick={onClick} disabled={disabled}>
       {label}
     </Button>
   );
@@ -45,7 +34,7 @@ export const EditIconButton: FC<{
   disabled?: boolean;
 }> = ({ title, onClick, disabled }) => (
   <IconButton
-    icon='pencil'
+    icon="pencil"
     iconComponent={EditIcon}
     onClick={onClick}
     className={classes.editButton}
@@ -60,7 +49,7 @@ export const DeleteIconButton: FC<{
   disabled?: boolean;
 }> = ({ onClick, label, disabled }) => (
   <IconButton
-    icon='delete'
+    icon="delete"
     iconComponent={DeleteIcon}
     onClick={onClick}
     className={classNames(classes.editButton, classes.deleteButton)}

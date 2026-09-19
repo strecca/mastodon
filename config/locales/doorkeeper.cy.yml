@@ -52,7 +52,7 @@ cy:
         callback_urls: URLau adalw
         scopes: Cwmpasau
         secret: Cyfrinach cleient
-        title: 'Rhaglen: %{name}'
+        title: "Rhaglen: %{name}"
     authorizations:
       buttons:
         authorize: Awdurdodi
@@ -86,7 +86,7 @@ cy:
         invalid_grant: Mae'r grant awdurdodi ar yr amod yn annilys, wedi dod i ben, wedi'i ddirymu, nid yw'n cyfateb i'r URI ailgyfeirio a ddefnyddiwyd yn y cais am awdurdodiad, neu wedi'i roi i gleient arall.
         invalid_redirect_uri: Nid yw'r uri ailgyfeirio a gynhwysir yn ddilys.
         invalid_request:
-          missing_param: 'Paramedr gofynnol ar goll: %{value}.'
+          missing_param: "Paramedr gofynnol ar goll: %{value}."
           request_not_authorized: Mae angen awdurdodi'r cais. Mae'r paramedr gofynnol ar gyfer awdurdodi cais ar goll neu'n annilys.
           unknown: Mae'r cais yn brin o baramedr gofynnol, yn cynnwys gwerth paramedr heb ei gefnogi, neu wedi ei gamffurfio fel arall.
         invalid_resource_owner: Nid yw meini prawf perchennog yr adnodd yn ddilys, neu ni ellir canfod perchennog yr adnodd

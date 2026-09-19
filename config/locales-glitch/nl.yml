@@ -2,8 +2,8 @@
 nl:
   admin:
     custom_emojis:
-      batch_copy_error: 'Er is een fout opgetreden bij het kopiëren van een deel van de geselecteerde emoji: %{message}'
-      batch_error: 'Er is een fout opgetreden: %{message}'
+      batch_copy_error: "Er is een fout opgetreden bij het kopiëren van een deel van de geselecteerde emoji: %{message}"
+      batch_error: "Er is een fout opgetreden: %{message}"
     settings:
       captcha_enabled:
         desc_html: Dit is afhankelijk van externe scripts van hCaptcha, wat veiligheids- en privacyrisico's met zich mee kan brengen. Bovendien kan <strong>dit het registratieproces aanzienlijk minder toegankelijk maken voor sommige (vooral gehandicapte) mensen</strong>. Om deze redenen kun je het beste alternatieve maatregelen overwegen, zoals registratie op basis van goedkeuring of op uitnodiging.

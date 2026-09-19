@@ -53,7 +53,7 @@ sco:
         domain: This kin be the domain nemm thit shaws up in the email address or the MX record thit it uises. They'll be checked on sign-up.
         with_dns_records: An attempt fie tae resolve the gien domain's DNS records wull be made an the results will be dingied tae
       featured_tag:
-        name: 'Here some o the hashtags ye uised the maist o late:'
+        name: "Here some o the hashtags ye uised the maist o late:"
       filters:
         actions:
           hide: Totally plank the filtert content, ackin as if it didnae exist
@@ -92,7 +92,7 @@ sco:
       rule:
         text: Describe a rule or requirement fir uisers on this server. Try tae keep it short an simple
       sessions:
-        otp: 'Pit in the twa-factor code generatit bi yer phone app or uise ane o yer recovery codes:'
+        otp: "Pit in the twa-factor code generatit bi yer phone app or uise ane o yer recovery codes:"
         webauthn: Gin it's a USB key be sure fir tae insert it an, if necessary, tap it.
       tag:
         name: Ye kin ainly chynge the case o the letters, fir example, fir tae mak it mair readable
@@ -263,7 +263,7 @@ sco:
       webhook:
         events: Enabilt events
         url: Enpynt URL
-    'no': Naw
+    "no": Naw
     not_recommended: No recommendit
     recommended: Recommendit
     required:
@@ -272,4 +272,4 @@ sco:
     title:
       sessions:
         webauthn: Uise ane o yer security keys fir tae sign in
-    'yes': Ay
+    "yes": Ay

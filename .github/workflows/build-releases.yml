@@ -2,7 +2,7 @@ name: Build container release images
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 permissions:
   contents: read

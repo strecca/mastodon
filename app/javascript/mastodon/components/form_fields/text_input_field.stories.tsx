@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import SearchIcon from '@/material-icons/400-24px/search.svg?react';
+import SearchIcon from "@/material-icons/400-24px/search.svg?react";
 
-import { TextInputField, TextInput } from './text_input_field';
+import { TextInputField, TextInput } from "./text_input_field";
 
 const meta = {
-  title: 'Components/Form Fields/TextInputField',
+  title: "Components/Form Fields/TextInputField",
   component: TextInputField,
   args: {
-    label: 'Label',
-    hint: 'This is a description of this form field',
+    label: "Label",
+    hint: "This is a description of this form field",
   },
 } satisfies Meta<typeof TextInputField>;
 
@@ -40,7 +40,7 @@ export const Optional: Story = {
 export const WithError: Story = {
   args: {
     required: false,
-    status: 'error',
+    status: "error",
   },
 };
 
@@ -48,15 +48,15 @@ export const WithWarning: Story = {
   args: {
     required: false,
     status: {
-      variant: 'warning',
-      message: 'Special characters are not allowed',
+      variant: "warning",
+      message: "Special characters are not allowed",
     },
   },
 };
 
 export const WithIcon: Story = {
   args: {
-    label: 'Search',
+    label: "Search",
     hint: undefined,
     icon: SearchIcon,
   },

@@ -8,7 +8,7 @@ fi:
         display_name: Koko nimesi tai lempinimesi.
         fields: Verkkosivustosi, pronominisi, ikäsi ja mitä ikinä haluatkaan ilmoittaa.
         indexable: Julkiset julkaisusi voivat näkyä Mastodonin hakutuloksissa. Käyttäjät, jotka ovat olleet vuorovaikutuksessa julkaisujesi kanssa, voivat etsiä niitä asetuksesta riippumatta.
-        note: 'Voit @mainita muita käyttäjiä tai #aihetunnisteita.'
+        note: "Voit @mainita muita käyttäjiä tai #aihetunnisteita."
         show_collections: Käyttäjät voivat selata seurattaviasi ja seuraajiasi. Käyttäjät, joita seuraat, näkevät joka tapauksessa, että seuraat heitä.
         unlocked: Käyttäjät voivat seurata sinua pyytämättä hyväksyntääsi. Poista valinta, jos haluat tarkistaa sekä hyväksyä tai hylätä vastaanottamasi seurantapyynnöt.
       account_alias:
@@ -76,7 +76,7 @@ fi:
         domain: Tämä voi olla verkkotunnus, joka näkyy sähköpostiosoitteessa tai sen käyttämässä MX-tietueessa. Ne tarkistetaan rekisteröitymisen yhteydessä.
         with_dns_records: Annetun verkkotunnuksen DNS-tietueet yritetään selvittää ja myös tulokset estetään
       featured_tag:
-        name: 'Tässä muutamia hiljattain käyttämiäsi aihetunnisteita:'
+        name: "Tässä muutamia hiljattain käyttämiäsi aihetunnisteita:"
       filters:
         action: Valitse, miten toimitaan, kun julkaisu vastaa suodatinta
         actions:
@@ -132,7 +132,7 @@ fi:
         hint: Vapaaehtoinen. Anna yksityiskohtaisempia tietoja säännöstä
         text: Kuvaile sääntöä tai edellytystä palvelimesi käyttäjille. Suosi tiivistä, yksinkertaista ilmaisua
       sessions:
-        otp: 'Näppäile mobiilisovelluksessa näkyvä kaksivaiheisen todennuksen tunnusluku tai käytä tarvittaessa palautuskoodia:'
+        otp: "Näppäile mobiilisovelluksessa näkyvä kaksivaiheisen todennuksen tunnusluku tai käytä tarvittaessa palautuskoodia:"
         webauthn: Jos kyseessä on USB-avain, muista laittaa se paikalleen ja tarvittaessa napauttaa sitä.
       settings:
         email_subscriptions: Käytöstäpoisto säilyttää olemassa olevat tilaajat mutta lopettaa sähköpostin lähettämisen.
@@ -408,7 +408,7 @@ fi:
         events: Käytössä olevat tapahtumat
         template: Hyötykuormapohja
         url: Päätepisteen URL
-    'no': Ei
+    "no": Ei
     not_recommended: Ei suositella
     overridden: Ohitettu
     recommended: Suositellaan
@@ -418,4 +418,4 @@ fi:
     title:
       sessions:
         webauthn: Käytä yhtä suojausavaimistasi kirjautuaksesi sisään
-    'yes': Kyllä
+    "yes": Kyllä

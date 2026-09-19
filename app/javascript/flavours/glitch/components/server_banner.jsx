@@ -1,27 +1,33 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, useIntl, defineMessages } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-import { fetchServer } from 'flavours/glitch/actions/server';
-import { Account } from 'flavours/glitch/components/account';
-import { ServerHeroImage } from 'flavours/glitch/components/server_hero_image';
-import { ShortNumber } from 'flavours/glitch/components/short_number';
-import { Skeleton } from 'flavours/glitch/components/skeleton';
-import { useSiteContent } from 'flavours/glitch/hooks/useSiteContent';
+import { fetchServer } from "flavours/glitch/actions/server";
+import { Account } from "flavours/glitch/components/account";
+import { ServerHeroImage } from "flavours/glitch/components/server_hero_image";
+import { ShortNumber } from "flavours/glitch/components/short_number";
+import { Skeleton } from "flavours/glitch/components/skeleton";
+import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
 
 const messages = defineMessages({
-  aboutActiveUsers: { id: 'server_banner.about_active_users', defaultMessage: 'People using this server during the last 30 days (Monthly Active Users)' },
-  aboutThisServer: { id: 'server_banner.more_about_this_server', defaultMessage: 'More about this server'},
+  aboutActiveUsers: {
+    id: "server_banner.about_active_users",
+    defaultMessage: "People using this server during the last 30 days (Monthly Active Users)",
+  },
+  aboutThisServer: {
+    id: "server_banner.more_about_this_server",
+    defaultMessage: "More about this server",
+  },
 });
 
 const ServerBanner = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const server = useSelector(state => state.server.server);
+  const server = useSelector((state) => state.server.server);
   const sc = useSiteContent();
 
   useEffect(() => {
@@ -31,52 +37,72 @@ const ServerBanner = () => {
   const isLoading = server.isLoading;
 
   return (
-    <div className='server-banner'>
-      <Link to='/landing'>
+    <div className="server-banner">
+      <Link to="/landing">
         <ServerHeroImage
           blurhash={server.item?.thumbnail.blurhash}
           src={server.item?.thumbnail.url}
           alt={intl.formatMessage(messages.aboutThisServer)}
-          className='server-banner__hero'
+          className="server-banner__hero"
         />
-        <p className='server-banner__hero-cta'>
-          {sc('server_hero_cta', 'Click this image to see MiaCivezza.com in action!')}
+        <p className="server-banner__hero-cta">
+          {sc("server_hero_cta", "Click this image to see MiaCivezza.com in action!")}
         </p>
       </Link>
 
-      <div className='server-banner__description'>
+      <div className="server-banner__description">
         {isLoading ? (
           <>
-            <Skeleton width='100%' />
+            <Skeleton width="100%" />
             <br />
-            <Skeleton width='100%' />
+            <Skeleton width="100%" />
             <br />
-            <Skeleton width='70%' />
+            <Skeleton width="70%" />
           </>
-        ) : sc('server_description', server.item?.description)}
+        ) : (
+          sc("server_description", server.item?.description)
+        )}
       </div>
 
-      <div className='server-banner__meta'>
-        <div className='server-banner__meta__column'>
-          <h4><FormattedMessage id='server_banner.administered_by' defaultMessage='Administered by:' /></h4>
+      <div className="server-banner__meta">
+        <div className="server-banner__meta__column">
+          <h4>
+            <FormattedMessage
+              id="server_banner.administered_by"
+              defaultMessage="Administered by:"
+            />
+          </h4>
 
           <Account id={server.item?.contact.account?.id} size={36} minimal />
         </div>
 
-        <div className='server-banner__meta__column'>
-          <h4><FormattedMessage id='server_banner.server_stats' defaultMessage='Server stats:' /></h4>
+        <div className="server-banner__meta__column">
+          <h4>
+            <FormattedMessage id="server_banner.server_stats" defaultMessage="Server stats:" />
+          </h4>
 
           {isLoading ? (
             <>
-              <strong className='server-banner__number'><Skeleton width='10ch' /></strong>
+              <strong className="server-banner__number">
+                <Skeleton width="10ch" />
+              </strong>
               <br />
-              <span className='server-banner__number-label'><Skeleton width='5ch' /></span>
+              <span className="server-banner__number-label">
+                <Skeleton width="5ch" />
+              </span>
             </>
           ) : (
             <>
-              <strong className='server-banner__number'><ShortNumber value={server.item?.usage.users.active_month} /></strong>
+              <strong className="server-banner__number">
+                <ShortNumber value={server.item?.usage.users.active_month} />
+              </strong>
               <br />
-              <span className='server-banner__number-label' title={intl.formatMessage(messages.aboutActiveUsers)}><FormattedMessage id='server_banner.active_users' defaultMessage='active users' /></span>
+              <span
+                className="server-banner__number-label"
+                title={intl.formatMessage(messages.aboutActiveUsers)}
+              >
+                <FormattedMessage id="server_banner.active_users" defaultMessage="active users" />
+              </span>
             </>
           )}
         </div>

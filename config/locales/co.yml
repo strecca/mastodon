@@ -1,7 +1,7 @@
 ---
 co:
   about:
-    about_mastodon_html: 'A rete suciale di u futuru: micca pubblicità, micca surveglianza, cuncezzione etica, è dicentralizazione! Firmate in cuntrollu di i vostri dati cù Mastodon!'
+    about_mastodon_html: "A rete suciale di u futuru: micca pubblicità, micca surveglianza, cuncezzione etica, è dicentralizazione! Firmate in cuntrollu di i vostri dati cù Mastodon!"
     contact_missing: Mancante
     contact_unavailable: Micca dispunibule
     hosted_on: Mastodon allughjatu nant’à %{domain}
@@ -368,12 +368,12 @@ co:
       created_msg: Nova regula IP aghjunta
       delete: Toglie
       expires_in:
-        '1209600': 2 settimane
-        '15778476': 6 mesi
-        '2629746': 1 mese
-        '31556952': 1 annu
-        '86400': 1 ghjornu
-        '94670856': 3 anni
+        "1209600": 2 settimane
+        "15778476": 6 mesi
+        "2629746": 1 mese
+        "31556952": 1 annu
+        "86400": 1 ghjornu
+        "94670856": 3 anni
       new:
         title: Creà una nova regula IP
       no_ip_block_selected: E regule ùn sò micca state mudificate perchè manc'un'era selezziunata
@@ -423,7 +423,7 @@ co:
         delete: Toglie
         placeholder: Per parlà di l’azzione pigliate, o altre messe à ghjornu nant’à u signalamentu…
       reopen: Riapre u signalamentu
-      report: 'Signalamente #%{id}'
+      report: "Signalamente #%{id}"
       reported_account: Contu palisatu
       reported_by: Palisatu da
       resolved: Scioltu è chjosu
@@ -516,7 +516,7 @@ co:
     sensitive_content: Cuntinutu sensibile
   application_mailer:
     salutation: "%{name},"
-    view: 'Vede:'
+    view: "Vede:"
     view_profile: Vede u prufile
     view_status: Vede u statutu
   applications:
@@ -589,7 +589,7 @@ co:
     proceed: Sguassà u contu
     success_msg: U vostru contu hè statu sguassatu
     warning:
-      before: 'Nanz''à cuntinuà, leghjete ste note attentamente:'
+      before: "Nanz'à cuntinuà, leghjete ste note attentamente:"
       caches: U cuntinutu indè u cache di l'altri servori sarà forse cunservatu
       data_removal: I vostri posti è dati saranu sguassati di manera permanente
       irreversible: Ùn puderete micca ricuperà o riattivà u vostru contu
@@ -597,19 +597,19 @@ co:
       username_available: U vostru cugnome riduvinterà dispunibule
       username_unavailable: U vostru cugnome ùn sarà sempre micca dispunibule
   errors:
-    '400': A richiesta mandata ùn era micca valida o curretta.
-    '403': Ùn site micca auturizatu·a à vede sta pagina.
-    '404': Sta pagina ùn esiste micca quì.
-    '406': A pagina ùn hè micca dispunivule in u furmatu riquisitu.
-    '410': Sta pagina ùn esiste più quì.
-    '422':
+    "400": A richiesta mandata ùn era micca valida o curretta.
+    "403": Ùn site micca auturizatu·a à vede sta pagina.
+    "404": Sta pagina ùn esiste micca quì.
+    "406": A pagina ùn hè micca dispunivule in u furmatu riquisitu.
+    "410": Sta pagina ùn esiste più quì.
+    "422":
       content: C’hè statu un prublemu cù a verificazione di sicurità. Forse bluccate cookies?
       title: Fiascu di verificazione
-    '429': Limitatu dop’à troppu richieste
-    '500':
+    "429": Limitatu dop’à troppu richieste
+    "500":
       content: Scusate, mà c’hè statu un prublemu cù u nostru servore.
       title: Sta pagina ùn hè curretta
-    '503': A pagina ùn hè micca stata servita per via di un prublemu timpuraneu di u servore.
+    "503": A pagina ùn hè micca stata servita per via di un prublemu timpuraneu di u servore.
     noscript_html: Mastodon nant’à u web hà bisognu di JavaScript per funziunà. Pudete ancu pruvà <a href="%{apps_path}">l’applicazione native</a> per a vostra piattaforma.
   existing_username_validator:
     not_found: ùn si pudeva micca truvà un'utilizatore lucale cù stu cugnome
@@ -677,15 +677,15 @@ co:
     delete: Disattivà
     expired: Spirata
     expires_in:
-      '1800': 30 minuti
-      '21600': 6 ore
-      '3600': 1 ora
-      '43200': 12 ore
-      '604800': 1 settimana
-      '86400': 1 ghjornu
+      "1800": 30 minuti
+      "21600": 6 ore
+      "3600": 1 ora
+      "43200": 12 ore
+      "604800": 1 settimana
+      "86400": 1 ghjornu
     expires_in_prompt: Mai
     generate: Creà
-    invited_by: 'Site statu·a invitatu·a da:'
+    invited_by: "Site statu·a invitatu·a da:"
     max_uses:
       one: 1 usu
       other: "%{count} usi"
@@ -729,7 +729,7 @@ co:
     set_redirect: Creà ridirezzione
     warning:
       backreference_required: U novu contu deve prima esse cunfiguratu per fà rifirenza cù un pseudonimu à quessu contu
-      before: 'Nanz''à cuntinuà, leghjete ste note attentamente:'
+      before: "Nanz'à cuntinuà, leghjete ste note attentamente:"
       cooldown: Dopu à a traslucazione, c'hè una perioda di ricuperazione in quella ùn puderete micca cambià torna di contu
       disabled_account: U contu attuale ùn puderà più esse utilizatu dop'à st'azzione. Però, puderete accede à a spurtazione di dati o riattivà u contu.
       followers: St'azzione hà da spiazzà tutti l'abbunati di u contu attuale nant'à u novu contu
@@ -740,7 +740,7 @@ co:
   move_handler:
     carry_blocks_over_text: St'utilizatore hà traslucatu dapoi %{acct}, ch'aviate bluccatu.
     carry_mutes_over_text: St'utilizatore hà traslucatu dapoi %{acct}, ch'aviate piattatu.
-    copy_account_note_text: 'St''utilizatore hà traslucatu dapoi %{acct}, eccu e vostr''anziane note nant''à ellu:'
+    copy_account_note_text: "St'utilizatore hà traslucatu dapoi %{acct}, eccu e vostr'anziane note nant'à ellu:"
   notification_mailer:
     favourite:
       body: "%{name} hà aghjuntu u vostru statutu à i so favuriti :"
@@ -753,7 +753,7 @@ co:
     follow_request:
       action: Vede e dumande d’abbunamentu
       body: "%{name} vole abbunassi à u vostru contu"
-      subject: 'Dumanda d’abbunamentu: %{name}'
+      subject: "Dumanda d’abbunamentu: %{name}"
       title: Nova dumanda d’abbunamentu
     mention:
       action: Risposta
@@ -763,13 +763,13 @@ co:
     poll:
       subject: Un scandagliu da %{name} hè finitu
     reblog:
-      body: 'U vostru statutu hè statu spartutu da %{name}:'
+      body: "U vostru statutu hè statu spartutu da %{name}:"
       subject: "%{name} hà spartutu u vostru statutu"
       title: Nova spartera
     status:
       subject: "%{name} hà appena pubblicatu"
   notifications:
-    email_events_hint: 'Selezziunate l''avvenimenti per quelli vulete riceve nutificazione:'
+    email_events_hint: "Selezziunate l'avvenimenti per quelli vulete riceve nutificazione:"
   number:
     human:
       decimal_units:
@@ -785,7 +785,7 @@ co:
     description_html: S’ella hè attivata <strong>l’identificazione à dui fattori</strong> cù un'applicazione d'identificazione, duvete avè u vostru telefuninu pè ottene un codice di cunnezzione.
     enable: Attivà
     instructions_html: "<strong>Scanate stu QR code cù Google Authenticator, Authy o qualcosa cusì nant’à u vostru telefuninu</strong>. St’applicazione hà da creà codici da entrà ogni volta chì vi cunnettate."
-    manual_instructions: 'S’ellu ùn hè micca pussibule scanà u QR code, pudete entre sta chjave sicreta:'
+    manual_instructions: "S’ellu ùn hè micca pussibule scanà u QR code, pudete entre sta chjave sicreta:"
     setup: Attivà
     wrong_code: U codice ùn hè micca currettu! Site sicuru·a chì l’ora di l'apparechju è di u servore sò esatte?
   pagination:
@@ -895,7 +895,7 @@ co:
       audio:
         one: "%{count} audio"
         other: "%{count} audio"
-      description: 'Aghjuntu: %{attached}'
+      description: "Aghjuntu: %{attached}"
       image:
         one: "%{count} ritrattu"
         other: "%{count} ritratti"
@@ -903,10 +903,10 @@ co:
         one: "%{count} filmettu"
         other: "%{count} filmetti"
     boosted_from_html: Spartutu dapoi à %{acct_link}
-    content_warning: 'Avertimentu: %{warning}'
+    content_warning: "Avertimentu: %{warning}"
     disallowed_hashtags:
-      one: 'cuntene l’hashtag disattivatu: %{tags}'
-      other: 'cuntene l’hashtag disattivati: %{tags}'
+      one: "cuntene l’hashtag disattivatu: %{tags}"
+      other: "cuntene l’hashtag disattivati: %{tags}"
     errors:
       in_reply_not_found: U statutu à quellu avete pruvatu di risponde ùn sembra micca esiste.
     over_character_limit: site sopr’à a limita di %{max} caratteri
@@ -932,13 +932,13 @@ co:
     keep_self_fav: Cunservà i statuti ch'avete favurizati
     keep_self_fav_hint: Ùn sguassa micca i vostri propii missaghji s'e voi l'avete aghjunti à i vostri favuriti
     min_age:
-      '1209600': 2 settimane
-      '15778476': 6 mesi
-      '2629746': 1 mese
-      '31556952': 1 annu
-      '5259492': 2 mesi
-      '63113904': 2 anni
-      '7889238': 3 mesi
+      "1209600": 2 settimane
+      "15778476": 6 mesi
+      "2629746": 1 mese
+      "31556952": 1 annu
+      "5259492": 2 mesi
+      "63113904": 2 anni
+      "7889238": 3 mesi
     min_age_label: Età minima
     min_favs: Cunservà i statuti favurizzati più di
     min_reblogs: Cunservà i statuti spartuti più di
@@ -989,7 +989,7 @@ co:
     follow_limit_reached: Ùn pidete seguità più di %{limit} conti
     invalid_otp_token: U codice d’identificazione ùn hè currettu
     otp_lost_help_html: S’è voi avete persu i dui, pudete cuntattà %{email}
-    signed_in_as: 'Cunnettatu·a cum’è:'
+    signed_in_as: "Cunnettatu·a cum’è:"
   verification:
     verification: Verificazione
   webauthn_credentials:

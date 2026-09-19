@@ -41,10 +41,10 @@
 
     &::before {
       display: block;
-      content: '';
+      content: "";
       width: 24px;
       height: 20px;
-      mask-image: url('@/images/quote.svg');
+      mask-image: url("@/images/quote.svg");
       background-color: var(--rich-text-decorations-color);
       position: absolute;
       inset-inline-start: 0;
@@ -103,7 +103,7 @@
   }
 
   ul {
-    list-style-type: '•';
+    list-style-type: "•";
 
     li::marker {
       text-align: start;

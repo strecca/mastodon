@@ -1,7 +1,7 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from "react";
 
-const STORAGE_KEY = 'viewing_locale';
-const CHANGE_EVENT = 'viewing-locale-change';
+const STORAGE_KEY = "viewing_locale";
+const CHANGE_EVENT = "viewing-locale-change";
 
 /**
  * Manages the "viewing language" for community directory content.
@@ -12,13 +12,10 @@ const CHANGE_EVENT = 'viewing-locale-change';
  * When null, falls back to the account locale (intl.locale).
  */
 export function useViewingLocale() {
-  const [viewingLocale, setViewingLocaleState] = useState(
-    () => localStorage.getItem(STORAGE_KEY),
-  );
+  const [viewingLocale, setViewingLocaleState] = useState(() => localStorage.getItem(STORAGE_KEY));
 
   useEffect(() => {
-    const handler = () =>
-      setViewingLocaleState(localStorage.getItem(STORAGE_KEY));
+    const handler = () => setViewingLocaleState(localStorage.getItem(STORAGE_KEY));
     window.addEventListener(CHANGE_EVENT, handler);
     return () => window.removeEventListener(CHANGE_EVENT, handler);
   }, []);

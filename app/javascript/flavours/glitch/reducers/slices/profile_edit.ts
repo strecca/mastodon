@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchAccount } from '@/flavours/glitch/actions/accounts';
+import { fetchAccount } from "@/flavours/glitch/actions/accounts";
 import {
   apiDeleteFeaturedTag,
   apiDeleteProfileAvatar,
@@ -10,31 +10,25 @@ import {
   apiGetTagSuggestions,
   apiPatchProfile,
   apiPostFeaturedTag,
-} from '@/flavours/glitch/api/accounts';
-import type { ApiAccountFieldJSON } from '@/flavours/glitch/api_types/accounts';
-import type {
-  ApiProfileJSON,
-  ApiProfileUpdateParams,
-} from '@/flavours/glitch/api_types/profile';
-import type {
-  ApiFeaturedTagJSON,
-  ApiHashtagJSON,
-} from '@/flavours/glitch/api_types/tags';
+} from "@/flavours/glitch/api/accounts";
+import type { ApiAccountFieldJSON } from "@/flavours/glitch/api_types/accounts";
+import type { ApiProfileJSON, ApiProfileUpdateParams } from "@/flavours/glitch/api_types/profile";
+import type { ApiFeaturedTagJSON, ApiHashtagJSON } from "@/flavours/glitch/api_types/tags";
 import {
   createAppAsyncThunk,
   createAppSelector,
   createDataLoadingThunk,
-} from '@/flavours/glitch/store/typed_functions';
-import { hashObjectArray } from '@/flavours/glitch/utils/hash';
-import type { SnakeToCamelCase } from '@/flavours/glitch/utils/types';
+} from "@/flavours/glitch/store/typed_functions";
+import { hashObjectArray } from "@/flavours/glitch/utils/hash";
+import type { SnakeToCamelCase } from "@/flavours/glitch/utils/types";
 
 type ProfileData = {
   [Key in keyof Omit<
     ApiProfileJSON,
-    'note' | 'fields' | 'featured_tags'
+    "note" | "fields" | "featured_tags"
   > as SnakeToCamelCase<Key>]: ApiProfileJSON[Key];
 } & {
-  bio: ApiProfileJSON['note'];
+  bio: ApiProfileJSON["note"];
   fields: FieldData[];
   featuredTags: TagData[];
 };
@@ -44,7 +38,7 @@ export type FieldData = ApiAccountFieldJSON & { id: string };
 export type TagData = {
   [Key in keyof Omit<
     ApiFeaturedTagJSON,
-    'statuses_count'
+    "statuses_count"
   > as SnakeToCamelCase<Key>]: ApiFeaturedTagJSON[Key];
 } & {
   statusesCount: number;
@@ -61,7 +55,7 @@ const initialState: ProfileEditState = {
 };
 
 const profileEditSlice = createSlice({
-  name: 'profileEdit',
+  name: "profileEdit",
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -200,13 +194,10 @@ export const patchProfile = createDataLoadingThunk(
   },
 );
 
-export type ImageLocation = 'avatar' | 'header';
+export type ImageLocation = "avatar" | "header";
 
 export const selectImageInfo = createAppSelector(
-  [
-    (state) => state.profileEdit.profile,
-    (_, location: ImageLocation) => location,
-  ],
+  [(state) => state.profileEdit.profile, (_, location: ImageLocation) => location],
   (profile, location) => {
     if (!profile) {
       return {};
@@ -243,7 +234,7 @@ export const uploadImage = createDataLoadingThunk(
 export const deleteImage = createDataLoadingThunk(
   `${profileEditSlice.name}/deleteImage`,
   (arg: { location: ImageLocation }) => {
-    if (arg.location === 'avatar') {
+    if (arg.location === "avatar") {
       return apiDeleteProfileAvatar();
     } else {
       return apiDeleteProfileHeader();
@@ -273,23 +264,19 @@ export const selectFieldById = createAppSelector(
 
 export const updateField = createAppAsyncThunk(
   `${profileEditSlice.name}/updateField`,
-  async (
-    arg: { id?: string; name: string; value: string },
-    { getState, dispatch },
-  ) => {
+  async (arg: { id?: string; name: string; value: string }, { getState, dispatch }) => {
     const fields = getState().profileEdit.profile?.fields;
     if (!fields) {
-      throw new Error('Profile fields not found');
+      throw new Error("Profile fields not found");
     }
 
-    const maxFields =
-      getState().server.server.item?.configuration.accounts.max_profile_fields;
+    const maxFields = getState().server.server.item?.configuration.accounts.max_profile_fields;
     if (maxFields && fields.length >= maxFields && !arg.id) {
-      throw new Error('Maximum number of profile fields reached');
+      throw new Error("Maximum number of profile fields reached");
     }
 
     // Replace the field data if there is an ID, otherwise append a new field.
-    const newFields: Pick<ApiAccountFieldJSON, 'name' | 'value'>[] = [];
+    const newFields: Pick<ApiAccountFieldJSON, "name" | "value">[] = [];
     for (const field of fields) {
       if (field.id === arg.id) {
         newFields.push({ name: arg.name, value: arg.value });
@@ -314,11 +301,11 @@ export const removeField = createAppAsyncThunk(
   async (arg: { key: string }, { getState, dispatch }) => {
     const fields = getState().profileEdit.profile?.fields;
     if (!fields) {
-      throw new Error('Profile fields not found');
+      throw new Error("Profile fields not found");
     }
     const field = fields.find((f) => f.id === arg.key);
     if (!field) {
-      throw new Error('Field not found');
+      throw new Error("Field not found");
     }
     const newFields = fields
       .filter((f) => f.id !== arg.key)
@@ -348,8 +335,7 @@ export const fetchSuggestedTags = createDataLoadingThunk(
 
 export const addFeaturedTags = createDataLoadingThunk(
   `${profileEditSlice.name}/addFeaturedTag`,
-  ({ names }: { names: string[] }) =>
-    Promise.all(names.map((n) => apiPostFeaturedTag(n))),
+  ({ names }: { names: string[] }) => Promise.all(names.map((n) => apiPostFeaturedTag(n))),
   { useLoadingBar: false },
 );
 

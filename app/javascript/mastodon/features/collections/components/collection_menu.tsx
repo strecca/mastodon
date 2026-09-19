@@ -1,61 +1,61 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { showAlert } from '@/mastodon/actions/alerts';
-import { initBlockModal } from '@/mastodon/actions/blocks';
-import { useAccount } from '@/mastodon/hooks/useAccount';
-import MoreVertIcon from '@/material-icons/400-24px/more_vert.svg?react';
-import { openModal } from 'mastodon/actions/modal';
-import type { ApiCollectionJSON } from 'mastodon/api_types/collections';
-import { Dropdown } from 'mastodon/components/dropdown_menu';
-import { IconButton } from 'mastodon/components/icon_button';
-import { me } from 'mastodon/initial_state';
-import type { MenuItem } from 'mastodon/models/dropdown_menu';
-import { useAppDispatch } from 'mastodon/store';
+import { showAlert } from "@/mastodon/actions/alerts";
+import { initBlockModal } from "@/mastodon/actions/blocks";
+import { useAccount } from "@/mastodon/hooks/useAccount";
+import MoreVertIcon from "@/material-icons/400-24px/more_vert.svg?react";
+import { openModal } from "mastodon/actions/modal";
+import type { ApiCollectionJSON } from "mastodon/api_types/collections";
+import { Dropdown } from "mastodon/components/dropdown_menu";
+import { IconButton } from "mastodon/components/icon_button";
+import { me } from "mastodon/initial_state";
+import type { MenuItem } from "mastodon/models/dropdown_menu";
+import { useAppDispatch } from "mastodon/store";
 
-import { messages as editorMessages } from '../editor';
-import { getCollectionPath } from '../utils';
+import { messages as editorMessages } from "../editor";
+import { getCollectionPath } from "../utils";
 
 const messages = defineMessages({
   view: {
-    id: 'collections.view_collection',
-    defaultMessage: 'View collection',
+    id: "collections.view_collection",
+    defaultMessage: "View collection",
   },
   share: {
-    id: 'collections.share_short',
-    defaultMessage: 'Share',
+    id: "collections.share_short",
+    defaultMessage: "Share",
   },
   copyLink: {
-    id: 'collections.copy_link',
-    defaultMessage: 'Copy link',
+    id: "collections.copy_link",
+    defaultMessage: "Copy link",
   },
   copyLinkConfirmation: {
-    id: 'collections.copy_link_confirmation',
-    defaultMessage: 'Copied collection link to clipboard',
+    id: "collections.copy_link_confirmation",
+    defaultMessage: "Copied collection link to clipboard",
   },
   delete: {
-    id: 'collections.delete_collection',
-    defaultMessage: 'Delete collection',
+    id: "collections.delete_collection",
+    defaultMessage: "Delete collection",
   },
   report: {
-    id: 'collections.report_collection',
-    defaultMessage: 'Report this collection',
+    id: "collections.report_collection",
+    defaultMessage: "Report this collection",
   },
   blockOwner: {
-    id: 'collections.block_collection_owner',
-    defaultMessage: 'Block account',
+    id: "collections.block_collection_owner",
+    defaultMessage: "Block account",
   },
   revoke: {
-    id: 'collections.revoke_collection_inclusion',
-    defaultMessage: 'Remove myself from this collection',
+    id: "collections.revoke_collection_inclusion",
+    defaultMessage: "Remove myself from this collection",
   },
-  more: { id: 'status.more', defaultMessage: 'More' },
+  more: { id: "status.more", defaultMessage: "More" },
 });
 
 export const CollectionMenu: React.FC<{
   collection: ApiCollectionJSON;
-  context: 'list' | 'notifications' | 'collection';
+  context: "list" | "notifications" | "collection";
   className?: string;
 }> = ({ collection, context, className }) => {
   const dispatch = useAppDispatch();
@@ -64,14 +64,12 @@ export const CollectionMenu: React.FC<{
   const { id, name, account_id, items } = collection;
   const ownerAccount = useAccount(account_id);
   const isOwnCollection = account_id === me;
-  const currentAccountInCollection = items.find(
-    (item) => item.account_id === me,
-  );
+  const currentAccountInCollection = items.find((item) => item.account_id === me);
 
   const openShareModal = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'SHARE_COLLECTION',
+        modalType: "SHARE_COLLECTION",
         modalProps: {
           collection,
         },
@@ -82,7 +80,7 @@ export const CollectionMenu: React.FC<{
   const openDeleteConfirmation = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'CONFIRM_DELETE_COLLECTION',
+        modalType: "CONFIRM_DELETE_COLLECTION",
         modalProps: {
           name,
           id,
@@ -94,7 +92,7 @@ export const CollectionMenu: React.FC<{
   const openReportModal = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'REPORT_COLLECTION',
+        modalType: "REPORT_COLLECTION",
         modalProps: {
           collection,
         },
@@ -109,7 +107,7 @@ export const CollectionMenu: React.FC<{
   const openRevokeConfirmation = useCallback(() => {
     void dispatch(
       openModal({
-        modalType: 'REVOKE_COLLECTION_INCLUSION',
+        modalType: "REVOKE_COLLECTION_INCLUSION",
         modalProps: {
           collectionId: collection.id,
           collectionItemId: currentAccountInCollection?.id,
@@ -157,7 +155,7 @@ export const CollectionMenu: React.FC<{
         },
       ];
 
-      if (context === 'list') {
+      if (context === "list") {
         return [viewCollectionItem, ...ownerItems];
       } else {
         return ownerItems;
@@ -166,7 +164,7 @@ export const CollectionMenu: React.FC<{
       const nonOwnerItems: MenuItem[] = [...shareItems, null];
 
       // Collection notifications already have a prominent 'Remove me' button
-      if (currentAccountInCollection && context !== 'notifications') {
+      if (currentAccountInCollection && context !== "notifications") {
         nonOwnerItems.push({
           text: intl.formatMessage(messages.revoke),
           action: openRevokeConfirmation,
@@ -185,7 +183,7 @@ export const CollectionMenu: React.FC<{
         });
       }
 
-      if (context !== 'collection') {
+      if (context !== "collection") {
         return [viewCollectionItem, ...nonOwnerItems];
       }
 
@@ -207,9 +205,9 @@ export const CollectionMenu: React.FC<{
   ]);
 
   return (
-    <Dropdown scrollKey='collections' items={menu}>
+    <Dropdown scrollKey="collections" items={menu}>
       <IconButton
-        icon='menu-icon'
+        icon="menu-icon"
         iconComponent={MoreVertIcon}
         title={intl.formatMessage(messages.more)}
         className={className}

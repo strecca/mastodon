@@ -1,6 +1,6 @@
-@use 'sass:color';
-@use 'variables' as *;
-@use 'mixins' as *;
+@use "sass:color";
+@use "variables" as *;
+@use "mixins" as *;
 
 .app-body {
   -webkit-overflow-scrolling: touch;
@@ -396,7 +396,7 @@ body > [data-popper-placement] {
 
 .ellipsis {
   &::after {
-    content: '…';
+    content: "…";
   }
 }
 
@@ -590,7 +590,7 @@ body > [data-popper-placement] {
     align-items: stretch;
 
     &__border {
-      background: url('@/images/warning-stripes.svg') repeat-y;
+      background: url("@/images/warning-stripes.svg") repeat-y;
       width: 5px;
       flex: 0 0 auto;
     }
@@ -780,7 +780,7 @@ body > [data-popper-placement] {
   &__sensitive-button {
     padding: 0 12px;
 
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       appearance: none;
       display: block;
       border: 1px solid var(--color-text-secondary);
@@ -1165,7 +1165,7 @@ body > [data-popper-placement] {
     --text-decoration-default: none;
     --text-decoration-hover: underline;
 
-    [data-contrast='high'] & {
+    [data-contrast="high"] & {
       --text-decoration-default: underline;
       --text-decoration-hover: none;
     }
@@ -1254,7 +1254,7 @@ body > [data-popper-placement] {
 
     &::before {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       inset-inline-start: 50%;
       top: 4px;
@@ -1434,9 +1434,7 @@ body > [data-popper-placement] {
   // the start of this element's text is cut off.
 
   // Posts on the timeline
-  .status:not(.status--is-quote)
-    > .status__content
-    > .status__content__text:lang(#{$lang}),
+  .status:not(.status--is-quote) > .status__content > .status__content__text:lang(#{$lang}),
   .conversation
     > .conversation__content
     > .status__content
@@ -1458,10 +1456,7 @@ body > [data-popper-placement] {
   }
 
   // Alt text editor
-  .dialog-modal__content__form
-    > .input
-    > .label_input
-    > textarea#description:lang(#{$lang}) {
+  .dialog-modal__content__form > .input > .label_input > textarea#description:lang(#{$lang}) {
     writing-mode: vertical-lr;
     min-height: 150px; // writable
     max-height: 150px; // suppress autosizing by react-textarea-autosize
@@ -1507,7 +1502,7 @@ body > [data-popper-placement] {
     text-decoration: underline;
   }
 
-  [data-contrast='high'] & {
+  [data-contrast="high"] & {
     text-decoration: underline;
 
     &:hover,
@@ -1667,7 +1662,7 @@ body > [data-popper-placement] {
       height: 100%;
 
       &::before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 10px - 4px;
@@ -1689,7 +1684,7 @@ body > [data-popper-placement] {
   }
 
   .no-reduce-motion &--highlighted-entry::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
@@ -2419,8 +2414,7 @@ body > [data-popper-placement] {
       inset-inline-start: 50%;
       transform: translate(-50%, -50%);
       color: var(--color-text-primary);
-      text-shadow: 1px 1px 2px
-        rgb(from var(--color-shadow-primary) r g b / 100%);
+      text-shadow: 1px 1px 2px rgb(from var(--color-shadow-primary) r g b / 100%);
       font-weight: 700;
       font-size: 15px;
     }
@@ -3030,7 +3024,7 @@ a.account__display-name {
     &:focus,
     &:hover,
     &:active {
-      &:where(:not(:disabled, [aria-disabled='true'])) {
+      &:where(:not(:disabled, [aria-disabled="true"])) {
         background: var(--color-bg-brand-softest);
         outline: 0;
       }
@@ -3042,7 +3036,7 @@ a.account__display-name {
   }
 
   button:disabled,
-  button[aria-disabled='true'] {
+  button[aria-disabled="true"] {
     color: var(--color-text-disabled);
     cursor: default;
 
@@ -3053,7 +3047,7 @@ a.account__display-name {
     }
   }
 
-  button:is(:disabled, [aria-disabled='true']) &-subtitle {
+  button:is(:disabled, [aria-disabled="true"]) &-subtitle {
     color: inherit;
   }
 }
@@ -3342,9 +3336,7 @@ a.account__display-name {
   height: 100%;
 
   @media (max-width: #{$mobile-menu-breakpoint - 1}) {
-    padding-bottom: calc(
-      var(--mobile-bottom-nav-height) - var(--last-content-item-border-width)
-    );
+    padding-bottom: calc(var(--mobile-bottom-nav-height) - var(--last-content-item-border-width));
   }
 }
 
@@ -3622,7 +3614,8 @@ a.account__display-name {
     flex-shrink: 0;
   }
 
-  &:hover, &:focus-visible {
+  &:hover,
+  &:focus-visible {
     background: #0d47a1;
   }
 }
@@ -3709,7 +3702,8 @@ a.account__display-name {
       fill: currentColor;
     }
 
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
       background: rgb(255 255 255 / 15%);
     }
   }
@@ -4076,7 +4070,7 @@ a.account__display-name {
 .navigation-panel,
 .compose-panel {
   hr,
-  li[role='separator'] {
+  li[role="separator"] {
     flex: 0 0 auto;
     border: 0;
     background: transparent;
@@ -4376,11 +4370,7 @@ a.account__display-name {
   font-weight: 400;
   text-decoration: none;
   white-space: nowrap;
-  color: color-mix(
-    in oklab,
-    var(--color-text-primary),
-    var(--color-text-secondary)
-  );
+  color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
   background: transparent;
   border: none;
   border-radius: 4px;
@@ -4907,7 +4897,7 @@ a.status-card {
 
     &::before {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       bottom: -13px;
       inset-inline-start: 0;
@@ -5533,11 +5523,7 @@ a.status-card {
       @include search-input;
 
       &::placeholder {
-        color: color-mix(
-          in oklab,
-          var(--color-text-primary),
-          var(--color-text-secondary)
-        );
+        color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
       }
 
       &::-moz-focus-inner {
@@ -5579,11 +5565,7 @@ a.status-card {
         &:active,
         &:focus {
           background: var(--color-bg-brand-softest);
-          color: color-mix(
-            in oklab,
-            var(--color-text-primary),
-            var(--color-text-secondary)
-          );
+          color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
         }
       }
     }
@@ -6633,7 +6615,7 @@ a.status-card {
     box-shadow: 0 0 0 2px var(--color-border-brand);
   }
 
-  &[aria-hidden='true'] {
+  &[aria-hidden="true"] {
     pointer-events: none;
     opacity: 0;
     transform: rotate(-90deg);
@@ -6770,8 +6752,7 @@ a.status-card {
       --default-bg-color: transparent;
       --hover-icon-color: var(--color-text-on-media);
       --hover-bg-color: rgb(
-        from var(--color-text-on-media) r g b /
-          var(--overlay-strength-secondary)
+        from var(--color-text-on-media) r g b / var(--overlay-strength-secondary)
       );
 
       padding: 8px;
@@ -6873,9 +6854,7 @@ a.status-card {
   &:hover .icon,
   &:focus .icon,
   &:active .icon {
-    background: rgb(
-      from var(--color-text-on-media) r g b / var(--overlay-strength-secondary)
-    );
+    background: rgb(from var(--color-text-on-media) r g b / var(--overlay-strength-secondary));
   }
 }
 
@@ -6921,9 +6900,7 @@ a.status-card {
       &.star-icon.active {
         --default-icon-color: var(--color-text-favourite-highlight);
         --hover-icon-color: var(--color-text-favourite-highlight);
-        --hover-bg-color: rgb(
-          from var(--color-text-favourite-highlight) r g b / 10%
-        );
+        --hover-bg-color: rgb(from var(--color-text-favourite-highlight) r g b / 10%);
       }
 
       &.disabled {
@@ -8181,7 +8158,7 @@ img.modal-warning {
 
   // Double focus outline for better visibility on photos
   &:focus-visible::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 2px;
     z-index: 1;
@@ -8473,11 +8450,7 @@ img.modal-warning {
       &:hover,
       &:active,
       &:focus {
-        color: color-mix(
-          in oklab,
-          var(--color-text-primary),
-          var(--color-text-secondary)
-        );
+        color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
       }
     }
 
@@ -8575,7 +8548,7 @@ img.modal-warning {
     }
 
     &::before {
-      content: '';
+      content: "";
       width: 50px;
       background: rgb(from var(--color-text-on-media) r g b / 35%);
       border-radius: 4px;
@@ -8645,7 +8618,7 @@ img.modal-warning {
     position: relative;
 
     &::before {
-      content: '';
+      content: "";
       width: 100%;
       background: rgb(from var(--color-text-on-media) r g b / 35%);
       border-radius: 4px;
@@ -8821,7 +8794,7 @@ img.modal-warning {
 
       &::before {
         display: block;
-        content: '';
+        content: "";
         position: absolute;
         bottom: -1px;
         left: 50%;
@@ -8918,8 +8891,8 @@ img.modal-warning {
   gap: 10px;
   color: var(--color-text-primary);
 
-  input[type='radio'],
-  input[type='checkbox'] {
+  input[type="radio"],
+  input[type="checkbox"] {
     display: none;
   }
 
@@ -8948,7 +8921,7 @@ img.modal-warning {
 }
 
 .radio-button__input.checked::before {
-  content: '';
+  content: "";
   display: block;
   border-radius: 50%;
   width: calc(100% - 4px);
@@ -9398,11 +9371,7 @@ noscript {
   &__item {
     flex-shrink: 0;
     background: var(--color-bg-brand-softest);
-    color: color-mix(
-      in oklab,
-      var(--color-text-primary),
-      var(--color-text-secondary)
-    );
+    color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
     border: 1px solid var(--color-border-brand-soft);
     border-radius: 3px;
     box-sizing: border-box;
@@ -9486,11 +9455,7 @@ noscript {
     &:active,
     &:focus {
       opacity: 1;
-      color: color-mix(
-        in oklab,
-        var(--color-text-primary),
-        var(--color-text-secondary)
-      );
+      color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
       transition: all 200ms ease-out;
       transition-property: background-color, color;
     }
@@ -9510,7 +9475,7 @@ noscript {
 
   &.unread {
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       inset-inline-start: 0;
@@ -9889,7 +9854,7 @@ noscript {
     text-align: center;
     font-size: 13px;
     font-weight: 700;
-    color: #6B1A30 !important;
+    color: #6b1a30 !important;
     margin-bottom: 16px;
     letter-spacing: 0.01em;
   }
@@ -10038,11 +10003,7 @@ noscript {
         min-width: 0;
 
         &::placeholder {
-          color: color-mix(
-            in oklab,
-            var(--color-text-primary),
-            var(--color-text-secondary)
-          );
+          color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
         }
 
         &:focus {
@@ -10205,14 +10166,14 @@ noscript {
     counter-increment: list-counter;
 
     &::before {
-      content: counter(list-counter) '.';
+      content: counter(list-counter) ".";
       position: absolute;
       inset-inline-start: 0;
     }
   }
 
   ul > li::before {
-    content: '';
+    content: "";
     position: absolute;
     background-color: var(--color-text-secondary);
     border-radius: 50%;
@@ -10478,7 +10439,7 @@ noscript {
       text-align: center;
       font-size: 14px;
       font-weight: 700;
-      color: #6B1A30 !important;
+      color: #6b1a30 !important;
       margin-bottom: 20px;
       letter-spacing: 0.01em;
     }
@@ -10488,7 +10449,7 @@ noscript {
       padding: 16px;
       background: var(--color-bg-elevated);
       border-radius: 8px;
-      border-left: 4px solid #6B1A30;
+      border-left: 4px solid #6b1a30;
       overflow: hidden;
 
       &-photo {
@@ -10498,7 +10459,7 @@ noscript {
         object-fit: cover;
         border-radius: 50%;
         margin: 0 0 12px 16px;
-        border: 3px solid #6B1A30;
+        border: 3px solid #6b1a30;
         flex-shrink: 0;
 
         @media (max-width: 480px) {
@@ -10514,7 +10475,9 @@ noscript {
         text-align: left !important;
         margin-bottom: 10px;
 
-        &:last-child { margin-bottom: 0; }
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
 
@@ -10751,9 +10714,7 @@ noscript {
   line-height: 21px;
 
   &.from-side {
-    translate: calc(
-      -1 * (100% + var(--alert-edge-spacing)) * var(--text-x-direction)
-    );
+    translate: calc(-1 * (100% + var(--alert-edge-spacing)) * var(--text-x-direction));
   }
 
   &.from-below {
@@ -10925,11 +10886,7 @@ noscript {
   font-size: 12px;
   line-height: 16px;
   gap: 6px;
-  color: color-mix(
-    in oklab,
-    var(--color-text-primary),
-    var(--color-text-secondary)
-  );
+  color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
 
   a {
     display: inline-flex;
@@ -11604,7 +11561,7 @@ noscript {
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     inset-inline-start: 0;
@@ -11615,7 +11572,7 @@ noscript {
   }
 }
 
-.hover-card-controller[data-popper-reference-hidden='true'] {
+.hover-card-controller[data-popper-reference-hidden="true"] {
   opacity: 0;
   pointer-events: none;
 }
@@ -12145,7 +12102,7 @@ noscript {
     letter-spacing: -1px;
     color: #ffffff;
     line-height: 1;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: Georgia, "Times New Roman", serif;
   }
 
   &__masthead-subtitle {
@@ -12259,7 +12216,7 @@ noscript {
       float: left;
       font-size: 52px;
       line-height: 0.85;
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: Georgia, "Times New Roman", serif;
       font-weight: 700;
       color: #c9a84c;
       margin: 4px 8px 0 0;
@@ -12272,7 +12229,9 @@ noscript {
     text-decoration: underline;
     text-underline-offset: 2px;
 
-    &:hover { color: #dac487; }
+    &:hover {
+      color: #dac487;
+    }
   }
 
   &__newsletter-btn {
@@ -12290,7 +12249,10 @@ noscript {
     vertical-align: baseline;
     transition: background 0.15s;
 
-    &:hover { background: #d5bb73; color: #1a1a2e; }
+    &:hover {
+      background: #d5bb73;
+      color: #1a1a2e;
+    }
   }
 
   &__footer {
@@ -12307,7 +12269,9 @@ noscript {
     color: rgba(#c9a84c, 0.7);
     text-decoration: none;
 
-    &:hover { color: #c9a84c; }
+    &:hover {
+      color: #c9a84c;
+    }
   }
 
   // Empty state -------------------------------------------------------------

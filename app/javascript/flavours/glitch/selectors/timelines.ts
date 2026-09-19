@@ -1,9 +1,9 @@
-import type { Map as ImmutableMap } from 'immutable';
-import { List as ImmutableList } from 'immutable';
+import type { Map as ImmutableMap } from "immutable";
+import { List as ImmutableList } from "immutable";
 
-import type { TimelineParams } from '../actions/timelines_typed';
-import { timelineKey } from '../actions/timelines_typed';
-import { createAppSelector } from '../store';
+import type { TimelineParams } from "../actions/timelines_typed";
+import { timelineKey } from "../actions/timelines_typed";
+import { createAppSelector } from "../store";
 
 interface TimelineShape {
   unread: number;
@@ -34,8 +34,7 @@ export const selectTimelineByParams = createAppSelector(
 
 export const selectTimelinesByAccount = createAppSelector(
   [(state) => state.timelines, (_, accountId: string) => accountId],
-  (timelines, accountId) =>
-    timelines.filter((_, key) => key.startsWith(`account:${accountId}:`)),
+  (timelines, accountId) => timelines.filter((_, key) => key.startsWith(`account:${accountId}:`)),
 );
 
 export function toTypedTimeline(timeline?: ImmutableMap<string, unknown>) {
@@ -43,15 +42,12 @@ export function toTypedTimeline(timeline?: ImmutableMap<string, unknown>) {
     return null;
   }
   return {
-    unread: timeline.get('unread', 0) as number,
-    online: !!timeline.get('online', false),
-    top: !!timeline.get('top', false),
-    isLoading: !!timeline.get('isLoading', true),
-    hasMore: !!timeline.get('hasMore', false),
-    pendingItems: timeline.get(
-      'pendingItems',
-      emptyList,
-    ) as ImmutableList<string>,
-    items: timeline.get('items', emptyList) as ImmutableList<string>,
+    unread: timeline.get("unread", 0) as number,
+    online: !!timeline.get("online", false),
+    top: !!timeline.get("top", false),
+    isLoading: !!timeline.get("isLoading", true),
+    hasMore: !!timeline.get("hasMore", false),
+    pendingItems: timeline.get("pendingItems", emptyList) as ImmutableList<string>,
+    items: timeline.get("items", emptyList) as ImmutableList<string>,
   } satisfies TimelineShape;
 }

@@ -8,7 +8,7 @@ pl:
         display_name: Twoje imię lub pseudonim.
         fields: Co ci się tylko podoba – twoja strona domowa, zaimki, wiek…
         indexable: Twoje publiczne wpisy mogą pojawiać się w wynikach wyszukiwania w Mastodonie. Użytkownicy, którzy reagowali na Twoje wpisy, będą mogli je znaleźć niezależnie od tego ustawienia.
-        note: 'Możesz @wspomnieć użytkowników albo #hasztagi.'
+        note: "Możesz @wspomnieć użytkowników albo #hasztagi."
         show_collections: Twoja lista obserwowanych i obserwujących będzie widoczna dla wszystkich. Użytkownicy których obserwujesz będą jednak o tym wiedzieli.
         unlocked: Inni użytkownicy będą mogli cię obserwować bez proszenia o zgodę. Odznacz, jeżeli chcesz aprobować obserwujących ręcznie po przejrzeniu próśb o obserwowanie.
       account_alias:
@@ -76,7 +76,7 @@ pl:
         domain: To może być nazwa domeny, która pojawia się w adresie e-mail lub rekordzie MX, którego używa. Zostaną one sprawdzone przy rejestracji.
         with_dns_records: Zostanie wykonana próba rozwiązania rekordów DNS podanej domeny, a wyniki również zostaną dodane na czarną listę
       featured_tag:
-        name: 'Oto niektóre hasztagi, których były ostatnio przez ciebie użyte:'
+        name: "Oto niektóre hasztagi, których były ostatnio przez ciebie użyte:"
       filters:
         action: Wybierz akcję do wykonania, gdy wpis pasuje do filtra
         actions:
@@ -129,7 +129,7 @@ pl:
         hint: Opcjonalne. Dodaj więcej szczegółów dot. tej zasady
         text: Opisz wymóg lub regułę dla użytkowników na tym serwerze. Postaraj się, aby była krótka i prosta
       sessions:
-        otp: 'Wprowadź kod weryfikacji dwuetapowej z telefonu lub wykorzystaj jeden z kodów zapasowych:'
+        otp: "Wprowadź kod weryfikacji dwuetapowej z telefonu lub wykorzystaj jeden z kodów zapasowych:"
         webauthn: Jeżeli jest to klucz USB, upewnij się, że go włożyłeś i, jeśli to konieczne, naciśnij go.
       settings:
         indexable: Twój profil pojawi się w wynikach wyszukiwarek internetowych.
@@ -402,7 +402,7 @@ pl:
         events: Włączone zdarzenia
         template: Szablon zawartości
         url: Endpoint URL
-    'no': Nie
+    "no": Nie
     not_recommended: Niezalecane
     overridden: Nadpisane
     recommended: Polecane
@@ -412,4 +412,4 @@ pl:
     title:
       sessions:
         webauthn: Użyj jednego ze swoich kluczy bezpieczeństwa, aby się zalogować
-    'yes': Tak
+    "yes": Tak

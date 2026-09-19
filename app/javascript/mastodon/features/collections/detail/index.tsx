@@ -1,50 +1,47 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { useHistory, useLocation, useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from "react-router";
+import { Link } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import HelpIcon from '@/material-icons/400-24px/help.svg?react';
-import ListAltIcon from '@/material-icons/400-24px/list_alt.svg?react';
-import ShareIcon from '@/material-icons/400-24px/share.svg?react';
-import StarIcon from '@/material-icons/400-24px/star.svg?react';
-import { openModal } from 'mastodon/actions/modal';
-import type {
-  ApiCollectionJSON,
-  CollectionAccountItem,
-} from 'mastodon/api_types/collections';
-import { Badge } from 'mastodon/components/badge';
-import { Callout } from 'mastodon/components/callout';
-import { Column } from 'mastodon/components/column';
-import { ColumnHeader } from 'mastodon/components/column_header';
-import { DisplayName } from 'mastodon/components/display_name';
-import { useAccountHandle } from 'mastodon/components/display_name/default';
-import { FormattedDateWrapper } from 'mastodon/components/formatted_date';
-import { IconButton } from 'mastodon/components/icon_button';
-import { LoadingIndicator } from 'mastodon/components/loading_indicator';
-import { Scrollable } from 'mastodon/components/scrollable_list/components';
-import { useAccount } from 'mastodon/hooks/useAccount';
-import { domain, me } from 'mastodon/initial_state';
-import { fetchCollection } from 'mastodon/reducers/slices/collections';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+import HelpIcon from "@/material-icons/400-24px/help.svg?react";
+import ListAltIcon from "@/material-icons/400-24px/list_alt.svg?react";
+import ShareIcon from "@/material-icons/400-24px/share.svg?react";
+import StarIcon from "@/material-icons/400-24px/star.svg?react";
+import { openModal } from "mastodon/actions/modal";
+import type { ApiCollectionJSON, CollectionAccountItem } from "mastodon/api_types/collections";
+import { Badge } from "mastodon/components/badge";
+import { Callout } from "mastodon/components/callout";
+import { Column } from "mastodon/components/column";
+import { ColumnHeader } from "mastodon/components/column_header";
+import { DisplayName } from "mastodon/components/display_name";
+import { useAccountHandle } from "mastodon/components/display_name/default";
+import { FormattedDateWrapper } from "mastodon/components/formatted_date";
+import { IconButton } from "mastodon/components/icon_button";
+import { LoadingIndicator } from "mastodon/components/loading_indicator";
+import { Scrollable } from "mastodon/components/scrollable_list/components";
+import { useAccount } from "mastodon/hooks/useAccount";
+import { domain, me } from "mastodon/initial_state";
+import { fetchCollection } from "mastodon/reducers/slices/collections";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
-import { CollectionMenu } from '../components/collection_menu';
+import { CollectionMenu } from "../components/collection_menu";
 
-import { CollectionAccountsList } from './accounts_list';
-import { useConfirmRevoke } from './revoke_collection_inclusion_modal';
-import classes from './styles.module.scss';
+import { CollectionAccountsList } from "./accounts_list";
+import { useConfirmRevoke } from "./revoke_collection_inclusion_modal";
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   loading: {
-    id: 'collections.detail.loading',
-    defaultMessage: 'Loading collection…',
+    id: "collections.detail.loading",
+    defaultMessage: "Loading collection…",
   },
   share: {
-    id: 'collections.detail.share',
-    defaultMessage: 'Share this collection',
+    id: "collections.detail.share",
+    defaultMessage: "Share this collection",
   },
 });
 
@@ -65,8 +62,8 @@ export const AuthorNote: React.FC<{ id: string }> = ({ id }) => {
   return (
     <p className={classes.authorNote}>
       <FormattedMessage
-        id='collections.by_account'
-        defaultMessage='by {account_handle}'
+        id="collections.by_account"
+        defaultMessage="by {account_handle}"
         values={{
           account_handle: author,
         }}
@@ -87,29 +84,26 @@ const RevokeControls: React.FC<{
       icon={StarIcon}
       title={
         <FormattedMessage
-          id='collections.detail.you_are_in_this_collection'
+          id="collections.detail.you_are_in_this_collection"
           defaultMessage="You're featured in this collection"
         />
       }
       primaryLabel={
-        <FormattedMessage
-          id='collections.detail.revoke_inclusion'
-          defaultMessage='Remove me'
-        />
+        <FormattedMessage id="collections.detail.revoke_inclusion" defaultMessage="Remove me" />
       }
       onPrimary={confirmRevoke}
     >
       <FormattedMessage
-        id='collections.detail.author_added_you_on_date'
-        defaultMessage='{author} added you on {date}'
+        id="collections.detail.author_added_you_on_date"
+        defaultMessage="{author} added you on {date}"
         values={{
-          author: <DisplayName account={authorAccount} variant='simple' />,
+          author: <DisplayName account={authorAccount} variant="simple" />,
           date: (
             <FormattedDateWrapper
               value={currentUserCollectionItem.created_at}
-              day='2-digit'
-              month='short'
-              year='numeric'
+              day="2-digit"
+              month="short"
+              year="numeric"
             />
           ),
         }}
@@ -121,47 +115,40 @@ const RevokeControls: React.FC<{
 export const PendingNote: React.FC = () => {
   return (
     <Callout
-      variant='subtle'
+      variant="subtle"
       icon={HelpIcon}
       title={
         <FormattedMessage
-          id='collections.pending_accounts.title'
-          defaultMessage='Why am I seeing pending accounts?'
+          id="collections.pending_accounts.title"
+          defaultMessage="Why am I seeing pending accounts?"
         />
       }
     >
       <FormattedMessage
-        id='collections.pending_accounts.message'
-        defaultMessage='Accounts may appear as pending when we’re awaiting a response from the user or their server. Only you can see pending accounts.'
+        id="collections.pending_accounts.message"
+        defaultMessage="Accounts may appear as pending when we’re awaiting a response from the user or their server. Only you can see pending accounts."
       />
     </Callout>
   );
 };
 
-const SensitiveContentNote: React.FC<{ onReveal: () => void }> = ({
-  onReveal,
-}) => {
+const SensitiveContentNote: React.FC<{ onReveal: () => void }> = ({ onReveal }) => {
   return (
     <Callout
-      variant='warning'
+      variant="warning"
       title={
         <FormattedMessage
-          id='collections.detail.sensitive_content'
-          defaultMessage='Sensitive content'
+          id="collections.detail.sensitive_content"
+          defaultMessage="Sensitive content"
         />
       }
-      primaryLabel={
-        <FormattedMessage
-          id='content_warning.show_short'
-          defaultMessage='Show'
-        />
-      }
+      primaryLabel={<FormattedMessage id="content_warning.show_short" defaultMessage="Show" />}
       onPrimary={onReveal}
       className={classes.sensitiveScreen}
     >
       <FormattedMessage
-        id='collections.detail.sensitive_note'
-        defaultMessage='The description and accounts may not be suitable for all viewers.'
+        id="collections.detail.sensitive_note"
+        defaultMessage="The description and accounts may not be suitable for all viewers."
       />
     </Callout>
   );
@@ -178,16 +165,13 @@ const CollectionHeader: React.FC<{
   const history = useHistory();
 
   const isOwnCollection = account_id === me;
-  const currentUserCollectionItem = items.find(
-    (account) => account.account_id === me,
-  );
-  const isCurrentUserInCollection =
-    !isOwnCollection && !!currentUserCollectionItem;
+  const currentUserCollectionItem = items.find((account) => account.account_id === me);
+  const isCurrentUserInCollection = !isOwnCollection && !!currentUserCollectionItem;
 
   const openShareModal = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'SHARE_COLLECTION',
+        modalType: "SHARE_COLLECTION",
         modalProps: {
           collection,
         },
@@ -205,7 +189,7 @@ const CollectionHeader: React.FC<{
     }
   }, [history, openShareModal, isNewCollection, location.pathname]);
 
-  const hasPendingAccounts = items.some((item) => item.state === 'pending');
+  const hasPendingAccounts = items.some((item) => item.state === "pending");
 
   return (
     <header className={classes.header}>
@@ -220,21 +204,19 @@ const CollectionHeader: React.FC<{
         <div className={classes.headerButtonWrapper}>
           <IconButton
             iconComponent={ShareIcon}
-            icon='share-icon'
+            icon="share-icon"
             title={intl.formatMessage(messages.share)}
             className={classes.iconButton}
             onClick={openShareModal}
           />
           <CollectionMenu
-            context='collection'
+            context="collection"
             collection={collection}
             className={classes.iconButton}
           />
         </div>
       </div>
-      {withDescription && description && (
-        <p className={classes.description}>{description}</p>
-      )}
+      {withDescription && description && <p className={classes.description}>{description}</p>}
       {hasPendingAccounts && <PendingNote />}
       {isCurrentUserInCollection && (
         <RevokeControls
@@ -246,11 +228,7 @@ const CollectionHeader: React.FC<{
   );
 };
 
-function useRevealSensitiveContent({
-  sensitive,
-}: {
-  sensitive: boolean | undefined;
-}) {
+function useRevealSensitiveContent({ sensitive }: { sensitive: boolean | undefined }) {
   const postRevealFocusTargetRef = useRef<HTMLHeadingElement>(null);
   const [isContentVisible, setIsContentVisible] = useState(!sensitive);
 
@@ -271,10 +249,9 @@ function useRevealSensitiveContent({
 const ColumnContent: React.FC<{
   collection: ApiCollectionJSON;
 }> = ({ collection }) => {
-  const { isContentVisible, revealContent, postRevealFocusTargetRef } =
-    useRevealSensitiveContent({
-      sensitive: collection.sensitive && collection.account_id !== me,
-    });
+  const { isContentVisible, revealContent, postRevealFocusTargetRef } = useRevealSensitiveContent({
+    sensitive: collection.sensitive && collection.account_id !== me,
+  });
 
   return (
     <>
@@ -315,22 +292,18 @@ export const CollectionDetailPage: React.FC<{
       <ColumnHeader
         showBackButton
         title={pageTitle}
-        icon='collection-icon'
+        icon="collection-icon"
         iconComponent={ListAltIcon}
         multiColumn={multiColumn}
       />
 
       <Scrollable>
-        {collection ? (
-          <ColumnContent collection={collection} />
-        ) : (
-          <LoadingIndicator />
-        )}
+        {collection ? <ColumnContent collection={collection} /> : <LoadingIndicator />}
       </Scrollable>
 
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

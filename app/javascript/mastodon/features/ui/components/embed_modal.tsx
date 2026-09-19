@@ -1,13 +1,13 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { showAlertForError } from 'mastodon/actions/alerts';
-import api from 'mastodon/api';
-import { Button } from 'mastodon/components/button';
-import { CopyPasteText } from 'mastodon/components/copy_paste_text';
-import { NavigationFocusTarget } from 'mastodon/components/navigation_focus_target';
-import { useAppDispatch } from 'mastodon/store';
+import { showAlertForError } from "mastodon/actions/alerts";
+import api from "mastodon/api";
+import { Button } from "mastodon/components/button";
+import { CopyPasteText } from "mastodon/components/copy_paste_text";
+import { NavigationFocusTarget } from "mastodon/components/navigation_focus_target";
+import { useAppDispatch } from "mastodon/store";
 
 interface OEmbedResponse {
   html: string;
@@ -33,7 +33,7 @@ const EmbedModal: React.FC<{
         const iframeDocument = iframeRef.current?.contentWindow?.document;
 
         if (!iframeDocument) {
-          return '';
+          return "";
         }
 
         iframeDocument.open();
@@ -41,7 +41,7 @@ const EmbedModal: React.FC<{
         iframeDocument.write(data.html);
         iframeDocument.close();
 
-        iframeDocument.body.style.margin = '0px';
+        iframeDocument.body.style.margin = "0px";
 
         // This is our best chance to ensure the parent iframe has the correct height...
         intervalRef.current = setInterval(
@@ -55,7 +55,7 @@ const EmbedModal: React.FC<{
           100,
         );
 
-        return '';
+        return "";
       })
       .catch((error: unknown) => {
         dispatch(showAlertForError(error));
@@ -72,42 +72,36 @@ const EmbedModal: React.FC<{
   );
 
   return (
-    <div className='modal-root__modal dialog-modal'>
-      <div className='dialog-modal__header'>
+    <div className="modal-root__modal dialog-modal">
+      <div className="dialog-modal__header">
         <Button onClick={onClose}>
-          <FormattedMessage id='report.close' defaultMessage='Done' />
+          <FormattedMessage id="report.close" defaultMessage="Done" />
         </Button>
-        <NavigationFocusTarget as='h1' className='dialog-modal__header__title'>
-          <FormattedMessage id='status.embed' defaultMessage='Get embed code' />
+        <NavigationFocusTarget as="h1" className="dialog-modal__header__title">
+          <FormattedMessage id="status.embed" defaultMessage="Get embed code" />
         </NavigationFocusTarget>
         <Button secondary onClick={onClose}>
-          <FormattedMessage
-            id='confirmation_modal.cancel'
-            defaultMessage='Cancel'
-          />
+          <FormattedMessage id="confirmation_modal.cancel" defaultMessage="Cancel" />
         </Button>
       </div>
 
-      <div className='dialog-modal__content'>
-        <div className='dialog-modal__content__form'>
+      <div className="dialog-modal__content">
+        <div className="dialog-modal__content__form">
           <FormattedMessage
-            id='embed.instructions'
-            defaultMessage='Embed this status on your website by copying the code below.'
+            id="embed.instructions"
+            defaultMessage="Embed this status on your website by copying the code below."
           />
 
-          <CopyPasteText value={oembed?.html ?? ''} />
+          <CopyPasteText value={oembed?.html ?? ""} />
 
-          <FormattedMessage
-            id='embed.preview'
-            defaultMessage='Here is what it will look like:'
-          />
+          <FormattedMessage id="embed.preview" defaultMessage="Here is what it will look like:" />
 
           <iframe
             // eslint-disable-next-line @typescript-eslint/no-deprecated
-            frameBorder='0'
+            frameBorder="0"
             ref={iframeRef}
-            sandbox='allow-scripts allow-same-origin'
-            title='Preview'
+            sandbox="allow-scripts allow-same-origin"
+            title="Preview"
           />
         </div>
       </div>

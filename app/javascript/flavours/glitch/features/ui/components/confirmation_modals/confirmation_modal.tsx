@@ -1,14 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { FormattedMessage, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from "react-intl";
 
-import { NavigationFocusTarget } from '@/flavours/glitch/components/navigation_focus_target';
-import { Button } from 'flavours/glitch/components/button';
+import { NavigationFocusTarget } from "@/flavours/glitch/components/navigation_focus_target";
+import { Button } from "flavours/glitch/components/button";
 import {
   ModalShell,
   ModalShellActions,
   ModalShellBody,
-} from 'flavours/glitch/components/modal_shell';
+} from "flavours/glitch/components/modal_shell";
 
 export interface BaseConfirmationModalProps {
   onClose: () => void;
@@ -17,8 +17,8 @@ export interface BaseConfirmationModalProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- keep the message around while we find a place to show it
 const messages = defineMessages({
   doNotAskAgain: {
-    id: 'confirmation_modal.do_not_ask_again',
-    defaultMessage: 'Do not ask for confirmation again',
+    id: "confirmation_modal.do_not_ask_again",
+    defaultMessage: "Do not ask for confirmation again",
   },
 });
 
@@ -40,9 +40,7 @@ interface ConfirmationModalProps {
   noFocusButton?: boolean;
 }
 
-export const ConfirmationModal: React.FC<
-  ConfirmationModalProps & BaseConfirmationModalProps
-> = ({
+export const ConfirmationModal: React.FC<ConfirmationModalProps & BaseConfirmationModalProps> = ({
   title,
   titleId,
   message,
@@ -82,7 +80,7 @@ export const ConfirmationModal: React.FC<
     <ModalShell onSubmit={handleSubmit}>
       <ModalShellBody className={className}>
         {noFocusButton ? (
-          <NavigationFocusTarget as='h1' id={titleId}>
+          <NavigationFocusTarget as="h1" id={titleId}>
             {title}
           </NavigationFocusTarget>
         ) : (
@@ -94,22 +92,17 @@ export const ConfirmationModal: React.FC<
       </ModalShellBody>
 
       <ModalShellActions>
-        <button onClick={onClose} className='link-button' type='button'>
-          {cancel ?? (
-            <FormattedMessage
-              id='confirmation_modal.cancel'
-              defaultMessage='Cancel'
-            />
-          )}
+        <button onClick={onClose} className="link-button" type="button">
+          {cancel ?? <FormattedMessage id="confirmation_modal.cancel" defaultMessage="Cancel" />}
         </button>
 
         {secondary && (
           <>
-            <div className='spacer' />
+            <div className="spacer" />
             <button
               onClick={handleSecondary}
-              className='link-button'
-              type='button'
+              className="link-button"
+              type="button"
               disabled={disabled}
             >
               {secondary}
@@ -118,12 +111,7 @@ export const ConfirmationModal: React.FC<
         )}
 
         {/* eslint-disable jsx-a11y/no-autofocus -- we are in a modal and thus autofocusing is justified */}
-        <Button
-          type='submit'
-          loading={updating}
-          disabled={disabled}
-          autoFocus={!noFocusButton}
-        >
+        <Button type="submit" loading={updating} disabled={disabled} autoFocus={!noFocusButton}>
           {confirm}
         </Button>
         {/* eslint-enable */}

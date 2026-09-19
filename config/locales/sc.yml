@@ -1,7 +1,7 @@
 ---
 sc:
   about:
-    about_mastodon_html: 'Sa rete sotziale de su benidore: sena publitzidade, sena vigilàntzia corporativa, disinnu èticu e detzentralizatzione! Sias mere de is datos tuos cun Mastodon!'
+    about_mastodon_html: "Sa rete sotziale de su benidore: sena publitzidade, sena vigilàntzia corporativa, disinnu èticu e detzentralizatzione! Sias mere de is datos tuos cun Mastodon!"
     contact_missing: No cunfiguradu
     contact_unavailable: No a disponimentu
     hosted_on: Mastodon allogiadu in %{domain}
@@ -436,12 +436,12 @@ sc:
       created_msg: Règula IP noa agiunta
       delete: Cantzella
       expires_in:
-        '1209600': 2 chidas
-        '15778476': 6 meses
-        '2629746': 1 mese
-        '31556952': 1 annu
-        '86400': 1 die
-        '94670856': 3 annos
+        "1209600": 2 chidas
+        "15778476": 6 meses
+        "2629746": 1 mese
+        "31556952": 1 annu
+        "86400": 1 die
+        "94670856": 3 annos
       new:
         title: Crea una règula IP noa
       no_ip_block_selected: Peruna règula IP est istada mudada dae chi non nd'as seletzionadu
@@ -498,7 +498,7 @@ sc:
         placeholder: Descrie is atziones chi as pigadu o cale si siat àtera atualizatzione de importu...
         title: Notas
       reopen: Torra a abèrrere s'informe
-      report: 'Informe #%{id}'
+      report: "Informe #%{id}"
       reported_account: Contu sinnaladu
       reported_by: Sinnaladu dae
       resolved: Isòrvidu
@@ -663,7 +663,7 @@ sc:
   application_mailer:
     salutation: "%{name},"
     unsubscribe: Annulla sa sutiscritzione
-    view: 'Visualizatzione:'
+    view: "Visualizatzione:"
     view_profile: Visualiza profilu
     view_status: Ammustra s'istadu
   applications:
@@ -755,7 +755,7 @@ sc:
     proceed: Cantzella su contu
     success_msg: Contu cantzelladu
     warning:
-      before: 'In antis de sighire, leghe custu cun atentzione:'
+      before: "In antis de sighire, leghe custu cun atentzione:"
       caches: Su cuntenutu chi siat istadu sarvadu in sa memòria temporànea de àteros serbidores podet sighire a esìstere
       data_removal: Is publicatziones tuas e àteros datos ant a èssere cantzellados in manera permanente
       irreversible: No as a pòdere ripristinare o torrare a ativare su contu tuo
@@ -772,19 +772,19 @@ sc:
   edit_profile:
     other: Àteru
   errors:
-    '400': Sa dimanda chi as imbiadu non fiat vàlida o non fiat curreta.
-    '403': Non tenes permissu pro bìdere custa pàgina.
-    '404': Sa pàgina chi ses chirchende no est inoghe.
-    '406': Custa pàgina no est a disponimentu in su formadu chi as pregontadu.
-    '410': Sa pàgina chi ses chirchende no esistet prus.
-    '422':
+    "400": Sa dimanda chi as imbiadu non fiat vàlida o non fiat curreta.
+    "403": Non tenes permissu pro bìdere custa pàgina.
+    "404": Sa pàgina chi ses chirchende no est inoghe.
+    "406": Custa pàgina no est a disponimentu in su formadu chi as pregontadu.
+    "410": Sa pàgina chi ses chirchende no esistet prus.
+    "422":
       content: Faddina in sa verìfica de seguresa. Ses blochende is testimòngios?
       title: Faddina in sa verìfica de seguresa
-    '429': Tropu rechestas
-    '500':
+    "429": Tropu rechestas
+    "500":
       content: Faddina dae s'ala nostra.
       title: Custa pàgina no est curreta
-    '503': Faddina in sa trasmissione de sa pàgina pro more de una faddina temporànea de su serbidore.
+    "503": Faddina in sa trasmissione de sa pàgina pro more de una faddina temporànea de su serbidore.
     noscript_html: Pro impreare s'aplicatzione web de Mastodon, ativa JavaScript. In alternativa, proa una de is <a href="%{apps_path}">aplicatziones nativas</a> pro Mastodon in sa prataforma tua.
   existing_username_validator:
     not_found: impossìbile agatare utentes locales cun cussu nòmine
@@ -886,15 +886,15 @@ sc:
     delete: Disativa
     expired: Iscadidu
     expires_in:
-      '1800': 30 minutos
-      '21600': 6 oras
-      '3600': 1 ora
-      '43200': 12 oras
-      '604800': 1 chida
-      '86400': 1 die
+      "1800": 30 minutos
+      "21600": 6 oras
+      "3600": 1 ora
+      "43200": 12 oras
+      "604800": 1 chida
+      "86400": 1 die
     expires_in_prompt: Mai
     generate: Gènera ligàmene de invitu
-    invited_by: 'As retzidu unu messàgiu de invitu dae:'
+    invited_by: "As retzidu unu messàgiu de invitu dae:"
     max_uses:
       one: 1 impreu
       other: "%{count} impreos"
@@ -937,7 +937,7 @@ sc:
     set_redirect: Cunfigura s'indiritzamentu
     warning:
       backreference_required: Su contu nou depet èssere prima cunfiguradu pro pòdere fàghere riferimentu a custu
-      before: 'In antis de sighire, leghe custu cun atentzione:'
+      before: "In antis de sighire, leghe custu cun atentzione:"
       cooldown: A pustis de tramudare, ddoe at a èssere unu perìodu de pàusa in su chi no as a pòdere torrare a tramudare
       disabled_account: A pustis, su contu atuale tuo no at a èssere prus operativu in manera cumpleta. Sende gasi, as a tènnere atzessu a s'esportatzione de datos e a sa re-ativatzione.
       followers: Custa atzione at a tramudare totu sa gente chi ti sighit dae su contu atuale a su contu nou
@@ -948,7 +948,7 @@ sc:
   move_handler:
     carry_blocks_over_text: Custa persone s'est tramudada dae %{acct}, chi as blocadu.
     carry_mutes_over_text: Custa persone s'est tramudada dae %{acct}, chi as postu a sa muda.
-    copy_account_note_text: 'Custa persone s''est tramudada dae %{acct}, custas sunt is notas antepostas tuas chi ddi pertocant:'
+    copy_account_note_text: "Custa persone s'est tramudada dae %{acct}, custas sunt is notas antepostas tuas chi ddi pertocant:"
   notification_mailer:
     favourite:
       body: "%{name} at marcadu comente preferida sa publicatzione tua:"
@@ -961,7 +961,7 @@ sc:
     follow_request:
       action: Gesti is rechestas de sighidura
       body: "%{name} at rechestu de ti sighire"
-      subject: 'Sighidura in ispera: %{name}'
+      subject: "Sighidura in ispera: %{name}"
       title: Rechesta de sighidura noa
     mention:
       action: Risponde
@@ -977,7 +977,7 @@ sc:
     status:
       subject: "%{name} at publicadu cosa"
   notifications:
-    email_events_hint: 'Seletziona eventos pro is chi boles retzire notìficas:'
+    email_events_hint: "Seletziona eventos pro is chi boles retzire notìficas:"
   number:
     human:
       decimal_units:
@@ -993,7 +993,7 @@ sc:
     description_html: Si as a abilitare <strong>s'autenticatzione in duas fases</strong> impreende un'aplicatzione de autenticatzione, pro s'intrada as a dèpere tènnere in fatu su telèfonu tuo, chi at a ingendrare getones pro ti fàghere intrare.
     enable: Ativa
     instructions_html: "<strong>Iscansiona custu còdighe QR in s'autenticadore de Google o in un'àtera aplicatzione TOTP in su telèfonu tuo</strong>. Dae immoe, cussa aplicatzione at a ingendrare getones chi as a dèpere insertare pro pòdere fàghere s'atzessu."
-    manual_instructions: 'Si non podes iscansionare su còdighe QR e tenes bisòngiu de ddu insertare a manu, inoghe ddoe est su còdighe segretu in testu craru:'
+    manual_instructions: "Si non podes iscansionare su còdighe QR e tenes bisòngiu de ddu insertare a manu, inoghe ddoe est su còdighe segretu in testu craru:"
     setup: Cunfigura
     wrong_code: Su còdighe insertadu no est vàlidu. S'ora de su serbidore e de su dispositivu sunt curretas?
   pagination:
@@ -1046,10 +1046,10 @@ sc:
   remote_follow:
     missing_resource: Impossìbile agatare sa rechesta de indiritzamentu URL pro su contu tuo
   rss:
-    content_warning: 'Avisu de cuntenutu:'
+    content_warning: "Avisu de cuntenutu:"
     descriptions:
       account: Publicatziones pùblicas dae @%{acct}
-      tag: 'Publicatziones pùblicas etichetadas cun #%{hashtag}'
+      tag: "Publicatziones pùblicas etichetadas cun #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: As superadu su lìmite de %{limit} publicatziones programmadas pro cudda die
     over_total_limit: As superadu su lìmite de %{limit} tuts programmados
@@ -1122,7 +1122,7 @@ sc:
       audio:
         one: "%{count} àudio"
         other: "%{count} àudios"
-      description: 'Allegadu: %{attached}'
+      description: "Allegadu: %{attached}"
       image:
         one: "%{count} immàgine"
         other: "%{count} immàgines"
@@ -1130,10 +1130,10 @@ sc:
         one: "%{count} vìdeu"
         other: "%{count} vìdeos"
     boosted_from_html: Cumpartzidu dae %{acct_link}
-    content_warning: 'Avisu de cuntenutu: %{warning}'
+    content_warning: "Avisu de cuntenutu: %{warning}"
     disallowed_hashtags:
-      one: 'cuntenet un''eticheta non permìtida: %{tags}'
-      other: 'cuntenet is etichetas non permìtidas: %{tags}'
+      one: "cuntenet un'eticheta non permìtida: %{tags}"
+      other: "cuntenet is etichetas non permìtidas: %{tags}"
     errors:
       in_reply_not_found: Ses chirchende de rispòndere a unu tut chi no esistit prus.
     over_character_limit: lìmite de caràteres de %{max} superadu
@@ -1147,14 +1147,14 @@ sc:
   statuses_cleanup:
     exceptions: Etzetziones
     min_age:
-      '1209600': 2 chidas
-      '15778476': 6 meses
-      '2629746': 1 mese
-      '31556952': 1 annu
-      '5259492': 2 meses
-      '604800': 1 chida
-      '63113904': 2 annos
-      '7889238': 3 meses
+      "1209600": 2 chidas
+      "15778476": 6 meses
+      "2629746": 1 mese
+      "31556952": 1 annu
+      "5259492": 2 meses
+      "604800": 1 chida
+      "63113904": 2 annos
+      "7889238": 3 meses
   stream_entries:
     sensitive_content: Cuntenutu sensìbile
   tags:
@@ -1188,12 +1188,12 @@ sc:
       title: Collida dae s'archìviu
     suspicious_sign_in:
       change_password: muda sa crae
-      details: 'Custos sunt is detàllios de s''identificatzione:'
+      details: "Custos sunt is detàllios de s'identificatzione:"
     warning:
       categories:
         spam: Àliga
-      reason: 'Resone:'
-      statuses: 'Publicatziones tzitadas:'
+      reason: "Resone:"
+      statuses: "Publicatziones tzitadas:"
       subject:
         disable: Su contu tuo %{acct} est istadu cungeladu
         none: Avisu pro %{acct}
@@ -1227,7 +1227,7 @@ sc:
     follow_limit_reached: Non podes sighire prus de %{limit} persones
     invalid_otp_token: Còdighe a duas fases non vàlidu
     otp_lost_help_html: Si as pèrdidu s'atzessu a ambos, podes cuntatare a %{email}
-    signed_in_as: 'Sessione aberta comente:'
+    signed_in_as: "Sessione aberta comente:"
   verification:
     verification: Verìfica
   webauthn_credentials:
@@ -1246,4 +1246,4 @@ sc:
     not_enabled: No as ativadu ancora WebAuthn
     not_supported: Custu navigadore no est cumpatìbile cun is craes de seguresa
     otp_required: Pro impreare is craes de seguresa depes ativare prima s'autenticatzione in duos passos.
-    registered_on: 'Registratzione: %{date}'
+    registered_on: "Registratzione: %{date}"

@@ -1,7 +1,7 @@
 ---
 lt:
   about:
-    about_mastodon_html: 'Ateities socialinis tinklas: jokių reklamų ir įmonių sekimo, etiškas dizainas bei decentralizacija! Turėkite savo duomenis su „Mastodon“!'
+    about_mastodon_html: "Ateities socialinis tinklas: jokių reklamų ir įmonių sekimo, etiškas dizainas bei decentralizacija! Turėkite savo duomenis su „Mastodon“!"
     contact_missing: Nenustatyta
     contact_unavailable: Nėra
     hosted_on: "„Mastodon“ talpinamas domene %{domain}"
@@ -321,7 +321,7 @@ lt:
         title: Naujas skelbimas
       preview:
         disclaimer: Kadangi naudotojai negali jų atsisakyti, el. pašto pranešimai turėtų būti siunčiami tik svarbiems pranešimams, pavyzdžiui, asmeninių duomenų pažeidimo ar serverio uždarymo pranešimams.
-        explanation_html: 'El. laiškas bus išsiųstas <strong>%{display_count} naudotojams</strong>. Į el. laišką bus įtrauktas toliau nurodytas tekstas:'
+        explanation_html: "El. laiškas bus išsiųstas <strong>%{display_count} naudotojams</strong>. Į el. laišką bus įtrauktas toliau nurodytas tekstas:"
         title: Peržiūrėti skelbimo pranešimą
       publish: Skelbti
       published_msg: Skelbimas sėkmingai paskelbtas.
@@ -460,10 +460,10 @@ lt:
       import:
         description_html: Netrukus importuosi domenų blokavimų sąrašą. Labai atidžiai peržiūrėk šį sąrašą, ypač jei ne tu jį sudarei.
         existing_relationships_warning: Esami sekimo sąryšiai
-        private_comment_description_html: 'Kad būtų lengviau atsekti, iš kur importuoti blokavimai, importuoti blokavimai bus kuriami su šiuo privačiu komentaru: <q>%{comment}</q>'
+        private_comment_description_html: "Kad būtų lengviau atsekti, iš kur importuoti blokavimai, importuoti blokavimai bus kuriami su šiuo privačiu komentaru: <q>%{comment}</q>"
         private_comment_template: Importuota iš %{source}, %{date}
         title: Importuoti domeno blokavimus
-      invalid_domain_block: 'Vienas ar daugiau domenų blokavimų buvo praleisti dėl toliau nurodytos (-ų) klaidos (-ų): %{error}'
+      invalid_domain_block: "Vienas ar daugiau domenų blokavimų buvo praleisti dėl toliau nurodytos (-ų) klaidos (-ų): %{error}"
       new:
         title: Importuoti domeno blokavimus
       no_file: Nėra pasirinkto failo
@@ -563,7 +563,7 @@ lt:
         placeholder: Apibūdink, kokių veiksmų imtasi arba kitokie atnaujinimai..
       notes_description_html: Peržiūrėk ir palik pastabas kitiems prižiūrėtojams ir savo būsimam aš
       reopen: Atidaryti skundą
-      report: 'Skundas #%{id}'
+      report: "Skundas #%{id}"
       reported_account: Reportuota paskyra
       reported_by: Skundas sukurtas
       reported_with_application: Pranešta su programėle
@@ -625,7 +625,7 @@ lt:
       back_to_account: Grįžti į paskyros puslapį
       back_to_report: Grįžti į ataskaitos puslapį
       batch:
-        add_to_report: 'Pridėti į ataskaitą #%{id}'
+        add_to_report: "Pridėti į ataskaitą #%{id}"
         remove_from_report: Pašalinti iš ataskaitos
       contents: Turinys
       deleted: Ištrinta
@@ -703,7 +703,7 @@ lt:
       notified_on_html: Naudotojams pranešta %{date}
       notify_users: Pranešti naudotojus
       preview:
-        explanation_html: 'El. laiškas bus išsiųstas <strong>%{display_count} naudotojams</strong>, kurie užsiregistravo iki %{date}. Į el. laišką bus įtrauktas toks tekstas:'
+        explanation_html: "El. laiškas bus išsiųstas <strong>%{display_count} naudotojams</strong>, kurie užsiregistravo iki %{date}. Į el. laišką bus įtrauktas toks tekstas:"
         send_preview: Siųsti peržiūrą į %{email}
         send_to_all:
           few: Siųsti %{display_count} el. laiškus
@@ -776,7 +776,7 @@ lt:
         not_trendable: Nepasirodys tendencijose
         title: Populiarios grotažymės
         trendable: Gali pasirodyti tendencijose
-        trending_rank: 'Tendencinga #%{rank}'
+        trending_rank: "Tendencinga #%{rank}"
       title: Rekomendacijos ir tendencijos
       trending: Tendencinga
     username_blocks:
@@ -841,7 +841,7 @@ lt:
       guide_link_text: Visi gali prisidėti.
     sensitive_content: Jautrus turinys
   application_mailer:
-    view: 'Peržiūra:'
+    view: "Peržiūra:"
     view_profile: Peržiurėti profilį
     view_status: Peržiūrėti įrašą
   applications:
@@ -897,7 +897,7 @@ lt:
     rules:
       accept: Priimti
       back: Grįžti
-      invited_by: 'Gali prisijungti prie %{domain} pagal kvietimą, kurį gavai iš:'
+      invited_by: "Gali prisijungti prie %{domain} pagal kvietimą, kurį gavai iš:"
       preamble: Tai nustatė ir taiko %{domain} prižiūrėtojai.
       preamble_invited: Prieš tęsiant, atsižvelk į pagrindines taisykles, kurias nustatė %{domain} prižiūrėtojai.
       title: Kelios pagrindinės taisyklės.
@@ -924,7 +924,7 @@ lt:
   author_attribution:
     example_title: Teksto pavyzdys
     hint_html: Ar rašote naujienas ar tinklaraščio straipsnius už „Mastodon“ ribų? Valdykite, kaip būsite nurodomi, kai jais bus bendrinama platformoje „Mastodon“.
-    instructions: 'Įsitikinkite, kad šis kodas yra jūsų straipsnio HTML:'
+    instructions: "Įsitikinkite, kad šis kodas yra jūsų straipsnio HTML:"
     more_from_html: Daugiau iš %{name}
     s_blog: "%{name} tinklaraštis"
     then_instructions: Tada toliau esančiame lauke įrašykite leidinio domeno vardą.
@@ -969,14 +969,14 @@ lt:
     native: Vietiniai
     twemoji: Tvejaustukai
   errors:
-    '403': Jūs neturie prieigos matyti šiam puslapiui.
-    '404': Puslapis nerastas.
-    '410': Puslapis neegzistuoja.
-    '422':
+    "403": Jūs neturie prieigos matyti šiam puslapiui.
+    "404": Puslapis nerastas.
+    "410": Puslapis neegzistuoja.
+    "422":
       content: Nepavyko saugumo patvirtinimas. Ar blokuoji slapukus?
       title: Nepavyko saugumo patvirtinimas
-    '429': Stabdomas
-    '500':
+    "429": Stabdomas
+    "500":
       content: Atsiprašome, bet kažkas nutiko ne taip mūsų pusėje.
       title: Netinkamas puslapis
     noscript_html: Kad naudotumėtės Mastodon web aplikacija, prašome įsijungti JavaScript. Alternatyviai, pabandykite viena iš <a href="%{apps_path}">vietinių aplikacijų</a> Mastodon savo platformai.
@@ -1043,16 +1043,16 @@ lt:
     delete: Deaktyvuoti
     expired: Nebegaliojantis
     expires_in:
-      '1800': 30 minučių
-      '21600': 6 valandų
-      '3600': 1 valandos
-      '43200': 12 valandų
-      '604800': 1 savaitės
-      '86400': 1 dienos
+      "1800": 30 minučių
+      "21600": 6 valandų
+      "3600": 1 valandos
+      "43200": 12 valandų
+      "604800": 1 savaitės
+      "86400": 1 dienos
     expires_in_prompt: Niekada
     generate: Generuoti kvietimo nuorodą
     invalid: Šis kvietimas negalioja.
-    invited_by: 'Tave pakvietė:'
+    invited_by: "Tave pakvietė:"
     max_uses:
       few: "%{count} naudojimai"
       many: "%{count} naudojimo"
@@ -1085,7 +1085,7 @@ lt:
     title: Prižiūrėjimas
   notification_mailer:
     favourite:
-      body: 'Tavo įrašą pamėgo %{name}:'
+      body: "Tavo įrašą pamėgo %{name}:"
       subject: "%{name} pamėgo tavo įrašą"
       title: Naujas mėgstamas
     follow:
@@ -1095,25 +1095,25 @@ lt:
     follow_request:
       action: Tvarkyti prašymus sekti
       body: "%{name} paprašė tave sekti"
-      subject: 'Laukiantis sprendimo sekėjas:  %{name}'
+      subject: "Laukiantis sprendimo sekėjas:  %{name}"
       title: Naujas prašymas sekti
     mention:
       action: Atsakyti
-      body: 'Tave %{name} paminėjo:'
+      body: "Tave %{name} paminėjo:"
       subject: Tave paminėjo %{name}
       title: Naujas paminėjimas
     quote:
-      body: 'Tavo įrašą paminėjo %{name}:'
+      body: "Tavo įrašą paminėjo %{name}:"
       subject: "%{name} paminėjo jūsų įrašą"
       title: Naujas paminėjimas
     reblog:
-      body: 'Tavo įrašą dalinosi %{name}:'
+      body: "Tavo įrašą dalinosi %{name}:"
       subject: "%{name} dalinosi tavo įrašu"
       title: Naujas dalinimasis
   notifications:
     administration_emails: Administratoriaus el. laiško pranešimai
     email_events: Įvykiai, skirti el. laiško pranešimams
-    email_events_hint: 'Pasirink įvykius, apie kuriuos nori gauti pranešimus:'
+    email_events_hint: "Pasirink įvykius, apie kuriuos nori gauti pranešimus:"
   number:
     human:
       decimal_units:
@@ -1166,7 +1166,7 @@ lt:
     missing_resource: Jūsų paskyros nukreipimo URL nerasta
   rss:
     descriptions:
-      tag: 'Vieši įrašai su grotažymėmis #%{hashtag}'
+      tag: "Vieši įrašai su grotažymėmis #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Jūs pasieketė limitą (%{limit}) galimų toot'ų per dieną
     over_total_limit: Jūs pasieketė %{limit} limitą galimų toot'ų
@@ -1232,14 +1232,14 @@ lt:
         many: "%{count} garso įrašo"
         one: "%{count} garso įrašas"
         other: "%{count} garso įrašų"
-      description: 'Pridėta: %{attached}'
+      description: "Pridėta: %{attached}"
       image:
         few: "%{count} vaizdai"
         many: "%{count} vaizdo"
         one: "%{count} vaizdas"
         other: "%{count} vaizdų"
     boosted_from_html: Dalintasi iš %{acct_link}
-    content_warning: 'Turinio įspėjimas: %{warning}'
+    content_warning: "Turinio įspėjimas: %{warning}"
     errors:
       quoted_status_not_found: Įrašas, kurį bandote cituoti, atrodo, neegzistuoja.
       quoted_user_not_mentioned: Privačiame paminėjime negalima cituoti citatoje nepaminėto vartotojo.
@@ -1305,7 +1305,7 @@ lt:
       subject: Jūsų archyvas paruoštas parsisiuntimui
       title: Archyvas išimtas
     failed_2fa:
-      details: 'Štai išsami informacija apie bandymą prisijungti:'
+      details: "Štai išsami informacija apie bandymą prisijungti:"
       explanation: Kažkas bandė prisijungti prie tavo paskyros, bet nurodė netinkamą dvigubą tapatybės nustatymą.
       further_actions_html: Jei tai buvo ne tu, rekomenduojame nedelsiant imtis %{action}, nes jis gali būti pažeistas.
       subject: Dvigubas tapatybės nustatymas nesėkmingai
@@ -1337,7 +1337,7 @@ lt:
       apps_ios_action: Atsisiųsti per App Store
       apps_step: Atsisiųsk oficialias programėles.
       apps_title: Mastodon programėlės
-      checklist_subtitle: 'Pradėkime pažintį su šia nauja socialine sritimi:'
+      checklist_subtitle: "Pradėkime pažintį su šia nauja socialine sritimi:"
       checklist_title: Pasveikinimo sąrašas
       edit_profile_action: Suasmeninti
       edit_profile_step: Padidink savo sąveiką turint išsamų profilį.
@@ -1376,7 +1376,7 @@ lt:
     otp_lost_help_html: Jei praradai prieigą prie abiejų, gali susisiek su %{email}
     rate_limited: Per daug tapatybės nustatymo bandymų. Bandyk dar kartą vėliau.
     seamless_external_login: Esi prisijungęs (-usi) per išorinę paslaugą, todėl slaptažodžio ir el. pašto nustatymai nepasiekiami.
-    signed_in_as: 'Prisijungta kaip:'
+    signed_in_as: "Prisijungta kaip:"
   verification:
     extra_instructions_html: <strong>Patarimas:</strong> nuoroda tavo svetainėje gali būti nematoma. Svarbi dalis – tai, kad <code>rel="me"</code> neleidžia apsimesti interneto svetainėse, kuriose yra naudotojų sukurto turinio. Vietoj to gali naudoti net <code>nuorodą</code> puslapio antraštėje esančią žymę <code>a</code>, tačiau HTML turi būti pasiekiamas nevykdant JavaScript.
     here_is_how: Štai kaip

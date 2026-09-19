@@ -52,7 +52,7 @@ is:
         callback_urls: URL-slóðir baksvörunar (callback)
         scopes: Gildissvið
         secret: Leynilykill biðlara
-        title: 'Forrit: %{name}'
+        title: "Forrit: %{name}"
     authorizations:
       buttons:
         authorize: Heimila
@@ -89,7 +89,7 @@ is:
         invalid_grant: Uppgefin auðkenningarheimild er ógild, útrunnin, afturkölluð, samsvarar ekki endurbirtingarslóðinni í auðkenningarbeiðninni, eða var gefin út til annars biðlara.
         invalid_redirect_uri: Endurbeiningarslóðin sem fylgdi er ekki gild.
         invalid_request:
-          missing_param: 'Vantar nauðsynlega færibreytu: %{value}.'
+          missing_param: "Vantar nauðsynlega færibreytu: %{value}."
           request_not_authorized: Beiðnina þarf að heimila. Nauðsynlega færibreytu svo hægt sé að heimila hana vantar eða að hún er gölluð.
           unknown: Í beiðnina vantar nauðsynlega færibreytu, hún inniheldur óleyfilegt gildi á færibreytu, eða er gölluð á einhvern annan hátt.
         invalid_resource_owner: Uppgefin auðkenni eiganda tilfangs eru ekki gild, eða að eigandi tilfangs finnst ekki

@@ -1,18 +1,18 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { unfollowAccount } from 'flavours/glitch/actions/accounts';
-import type { Account } from 'flavours/glitch/models/account';
-import { useAppDispatch } from 'flavours/glitch/store';
+import { unfollowAccount } from "flavours/glitch/actions/accounts";
+import type { Account } from "flavours/glitch/models/account";
+import { useAppDispatch } from "flavours/glitch/store";
 
-import type { BaseConfirmationModalProps } from './confirmation_modal';
-import { ConfirmationModal } from './confirmation_modal';
+import type { BaseConfirmationModalProps } from "./confirmation_modal";
+import { ConfirmationModal } from "./confirmation_modal";
 
 const messages = defineMessages({
   unfollowConfirm: {
-    id: 'confirmations.unfollow.confirm',
-    defaultMessage: 'Unfollow',
+    id: "confirmations.unfollow.confirm",
+    defaultMessage: "Unfollow",
   },
 });
 
@@ -32,8 +32,8 @@ export const ConfirmUnfollowModal: React.FC<
     <ConfirmationModal
       title={
         <FormattedMessage
-          id='confirmations.unfollow.title'
-          defaultMessage='Unfollow {name}?'
+          id="confirmations.unfollow.title"
+          defaultMessage="Unfollow {name}?"
           values={{ name: `@${account.acct}` }}
         />
       }

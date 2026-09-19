@@ -1,18 +1,18 @@
-import type { ComponentPropsWithoutRef, ReactNode } from 'react';
-import { forwardRef } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { forwardRef } from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { OmitUnion } from '@/mastodon/utils/types';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
+import type { OmitUnion } from "@/mastodon/utils/types";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
 
-import type { IconProp } from '../icon';
-import { Icon } from '../icon';
-import { IconButton } from '../icon_button';
+import type { IconProp } from "../icon";
+import { Icon } from "../icon";
+import { IconButton } from "../icon_button";
 
-import classes from './style.module.css';
+import classes from "./style.module.css";
 
 export interface TagProps {
   name: ReactNode;
@@ -24,7 +24,7 @@ export interface TagProps {
 
 export const Tag = forwardRef<
   HTMLButtonElement,
-  OmitUnion<ComponentPropsWithoutRef<'button'>, TagProps>
+  OmitUnion<ComponentPropsWithoutRef<"button">, TagProps>
 >(({ name, active, icon, className, children, ...props }, ref) => {
   if (!name) {
     return null;
@@ -32,23 +32,23 @@ export const Tag = forwardRef<
   return (
     <button
       {...props}
-      type='button'
+      type="button"
       ref={ref}
       className={classNames(className, classes.tag, active && classes.active)}
       aria-pressed={active}
     >
-      {icon && <Icon icon={icon} id='tag-icon' className={classes.icon} />}
-      {typeof name === 'string' ? `#${name}` : name}
+      {icon && <Icon icon={icon} id="tag-icon" className={classes.icon} />}
+      {typeof name === "string" ? `#${name}` : name}
       {children}
     </button>
   );
 });
-Tag.displayName = 'Tag';
+Tag.displayName = "Tag";
 
 export const EditableTag = forwardRef<
   HTMLSpanElement,
   OmitUnion<
-    ComponentPropsWithoutRef<'span'>,
+    ComponentPropsWithoutRef<"span">,
     TagProps & {
       onRemove: () => void;
       removeIcon?: IconProp;
@@ -56,16 +56,7 @@ export const EditableTag = forwardRef<
   >
 >(
   (
-    {
-      name,
-      active,
-      icon,
-      className,
-      children,
-      removeIcon = CloseIcon,
-      onRemove,
-      ...props
-    },
+    { name, active, icon, className, children, removeIcon = CloseIcon, onRemove, ...props },
     ref,
   ) => {
     const intl = useIntl();
@@ -79,21 +70,21 @@ export const EditableTag = forwardRef<
         ref={ref}
         className={classNames(className, classes.tag, active && classes.active)}
       >
-        {icon && <Icon icon={icon} id='tag-icon' className={classes.icon} />}
-        {typeof name === 'string' ? `#${name}` : name}
+        {icon && <Icon icon={icon} id="tag-icon" className={classes.icon} />}
+        {typeof name === "string" ? `#${name}` : name}
         {children}
         <IconButton
           className={classes.closeButton}
           iconComponent={removeIcon}
           onClick={onRemove}
-          icon='remove'
+          icon="remove"
           title={intl.formatMessage({
-            id: 'tag.remove',
-            defaultMessage: 'Remove',
+            id: "tag.remove",
+            defaultMessage: "Remove",
           })}
         />
       </span>
     );
   },
 );
-EditableTag.displayName = 'EditableTag';
+EditableTag.displayName = "EditableTag";

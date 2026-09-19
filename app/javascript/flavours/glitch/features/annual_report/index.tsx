@@ -1,30 +1,26 @@
-import { useCallback, useEffect, useState } from 'react';
-import type { FC } from 'react';
+import { useCallback, useEffect, useState } from "react";
+import type { FC } from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import { useLocation } from 'react-router';
+import { useLocation } from "react-router";
 
-import classNames from 'classnames/bind';
+import classNames from "classnames/bind";
 
-import { closeModal } from '@/flavours/glitch/actions/modal';
-import { IconButton } from '@/flavours/glitch/components/icon_button';
-import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
-import { NavigationFocusTarget } from '@/flavours/glitch/components/navigation_focus_target';
-import { getReport } from '@/flavours/glitch/reducers/slices/annual_report';
-import {
-  createAppSelector,
-  useAppDispatch,
-  useAppSelector,
-} from '@/flavours/glitch/store';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
+import { closeModal } from "@/flavours/glitch/actions/modal";
+import { IconButton } from "@/flavours/glitch/components/icon_button";
+import { LoadingIndicator } from "@/flavours/glitch/components/loading_indicator";
+import { NavigationFocusTarget } from "@/flavours/glitch/components/navigation_focus_target";
+import { getReport } from "@/flavours/glitch/reducers/slices/annual_report";
+import { createAppSelector, useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
 
-import { Archetype } from './archetype';
-import { Followers } from './followers';
-import { HighlightedPost } from './highlighted_post';
-import styles from './index.module.scss';
-import { MostUsedHashtag } from './most_used_hashtag';
-import { NewPosts } from './new_posts';
+import { Archetype } from "./archetype";
+import { Followers } from "./followers";
+import { HighlightedPost } from "./highlighted_post";
+import styles from "./index.module.scss";
+import { MostUsedHashtag } from "./most_used_hashtag";
+import { NewPosts } from "./new_posts";
 
 const moduleClassNames = classNames.bind(styles);
 
@@ -38,8 +34,8 @@ export const accountSelector = createAppSelector(
   },
 );
 
-export const AnnualReport: FC<{ context?: 'modal' | 'standalone' }> = ({
-  context = 'standalone',
+export const AnnualReport: FC<{ context?: "modal" | "standalone" }> = ({
+  context = "standalone",
 }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
@@ -54,7 +50,7 @@ export const AnnualReport: FC<{ context?: 'modal' | 'standalone' }> = ({
   }, [dispatch, needsReport]);
 
   const close = useCallback(() => {
-    dispatch(closeModal({ modalType: 'ANNUAL_REPORT', ignoreFocus: false }));
+    dispatch(closeModal({ modalType: "ANNUAL_REPORT", ignoreFocus: false }));
   }, [dispatch]);
 
   // Close modal when navigating away from within
@@ -70,32 +66,26 @@ export const AnnualReport: FC<{ context?: 'modal' | 'standalone' }> = ({
     return <LoadingIndicator />;
   }
 
-  const newPostCount = report.data.time_series.reduce(
-    (sum, item) => sum + item.statuses,
-    0,
-  );
+  const newPostCount = report.data.time_series.reduce((sum, item) => sum + item.statuses, 0);
 
   const newFollowerCount =
-    context === 'modal' &&
-    report.data.time_series.reduce((sum, item) => sum + item.followers, 0);
+    context === "modal" && report.data.time_series.reduce((sum, item) => sum + item.followers, 0);
 
   const topHashtag = report.data.top_hashtags[0];
 
   return (
-    <div className={styles.wrapper} data-color-scheme='dark'>
+    <div className={styles.wrapper} data-color-scheme="dark">
       <div className={styles.header}>
-        <NavigationFocusTarget as='h1'>
-          Wrapstodon {report.year}
-        </NavigationFocusTarget>
+        <NavigationFocusTarget as="h1">Wrapstodon {report.year}</NavigationFocusTarget>
         {account && <p>@{account.acct}</p>}
-        {context === 'modal' && (
+        {context === "modal" && (
           <IconButton
             title={intl.formatMessage({
-              id: 'annual_report.summary.close',
-              defaultMessage: 'Close',
+              id: "annual_report.summary.close",
+              defaultMessage: "Close",
             })}
             className={styles.closeButton}
-            icon='close'
+            icon="close"
             iconComponent={CloseIcon}
             onClick={close}
           />
@@ -114,11 +104,7 @@ export const AnnualReport: FC<{ context?: 'modal' | 'standalone' }> = ({
           {!!newFollowerCount && <Followers count={newFollowerCount} />}
           {!!newPostCount && <NewPosts count={newPostCount} />}
           {topHashtag && (
-            <MostUsedHashtag
-              hashtag={topHashtag}
-              account={account}
-              context={context}
-            />
+            <MostUsedHashtag hashtag={topHashtag} account={account} context={context} />
           )}
         </div>
         <Archetype report={report} account={account} context={context} />

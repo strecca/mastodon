@@ -1,4 +1,5 @@
 # Admin Translation Guide
+
 ## miacivezza.com — Translation Status Dashboard & Command Reference
 
 ---
@@ -12,12 +13,12 @@ URL: `https://miacivezza.com/admin/translation_status`
 
 ### Summary Tiles (top row)
 
-| Tile | What it means |
-|------|--------------|
-| **Total translation rows stored** | Each row = one translatable field, for one entry, in one language. A Community Event with 2 fields (title + description) translated into 11 languages = 22 rows. Low numbers are normal when the site is new. |
-| **Sidekiq jobs processed (all time)** | Every background job ever completed — translations, scraper runs, media processing, emails, federation. Not translation-specific. 28,000+ is healthy for a running instance. |
-| **Jobs currently in queue** | Pending background jobs waiting to run. A few is normal. Hundreds means something is backed up. |
-| **Failed jobs** (red tile, only appears when > 0) | Jobs that crashed and were not retried successfully. **314 failed jobs is worth investigating** — click "→ view in Sidekiq" to see the error details and retry or discard them. |
+| Tile                                              | What it means                                                                                                                                                                                                 |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Total translation rows stored**                 | Each row = one translatable field, for one entry, in one language. A Community Event with 2 fields (title + description) translated into 11 languages = 22 rows. Low numbers are normal when the site is new. |
+| **Sidekiq jobs processed (all time)**             | Every background job ever completed — translations, scraper runs, media processing, emails, federation. Not translation-specific. 28,000+ is healthy for a running instance.                                  |
+| **Jobs currently in queue**                       | Pending background jobs waiting to run. A few is normal. Hundreds means something is backed up.                                                                                                               |
+| **Failed jobs** (red tile, only appears when > 0) | Jobs that crashed and were not retried successfully. **314 failed jobs is worth investigating** — click "→ view in Sidekiq" to see the error details and retry or discard them.                               |
 
 ---
 
@@ -29,25 +30,25 @@ The coloured badges (IT, DE, FR, ES, PT, NL, DA, SV, NO, SL, SQ) show every lang
 
 ### The Category Table
 
-| Column | What it means |
-|--------|--------------|
-| **Category** | One of the 7 translatable content types. Grey/dimmed rows have no entries yet. |
-| **Entries** | How many records exist in the database for that category. |
-| **Translation rows** | Rows in the `community_entry_translations` table for this category. Healthy target: Entries × fields-per-entry × 11 locales. |
-| **Coverage bar + %** | Percentage of the 11 target locales that have *at least one* translation row for this category. 100% means every language is represented — it does not guarantee every individual entry is translated. |
-| **Locales present** | Green badge = at least one translation exists for that locale. Grey badge = no translation yet. |
-| **Action** | Backfill button queues every entry in that category to Sidekiq for DeepL translation. Only appears when Entries > 0. |
+| Column               | What it means                                                                                                                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Category**         | One of the 7 translatable content types. Grey/dimmed rows have no entries yet.                                                                                                                         |
+| **Entries**          | How many records exist in the database for that category.                                                                                                                                              |
+| **Translation rows** | Rows in the `community_entry_translations` table for this category. Healthy target: Entries × fields-per-entry × 11 locales.                                                                           |
+| **Coverage bar + %** | Percentage of the 11 target locales that have _at least one_ translation row for this category. 100% means every language is represented — it does not guarantee every individual entry is translated. |
+| **Locales present**  | Green badge = at least one translation exists for that locale. Grey badge = no translation yet.                                                                                                        |
+| **Action**           | Backfill button queues every entry in that category to Sidekiq for DeepL translation. Only appears when Entries > 0.                                                                                   |
 
 #### Reading the current numbers (as of July 2026)
 
-| Category | Status | Meaning |
-|----------|--------|---------|
-| Community Events | 33 entries / 66 rows / 100% | All 11 locales have translations. 66 rows = 33 events × 2 fields (title + description). |
-| Community Artists | 1 entry / 9 rows / 81% | 9 of 11 locales translated. Click Backfill to catch up the missing 2. |
-| Community Services | 1 entry / 0 rows | Entry exists but has never been translated. Click Backfill. |
-| Community Listings | 6 entries / 0 rows | Same — 6 listings untranslated. Click Backfill. |
-| Member Stories | 1 entry / 0 rows | Same — 1 story untranslated. Click Backfill. |
-| Community Restaurants / Properties | 0 entries | No content yet — no action needed. |
+| Category                           | Status                      | Meaning                                                                                 |
+| ---------------------------------- | --------------------------- | --------------------------------------------------------------------------------------- |
+| Community Events                   | 33 entries / 66 rows / 100% | All 11 locales have translations. 66 rows = 33 events × 2 fields (title + description). |
+| Community Artists                  | 1 entry / 9 rows / 81%      | 9 of 11 locales translated. Click Backfill to catch up the missing 2.                   |
+| Community Services                 | 1 entry / 0 rows            | Entry exists but has never been translated. Click Backfill.                             |
+| Community Listings                 | 6 entries / 0 rows          | Same — 6 listings untranslated. Click Backfill.                                         |
+| Member Stories                     | 1 entry / 0 rows            | Same — 1 story untranslated. Click Backfill.                                            |
+| Community Restaurants / Properties | 0 entries                   | No content yet — no action needed.                                                      |
 
 ---
 
@@ -65,6 +66,7 @@ The coloured badges (IT, DE, FR, ES, PT, NL, DA, SV, NO, SL, SQ) show every lang
 ### The Backfill Button
 
 Use Backfill when:
+
 - A category has entries but 0 translation rows (new feature, or translations were never triggered)
 - You add a new target locale and need to back-populate all existing entries
 - Failed jobs left gaps in coverage
@@ -76,6 +78,7 @@ Each press queues every entry in that category. DeepL processes them within seco
 ### The 314 Failed Jobs
 
 This is the most important thing to act on. Visit `/sidekiq/retries` (linked from the red tile) to:
+
 1. See which worker + error caused each failure
 2. Retry all — if the errors were transient (network timeout, DeepL API rate limit), they'll succeed on retry
 3. Discard all — if they're old and no longer relevant
@@ -222,24 +225,24 @@ sudo systemctl restart mastodon-web mastodon-sidekiq mastodon-streaming
 
 ### Troubleshooting Cheat Sheet
 
-| Symptom | Check | Fix |
-|---------|-------|-----|
-| 500 error on any admin page | `sudo journalctl -u mastodon-web -n 30 --no-pager \| grep -i error` | Read the Ruby exception; fix the file; git push; git pull; restart mastodon-web |
-| Frontend change not showing | Is it a JS/SCSS file? | Run `npx vite build` on Hetzner, then hard-refresh (Cmd+Shift+R) |
-| New Rails route not found | Did you restart? | `sudo systemctl restart mastodon-web` |
-| Translation rows not increasing | Check Sidekiq for failed jobs | Visit `/sidekiq/retries`; fix root cause; retry or requeue via Backfill button |
-| Site content text not updating | Did you seed? | `RAILS_ENV=production bundle exec rails runner 'SiteContent.seed!'` |
-| DB migration error | Wrong RAILS_ENV syntax | Always prefix: `RAILS_ENV=production bundle exec rails db:migrate` — never suffix |
-| git pull says "Already up to date" on Hetzner | Forgot to push from Mac first | Run `git push origin main` on Mac, then pull again on Hetzner |
+| Symptom                                       | Check                                                               | Fix                                                                               |
+| --------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| 500 error on any admin page                   | `sudo journalctl -u mastodon-web -n 30 --no-pager \| grep -i error` | Read the Ruby exception; fix the file; git push; git pull; restart mastodon-web   |
+| Frontend change not showing                   | Is it a JS/SCSS file?                                               | Run `npx vite build` on Hetzner, then hard-refresh (Cmd+Shift+R)                  |
+| New Rails route not found                     | Did you restart?                                                    | `sudo systemctl restart mastodon-web`                                             |
+| Translation rows not increasing               | Check Sidekiq for failed jobs                                       | Visit `/sidekiq/retries`; fix root cause; retry or requeue via Backfill button    |
+| Site content text not updating                | Did you seed?                                                       | `RAILS_ENV=production bundle exec rails runner 'SiteContent.seed!'`               |
+| DB migration error                            | Wrong RAILS_ENV syntax                                              | Always prefix: `RAILS_ENV=production bundle exec rails db:migrate` — never suffix |
+| git pull says "Already up to date" on Hetzner | Forgot to push from Mac first                                       | Run `git push origin main` on Mac, then pull again on Hetzner                     |
 
 ---
 
 ### Dashboard URLs (bookmarkable)
 
-| Page | URL |
-|------|-----|
+| Page                        | URL                                               |
+| --------------------------- | ------------------------------------------------- |
 | Site Content & Translations | `https://miacivezza.com/admin/site_settings/edit` |
-| Translation Status | `https://miacivezza.com/admin/translation_status` |
-| Sidekiq Dashboard | `https://miacivezza.com/sidekiq` |
-| Sidekiq Failed Jobs | `https://miacivezza.com/sidekiq/retries` |
-| Admin Dashboard | `https://miacivezza.com/admin/dashboard` |
+| Translation Status          | `https://miacivezza.com/admin/translation_status` |
+| Sidekiq Dashboard           | `https://miacivezza.com/sidekiq`                  |
+| Sidekiq Failed Jobs         | `https://miacivezza.com/sidekiq/retries`          |
+| Admin Dashboard             | `https://miacivezza.com/admin/dashboard`          |

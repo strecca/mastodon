@@ -1,39 +1,35 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
-import type { List as ImmutableList, RecordOf } from 'immutable';
+import type { List as ImmutableList, RecordOf } from "immutable";
 
-import type { ApiMentionJSON } from '@/flavours/glitch/api_types/statuses';
-import { AnimateEmojiProvider } from '@/flavours/glitch/components/emoji/context';
-import { FOCUS_TARGET } from '@/flavours/glitch/components/navigation_focus_target';
-import BarChart4BarsIcon from '@/material-icons/400-24px/bar_chart_4_bars.svg?react';
-import PhotoLibraryIcon from '@/material-icons/400-24px/photo_library.svg?react';
-import { toggleStatusSpoilers } from 'flavours/glitch/actions/statuses';
-import { Avatar } from 'flavours/glitch/components/avatar';
-import { ContentWarning } from 'flavours/glitch/components/content_warning';
-import { DisplayName } from 'flavours/glitch/components/display_name';
-import { Icon } from 'flavours/glitch/components/icon';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
+import type { ApiMentionJSON } from "@/flavours/glitch/api_types/statuses";
+import { AnimateEmojiProvider } from "@/flavours/glitch/components/emoji/context";
+import { FOCUS_TARGET } from "@/flavours/glitch/components/navigation_focus_target";
+import BarChart4BarsIcon from "@/material-icons/400-24px/bar_chart_4_bars.svg?react";
+import PhotoLibraryIcon from "@/material-icons/400-24px/photo_library.svg?react";
+import { toggleStatusSpoilers } from "flavours/glitch/actions/statuses";
+import { Avatar } from "flavours/glitch/components/avatar";
+import { ContentWarning } from "flavours/glitch/components/content_warning";
+import { DisplayName } from "flavours/glitch/components/display_name";
+import { Icon } from "flavours/glitch/components/icon";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
-import { EmbeddedStatusContent } from './embedded_status_content';
+import { EmbeddedStatusContent } from "./embedded_status_content";
 
 export type Mention = RecordOf<ApiMentionJSON>;
 
-export const EmbeddedStatus: React.FC<{ statusId: string }> = ({
-  statusId,
-}) => {
+export const EmbeddedStatus: React.FC<{ statusId: string }> = ({ statusId }) => {
   const history = useHistory();
   const clickCoordinatesRef = useRef<[number, number] | null>();
   const dispatch = useAppDispatch();
 
   const status = useAppSelector((state) => state.statuses.get(statusId));
 
-  const account = useAppSelector((state) =>
-    state.accounts.get(status?.get('account') as string),
-  );
+  const account = useAppSelector((state) => state.accounts.get(status?.get("account") as string));
 
   const handleMouseDown = useCallback<React.MouseEventHandler<HTMLDivElement>>(
     ({ clientX, clientY }) => {
@@ -45,18 +41,15 @@ export const EmbeddedStatus: React.FC<{ statusId: string }> = ({
   const handleMouseUp = useCallback<React.MouseEventHandler<HTMLDivElement>>(
     ({ clientX, clientY, target, button, ctrlKey, metaKey }) => {
       const [startX, startY] = clickCoordinatesRef.current ?? [0, 0];
-      const [deltaX, deltaY] = [
-        Math.abs(clientX - startX),
-        Math.abs(clientY - startY),
-      ];
+      const [deltaX, deltaY] = [Math.abs(clientX - startX), Math.abs(clientY - startY)];
 
       let element: HTMLDivElement | null = target as HTMLDivElement;
 
       while (element) {
         if (
-          element.localName === 'button' ||
-          element.localName === 'a' ||
-          element.localName === 'label'
+          element.localName === "button" ||
+          element.localName === "a" ||
+          element.localName === "label"
         ) {
           return;
         }
@@ -70,7 +63,7 @@ export const EmbeddedStatus: React.FC<{ statusId: string }> = ({
         if (button === 0 && !(ctrlKey || metaKey)) {
           history.push(path, { focusTarget: FOCUS_TARGET.POST });
         } else if (button === 1 || (button === 0 && (ctrlKey || metaKey))) {
-          window.open(path, '_blank', 'noopener');
+          window.open(path, "_blank", "noopener");
         }
       }
 
@@ -88,56 +81,47 @@ export const EmbeddedStatus: React.FC<{ statusId: string }> = ({
   }
 
   // Assign status attributes to variables with a forced type, as status is not yet properly typed
-  const hasContentWarning = !!status.get('spoiler_text');
-  const poll = status.get('poll');
-  const expanded = !status.get('hidden') || !hasContentWarning;
-  const mediaAttachmentsSize = (
-    status.get('media_attachments') as ImmutableList<unknown>
-  ).size;
+  const hasContentWarning = !!status.get("spoiler_text");
+  const poll = status.get("poll");
+  const expanded = !status.get("hidden") || !hasContentWarning;
+  const mediaAttachmentsSize = (status.get("media_attachments") as ImmutableList<unknown>).size;
 
   return (
     <AnimateEmojiProvider
-      className='notification-group__embedded-status'
-      role='button'
+      className="notification-group__embedded-status"
+      role="button"
       tabIndex={-1}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
     >
-      <div className='notification-group__embedded-status__account'>
+      <div className="notification-group__embedded-status__account">
         <Avatar account={account} size={16} />
         <DisplayName account={account} />
       </div>
 
-      <ContentWarning
-        status={status}
-        onClick={handleContentWarningClick}
-        expanded={expanded}
-      />
+      <ContentWarning status={status} onClick={handleContentWarningClick} expanded={expanded} />
 
       {(!hasContentWarning || expanded) && (
         <EmbeddedStatusContent
-          className='notification-group__embedded-status__content reply-indicator__content translate'
+          className="notification-group__embedded-status__content reply-indicator__content translate"
           status={status}
         />
       )}
 
       {expanded && (poll || mediaAttachmentsSize > 0) && (
-        <div className='notification-group__embedded-status__attachments reply-indicator__attachments'>
+        <div className="notification-group__embedded-status__attachments reply-indicator__attachments">
           {!!poll && (
             <>
-              <Icon icon={BarChart4BarsIcon} id='bar-chart-4-bars' />
-              <FormattedMessage
-                id='reply_indicator.poll'
-                defaultMessage='Poll'
-              />
+              <Icon icon={BarChart4BarsIcon} id="bar-chart-4-bars" />
+              <FormattedMessage id="reply_indicator.poll" defaultMessage="Poll" />
             </>
           )}
           {mediaAttachmentsSize > 0 && (
             <>
-              <Icon icon={PhotoLibraryIcon} id='photo-library' />
+              <Icon icon={PhotoLibraryIcon} id="photo-library" />
               <FormattedMessage
-                id='reply_indicator.attachments'
-                defaultMessage='{count, plural, one {# attachment} other {# attachments}}'
+                id="reply_indicator.attachments"
+                defaultMessage="{count, plural, one {# attachment} other {# attachments}}"
                 values={{ count: mediaAttachmentsSize }}
               />
             </>

@@ -1,7 +1,7 @@
 ---
 gl:
   about:
-    about_mastodon_html: 'A rede social do futuro: Sen publicidade, sen seguimento por empresas, deseño ético e descentralización! En Mastodon ti posúes os teus datos!'
+    about_mastodon_html: "A rede social do futuro: Sen publicidade, sen seguimento por empresas, deseño ético e descentralización! En Mastodon ti posúes os teus datos!"
     contact_missing: Non establecido
     contact_unavailable: Non dispoñíbel
     default_thumbnail_description: Dous mastodóns sorrintes debuxados (que semellan elefantes) tiran un avión de papel polo aire entre eles. De fondo vese o ceo azul con planetas flotando entre árbores e máis mastodóns neles.
@@ -334,7 +334,7 @@ gl:
         title: Novo anuncio
       preview:
         disclaimer: As usuarias non poden omitilas, as notificiacións por correo deberían limitarse a anuncios importantes como fugas de datos personais ou notificación do cese do servizo.
-        explanation_html: 'Vaise enviar o correo a <strong>%{display_count} usuarias</strong>. Incluirase o seguinte texto no correo:'
+        explanation_html: "Vaise enviar o correo a <strong>%{display_count} usuarias</strong>. Incluirase o seguinte texto no correo:"
         title: Previsualización da notificación do anuncio
       publish: Publicar
       published_msg: Anuncio publicado de xeito correcto!
@@ -349,7 +349,7 @@ gl:
       back_to_account: Volver a páxina da conta
       back_to_report: Volver á páxina da denuncia
       batch:
-        add_to_report: 'Engadir á denuncia #%{id}'
+        add_to_report: "Engadir á denuncia #%{id}"
         remove_from_report: Retirar da denuncia
         report: Denunciar
       collection_title: Colección de %{name}
@@ -584,10 +584,10 @@ gl:
       import:
         description_html: Vas importar unha lista de dominios a bloquear. Comproba a lista con atención, especialmente se non creaches ti mesma a lista.
         existing_relationships_warning: Relacións de seguimento existentes
-        private_comment_description_html: 'Para axudarche a lembrar de onde veñen os bloqueos importados, imos crealos engadindo o seguinte comentario privado: <q>%{comment}</q>'
+        private_comment_description_html: "Para axudarche a lembrar de onde veñen os bloqueos importados, imos crealos engadindo o seguinte comentario privado: <q>%{comment}</q>"
         private_comment_template: Importada desde %{source} o %{date}
         title: Importar bloqueos de dominio
-      invalid_domain_block: 'Un ou varios dominios non se bloquearon debido ao seguinte erro(s): %{error}'
+      invalid_domain_block: "Un ou varios dominios non se bloquearon debido ao seguinte erro(s): %{error}"
       new:
         title: Importar bloqueos de dominio
       no_file: Ningún ficheiro seleccionado
@@ -721,12 +721,12 @@ gl:
       created_msg: Engadeuse a nova regra IP
       delete: Eliminar
       expires_in:
-        '1209600': 2 semanas
-        '15778476': 6 meses
-        '2629746': 1 mes
-        '31556952': 1 ano
-        '86400': 1 día
-        '94670856': 3 anos
+        "1209600": 2 semanas
+        "15778476": 6 meses
+        "2629746": 1 mes
+        "31556952": 1 ano
+        "86400": 1 día
+        "94670856": 3 anos
       new:
         title: Crear nova regra IP
       no_ip_block_selected: Non se cambiou ningunha regra iP porque non seleccionaches ningunha
@@ -783,7 +783,7 @@ gl:
       collections: Coleccións (%{count})
       comment:
         none: Ningún
-      comment_description_html: 'Como información engadida, %{name} escribiu:'
+      comment_description_html: "Como información engadida, %{name} escribiu:"
       confirm: Confirmar
       confirm_action: Confirma a acción de moderación contra @%{acct}
       created_at: Denunciado
@@ -803,11 +803,11 @@ gl:
         placeholder: Describir que accións foron tomadas ou calquera outra novidade sobre esta denuncia...
         title: Notas
       notes_description_html: Ver e deixar unha nota para ti no futuro e outras moderadoras
-      processed_msg: 'Procesada correctamente a denuncia #%{id}'
-      quick_actions_description_html: 'Toma unha acción rápida ou desprázate abaixo para ver o contido denunciado:'
+      processed_msg: "Procesada correctamente a denuncia #%{id}"
+      quick_actions_description_html: "Toma unha acción rápida ou desprázate abaixo para ver o contido denunciado:"
       remote_user_placeholder: a usuaria remota desde %{instance}
       reopen: Reabrir denuncia
-      report: 'Denuncia #%{id}'
+      report: "Denuncia #%{id}"
       reported_account: Conta denunciada
       reported_by: Denunciado por
       reported_content: Contido denunciado
@@ -820,16 +820,16 @@ gl:
       statuses_description_html: O contido ofensivo será citado na comunicación coa conta denunciada
       summary:
         action_preambles:
-          delete_html: 'Vas <strong>eliminar</strong> algunha das publicacións de <strong>@%{acct}</strong>. Serán:'
-          mark_as_sensitive_html: 'Vas <strong>marcar</strong> algunha das publicacións de <strong>@%{acct}</strong> como <strong>sensibles</strong>. Serán:'
-          silence_html: 'Vas <strong>limitar</strong> a conta <strong>@%{acct}</strong>:'
-          suspend_html: 'Vas <strong>suspender</strong> a conta <strong>@%{acct}</strong>:'
+          delete_html: "Vas <strong>eliminar</strong> algunha das publicacións de <strong>@%{acct}</strong>. Serán:"
+          mark_as_sensitive_html: "Vas <strong>marcar</strong> algunha das publicacións de <strong>@%{acct}</strong> como <strong>sensibles</strong>. Serán:"
+          silence_html: "Vas <strong>limitar</strong> a conta <strong>@%{acct}</strong>:"
+          suspend_html: "Vas <strong>suspender</strong> a conta <strong>@%{acct}</strong>:"
         actions:
           delete_html: Eliminar as publicacións ofensivas
           mark_as_sensitive_html: Marcar as publicacións ofensivas como sensibles
           silence_html: Limitar moito a visibilidade e alcance da conta <strong>@%{acct}</strong> facendo que o seu perfil e contidos sexan visibles só por persoas que a seguen ou que a busquen de xeito activo
           suspend_html: Suspender a conta <strong>@%{acct}</strong>, facendo que o seu perfil e contidos non sexan accesibles e imposible interactuar con ela
-        close_report: 'Marcar a denuncia #%{id} como resolta'
+        close_report: "Marcar a denuncia #%{id} como resolta"
         close_reports_html: Marcar <strong>todas</strong> as denuncias contra <strong>@%{acct}</strong> como resoltas
         delete_data_html: Eliminar o perfil e contidos de <strong>@%{acct}</strong> para os próximos 30 días a non ser que sexa suspendida nese período
         preview_preamble_html: "<strong>@%{acct}</strong> vai recibir un aviso co seguinte contido:"
@@ -839,7 +839,7 @@ gl:
       target_origin: Orixe da conta denunciada
       title: Denuncias
       unassign: Non asignar
-      unknown_action_msg: 'Acción descoñecida: %{action}'
+      unknown_action_msg: "Acción descoñecida: %{action}"
       unresolved: Non resolto
       updated_at: Actualizado
       view_profile: Ver perfil
@@ -932,7 +932,7 @@ gl:
         rules_hint: Hai un espazo dedicado para as normas que é de agardar as usuarias acaten.
         title: Sobre
       allow_referrer_origin:
-        desc: 'Cando as túas usuarias premen en ligazóns a sitios web externos o seu navegador pode enviar o enderezo do teu servidor Mastodon como «referrer». Destactiva esta opción se isto permitiría identificar de xeito único ás túas usuarias. Ex.: un servidor persoal de Mastodon.'
+        desc: "Cando as túas usuarias premen en ligazóns a sitios web externos o seu navegador pode enviar o enderezo do teu servidor Mastodon como «referrer». Destactiva esta opción se isto permitiría identificar de xeito único ás túas usuarias. Ex.: un servidor persoal de Mastodon."
         title: Permitir a sitios web externos ver o teu servidor Mastodon como orixe do tráfico
       appearance:
         preamble: Personalizar a interface web de Mastodon.
@@ -1018,7 +1018,7 @@ gl:
       back_to_account: Volver a páxina da conta
       back_to_report: Volver a denuncias
       batch:
-        add_to_report: 'Engadir á denuncia #%{id}'
+        add_to_report: "Engadir á denuncia #%{id}"
         remove_from_report: Eliminar da denuncia
         report: Denuncia
       contents: Contidos
@@ -1079,7 +1079,7 @@ gl:
       elasticsearch_running_check:
         message_html: Non se puido conectar con Elasticsearch. Comproba que está funcionando, ou desactiva a busca por texto completo
       elasticsearch_version_check:
-        message_html: 'Versión incompatible de Elasticsearch: %{value}'
+        message_html: "Versión incompatible de Elasticsearch: %{value}"
         version_comparison: Está executándose Elasticsearch %{running_version} pero requírese a %{required_version}
       rules_check:
         action: Xestionar regras do servidor
@@ -1141,7 +1141,7 @@ gl:
       notified_on_html: Informouse ás usuarias o %{date}
       notify_users: Informar ás usuarias
       preview:
-        explanation_html: 'Vaise enviar un correo a <strong>%{display_count} usuarias</strong> que crearon a conta antes do %{date}. Incluirase o seguinte texto no correo:'
+        explanation_html: "Vaise enviar un correo a <strong>%{display_count} usuarias</strong> que crearon a conta antes do %{date}. Incluirase o seguinte texto no correo:"
         send_preview: Enviar vista previa a %{email}
         send_to_all:
           one: Enviar %{display_count} correo
@@ -1218,7 +1218,7 @@ gl:
         peaked_on_and_decaying: Máximo en %{date}, agora diminúe
         title: Cancelos en voga
         trendable: Pode aparecer nas tendencias
-        trending_rank: 'En voga #%{rank}'
+        trending_rank: "En voga #%{rank}"
         usable: Pode ser usado
         usage_comparison: Utilizado %{today} veces hoxe, comparado coas %{yesterday} de onte
         used_by_over_week:
@@ -1301,7 +1301,7 @@ gl:
       body: Publicáronse novas versións de Mastodon, convenche actualizar!
       subject: Hai novas versións de Mastodon dispoñibles para %{instance}!
     new_trends:
-      body: 'Os seguintes elementos precisan revisión antes de ser mostrados públicamente:'
+      body: "Os seguintes elementos precisan revisión antes de ser mostrados públicamente:"
       new_trending_links:
         title: Ligazóns en voga
       new_trending_statuses:
@@ -1331,7 +1331,7 @@ gl:
     notification_preferences: Cambiar preferencias de correo
     salutation: "%{name},"
     unsubscribe: Anular subscrición
-    view: 'Vista:'
+    view: "Vista:"
     view_profile: Ver perfil
     view_status: Ver publicación
   applications:
@@ -1392,7 +1392,7 @@ gl:
     rules:
       accept: Aceptar
       back: Volver
-      invited_by: 'Podes unirte a %{domain} grazas ao convite que recibiches de parte de:'
+      invited_by: "Podes unirte a %{domain} grazas ao convite que recibiches de parte de:"
       preamble: Son establecidas e aplicadas pola moderación de %{domain}.
       preamble_invited: Antes de continuar adica un minuto a ler as regras básicas establecidas para %{domain}.
       read_more: Ler máis
@@ -1428,7 +1428,7 @@ gl:
   author_attribution:
     example_title: Texto de mostra
     hint_html: Escribes novas ou artigos nun blog alleos a Mastodon? Xestiona o xeito en que podes dar crédito da túa autoría cando os compartes en Mastodon.
-    instructions: 'Pon coidado en que este código apareza no HTML do teu artigo:'
+    instructions: "Pon coidado en que este código apareza no HTML do teu artigo:"
     more_from_html: Máis de %{name}
     s_blog: Blog de %{name}
     then_instructions: Despois engade o nome de dominio da publicación no campo inferior.
@@ -1473,7 +1473,7 @@ gl:
     proceed: Eliminar conta
     success_msg: A súa conta eliminouse correctamente
     warning:
-      before: 'Antes de continuar, por favor le estas notas con atención:'
+      before: "Antes de continuar, por favor le estas notas con atención:"
       caches: O contido almacenado noutros servidores podería persistir
       data_removal: As túas publicacións e outros datos serán permanentemente borrados
       email_change_html: Podes <a href="%{path}">cambiar o enderezo de correo</a> sen eliminar a conta
@@ -1499,7 +1499,7 @@ gl:
       description_html: Estas son as accións tomadas contra a túa conta e os avisos que che enviou a administración de %{instance}.
       recipient: Entregada a
       reject_appeal: Rexeitar apelación
-      status: 'Publicación #%{id}'
+      status: "Publicación #%{id}"
       status_removed: A publicación xa foi eliminada do sistema
       title: "%{action} o %{date}"
       title_actions:
@@ -1558,19 +1558,19 @@ gl:
     native: Nativo
     twemoji: Twemoji
   errors:
-    '400': A solicitude que enviou non é válida ou ten formato incorrecto.
-    '403': Non ten permiso para ver esta páxina.
-    '404': A páxina que buscas non está aquí.
-    '406': Esta páxina non está dispoñible no formato solicitado.
-    '410': A páxina que estaba a buscar xa non existe.
-    '422':
+    "400": A solicitude que enviou non é válida ou ten formato incorrecto.
+    "403": Non ten permiso para ver esta páxina.
+    "404": A páxina que buscas non está aquí.
+    "406": Esta páxina non está dispoñible no formato solicitado.
+    "410": A páxina que estaba a buscar xa non existe.
+    "422":
       content: Fallou a verificación de seguridade. Estás bloqueando os rastros?
       title: Fallou a verficación de seguridade
-    '429': Acelerado
-    '500':
+    "429": Acelerado
+    "500":
       content: Sentímolo, pero algo do noso lado falloou.
       title: Esta páxina non é correcta
-    '503': A páxina non se puido servir debido a un fallo temporal no servidor.
+    "503": A páxina non se puido servir debido a un fallo temporal no servidor.
     noscript_html: Para utilizar a aplicación web de Mastodon debes activar JavaScript. De xeito alternativo, proba cunha das <a href="%{apps_path}">apps nativas</a> para Mastodon na túa plataforma.
   existing_username_validator:
     not_found: non se atopou unha usuaria local con ese alcume
@@ -1665,8 +1665,8 @@ gl:
     errors:
       empty: Ficheiro CSV de baleiro
       incompatible_type: Non é compatible co tipo de importación seleccionado
-      invalid_csv_file: 'Ficheiro CSV non válido. Erro: %{error}'
-      invalid_json_file: 'Ficheiro JSON non válido. Erro: %{error}'
+      invalid_csv_file: "Ficheiro CSV non válido. Erro: %{error}"
+      invalid_json_file: "Ficheiro JSON non válido. Erro: %{error}"
       over_rows_processing_limit: contén máis de %{count} filas
       status_not_found_warning: Algún dos teus filtros oculta publicacións concretas que non son coñecidas por este servidor. Estas publicacións non se van filtrar automaticamente se son descubertas máis tarde polo servidor.
       too_large: O ficheiro é demasiado grande
@@ -1756,16 +1756,16 @@ gl:
     delete: Desactivar
     expired: Caducou
     expires_in:
-      '1800': 30 minutos
-      '21600': 6 horas
-      '3600': 1 hora
-      '43200': 12 horas
-      '604800': 1 semana
-      '86400': 1 día
+      "1800": 30 minutos
+      "21600": 6 horas
+      "3600": 1 hora
+      "43200": 12 horas
+      "604800": 1 semana
+      "86400": 1 día
     expires_in_prompt: Nunca
     generate: Xerar
     invalid: Este convite non é válido
-    invited_by: 'Convidoute:'
+    invited_by: "Convidoute:"
     max_uses:
       one: 1 uso
       other: "%{count} usos"
@@ -1826,7 +1826,7 @@ gl:
     set_redirect: Establecer redirección
     warning:
       backreference_required: Tes que configurar primeiro a nova conta para referenciar hacia esta
-      before: 'Antes de continuar, por favor le estas notas con atención:'
+      before: "Antes de continuar, por favor le estas notas con atención:"
       cooldown: Tras a migración existe un período de calma durante o cal non poderás volver a migrar de novo
       disabled_account: Tras o cambio a túa conta actual non será totalmente usable, pero terás acceso a exportar os datos e tamén a reactivación.
       followers: Esta acción moverá todas as túas seguidoras desde a conta actual a nova conta
@@ -1838,7 +1838,7 @@ gl:
   move_handler:
     carry_blocks_over_text: Esta usuaria chegou desde %{acct}, que ti tes bloqueada.
     carry_mutes_over_text: Esta usuaria chegou desde %{acct}, que ti tes acalada.
-    copy_account_note_text: 'Esta usuaria chegou desde %{acct}, aquí están as túas notas previas acerca dela:'
+    copy_account_note_text: "Esta usuaria chegou desde %{acct}, aquí están as túas notas previas acerca dela:"
   navigation:
     toggle_menu: Activa o menú
   notification_fallbacks:
@@ -1869,7 +1869,7 @@ gl:
       sign_up:
         subject: "%{name} rexistrouse"
     favourite:
-      body: 'A túa publicación foi favorecida por %{name}:'
+      body: "A túa publicación foi favorecida por %{name}:"
       subject: "%{name} marcou como favorita a túa publicación"
       title: Nova favorita
     follow:
@@ -1879,7 +1879,7 @@ gl:
     follow_request:
       action: Xestionar peticións de seguimento
       body: "%{name} solicitou poder seguila"
-      subject: 'Seguidora pendente: %{name}'
+      subject: "Seguidora pendente: %{name}"
       title: Nova petición de seguimento
     mention:
       action: Responder
@@ -1891,13 +1891,13 @@ gl:
     poll:
       subject: A enquisa de %{name} rematou
     quote:
-      body: 'A túa publicación foi citada por %{name}:'
+      body: "A túa publicación foi citada por %{name}:"
       subject: "%{name} citou a túa publicación"
       title: Nova cita
     quoted_update:
       subject: "%{name} editou unha publicación que citaches"
     reblog:
-      body: 'A túa publicación promovida por %{name}:'
+      body: "A túa publicación promovida por %{name}:"
       subject: "%{name} promoveu a túa publicación"
       title: Nova promoción
     severed_relationships:
@@ -1909,7 +1909,7 @@ gl:
   notifications:
     administration_emails: Administrar notificacións por correo
     email_events: Eventos para as notificación por correo
-    email_events_hint: 'Escolle os eventos sobre os que queres recibir notificacións:'
+    email_events_hint: "Escolle os eventos sobre os que queres recibir notificacións:"
   number:
     human:
       decimal_units:
@@ -1925,7 +1925,7 @@ gl:
     description_html: Se activas a <strong>autenticación con dous factores</strong> utilizando unha app de autenticación, ao conectarte pedirémosche que teñas o móbil á man, para crear o código que precisas para acceder.
     enable: Activar
     instructions_html: "<strong>Escanea este código QR na túa app TOTP ou tipo Google Authenticator no móbil</strong>. A partir de agora, a app creará códigos que terás que escribir cando entres."
-    manual_instructions: 'Se non podes escanear o código QR e tes que escribilo á man, aquí tes o código en texto plano:'
+    manual_instructions: "Se non podes escanear o código QR e tes que escribilo á man, aquí tes o código en texto plano:"
     setup: Configurar
     wrong_code: O código escrito non é válido! ¿é correcta a hora no dispositivo e no servidor?
   pagination:
@@ -2000,10 +2000,10 @@ gl:
     errors:
       invalid_rules: non fai referencia a regras válidas
   rss:
-    content_warning: 'Aviso sobre o contido:'
+    content_warning: "Aviso sobre o contido:"
     descriptions:
       account: Publicacións públicas de @%{acct}
-      tag: 'Publicacións públicas con #%{hashtag}'
+      tag: "Publicacións públicas con #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Excedeches o límite de %{limit} publicacións programadas para ese día
     over_total_limit: Excedeches o límite de %{limit} publicacións programadas
@@ -2097,7 +2097,7 @@ gl:
       audio:
         one: "%{count} audio"
         other: "%{count} audios"
-      description: 'Axenado: %{attached}'
+      description: "Axenado: %{attached}"
       image:
         one: "%{count} imaxe"
         other: "%{count} imaxes"
@@ -2105,14 +2105,14 @@ gl:
         one: "%{count}  vídeo"
         other: "%{count} vídeos"
     boosted_from_html: Promovida desde %{acct_link}
-    content_warning: 'Aviso sobre o contido: %{warning}'
+    content_warning: "Aviso sobre o contido: %{warning}"
     content_warnings:
       hide: Ocultar publicación
       show: Ver máis
     default_language: Igual que o idioma da interface
     disallowed_hashtags:
-      one: 'contiña un cancelo non permitido: %{tags}'
-      other: 'contiña uns cancelos non permitidos: %{tags}'
+      one: "contiña un cancelo non permitido: %{tags}"
+      other: "contiña uns cancelos non permitidos: %{tags}"
     edited_at_html: Editado %{date}
     errors:
       in_reply_not_found: A publicación á que tentas responder semella que non existe.
@@ -2163,14 +2163,14 @@ gl:
     keep_self_fav: Manter as publicacións que favoreceches
     keep_self_fav_hint: Non elimina as túas propias publicacións se as marcaches como favoritas
     min_age:
-      '1209600': 2 semanas
-      '15778476': 6 meses
-      '2629746': 1 mes
-      '31556952': 1 ano
-      '5259492': 2 meses
-      '604800': 1 semana
-      '63113904': 2 anos
-      '7889238': 3 meses
+      "1209600": 2 semanas
+      "15778476": 6 meses
+      "2629746": 1 mes
+      "31556952": 1 ano
+      "5259492": 2 meses
+      "604800": 1 semana
+      "63113904": 2 anos
+      "7889238": 3 meses
     min_age_label: Límite temporal
     min_favs: Manter publicacións favorecidas polo menos
     min_favs_hint: Non elimina ningunha das túas publicacións que recibiron alomenos esta cantidade de favorecementos. Deixa en branco para eliminar publicacións independentemente do número de favorecementos
@@ -2263,22 +2263,22 @@ gl:
       subject: O teu ficheiro xa está preparado para descargar
       title: Leve o ficheiro
     failed_2fa:
-      details: 'Detalles do intento de acceso:'
+      details: "Detalles do intento de acceso:"
       explanation: Alguén intentou acceder á túa conta mais fíxoo cun segundo factor de autenticación non válido.
       further_actions_html: Se non foches ti, recomendámosche %{action} inmediatamente porque a conta podería estar en risco.
       subject: Fallo co segundo factor de autenticación
       title: Fallou o segundo factor de autenticación
     suspicious_sign_in:
       change_password: cambia o teu contrasinal
-      details: 'Estos son os detalles do acceso:'
+      details: "Estos son os detalles do acceso:"
       explanation: Detectamos que accedeches á conta desde un novo enderezo IP.
       further_actions_html: Se non foches ti, aconsellámosche %{action} inmediatamente e activar o segundo factor de autenticación para manter conta segura.
       subject: Accedeuse á túa conta desde novos enderezos IP
       title: Novo acceso
     terms_of_service_changed:
       agreement: Se continúas a usar %{domain} aceptas estas condicións. Se non aceptas as condicións actualizadas podería rematar o acordo con %{domain} en calquera momento e eliminarse a túa conta.
-      changelog: 'Dunha ollada, aquí tes o que implican os cambios para ti:'
-      description: 'Estás a recibir este correo porque fixemos cambios nas condicións do servizo en %{domain}. Estas actualizacións terán efecto desde o %{date}. Convidámoste a que revises os termos ao completo aquí:'
+      changelog: "Dunha ollada, aquí tes o que implican os cambios para ti:"
+      description: "Estás a recibir este correo porque fixemos cambios nas condicións do servizo en %{domain}. Estas actualizacións terán efecto desde o %{date}. Convidámoste a que revises os termos ao completo aquí:"
       description_html: 'Estás a recibir este correo porque fixemos algúns cambios nas nósas condicións do servizo en %{domain}. Estas actualizacións terán efecto desde o <strong>%{date}</strong>. Convidámoste a que leas <a href="%{path}" target="_blank">aquí as condicións actualizadas ao completo</a>:'
       sign_off: O equipo de %{domain}
       subject: Actualización das condicións do servizo
@@ -2297,8 +2297,8 @@ gl:
         sensitive: A partir deste momento, tódolos ficheiros que subiches estarán marcados como sensibles e agochados tras un aviso de contido.
         silence: Aínda podes usar a túa conta pero só as persoas que te siguen poden ver as túas publicacións neste servidor, e podes que foses excluída de varios xeitos de descubrimento. Porén, aínda te poden seguir de xeito manual.
         suspend: Xa non podes usar a túa conta, o teu perfil e outros datos xa non son accesibles. Aínda podes acceder para solicitar unha copia dos teus datos no prazo de 30 días previos á eliminación da conta. Imos reter algúns datos básicos para evitar que poidas evitar a suspensión.
-      reason: 'Razón:'
-      statuses: 'Publicacións citadas:'
+      reason: "Razón:"
+      statuses: "Publicacións citadas:"
       subject:
         delete_statuses: As túas publicacións en %{acct} foron eliminadas
         disable: A súa conta %{acct} foi conxelada
@@ -2320,7 +2320,7 @@ gl:
       apps_ios_action: Descarga desde App Store
       apps_step: Descarga as apps oficiais.
       apps_title: Apps de Mastodon
-      checklist_subtitle: 'Ímoste guiar no comezo nesta nova experiencia social:'
+      checklist_subtitle: "Ímoste guiar no comezo nesta nova experiencia social:"
       checklist_title: Lista de comprobación
       edit_profile_action: Personalizar
       edit_profile_step: Aumenta as túas interaccións grazas a un perfil descriptivo.
@@ -2362,7 +2362,7 @@ gl:
     otp_lost_help_html: Se perdes o acceso a ambos, podes contactar con %{email}
     rate_limited: Demasiados intentos de autenticación, inténtao máis tarde.
     seamless_external_login: Accedeches a través dun servizo externo, polo que os axustes de contrasinal e correo non están dispoñibles.
-    signed_in_as: 'Rexistrada como:'
+    signed_in_as: "Rexistrada como:"
   verification:
     extra_instructions_html: <strong>Truco:</strong> A ligazón pode estar agochada na túa páxina web. A parte importante é <code>rel="me"</code> que impide a suplantación en sitios web con contido creado polas usuarias. Incluso podes usar a etiqueta <code>link</code> na cabeceira da páxina en lugar de <code>a</code>, pero o HTML debe ser accesible sen precisar usar JavaScript.
     here_is_how: Podes facelo así

@@ -1,16 +1,16 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import type { Map as ImmutableMap, List as ImmutableList } from 'immutable';
+import type { Map as ImmutableMap, List as ImmutableList } from "immutable";
 
-import { fetchHistory } from 'flavours/glitch/actions/history';
-import { openModal } from 'flavours/glitch/actions/modal';
-import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
-import { FormattedDateWrapper } from 'flavours/glitch/components/formatted_date';
-import InlineAccount from 'flavours/glitch/components/inline_account';
-import { RelativeTimestamp } from 'flavours/glitch/components/relative_timestamp';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import { fetchHistory } from "flavours/glitch/actions/history";
+import { openModal } from "flavours/glitch/actions/modal";
+import { Dropdown } from "flavours/glitch/components/dropdown_menu";
+import { FormattedDateWrapper } from "flavours/glitch/components/formatted_date";
+import InlineAccount from "flavours/glitch/components/inline_account";
+import { RelativeTimestamp } from "flavours/glitch/components/relative_timestamp";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
 type HistoryItem = ImmutableMap<string, unknown>;
 
@@ -22,14 +22,10 @@ export const EditedTimestamp: React.FC<{
   const items = useAppSelector(
     (state) =>
       (
-        state.history.getIn([statusId, 'items']) as
-          | ImmutableList<unknown>
-          | undefined
+        state.history.getIn([statusId, "items"]) as ImmutableList<unknown> | undefined
       )?.toArray() as HistoryItem[],
   );
-  const loading = useAppSelector(
-    (state) => state.history.getIn([statusId, 'loading']) as boolean,
-  );
+  const loading = useAppSelector((state) => state.history.getIn([statusId, "loading"]) as boolean);
 
   const handleOpen = useCallback(() => {
     dispatch(fetchHistory(statusId));
@@ -39,7 +35,7 @@ export const EditedTimestamp: React.FC<{
     (_item: HistoryItem, index: number) => {
       dispatch(
         openModal({
-          modalType: 'COMPARE_HISTORY',
+          modalType: "COMPARE_HISTORY",
           modalProps: { index, statusId },
         }),
       );
@@ -50,8 +46,8 @@ export const EditedTimestamp: React.FC<{
   const renderHeader = useCallback((items: HistoryItem[]) => {
     return (
       <FormattedMessage
-        id='status.edited_x_times'
-        defaultMessage='Edited {count, plural, one {# time} other {# times}}'
+        id="status.edited_x_times"
+        defaultMessage="Edited {count, plural, one {# time} other {# times}}"
         values={{ count: items.length - 1 }}
       />
     );
@@ -59,35 +55,31 @@ export const EditedTimestamp: React.FC<{
 
   const renderItem = useCallback(
     (item: HistoryItem, index: number, onClick: React.MouseEventHandler) => {
-      const formattedDate = (
-        <RelativeTimestamp timestamp={item.get('created_at') as string} long />
-      );
-      const formattedName = (
-        <InlineAccount accountId={item.get('account') as string} />
-      );
+      const formattedDate = <RelativeTimestamp timestamp={item.get("created_at") as string} long />;
+      const formattedName = <InlineAccount accountId={item.get("account") as string} />;
 
-      const label = (item.get('original') as boolean) ? (
+      const label = (item.get("original") as boolean) ? (
         <FormattedMessage
-          id='status.history.created'
-          defaultMessage='{name} created {date}'
+          id="status.history.created"
+          defaultMessage="{name} created {date}"
           values={{ name: formattedName, date: formattedDate }}
-          tagName='span'
+          tagName="span"
         />
       ) : (
         <FormattedMessage
-          id='status.history.edited'
-          defaultMessage='{name} edited {date}'
+          id="status.history.edited"
+          defaultMessage="{name} edited {date}"
           values={{ name: formattedName, date: formattedDate }}
-          tagName='span'
+          tagName="span"
         />
       );
 
       return (
         <li
-          className='dropdown-menu__item edited-timestamp__history__item'
-          key={item.get('created_at') as string}
+          className="dropdown-menu__item edited-timestamp__history__item"
+          key={item.get("created_at") as string}
         >
-          <button data-index={index} onClick={onClick} type='button'>
+          <button data-index={index} onClick={onClick} type="button">
             {label}
           </button>
         </li>
@@ -107,23 +99,23 @@ export const EditedTimestamp: React.FC<{
       onItemClick={handleItemClick}
       forceDropdown
     >
-      <button className='dropdown-menu__text-button' type='button'>
+      <button className="dropdown-menu__text-button" type="button">
         <FormattedMessage
-          id='status.edited'
-          defaultMessage='Edited {date}'
+          id="status.edited"
+          defaultMessage="Edited {date}"
           values={{
             date: (
               <FormattedDateWrapper
-                className='animated-number'
+                className="animated-number"
                 value={timestamp}
-                month='short'
-                day='2-digit'
-                hour='2-digit'
-                minute='2-digit'
+                month="short"
+                day="2-digit"
+                hour="2-digit"
+                minute="2-digit"
               />
             ),
           }}
-          tagName='span'
+          tagName="span"
         />
       </button>
     </Dropdown>

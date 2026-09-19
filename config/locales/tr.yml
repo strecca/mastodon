@@ -1,7 +1,7 @@
 ---
 tr:
   about:
-    about_mastodon_html: 'Geleceğin sosyal ağı: Reklam yok, kurumsal gözetim yok, etik tasarım ve merkeziyetsizlik! Mastodon ile verilerinizin sahibi olun!'
+    about_mastodon_html: "Geleceğin sosyal ağı: Reklam yok, kurumsal gözetim yok, etik tasarım ve merkeziyetsizlik! Mastodon ile verilerinizin sahibi olun!"
     contact_missing: Ayarlanmadı
     contact_unavailable: Bulunamadı
     default_thumbnail_description: İki gülümseyen (fil gibi görünen) çizgi film mastodonu aralarında bir kağıt uçak atıp tutuyorlar. Etraflarını parlak mavi bir gökyüzü ve üzerinde ağaçlar ile başka mastodonlar bulunan süzülen gezegenler çevreliyor.
@@ -334,7 +334,7 @@ tr:
         title: Yeni duyuru
       preview:
         disclaimer: Kullanıcılar bu bildirimleri almayı iptal edemediği için, e-posta bildirimleri kişisel veri ihlali veya sunucu kapatma bildirimleri gibi önemli duyurularla sınırlandırılmalıdır.
-        explanation_html: 'E-posta, <strong>%{display_count} kullanıcıya</strong> gönderilecektir. E-posta içerisinde aşağıdaki metin yer alacaktır:'
+        explanation_html: "E-posta, <strong>%{display_count} kullanıcıya</strong> gönderilecektir. E-posta içerisinde aşağıdaki metin yer alacaktır:"
         title: Duyuru bildiriminin önizlemesine bak
       publish: Yayınla
       published_msg: Duyuru başarıyla yayınlandı!
@@ -584,10 +584,10 @@ tr:
       import:
         description_html: Bir alan adı engeli listesini içe aktarmak üzeresiniz. Bu listeyi iyice gözden geçirin, özellikle listeyi siz hazırlamadıysanız.
         existing_relationships_warning: Mevcut takip ilişkileri
-        private_comment_description_html: 'İçe aktarılan engellerin nereden geldiğini izlemenize olanak sağlamak için, içe aktarılan engeller şu özel yorum ile oluşturulacak: <q>%{comment}</q>'
+        private_comment_description_html: "İçe aktarılan engellerin nereden geldiğini izlemenize olanak sağlamak için, içe aktarılan engeller şu özel yorum ile oluşturulacak: <q>%{comment}</q>"
         private_comment_template: "%{source} kaynağından %{date} tarihinde içe aktarıldı"
         title: Domain bloklarını içe aktar
-      invalid_domain_block: 'Bir veya daha fazla alan adı engeli şu hata(lar)dan dolayı atlandı: %{error}'
+      invalid_domain_block: "Bir veya daha fazla alan adı engeli şu hata(lar)dan dolayı atlandı: %{error}"
       new:
         title: Domain bloklarını içe aktar
       no_file: Dosya seçilmedi
@@ -721,12 +721,12 @@ tr:
       created_msg: Yeni IP kuralı başarıyla eklendi
       delete: Sil
       expires_in:
-        '1209600': 2 hafta
-        '15778476': 6 ay
-        '2629746': 1 ay
-        '31556952': 1 yıl
-        '86400': 1 gün
-        '94670856': 3 yıl
+        "1209600": 2 hafta
+        "15778476": 6 ay
+        "2629746": 1 ay
+        "31556952": 1 yıl
+        "86400": 1 gün
+        "94670856": 3 yıl
       new:
         title: Yeni IP kuralı oluştur
       no_ip_block_selected: Hiçbiri seçilmediğinden hiçbir IP kuralı değiştirilmedi
@@ -783,7 +783,7 @@ tr:
       collections: Koleksiyonlar (%{count})
       comment:
         none: Yok
-      comment_description_html: 'Daha fazla bilgi vermek için %{name} şunu yazdı:'
+      comment_description_html: "Daha fazla bilgi vermek için %{name} şunu yazdı:"
       confirm: Onayla
       confirm_action: "%{acct} üzerindeki denetleme eylemini onayla"
       created_at: Şikayet edildi
@@ -804,10 +804,10 @@ tr:
         title: Notlar
       notes_description_html: Kendiniz ve diğer moderatörler için not bırakın veya notları görüntüleyin
       processed_msg: "#%{id} Bildirimi başarıyla işlendi"
-      quick_actions_description_html: 'Hemen bir şey yapın veya bildirilen içeriği görmek için aşağı kaydırın:'
+      quick_actions_description_html: "Hemen bir şey yapın veya bildirilen içeriği görmek için aşağı kaydırın:"
       remote_user_placeholder: "%{instance}'dan uzak kullanıcı"
       reopen: Şikayeti tekrar aç
-      report: 'Şikayet #%{id}'
+      report: "Şikayet #%{id}"
       reported_account: Şikayet edilen hesap
       reported_by: Şikayet eden
       reported_content: Bildirilen içerik
@@ -839,7 +839,7 @@ tr:
       target_origin: Şikayet edilen hesabın kökeni
       title: Şikayetler
       unassign: Atamayı geri al
-      unknown_action_msg: 'Bilinmeyen eylem: %{action}'
+      unknown_action_msg: "Bilinmeyen eylem: %{action}"
       unresolved: Giderilmedi
       updated_at: Güncellendi
       view_profile: Profili görüntüle
@@ -1079,7 +1079,7 @@ tr:
       elasticsearch_running_check:
         message_html: Elasticsearch'e bağlanılamıyor. Çalıştığından emin olun veya tüm metin aramayı devre dışı bırakın
       elasticsearch_version_check:
-        message_html: 'Uyumsuz Elasticsearch sürümü: %{value}'
+        message_html: "Uyumsuz Elasticsearch sürümü: %{value}"
         version_comparison: Elasticsearch %{running_version} sürümü çalışıyor, ancak %{required_version} sürümü gerekiyor
       rules_check:
         action: Sunucu kurallarını yönet
@@ -1141,7 +1141,7 @@ tr:
       notified_on_html: Kullanıcılar %{date} tarihinde bilgilendirildi
       notify_users: Kullanıcılara bildir
       preview:
-        explanation_html: 'E-posta, %{date} tarihinden önce kaydolan <strong>%{display_count} kullanıcıya</strong> gönderilecektir. E-posta içerisinde aşağıdaki metin yer alacaktır:'
+        explanation_html: "E-posta, %{date} tarihinden önce kaydolan <strong>%{display_count} kullanıcıya</strong> gönderilecektir. E-posta içerisinde aşağıdaki metin yer alacaktır:"
         send_preview: Ön izlemeyi %{email} adresine gönder
         send_to_all:
           one: "%{display_count} e-posta gönder"
@@ -1218,7 +1218,7 @@ tr:
         peaked_on_and_decaying: "%{date} tarihinde zirvedeydi, şimdi azalıyor"
         title: Öne çıkan etiketler
         trendable: Öne çıkanlar altında görünebilir
-        trending_rank: 'Öne çıkanlar #%{rank}'
+        trending_rank: "Öne çıkanlar #%{rank}"
         usable: Kullanılabilir
         usage_comparison: Bugün %{today} kere kullanıldı, dün %{yesterday} kere kullanılmıştı
         used_by_over_week:
@@ -1301,7 +1301,7 @@ tr:
       body: Yeni Mastodon sürümleri yayınlandı, güncellemek isteyebilirsiniz!
       subject: "%{instance} için yeni Mastodon sürümleri mevcut!"
     new_trends:
-      body: 'Aşağıdaki öğeler herkese açık olarak gösterilmeden önce gözden geçirilmelidir:'
+      body: "Aşağıdaki öğeler herkese açık olarak gösterilmeden önce gözden geçirilmelidir:"
       new_trending_links:
         title: Öne çıkan bağlantılar
       new_trending_statuses:
@@ -1331,7 +1331,7 @@ tr:
     notification_preferences: E-posta tercihlerini değiştir
     salutation: "%{name},"
     unsubscribe: Abonelikten çık
-    view: 'Görüntüle:'
+    view: "Görüntüle:"
     view_profile: Profili görüntüle
     view_status: Durumu görüntüle
   applications:
@@ -1375,7 +1375,7 @@ tr:
     logout: Oturumu kapat
     migrate_account: Farklı bir hesaba taşıyın
     migrate_account_html: Bu hesabı başka bir hesaba yönlendirmek istiyorsan, <a href="%{path}">buradan yapılandırabilirsin</a>.
-    or_log_in_with: 'Veya şununla oturum açın:'
+    or_log_in_with: "Veya şununla oturum açın:"
     progress:
       confirm: E-postanızı onaylayın
       details: Ayrıntılarınız
@@ -1392,7 +1392,7 @@ tr:
     rules:
       accept: Onayla
       back: Geri
-      invited_by: 'Aşağıdakinden aldığınız davet sayesinde %{domain} sunucusuna katılabilirsiniz:'
+      invited_by: "Aşağıdakinden aldığınız davet sayesinde %{domain} sunucusuna katılabilirsiniz:"
       preamble: Bunlar, %{domain} moderatörleri tarafından ayarlanmış ve uygulanmıştır.
       preamble_invited: Devam etmeden önce, %{domain} moderatörleri tarafından belirlenmiş temel kuralları gözden geçirin.
       read_more: Devamını okuyun
@@ -1428,7 +1428,7 @@ tr:
   author_attribution:
     example_title: Örnek metin
     hint_html: Mastodon dışında haber veya günlük yazıları mı yazıyorsunuz? Bu yazılar Mastodon'da paylaşıldığında size nasıl atıf yapılacağını denetleyin.
-    instructions: 'Bu kodun yazınızın HTML''sinde olduğundan emin olun:'
+    instructions: "Bu kodun yazınızın HTML'sinde olduğundan emin olun:"
     more_from_html: "%{name} kişisinden daha fazlası"
     s_blog: "%{name} kişisinin Günlüğü"
     then_instructions: Daha sonra, yayının alan adını aşağıda sahaya girin.
@@ -1473,7 +1473,7 @@ tr:
     proceed: Hesabı sil
     success_msg: Hesabınız başarıyla silindi
     warning:
-      before: 'Devam etmeden önce, lütfen bu notları dikkatlice okuyun:'
+      before: "Devam etmeden önce, lütfen bu notları dikkatlice okuyun:"
       caches: Diğer sunucular tarafından ön belleğe alınan içerik kalabilir
       data_removal: Gönderileriniz ve diğer verileriniz kalıcı olarak silinecektir
       email_change_html: Hesabınızı silmeden <a href="%{path}">e-posta adresinizi değiştirebilirsiniz</a>
@@ -1499,7 +1499,7 @@ tr:
       description_html: Bunlar hesabınıza yönelik eylemler ve %{instance} yönetimi tarafından size gönderilen uyarılardır.
       recipient: Kime
       reject_appeal: İtirazı reddet
-      status: 'Gönderi #%{id}'
+      status: "Gönderi #%{id}"
       status_removed: Gönderi zaten sistemden kaldırıldı
       title: "%{date} tarihli %{action}"
       title_actions:
@@ -1558,19 +1558,19 @@ tr:
     native: Yerel
     twemoji: Twemoji
   errors:
-    '400': Gönderdiğiniz istek geçersiz veya hatalı biçimlendirilmiş.
-    '403': Bu sayfayı görmek için izniniz yok.
-    '404': Aradığınız sayfa bulunamadı.
-    '406': Bu sayfa istenen formatta mevcut değil.
-    '410': Aradığınız sayfa artık yok.
-    '422':
+    "400": Gönderdiğiniz istek geçersiz veya hatalı biçimlendirilmiş.
+    "403": Bu sayfayı görmek için izniniz yok.
+    "404": Aradığınız sayfa bulunamadı.
+    "406": Bu sayfa istenen formatta mevcut değil.
+    "410": Aradığınız sayfa artık yok.
+    "422":
       content: Güvenlik doğrulaması başarısız oldu. Site çerezlerini engellemiş olabilirmisiniz?
       title: Güvenlik doğrulaması başarısız
-    '429': Kısıtlandı
-    '500':
+    "429": Kısıtlandı
+    "500":
       content: Üzgünüz, ancak bir şey ters gitti.
       title: Bu sayfa doğru değil
-    '503': Geçici sunucu hatası nedeniyle sayfa görüntülenemedi.
+    "503": Geçici sunucu hatası nedeniyle sayfa görüntülenemedi.
     noscript_html: Mastodon web uygulamasını kullanmak için lütfen JavaScript'i etkinleştirin. Alternatif olarak, platformunuz için Mastodon <a href="%{apps_path}">yerel uygulamalardan</a> birini deneyin.
   existing_username_validator:
     not_found: bu kullanıcı adına sahip yerel bir kullanıcı bulunamadı
@@ -1665,8 +1665,8 @@ tr:
     errors:
       empty: Boş CSV Dosyası
       incompatible_type: Seçilen içe aktarma türüyle uyumsuz
-      invalid_csv_file: 'Geçersiz CSV dosyası. Hata: %{error}'
-      invalid_json_file: 'Geçersiz JSON dosyası. Hata: %{error}'
+      invalid_csv_file: "Geçersiz CSV dosyası. Hata: %{error}"
+      invalid_json_file: "Geçersiz JSON dosyası. Hata: %{error}"
       over_rows_processing_limit: "%{count} satırdan fazlasını içeriyor"
       status_not_found_warning: Filtrelerinizden bazıları, bu sunucu tarafından tanınmayan belirli gönderileri gizler. Bu gönderiler, daha sonra sunucu tarafından tespit edildiklerinde otomatik olarak filtrelenmeyecektir.
       too_large: Dosya çok büyük
@@ -1756,16 +1756,16 @@ tr:
     delete: Devre dışı bırak
     expired: Süresi dolmuş
     expires_in:
-      '1800': 30 dakika
-      '21600': 6 saat
-      '3600': 1 saat
-      '43200': 12 saat
-      '604800': 1 hafta
-      '86400': 1 gün
+      "1800": 30 dakika
+      "21600": 6 saat
+      "3600": 1 saat
+      "43200": 12 saat
+      "604800": 1 hafta
+      "86400": 1 gün
     expires_in_prompt: Asla
     generate: Davet bağlantısı oluştur
     invalid: Bu davet geçerli değil
-    invited_by: 'Davet edildiniz:'
+    invited_by: "Davet edildiniz:"
     max_uses:
       one: 1 kullanım
       other: "%{count} kullanım"
@@ -1776,7 +1776,7 @@ tr:
       uses: Kullanım
     title: İnsanları davet et
   link_preview:
-    author_html: 'Yazan: %{name}'
+    author_html: "Yazan: %{name}"
     potentially_sensitive_content:
       action: Göstermek için tıklayın
       confirm_visit: Bu bağlantıyı açmak istediğinizden emin misiniz?
@@ -1826,7 +1826,7 @@ tr:
     set_redirect: Yönlendirme ayarla
     warning:
       backreference_required: Öncelikle, yeni hesap bu hesabı geri referans edecek şekilde yapılandırılmalıdır
-      before: 'Devam etmeden önce, lütfen bu notları dikkatlice okuyun:'
+      before: "Devam etmeden önce, lütfen bu notları dikkatlice okuyun:"
       cooldown: Taşındıktan sonra, yeniden taşınma imkanınızın olmayacağı bir soğuma periyodu vardır
       disabled_account: Sonrasında, mevcut hesabınız tamamen kullanılabilir olmayacaktır. Ancak, yeniden etkinleştirme işleminin yanı sıra veri dışa aktarma erişimine sahip olacaksınız.
       followers: Bu eylem tüm takipçileri şu anki hesaptan yeni hesaba taşıyacaktır
@@ -1838,7 +1838,7 @@ tr:
   move_handler:
     carry_blocks_over_text: Bu kullanıcı engellediğiniz %{acct} adresinden taşındı.
     carry_mutes_over_text: Bu kullanıcı sessize aldığınız %{acct} adresinden taşındı.
-    copy_account_note_text: 'Bu kullanıcı %{acct} adresinden taşındı, işte onlarla ilgili önceki notlarınız:'
+    copy_account_note_text: "Bu kullanıcı %{acct} adresinden taşındı, işte onlarla ilgili önceki notlarınız:"
   navigation:
     toggle_menu: Menüyü aç/kapa
   notification_fallbacks:
@@ -1879,7 +1879,7 @@ tr:
     follow_request:
       action: Takip isteklerini yönet
       body: "%{name} sana takip isteği gönderdi"
-      subject: 'Bekleyen takipçi: %{name}'
+      subject: "Bekleyen takipçi: %{name}"
       title: Yeni takip isteği
     mention:
       action: Yanıtla
@@ -1909,7 +1909,7 @@ tr:
   notifications:
     administration_emails: Yönetici e-posta bildirimleri
     email_events: E-posta bildirimi etkinlikleri
-    email_events_hint: 'Bildirim almak istediğiniz olayları seçin:'
+    email_events_hint: "Bildirim almak istediğiniz olayları seçin:"
   number:
     human:
       decimal_units:
@@ -1925,7 +1925,7 @@ tr:
     description_html: Bir authenticator uygulamasını kullanarak <strong>iki adımlı kimlik doğrulamayı</strong> etkinleştirirseniz, giriş yapmak için telefonunuzun elinizde olması gerekir ve telefonunuz giriş yapmanız için kodlar oluşturur.
     enable: Etkinleştir
     instructions_html: "<strong>Bu QR kodunu Google Authenticator'a veya telefonunuzdaki benzer bir TOTP uygulamasına taratın.</strong> Bundan sonra, bu uygulama giriş yaparken girmeniz gereken kodu üretecektir."
-    manual_instructions: 'QR kodunu taratamıyorsanız ve elle girmeniz gerekiyorsa, buradaki gizli düz metni girebilirsiniz:'
+    manual_instructions: "QR kodunu taratamıyorsanız ve elle girmeniz gerekiyorsa, buradaki gizli düz metni girebilirsiniz:"
     setup: Yapılandır
     wrong_code: Girilen kod geçersiz! Sunucu zamanı ve cihaz zamanı doğru mu?
   pagination:
@@ -2000,7 +2000,7 @@ tr:
     errors:
       invalid_rules: geçerli kurallara işaret etmez
   rss:
-    content_warning: 'İçerik uyarısı:'
+    content_warning: "İçerik uyarısı:"
     descriptions:
       account: "@%{acct} hesabından herkese açık gönderiler"
       tag: "#%{hashtag} etiketli herkese açık gönderiler"
@@ -2086,7 +2086,7 @@ tr:
     event_type:
       account_suspension: Hesap askıya alma (%{target_name})
       domain_block: Sunucu askıya alma (%{target_name})
-      user_domain_block: 'Engellediniz: %{target_name}'
+      user_domain_block: "Engellediniz: %{target_name}"
     lost_followers: Kaybedilen takipçiler
     lost_follows: Kaybedilen takipler
     preamble: Bir alan adını engellediğinizde veya moderatörleriniz uzak bir sunucuyu askıya almaya karar verdiğinde takipçilerinizi ve takiplerinizi kaybedebilirsiniz. Bu olduğunda, kopan ilişkilerin bir listesini, incelemek ve başka bir sunucuya aktarmak için indirebileceksiniz.
@@ -2097,7 +2097,7 @@ tr:
       audio:
         one: "%{count} ses"
         other: "%{count} ses"
-      description: 'Ekli: %{attached}'
+      description: "Ekli: %{attached}"
       image:
         one: "%{count} görsel"
         other: "%{count} görseller"
@@ -2105,14 +2105,14 @@ tr:
         one: "%{count} video"
         other: "%{count} videolar"
     boosted_from_html: "%{acct_link} kişisinden yeniden paylaştı"
-    content_warning: 'İçerik uyarısı: %{warning}'
+    content_warning: "İçerik uyarısı: %{warning}"
     content_warnings:
       hide: Gönderiyi gizle
       show: Daha fazlasını göster
     default_language: Arayüz diliyle aynı
     disallowed_hashtags:
-      one: 'izin verilmeyen bir etiket içeriyordu: %{tags}'
-      other: 'izin verilmeyen etiketler içeriyordu: %{tags}'
+      one: "izin verilmeyen bir etiket içeriyordu: %{tags}"
+      other: "izin verilmeyen etiketler içeriyordu: %{tags}"
     edited_at_html: "%{date} tarihinde düzenlendi"
     errors:
       in_reply_not_found: Yanıtlamaya çalıştığınız durum yok gibi görünüyor.
@@ -2163,14 +2163,14 @@ tr:
     keep_self_fav: Beğendiğiniz gönderileri sakla
     keep_self_fav_hint: Kendi gönderilerinizi beğenmişseniz silmez
     min_age:
-      '1209600': 2 hafta
-      '15778476': 6 ay
-      '2629746': 1 ay
-      '31556952': 1 yıl
-      '5259492': 2 ay
-      '604800': 1 hafta
-      '63113904': 2 yıl
-      '7889238': 3 ay
+      "1209600": 2 hafta
+      "15778476": 6 ay
+      "2629746": 1 ay
+      "31556952": 1 yıl
+      "5259492": 2 ay
+      "604800": 1 hafta
+      "63113904": 2 yıl
+      "7889238": 3 ay
     min_age_label: Zaman eşiği
     min_favs: Şundan daha fazla beğenilen gönderileri sakla
     min_favs_hint: En az bu belirtilen kadar beğeni alan gönderilerinizin herhangi birini silmez. Beğeni sayısından bağımsız olarak gönderilerin silinmesi için burayı boş bırakın
@@ -2215,7 +2215,7 @@ tr:
     otp: Authenticator uygulaması
     recovery_codes: Kurtarma kodlarını yedekle
     recovery_codes_regenerated: Kurtarma kodları başarıyla yeniden oluşturuldu
-    recovery_instructions_html: 'Eğer telefonunuza erişiminizi kaybederseniz, aşağıdaki kurtarma kodlarından birini kullanarak hesabınıza giriş yapabilirsiniz. <strong>Kurtarma kodlarınızı güvenli halde tutunuz.</strong> Örneğin: kodların çıktısını alıp diğer önemli belgeleriniz ile birlikte saklayabilirsiniz.'
+    recovery_instructions_html: "Eğer telefonunuza erişiminizi kaybederseniz, aşağıdaki kurtarma kodlarından birini kullanarak hesabınıza giriş yapabilirsiniz. <strong>Kurtarma kodlarınızı güvenli halde tutunuz.</strong> Örneğin: kodların çıktısını alıp diğer önemli belgeleriniz ile birlikte saklayabilirsiniz."
     resume_app_authorization: Uygulama yetkilendirmeyi sürdür
     role_requirement: "%{domain} Mastodon'u kullanabilmeniz için İki Aşamalı Kimlik Doğrulama'yı ayarlamanızı gerektirir."
     webauthn: Güvenlik anahtarları
@@ -2263,22 +2263,22 @@ tr:
       subject: Arşiviniz indirilmeye hazır
       title: Arşiv paketlemesi
     failed_2fa:
-      details: 'İşte oturum açma girişiminin ayrıntıları:'
+      details: "İşte oturum açma girişiminin ayrıntıları:"
       explanation: Birisi hesabınızda oturum açmaya çalıştı ancak hatalı bir iki aşamalı doğrulama kodu kullandı.
       further_actions_html: Eğer bu kişi siz değilseniz, hemen %{action} yapmanızı öneriyoruz çünkü hesabınız ifşa olmuş olabilir.
       subject: İki aşamalı doğrulama başarısızlığı
       title: Başarısız iki aşamalı kimlik doğrulama
     suspicious_sign_in:
       change_password: parolanızı değiştirin
-      details: 'Oturum açma ayrıntıları şöyledir:'
+      details: "Oturum açma ayrıntıları şöyledir:"
       explanation: Hesabınıza yeni bir IP adresinden oturum açıldığını farkettik.
       further_actions_html: Eğer oturum açan siz değildiyseniz, hesabınızı güvenli tutmanız için hemen %{action} yapmanızı ve iki aşamalı yetkilendirmeyi etkinleştirmenizi öneriyoruz.
       subject: Hesabınıza yeni bir IP adresinden erişim oldu
       title: Yeni bir oturum açma
     terms_of_service_changed:
       agreement: "%{domain} sunucusunu kullanmaya devam ederek bu şartları kabul etmiş olursunuz. Güncellenen şartları kabul etmiyorsanız, %{domain} ile olan sözleşmenizi istediğiniz zaman hesabınızı silerek feshedebilirsiniz."
-      changelog: 'Bir bakışta, bu güncellemenin sizin için anlamı şudur:'
-      description: 'Bu e-postayı alıyorsunuz çünkü %{domain} adresindeki hizmet şartlarımızda bazı değişiklikler yapıyoruz. Bu değişiklikler %{date} tarihinde geçerli olacak. Aşağıda tümü yer alan güncellenen şartları incelemenizi öneriyoruz:'
+      changelog: "Bir bakışta, bu güncellemenin sizin için anlamı şudur:"
+      description: "Bu e-postayı alıyorsunuz çünkü %{domain} adresindeki hizmet şartlarımızda bazı değişiklikler yapıyoruz. Bu değişiklikler %{date} tarihinde geçerli olacak. Aşağıda tümü yer alan güncellenen şartları incelemenizi öneriyoruz:"
       description_html: Bu e-postayı alıyorsunuz çünkü %{domain} adresindeki hizmet şartlarımızda bazı değişiklikler yapıyoruz. Bu değişiklikler <strong>%{date}</strong> tarihinde geçerli olacak. <a href="%{path}" target="_blank">Tüm güncellenen şartları</a> incelemenizi öneriyoruz.
       sign_off: "%{domain} Ekibi"
       subject: Şimdiki hizmet şartlarımıza güncellemeler
@@ -2297,8 +2297,8 @@ tr:
         sensitive: Artık tüm yüklenmiş medya dosyalarınız hassas olarak işaretlenecek ve üzerine tıklanarak açılacak şekilde bir uyarının ardına gizlenecektir.
         silence: Hesabınız sınırlı iken, yalnızca sizi takip eden kişiler bu sunucudaki gönderilenizi görecek ve çeşitli keşif özelliklerinin dışında bırakılabilirsiniz. Ancak, başkaları sizi manuel olarak hala takip edebilir.
         suspend: Hesabınızı artık kullanamazsınız ve profiliniz ve diğer veri artık erişilebilir değil. Yaklaşık 30 gün içinde silinene kadar verinizin bir yedeğini istemek için giriş yapabilirsiniz, ancak askıdan kaçınmanızı önlemek için bazı temel veriyi saklayabiliriz.
-      reason: 'Gerekçe:'
-      statuses: 'Sözü geçen gönderiler:'
+      reason: "Gerekçe:"
+      statuses: "Sözü geçen gönderiler:"
       subject:
         delete_statuses: "%{acct} hesabınızdaki gönderiler kaldırıldı"
         disable: "%{acct} hesabınız donduruldu"
@@ -2320,7 +2320,7 @@ tr:
       apps_ios_action: App Store'dan İndirin
       apps_step: Resmi uygulamalarımızı indirin.
       apps_title: Mastodon uygulamaları
-      checklist_subtitle: 'Bu yeni sosyal sınırda başlamanızı sağlar:'
+      checklist_subtitle: "Bu yeni sosyal sınırda başlamanızı sağlar:"
       checklist_title: Hoşgeldiniz Yapılacaklar Listesi
       edit_profile_action: Kişiselleştir
       edit_profile_step: Kapsamlı bir profille etkileşimlerinizi arttırın.
@@ -2362,7 +2362,7 @@ tr:
     otp_lost_help_html: Her ikisine de erişiminizi kaybettiyseniz, %{email} ile irtibata geçebilirsiniz
     rate_limited: Çok fazla kimlik doğrulama denemesi. Daha sonra tekrar deneyin.
     seamless_external_login: Harici bir servis aracılığıyla oturum açtınız, bu nedenle parola ve e-posta ayarları mevcut değildir.
-    signed_in_as: 'Oturum açtı:'
+    signed_in_as: "Oturum açtı:"
   verification:
     extra_instructions_html: <strong>İpucu:</strong> Web sitenizdeki bağlantı görünmez olabilir. Önemli olan, kullanıcı tarafından oluşturulan içeriğe sahip web sitelerinde kimliğe bürünmeyi önleyen <code>rel="me"</code>'dir. Sayfa başlığında <code>a</code> yerine bir <code>bağlantı</code> etiketi de kullanabilirsiniz, ancak HTML'ye JavaScript çalıştırılmadan erişilebilir olmalıdır.
     here_is_how: İşte yapmanın yolu

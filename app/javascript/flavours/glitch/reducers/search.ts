@@ -1,17 +1,10 @@
-import { createReducer, isAnyOf } from '@reduxjs/toolkit';
+import { createReducer, isAnyOf } from "@reduxjs/toolkit";
 
-import type { ApiSearchType } from 'flavours/glitch/api_types/search';
-import type {
-  RecentSearch,
-  SearchResults,
-} from 'flavours/glitch/models/search';
-import { createSearchResults } from 'flavours/glitch/models/search';
+import type { ApiSearchType } from "flavours/glitch/api_types/search";
+import type { RecentSearch, SearchResults } from "flavours/glitch/models/search";
+import { createSearchResults } from "flavours/glitch/models/search";
 
-import {
-  updateSearchHistory,
-  submitSearch,
-  expandSearch,
-} from '../actions/search';
+import { updateSearchHistory, submitSearch, expandSearch } from "../actions/search";
 
 interface State {
   recent: RecentSearch[];
@@ -23,7 +16,7 @@ interface State {
 
 const initialState: State = {
   recent: [],
-  q: '',
+  q: "",
   type: undefined,
   loading: false,
   results: undefined,
@@ -43,15 +36,9 @@ export const searchReducer = createReducer(initialState, (builder) => {
 
     state.type = type;
     state.results = {
-      accounts: state.results
-        ? [...state.results.accounts, ...results.accounts]
-        : results.accounts,
-      statuses: state.results
-        ? [...state.results.statuses, ...results.statuses]
-        : results.statuses,
-      hashtags: state.results
-        ? [...state.results.hashtags, ...results.hashtags]
-        : results.hashtags,
+      accounts: state.results ? [...state.results.accounts, ...results.accounts] : results.accounts,
+      statuses: state.results ? [...state.results.statuses, ...results.statuses] : results.statuses,
+      hashtags: state.results ? [...state.results.hashtags, ...results.hashtags] : results.hashtags,
       collections: state.results
         ? [...state.results.collections, ...results.collections]
         : results.collections,
@@ -63,21 +50,15 @@ export const searchReducer = createReducer(initialState, (builder) => {
     state.recent = action.payload;
   });
 
-  builder.addMatcher(
-    isAnyOf(expandSearch.pending, submitSearch.pending),
-    (state, action) => {
-      state.type = action.meta.arg.type;
-      state.loading = true;
-      if (action.type === submitSearch.pending.type) {
-        state.results = undefined;
-      }
-    },
-  );
+  builder.addMatcher(isAnyOf(expandSearch.pending, submitSearch.pending), (state, action) => {
+    state.type = action.meta.arg.type;
+    state.loading = true;
+    if (action.type === submitSearch.pending.type) {
+      state.results = undefined;
+    }
+  });
 
-  builder.addMatcher(
-    isAnyOf(expandSearch.rejected, submitSearch.rejected),
-    (state) => {
-      state.loading = false;
-    },
-  );
+  builder.addMatcher(isAnyOf(expandSearch.rejected, submitSearch.rejected), (state) => {
+    state.loading = false;
+  });
 });

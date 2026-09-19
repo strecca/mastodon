@@ -8,7 +8,7 @@ ga:
         display_name: D'ainm iomlán nó d'ainm spraoi.
         fields: Do leathanach baile, forainmneacha, aois, rud ar bith is mian leat.
         indexable: Seans go mbeidh do phostálacha poiblí le feiceáil sna torthaí cuardaigh ar Mastodon. Seans go mbeidh daoine a d’idirghníomhaigh le do phostálacha in ann iad a chuardach beag beann ar.
-        note: 'Is féidir leat @trá a dhéanamh ar dhaoine eile nó #hashtags.'
+        note: "Is féidir leat @trá a dhéanamh ar dhaoine eile nó #hashtags."
         show_collections: Beidh daoine in ann brabhsáil trí do seo a leanas agus do leanúna. Feicfidh na daoine a leanann tú go leanann tú iad beag beann ar.
         unlocked: Beidh daoine in ann tú a leanúint gan cead a iarraidh. Díthiceáil an dteastaíonn uait athbhreithniú a dhéanamh ar iarratais leantacha agus roghnaigh cé acu an nglacfaidh nó an diúltóidh tú do leantóirí nua.
       account_alias:
@@ -76,7 +76,7 @@ ga:
         domain: Is féidir gurb é seo an t-ainm fearainn a thaispeánann sa seoladh ríomhphoist nó sa taifead MX a úsáideann sé. Déanfar iad a sheiceáil nuair a chláraítear iad.
         with_dns_records: Déanfar iarracht taifid DNS an fhearainn tugtha a réiteach agus cuirfear bac ar na torthaí freisin
       featured_tag:
-        name: 'Seo cuid de na hashtags a d’úsáid tú le déanaí:'
+        name: "Seo cuid de na hashtags a d’úsáid tú le déanaí:"
       filters:
         action: Roghnaigh cén gníomh atá le déanamh nuair a mheaitseálann post an scagaire
         actions:
@@ -132,7 +132,7 @@ ga:
         hint: Roghnach. Tabhair tuilleadh sonraí faoin riail
         text: Déan cur síos ar riail nó riachtanas d'úsáideoirí ar an bhfreastalaí seo. Déan iarracht é a choinneáil gearr agus simplí
       sessions:
-        otp: 'Cuir isteach an cód dhá fhachtóir ginte ag d''aip ghutháin nó úsáid ceann de do chóid athshlánaithe:'
+        otp: "Cuir isteach an cód dhá fhachtóir ginte ag d'aip ghutháin nó úsáid ceann de do chóid athshlánaithe:"
         webauthn: Más eochair USB atá ann déan cinnte é a chur isteach agus, más gá, tapáil í.
       settings:
         email_subscriptions: Coinnítear síntiúsóirí reatha ach cuirtear stop le ríomhphoist a sheoladh má dhíchumasaítear iad.
@@ -411,7 +411,7 @@ ga:
         events: Imeachtaí cumasaithe
         template: Teimpléad pá-ualach
         url: URL críochphointe
-    'no': Níl
+    "no": Níl
     not_recommended: Ní mholtar
     overridden: Sáraithe
     recommended: Molta
@@ -421,4 +421,4 @@ ga:
     title:
       sessions:
         webauthn: Úsáid ceann de d'eochracha slándála chun síniú isteach
-    'yes': Tá
+    "yes": Tá

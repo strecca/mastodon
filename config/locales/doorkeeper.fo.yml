@@ -52,7 +52,7 @@ fo:
         callback_urls: Afturkallingar URL'ir
         scopes: Møguleikar
         secret: Kunda loyndir
-        title: 'Skipan: %{name}'
+        title: "Skipan: %{name}"
     authorizations:
       buttons:
         authorize: Heimila
@@ -86,7 +86,7 @@ fo:
         invalid_grant: Veitta váttanarheimildin er antin ógildug, útgingin, tikin aftur, samsvarar ikki við endursendingar-URI'ið, sum bleiv brúkt í váttanarumbønini ella var flýggjað øðrum viðskiftara.
         invalid_redirect_uri: Endursendingar-URI'ið, sum var viðheft, er ógyldugt.
         invalid_request:
-          missing_param: 'Manglandi kravdur parametur: %{value}.'
+          missing_param: "Manglandi kravdur parametur: %{value}."
           request_not_authorized: Umbønin má váttast. Kravdi parameturin fyri váttanarumbønina manglar ella er ógyldugur.
           unknown: Umbønin manglar ein kravdan parametur, inniheldur eitt óstuðlað parametur-virði ella hevur skeivt skap.
         invalid_resource_owner: Veitta tilfarseigaraváttanin er ógyldug ella ber ikki til at finna tilfarseigaran

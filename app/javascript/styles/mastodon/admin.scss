@@ -1,6 +1,6 @@
-@use 'sass:color';
-@use 'sass:math';
-@use 'variables' as *;
+@use "sass:color";
+@use "sass:math";
+@use "variables" as *;
 
 $no-columns-breakpoint: 890px;
 $sidebar-width: 300px;
@@ -13,8 +13,8 @@ $content-width: 840px;
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
 
   .icon {
     width: 16px;
@@ -122,11 +122,7 @@ $content-width: 840px;
         align-items: center;
         gap: 6px;
         padding: 15px;
-        color: color-mix(
-          in oklab,
-          var(--color-text-primary),
-          var(--color-text-secondary)
-        );
+        color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
         text-decoration: none;
         transition: all 200ms linear;
         transition-property: color, background-color;
@@ -1523,9 +1519,7 @@ a.sparkline {
 
       @for $i from 0 through 10 {
         &--#{10 * $i} {
-          background-color: rgb(
-            from var(--color-text-brand) r g b / #{math.div(max(1, $i), 10)}
-          );
+          background-color: rgb(from var(--color-text-brand) r g b / #{math.div(max(1, $i), 10)});
         }
       }
     }
@@ -1623,8 +1617,8 @@ a.sparkline {
     inset-inline-start: 10px;
     border-radius: 4px;
     background:
-      url('@/images/warning-stripes.svg') repeat-y left,
-      url('@/images/warning-stripes.svg') repeat-y right,
+      url("@/images/warning-stripes.svg") repeat-y left,
+      url("@/images/warning-stripes.svg") repeat-y right,
       var(--color-bg-primary);
   }
 
@@ -1695,7 +1689,7 @@ a.sparkline {
 
     &::after {
       display: block;
-      content: '';
+      content: "";
       width: 50px;
       height: 21px;
       position: absolute;
@@ -2112,7 +2106,7 @@ a.sparkline {
 
     &::after {
       position: absolute;
-      content: '';
+      content: "";
       width: 1px;
       background: var(--color-text-brand);
       bottom: 0;
@@ -2199,7 +2193,7 @@ a.sparkline {
       cursor: pointer;
 
       &::after {
-        content: attr(data-show, 'Show more');
+        content: attr(data-show, "Show more");
         margin-top: 8px;
         display: block;
         font-size: 15px;
@@ -2225,7 +2219,7 @@ a.sparkline {
       margin-bottom: 16px;
 
       &::after {
-        content: attr(data-hide, 'Hide post');
+        content: attr(data-hide, "Hide post");
       }
     }
   }
@@ -2451,7 +2445,7 @@ a.sparkline {
   }
 
   // FIXME: This is duplicated with empty_message.module.scss
-  [data-color-scheme='dark'] & svg {
+  [data-color-scheme="dark"] & svg {
     --color-skin-1: #3a3a50;
     --color-skin-2: #67678e;
     --color-skin-3: #44445f;

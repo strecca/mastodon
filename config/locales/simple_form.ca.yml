@@ -7,7 +7,7 @@ ca:
         display_name: El teu nom complet o el teu nom divertit.
         fields: La teva pàgina d'inici, pronoms, edat, el que vulguis.
         indexable: Els teus tuts públics poden aparèixer en els resultats de cerca de Mastodon. Les persones que han interaccionat amb el teus tuts seran sempre capaços de cercar-los.
-        note: 'Pots @mencionar altra gent o #etiquetes.'
+        note: "Pots @mencionar altra gent o #etiquetes."
         show_collections: La gent podrà navegar pels teus seguits i seguidors. Qui segueixis sí que veurà que els segueixes.
         unlocked: Us podran seguir sense la vostra aprovació. Desmarqueu si voleu moderar les peticions de seguiment i decidir quines autoritzeu o denegueu.
       account_alias:
@@ -69,7 +69,7 @@ ca:
         domain: Aquest pot ser el nom de domini que es veu a l'adreça de correu o al registre MX que fa servir. Es revisaran en registrar-se.
         with_dns_records: Es procurarà resoldre els registres DNS del domini determinat i els resultats també es llistaran a la llista negra
       featured_tag:
-        name: 'Aquí estan algunes de les etiquetes que més has usat recentment:'
+        name: "Aquí estan algunes de les etiquetes que més has usat recentment:"
       filters:
         action: Trieu quina acció executar quan una publicació coincideixi amb el filtre
         actions:
@@ -121,7 +121,7 @@ ca:
         hint: Opcional. Proporcioneu més detalls de la regla
         text: Descriu una norma o requeriment pels usuaris d'aquest servidor. Intenta fer-la curta i senzilla
       sessions:
-        otp: 'Introdueix el codi de dos factors generat per el teu telèfon o utilitza un dels teus codis de recuperació:'
+        otp: "Introdueix el codi de dos factors generat per el teu telèfon o utilitza un dels teus codis de recuperació:"
         webauthn: Si és una clau USB, assegura't que està inserida i, si cal, toca-la.
       settings:
         indexable: La pàgina del teu perfil podria aparèixer en els resultats de cerca de Google, Bing i altres.
@@ -368,7 +368,7 @@ ca:
         events: Esdeveniments activats
         template: Plantilla de càrrega
         url: Enllaç de l'extrem
-    'no': 'No'
+    "no": "No"
     not_recommended: No recomanat
     overridden: Anul·lat
     recommended: Recomanat
@@ -378,4 +378,4 @@ ca:
     title:
       sessions:
         webauthn: Usa una de les teves claus de seguretat per a iniciar sessió
-    'yes': Sí
+    "yes": Sí

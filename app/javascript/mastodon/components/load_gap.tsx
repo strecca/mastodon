@@ -1,13 +1,13 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages } from "react-intl";
 
-import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
-import { Icon } from 'mastodon/components/icon';
-import { LoadingIndicator } from 'mastodon/components/loading_indicator';
+import MoreHorizIcon from "@/material-icons/400-24px/more_horiz.svg?react";
+import { Icon } from "mastodon/components/icon";
+import { LoadingIndicator } from "mastodon/components/loading_indicator";
 
 const messages = defineMessages({
-  load_more: { id: 'status.load_more', defaultMessage: 'Load more' },
+  load_more: { id: "status.load_more", defaultMessage: "Load more" },
 });
 
 interface Props<T> {
@@ -27,18 +27,14 @@ export const LoadGap = <T,>({ disabled, param, onClick }: Props<T>) => {
 
   return (
     <button
-      className='load-more load-gap'
+      className="load-more load-gap"
       disabled={disabled}
       onClick={handleClick}
       aria-label={intl.formatMessage(messages.load_more)}
       title={intl.formatMessage(messages.load_more)}
-      type='button'
+      type="button"
     >
-      {loading ? (
-        <LoadingIndicator />
-      ) : (
-        <Icon id='ellipsis-h' icon={MoreHorizIcon} />
-      )}
+      {loading ? <LoadingIndicator /> : <Icon id="ellipsis-h" icon={MoreHorizIcon} />}
     </button>
   );
 };

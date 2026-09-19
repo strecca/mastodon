@@ -52,7 +52,7 @@ io:
         callback_urls: Callback urls
         scopes: Skopi
         secret: Klientosekreto
-        title: 'Apliko: %{name}'
+        title: "Apliko: %{name}"
     authorizations:
       buttons:
         authorize: Yurizar
@@ -86,7 +86,7 @@ io:
         invalid_grant: Provizita yurizo esis nevalida, expiris, deaprobesis, ne parigas uzita ridirektoligilo dum yurizdemando o facesis a altra kliento.
         invalid_redirect_uri: La inkluzita ridirektoligilo esas nevalida.
         invalid_request:
-          missing_param: 'Bezonita parametro: %{value}.'
+          missing_param: "Bezonita parametro: %{value}."
           request_not_authorized: Demando bezonas yurizesar. Bezonita parametro por yurizar demando ne existas o esas nevalida.
           unknown: La demando ne havas bezonita parametro, inkluzas nesuportita parametro o malformesas.
         invalid_resource_owner: Provizita Moyenproprietantidenteso esas nevalida o moyenproprietanto ne existas

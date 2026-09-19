@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { animated, useSpring, config } from '@react-spring/web';
+import { animated, useSpring, config } from "@react-spring/web";
 
-import { reduceMotion } from '../initial_state';
+import { reduceMotion } from "../initial_state";
 
-import { ShortNumber } from './short_number';
+import { ShortNumber } from "./short_number";
 
 const obfuscatedCount = (count: number) => {
   if (count < 0) {
@@ -12,7 +12,7 @@ const obfuscatedCount = (count: number) => {
   } else if (count <= 1) {
     return count;
   } else {
-    return '1+';
+    return "1+";
   }
 };
 
@@ -27,7 +27,7 @@ export const AnimatedNumber: React.FC<Props> = ({ value, obfuscate }) => {
   const [styles, api] = useSpring(
     () => ({
       from: { transform: `translateY(${100 * direction}%)` },
-      to: { transform: 'translateY(0%)' },
+      to: { transform: "translateY(0%)" },
       onRest() {
         setPreviousValue(value);
       },
@@ -45,15 +45,11 @@ export const AnimatedNumber: React.FC<Props> = ({ value, obfuscate }) => {
   }, [api, previousValue, value]);
 
   if (reduceMotion) {
-    return obfuscate ? (
-      <>{obfuscatedCount(value)}</>
-    ) : (
-      <ShortNumber value={value} />
-    );
+    return obfuscate ? <>{obfuscatedCount(value)}</> : <ShortNumber value={value} />;
   }
 
   return (
-    <span className='animated-number'>
+    <span className="animated-number">
       <animated.span style={styles}>
         {obfuscate ? obfuscatedCount(value) : <ShortNumber value={value} />}
       </animated.span>
@@ -61,17 +57,13 @@ export const AnimatedNumber: React.FC<Props> = ({ value, obfuscate }) => {
         <animated.span
           style={{
             ...styles,
-            position: 'absolute',
+            position: "absolute",
             top: `${-100 * direction}%`, // Adds extra space on top of translateY
           }}
-          role='presentation'
+          role="presentation"
         >
           <ShortNumber value={previousValue} />
-          {obfuscate ? (
-            obfuscatedCount(previousValue)
-          ) : (
-            <ShortNumber value={previousValue} />
-          )}
+          {obfuscate ? obfuscatedCount(previousValue) : <ShortNumber value={previousValue} />}
         </animated.span>
       )}
     </span>

@@ -1,7 +1,7 @@
 ---
 lad:
   about:
-    about_mastodon_html: 'La red sosyala del avenir: Sin reklamas, sin vijilansia korporativa, kon desen etiko, i desentralizasyon! Seas patron de tu enformasyon kon Mastodon!'
+    about_mastodon_html: "La red sosyala del avenir: Sin reklamas, sin vijilansia korporativa, kon desen etiko, i desentralizasyon! Seas patron de tu enformasyon kon Mastodon!"
     contact_missing: No espesifikado
     contact_unavailable: No desponivle
     hosted_on: Mastodon balabayado en %{domain}
@@ -263,7 +263,7 @@ lad:
         destroy_domain_allow_html: "%{name} bloko la federasyon kon el domeno %{target}"
         destroy_domain_block_html: "%{name} dezbloko el domeno %{target}"
         destroy_email_domain_block_html: "%{name} dezbloko el domeno de posta elektronika %{target}"
-        destroy_instance_html: "\"%{name} purgo el domeno %{target}"
+        destroy_instance_html: '"%{name} purgo el domeno %{target}'
         destroy_ip_block_html: "%{name} supremio una regla para la IP %{target}"
         destroy_status_html: "%{name} supremio una publikasyon de %{target}"
         destroy_unavailable_domain_html: "%{name} reinisyo las entregas al domeno %{target}"
@@ -295,7 +295,7 @@ lad:
         update_announcement_html: "%{name} aktualizo el pregon %{target}"
         update_custom_emoji_html: "%{name} aktualizo el emoji %{target}"
         update_domain_block_html: "%{name} aktualizo el bloko de domeno para %{target}"
-        update_ip_block_html: "\"%{name} troko la regla de IP %{target}"
+        update_ip_block_html: '"%{name} troko la regla de IP %{target}'
         update_report_html: "%{name} aktualizo el raporto %{target}"
         update_status_html: "%{name} aktualizo la publikasyon de %{target}"
         update_user_role_html: "%{name} troko el rolo %{target}"
@@ -325,7 +325,7 @@ lad:
       back_to_account: Retorna a la pajina del kuento
       back_to_report: Retorna a la pajina del raporto
       batch:
-        add_to_report: 'Adjusta al raporto #%{id}'
+        add_to_report: "Adjusta al raporto #%{id}"
         report: Raporto
       no_collection_selected: No se troko dinguna koleksyon porke no eskojites dinguna
       open: Avre
@@ -449,7 +449,7 @@ lad:
       add_new: Adjustar muevo
       allow_registrations_with_approval: Permite enrejistrasyones kon aprovasyon
       attempts_over_week:
-        one: "\"%{count} prova durante la ultima semana"
+        one: '"%{count} prova durante la ultima semana'
         other: "%{count} provas de enrejistrarse durante la ultima semana"
       created_msg: Domeno de posta blokado kon sukseso
       delete: Efasa
@@ -484,10 +484,10 @@ lad:
       import:
         description_html: Vas importar una lista de blokos de domenos. Por favor reviza esta lista kon atansion, espesialmente si no eres el kriyador de la lista.
         existing_relationships_warning: Relasiones de segimiento existientes
-        private_comment_description_html: 'Para ayudarte a averiguar de ande vienen los blokos importados, blokos importados seran kriyados kon este komento privado: <q>%{comment}</q>'
+        private_comment_description_html: "Para ayudarte a averiguar de ande vienen los blokos importados, blokos importados seran kriyados kon este komento privado: <q>%{comment}</q>"
         private_comment_template: Importado de %{source} el %{date}
         title: Importa blokos de domeno
-      invalid_domain_block: 'Uno o mas blokos de domeno fueron omitidos por razon de yerro(s): %{error}'
+      invalid_domain_block: "Uno o mas blokos de domeno fueron omitidos por razon de yerro(s): %{error}"
       new:
         title: Importa blokos de domeno
       no_file: Dinguna dosya tiene sido eskojida
@@ -610,12 +610,12 @@ lad:
       created_msg: Mueva regla de IP adjustada kon sukseso
       delete: Efasa
       expires_in:
-        '1209600': 2 semanas
-        '15778476': 6 mezes
-        '2629746': 1 mez
-        '31556952': 1 anyo
-        '86400': 1 diya
-        '94670856': 3 anyos
+        "1209600": 2 semanas
+        "15778476": 6 mezes
+        "2629746": 1 mez
+        "31556952": 1 anyo
+        "86400": 1 diya
+        "94670856": 3 anyos
       new:
         title: Kriya mueva regla de IP
       no_ip_block_selected: No se tienen trokado reglas IP deke niguna fue eskojida
@@ -669,7 +669,7 @@ lad:
       category_description_html: La razon por la ke se raporto este kuento o kontenido sera mensyonada en las komuniksayones kon el kuento raportado
       comment:
         none: Dinguno
-      comment_description_html: 'Para dar mas enformasyon, %{name} eskrivio:'
+      comment_description_html: "Para dar mas enformasyon, %{name} eskrivio:"
       confirm: Konfirma
       confirm_action: Konfirma la aksyon de moderasyon kontra @%{acct}
       created_at: Raportado
@@ -688,11 +688,11 @@ lad:
         placeholder: Espesifika ke aksyones se tienen tomado o kualkier otro haber...
         title: Notas
       notes_description_html: Ve i desha notas a otros moderadores i a tu yo futuro
-      processed_msg: 'Raporto #%{id} prosesado kon sukseso'
-      quick_actions_description_html: 'Toma una aksion rapida o metete abasho para ver el kontenido denunsiado:'
+      processed_msg: "Raporto #%{id} prosesado kon sukseso"
+      quick_actions_description_html: "Toma una aksion rapida o metete abasho para ver el kontenido denunsiado:"
       remote_user_placeholder: el utilizador remoto de %{instance}
       reopen: Reavre denunsia
-      report: 'Raporta #%{id}'
+      report: "Raporta #%{id}"
       reported_account: Kuento raportado
       reported_by: Raportado por
       reported_with_application: Raportado kon aplikasyon
@@ -703,16 +703,16 @@ lad:
       statuses_description_html: El kontenido ofensivo se sitara en la komunikasyon kon el kuento raportado
       summary:
         action_preambles:
-          delete_html: 'Vas <strong>kitar</strong> algunas de las publikasyones de <strong>@%{acct}</strong>''''. Esto va:'
-          mark_as_sensitive_html: 'Vas <strong>markar</strong> algunas de las publikasyones de <strong>@%{acct}</strong> komo <strong>sensivles</strong>. Esto va:'
-          silence_html: 'Vas <strong>limitar</strong> el kuento de <strong>@%{acct}</strong>''''. Esto va:'
-          suspend_html: 'Vas <strong>suspender</strong> el kuento de <strong>@%{acct}</strong>''''. Esto va:'
+          delete_html: "Vas <strong>kitar</strong> algunas de las publikasyones de <strong>@%{acct}</strong>''. Esto va:"
+          mark_as_sensitive_html: "Vas <strong>markar</strong> algunas de las publikasyones de <strong>@%{acct}</strong> komo <strong>sensivles</strong>. Esto va:"
+          silence_html: "Vas <strong>limitar</strong> el kuento de <strong>@%{acct}</strong>''. Esto va:"
+          suspend_html: "Vas <strong>suspender</strong> el kuento de <strong>@%{acct}</strong>''. Esto va:"
         actions:
           delete_html: Kita las publikasyones ofensivas
           mark_as_sensitive_html: Marka los multimedios de la publikasyon komo sensivles
           silence_html: Severamente limita la vizivilita de <strong>@%{acct}</strong>, fazendo su profil i kontenido vizivles solo para las personas ke ya lo sigen o manualmente bushkan su profil
           suspend_html: Suspende <strong>@%{acct}</strong>, faziendo su profil i kontenido inaksesivle i no disponivle para interaksiones
-        close_report: 'Marka raporto #%{id} komo rezolvido'
+        close_report: "Marka raporto #%{id} komo rezolvido"
         close_reports_html: Marka <strong>todos</strong> los raportos kontra <strong>@%{acct}</strong> komo rezolvidos
         delete_data_html: Efasa el profil i kontenido de <strong>@%{acct}</strong> en 30 dias si no sea desuspendido en akel tiempo
         preview_preamble_html: "<strong>@%{acct}</strong> resivira una avertensya komo esta:"
@@ -722,7 +722,7 @@ lad:
       target_origin: Orijin del kuento raportado
       title: Raportos
       unassign: Dezasinya
-      unknown_action_msg: 'Aksyon no konesida: %{action}'
+      unknown_action_msg: "Aksyon no konesida: %{action}"
       unresolved: No rezolvido
       updated_at: Aktualizado
       view_profile: Ve profil
@@ -875,7 +875,7 @@ lad:
       back_to_account: Retorna al kuento
       back_to_report: Retorna a la pajina del raporto
       batch:
-        add_to_report: 'Adjusta al raporto #%{id}'
+        add_to_report: "Adjusta al raporto #%{id}"
         remove_from_report: Kita del raporto
         report: Raporto
       contents: Kontenidos
@@ -930,7 +930,7 @@ lad:
       elasticsearch_running_check:
         message_html: No se pudo konektar a Elasticsearch. Por favor, averigua ke esta egzekutandose, o dezaktiva la bushkeda de teksto kompleto
       elasticsearch_version_check:
-        message_html: 'Versyon inkompativle de Elasticsearch: %{value}'
+        message_html: "Versyon inkompativle de Elasticsearch: %{value}"
         version_comparison: Elasticsearch %{running_version} se esta egzekutando ama ay menester de Elasticsearch %{required_version}
       rules_check:
         action: Administra reglas del sirvidor
@@ -1123,7 +1123,7 @@ lad:
       body: Ay mueva versyon de Mastodon, kizas keras aktualizar!
       subject: Ay muevas versyones de Mastodon desponivles para %{instance}!
     new_trends:
-      body: 'Los sigientes elementos nesesitan una revizion antes de ke se puedan amostrar publikamente:'
+      body: "Los sigientes elementos nesesitan una revizion antes de ke se puedan amostrar publikamente:"
       new_trending_links:
         title: Atadijos en trend
       new_trending_statuses:
@@ -1152,7 +1152,7 @@ lad:
     notification_preferences: Troka preferensyas de posta
     salutation: "%{name},"
     unsubscribe: Dezabona
-    view: 'Mira:'
+    view: "Mira:"
     view_profile: Ve profil
     view_status: Ve publikasyon
   applications:
@@ -1212,7 +1212,7 @@ lad:
     rules:
       accept: Acheta
       back: Atras
-      invited_by: 'Puedes adjuntarte a %{domain} grasyas a la envitasyon de:'
+      invited_by: "Puedes adjuntarte a %{domain} grasyas a la envitasyon de:"
       preamble: Estas son establesidas i aplikadas por los moderadores de %{domain}.
       preamble_invited: Antes de kontinuar, por favor reviza las reglas del sirvidor establesidas por los moderatores de %{domain}.
       title: Algunas reglas bazikas.
@@ -1283,7 +1283,7 @@ lad:
     proceed: Efasa kuento
     success_msg: Tu kuento fue efasado kon reushita
     warning:
-      before: 'Antes de kontinuar, por favor melda kon atensyon las sigientes notas:'
+      before: "Antes de kontinuar, por favor melda kon atensyon las sigientes notas:"
       caches: El kontenido ke tiene sido magazinado en kashe por otros sirvidores puede persistir
       data_removal: Tus publikasyones i el resto de datos se supremiran definitivamente
       email_change_html: Puedes <a href="%{path}"> trokar tu adreso de posta elektronika</a> sin supremir tu kuento
@@ -1309,7 +1309,7 @@ lad:
       description_html: Estas son las aksyones emprendidas kontra tu kuento i las avertensyas ke te an sido enviadas por la taifa de %{instance}.
       recipient: Dirijda a
       reject_appeal: Refuza apelasyon
-      status: 'Publikasyon #%{id}'
+      status: "Publikasyon #%{id}"
       status_removed: Publikasyon ya supremida del sistem
       title: "%{action} del %{date}"
       title_actions:
@@ -1339,19 +1339,19 @@ lad:
     native: Nativo
     twemoji: Twemoji
   errors:
-    '400': La solisitasyon ke enviates no fue valida o fue malformada.
-    '403': No tienes permiso para ver esta pajina.
-    '404': La pajina ke bushkas no egziste.
-    '406': Esta pajina no esta desponivle en el formato solisitado.
-    '410': La pajina ke estavas bushkando no egziste mas.
-    '422':
+    "400": La solisitasyon ke enviates no fue valida o fue malformada.
+    "403": No tienes permiso para ver esta pajina.
+    "404": La pajina ke bushkas no egziste.
+    "406": Esta pajina no esta desponivle en el formato solisitado.
+    "410": La pajina ke estavas bushkando no egziste mas.
+    "422":
       content: Verifikasyon de sigurita no reushida. Estas blokando algunas cookies?
       title: Verifikasyon de sigurita no reushida
-    '429': Demaziadas solisitasyones
-    '500':
+    "429": Demaziadas solisitasyones
+    "500":
       content: Pardon, algo tiene fonksionado mal por muestra parte.
       title: Esta pajina no es djusta
-    '503': La pajina no se tiene podido desbarkar por un yerro temporal del sirvidor.
+    "503": La pajina no se tiene podido desbarkar por un yerro temporal del sirvidor.
     noscript_html: Para uzar la aplikasyon web de Mastodon, por favor aktiva Javascript. Alternativamente, aprova alguna de las <a href="%{apps_path}">aplikasyones nativas</a> para Mastodon para tu platforma.
   existing_username_validator:
     not_found: no se pudo topar un utilizador lokal kon akel nombre de utilizador
@@ -1444,7 +1444,7 @@ lad:
     errors:
       empty: Dosya CSV vaziya
       incompatible_type: Inkompativle kon el tipo de importo eskojido
-      invalid_csv_file: 'Dosya CSV no valida. Yerro: %{error}'
+      invalid_csv_file: "Dosya CSV no valida. Yerro: %{error}"
       over_rows_processing_limit: kontiene mas de %{count} filas
       too_large: Dosya es mas grande
     failures: Yerros
@@ -1488,16 +1488,16 @@ lad:
     delete: Dezaktiva
     expired: Kadukado
     expires_in:
-      '1800': 30 minutos
-      '21600': 6 oras
-      '3600': 1 ora
-      '43200': 12 oras
-      '604800': 1 semana
-      '86400': 1 diya
+      "1800": 30 minutos
+      "21600": 6 oras
+      "3600": 1 ora
+      "43200": 12 oras
+      "604800": 1 semana
+      "86400": 1 diya
     expires_in_prompt: Nunkua
     generate: Djenera un atadijo de envitasyon
     invalid: Esta envitasyon no es valida
-    invited_by: 'Fuites envitado por:'
+    invited_by: "Fuites envitado por:"
     max_uses:
       one: 1 uzo
       other: "%{count} uzos"
@@ -1556,7 +1556,7 @@ lad:
     set_redirect: Establese readreso
     warning:
       backreference_required: El muevo kuento deve ser konfigurado primero para fazer referensya a este
-      before: 'Antes de kontinuar, por favor melda kon atensyon las sigientes notas:'
+      before: "Antes de kontinuar, por favor melda kon atensyon las sigientes notas:"
       cooldown: Dempues de migrar ay un periodo de aspera durante el kual no podras retornar a migrar
       disabled_account: Tu kuento aktual no sera kompletamente utilizable dempues. Portanto, tendras akseso a la eksportasyon de datos ansi komo a la reaktivasyon.
       followers: Esta aksion migrara a todos los suivantes del kuento aktual al muevo kuento
@@ -1567,7 +1567,7 @@ lad:
   move_handler:
     carry_blocks_over_text: Este utilizador se movio dizde %{acct}, ke blokates.
     carry_mutes_over_text: Este utilizador se movio dizde %{acct}, ke silensiates.
-    copy_account_note_text: 'Este utilizador se movio dizde %{acct}, aki estavan tus notas anteriores sovre el:'
+    copy_account_note_text: "Este utilizador se movio dizde %{acct}, aki estavan tus notas anteriores sovre el:"
   navigation:
     toggle_menu: Alterna menu
   notification_mailer:
@@ -1577,7 +1577,7 @@ lad:
       sign_up:
         subject: "%{name} se enrejistro"
     favourite:
-      body: 'Tu publikasyon fue favoritada por %{name}:'
+      body: "Tu publikasyon fue favoritada por %{name}:"
       subject: A %{name} le plaze tu publikasyon
       title: Muevo favorito
     follow:
@@ -1587,21 +1587,21 @@ lad:
     follow_request:
       action: Administra solisitudes de segimiento
       body: "%{name} tiene solisitado segirte"
-      subject: 'Segidor esta asperando: %{name}'
+      subject: "Segidor esta asperando: %{name}"
       title: Mueva solisitud de segimiento
     mention:
       action: Arisponde
-      body: 'Fuites enmentado por %{name} en:'
+      body: "Fuites enmentado por %{name} en:"
       subject: Fuites enmentado por %{name}
       title: Mueva enmentadura
     poll:
       subject: Una anketa de %{name} eskapo
     quote:
-      body: 'Tu publikasyon fue sitada por %{name}:'
+      body: "Tu publikasyon fue sitada por %{name}:"
       subject: "%{name} sito tu publikasyon"
       title: Mueva sita
     reblog:
-      body: 'Tu publikasyon fue repartajada por %{name}:'
+      body: "Tu publikasyon fue repartajada por %{name}:"
       subject: "%{name} repartajo tu publikasyon"
       title: Mueva repartajasyon
     status:
@@ -1611,7 +1611,7 @@ lad:
   notifications:
     administration_emails: Avizos de administrasyon por posta
     email_events: Evenimyentos para avizos por posta
-    email_events_hint: 'Eskoje los evenimientos para los kualos keres risivir avizos:'
+    email_events_hint: "Eskoje los evenimientos para los kualos keres risivir avizos:"
   number:
     human:
       decimal_units:
@@ -1627,7 +1627,7 @@ lad:
     description_html: Si kapasitas <strong>autentifikasyon en dos pasos</strong> kon una aplikasyon de autentifikasyon, la entrada rekerira ke estes en posesyon de tu telefon, ke djenerara kodiches para ke entres.
     enable: Kapasita
     instructions_html: "<strong>Eskanea este kodiche QR dizde Google Authenticator o una aplikasyon similar en tu telefon</strong>. A partir de agora, esta aplikasyon djenerara kodiches ke tendras ke ingresar kuando keras konektarte kon tu kuento."
-    manual_instructions: 'Si no puedes eskanear el kodiche QR i nesesitas introdusirlo manualmente, este es el sekreto en teksto plano:'
+    manual_instructions: "Si no puedes eskanear el kodiche QR i nesesitas introdusirlo manualmente, este es el sekreto en teksto plano:"
     setup: Konfigura
     wrong_code: El kodiche ingresado es malato! Es djusta la ora del aparato i el sirvidor?
   pagination:
@@ -1698,10 +1698,10 @@ lad:
     errors:
       invalid_rules: no faze referensia a reglas validas
   rss:
-    content_warning: 'Avertensya de kontenido:'
+    content_warning: "Avertensya de kontenido:"
     descriptions:
       account: Publikasyones publikas de @%{acct}
-      tag: 'Publikasyones publikas etiketadas kon #%{hashtag}'
+      tag: "Publikasyones publikas etiketadas kon #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Tienes superado el limito de %{limit} publikasyones programadas para akel diya
     over_total_limit: Tienes superado el limito de %{limit} publikasyones programadas
@@ -1793,7 +1793,7 @@ lad:
       audio:
         one: "%{count} audio"
         other: "%{count} audios"
-      description: 'Atamiento: %{attached}'
+      description: "Atamiento: %{attached}"
       image:
         one: "%{count} imaje"
         other: "%{count} imajes"
@@ -1801,14 +1801,14 @@ lad:
         one: "%{count} video"
         other: "%{count} videos"
     boosted_from_html: Repartajado dizde %{acct_link}
-    content_warning: 'Avertensya de kontenido: %{warning}'
+    content_warning: "Avertensya de kontenido: %{warning}"
     content_warnings:
       hide: Eskonde puvlikasyon
       show: Amostra mas
     default_language: La mezma ke la lingua de la enterfaz
     disallowed_hashtags:
-      one: 'kontenia una etiketa no permetida: %{tags}'
-      other: 'kontenia las etiketas no permetidas: %{tags}'
+      one: "kontenia una etiketa no permetida: %{tags}"
+      other: "kontenia las etiketas no permetidas: %{tags}"
     edited_at_html: Editado %{date}
     errors:
       in_reply_not_found: La publikasion a la ke aprovas arispondir no egziste.
@@ -1855,14 +1855,14 @@ lad:
     keep_self_fav: Manten publikasyones ke te plazen
     keep_self_fav_hint: No efasa las tus publikasyones kualas markates komo favoritas
     min_age:
-      '1209600': 2 semanas
-      '15778476': 6 mezes
-      '2629746': 1 mez
-      '31556952': 1 anyo
-      '5259492': 2 mezes
-      '604800': 1 semana
-      '63113904': 2 anyos
-      '7889238': 3 mezes
+      "1209600": 2 semanas
+      "15778476": 6 mezes
+      "2629746": 1 mez
+      "31556952": 1 anyo
+      "5259492": 2 mezes
+      "604800": 1 semana
+      "63113904": 2 anyos
+      "7889238": 3 mezes
     min_age_label: Limito de tiempo
     min_favs: Manten publikasyones favoritadas a lo manko
     min_favs_hint: No efasa dinguna de las publikasyones ke plazgan a mas de esta kantita de personas. Desha en blanko para supremir publikasyones sin importar el numero de personas a las ke plazen las publikasyones
@@ -1927,14 +1927,14 @@ lad:
       subject: Tu dosya esta pronta para abashar
       title: Abasha dosya
     failed_2fa:
-      details: 'Aki estan los peratim de las provas de koneksyon kon tu kuento:'
+      details: "Aki estan los peratim de las provas de koneksyon kon tu kuento:"
       explanation: Algun ha intentado konektarte kon tu cuenta ama prokuro un sigundo paso de autentifikasyon invalido.
       further_actions_html: Si no fuites tu, rekomendamos %{action} inmediatamente deke puede estar komprometido.
       subject: Autentikasyon del sigundo paso sin sukseso
       title: Autentifikasyon del sigundo paso no reushida
     suspicious_sign_in:
       change_password: troka tu kod
-      details: 'Aki estan los peratim de la koneksyon kon tu kuento:'
+      details: "Aki estan los peratim de la koneksyon kon tu kuento:"
       explanation: Topimos una koneksyon kon tu kuento dizde un muevo adreso IP.
       further_actions_html: Si no fuites tu, te rekomendamos ke %{action} pishin i kapasites la autentifikasyon en dos pasos para mantener tu kuento siguro.
       subject: Tu kuento fue aksedido dizde un muevo adreso IP
@@ -1956,8 +1956,8 @@ lad:
         sensitive: A partir de agora todas los dosyas multimedia ke subas seran markados komo sensivles i eskondidos tras una avertensya.
         silence: Ainda puedes uzar tu kuento, ama solo las personas ke te estan sigiendo veran tus publikasyones en este sirvidor, i puedes ser eskluido de varias fonksionalitas de diskuvrimiento. Portanto, otros kuentos podran ampesar a segirte manualmente.
         suspend: Ya no puedes utilizar tu kuento, i tu profil i el resto de datos ya no son aksesivles. Ainda puedes inisyar sesion para solisitar una kopia de sigurita de tus datos, asta ke estos sean supremidos por kompleto en unos 30 diyas, aunke konservaremos algunos datos bazikos para impedir ke evitas la suspensyon.
-      reason: 'Razon:'
-      statuses: 'Publikasyones relevantes:'
+      reason: "Razon:"
+      statuses: "Publikasyones relevantes:"
       subject:
         delete_statuses: Tus publikasyones en %{acct} tienen sido efasadas
         disable: Tu kuento %{acct} tiene sido konjelado
@@ -2016,7 +2016,7 @@ lad:
     otp_lost_help_html: Si pedriste akseso a los dos, puedes kontaktarte kon %{email}
     rate_limited: Demaziadas provas de autentifikasyon, aprova de muevo dempues.
     seamless_external_login: Estas konektado por un servisyo eksterno i estonses la konfigurasyon de kod i konto de posta no estan disponivles.
-    signed_in_as: 'Konektado komo:'
+    signed_in_as: "Konektado komo:"
   verification:
     extra_instructions_html: <strong>Konsejo:</strong> El atadijo en tu web puede ser invizivle. La parte importante es <code>rel="me"</code>, ke evita la suplantasyon de identita en sitios kon kontenido jenerado por el utilizador. Puedes inkluzo uzar una etiketa <code>atadijo</code> en la kavesera de la pajina en vez de <code>a</code>, ama el HTML deve ser aksesivle sin exekutar JavaScript.
     here_is_how: Ansina es komo

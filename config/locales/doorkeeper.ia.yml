@@ -52,7 +52,7 @@ ia:
         callback_urls: URLs de retorno
         scopes: Ambitos
         secret: Secreto del application
-        title: 'Application: %{name}'
+        title: "Application: %{name}"
     authorizations:
       buttons:
         authorize: Autorisar
@@ -86,7 +86,7 @@ ia:
         invalid_grant: Le concession de autorisation fornite es invalide, expirate, revocate, non corresponde al URI de redirection usate in le requesta de autorisation, o ha essite emittite a un altere cliente.
         invalid_redirect_uri: Le URI de redirection includite non es valide.
         invalid_request:
-          missing_param: 'Parametro requirite mancante: %{value}.'
+          missing_param: "Parametro requirite mancante: %{value}."
           request_not_authorized: Le requesta debe esser autorisate. Un parametro requirite pro autorisar le requesta manca o non es valide.
           unknown: Le requesta non include un parametro requirite, include un valor de parametro non supportate, o es alteremente mal formate.
         invalid_resource_owner: Le credentiales del proprietario del ressource fornite non es valide, o le proprietario del ressource non pote esser trovate

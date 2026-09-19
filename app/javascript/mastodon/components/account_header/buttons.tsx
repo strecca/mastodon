@@ -1,34 +1,34 @@
-import { useCallback } from 'react';
-import type { FC } from 'react';
+import { useCallback } from "react";
+import type { FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { followAccount } from '@/mastodon/actions/accounts';
-import { useAccount } from '@/mastodon/hooks/useAccount';
-import { getAccountHidden } from '@/mastodon/selectors/accounts';
-import { useAppDispatch, useAppSelector } from '@/mastodon/store';
-import NotificationsIcon from '@/material-icons/400-24px/notifications.svg?react';
-import NotificationsActiveIcon from '@/material-icons/400-24px/notifications_active-fill.svg?react';
-import ShareIcon from '@/material-icons/400-24px/share.svg?react';
+import { followAccount } from "@/mastodon/actions/accounts";
+import { useAccount } from "@/mastodon/hooks/useAccount";
+import { getAccountHidden } from "@/mastodon/selectors/accounts";
+import { useAppDispatch, useAppSelector } from "@/mastodon/store";
+import NotificationsIcon from "@/material-icons/400-24px/notifications.svg?react";
+import NotificationsActiveIcon from "@/material-icons/400-24px/notifications_active-fill.svg?react";
+import ShareIcon from "@/material-icons/400-24px/share.svg?react";
 
-import { CopyIconButton } from '../copy_button';
-import { FollowButton } from '../follow_button';
-import { IconButton } from '../icon_button';
+import { CopyIconButton } from "../copy_button";
+import { FollowButton } from "../follow_button";
+import { IconButton } from "../icon_button";
 
-import { AccountMenu } from './menu';
-import classes from './styles.module.scss';
+import { AccountMenu } from "./menu";
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   enableNotifications: {
-    id: 'account.enable_notifications',
-    defaultMessage: 'Notify me when @{name} posts',
+    id: "account.enable_notifications",
+    defaultMessage: "Notify me when @{name} posts",
   },
   disableNotifications: {
-    id: 'account.disable_notifications',
-    defaultMessage: 'Stop notifying me when @{name} posts',
+    id: "account.disable_notifications",
+    defaultMessage: "Stop notifying me when @{name} posts",
   },
-  share: { id: 'account.share', defaultMessage: "Share @{name}'s profile" },
-  copy: { id: 'account.copy', defaultMessage: 'Copy link to profile' },
+  share: { id: "account.share", defaultMessage: "Share @{name}'s profile" },
+  copy: { id: "account.copy", defaultMessage: "Copy link to profile" },
 });
 
 interface AccountButtonsProps {
@@ -45,26 +45,23 @@ export const AccountButtons: FC<AccountButtonsProps> = ({
   forceMenu,
 }) => {
   const hidden = useAppSelector((state) => getAccountHidden(state, accountId));
-  const me = useAppSelector((state) => state.meta.get('me') as string);
+  const me = useAppSelector((state) => state.meta.get("me") as string);
 
   return (
     <div className={className}>
-      {!hidden && (
-        <AccountButtonsOther accountId={accountId} noShare={noShare} />
-      )}
+      {!hidden && <AccountButtonsOther accountId={accountId} noShare={noShare} />}
       {(accountId !== me || forceMenu) && <AccountMenu accountId={accountId} />}
     </div>
   );
 };
 
-const AccountButtonsOther: FC<
-  Pick<AccountButtonsProps, 'accountId' | 'noShare'>
-> = ({ accountId, noShare }) => {
+const AccountButtonsOther: FC<Pick<AccountButtonsProps, "accountId" | "noShare">> = ({
+  accountId,
+  noShare,
+}) => {
   const intl = useIntl();
   const account = useAccount(accountId);
-  const relationship = useAppSelector((state) =>
-    state.relationships.get(accountId),
-  );
+  const relationship = useAppSelector((state) => state.relationships.get(accountId));
 
   const dispatch = useAppDispatch();
   const handleNotifyToggle = useCallback(() => {
@@ -91,33 +88,25 @@ const AccountButtonsOther: FC<
   return (
     <>
       {!isMovedAndUnfollowedAccount && (
-        <FollowButton
-          accountId={accountId}
-          className={classes.followButton}
-          labelLength='long'
-        />
+        <FollowButton accountId={accountId} className={classes.followButton} labelLength="long" />
       )}
       {isFollowing && (
         <IconButton
-          icon={relationship.notifying ? 'bell' : 'bell-o'}
-          iconComponent={
-            relationship.notifying ? NotificationsActiveIcon : NotificationsIcon
-          }
+          icon={relationship.notifying ? "bell" : "bell-o"}
+          iconComponent={relationship.notifying ? NotificationsActiveIcon : NotificationsIcon}
           active={relationship.notifying}
           title={intl.formatMessage(
-            relationship.notifying
-              ? messages.disableNotifications
-              : messages.enableNotifications,
+            relationship.notifying ? messages.disableNotifications : messages.enableNotifications,
             { name: account.username },
           )}
           onClick={handleNotifyToggle}
         />
       )}
       {!noShare &&
-        ('share' in navigator ? (
+        ("share" in navigator ? (
           <IconButton
-            className='optional'
-            icon=''
+            className="optional"
+            icon=""
             iconComponent={ShareIcon}
             title={intl.formatMessage(messages.share, {
               name: account.username,
@@ -126,7 +115,7 @@ const AccountButtonsOther: FC<
           />
         ) : (
           <CopyIconButton
-            className='optional'
+            className="optional"
             title={intl.formatMessage(messages.copy)}
             value={account.url}
           />

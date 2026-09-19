@@ -1,45 +1,26 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  cloneElement,
-  Children,
-  useId,
-} from 'react';
+import { useState, useEffect, useRef, useCallback, cloneElement, Children, useId } from "react";
 
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import type { Map as ImmutableMap } from 'immutable';
+import type { Map as ImmutableMap } from "immutable";
 
-import type {
-  OffsetValue,
-  UsePopperOptions,
-  Placement,
-} from 'react-overlays/esm/usePopper';
-import Overlay from 'react-overlays/Overlay';
+import type { OffsetValue, UsePopperOptions, Placement } from "react-overlays/esm/usePopper";
+import Overlay from "react-overlays/Overlay";
 
-import { fetchRelationships } from 'flavours/glitch/actions/accounts';
-import {
-  openDropdownMenu,
-  closeDropdownMenu,
-} from 'flavours/glitch/actions/dropdown_menu';
-import { openModal, closeModal } from 'flavours/glitch/actions/modal';
-import { fetchStatus } from 'flavours/glitch/actions/statuses';
-import { CircularProgress } from 'flavours/glitch/components/circular_progress';
-import { isUserTouching } from 'flavours/glitch/is_mobile';
-import {
-  isMenuItem,
-  isActionItem,
-  isExternalLinkItem,
-} from 'flavours/glitch/models/dropdown_menu';
-import type { MenuItem } from 'flavours/glitch/models/dropdown_menu';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import { fetchRelationships } from "flavours/glitch/actions/accounts";
+import { openDropdownMenu, closeDropdownMenu } from "flavours/glitch/actions/dropdown_menu";
+import { openModal, closeModal } from "flavours/glitch/actions/modal";
+import { fetchStatus } from "flavours/glitch/actions/statuses";
+import { CircularProgress } from "flavours/glitch/components/circular_progress";
+import { isUserTouching } from "flavours/glitch/is_mobile";
+import { isMenuItem, isActionItem, isExternalLinkItem } from "flavours/glitch/models/dropdown_menu";
+import type { MenuItem } from "flavours/glitch/models/dropdown_menu";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
-import { Icon } from './icon';
-import type { IconProp } from './icon';
-import { IconButton } from './icon_button';
+import { Icon } from "./icon";
+import type { IconProp } from "./icon";
+import { IconButton } from "./icon_button";
 
 let id = 0;
 
@@ -64,9 +45,7 @@ interface DropdownMenuProps<Item = MenuItem> {
   onItemClick?: ItemClickFn<Item>;
 }
 
-export const DropdownMenuItemContent: React.FC<{ item: MenuItem }> = ({
-  item,
-}) => {
+export const DropdownMenuItemContent: React.FC<{ item: MenuItem }> = ({ item }) => {
   if (item === null) {
     return null;
   }
@@ -74,16 +53,11 @@ export const DropdownMenuItemContent: React.FC<{ item: MenuItem }> = ({
   const { text, description, icon, iconId } = item;
   return (
     <>
-      {icon && (
-        <Icon
-          icon={icon}
-          id={iconId ?? text.toLowerCase().replaceAll(/[^a-z]+/g, '-')}
-        />
-      )}
-      <span className='dropdown-menu__item-content'>
+      {icon && <Icon icon={icon} id={iconId ?? text.toLowerCase().replaceAll(/[^a-z]+/g, "-")} />}
+      <span className="dropdown-menu__item-content">
         {text}
         {Boolean(description) && (
-          <span className='dropdown-menu__item-subtitle'>{description}</span>
+          <span className="dropdown-menu__item-subtitle">{description}</span>
         )}
       </span>
     </>
@@ -104,11 +78,7 @@ export const DropdownMenu = <Item = MenuItem,>({
 
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
-      if (
-        e.target instanceof Node &&
-        nodeRef.current &&
-        !nodeRef.current.contains(e.target)
-      ) {
+      if (e.target instanceof Node && nodeRef.current && !nodeRef.current.contains(e.target)) {
         onClose();
         e.stopPropagation();
         e.preventDefault();
@@ -120,34 +90,32 @@ export const DropdownMenu = <Item = MenuItem,>({
         return;
       }
 
-      const items = Array.from(nodeRef.current.querySelectorAll('a, button'));
-      const index = document.activeElement
-        ? items.indexOf(document.activeElement)
-        : -1;
+      const items = Array.from(nodeRef.current.querySelectorAll("a, button"));
+      const index = document.activeElement ? items.indexOf(document.activeElement) : -1;
 
       let element: Element | undefined;
 
       switch (e.key) {
-        case 'ArrowDown':
+        case "ArrowDown":
           element = items[index + 1] ?? items[0];
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           element = items[index - 1] ?? items[items.length - 1];
           break;
-        case 'Tab':
+        case "Tab":
           if (e.shiftKey) {
             element = items[index - 1] ?? items[items.length - 1];
           } else {
             element = items[index + 1] ?? items[0];
           }
           break;
-        case 'Home':
+        case "Home":
           element = items[0];
           break;
-        case 'End':
+        case "End":
           element = items[items.length - 1];
           break;
-        case 'Escape':
+        case "Escape":
           onClose();
           break;
       }
@@ -159,30 +127,30 @@ export const DropdownMenu = <Item = MenuItem,>({
       }
     };
 
-    document.addEventListener('click', handleDocumentClick, { capture: true });
-    document.addEventListener('keydown', handleKeyDown, { capture: true });
+    document.addEventListener("click", handleDocumentClick, { capture: true });
+    document.addEventListener("keydown", handleKeyDown, { capture: true });
 
     if (openedViaKeyboard) {
-      const firstMenuItem = nodeRef.current?.querySelector<
-        HTMLAnchorElement | HTMLButtonElement
-      >('li:first-child > :is(a, button)');
+      const firstMenuItem = nodeRef.current?.querySelector<HTMLAnchorElement | HTMLButtonElement>(
+        "li:first-child > :is(a, button)",
+      );
       firstMenuItem?.focus({ preventScroll: true });
     }
 
     return () => {
-      document.removeEventListener('click', handleDocumentClick, {
+      document.removeEventListener("click", handleDocumentClick, {
         capture: true,
       });
-      document.removeEventListener('keydown', handleKeyDown, { capture: true });
+      document.removeEventListener("keydown", handleKeyDown, { capture: true });
     };
   }, [onClose, openedViaKeyboard]);
 
   const handleItemClick = useCallback(
     (e: React.MouseEvent | React.KeyboardEvent) => {
-      const i = Number(e.currentTarget.getAttribute('data-index'));
+      const i = Number(e.currentTarget.getAttribute("data-index"));
       const item = items?.[i];
       const isItemDisabled = Boolean(
-        item && typeof item === 'object' && 'disabled' in item && item.disabled,
+        item && typeof item === "object" && "disabled" in item && item.disabled,
       );
 
       if (!item || isItemDisabled) {
@@ -191,7 +159,7 @@ export const DropdownMenu = <Item = MenuItem,>({
 
       onClose();
 
-      if (typeof onItemClick === 'function') {
+      if (typeof onItemClick === "function") {
         e.preventDefault();
         onItemClick(item, i);
       } else if (isActionItem(item)) {
@@ -208,7 +176,7 @@ export const DropdownMenu = <Item = MenuItem,>({
     }
 
     if (option === null) {
-      return <li key={`sep-${i}`} className='dropdown-menu__separator' />;
+      return <li key={`sep-${i}`} className="dropdown-menu__separator" />;
     }
 
     const { text, highlighted, disabled, dangerous } = option;
@@ -217,12 +185,7 @@ export const DropdownMenu = <Item = MenuItem,>({
 
     if (isActionItem(option)) {
       element = (
-        <button
-          onClick={handleItemClick}
-          data-index={i}
-          aria-disabled={disabled}
-          type='button'
-        >
+        <button onClick={handleItemClick} data-index={i} aria-disabled={disabled} type="button">
           <DropdownMenuItemContent item={option} />
         </button>
       );
@@ -230,9 +193,9 @@ export const DropdownMenu = <Item = MenuItem,>({
       element = (
         <a
           href={option.href}
-          target={option.target ?? '_target'}
+          target={option.target ?? "_target"}
           data-method={option.method}
-          rel='noopener'
+          rel="noopener"
           onClick={handleItemClick}
           data-index={i}
         >
@@ -249,9 +212,9 @@ export const DropdownMenu = <Item = MenuItem,>({
 
     return (
       <li
-        className={classNames('dropdown-menu__item', {
-          'dropdown-menu__item--highlighted': highlighted,
-          'dropdown-menu__item--dangerous': dangerous,
+        className={classNames("dropdown-menu__item", {
+          "dropdown-menu__item--highlighted": highlighted,
+          "dropdown-menu__item--dangerous": dangerous,
         })}
         key={`${text}-${i}`}
       >
@@ -264,28 +227,24 @@ export const DropdownMenu = <Item = MenuItem,>({
 
   return (
     <div
-      className={classNames('dropdown-menu__container', {
-        'dropdown-menu__container--loading': loading,
+      className={classNames("dropdown-menu__container", {
+        "dropdown-menu__container--loading": loading,
       })}
       ref={nodeRef}
     >
       {(loading || !items) && <CircularProgress size={30} strokeWidth={3.5} />}
 
       {!loading && renderHeader && items && (
-        <div className='dropdown-menu__container__header'>
-          {renderHeader(items)}
-        </div>
+        <div className="dropdown-menu__container__header">{renderHeader(items)}</div>
       )}
 
       {!loading && items && (
         <ul
-          className={classNames('dropdown-menu__container__list', {
-            'dropdown-menu__container__list--scrollable': scrollable,
+          className={classNames("dropdown-menu__container__list", {
+            "dropdown-menu__container__list--scrollable": scrollable,
           })}
         >
-          {items.map((option, i) =>
-            renderItemMethod(option, i, handleItemClick),
-          )}
+          {items.map((option, i) => renderItemMethod(option, i, handleItemClick))}
         </ul>
       )}
     </div>
@@ -321,7 +280,7 @@ interface DropdownProps<Item extends object | null = MenuItem> {
   onItemClick?: ItemClickFn<Item>;
 }
 
-const popperConfig = { strategy: 'fixed' } as UsePopperOptions;
+const popperConfig = { strategy: "fixed" } as UsePopperOptions;
 
 export const Dropdown = <Item extends object | null = MenuItem>({
   children,
@@ -330,10 +289,10 @@ export const Dropdown = <Item extends object | null = MenuItem>({
   iconClassName,
   items,
   loading,
-  title = 'Menu',
+  title = "Menu",
   disabled,
   scrollable,
-  placement = 'bottom',
+  placement = "bottom",
   offset = [5, 5],
   status,
   needsStatusRefresh,
@@ -347,17 +306,13 @@ export const Dropdown = <Item extends object | null = MenuItem>({
 }: DropdownProps<Item>) => {
   const dispatch = useAppDispatch();
   const openDropdownId = useAppSelector((state) => state.dropdownMenu.openId);
-  const openedViaKeyboard = useAppSelector(
-    (state) => state.dropdownMenu.keyboard,
-  );
+  const openedViaKeyboard = useAppSelector((state) => state.dropdownMenu.keyboard);
   const [currentId] = useState(id++);
   const open = currentId === openDropdownId;
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuId = useId();
-  const prefetchAccountId = status
-    ? status.getIn(['account', 'id'])
-    : undefined;
-  const statusId = status?.get('id') as string | undefined;
+  const prefetchAccountId = status ? status.getIn(["account", "id"]) : undefined;
+  const statusId = status?.get("id") as string | undefined;
 
   const handleClose = useCallback(() => {
     if (buttonRef.current) {
@@ -366,7 +321,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
 
     dispatch(
       closeModal({
-        modalType: 'ACTIONS',
+        modalType: "ACTIONS",
         ignoreFocus: false,
       }),
     );
@@ -376,7 +331,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
 
   const handleItemClick = useCallback(
     (e: React.MouseEvent) => {
-      const i = Number(e.currentTarget.getAttribute('data-index'));
+      const i = Number(e.currentTarget.getAttribute("data-index"));
       const item = items?.[i];
 
       handleClose();
@@ -385,7 +340,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
         return;
       }
 
-      if (typeof onItemClick === 'function') {
+      if (typeof onItemClick === "function") {
         e.preventDefault();
         onItemClick(item, i);
       } else if (isActionItem(item)) {
@@ -399,7 +354,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
   const isKeypressRef = useRef(false);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === ' ' || e.key === 'Enter') {
+    if (e.key === " " || e.key === "Enter") {
       isKeypressRef.current = true;
     }
   }, []);
@@ -434,7 +389,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
         if (isUserTouching() && !forceDropdown) {
           dispatch(
             openModal({
-              modalType: 'ACTIONS',
+              modalType: "ACTIONS",
               modalProps: {
                 actions: items,
                 onClick: handleItemClick,
@@ -487,8 +442,8 @@ export const Dropdown = <Item extends object | null = MenuItem>({
     onKeyDown: handleKeyDown,
     onKeyUp: unsetIsKeypress,
     onBlur: unsetIsKeypress,
-    'aria-expanded': open,
-    'aria-controls': menuId,
+    "aria-expanded": open,
+    "aria-controls": menuId,
     ref: buttonRef,
   };
 
@@ -497,7 +452,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
   } else if (icon && iconComponent) {
     button = (
       <IconButton
-        icon={!open ? icon : 'close'}
+        icon={!open ? icon : "close"}
         iconComponent={iconComponent}
         title={title}
         active={open}
@@ -524,10 +479,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
         {({ props, arrowProps, placement }) => (
           <div {...props} className={className} id={menuId}>
             <div className={`dropdown-animation dropdown-menu ${placement}`}>
-              <div
-                className={`dropdown-menu__arrow ${placement}`}
-                {...arrowProps}
-              />
+              <div className={`dropdown-menu__arrow ${placement}`} {...arrowProps} />
 
               <DropdownMenu
                 items={items}

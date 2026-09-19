@@ -1,11 +1,7 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit";
 
-import {
-  showAlert,
-  dismissAlert,
-  clearAlerts,
-} from 'flavours/glitch/actions/alerts';
-import type { Alert } from 'flavours/glitch/models/alert';
+import { showAlert, dismissAlert, clearAlerts } from "flavours/glitch/actions/alerts";
+import type { Alert } from "flavours/glitch/models/alert";
 
 const initialState: Alert[] = [];
 

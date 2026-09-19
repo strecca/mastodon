@@ -1,14 +1,11 @@
-import {
-  apiGetSuggestions,
-  apiDeleteSuggestion,
-} from 'mastodon/api/suggestions';
-import { createDataLoadingThunk } from 'mastodon/store/typed_functions';
+import { apiGetSuggestions, apiDeleteSuggestion } from "mastodon/api/suggestions";
+import { createDataLoadingThunk } from "mastodon/store/typed_functions";
 
-import { fetchRelationships } from './accounts';
-import { importFetchedAccounts } from './importer';
+import { fetchRelationships } from "./accounts";
+import { importFetchedAccounts } from "./importer";
 
 export const fetchSuggestions = createDataLoadingThunk(
-  'suggestions/fetch',
+  "suggestions/fetch",
   () => apiGetSuggestions(20),
   (data, { dispatch }) => {
     dispatch(importFetchedAccounts(data.map((x) => x.account)));
@@ -19,6 +16,6 @@ export const fetchSuggestions = createDataLoadingThunk(
 );
 
 export const dismissSuggestion = createDataLoadingThunk(
-  'suggestions/dismiss',
+  "suggestions/dismiss",
   ({ accountId }: { accountId: string }) => apiDeleteSuggestion(accountId),
 );

@@ -1,54 +1,38 @@
-import {
-  useCallback,
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useId,
-} from 'react';
+import { useCallback, useState, useRef, useEffect, useMemo, useId } from "react";
 
-import {
-  defineMessages,
-  useIntl,
-  FormattedMessage,
-  FormattedList,
-} from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage, FormattedList } from "react-intl";
 
-import classNames from 'classnames';
-import { useHistory } from 'react-router-dom';
+import classNames from "classnames";
+import { useHistory } from "react-router-dom";
 
-import { isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled } from "@reduxjs/toolkit";
 
-import { getCollectionPath } from '@/mastodon/features/collections/utils';
-import CancelIcon from '@/material-icons/400-24px/cancel-fill.svg?react';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import SearchIcon from '@/material-icons/400-24px/search.svg?react';
-import {
-  clickSearchResult,
-  forgetSearchResult,
-  openURL,
-} from 'mastodon/actions/search';
-import { Icon } from 'mastodon/components/icon';
-import { useIdentity } from 'mastodon/identity_context';
-import { domain, searchEnabled } from 'mastodon/initial_state';
-import type { RecentSearch, SearchType } from 'mastodon/models/search';
-import { useAppSelector, useAppDispatch } from 'mastodon/store';
-import { HASHTAG_REGEX } from 'mastodon/utils/hashtags';
+import { getCollectionPath } from "@/mastodon/features/collections/utils";
+import CancelIcon from "@/material-icons/400-24px/cancel-fill.svg?react";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import SearchIcon from "@/material-icons/400-24px/search.svg?react";
+import { clickSearchResult, forgetSearchResult, openURL } from "mastodon/actions/search";
+import { Icon } from "mastodon/components/icon";
+import { useIdentity } from "mastodon/identity_context";
+import { domain, searchEnabled } from "mastodon/initial_state";
+import type { RecentSearch, SearchType } from "mastodon/models/search";
+import { useAppSelector, useAppDispatch } from "mastodon/store";
+import { HASHTAG_REGEX } from "mastodon/utils/hashtags";
 
 const messages = defineMessages({
-  placeholder: { id: 'search.placeholder', defaultMessage: 'Search' },
-  clearSearch: { id: 'search.clear', defaultMessage: 'Clear search' },
+  placeholder: { id: "search.placeholder", defaultMessage: "Search" },
+  clearSearch: { id: "search.clear", defaultMessage: "Clear search" },
   placeholderSignedIn: {
-    id: 'search.search_or_paste',
-    defaultMessage: 'Search or paste URL',
+    id: "search.search_or_paste",
+    defaultMessage: "Search or paste URL",
   },
 });
 
 const labelForRecentSearch = (search: RecentSearch) => {
   switch (search.type) {
-    case 'account':
+    case "account":
       return `@${search.q}`;
-    case 'hashtag':
+    case "hashtag":
       return `#${search.q}`;
     default:
       return search.q;
@@ -62,19 +46,17 @@ const ClearButton: React.FC<{
   const intl = useIntl();
 
   return (
-    <div
-      className={classNames('search__icon-wrapper', { 'has-value': hasValue })}
-    >
-      <Icon id='search' icon={SearchIcon} className='search__icon' />
+    <div className={classNames("search__icon-wrapper", { "has-value": hasValue })}>
+      <Icon id="search" icon={SearchIcon} className="search__icon" />
       <button
-        type='button'
+        type="button"
         onClick={onClick}
-        className='search__icon search__icon--clear-button'
+        className="search__icon search__icon--clear-button"
         tabIndex={hasValue ? undefined : -1}
         aria-hidden={!hasValue}
       >
         <Icon
-          id='times-circle'
+          id="times-circle"
           icon={CancelIcon}
           aria-label={intl.formatMessage(messages.clearSearch)}
         />
@@ -100,22 +82,22 @@ export const Search: React.FC<{
   const dispatch = useAppDispatch();
   const history = useHistory();
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState(initialValue ?? '');
+  const [value, setValue] = useState(initialValue ?? "");
   const hasValue = value.length > 0;
   const [expanded, setExpanded] = useState(false);
   const [selectedOption, setSelectedOption] = useState(-1);
   const [quickActions, setQuickActions] = useState<SearchOption[]>([]);
 
   const unfocus = useCallback(() => {
-    document.querySelector('.ui')?.parentElement?.focus();
+    document.querySelector(".ui")?.parentElement?.focus();
     setExpanded(false);
   }, []);
 
   const insertText = useCallback((text: string) => {
     setValue((currentValue) => {
-      if (currentValue === '') {
+      if (currentValue === "") {
         return text;
-      } else if (currentValue.endsWith(' ')) {
+      } else if (currentValue.endsWith(" ")) {
         return `${currentValue}${text}`;
       } else {
         return `${currentValue} ${text}`;
@@ -129,128 +111,108 @@ export const Search: React.FC<{
     } else {
       const options: SearchOption[] = [
         {
-          key: 'prompt-has',
+          key: "prompt-has",
           label: (
             <>
-              <mark>has:</mark>{' '}
-              <FormattedList
-                type='disjunction'
-                value={['media', 'poll', 'embed']}
-              />
+              <mark>has:</mark>{" "}
+              <FormattedList type="disjunction" value={["media", "poll", "embed"]} />
             </>
           ),
           action: (e) => {
             e.preventDefault();
-            insertText('has:');
+            insertText("has:");
           },
         },
         {
-          key: 'prompt-is',
+          key: "prompt-is",
           label: (
             <>
-              <mark>is:</mark>{' '}
-              <FormattedList
-                type='disjunction'
-                value={['reply', 'sensitive']}
-              />
+              <mark>is:</mark> <FormattedList type="disjunction" value={["reply", "sensitive"]} />
             </>
           ),
           action: (e) => {
             e.preventDefault();
-            insertText('is:');
+            insertText("is:");
           },
         },
         {
-          key: 'prompt-language',
+          key: "prompt-language",
           label: (
             <>
-              <mark>language:</mark>{' '}
+              <mark>language:</mark>{" "}
               <FormattedMessage
-                id='search_popout.language_code'
-                defaultMessage='ISO language code'
+                id="search_popout.language_code"
+                defaultMessage="ISO language code"
               />
             </>
           ),
           action: (e) => {
             e.preventDefault();
-            insertText('language:');
+            insertText("language:");
           },
         },
         {
-          key: 'prompt-from',
+          key: "prompt-from",
           label: (
             <>
-              <mark>from:</mark>{' '}
-              <FormattedMessage id='search_popout.user' defaultMessage='user' />
+              <mark>from:</mark> <FormattedMessage id="search_popout.user" defaultMessage="user" />
             </>
           ),
           action: (e) => {
             e.preventDefault();
-            insertText('from:');
+            insertText("from:");
           },
         },
         {
-          key: 'prompt-before',
+          key: "prompt-before",
           label: (
             <>
-              <mark>before:</mark>{' '}
-              <FormattedMessage
-                id='search_popout.specific_date'
-                defaultMessage='specific date'
-              />
+              <mark>before:</mark>{" "}
+              <FormattedMessage id="search_popout.specific_date" defaultMessage="specific date" />
             </>
           ),
           action: (e) => {
             e.preventDefault();
-            insertText('before:');
+            insertText("before:");
           },
         },
         {
-          key: 'prompt-during',
+          key: "prompt-during",
           label: (
             <>
-              <mark>during:</mark>{' '}
-              <FormattedMessage
-                id='search_popout.specific_date'
-                defaultMessage='specific date'
-              />
+              <mark>during:</mark>{" "}
+              <FormattedMessage id="search_popout.specific_date" defaultMessage="specific date" />
             </>
           ),
           action: (e) => {
             e.preventDefault();
-            insertText('during:');
+            insertText("during:");
           },
         },
         {
-          key: 'prompt-after',
+          key: "prompt-after",
           label: (
             <>
-              <mark>after:</mark>{' '}
-              <FormattedMessage
-                id='search_popout.specific_date'
-                defaultMessage='specific date'
-              />
+              <mark>after:</mark>{" "}
+              <FormattedMessage id="search_popout.specific_date" defaultMessage="specific date" />
             </>
           ),
           action: (e) => {
             e.preventDefault();
-            insertText('after:');
+            insertText("after:");
           },
         },
         {
-          key: 'prompt-in',
+          key: "prompt-in",
           label: (
             <>
-              <mark>in:</mark>{' '}
-              <FormattedList
-                type='disjunction'
-                value={['all', 'library', 'public']}
-              />
+              <mark>in:</mark>{" "}
+              <FormattedList type="disjunction" value={["all", "library", "public"]} />
             </>
           ),
           action: (e) => {
             e.preventDefault();
-            insertText('in:');
+            insertText("in:");
           },
         },
       ];
@@ -266,15 +228,15 @@ export const Search: React.FC<{
         action: () => {
           setValue(search.q);
 
-          if (search.type === 'account') {
+          if (search.type === "account") {
             history.push(`/@${search.q}`);
-          } else if (search.type === 'hashtag') {
+          } else if (search.type === "hashtag") {
             history.push(`/tags/${search.q}`);
           } else {
             const queryParams = new URLSearchParams({ q: search.q });
-            if (search.type) queryParams.set('type', search.type);
+            if (search.type) queryParams.set("type", search.type);
             history.push({
-              pathname: '/search',
+              pathname: "/search",
               search: queryParams.toString(),
             });
           }
@@ -301,8 +263,8 @@ export const Search: React.FC<{
     (q: string, type?: SearchType) => {
       void dispatch(clickSearchResult({ q, type }));
       const queryParams = new URLSearchParams({ q });
-      if (type) queryParams.set('type', type);
-      history.push({ pathname: '/search', search: queryParams.toString() });
+      if (type) queryParams.set("type", type);
+      history.push({ pathname: "/search", search: queryParams.toString() });
       unfocus();
     },
     [dispatch, history, unfocus],
@@ -316,16 +278,15 @@ export const Search: React.FC<{
       const newQuickActions = [];
 
       if (trimmedValue.length > 0) {
-        const couldBeURL =
-          trimmedValue.startsWith('https://') && !trimmedValue.includes(' ');
+        const couldBeURL = trimmedValue.startsWith("https://") && !trimmedValue.includes(" ");
 
         if (couldBeURL) {
           newQuickActions.push({
-            key: 'open-url',
+            key: "open-url",
             label: (
               <FormattedMessage
-                id='search.quick_action.open_url'
-                defaultMessage='Open URL in Mastodon'
+                id="search.quick_action.open_url"
+                defaultMessage="Open URL in Mastodon"
               />
             ),
             action: async () => {
@@ -339,9 +300,7 @@ export const Search: React.FC<{
                     `/@${result.payload.statuses[0].account.acct}/${result.payload.statuses[0].id}`,
                   );
                 } else if (result.payload.collections[0]) {
-                  history.push(
-                    getCollectionPath(result.payload.collections[0].id),
-                  );
+                  history.push(getCollectionPath(result.payload.collections[0].id));
                 }
               }
 
@@ -351,23 +310,23 @@ export const Search: React.FC<{
         }
 
         const couldBeHashtag =
-          (trimmedValue.startsWith('#') && trimmedValue.length > 1) ||
+          (trimmedValue.startsWith("#") && trimmedValue.length > 1) ||
           trimmedValue.match(HASHTAG_REGEX);
 
         if (couldBeHashtag) {
           newQuickActions.push({
-            key: 'go-to-hashtag',
+            key: "go-to-hashtag",
             label: (
               <FormattedMessage
-                id='search.quick_action.go_to_hashtag'
-                defaultMessage='Go to hashtag {x}'
-                values={{ x: <mark>#{trimmedValue.replace(/^#/, '')}</mark> }}
+                id="search.quick_action.go_to_hashtag"
+                defaultMessage="Go to hashtag {x}"
+                values={{ x: <mark>#{trimmedValue.replace(/^#/, "")}</mark> }}
               />
             ),
             action: () => {
-              const query = trimmedValue.replace(/^#/, '');
+              const query = trimmedValue.replace(/^#/, "");
               history.push(`/tags/${query}`);
-              void dispatch(clickSearchResult({ q: query, type: 'hashtag' }));
+              void dispatch(clickSearchResult({ q: query, type: "hashtag" }));
               unfocus();
             },
           });
@@ -377,18 +336,18 @@ export const Search: React.FC<{
 
         if (couldBeUsername) {
           newQuickActions.push({
-            key: 'go-to-account',
+            key: "go-to-account",
             label: (
               <FormattedMessage
-                id='search.quick_action.go_to_account'
-                defaultMessage='Go to profile {x}'
-                values={{ x: <mark>@{trimmedValue.replace(/^@/, '')}</mark> }}
+                id="search.quick_action.go_to_account"
+                defaultMessage="Go to profile {x}"
+                values={{ x: <mark>@{trimmedValue.replace(/^@/, "")}</mark> }}
               />
             ),
             action: () => {
-              const query = trimmedValue.replace(/^@/, '');
+              const query = trimmedValue.replace(/^@/, "");
               history.push(`/@${query}`);
-              void dispatch(clickSearchResult({ q: query, type: 'account' }));
+              void dispatch(clickSearchResult({ q: query, type: "account" }));
               unfocus();
             },
           });
@@ -398,31 +357,31 @@ export const Search: React.FC<{
 
         if (couldBeStatusSearch && signedIn) {
           newQuickActions.push({
-            key: 'status-search',
+            key: "status-search",
             label: (
               <FormattedMessage
-                id='search.quick_action.status_search'
-                defaultMessage='Posts matching {x}'
+                id="search.quick_action.status_search"
+                defaultMessage="Posts matching {x}"
                 values={{ x: <mark>{trimmedValue}</mark> }}
               />
             ),
             action: () => {
-              submit(trimmedValue, 'statuses');
+              submit(trimmedValue, "statuses");
             },
           });
         }
 
         newQuickActions.push({
-          key: 'account-search',
+          key: "account-search",
           label: (
             <FormattedMessage
-              id='search.quick_action.account_search'
-              defaultMessage='Profiles matching {x}'
+              id="search.quick_action.account_search"
+              defaultMessage="Profiles matching {x}"
               values={{ x: <mark>{trimmedValue}</mark> }}
             />
           ),
           action: () => {
-            submit(trimmedValue, 'accounts');
+            submit(trimmedValue, "accounts");
           },
         });
       }
@@ -433,7 +392,7 @@ export const Search: React.FC<{
   );
 
   const handleClear = useCallback(() => {
-    setValue('');
+    setValue("");
     setQuickActions([]);
     setSelectedOption(-1);
     unfocus();
@@ -442,13 +401,13 @@ export const Search: React.FC<{
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       switch (e.key) {
-        case 'Escape':
+        case "Escape":
           e.preventDefault();
           searchInputRef.current?.focus();
           setExpanded(false);
 
           break;
-        case 'ArrowDown':
+        case "ArrowDown":
           e.preventDefault();
 
           if (!expanded) {
@@ -456,13 +415,11 @@ export const Search: React.FC<{
           }
 
           if (navigableOptions.length > 0) {
-            setSelectedOption(
-              Math.min(selectedOption + 1, navigableOptions.length - 1),
-            );
+            setSelectedOption(Math.min(selectedOption + 1, navigableOptions.length - 1));
           }
 
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           e.preventDefault();
 
           if (navigableOptions.length > 0) {
@@ -470,7 +427,7 @@ export const Search: React.FC<{
           }
 
           break;
-        case 'Enter':
+        case "Enter":
           e.preventDefault();
 
           if (selectedOption === -1) {
@@ -480,11 +437,11 @@ export const Search: React.FC<{
           }
 
           break;
-        case 'Delete':
+        case "Delete":
           if (selectedOption > -1 && navigableOptions.length > 0) {
             const search = navigableOptions[selectedOption];
 
-            if (typeof search?.forget === 'function') {
+            if (typeof search?.forget === "function") {
               e.preventDefault();
               search.forget(e);
             }
@@ -503,10 +460,7 @@ export const Search: React.FC<{
     if (searchInputRef.current && !singleColumn) {
       const { left, right } = searchInputRef.current.getBoundingClientRect();
 
-      if (
-        left < 0 ||
-        right > (window.innerWidth || document.documentElement.clientWidth)
-      ) {
+      if (left < 0 || right > (window.innerWidth || document.documentElement.clientWidth)) {
         searchInputRef.current.scrollIntoView();
       }
     }
@@ -532,18 +486,17 @@ export const Search: React.FC<{
       function closeOnLeave(event: FocusEvent | MouseEvent) {
         const form = formRef.current;
         const isClickInsideForm =
-          form &&
-          (form === event.target || form.contains(event.target as Node));
+          form && (form === event.target || form.contains(event.target as Node));
         if (!isClickInsideForm) {
           setExpanded(false);
         }
       }
-      document.addEventListener('focusin', closeOnLeave);
-      document.addEventListener('click', closeOnLeave);
+      document.addEventListener("focusin", closeOnLeave);
+      document.addEventListener("click", closeOnLeave);
 
       return () => {
-        document.removeEventListener('focusin', closeOnLeave);
-        document.removeEventListener('click', closeOnLeave);
+        document.removeEventListener("focusin", closeOnLeave);
+        document.removeEventListener("click", closeOnLeave);
       };
     }
     return () => null;
@@ -552,16 +505,12 @@ export const Search: React.FC<{
   const searchOptionsHeading = useId();
 
   return (
-    <form
-      role='search'
-      ref={formRef}
-      className={classNames('search', { active: expanded })}
-    >
+    <form role="search" ref={formRef} className={classNames("search", { active: expanded })}>
       <input
         ref={searchInputRef}
-        className='search__input'
-        type='text'
-        inputMode='search'
+        className="search__input"
+        type="text"
+        inputMode="search"
         placeholder={intl.formatMessage(
           signedIn ? messages.placeholderSignedIn : messages.placeholder,
         )}
@@ -579,8 +528,8 @@ export const Search: React.FC<{
 
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
-        className='search__popout'
-        role='dialog'
+        className="search__popout"
+        role="dialog"
         tabIndex={-1}
         aria-labelledby={searchOptionsHeading}
         onKeyDown={handleKeyDown}
@@ -588,41 +537,34 @@ export const Search: React.FC<{
         {!hasValue && (
           <>
             <h4>
-              <FormattedMessage
-                id='search_popout.recent'
-                defaultMessage='Recent searches'
-              />
+              <FormattedMessage id="search_popout.recent" defaultMessage="Recent searches" />
             </h4>
 
-            <div className='search__popout__menu'>
+            <div className="search__popout__menu">
               {recentOptions.length > 0 ? (
                 recentOptions.map(({ label, key, action, forget }, i) => (
                   <div
                     key={key}
                     tabIndex={0}
-                    role='button'
+                    role="button"
                     onMouseDown={action}
                     onFocus={getOptionFocusHandler(i)}
                     className={classNames(
-                      'search__popout__menu__item search__popout__menu__item--flex',
+                      "search__popout__menu__item search__popout__menu__item--flex",
                       { selected: selectedOption === i },
                     )}
                   >
                     <span>{label}</span>
-                    <button
-                      className='icon-button'
-                      onMouseDown={forget}
-                      type='button'
-                    >
-                      <Icon id='times' icon={CloseIcon} />
+                    <button className="icon-button" onMouseDown={forget} type="button">
+                      <Icon id="times" icon={CloseIcon} />
                     </button>
                   </div>
                 ))
               ) : (
-                <div className='search__popout__menu__message'>
+                <div className="search__popout__menu__message">
                   <FormattedMessage
-                    id='search.no_recent_searches'
-                    defaultMessage='No recent searches'
+                    id="search.no_recent_searches"
+                    defaultMessage="No recent searches"
                   />
                 </div>
               )}
@@ -633,22 +575,19 @@ export const Search: React.FC<{
         {quickActions.length > 0 && (
           <>
             <h4>
-              <FormattedMessage
-                id='search_popout.quick_actions'
-                defaultMessage='Quick actions'
-              />
+              <FormattedMessage id="search_popout.quick_actions" defaultMessage="Quick actions" />
             </h4>
 
-            <div className='search__popout__menu'>
+            <div className="search__popout__menu">
               {quickActions.map(({ key, label, action }, i) => (
                 <button
                   key={key}
                   onMouseDown={action}
                   onFocus={getOptionFocusHandler(i)}
-                  className={classNames('search__popout__menu__item', {
+                  className={classNames("search__popout__menu__item", {
                     selected: selectedOption === i,
                   })}
-                  type='button'
+                  type="button"
                 >
                   {label}
                 </button>
@@ -658,14 +597,11 @@ export const Search: React.FC<{
         )}
 
         <h4 id={searchOptionsHeading}>
-          <FormattedMessage
-            id='search_popout.options'
-            defaultMessage='Search options'
-          />
+          <FormattedMessage id="search_popout.options" defaultMessage="Search options" />
         </h4>
 
         {searchEnabled && signedIn ? (
-          <div className='search__popout__menu'>
+          <div className="search__popout__menu">
             {searchOptions.map(({ key, label, action }, i) => {
               const currentIndex = (quickActions.length || recent.length) + i;
               return (
@@ -673,10 +609,10 @@ export const Search: React.FC<{
                   key={key}
                   onMouseDown={action}
                   onFocus={getOptionFocusHandler(currentIndex)}
-                  className={classNames('search__popout__menu__item', {
+                  className={classNames("search__popout__menu__item", {
                     selected: selectedOption === currentIndex,
                   })}
-                  type='button'
+                  type="button"
                 >
                   {label}
                 </button>
@@ -684,16 +620,16 @@ export const Search: React.FC<{
             })}
           </div>
         ) : (
-          <div className='search__popout__menu__message'>
+          <div className="search__popout__menu__message">
             {searchEnabled ? (
               <FormattedMessage
-                id='search_popout.full_text_search_logged_out_message'
-                defaultMessage='Only available when logged in.'
+                id="search_popout.full_text_search_logged_out_message"
+                defaultMessage="Only available when logged in."
               />
             ) : (
               <FormattedMessage
-                id='search_popout.full_text_search_disabled_message'
-                defaultMessage='Not available on {domain}.'
+                id="search_popout.full_text_search_disabled_message"
+                defaultMessage="Not available on {domain}."
                 values={{ domain }}
               />
             )}

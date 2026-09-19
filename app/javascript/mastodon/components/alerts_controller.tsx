@@ -1,25 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { defineMessage, useIntl } from 'react-intl';
-import type { IntlShape } from 'react-intl';
+import { defineMessage, useIntl } from "react-intl";
+import type { IntlShape } from "react-intl";
 
-import { dismissAlert } from 'mastodon/actions/alerts';
+import { dismissAlert } from "mastodon/actions/alerts";
 import type {
   Alert as AlertType,
   TranslatableString,
   TranslatableValues,
-} from 'mastodon/models/alert';
-import { useAppSelector, useAppDispatch } from 'mastodon/store';
+} from "mastodon/models/alert";
+import { useAppSelector, useAppDispatch } from "mastodon/store";
 
-import { A11yLiveRegion } from './a11y_live_region';
-import { Alert } from './alert';
+import { A11yLiveRegion } from "./a11y_live_region";
+import { Alert } from "./alert";
 
 const formatIfNeeded = (
   intl: IntlShape,
   message: TranslatableString,
   values?: TranslatableValues,
 ) => {
-  if (typeof message === 'object') {
+  if (typeof message === "object") {
     return intl.formatMessage(message, values);
   }
 
@@ -29,10 +29,7 @@ const formatIfNeeded = (
 const TimedAlert: React.FC<{
   alert: AlertType;
   dismissAfter: number;
-}> = ({
-  alert: { key, title, message, values, action, onClick },
-  dismissAfter,
-}) => {
+}> = ({ alert: { key, title, message, values, action, onClick }, dismissAfter }) => {
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const [active, setActive] = useState(false);
@@ -75,18 +72,12 @@ const TimedAlert: React.FC<{
 
 export const AlertsController: React.FC = () => {
   const alerts = useAppSelector((state) => state.alerts);
-  const needsReload = useAppSelector(
-    (state) => !!state.meta.get('needsReload'),
-  );
+  const needsReload = useAppSelector((state) => !!state.meta.get("needsReload"));
 
   return (
-    <A11yLiveRegion className='notification-list'>
+    <A11yLiveRegion className="notification-list">
       {alerts.map((alert, idx) => (
-        <TimedAlert
-          key={alert.key}
-          alert={alert}
-          dismissAfter={5000 + idx * 1000}
-        />
+        <TimedAlert key={alert.key} alert={alert} dismissAfter={5000 + idx * 1000} />
       ))}
       {needsReload && <ReloadAlert />}
     </A11yLiveRegion>
@@ -94,9 +85,9 @@ export const AlertsController: React.FC = () => {
 };
 
 const reloadMessage = defineMessage({
-  id: 'alert.need_reload.message',
+  id: "alert.need_reload.message",
   defaultMessage:
-    'Mastodon has been updated. Some things may not work correctly until you reload the page.',
+    "Mastodon has been updated. Some things may not work correctly until you reload the page.",
 });
 
 const ReloadAlert: React.FC = () => {

@@ -52,7 +52,7 @@ gd:
         callback_urls: URLaichean gairm air ais
         scopes: Sgòpaichean
         secret: Rùn a’ chliant
-        title: 'Aplacaidean: %{name}'
+        title: "Aplacaidean: %{name}"
     authorizations:
       buttons:
         authorize: Ùghdarraich
@@ -91,7 +91,7 @@ gd:
         invalid_grant: Chan eil an t-ùghdarrachadh a chaidh a thoirt seachad dligheach, dh’fhalbh an ùine air, chaidh a chùl-ghairm no chan eil e a-rèir URI an ath-stiùiridh a chaidh a chleachdadh san iarrtas ùghdarrachaidh no chaidh fhoillseachadh le cliant eile.
         invalid_redirect_uri: Chan eil an URI ath-stiùiridh a chaidh a ghabhail a-staigh dligheach.
         invalid_request:
-          missing_param: 'Tha paramadair riatanach a dhìth: %{value}.'
+          missing_param: "Tha paramadair riatanach a dhìth: %{value}."
           request_not_authorized: Tha an t-iarrtas feumach air ùghdarrachadh. Tha paramadair riatanach a dhìth air an iarrtas ùghdarrachaidh no tha e mì-dhligheach.
           unknown: Tha paramadair a dhìth air an iarrtas, tha luach paramadair ’na bhroinn ris nach cuirear taic no tha droch-chruth air choireigin eile air.
         invalid_resource_owner: Chan eil teisteas sealbhadair a’ ghoireis a chaidh a sholar dligheach no cha ghabh sealbhadair a’ ghoireis a lorg

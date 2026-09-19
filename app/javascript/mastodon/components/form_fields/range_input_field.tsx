@@ -1,21 +1,18 @@
-import type { ComponentPropsWithoutRef } from 'react';
-import { forwardRef, useId } from 'react';
+import type { ComponentPropsWithoutRef } from "react";
+import { forwardRef, useId } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { FormFieldWrapper } from './form_field_wrapper';
-import type { CommonFieldWrapperProps } from './form_field_wrapper';
-import classes from './range_input.module.scss';
+import { FormFieldWrapper } from "./form_field_wrapper";
+import type { CommonFieldWrapperProps } from "./form_field_wrapper";
+import classes from "./range_input.module.scss";
 
-export type RangeInputProps = Omit<
-  ComponentPropsWithoutRef<'input'>,
-  'type' | 'list'
-> & {
+export type RangeInputProps = Omit<ComponentPropsWithoutRef<"input">, "type" | "list"> & {
   markers?: { value: number; label: string }[] | number[];
 };
 
 interface Props extends RangeInputProps, CommonFieldWrapperProps {
-  inputPlacement?: 'inline-start' | 'inline-end'; // TODO: Move this to the common field wrapper props for other fields.
+  inputPlacement?: "inline-start" | "inline-end"; // TODO: Move this to the common field wrapper props for other fields.
 }
 
 /**
@@ -26,19 +23,7 @@ interface Props extends RangeInputProps, CommonFieldWrapperProps {
  */
 
 export const RangeInputField = forwardRef<HTMLInputElement, Props>(
-  (
-    {
-      id,
-      label,
-      hint,
-      status,
-      required,
-      wrapperClassName,
-      inputPlacement,
-      ...otherProps
-    },
-    ref,
-  ) => (
+  ({ id, label, hint, status, required, wrapperClassName, inputPlacement, ...otherProps }, ref) => (
     <FormFieldWrapper
       label={label}
       hint={hint}
@@ -53,7 +38,7 @@ export const RangeInputField = forwardRef<HTMLInputElement, Props>(
   ),
 );
 
-RangeInputField.displayName = 'RangeInputField';
+RangeInputField.displayName = "RangeInputField";
 
 export const RangeInput = forwardRef<HTMLInputElement, RangeInputProps>(
   ({ className, markers, id, ...otherProps }, ref) => {
@@ -63,7 +48,7 @@ export const RangeInput = forwardRef<HTMLInputElement, RangeInputProps>(
       return (
         <input
           {...otherProps}
-          type='range'
+          type="range"
           className={classNames(className, classes.input)}
           ref={ref}
         />
@@ -73,19 +58,19 @@ export const RangeInput = forwardRef<HTMLInputElement, RangeInputProps>(
       <>
         <input
           {...otherProps}
-          type='range'
+          type="range"
           className={classNames(className, classes.input)}
           ref={ref}
           list={markersId}
         />
         <datalist id={markersId} className={classes.markers}>
           {markers.map((marker) => {
-            const value = typeof marker === 'number' ? marker : marker.value;
+            const value = typeof marker === "number" ? marker : marker.value;
             return (
               <option
                 key={value}
                 value={value}
-                label={typeof marker !== 'number' ? marker.label : undefined}
+                label={typeof marker !== "number" ? marker.label : undefined}
               />
             );
           })}
@@ -95,4 +80,4 @@ export const RangeInput = forwardRef<HTMLInputElement, RangeInputProps>(
   },
 );
 
-RangeInput.displayName = 'RangeInput';
+RangeInput.displayName = "RangeInput";

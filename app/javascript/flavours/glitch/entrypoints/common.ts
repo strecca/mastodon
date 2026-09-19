@@ -1,3 +1,3 @@
-import { start } from 'flavours/glitch/common';
+import { start } from "flavours/glitch/common";
 
 start();

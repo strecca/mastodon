@@ -52,7 +52,7 @@ ie:
         callback_urls: URLs de retrovocada
         scopes: Scopes
         secret: Secrete de client
-        title: 'Aplication: %{name}'
+        title: "Aplication: %{name}"
     authorizations:
       buttons:
         authorize: Autorisar
@@ -85,7 +85,7 @@ ie:
         invalid_grant: Li providet autorisation ó es ínvalid, expirat, revocat, ne acorda con li URI de redirection usat in li demanda de autorisation, ó ha esset emisset a un altri client.
         invalid_redirect_uri: Li uri de redirection includet ne es valid.
         invalid_request:
-          missing_param: 'Mancant postulat parametre: %{value}.'
+          missing_param: "Mancant postulat parametre: %{value}."
           request_not_authorized: Demanda besonant autorisation. Hay un mancant o ínvalid parametre besonat por autorisar li demanda.
           unknown: Li petition manca un postulat parametre, include un ne apoyat parametre-valore, o es altrimen mal format.
         invalid_resource_owner: Sive li credentiales de ressurse-proprietario providet es ínvalid, sive li ressurse-proprietario ne posse esser trovat

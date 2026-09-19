@@ -1,7 +1,7 @@
 ---
 ku:
   about:
-    about_mastodon_html: 'Tora civakî ya pêşerojê: Ne reklam, ne şopandina şîrketan, dîzayna nenavendî! Bi Mastodon re bibe xwediyê daneyên xwe!'
+    about_mastodon_html: "Tora civakî ya pêşerojê: Ne reklam, ne şopandina şîrketan, dîzayna nenavendî! Bi Mastodon re bibe xwediyê daneyên xwe!"
     contact_missing: Nehate sazkirin
     contact_unavailable: Tune
     hosted_on: Mastodon li ser %{domain} tê pêşkêşkirin
@@ -411,7 +411,7 @@ ku:
       import:
         description_html: Tu kê rêzokek ji astengkirinên navperê têxê. Ji kerema xwe vê rêzokê pir bi baldarî binirxîne, taybet ku te ev rêzok bi xwe nenivîsandiye.
         existing_relationships_warning: Têkiliyên şopandinê yên heyî
-        private_comment_description_html: 'Ji bo ku bibe alîkar ji te re bo ku bişopînî ka astengkirinên têxistî ji kuderê tên, astengkirinên têxistî wê werin afirandin bi şîroveya taybet ya: <q>%{comment}</q>'
+        private_comment_description_html: "Ji bo ku bibe alîkar ji te re bo ku bişopînî ka astengkirinên têxistî ji kuderê tên, astengkirinên têxistî wê werin afirandin bi şîroveya taybet ya: <q>%{comment}</q>"
         private_comment_template: Ji %{source} hate têxistin di %{date} de
         title: Astengkirinên navperê têxe
       new:
@@ -505,12 +505,12 @@ ku:
       created_msg: Rêzika nû a IPyê bi awayekî serkeftî hat tevlêkirin
       delete: Jê bibe
       expires_in:
-        '1209600': 2 hefte
-        '15778476': 6 meh
-        '2629746': 1 meh
-        '31556952': 1 sal
-        '86400': 1 roj
-        '94670856': 3 sal
+        "1209600": 2 hefte
+        "15778476": 6 meh
+        "2629746": 1 meh
+        "31556952": 1 sal
+        "86400": 1 roj
+        "94670856": 3 sal
       new:
         title: Rêzika nû a IPyê çêbike
       no_ip_block_selected: Ji ber ku tu ajimêr nehat hilbijartin tu rêzika IPyê nehate guhertin
@@ -556,7 +556,7 @@ ku:
       category_description_html: Sedema ku ev ajimêr û/an jî naverok hate ragihandin wê di pêwendiya bi ajimêrê ragihandinê de werê diyarkirin
       comment:
         none: Ne yek
-      comment_description_html: 'Bo bêtir zanyarî bidî, %{name} nivîsand:'
+      comment_description_html: "Bo bêtir zanyarî bidî, %{name} nivîsand:"
       created_at: Hate ragihandin
       forwarded: Beralîkirî
       forwarded_to: Beralîkirî bo %{domain}
@@ -572,7 +572,7 @@ ku:
         placeholder: Bide nasîn ka çi çalakî hatine kirin, an jî heman rojanekirinên din ên têkildar...
         title: Nîşe
       notes_description_html: Nîşeyan ji çavdêrên din û ji xwe re di pêşerojê de bibîne û bihêle
-      quick_actions_description_html: 'Ji bo dîtina naveroka ragihandî çalakiyeke bilez bavêje an jî li jêr bigere:'
+      quick_actions_description_html: "Ji bo dîtina naveroka ragihandî çalakiyeke bilez bavêje an jî li jêr bigere:"
       remote_user_placeholder: bikarhênerê ji dûr ve ji %{instance}
       reopen: Ragihandina ji nû ve veke
       report: "@%{id} Ragihîne"
@@ -735,7 +735,7 @@ ku:
       elasticsearch_running_check:
         message_html: Bi Elasticsearch re nayê girêdan. Ji kerema xwe kontrol bike ku ew dixebite, an lêgerîna tev-nivîsî neçalak bike
       elasticsearch_version_check:
-        message_html: 'Guhertoya Elasticsearch a nelihevhatî: %{value}'
+        message_html: "Guhertoya Elasticsearch a nelihevhatî: %{value}"
         version_comparison: Elasticsearch %{running_version} dixebite lê %{required_version} pêwîst e
       rules_check:
         action: Rêzikên rajekara bi rê ve bibe
@@ -801,7 +801,7 @@ ku:
         peaked_on_and_decaying: Di %{date} de derketiye asta herî bilind, û niha winda dibe
         title: Hashtagên rojevê
         trendable: Dikare di bin rojevan de xuya bibe
-        trending_rank: 'Rojev #%{rank}'
+        trending_rank: "Rojev #%{rank}"
         usable: Dikare were bikaranîn
         usage_comparison: "%{today} car îro hate bikaranîn, li gorî %{yesterday} duh"
         used_by_over_week:
@@ -854,7 +854,7 @@ ku:
       body_remote: Kesekî bi navê %{domain} ji %{target} ê ragihand
       subject: Ragihandinek nû ji bo %{instance} (#%{id})
     new_trends:
-      body: 'Tiştên jêrîn berî ku ew bi gelemperî werin xuyakirin divê werin nirxandin:'
+      body: "Tiştên jêrîn berî ku ew bi gelemperî werin xuyakirin divê werin nirxandin:"
       new_trending_links:
         title: Girêdanên rojevê
       new_trending_statuses:
@@ -879,7 +879,7 @@ ku:
     sensitive_content: Naveroka hestiyarî
   application_mailer:
     salutation: "%{name},"
-    view: 'Nîşan bide:'
+    view: "Nîşan bide:"
     view_profile: Profîlê nîşan bide
     view_status: Şandiyê nîşan bide
   applications:
@@ -964,7 +964,7 @@ ku:
     proceed: Ajimêr jê bibe
     success_msg: Ajimêra te bi serkeftî hate jêbirin
     warning:
-      before: 'Berî ku tu pêşve biçî, jkx nvan nîşeyan bi baldarî bixwîne:'
+      before: "Berî ku tu pêşve biçî, jkx nvan nîşeyan bi baldarî bixwîne:"
       caches: Naveroka ku ji hêla rajekarên din ve hatiye pêşbîrkirin dibe ku bimîne
       data_removal: Şandiyên te û daneyên din wê bi awayekî dawî bêne rakirin
       irreversible: Tu yê nikaribe ajimêra xwe serrast bike an ji nû ve çalak bike
@@ -987,7 +987,7 @@ ku:
       description_html: Ev kiryarên ku li dijî ajimêrê te hatine kirin û hişyariyên ku ji hêla xebatkarên %{instance} ve ji te re hatine şandinin.
       recipient: Ji kê re
       reject_appeal: Îtîrazê nepejirîne
-      status: 'Şandî #%{id}'
+      status: "Şandî #%{id}"
       status_removed: Şandî jixwe ji pergalê hatî rakirin
       title: "%{action} ji %{date}"
       title_actions:
@@ -1002,19 +1002,19 @@ ku:
       your_appeal_pending: Te îtîrazek şand
       your_appeal_rejected: Îtîraza te nehate pejirandin
   errors:
-    '400': Daxwaza ku te şand nederbasdar an çewt bû.
-    '403': Ji bo dîtina vê rûpelê mafê te nîn e.
-    '404': Rûpela ku tu lê digerî ne li vir e.
-    '406': Ev rûpel di awayê ku tê xwestin de peyda nabe.
-    '410': Ew rûpela ku tu lê digeriya êdî li vir nîne.
-    '422':
+    "400": Daxwaza ku te şand nederbasdar an çewt bû.
+    "403": Ji bo dîtina vê rûpelê mafê te nîn e.
+    "404": Rûpela ku tu lê digerî ne li vir e.
+    "406": Ev rûpel di awayê ku tê xwestin de peyda nabe.
+    "410": Ew rûpela ku tu lê digeriya êdî li vir nîne.
+    "422":
       content: Rastekirina ewlehiyê têk çû. Ma tu kiloran asteng dikî?
       title: Rastekirina ewlehiyê têk çû
-    '429': Gelek daxwazî
-    '500':
+    "429": Gelek daxwazî
+    "500":
       content: Em xemgîn in, lê tiştek di aliyê me de şaş çû.
       title: Ev rûpel ne rast e
-    '503': Ji ber têkçûna rajekar a demkî rûpel nayê bikaranîn.
+    "503": Ji ber têkçûna rajekar a demkî rûpel nayê bikaranîn.
     noscript_html: Ji bo ku tu sepanaa Mastodon a tevnê bi kar bîne, jkx JavaScript-ê çalak bike. Wekî din, yek ji <a href="%{apps_path}">sepanên xwemalî</a> ji bo Mastodon ji bo platforma xwe biceribîne.
   existing_username_validator:
     not_found: nikaribû bikarhênerek herêmî bi wê navê bikarhêner bibîne
@@ -1100,7 +1100,7 @@ ku:
       other: Tiştek hîn ne rast e! Ji kerema xwe %{count} çewtî li jêr di ber çavan re derbas bike
   imports:
     errors:
-      invalid_csv_file: 'Pelê CSV nederbasdar e. Çewtî: %{error}'
+      invalid_csv_file: "Pelê CSV nederbasdar e. Çewtî: %{error}"
       over_rows_processing_limit: ji %{count} zêdetir rêzok hene
     modes:
       merge: Bi hev re bike
@@ -1120,15 +1120,15 @@ ku:
     delete: Neçalak bike
     expired: Dema wê qediya
     expires_in:
-      '1800': 30 xulek
-      '21600': 6 demjimêr
-      '3600': 1 demjimêr
-      '43200': 12 demjimêr
-      '604800': 1 hefte
-      '86400': 1 roj
+      "1800": 30 xulek
+      "21600": 6 demjimêr
+      "3600": 1 demjimêr
+      "43200": 12 demjimêr
+      "604800": 1 hefte
+      "86400": 1 roj
     expires_in_prompt: Tu car
     generate: Girêdana vexwendinê çê bike
-    invited_by: 'Tu hatî vexwendin ji hêla:'
+    invited_by: "Tu hatî vexwendin ji hêla:"
     max_uses:
       one: 1 bikaranîn
       other: "%{count} bikaranîn"
@@ -1177,7 +1177,7 @@ ku:
     set_redirect: Beralîkirin saz bike
     warning:
       backreference_required: Pêdivî ye ku ajimêra nû wekî referanseke paşîn a vê ajimêrê were sazkirin
-      before: 'Berî ku tu berdewam bikî, ji kerema xwe re van nîşaneyan bi baldarî bixwîne:'
+      before: "Berî ku tu berdewam bikî, ji kerema xwe re van nîşaneyan bi baldarî bixwîne:"
       cooldown: Piştî livandin demek heye ku di wê navberê de tu yê nikaribe dîsa bilive
       disabled_account: Ajimêra te ya heyî dê paşê bi tevahî neyê bikaranîn. Lê belê, tu dikarî bigihîje derxistinê daneyan û hem jî ji nû ve çalakkirinê.
       followers: Ev çalakî dê hemî şopînerên ji ajimêra heyî bar bike ajimêra nû
@@ -1188,7 +1188,7 @@ ku:
   move_handler:
     carry_blocks_over_text: Ev bikarhêner ji %{acct}, ku te astengkirî bû, bar kir.
     carry_mutes_over_text: Ev bikarhêner ji %{acct}, ku te bê deng kirbû, bar kir.
-    copy_account_note_text: 'Ev bikarhêner ji %{acct} livî ye, li vir nîşeyên te yên berê ku te di derbarê wî/ê de nivîsandiye:'
+    copy_account_note_text: "Ev bikarhêner ji %{acct} livî ye, li vir nîşeyên te yên berê ku te di derbarê wî/ê de nivîsandiye:"
   navigation:
     toggle_menu: Menuyê biguherîne
   notification_mailer:
@@ -1198,7 +1198,7 @@ ku:
       sign_up:
         subject: "%{name} tomar bû"
     favourite:
-      body: 'Şandiya te hate bijartin ji alî %{name} ve:'
+      body: "Şandiya te hate bijartin ji alî %{name} ve:"
       subject: "%{name} şandiya te hez kir"
       title: Bijarteyek nû
     follow:
@@ -1212,13 +1212,13 @@ ku:
       title: Daxwazeke şopandinê ya nû
     mention:
       action: Bersivê bide
-      body: 'Tu hatiyî qalkirin ji aliyê %{name}:'
+      body: "Tu hatiyî qalkirin ji aliyê %{name}:"
       subject: Tu hatiye qalkirin ji aliyê %{name}
       title: Qalkirina nû
     poll:
       subject: Rapirsî ji hêla %{name} ve qediya
     reblog:
-      body: 'Şandiye te hate bilindkirin ji hêla %{name} ve:'
+      body: "Şandiye te hate bilindkirin ji hêla %{name} ve:"
       subject: "%{name} şandiya te bilind kir"
       title: Bilindkirinên nû
     status:
@@ -1226,7 +1226,7 @@ ku:
     update:
       subject: "%{name} şandiyek guhert"
   notifications:
-    email_events_hint: 'Bûyera ku tu dixwazî agahdariyan jê wergerî hilbijêre:'
+    email_events_hint: "Bûyera ku tu dixwazî agahdariyan jê wergerî hilbijêre:"
   number:
     human:
       decimal_units:
@@ -1242,7 +1242,7 @@ ku:
     description_html: Ku tu<strong>bi piştrastkirina du-gavî re</strong> sepana piştrastkirinê çalak bikî, ji bo têketinê pêdivî heye ku telefona te li ba te be, ji bona têketinê te ra nîşaneyan çê bike.
     enable: Çalak bike
     instructions_html: "<strong>Vê kodê QR kontrol bike bi riya Google Authenticator an jî sepanekeTOTP li ser têlefona xwe </strong>. Ji niha û pê ve, ew sepan dê nîşanên ku divê tu binivîsîne dema têketinê de biafirîne."
-    manual_instructions: 'Ku tu nikarî bî koda QR venêrî û pêwîst be bi dest bikevî, ev nivîsê hêsan ê veşartî:'
+    manual_instructions: "Ku tu nikarî bî koda QR venêrî û pêwîst be bi dest bikevî, ev nivîsê hêsan ê veşartî:"
     setup: Saz bike
     wrong_code: Koda têketinê betal e! Dema rajekarê û dema amûrê raste?
   pagination:
@@ -1295,10 +1295,10 @@ ku:
     errors:
       invalid_rules: rêbazên derbasdar nîşan nadê
   rss:
-    content_warning: 'Hişyariya naverokê:'
+    content_warning: "Hişyariya naverokê:"
     descriptions:
       account: Şandiyên gelemperî ji @%{acct}
-      tag: 'Şandiyên gelemperî yên nîşankirî #%{hashtag}'
+      tag: "Şandiyên gelemperî yên nîşankirî #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Te sînorê %{limit} şandiyên demsazkirî yên ji bo îro derbas kir
     over_total_limit: Te sînorê %{limit} şandiyên demsazkirî derbas kir
@@ -1369,7 +1369,7 @@ ku:
       audio:
         one: "%{count} deng"
         other: "%{count} deng"
-      description: 'Pêvek: %{attached}'
+      description: "Pêvek: %{attached}"
       image:
         one: "%{count} wêne"
         other: "%{count} wêne"
@@ -1377,11 +1377,11 @@ ku:
         one: "%{count} vîdyo"
         other: "%{count} vîdyo"
     boosted_from_html: Bilindkirî ji alî %{acct_link} ve
-    content_warning: 'Hişyariya naverokê: %{warning}'
+    content_warning: "Hişyariya naverokê: %{warning}"
     default_language: Wekî zimanê navrûya bikarhêneriyê
     disallowed_hashtags:
-      one: 'hashtagek bê maf tê de hebû: %{tags}'
-      other: 'hashtagek bê maf tê de hebû: %{tags}'
+      one: "hashtagek bê maf tê de hebû: %{tags}"
+      other: "hashtagek bê maf tê de hebû: %{tags}"
     edited_at_html: Di %{date} de hate serrastkirin
     errors:
       in_reply_not_found: Ew şandiya ku tu dikî nakî bersivê bide xuya nake an jî hatiye jêbirin.
@@ -1414,14 +1414,14 @@ ku:
     keep_self_fav: Şandiyên ku te eciband veşêre
     keep_self_fav_hint: Ger te şandiyên xwe ecibandibe jê nabe
     min_age:
-      '1209600': 2 hefte
-      '15778476': 6 meh
-      '2629746': 1 meh
-      '31556952': 1 sal
-      '5259492': 2 meh
-      '604800': 1 hefte
-      '63113904': 2 sal
-      '7889238': 3 meh
+      "1209600": 2 hefte
+      "15778476": 6 meh
+      "2629746": 1 meh
+      "31556952": 1 sal
+      "5259492": 2 meh
+      "604800": 1 hefte
+      "63113904": 2 sal
+      "7889238": 3 meh
     min_age_label: Şêmûga demê
     min_favs: Peyamên ku ji wê zêdetir hatine ecibandin veşêre
     min_reblogs: Şandiyên ku bêtir hatine bilindkirin veşêre
@@ -1467,7 +1467,7 @@ ku:
       title: Pakêtkirina arşîvan
     suspicious_sign_in:
       change_password: borînpeyva xwe biguherîne
-      details: 'Li vir hûrgiliyên hewldanên têketinê hene:'
+      details: "Li vir hûrgiliyên hewldanên têketinê hene:"
       explanation: Me têketineke nû ji ajimêra te ji navnîşaneke IP ya nû dît.
       further_actions_html: Ku ev ne tu ye, em pêşniyar dikin ku tu di tavilê de %{action} û piştrastkirina du-gavî çalak bikî da ku ajimêra te di ewlehiyê de bimîne.
       subject: Ajimêra te ji navnîşaneke IP ya nû ve hatiye gihîştin
@@ -1485,8 +1485,8 @@ ku:
         sensitive: Ji niha û pê ve, hemû pelên te yên medyayê yên hatine barkirin wê li piştî hişyariyek wekî hestyar û veşartî bêne nîşankirin.
         silence: Tu hîn jî dikarî ajimêra xwe bi kar bînî lê tenê kesên ku jixwe te dişopînin wê şandiyên te li ser vê rajekarê bibînin, û dibe ku tu ji cûrbecûr taybetmendiyên vedîtinê werî bi dûrxistin. Lêbelê, yên din hîn jî dikarin bi destan te bişopînin.
         suspend: Tu êdî nikarî têkevî ajimêra xwe, û profîla te û daneyên din êdî nayên gihîştin. Dîsa jî tu dikarî têkevî da ku hilanîna daneyên xwe daxwaz bikî heya ku dane bi tevahî werin rakirin di hundirê 30 roj de, lê em ê hin daneyan biparêzin da ku tu ji rawestandinê rizgar bikî.
-      reason: 'Sedem:'
-      statuses: 'Şandiyên binavkirî:'
+      reason: "Sedem:"
+      statuses: "Şandiyên binavkirî:"
       subject:
         delete_statuses: Şandiyên te yên li ser %{acct} hatin rakirin
         disable: Ajimêra te a %{acct} hat qerisandin
@@ -1511,7 +1511,7 @@ ku:
     follow_limit_reached: Tu nikarî zêdetirî %{limit} kesan bişopînî
     invalid_otp_token: Koda du-gavî ya nelê
     otp_lost_help_html: Ku te gihîştina herduyan ji dest da, dibe ku tu bi %{email} re têkilî deyne
-    signed_in_as: 'Têketin wekî:'
+    signed_in_as: "Têketin wekî:"
   verification:
     verification: Piştrastkirin
   webauthn_credentials:

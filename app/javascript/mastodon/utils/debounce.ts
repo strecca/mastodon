@@ -1,6 +1,6 @@
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 
-import type { AppDispatch } from 'mastodon/store';
+import type { AppDispatch } from "mastodon/store";
 
 export const debounceWithDispatchAndArguments = <T>(
   fn: (dispatch: AppDispatch, ...args: T[]) => void,

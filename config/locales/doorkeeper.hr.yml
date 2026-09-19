@@ -48,7 +48,7 @@ hr:
         application_id: Ključ klijenta
         callback_urls: URL-ovi povratnih poziva
         secret: Tajna klijenta
-        title: 'Aplikacija: %{name}'
+        title: "Aplikacija: %{name}"
     authorizations:
       buttons:
         authorize: Odobri

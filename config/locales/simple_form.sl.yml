@@ -7,7 +7,7 @@ sl:
         display_name: Vaše polno ime ali lažno ime.
         fields: Vaša domača stran, starost, kar koli.
         indexable: Vaše javne objave se lahko pojavijo v rezultatih iskanja na Mastodonu. Ljudje, ki so bili v interakciji z vašimi objavami, jih bodo lahko iskali ne glede na to.
-        note: 'Druge osebe lahko @omenite ali #ključnite.'
+        note: "Druge osebe lahko @omenite ali #ključnite."
         show_collections: Ljudje bodo lahko brskali po vaših sledilcih in sledenih. Ljudje, ki jim sledite, bodo videli, da jim sledite ne glede na to.
         unlocked: Ljudje vam bodo lahko sledili, ne da bi zahtevali odobritev. Ne potrdite, če želite pregledati prošnje za sledenje in izbrati, ali želite nove sledilce sprejeti ali zavrniti.
       account_alias:
@@ -67,7 +67,7 @@ sl:
         domain: To je lahko ime domene, ki se pokaže v e-poštnem naslovu, ali zapis MX, ki ga uporablja. Ob prijavi bo preverjeno.
         with_dns_records: Poskus razrešitve zapisov DNS danih domen bo izveden in rezultati bodo prav tako blokirani
       featured_tag:
-        name: 'Tukaj je nekaj ključnikov, ki ste jih nedavno uporabili:'
+        name: "Tukaj je nekaj ključnikov, ki ste jih nedavno uporabili:"
       filters:
         action: Izberite, kako naj se program vede, ko se objava sklada s filtrom
         actions:
@@ -117,7 +117,7 @@ sl:
         hint: Neobvezno. Vnesite dodatne podrobnosti o pravilu
         text: Opišite pravilo ali zahtevo za uporabnike na tem strežniku. Poskusite biti kratki in jasni
       sessions:
-        otp: 'Vnesite dvomestno kodo, ki je ustvarjena z aplikacijo na telefonu, ali uporabite eno od vaših obnovitvenih kod:'
+        otp: "Vnesite dvomestno kodo, ki je ustvarjena z aplikacijo na telefonu, ali uporabite eno od vaših obnovitvenih kod:"
         webauthn: Če gre za ključek USB, ga ne pozabite vstaviti in, če je potrebno, tapniti.
       settings:
         indexable: Stran vašega profila se lahko pojavi med zadetki iskanja iskalnikov Google, Bing idr.
@@ -362,7 +362,7 @@ sl:
         events: Omogočeni dogodki
         template: Predloga obremenitev
         url: URL končne točke
-    'no': Ne
+    "no": Ne
     not_recommended: Ni priporočeno
     overridden: Preglašeno
     recommended: Priporočeno
@@ -372,4 +372,4 @@ sl:
     title:
       sessions:
         webauthn: Za prijavo uporabite eno od svojih varnostnih kod
-    'yes': Da
+    "yes": Da

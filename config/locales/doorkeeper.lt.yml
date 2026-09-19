@@ -52,7 +52,7 @@ lt:
         callback_urls: Atgalinių URL
         scopes: Aprėptys
         secret: Kliento programos paslaptis
-        title: 'Programa: %{name}'
+        title: "Programa: %{name}"
     authorizations:
       buttons:
         authorize: Leisti
@@ -86,7 +86,7 @@ lt:
         invalid_grant: Pateiktas leidimo suteikimas yra netinkamas, nebegaliojantis, panaikintas, neatitinka leidimo užklausoje naudoto nukreipimo URI arba buvo išduotas kitam kliento programui.
         invalid_redirect_uri: Įtrauktas nukreipimo URI netinkamas.
         invalid_request:
-          missing_param: 'Trūksta privalomo parametro: %{value}.'
+          missing_param: "Trūksta privalomo parametro: %{value}."
           request_not_authorized: Užklausą reikia leisti. Trūksta privalomo parametro užklausai leisti arba jis netinkamas.
           unknown: Užklausai trūksta privalomo parametro, įtraukta nepalaikoma parametro reikšmė arba ji yra kitaip netaisyklingas.
         invalid_resource_owner: Pateikti išteklių savininko kredencialai yra netinkami arba išteklių savininko negalima surasti.

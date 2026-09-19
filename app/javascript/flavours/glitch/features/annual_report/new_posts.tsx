@@ -1,8 +1,8 @@
-import { FormattedNumber, FormattedMessage } from 'react-intl';
+import { FormattedNumber, FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 export const NewPosts: React.FC<{
   count: number;
@@ -15,8 +15,8 @@ export const NewPosts: React.FC<{
 
       <div className={styles.title}>
         <FormattedMessage
-          id='annual_report.summary.new_posts.new_posts'
-          defaultMessage='{count, plural, one {new post} other {new posts}}'
+          id="annual_report.summary.new_posts.new_posts"
+          defaultMessage="{count, plural, one {new post} other {new posts}}"
           values={{ count }}
         />
       </div>

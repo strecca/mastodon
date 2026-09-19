@@ -1,7 +1,7 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 
-export const openNavigation = createAction('navigation/open');
+export const openNavigation = createAction("navigation/open");
 
-export const closeNavigation = createAction('navigation/close');
+export const closeNavigation = createAction("navigation/close");
 
-export const toggleNavigation = createAction('navigation/toggle');
+export const toggleNavigation = createAction("navigation/toggle");

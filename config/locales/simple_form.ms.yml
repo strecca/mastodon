@@ -6,7 +6,7 @@ ms:
         display_name: Nama penuh anda atau nama anda yang menyeronokkan.
         fields: Halaman utama anda, kata ganti nama, umur, apa sahaja yang anda mahukan.
         indexable: Kiriman awam anda mungkin muncul dalam hasil carian di Mastodon. Orang yang telah berinteraksi dengan kiriman anda mungkin boleh mencarinya.
-        note: 'Anda boleh @menyebut orang lain atau #hashtags.'
+        note: "Anda boleh @menyebut orang lain atau #hashtags."
         show_collections: Orang akan dapat menyemak imbas ikutan dan pengikut anda. Orang yang anda ikuti akan melihat bahawa anda tetap mengikuti mereka.
       account_alias:
         acct: Tentukan namapengguna@domain akaun yang ingin anda alihkan daripada
@@ -62,7 +62,7 @@ ms:
         domain: Ini boleh menjadi nama domain yang dipaparkan dalam alamat e-mel atau rekod MX yang digunakannya. Mereka akan diperiksa semasa mendaftar.
         with_dns_records: Percubaan untuk menyelesaikan rekod DNS domain yang diberikan akan dibuat dan hasilnya juga akan disekat
       featured_tag:
-        name: 'Berikut ialah beberapa hashtag yang paling anda gunakan baru-baru ini:'
+        name: "Berikut ialah beberapa hashtag yang paling anda gunakan baru-baru ini:"
       filters:
         actions:
           hide: Sembunyikan sepenuhnya kandungan yang ditapis, berkelakuan seolah-olah ia tidak wujud
@@ -105,7 +105,7 @@ ms:
       rule:
         text: Terangkan peraturan atau keperluan untuk pengguna pada server ini. Cuba pastikan ia pendek dan ringkas
       sessions:
-        otp: 'Masukkan kod dua faktor yang dijana oleh apl telefon anda atau gunakan salah satu kod pemulihan anda:'
+        otp: "Masukkan kod dua faktor yang dijana oleh apl telefon anda atau gunakan salah satu kod pemulihan anda:"
         webauthn: Jika ia adalah kunci USB, pastikan anda memasukkannya dan, jika perlu, ketiknya.
       settings:
         indexable: Halaman profil anda mungkin muncul dalam hasil carian di Google, Bing dan lain-lain.
@@ -300,7 +300,7 @@ ms:
         events: Acara yang didayakan
         template: Templat muatan
         url: URL titik akhir
-    'no': Tidak
+    "no": Tidak
     not_recommended: Tidak disyorkan
     overridden: Ditindih
     recommended: Disyorkan
@@ -310,4 +310,4 @@ ms:
     title:
       sessions:
         webauthn: Gunakan salah satu kunci keselamatan anda untuk log masuk
-    'yes': Ya
+    "yes": Ya

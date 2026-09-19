@@ -52,7 +52,7 @@ ms:
         callback_urls: URLs Callback
         scopes: Skop
         secret: Rahsia klien
-        title: 'Aplikasi: %{name}'
+        title: "Aplikasi: %{name}"
     authorizations:
       buttons:
         authorize: Benarkan
@@ -85,7 +85,7 @@ ms:
         invalid_grant: Pemberian kebenaran yang diberikan adalah tidak sah, tamat tempoh, dibatalkan, tidak sepadan dengan URI pengalihan yang digunakan dalam permintaan kebenaran atau telah dikeluarkan kepada klien lain.
         invalid_redirect_uri: Uri ubah hala yang disertakan tidak sah.
         invalid_request:
-          missing_param: 'Parameter yang diperlukan hilang: %{value}.'
+          missing_param: "Parameter yang diperlukan hilang: %{value}."
           request_not_authorized: Permintaan perlu dibenarkan. Parameter yang diperlukan untuk membenarkan permintaan tiada atau tidak sah.
           unknown: Permintaan itu tidak mempunyai parameter yang diperlukan, termasuk nilai parameter yang tidak disokong, atau sebaliknya salah bentuk.
         invalid_resource_owner: Bukti kelayakan pemilik sumber yang diberikan tidak sah atau pemilik sumber tidak dapat ditemui

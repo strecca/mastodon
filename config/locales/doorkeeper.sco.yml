@@ -52,7 +52,7 @@ sco:
         callback_urls: Cawback URLs
         scopes: Scopes
         secret: Client secret
-        title: 'Application: %{name}'
+        title: "Application: %{name}"
     authorizations:
       buttons:
         authorize: Authorize
@@ -85,7 +85,7 @@ sco:
         invalid_grant: The provided authorization grant isnae valid, expirit, revokt, disnae match the redirection URI uised in the authorization request, or wis issued tae anither client.
         invalid_redirect_uri: The redirect uri includit isnae valid.
         invalid_request:
-          missing_param: 'Missing requirit parameter: %{value}.'
+          missing_param: "Missing requirit parameter: %{value}."
           request_not_authorized: Request need fir tae be authorized. Requirit parameter fir authorizin request is missin or invalid.
           unknown: The request is missin a requirit parameter, includes a unsupportit parameter value, or is itherwise malformt.
         invalid_resource_owner: The providit resoorce ainer credentials urnae valid, or resoorce ainer cannae be fun

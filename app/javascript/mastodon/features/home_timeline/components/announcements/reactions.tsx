@@ -1,34 +1,31 @@
-import { useCallback, useMemo } from 'react';
-import type { FC, HTMLAttributes } from 'react';
+import { useCallback, useMemo } from "react";
+import type { FC, HTMLAttributes } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { AnimatedProps } from '@react-spring/web';
-import { animated, useTransition } from '@react-spring/web';
+import type { AnimatedProps } from "@react-spring/web";
+import { animated, useTransition } from "@react-spring/web";
 
-import { addReaction, removeReaction } from '@/mastodon/actions/announcements';
-import type { ApiAnnouncementReactionJSON } from '@/mastodon/api_types/announcements';
-import { AnimatedNumber } from '@/mastodon/components/animated_number';
-import { Emoji } from '@/mastodon/components/emoji';
-import { Icon } from '@/mastodon/components/icon';
-import EmojiPickerDropdown from '@/mastodon/features/compose/containers/emoji_picker_dropdown_container';
-import { isUnicodeEmoji } from '@/mastodon/features/emoji/utils';
-import { useAppDispatch } from '@/mastodon/store';
-import AddIcon from '@/material-icons/400-24px/add.svg?react';
+import { addReaction, removeReaction } from "@/mastodon/actions/announcements";
+import type { ApiAnnouncementReactionJSON } from "@/mastodon/api_types/announcements";
+import { AnimatedNumber } from "@/mastodon/components/animated_number";
+import { Emoji } from "@/mastodon/components/emoji";
+import { Icon } from "@/mastodon/components/icon";
+import EmojiPickerDropdown from "@/mastodon/features/compose/containers/emoji_picker_dropdown_container";
+import { isUnicodeEmoji } from "@/mastodon/features/emoji/utils";
+import { useAppDispatch } from "@/mastodon/store";
+import AddIcon from "@/material-icons/400-24px/add.svg?react";
 
 export const ReactionsBar: FC<{
   reactions: ApiAnnouncementReactionJSON[];
   id: string;
 }> = ({ reactions, id }) => {
-  const visibleReactions = useMemo(
-    () => reactions.filter((x) => x.count > 0),
-    [reactions],
-  );
+  const visibleReactions = useMemo(() => reactions.filter((x) => x.count > 0), [reactions]);
 
   const dispatch = useAppDispatch();
   const handleEmojiPick = useCallback(
     (emoji: { native: string }) => {
-      dispatch(addReaction(id, emoji.native.replaceAll(/:/g, '')));
+      dispatch(addReaction(id, emoji.native.replaceAll(/:/g, "")));
     },
     [dispatch, id],
   );
@@ -48,8 +45,8 @@ export const ReactionsBar: FC<{
 
   return (
     <div
-      className={classNames('reactions-bar', {
-        'reactions-bar--empty': visibleReactions.length === 0,
+      className={classNames("reactions-bar", {
+        "reactions-bar--empty": visibleReactions.length === 0,
       })}
     >
       {transitions(({ scale }, reaction) => (
@@ -64,7 +61,7 @@ export const ReactionsBar: FC<{
       {visibleReactions.length < 8 && (
         <EmojiPickerDropdown
           onPickEmoji={handleEmojiPick}
-          button={<Icon id='plus' icon={AddIcon} />}
+          button={<Icon id="plus" icon={AddIcon} />}
         />
       )}
     </div>
@@ -74,7 +71,7 @@ export const ReactionsBar: FC<{
 const Reaction: FC<{
   reaction: ApiAnnouncementReactionJSON;
   id: string;
-  style: AnimatedProps<HTMLAttributes<HTMLButtonElement>>['style'];
+  style: AnimatedProps<HTMLAttributes<HTMLButtonElement>>["style"];
 }> = ({ id, reaction, style }) => {
   const dispatch = useAppDispatch();
   const handleClick = useCallback(() => {
@@ -85,22 +82,20 @@ const Reaction: FC<{
     }
   }, [dispatch, id, reaction.me, reaction.name]);
 
-  const code = isUnicodeEmoji(reaction.name)
-    ? reaction.name
-    : `:${reaction.name}:`;
+  const code = isUnicodeEmoji(reaction.name) ? reaction.name : `:${reaction.name}:`;
 
   return (
     <animated.button
-      className={classNames('reactions-bar__item', {
+      className={classNames("reactions-bar__item", {
         active: reaction.me,
       })}
       onClick={handleClick}
       style={style}
     >
-      <span className='reactions-bar__item__emoji'>
+      <span className="reactions-bar__item__emoji">
         <Emoji code={code} />
       </span>
-      <span className='reactions-bar__item__count'>
+      <span className="reactions-bar__item__count">
         <AnimatedNumber value={reaction.count} />
       </span>
     </animated.button>

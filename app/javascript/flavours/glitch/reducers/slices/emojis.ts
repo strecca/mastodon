@@ -1,21 +1,21 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import type { Locale } from 'emojibase';
+import type { Locale } from "emojibase";
 
-import type { ApiCustomEmojiJSON } from '@/flavours/glitch/api_types/custom_emoji';
-import { toSupportedLocale } from '@/flavours/glitch/features/emoji/locale';
-import { createAsyncThunk } from '@/flavours/glitch/store/typed_functions';
+import type { ApiCustomEmojiJSON } from "@/flavours/glitch/api_types/custom_emoji";
+import { toSupportedLocale } from "@/flavours/glitch/features/emoji/locale";
+import { createAsyncThunk } from "@/flavours/glitch/store/typed_functions";
 
 interface EmojisState {
-  custom: Record<string, Pick<ApiCustomEmojiJSON, 'url' | 'static_url'>>;
+  custom: Record<string, Pick<ApiCustomEmojiJSON, "url" | "static_url">>;
   customCategories: Record<string, string[]>; // { name: shortcodes[] }
   customLoaded: boolean;
   localesLoaded: Locale[];
 }
 
 const emojisSlice = createSlice({
-  name: 'emojis',
+  name: "emojis",
   initialState: {
     custom: {},
     customCategories: {},
@@ -64,8 +64,7 @@ export const { loadLocale } = emojisSlice.actions;
 export const loadCustomEmojis = createAsyncThunk(
   `${emojisSlice.name}/loadCustomEmojis`,
   async () => {
-    const { loadAllCustomEmoji } =
-      await import('@/flavours/glitch/features/emoji/database');
+    const { loadAllCustomEmoji } = await import("@/flavours/glitch/features/emoji/database");
     return loadAllCustomEmoji();
   },
 );

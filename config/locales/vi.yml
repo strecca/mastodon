@@ -1,7 +1,7 @@
 ---
 vi:
   about:
-    about_mastodon_html: 'Mạng xã hội của tương lai: Không quảng cáo, không bán thông tin người dùng và phi tập trung! Làm chủ dữ liệu của bạn với Mastodon!'
+    about_mastodon_html: "Mạng xã hội của tương lai: Không quảng cáo, không bán thông tin người dùng và phi tập trung! Làm chủ dữ liệu của bạn với Mastodon!"
     contact_missing: Chưa thiết lập
     contact_unavailable: N/A
     default_thumbnail_description: Hai chú voi ma mút hoạt hình đang mỉm cười và tung một chiếc máy bay giấy cho nhau. Chúng được bao quanh bởi bầu trời xanh tươi sáng và những hành tinh trôi nổi với cây cối và nhiều voi ma mút khác trên đó.
@@ -330,7 +330,7 @@ vi:
         title: Tạo thông báo mới
       preview:
         disclaimer: Vì người dùng không thể chọn không nhận thông báo qua email nên thông báo qua email chỉ nên giới hạn ở những thông báo quan trọng như thông báo vi phạm dữ liệu cá nhân hoặc thông báo đóng máy chủ.
-        explanation_html: 'Gửi email tới <strong>%{display_count} thành viên</strong>. Nội dung sau đây sẽ được đưa vào email:'
+        explanation_html: "Gửi email tới <strong>%{display_count} thành viên</strong>. Nội dung sau đây sẽ được đưa vào email:"
         title: Xem trước thông báo sẽ gửi
       publish: Đăng
       published_msg: Truyền đi thông báo thành công!
@@ -345,7 +345,7 @@ vi:
       back_to_account: Quay lại trang tài khoản
       back_to_report: Quay lại trang báo cáo
       batch:
-        add_to_report: 'Thêm vào báo cáo #%{id}'
+        add_to_report: "Thêm vào báo cáo #%{id}"
         remove_from_report: Xóa khỏi báo cáo
         report: Báo cáo
       collection_title: Gói khởi đầu bởi %{name}
@@ -574,10 +574,10 @@ vi:
       import:
         description_html: Bạn sắp nhập danh sách các tên miền chặn. Vui lòng xem lại danh sách này thật cẩn thận, đặc biệt nếu bạn không phải là tác giả của danh sách này.
         existing_relationships_warning: Các mối quan hệ theo dõi hiện tại
-        private_comment_description_html: 'Để giúp bạn theo dõi nguồn gốc của các chặn tên miền đã nhập, các tên miền chặn đã nhập sẽ được tạo bằng nhận xét riêng tư sau: <q>%{comment}</q>'
+        private_comment_description_html: "Để giúp bạn theo dõi nguồn gốc của các chặn tên miền đã nhập, các tên miền chặn đã nhập sẽ được tạo bằng nhận xét riêng tư sau: <q>%{comment}</q>"
         private_comment_template: Nhập từ %{source} vào %{date}
         title: Nhập máy chủ chặn
-      invalid_domain_block: 'Một hoặc nhiều tên miền đã bị bỏ qua do (các) lỗi sau: %{error}'
+      invalid_domain_block: "Một hoặc nhiều tên miền đã bị bỏ qua do (các) lỗi sau: %{error}"
       new:
         title: Nhập máy chủ chặn
       no_file: Không có tệp nào được chọn
@@ -708,12 +708,12 @@ vi:
       created_msg: Đã chặn IP thành công
       delete: Bỏ chặn
       expires_in:
-        '1209600': 2 tuần
-        '15778476': 6 tháng
-        '2629746': 1 tháng
-        '31556952': 1 năm
-        '86400': 1 ngày
-        '94670856': 3 năm
+        "1209600": 2 tuần
+        "15778476": 6 tháng
+        "2629746": 1 tháng
+        "31556952": 1 năm
+        "86400": 1 ngày
+        "94670856": 3 năm
       new:
         title: Chặn một IP mới
       no_ip_block_selected: Bạn chưa chọn bất kỳ IP nào
@@ -789,11 +789,11 @@ vi:
         placeholder: Mô tả vi phạm của người này, hướng xử lý và những cập nhật liên quan khác...
         title: Lưu ý
       notes_description_html: Xem và để lại lưu ý cho các kiểm duyệt viên khác
-      processed_msg: 'Báo cáo #%{id} đã được xử lý thành công'
-      quick_actions_description_html: 'Kiểm duyệt nhanh hoặc kéo xuống để xem nội dung bị báo cáo:'
+      processed_msg: "Báo cáo #%{id} đã được xử lý thành công"
+      quick_actions_description_html: "Kiểm duyệt nhanh hoặc kéo xuống để xem nội dung bị báo cáo:"
       remote_user_placeholder: người ở %{instance}
       reopen: Mở lại báo cáo
-      report: 'Báo cáo #%{id}'
+      report: "Báo cáo #%{id}"
       reported_account: Tài khoản bị báo cáo
       reported_by: Báo cáo bởi
       reported_content: Nội dung bị báo cáo
@@ -806,16 +806,16 @@ vi:
       statuses_description_html: Lý do tài khoản hoặc nội dung này bị báo cáo sẽ được trích dẫn khi giao tiếp với họ
       summary:
         action_preambles:
-          delete_html: 'Bạn sắp <strong>xóa</strong> vài tút của <strong>@%{acct}</strong>. Việc này sẽ:'
-          mark_as_sensitive_html: 'Bạn sắp <strong>đánh dấu</strong> vài tút của <strong>@%{acct}</strong> là <strong>nhạy cảm</strong>. Việc này sẽ:'
-          silence_html: 'Bạn sắp <strong>hạn chế</strong> <strong>@%{acct}</strong>. Việc này sẽ:'
-          suspend_html: 'Bạn sắp <strong>vô hiệu hóa</strong> <strong>@%{acct}</strong>. Việc này sẽ:'
+          delete_html: "Bạn sắp <strong>xóa</strong> vài tút của <strong>@%{acct}</strong>. Việc này sẽ:"
+          mark_as_sensitive_html: "Bạn sắp <strong>đánh dấu</strong> vài tút của <strong>@%{acct}</strong> là <strong>nhạy cảm</strong>. Việc này sẽ:"
+          silence_html: "Bạn sắp <strong>hạn chế</strong> <strong>@%{acct}</strong>. Việc này sẽ:"
+          suspend_html: "Bạn sắp <strong>vô hiệu hóa</strong> <strong>@%{acct}</strong>. Việc này sẽ:"
         actions:
           delete_html: Xóa các tút vi phạm
           mark_as_sensitive_html: Đánh dấu media trong tút vi phạm là nhạy cảm
           silence_html: Hạn chế mức ảnh hưởng của <strong>@%{acct}</strong> bằng cách làm cho trang và nội dung của họ chỉ hiển thị với những người đã theo dõi họ hoặc tìm kiếm theo cách thủ công
           suspend_html: Vô hiệu hóa <strong>@%{acct}</strong>, làm cho trang và nội dung của họ không thể truy cập và không thể tương tác
-        close_report: 'Đánh dấu báo cáo #%{id} đã xử lý xong'
+        close_report: "Đánh dấu báo cáo #%{id} đã xử lý xong"
         close_reports_html: Đánh dấu <strong>tất cả</strong> báo cáo chống lại <strong>@%{acct}</strong> đã xử lý xong
         delete_data_html: Xóa trang <strong>@%{acct}</strong> và nội dung 30 ngày kể từ bây giờ trừ khi bỏ vô hiệu hóa
         preview_preamble_html: "<strong>@%{acct}</strong> sẽ nhận được cảnh báo với nội dung như sau:"
@@ -825,7 +825,7 @@ vi:
       target_origin: Nguồn báo cáo
       title: Báo cáo
       unassign: Bỏ qua
-      unknown_action_msg: 'Hành động chưa biết: %{action}'
+      unknown_action_msg: "Hành động chưa biết: %{action}"
       unresolved: Chờ xử lý
       updated_at: Cập nhật lúc
       view_profile: Xem trang
@@ -916,7 +916,7 @@ vi:
         rules_hint: Có một khu vực dành riêng cho các nội quy mà người tham gia máy chủ của bạn phải tuân thủ.
         title: Giới thiệu
       allow_referrer_origin:
-        desc: 'Khi người dùng của bạn nhấn vào liên kết đến các trang web bên ngoài, trình duyệt của họ có thể gửi địa chỉ máy chủ Mastodon của bạn làm người giới thiệu. Tắt tùy chọn này nếu điều này sẽ xác định duy nhất người dùng của bạn, ví dụ: nếu đây là máy chủ Mastodon cá nhân.'
+        desc: "Khi người dùng của bạn nhấn vào liên kết đến các trang web bên ngoài, trình duyệt của họ có thể gửi địa chỉ máy chủ Mastodon của bạn làm người giới thiệu. Tắt tùy chọn này nếu điều này sẽ xác định duy nhất người dùng của bạn, ví dụ: nếu đây là máy chủ Mastodon cá nhân."
         title: Cho phép các trang web bên ngoài xem máy chủ Mastodon của bạn như một nguồn lưu lượng truy cập
       appearance:
         preamble: Tùy chỉnh giao diện web của Mastodon.
@@ -1002,7 +1002,7 @@ vi:
       back_to_account: Quay lại trang tài khoản
       back_to_report: Quay lại trang báo cáo
       batch:
-        add_to_report: 'Thêm vào báo cáo #%{id}'
+        add_to_report: "Thêm vào báo cáo #%{id}"
         remove_from_report: Xóa khỏi báo cáo
         report: Báo cáo
       contents: Nội dung
@@ -1063,7 +1063,7 @@ vi:
       elasticsearch_running_check:
         message_html: Không thể kết nối Elasticsearch. Hãy kiểm tra xem nó có đang chạy, hay tìm kiếm full-text bị tắt
       elasticsearch_version_check:
-        message_html: 'Phiên bản Elasticsearch không tương thích: %{value}'
+        message_html: "Phiên bản Elasticsearch không tương thích: %{value}"
         version_comparison: Đang dùng Elasticsearch %{running_version} trong khi bắt buộc phải có %{required_version}
       rules_check:
         action: Sửa nội quy máy chủ
@@ -1125,7 +1125,7 @@ vi:
       notified_on_html: Đã thông báo tới thành viên vào %{date}
       notify_users: Thông báo tới thành viên
       preview:
-        explanation_html: 'Gửi email tới <strong>%{display_count} thành viên</strong> đã đăng ký trước %{date}. Nội dung sau đây sẽ được đưa vào email:'
+        explanation_html: "Gửi email tới <strong>%{display_count} thành viên</strong> đã đăng ký trước %{date}. Nội dung sau đây sẽ được đưa vào email:"
         send_preview: Gửi bản xem thử tới %{email}
         send_to_all:
           other: Gửi tới %{display_count} email
@@ -1199,7 +1199,7 @@ vi:
         peaked_on_and_decaying: Đỉnh điểm %{date}, giờ đang giảm
         title: Xu hướng hashtag
         trendable: Cho phép lên xu hướng
-        trending_rank: 'Xu hướng #%{rank}'
+        trending_rank: "Xu hướng #%{rank}"
         usable: Có thể dùng
         usage_comparison: Dùng %{today} lần hôm nay, so với %{yesterday} hôm qua
         used_by_over_week:
@@ -1281,7 +1281,7 @@ vi:
       body: Phiên bản Mastodon mới đã được phát hành, bạn nên cập nhật!
       subject: Các bản cập nhật mới của Mastodon cho %{instance}!
     new_trends:
-      body: 'Các mục sau đây cần được xem xét trước khi chúng hiển thị công khai:'
+      body: "Các mục sau đây cần được xem xét trước khi chúng hiển thị công khai:"
       new_trending_links:
         title: Xu hướng tin tức
       new_trending_statuses:
@@ -1311,7 +1311,7 @@ vi:
     notification_preferences: Thay đổi thiết lập email
     salutation: "%{name},"
     unsubscribe: Hủy đăng ký
-    view: 'Chi tiết:'
+    view: "Chi tiết:"
     view_profile: Xem trang hồ sơ
     view_status: Xem tút
   applications:
@@ -1372,7 +1372,7 @@ vi:
     rules:
       accept: Chấp nhận
       back: Quay lại
-      invited_by: 'Bạn có thể tham gia %{domain} với thư mời từ:'
+      invited_by: "Bạn có thể tham gia %{domain} với thư mời từ:"
       preamble: Được ban hành và áp dụng bởi quản trị máy chủ %{domain}.
       preamble_invited: Trước khi tiếp tục, hãy đọc nội quy của %{domain}.
       read_more: Đọc tiếp
@@ -1408,7 +1408,7 @@ vi:
   author_attribution:
     example_title: Văn bản mẫu
     hint_html: Bạn là nhà báo hoặc blogger? Kiểm soát cách ghi nhận bài viết của bạn khi chúng được chia sẻ trên Mastodon.
-    instructions: 'Đặt mã này trong HTML bài viết:'
+    instructions: "Đặt mã này trong HTML bài viết:"
     more_from_html: Viết bởi %{name}
     s_blog: "%{name}'s Blog"
     then_instructions: Sau đó, thêm URL của báo/blog trong trường bên dưới.
@@ -1453,7 +1453,7 @@ vi:
     proceed: Xóa tài khoản
     success_msg: Tài khoản của bạn đã được xóa thành công
     warning:
-      before: 'Trước khi tiếp tục, xin vui lòng xem xét cẩn thận:'
+      before: "Trước khi tiếp tục, xin vui lòng xem xét cẩn thận:"
       caches: Nội dung đã lưu trữ trên các máy chủ khác có thể vẫn tồn tại
       data_removal: Bài viết của bạn và dữ liệu khác sẽ bị xóa vĩnh viễn
       email_change_html: Bạn có thể <a href="%{path}">đổi địa chỉ email</a> mà không cần phải xóa tài khoản
@@ -1479,7 +1479,7 @@ vi:
       description_html: Đây là những cảnh cáo và áp đặt kiểm duyệt đối với bạn bởi đội ngũ %{instance}.
       recipient: Người nhận
       reject_appeal: Từ chối khiếu nại
-      status: 'Tút #%{id}'
+      status: "Tút #%{id}"
       status_removed: Tút này đã được xóa khỏi hệ thống
       title: "%{action} từ %{date}"
       title_actions:
@@ -1537,19 +1537,19 @@ vi:
     native: Nguyên bản
     twemoji: Twemoji
   errors:
-    '400': Yêu cầu bạn gửi không hợp lệ hoặc sai hình thức.
-    '403': Bạn không có quyền xem trang này.
-    '404': Trang này chưa được tạo.
-    '406': Trang này không thể hiển thị do lỗi định dạng.
-    '410': Trang này đã bị xóa
-    '422':
+    "400": Yêu cầu bạn gửi không hợp lệ hoặc sai hình thức.
+    "403": Bạn không có quyền xem trang này.
+    "404": Trang này chưa được tạo.
+    "406": Trang này không thể hiển thị do lỗi định dạng.
+    "410": Trang này đã bị xóa
+    "422":
       content: Xác minh bảo mật thất bại. Bạn đang chặn cookie?
       title: Xác minh bảo mật thất bại
-    '429': Quá nhiều yêu cầu cùng lúc
-    '500':
+    "429": Quá nhiều yêu cầu cùng lúc
+    "500":
       content: Chúng tôi xin lỗi, nhưng đã xảy ra sự cố.
       title: Múi giờ trên thiết bị không đúng
-    '503': Trang không thể hiển thị do lỗi máy chủ tạm thời.
+    "503": Trang không thể hiển thị do lỗi máy chủ tạm thời.
     noscript_html: Để vào Mastodon bản web, vui lòng bật JavaScript. Ngoài ra, hãy thử dùng một <a href="%{apps_path}">ứng dụng lướt Mastodon</a> cho thiết bị của bạn.
   existing_username_validator:
     not_found: không có tên người dùng này trên máy chủ
@@ -1637,8 +1637,8 @@ vi:
     errors:
       empty: File CSV trống
       incompatible_type: Không tương thích với loại nhập đã chọn
-      invalid_csv_file: 'Tệp CSV không hợp lệ. Lỗi: %{error}'
-      invalid_json_file: 'Tệp JSON không hợp lệ. Lỗi: %{error}'
+      invalid_csv_file: "Tệp CSV không hợp lệ. Lỗi: %{error}"
+      invalid_json_file: "Tệp JSON không hợp lệ. Lỗi: %{error}"
       over_rows_processing_limit: chứa nhiều hơn %{count} hàng
       status_not_found_warning: Một số bộ lọc của bạn ẩn các tút cụ thể mà máy chủ này không biết đến. Những tút này sẽ không tự động bị lọc nếu máy chủ phát hiện ra chúng sau này.
       too_large: Tệp quá lớn
@@ -1714,16 +1714,16 @@ vi:
     delete: Vô hiệu hóa
     expired: Hết hạn
     expires_in:
-      '1800': 30 phút
-      '21600': 6 giờ
-      '3600': 1 giờ
-      '43200': 12 giờ
-      '604800': 1 tuần
-      '86400': 1 ngày
+      "1800": 30 phút
+      "21600": 6 giờ
+      "3600": 1 giờ
+      "43200": 12 giờ
+      "604800": 1 tuần
+      "86400": 1 ngày
     expires_in_prompt: Không giới hạn
     generate: Tạo lời mời
     invalid: Lời mời không hợp lệ
-    invited_by: 'Bạn đã được mời bởi:'
+    invited_by: "Bạn đã được mời bởi:"
     max_uses:
       other: "%{count} lần dùng"
     max_uses_prompt: Không giới hạn
@@ -1783,7 +1783,7 @@ vi:
     set_redirect: Thiết lập chuyển hướng
     warning:
       backreference_required: Bạn cần phải đăng ký tài khoản mới ở máy chủ khác trước
-      before: 'Trước khi tiếp tục, xin vui lòng lưu ý:'
+      before: "Trước khi tiếp tục, xin vui lòng lưu ý:"
       cooldown: Bạn sẽ bị hạn chế chuyển sang tài khoản mới trong thời gian sắp tới
       disabled_account: Tài khoản này sẽ không thể tiếp tục dùng nữa. Tuy nhiên, bạn có quyền truy cập để xuất dữ liệu cũng như kích hoạt lại.
       followers: Hành động này sẽ chuyển tất cả người theo dõi từ tài khoản hiện tại sang tài khoản mới
@@ -1795,7 +1795,7 @@ vi:
   move_handler:
     carry_blocks_over_text: Tài khoản này chuyển từ %{acct}, máy chủ mà bạn đã chặn trước đó.
     carry_mutes_over_text: Tài khoản này chuyển sang từ %{acct}, máy chủ mà bạn đã phớt lờ trước đó.
-    copy_account_note_text: 'Tài khoản này chuyển từ %{acct}, đây là lịch sử kiểm duyệt của họ:'
+    copy_account_note_text: "Tài khoản này chuyển từ %{acct}, đây là lịch sử kiểm duyệt của họ:"
   navigation:
     toggle_menu: Bật/tắt menu
   notification_fallbacks:
@@ -1835,11 +1835,11 @@ vi:
     follow_request:
       action: Quản lý yêu cầu theo dõi
       body: "%{name} vừa yêu cầu theo dõi bạn"
-      subject: 'Người theo dõi đang chờ đồng ý: %{name}'
+      subject: "Người theo dõi đang chờ đồng ý: %{name}"
       title: Yêu cầu theo dõi mới
     mention:
       action: Phản hồi
-      body: 'Bạn vừa được nhắc đến bởi %{name} trong:'
+      body: "Bạn vừa được nhắc đến bởi %{name} trong:"
       subject: Bạn vừa được nhắc đến bởi %{name}
       title: Lượt nhắc mới
     moderation_warning:
@@ -1847,7 +1847,7 @@ vi:
     poll:
       subject: Vốt của %{name} đã kết thúc
     quote:
-      body: 'Tút của bạn được trích dẫn bởi %{name}:'
+      body: "Tút của bạn được trích dẫn bởi %{name}:"
       subject: "%{name} vừa trích dẫn tút của bạn"
       title: Trích dẫn mới
     quoted_update:
@@ -1865,7 +1865,7 @@ vi:
   notifications:
     administration_emails: Thông báo email admin
     email_events: Hoạt động thông báo email
-    email_events_hint: 'Chọn những hoạt động sẽ gửi thông báo qua email:'
+    email_events_hint: "Chọn những hoạt động sẽ gửi thông báo qua email:"
   number:
     human:
       decimal_units:
@@ -1881,7 +1881,7 @@ vi:
     description_html: Bạn sẽ đăng nhập bằng mã token được tạo ra bởi điện thoại của bạn.
     enable: Kích hoạt
     instructions_html: "<strong>Quét mã QR bằng Google Authenticator hoặc một ứng dụng TOTP tương tự trên điện thoại của bạn</strong>. Kể từ bây giờ, ứng dụng đó sẽ tạo những token để bạn đăng nhập."
-    manual_instructions: 'Nếu bạn không thể quét mã QR, đây sẽ là dòng chữ gợi ý:'
+    manual_instructions: "Nếu bạn không thể quét mã QR, đây sẽ là dòng chữ gợi ý:"
     setup: Thiết lập
     wrong_code: Mã vừa nhập không chính xác! Thời gian máy chủ và thời gian thiết bị chính xác chưa?
   pagination:
@@ -1956,10 +1956,10 @@ vi:
     errors:
       invalid_rules: không hợp với nội quy
   rss:
-    content_warning: 'Cảnh báo nội dung:'
+    content_warning: "Cảnh báo nội dung:"
     descriptions:
       account: Những tút công khai của @%{acct}
-      tag: 'Những tút #%{hashtag} công khai'
+      tag: "Những tút #%{hashtag} công khai"
   scheduled_statuses:
     over_daily_limit: Bạn đã vượt qua giới hạn được lên lịch đăng tút %{limit} hôm nay
     over_total_limit: Bạn đã vượt quá giới hạn %{limit} của các tút được lên lịch
@@ -2052,19 +2052,19 @@ vi:
     attached:
       audio:
         other: "%{count} âm thanh"
-      description: 'Đính kèm: %{attached}'
+      description: "Đính kèm: %{attached}"
       image:
         other: "%{count} hình ảnh"
       video:
         other: "%{count} video"
     boosted_from_html: Đã đăng lại từ %{acct_link}
-    content_warning: 'Cảnh báo nội dung: %{warning}'
+    content_warning: "Cảnh báo nội dung: %{warning}"
     content_warnings:
       hide: Ẩn tút
       show: Mở rộng
     default_language: Giống giao diện
     disallowed_hashtags:
-      other: 'chứa các hashtag bị cấm: %{tags}'
+      other: "chứa các hashtag bị cấm: %{tags}"
     edited_at_html: Sửa %{date}
     errors:
       in_reply_not_found: Bạn đang trả lời một tút không còn tồn tại.
@@ -2115,14 +2115,14 @@ vi:
     keep_self_fav: Giữ lại những tút yêu thích
     keep_self_fav_hint: Không xóa những tút của bạn nếu bạn có thích chúng
     min_age:
-      '1209600': 2 tuần
-      '15778476': 6 tháng
-      '2629746': 1 tháng
-      '31556952': 1 năm
-      '5259492': 2 tháng
-      '604800': 1 tuần
-      '63113904': 2 năm
-      '7889238': 3 tháng
+      "1209600": 2 tuần
+      "15778476": 6 tháng
+      "2629746": 1 tháng
+      "31556952": 1 năm
+      "5259492": 2 tháng
+      "604800": 1 tuần
+      "63113904": 2 năm
+      "7889238": 3 tháng
     min_age_label: Sau thời điểm
     min_favs: Giữ lại những tút có lượt thích tối thiểu
     min_favs_hint: Những tút có lượt thích lớn hơn số này sẽ không bị xóa. Để trống nếu bạn muốn xóa hết
@@ -2195,7 +2195,7 @@ vi:
         title: Hủy đăng ký đọc %{type}?
   user_mailer:
     announcement_published:
-      description: 'Quản trị viên %{domain} gửi một thông báo:'
+      description: "Quản trị viên %{domain} gửi một thông báo:"
       subject: Thông báo dịch vụ
       title: "%{domain} thông báo dịch vụ"
     appeal_approved:
@@ -2215,22 +2215,22 @@ vi:
       subject: Dữ liệu cá nhân của bạn đã sẵn sàng để tải về
       title: Nhận dữ liệu cá nhân
     failed_2fa:
-      details: 'Chi tiết thông tin đăng nhập:'
+      details: "Chi tiết thông tin đăng nhập:"
       explanation: Ai đó đã cố đăng nhập vào tài khoản của bạn nhưng cung cấp yếu tố xác thực thứ hai không hợp lệ.
       further_actions_html: Nếu không phải bạn, hãy lập tức %{action} vì có thể có rủi ro.
       subject: Xác thực 2 bước thất bại
       title: Xác thực 2 bước thất bại
     suspicious_sign_in:
       change_password: đổi mật khẩu của bạn
-      details: 'Chi tiết thông tin đăng nhập:'
+      details: "Chi tiết thông tin đăng nhập:"
       explanation: Chúng tôi phát hiện tài khoản của bạn đăng nhập bất thường từ một địa chỉ IP mới.
       further_actions_html: Nếu đây không phải là bạn, hãy %{action} lập tức và bật xác thực 2 bước để giữ tài khoản được an toàn.
       subject: Đăng nhập tài khoản từ địa chỉ IP mới
       title: Lần đăng nhập mới
     terms_of_service_changed:
       agreement: Tiếp tục sử dụng %{domain}, đồng nghĩa bạn đồng ý điều khoản dịch vụ. Nếu bạn không đồng ý với các điều khoản đã cập nhật, hãy xóa tài khoản %{domain} của bạn.
-      changelog: 'Nhìn sơ qua, bản cập nhật này:'
-      description: 'Bạn nhận được email này vì chúng tôi đang thực hiện một số thay đổi đối với các điều khoản dịch vụ tại %{domain}. Thay đổi sẽ có hiệu lực từ %{date}. Hãy xem lại đầy đủ các điều khoản đã cập nhật tại đây:'
+      changelog: "Nhìn sơ qua, bản cập nhật này:"
+      description: "Bạn nhận được email này vì chúng tôi đang thực hiện một số thay đổi đối với các điều khoản dịch vụ tại %{domain}. Thay đổi sẽ có hiệu lực từ %{date}. Hãy xem lại đầy đủ các điều khoản đã cập nhật tại đây:"
       description_html: Bạn nhận được email này vì chúng tôi đang thực hiện một số thay đổi đối với các điều khoản dịch vụ tại %{domain}. Thay đổi sẽ có hiệu lực từ <strong>%{date}</strong>. Hãy xem lại <a href="%{path}" target="_blank">đầy đủ các điều khoản được cập nhật ở đây</a>.
       sign_off: Đội ngũ %{domain}
       subject: Cập nhật điều khoản dịch vụ
@@ -2249,8 +2249,8 @@ vi:
         sensitive: Từ giờ trở đi, tất cả các media của bạn bạn tải lên sẽ được đánh dấu là nhạy cảm và ẩn đằng sau cảnh báo nhấp chuột.
         silence: Bạn vẫn có thể sử dụng tài khoản của mình và người khác vẫn có thể theo dõi bạn, nhưng chỉ những người đã theo dõi bạn mới thấy tút của bạn. Bạn cũng bị loại khỏi các tính năng khám phá khác.
         suspend: Tài khoản của bạn, hồ sơ và các dữ liệu khác sẽ không thể truy cập được nữa. Bạn vẫn có thể đăng nhập để yêu cầu bản sao dữ liệu của mình cho đến khi dữ liệu bị xóa hoàn toàn trong vòng 30 ngày, nhưng chúng tôi sẽ giữ lại một số dữ liệu cơ bản để phòng khi bạn được bỏ vô hiệu hóa.
-      reason: 'Lý do:'
-      statuses: 'Tút vi phạm:'
+      reason: "Lý do:"
+      statuses: "Tút vi phạm:"
       subject:
         delete_statuses: Những tút %{acct} của bạn đã bị xóa bỏ
         disable: Tài khoản %{acct} của bạn đã bị vô hiệu hóa
@@ -2272,7 +2272,7 @@ vi:
       apps_ios_action: Tải trên App Store
       apps_step: Tải ứng dụng chính thức.
       apps_title: Ứng dụng Mastodon
-      checklist_subtitle: 'Hãy bắt đầu trên mạng xã hội mới này:'
+      checklist_subtitle: "Hãy bắt đầu trên mạng xã hội mới này:"
       checklist_title: Danh sách việc cần làm
       edit_profile_action: Cá nhân hoá
       edit_profile_step: Tạo sự tương tác bằng một hồ sơ hoàn chỉnh.
@@ -2313,7 +2313,7 @@ vi:
     otp_lost_help_html: Nếu bạn mất quyền truy cập vào cả hai, bạn có thể đăng nhập bằng %{email}
     rate_limited: Quá nhiều lần thử, vui lòng thử lại sau.
     seamless_external_login: Bạn đã đăng nhập thông qua một dịch vụ bên ngoài, vì vậy mật khẩu và email không khả dụng.
-    signed_in_as: 'Đăng nhập bằng:'
+    signed_in_as: "Đăng nhập bằng:"
   verification:
     extra_instructions_html: <strong>Mẹo:</strong> Có thể ẩn liên kết trên trang web của bạn. Quan trọng là <code>rel="me"</code> giúp ngăn chặn việc mạo danh trên các trang web có nội dung do người dùng tạo. Bạn cũng có thể sử dụng một thẻ <code>link</code> trên header của trang thay vì <code>a</code>, nhưng HTML phải có thể truy cập được mà không cần thực thi JavaScript.
     here_is_how: Cách thực hiện

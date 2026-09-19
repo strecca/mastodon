@@ -76,7 +76,7 @@ gd:
         domain: Seo ainm na h-àrainne a nochdas san t-seòladh puist-d no sa chlàr MX a chleachdas e. Thèid an dearbhadh aig àm a’ chlàraidh.
         with_dns_records: Thèid oidhirp a dhèanamh air fuasgladh clàran DNS na h-àrainne a chaidh a thoirt seachad agus thèid na toraidhean a bhacadh cuideachd
       featured_tag:
-        name: 'Seo cuid dhe na tagaichean hais a chleachd thu o chionn goirid:'
+        name: "Seo cuid dhe na tagaichean hais a chleachd thu o chionn goirid:"
       filters:
         action: Tagh na thachras nuair a bhios post a’ maidseadh na criathraige
         actions:
@@ -132,7 +132,7 @@ gd:
         hint: Roghainneil. Thoir seachad barrachd fiosrachaidh mun riaghailt
         text: Mìnich riaghailt no riatanas do chleachdaichean an fhrithealaiche seo. Feuch an cùm thu sìmplidh goirid e
       sessions:
-        otp: 'Cuir a-steach an còd dà-cheumnach a ghin aplacaid an fhòn agad no cleachd fear dhe na còdan aisig agad:'
+        otp: "Cuir a-steach an còd dà-cheumnach a ghin aplacaid an fhòn agad no cleachd fear dhe na còdan aisig agad:"
         webauthn: Mas e iuchair USB a th’ ann, dèan cinnteach gun cuir thu a-steach e is gun doir thu gnogag air ma bhios feum air sin.
       settings:
         email_subscriptions: Ma chuireas tu seo à comas, cumaidh tu an luchd fo-sgrìobhaidh làithreach agad ach cha dèid puist-d a chur tuilleadh.
@@ -410,7 +410,7 @@ gd:
         events: Na tachartas an comas
         template: Teamplaid payload
         url: URL na puinge-deiridh
-    'no': Chan eil
+    "no": Chan eil
     not_recommended: Cha mholamaid seo
     overridden: "’Ga thar-àithneadh"
     recommended: Molta
@@ -420,4 +420,4 @@ gd:
     title:
       sessions:
         webauthn: Cleachd tè dhe na h-iuchraichean tèarainteachd agad airson clàradh a-steach
-    'yes': Tha
+    "yes": Tha

@@ -1,32 +1,31 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { clearNotifications } from 'mastodon/actions/notification_groups';
-import { useAppDispatch } from 'mastodon/store';
+import { clearNotifications } from "mastodon/actions/notification_groups";
+import { useAppDispatch } from "mastodon/store";
 
-import type { BaseConfirmationModalProps } from './confirmation_modal';
-import { ConfirmationModal } from './confirmation_modal';
+import type { BaseConfirmationModalProps } from "./confirmation_modal";
+import { ConfirmationModal } from "./confirmation_modal";
 
 const messages = defineMessages({
   clearTitle: {
-    id: 'notifications.clear_title',
-    defaultMessage: 'Clear notifications?',
+    id: "notifications.clear_title",
+    defaultMessage: "Clear notifications?",
   },
   clearMessage: {
-    id: 'notifications.clear_confirmation',
-    defaultMessage:
-      'Are you sure you want to permanently clear all your notifications?',
+    id: "notifications.clear_confirmation",
+    defaultMessage: "Are you sure you want to permanently clear all your notifications?",
   },
   clearConfirm: {
-    id: 'notifications.clear',
-    defaultMessage: 'Clear notifications',
+    id: "notifications.clear",
+    defaultMessage: "Clear notifications",
   },
 });
 
-export const ConfirmClearNotificationsModal: React.FC<
-  BaseConfirmationModalProps
-> = ({ onClose }) => {
+export const ConfirmClearNotificationsModal: React.FC<BaseConfirmationModalProps> = ({
+  onClose,
+}) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
 

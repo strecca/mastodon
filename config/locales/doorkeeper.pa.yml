@@ -37,7 +37,7 @@ pa:
         callback_urls: ਕਾਲਬੈਕ URL
         scopes: ਸਕੋਪ
         secret: ਕਲਾਈਂਟ ਭੇਤ
-        title: 'ਐਪਲੀਕੇਸ਼ਨ: %{name}'
+        title: "ਐਪਲੀਕੇਸ਼ਨ: %{name}"
     authorizations:
       buttons:
         authorize: ਪਰਮਾਣਿਤ

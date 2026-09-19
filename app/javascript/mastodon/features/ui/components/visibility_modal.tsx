@@ -1,46 +1,46 @@
-import { forwardRef, useCallback, useId, useMemo, useState } from 'react';
-import type { FC } from 'react';
+import { forwardRef, useCallback, useId, useMemo, useState } from "react";
+import type { FC } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { ApiQuotePolicy } from '@/mastodon/api_types/quotes';
-import { isQuotePolicy } from '@/mastodon/api_types/quotes';
-import { isStatusVisibility } from '@/mastodon/api_types/statuses';
-import type { StatusVisibility } from '@/mastodon/api_types/statuses';
-import { Button } from '@/mastodon/components/button';
-import { Dropdown } from '@/mastodon/components/dropdown';
-import type { SelectItem } from '@/mastodon/components/dropdown_selector';
-import { IconButton } from '@/mastodon/components/icon_button';
-import { NavigationFocusTarget } from '@/mastodon/components/navigation_focus_target';
-import { messages as privacyMessages } from '@/mastodon/features/compose/components/privacy_dropdown';
-import { createAppSelector, useAppSelector } from '@/mastodon/store';
-import AlternateEmailIcon from '@/material-icons/400-24px/alternate_email.svg?react';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import LockIcon from '@/material-icons/400-24px/lock.svg?react';
-import PublicIcon from '@/material-icons/400-24px/public.svg?react';
-import QuietTimeIcon from '@/material-icons/400-24px/quiet_time.svg?react';
+import type { ApiQuotePolicy } from "@/mastodon/api_types/quotes";
+import { isQuotePolicy } from "@/mastodon/api_types/quotes";
+import { isStatusVisibility } from "@/mastodon/api_types/statuses";
+import type { StatusVisibility } from "@/mastodon/api_types/statuses";
+import { Button } from "@/mastodon/components/button";
+import { Dropdown } from "@/mastodon/components/dropdown";
+import type { SelectItem } from "@/mastodon/components/dropdown_selector";
+import { IconButton } from "@/mastodon/components/icon_button";
+import { NavigationFocusTarget } from "@/mastodon/components/navigation_focus_target";
+import { messages as privacyMessages } from "@/mastodon/features/compose/components/privacy_dropdown";
+import { createAppSelector, useAppSelector } from "@/mastodon/store";
+import AlternateEmailIcon from "@/material-icons/400-24px/alternate_email.svg?react";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import LockIcon from "@/material-icons/400-24px/lock.svg?react";
+import PublicIcon from "@/material-icons/400-24px/public.svg?react";
+import QuietTimeIcon from "@/material-icons/400-24px/quiet_time.svg?react";
 
-import type { BaseConfirmationModalProps } from './confirmation_modals/confirmation_modal';
+import type { BaseConfirmationModalProps } from "./confirmation_modals/confirmation_modal";
 
 const messages = defineMessages({
-  close: { id: 'lightbox.close', defaultMessage: 'Close' },
+  close: { id: "lightbox.close", defaultMessage: "Close" },
   buttonTitle: {
-    id: 'visibility_modal.button_title',
-    defaultMessage: 'Set visibility',
+    id: "visibility_modal.button_title",
+    defaultMessage: "Set visibility",
   },
   quotePublic: {
-    id: 'visibility_modal.quote_public',
-    defaultMessage: 'Anyone',
+    id: "visibility_modal.quote_public",
+    defaultMessage: "Anyone",
   },
   quoteFollowers: {
-    id: 'visibility_modal.quote_followers',
-    defaultMessage: 'Followers only',
+    id: "visibility_modal.quote_followers",
+    defaultMessage: "Followers only",
   },
   quoteNobody: {
-    id: 'visibility_modal.quote_nobody',
-    defaultMessage: 'Just me',
+    id: "visibility_modal.quote_nobody",
+    defaultMessage: "Just me",
   },
 });
 
@@ -58,7 +58,7 @@ const selectStatusPolicy = createAppSelector(
   [
     (state) => state.statuses,
     (_state, statusId?: string) => statusId,
-    (state) => state.compose.get('quote_policy') as ApiQuotePolicy,
+    (state) => state.compose.get("quote_policy") as ApiQuotePolicy,
   ],
   (statuses, statusId, composeQuotePolicy) => {
     if (!statusId) {
@@ -66,15 +66,14 @@ const selectStatusPolicy = createAppSelector(
     }
     const status = statuses.get(statusId);
     if (!status) {
-      return 'public';
+      return "public";
     }
-    const policy =
-      (status.getIn(['quote_approval', 'automatic', 0]) as string) || 'nobody';
-    const visibility = status.get('visibility') as StatusVisibility;
+    const policy = (status.getIn(["quote_approval", "automatic", 0]) as string) || "nobody";
+    const visibility = status.get("visibility") as StatusVisibility;
 
     // If the status is private or direct, it cannot be quoted by anyone.
-    if (visibility === 'private' || visibility === 'direct') {
-      return 'nobody';
+    if (visibility === "private" || visibility === "direct") {
+      return "nobody";
     }
 
     // If the status has a specific quote policy, return it.
@@ -83,10 +82,10 @@ const selectStatusPolicy = createAppSelector(
     }
 
     // Otherwise, return the default based on visibility.
-    if (visibility === 'unlisted') {
-      return 'followers';
+    if (visibility === "unlisted") {
+      return "followers";
     }
-    return 'public';
+    return "public";
   },
 );
 
@@ -94,7 +93,7 @@ const selectDisablePublicVisibilities = createAppSelector(
   [
     (state) => state.statuses,
     (_state, statusId?: string) => !!statusId,
-    (state) => state.compose.get('quoted_status_id') as string | null,
+    (state) => state.compose.get("quoted_status_id") as string | null,
   ],
   (statuses, isEditing, statusId) => {
     if (isEditing || !statusId) return false;
@@ -104,7 +103,7 @@ const selectDisablePublicVisibilities = createAppSelector(
       return false;
     }
 
-    return status.get('visibility') === 'private';
+    return status.get("visibility") === "private";
   },
 );
 
@@ -114,42 +113,35 @@ export const VisibilityModal: FC<VisibilityModalProps> = forwardRef(
     const intl = useIntl();
     const currentVisibility = useAppSelector((state) =>
       statusId
-        ? ((state.statuses.getIn([statusId, 'visibility'], 'public') as
+        ? ((state.statuses.getIn([statusId, "visibility"], "public") as
             | StatusVisibility
-            | undefined) ?? 'public')
-        : (state.compose.get('privacy') as StatusVisibility),
+            | undefined) ?? "public")
+        : (state.compose.get("privacy") as StatusVisibility),
     );
-    const currentQuotePolicy = useAppSelector((state) =>
-      selectStatusPolicy(state, statusId),
-    );
+    const currentQuotePolicy = useAppSelector((state) => selectStatusPolicy(state, statusId));
 
     const [visibility, setVisibility] = useState(currentVisibility);
     const [quotePolicy, setQuotePolicy] = useState(currentQuotePolicy);
 
     const disableVisibility = !!statusId;
-    const disableQuotePolicy =
-      visibility === 'private' || visibility === 'direct';
-    const disablePublicVisibilities = useAppSelector(
-      selectDisablePublicVisibilities,
-    );
-    const isQuotePost = useAppSelector(
-      (state) => state.compose.get('quoted_status_id') !== null,
-    );
+    const disableQuotePolicy = visibility === "private" || visibility === "direct";
+    const disablePublicVisibilities = useAppSelector(selectDisablePublicVisibilities);
+    const isQuotePost = useAppSelector((state) => state.compose.get("quoted_status_id") !== null);
 
     const visibilityItems = useMemo<SelectItem<StatusVisibility>[]>(() => {
       const items: SelectItem<StatusVisibility>[] = [
         {
-          value: 'private',
+          value: "private",
           text: intl.formatMessage(privacyMessages.private_short),
           meta: intl.formatMessage(privacyMessages.private_long),
-          icon: 'lock',
+          icon: "lock",
           iconComponent: LockIcon,
         },
         {
-          value: 'direct',
+          value: "direct",
           text: intl.formatMessage(privacyMessages.direct_short),
           meta: intl.formatMessage(privacyMessages.direct_long),
-          icon: 'at',
+          icon: "at",
           iconComponent: AlternateEmailIcon,
         },
       ];
@@ -157,17 +149,17 @@ export const VisibilityModal: FC<VisibilityModalProps> = forwardRef(
       if (!disablePublicVisibilities) {
         items.unshift(
           {
-            value: 'public',
+            value: "public",
             text: intl.formatMessage(privacyMessages.public_short),
             meta: intl.formatMessage(privacyMessages.public_long),
-            icon: 'globe',
+            icon: "globe",
             iconComponent: PublicIcon,
           },
           {
-            value: 'unlisted',
+            value: "unlisted",
             text: intl.formatMessage(privacyMessages.unlisted_short),
             meta: intl.formatMessage(privacyMessages.unlisted_long),
-            icon: 'unlock',
+            icon: "unlock",
             iconComponent: QuietTimeIcon,
           },
         );
@@ -177,12 +169,12 @@ export const VisibilityModal: FC<VisibilityModalProps> = forwardRef(
     }, [intl, disablePublicVisibilities]);
     const quoteItems = useMemo<SelectItem<ApiQuotePolicy>[]>(
       () => [
-        { value: 'public', text: intl.formatMessage(messages.quotePublic) },
+        { value: "public", text: intl.formatMessage(messages.quotePublic) },
         {
-          value: 'followers',
+          value: "followers",
           text: intl.formatMessage(messages.quoteFollowers),
         },
-        { value: 'nobody', text: intl.formatMessage(messages.quoteNobody) },
+        { value: "nobody", text: intl.formatMessage(messages.quoteNobody) },
       ],
       [intl],
     );
@@ -209,53 +201,42 @@ export const VisibilityModal: FC<VisibilityModalProps> = forwardRef(
     const quoteDescriptionId = `${uniqueId}-quote-desc`;
 
     return (
-      <div className='modal-root__modal dialog-modal visibility-modal'>
-        <div className='dialog-modal__header'>
+      <div className="modal-root__modal dialog-modal visibility-modal">
+        <div className="dialog-modal__header">
           <IconButton
-            className='dialog-modal__header__close'
+            className="dialog-modal__header__close"
             title={intl.formatMessage(messages.close)}
-            icon='times'
+            icon="times"
             iconComponent={CloseIcon}
             onClick={onClose}
           />
-          <NavigationFocusTarget
-            as='h1'
-            className='dialog-modal__header__title'
-          >
+          <NavigationFocusTarget as="h1" className="dialog-modal__header__title">
             <FormattedMessage
-              id='visibility_modal.header'
-              defaultMessage='Visibility and interaction'
+              id="visibility_modal.header"
+              defaultMessage="Visibility and interaction"
             />
           </NavigationFocusTarget>
         </div>
-        <div className='dialog-modal__content'>
-          <div className='dialog-modal__content__description'>
+        <div className="dialog-modal__content">
+          <div className="dialog-modal__content__description">
             <FormattedMessage
-              id='visibility_modal.instructions'
-              defaultMessage='Control who can interact with this post. You can also apply settings to all future posts by navigating to <link>Preferences > Posting defaults</link>.'
+              id="visibility_modal.instructions"
+              defaultMessage="Control who can interact with this post. You can also apply settings to all future posts by navigating to <link>Preferences > Posting defaults</link>."
               values={{
-                link: (chunks) => (
-                  <a href='/settings/preferences/posting_defaults'>{chunks}</a>
-                ),
+                link: (chunks) => <a href="/settings/preferences/posting_defaults">{chunks}</a>,
               }}
-              tagName='p'
+              tagName="p"
             />
           </div>
-          <div className='dialog-modal__content__form'>
+          <div className="dialog-modal__content__form">
             <div
-              className={classNames('visibility-dropdown', {
+              className={classNames("visibility-dropdown", {
                 disabled: disableVisibility,
               })}
             >
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label
-                className='visibility-dropdown__label'
-                id={visibilityLabelId}
-              >
-                <FormattedMessage
-                  id='visibility_modal.privacy_label'
-                  defaultMessage='Visibility'
-                />
+              <label className="visibility-dropdown__label" id={visibilityLabelId}>
+                <FormattedMessage id="visibility_modal.privacy_label" defaultMessage="Visibility" />
               </label>
 
               <Dropdown
@@ -264,90 +245,78 @@ export const VisibilityModal: FC<VisibilityModalProps> = forwardRef(
                 onChange={handleVisibilityChange}
                 labelId={visibilityLabelId}
                 descriptionId={visibilityDescriptionId}
-                classPrefix='visibility-dropdown'
+                classPrefix="visibility-dropdown"
                 disabled={disableVisibility}
               />
               {!!statusId && (
-                <p
-                  className='visibility-dropdown__helper'
-                  id='visibilityDescriptionId'
-                >
+                <p className="visibility-dropdown__helper" id="visibilityDescriptionId">
                   <FormattedMessage
-                    id='visibility_modal.helper.privacy_editing'
+                    id="visibility_modal.helper.privacy_editing"
                     defaultMessage="Visibility can't be changed after a post is published."
                   />
                 </p>
               )}
               {!statusId && disablePublicVisibilities && (
-                <p
-                  className='visibility-dropdown__helper'
-                  id='visibilityDescriptionId'
-                >
+                <p className="visibility-dropdown__helper" id="visibilityDescriptionId">
                   <FormattedMessage
-                    id='visibility_modal.helper.privacy_private_self_quote'
-                    defaultMessage='Self-quotes of private posts cannot be made public.'
+                    id="visibility_modal.helper.privacy_private_self_quote"
+                    defaultMessage="Self-quotes of private posts cannot be made public."
                   />
                 </p>
               )}
             </div>
 
             <div
-              className={classNames('visibility-dropdown', {
+              className={classNames("visibility-dropdown", {
                 disabled: disableQuotePolicy,
               })}
             >
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label className='visibility-dropdown__label' id={quoteLabelId}>
+              <label className="visibility-dropdown__label" id={quoteLabelId}>
                 <FormattedMessage
-                  id='visibility_modal.quote_label'
-                  defaultMessage='Who can quote'
+                  id="visibility_modal.quote_label"
+                  defaultMessage="Who can quote"
                 />
               </label>
 
               <Dropdown
                 items={quoteItems}
-                current={disableQuotePolicy ? 'nobody' : quotePolicy}
+                current={disableQuotePolicy ? "nobody" : quotePolicy}
                 onChange={handleQuotePolicyChange}
                 labelId={quoteLabelId}
                 descriptionId={quoteDescriptionId}
-                classPrefix='visibility-dropdown'
+                classPrefix="visibility-dropdown"
                 disabled={disableQuotePolicy}
               />
               <QuotePolicyHelper
                 policy={quotePolicy}
                 visibility={visibility}
-                className='visibility-dropdown__helper'
+                className="visibility-dropdown__helper"
                 id={quoteDescriptionId}
               />
             </div>
 
-            {isQuotePost && visibility === 'direct' && (
-              <div className='visibility-modal__quote-warning'>
+            {isQuotePost && visibility === "direct" && (
+              <div className="visibility-modal__quote-warning">
                 <FormattedMessage
-                  id='visibility_modal.direct_quote_warning.title'
+                  id="visibility_modal.direct_quote_warning.title"
                   defaultMessage="Quotes can't be embedded in private mentions"
-                  tagName='h3'
+                  tagName="h3"
                 />
                 <FormattedMessage
-                  id='visibility_modal.direct_quote_warning.text'
-                  defaultMessage='If you save the current settings, the embedded quote will be converted to a link.'
-                  tagName='p'
+                  id="visibility_modal.direct_quote_warning.text"
+                  defaultMessage="If you save the current settings, the embedded quote will be converted to a link."
+                  tagName="p"
                 />
               </div>
             )}
           </div>
-          <div className='dialog-modal__content__actions'>
+          <div className="dialog-modal__content__actions">
             <Button onClick={onClose} secondary>
-              <FormattedMessage
-                id='confirmation_modal.cancel'
-                defaultMessage='Cancel'
-              />
+              <FormattedMessage id="confirmation_modal.cancel" defaultMessage="Cancel" />
             </Button>
             <Button onClick={handleSave}>
-              <FormattedMessage
-                id='visibility_modal.save'
-                defaultMessage='Save'
-              />
+              <FormattedMessage id="visibility_modal.save" defaultMessage="Save" />
             </Button>
           </div>
         </div>
@@ -355,38 +324,38 @@ export const VisibilityModal: FC<VisibilityModalProps> = forwardRef(
     );
   },
 );
-VisibilityModal.displayName = 'VisibilityModal';
+VisibilityModal.displayName = "VisibilityModal";
 
 const QuotePolicyHelper: FC<
   {
     policy: ApiQuotePolicy;
     visibility: StatusVisibility;
-  } & React.ComponentPropsWithoutRef<'p'>
+  } & React.ComponentPropsWithoutRef<"p">
 > = ({ policy, visibility, ...otherProps }) => {
   let hintText: React.ReactElement | undefined;
 
-  if (visibility === 'unlisted' && policy !== 'nobody') {
+  if (visibility === "unlisted" && policy !== "nobody") {
     hintText = (
       <FormattedMessage
-        id='visibility_modal.helper.unlisted_quoting'
-        defaultMessage='When people quote you, their post will also be hidden from trending timelines.'
+        id="visibility_modal.helper.unlisted_quoting"
+        defaultMessage="When people quote you, their post will also be hidden from trending timelines."
       />
     );
   }
 
-  if (visibility === 'private') {
+  if (visibility === "private") {
     hintText = (
       <FormattedMessage
-        id='visibility_modal.helper.private_quoting'
+        id="visibility_modal.helper.private_quoting"
         defaultMessage="Follower-only posts authored on Mastodon can't be quoted by others."
       />
     );
   }
 
-  if (visibility === 'direct') {
+  if (visibility === "direct") {
     hintText = (
       <FormattedMessage
-        id='visibility_modal.helper.direct_quoting'
+        id="visibility_modal.helper.direct_quoting"
         defaultMessage="Private mentions authored on Mastodon can't be quoted by others."
       />
     );

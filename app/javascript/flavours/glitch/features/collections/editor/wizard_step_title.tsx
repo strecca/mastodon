@@ -1,6 +1,6 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 export const WizardStepTitle: React.FC<{
   step: number;
@@ -10,8 +10,8 @@ export const WizardStepTitle: React.FC<{
     <div>
       <p className={classes.step}>
         <FormattedMessage
-          id='collections.create.steps'
-          defaultMessage='Step {step}/{total}'
+          id="collections.create.steps"
+          defaultMessage="Step {step}/{total}"
           values={{ step, total: 2 }}
         />
       </p>

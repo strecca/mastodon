@@ -1,19 +1,19 @@
-import { useCallback, useId, useRef, useState } from 'react';
-import type { ChangeEventHandler, FC } from 'react';
+import { useCallback, useId, useRef, useState } from "react";
+import type { ChangeEventHandler, FC } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { useParams } from 'react-router';
+import { useParams } from "react-router";
 
-import Overlay from 'react-overlays/esm/Overlay';
+import Overlay from "react-overlays/esm/Overlay";
 
-import { AccountTabs } from '@/flavours/glitch/components/account_header/tabs';
-import { Toggle } from '@/flavours/glitch/components/form_fields';
-import { Icon } from '@/flavours/glitch/components/icon';
-import KeyboardArrowDownIcon from '@/material-icons/400-24px/keyboard_arrow_down.svg?react';
+import { AccountTabs } from "@/flavours/glitch/components/account_header/tabs";
+import { Toggle } from "@/flavours/glitch/components/form_fields";
+import { Icon } from "@/flavours/glitch/components/icon";
+import KeyboardArrowDownIcon from "@/material-icons/400-24px/keyboard_arrow_down.svg?react";
 
-import { useAccountContext } from '../hooks/useAccountContext';
-import classes from '../styles.module.scss';
+import { useAccountContext } from "../hooks/useAccountContext";
+import classes from "../styles.module.scss";
 
 export const AccountFilters: FC = () => {
   const { acct } = useParams<{ acct: string }>();
@@ -45,9 +45,9 @@ const FilterDropdown: FC = () => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     (event) => {
       const { name, checked } = event.target;
-      if (name === 'boosts') {
+      if (name === "boosts") {
         setBoosts(checked);
-      } else if (name === 'replies') {
+      } else if (name === "replies") {
         setReplies(checked);
       }
     },
@@ -60,7 +60,7 @@ const FilterDropdown: FC = () => {
   return (
     <div ref={containerRef}>
       <button
-        type='button'
+        type="button"
         className={classes.filterSelectButton}
         ref={buttonRef}
         onClick={handleClick}
@@ -68,70 +68,44 @@ const FilterDropdown: FC = () => {
         aria-controls={`${accessibleId}-wrapper`}
       >
         {boosts && replies && (
-          <FormattedMessage
-            id='account.filters.all'
-            defaultMessage='All activity'
-          />
+          <FormattedMessage id="account.filters.all" defaultMessage="All activity" />
         )}
         {!boosts && replies && (
-          <FormattedMessage
-            id='account.filters.posts_replies'
-            defaultMessage='Posts and replies'
-          />
+          <FormattedMessage id="account.filters.posts_replies" defaultMessage="Posts and replies" />
         )}
         {boosts && !replies && (
-          <FormattedMessage
-            id='account.filters.posts_boosts'
-            defaultMessage='Posts and boosts'
-          />
+          <FormattedMessage id="account.filters.posts_boosts" defaultMessage="Posts and boosts" />
         )}
         {!boosts && !replies && (
-          <FormattedMessage
-            id='account.filters.posts_only'
-            defaultMessage='Posts'
-          />
+          <FormattedMessage id="account.filters.posts_only" defaultMessage="Posts" />
         )}
-        <Icon
-          id='unfold_more'
-          icon={KeyboardArrowDownIcon}
-          className={classes.filterSelectIcon}
-        />
+        <Icon id="unfold_more" icon={KeyboardArrowDownIcon} className={classes.filterSelectIcon} />
       </button>
       <Overlay
         show={open}
         target={buttonRef}
-        placement='bottom-start'
+        placement="bottom-start"
         rootClose
         onHide={handleHide}
         container={containerRef}
       >
         {({ props }) => (
-          <div
-            {...props}
-            id={`${accessibleId}-wrapper`}
-            className={classes.filterOverlay}
-          >
+          <div {...props} id={`${accessibleId}-wrapper`} className={classes.filterOverlay}>
             <label htmlFor={`${accessibleId}-replies`}>
-              <FormattedMessage
-                id='account.filters.replies_toggle'
-                defaultMessage='Show replies'
-              />
+              <FormattedMessage id="account.filters.replies_toggle" defaultMessage="Show replies" />
             </label>
             <Toggle
-              name='replies'
+              name="replies"
               checked={replies}
               onChange={handleChange}
               id={`${accessibleId}-replies`}
             />
 
             <label htmlFor={`${accessibleId}-boosts`}>
-              <FormattedMessage
-                id='account.filters.boosts_toggle'
-                defaultMessage='Show boosts'
-              />
+              <FormattedMessage id="account.filters.boosts_toggle" defaultMessage="Show boosts" />
             </label>
             <Toggle
-              name='boosts'
+              name="boosts"
               checked={boosts}
               onChange={handleChange}
               id={`${accessibleId}-boosts`}

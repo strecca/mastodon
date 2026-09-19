@@ -1,7 +1,7 @@
 ---
 it:
   about:
-    about_mastodon_html: 'Il social network del futuro: Nessuna pubblicità, zero sorveglianza aziendale, design etico e decentralizzazione! Sii il proprietario dei tuoi dati, con Mastodonte!'
+    about_mastodon_html: "Il social network del futuro: Nessuna pubblicità, zero sorveglianza aziendale, design etico e decentralizzazione! Sii il proprietario dei tuoi dati, con Mastodonte!"
     contact_missing: Non impostato
     contact_unavailable: N/D
     default_thumbnail_description: Due mastodonti sorridenti dei cartoni animati (che sembrano elefanti) si lanciano in mezzo un aeroplanino di carta. Sono circondati da un cielo azzurro brillante e da pianeti fluttuanti con alberi e altri mastodonti su di essi.
@@ -334,7 +334,7 @@ it:
         title: Nuovo annuncio
       preview:
         disclaimer: Poiché gli utenti non possono disattivarle, le notifiche e-mail dovrebbero essere limitate ad annunci importanti, come notifiche di violazione dei dati personali o di chiusura del server.
-        explanation_html: 'L''e-mail verrà inviata a <strong>%{display_count} utenti</strong>. Il seguente testo sarà incluso nell''e-mail:'
+        explanation_html: "L'e-mail verrà inviata a <strong>%{display_count} utenti</strong>. Il seguente testo sarà incluso nell'e-mail:"
         title: Anteprima della notifica dell'annuncio
       publish: Pubblica
       published_msg: Annuncio pubblicato!
@@ -349,7 +349,7 @@ it:
       back_to_account: Torna alla pagina dell'account
       back_to_report: Torna alla pagina di segnalazione
       batch:
-        add_to_report: 'Aggiungi alla segnalazione #%{id}'
+        add_to_report: "Aggiungi alla segnalazione #%{id}"
         remove_from_report: Rimuovi dalla segnalazione
         report: Segnala
       collection_title: Collezione di %{name}
@@ -584,10 +584,10 @@ it:
       import:
         description_html: Stai per importare un elenco di blocchi di domini. Si prega di rivedere questo elenco con molta attenzione, soprattutto se non si è creato personalmente questo elenco.
         existing_relationships_warning: Relazioni di connessioni esistenti
-        private_comment_description_html: 'Per aiutarti a tenere traccia della provenienza dei blocchi importati, i blocchi importati verranno creati con il seguente commento privato: <q>%{comment}</q>'
+        private_comment_description_html: "Per aiutarti a tenere traccia della provenienza dei blocchi importati, i blocchi importati verranno creati con il seguente commento privato: <q>%{comment}</q>"
         private_comment_template: Importato da %{source} il %{date}
         title: Importare i blocchi di dominio
-      invalid_domain_block: 'Uno o più blocchi di dominio sono stati saltati a causa dei seguenti errori: %{error}'
+      invalid_domain_block: "Uno o più blocchi di dominio sono stati saltati a causa dei seguenti errori: %{error}"
       new:
         title: Importare i blocchi di dominio
       no_file: Nessun file selezionato
@@ -721,12 +721,12 @@ it:
       created_msg: Nuova regola IP aggiunta
       delete: Elimina
       expires_in:
-        '1209600': 2 settimane
-        '15778476': 6 mesi
-        '2629746': 1 mese
-        '31556952': 1 anno
-        '86400': 1 giorno
-        '94670856': 3 anni
+        "1209600": 2 settimane
+        "15778476": 6 mesi
+        "2629746": 1 mese
+        "31556952": 1 anno
+        "86400": 1 giorno
+        "94670856": 3 anni
       new:
         title: Crea una nuova regola IP
       no_ip_block_selected: Nessuna regola IP è stata modificata poiché nessuna è stata selezionata
@@ -783,7 +783,7 @@ it:
       collections: Collezioni (%{count})
       comment:
         none: Nessuno
-      comment_description_html: 'Per fornire ulteriori informazioni, %{name} ha scritto:'
+      comment_description_html: "Per fornire ulteriori informazioni, %{name} ha scritto:"
       confirm: Conferma
       confirm_action: Conferma l'azione di moderazione contro @%{acct}
       created_at: Segnalato
@@ -803,11 +803,11 @@ it:
         placeholder: Descrivi quali azioni sono state intraprese, o ogni altro aggiornamento rilevante...
         title: Note
       notes_description_html: Visualizza e lascia note ad altri moderatori e al tuo futuro sé
-      processed_msg: 'Segnalazione #%{id} elaborata correttamente'
-      quick_actions_description_html: 'Fai un''azione rapida o scorri verso il basso per vedere il contenuto segnalato:'
+      processed_msg: "Segnalazione #%{id} elaborata correttamente"
+      quick_actions_description_html: "Fai un'azione rapida o scorri verso il basso per vedere il contenuto segnalato:"
       remote_user_placeholder: l'utente remoto da %{instance}
       reopen: Riapri rapporto
-      report: 'Rapporto #%{id}'
+      report: "Rapporto #%{id}"
       reported_account: Account segnalato
       reported_by: Inviato da
       reported_content: Contenuto segnalato
@@ -820,16 +820,16 @@ it:
       statuses_description_html: Il contenuto offensivo sarà citato nella comunicazione con l'account segnalato
       summary:
         action_preambles:
-          delete_html: 'Stai per <strong>rimuovere</strong> alcuni post di <strong>@%{acct}</strong>. Questo conseguirà:'
-          mark_as_sensitive_html: 'Stai per <strong>contrassegnare</strong> alcuni post di <strong>@%{acct}</strong> come <strong>sensibili</strong>. Questo conseguirà:'
-          silence_html: 'Stai per <strong>limitare</strong> l''account di <strong>@%{acct}</strong>. Questo conseguirà:'
-          suspend_html: 'Stai per <strong>sospendere</strong> l''account di <strong>@%{acct}</strong>. Questo conseguirà:'
+          delete_html: "Stai per <strong>rimuovere</strong> alcuni post di <strong>@%{acct}</strong>. Questo conseguirà:"
+          mark_as_sensitive_html: "Stai per <strong>contrassegnare</strong> alcuni post di <strong>@%{acct}</strong> come <strong>sensibili</strong>. Questo conseguirà:"
+          silence_html: "Stai per <strong>limitare</strong> l'account di <strong>@%{acct}</strong>. Questo conseguirà:"
+          suspend_html: "Stai per <strong>sospendere</strong> l'account di <strong>@%{acct}</strong>. Questo conseguirà:"
         actions:
           delete_html: Rimuovi i post offensivi
           mark_as_sensitive_html: Contrassegna i file multimediali dei post offensivi come sensibili
           silence_html: Limita fortemente la visibilità di <strong>@%{acct}</strong> rendendo il suo profilo e i suoi contenuti visibili solo alle persone che già lo seguono o che cercano manualmente il suo profilo
           suspend_html: Sospendere <strong>@%{acct}</strong>, rendendo il suo profilo e i suoi contenuti inaccessibili e impossibilitandone l'interazione
-        close_report: 'Contrassegna la segnalazione #%{id} come risolta'
+        close_report: "Contrassegna la segnalazione #%{id} come risolta"
         close_reports_html: Contrassegna <strong>tutte</strong> le segnalazioni contro <strong>@%{acct}</strong> come risolte
         delete_data_html: Elimina il profilo e i contenuti di <strong>@%{acct}</strong> tra 30 giorni da ora, a meno che non vengano riattivati nel frattempo
         preview_preamble_html: "<strong>@%{acct}</strong> riceverà un avvertimento con i seguenti contenuti:"
@@ -839,7 +839,7 @@ it:
       target_origin: Origine dell'account segnalato
       title: Rapporti
       unassign: Non assegnare
-      unknown_action_msg: 'Azione sconosciuta: %{action}'
+      unknown_action_msg: "Azione sconosciuta: %{action}"
       unresolved: Non risolto
       updated_at: Aggiornato
       view_profile: Visualizza profilo
@@ -938,7 +938,7 @@ it:
         preamble: Personalizza l'interfaccia web di Mastodon.
         title: Aspetto
       branding:
-        preamble: 'Il marchio del tuo server lo differenzia dagli altri server nella rete. Queste informazioni possono essere visualizzate in una varietà di ambienti, come: l''interfaccia web di Mastodon, le applicazioni native, nelle anteprime dei collegamenti su altri siti Web e all''interno delle app di messaggistica e così via. Per questo motivo, è meglio mantenere queste informazioni chiare, brevi e concise.'
+        preamble: "Il marchio del tuo server lo differenzia dagli altri server nella rete. Queste informazioni possono essere visualizzate in una varietà di ambienti, come: l'interfaccia web di Mastodon, le applicazioni native, nelle anteprime dei collegamenti su altri siti Web e all'interno delle app di messaggistica e così via. Per questo motivo, è meglio mantenere queste informazioni chiare, brevi e concise."
         title: Marchio
       captcha_enabled:
         desc_html: Questo si basa su script esterni da hCaptcha, che possono rappresentare un problema di sicurezza e privacy. Inoltre, <strong>questo può rendere il processo di registrazione significativamente meno accessibile ad alcune persone (soprattutto disabili)</strong>. Per questi motivi, prendi in considerazione misure alternative come la registrazione basata su approvazione o su invito.
@@ -1001,7 +1001,7 @@ it:
       destroyed_msg: Caricamento sito eliminato!
     skip_to_content: Vai al contenuto
     software_updates:
-      critical_update: 'Critico: ti preghiamo di aggiornare rapidamente'
+      critical_update: "Critico: ti preghiamo di aggiornare rapidamente"
       description: Si consiglia di mantenere aggiornata l'installazione di Mastodon per beneficiare delle ultime correzioni e funzionalità. Inoltre, a volte è fondamentale aggiornare Mastodon in modo tempestivo per evitare problemi di sicurezza. Per queste ragioni, Mastodon verifica la presenza di aggiornamenti ogni 30 minuti e ti avviserà in base alle tue preferenze di notifica e-mail.
       documentation_link: Scopri di più
       release_notes: Note di rilascio
@@ -1010,7 +1010,7 @@ it:
       types:
         major: Rilascio principale
         minor: Rilascio secondario
-        patch: 'Patch: correzioni di bug e modifiche facili da applicare'
+        patch: "Patch: correzioni di bug e modifiche facili da applicare"
       version: Versione
     statuses:
       account: Autore
@@ -1018,7 +1018,7 @@ it:
       back_to_account: Torna alla pagina dell'account
       back_to_report: Torna alla pagina di segnalazione
       batch:
-        add_to_report: 'Aggiungi alla segnalazione #%{id}'
+        add_to_report: "Aggiungi alla segnalazione #%{id}"
         remove_from_report: Rimuovi dal report
         report: Rapporto
       contents: Contenuti
@@ -1079,7 +1079,7 @@ it:
       elasticsearch_running_check:
         message_html: Impossibile connettersi a Elasticsearch. Verificare che sia in esecuzione o disabilitare la ricerca full-text
       elasticsearch_version_check:
-        message_html: 'Versione Elasticsearch incompatibile: %{value}'
+        message_html: "Versione Elasticsearch incompatibile: %{value}"
         version_comparison: È in esecuzione la versione %{running_version} di Elasticsearch, ma è richiesta la versione %{required_version}
       rules_check:
         action: Gestisci regole del server
@@ -1138,17 +1138,17 @@ it:
       live: In uso
       no_history: Non sono ancora state registrate modifiche ai termini di servizio.
       no_terms_of_service_html: Al momento non hai configurato alcun termine di servizio. I termini di servizio sono pensati per fornire chiarezza e proteggerti da potenziali responsabilità in caso di controversie con i tuoi utenti.
-      notified_on_html: 'Utenti notificati in data: %{date}'
+      notified_on_html: "Utenti notificati in data: %{date}"
       notify_users: Notifica gli utenti
       preview:
-        explanation_html: 'L''email verrà inviata a <strong>%{display_count} utenti</strong> che si sono registrati prima del giorno %{date}. Il seguente testo sarà incluso nell''email:'
+        explanation_html: "L'email verrà inviata a <strong>%{display_count} utenti</strong> che si sono registrati prima del giorno %{date}. Il seguente testo sarà incluso nell'email:"
         send_preview: Invia l'anteprima a %{email}
         send_to_all:
           one: Invia %{display_count} email
           other: Invia %{display_count} email
         title: Anteprima della notifica dei termini di servizio
       publish: Pubblica
-      published_on_html: 'Pubblicati in data: %{date}'
+      published_on_html: "Pubblicati in data: %{date}"
       save_draft: Salva la bozza
       title: Termini di Servizio
     title: Amministrazione
@@ -1218,7 +1218,7 @@ it:
         peaked_on_and_decaying: Ha avuto un picco il %{date}, ora in caduta
         title: Hashtag in tendenza
         trendable: Può comparire nelle tendenze
-        trending_rank: 'In tendenza #%{rank}'
+        trending_rank: "In tendenza #%{rank}"
         usable: Utilizzabile
         usage_comparison: Usato %{today} volte oggi, rispetto a %{yesterday} ieri
         used_by_over_week:
@@ -1301,7 +1301,7 @@ it:
       body: Sono state rilasciate delle nuove versioni di Mastodon, potresti volerlo aggiornare!
       subject: Sono disponibili delle nuove versioni di Mastodon per %{instance}!
     new_trends:
-      body: 'I seguenti elementi necessitano di un controllo prima che possano essere visualizzati pubblicamente:'
+      body: "I seguenti elementi necessitano di un controllo prima che possano essere visualizzati pubblicamente:"
       new_trending_links:
         title: Link di tendenza
       new_trending_statuses:
@@ -1331,7 +1331,7 @@ it:
     notification_preferences: Modifica le preferenze e-mail
     salutation: "%{name},"
     unsubscribe: Disiscriviti
-    view: 'Guarda:'
+    view: "Guarda:"
     view_profile: Mostra profilo
     view_status: Mostra post
   applications:
@@ -1392,7 +1392,7 @@ it:
     rules:
       accept: Accetta
       back: Indietro
-      invited_by: 'Puoi unirti a %{domain} grazie all''invito che hai ricevuto da:'
+      invited_by: "Puoi unirti a %{domain} grazie all'invito che hai ricevuto da:"
       preamble: Questi sono impostati e applicati dai moderatori di %{domain}.
       preamble_invited: Prima di procedere, si prega di considerare le regole di base stabilite dai moderatori di %{domain}.
       read_more: Scopri di più
@@ -1428,7 +1428,7 @@ it:
   author_attribution:
     example_title: Testo di esempio
     hint_html: Stai scrivendo notizie o articoli di blog al di fuori di Mastodon? Controlla come vieni accreditato quando vengono condivisi su Mastodon.
-    instructions: 'Assicurati che questo codice sia presente nell''HTML del tuo articolo:'
+    instructions: "Assicurati che questo codice sia presente nell'HTML del tuo articolo:"
     more_from_html: Altro da %{name}
     s_blog: Blog di %{name}
     then_instructions: Quindi, aggiungi il nome di dominio della pubblicazione nel campo sottostante.
@@ -1473,7 +1473,7 @@ it:
     proceed: Cancella l'account
     success_msg: Il tuo account è stato cancellato
     warning:
-      before: 'Prima di procedere, per favore leggi attentamente queste note:'
+      before: "Prima di procedere, per favore leggi attentamente queste note:"
       caches: Il contenuto che è stato memorizzato in cache da altri server può continuare ad esistere
       data_removal: I tuoi post e altri dati saranno eliminati definitivamente
       email_change_html: Puoi <a href="%{path}">cambiare il tuo indirizzo e-mail</a> senza cancellare il tuo account
@@ -1499,7 +1499,7 @@ it:
       description_html: Queste sono azioni intraprese contro il tuo profilo e avvisi inviati a te dallo staff di %{instance}.
       recipient: Indirizzata a
       reject_appeal: Respingi ricorso
-      status: 'Post #%{id}'
+      status: "Post #%{id}"
       status_removed: Post già rimosso dal sistema
       title: "%{action} da %{date}"
       title_actions:
@@ -1558,19 +1558,19 @@ it:
     native: Nativo
     twemoji: Twemoji
   errors:
-    '400': La richiesta che hai inviato non è valida o non è corretta.
-    '403': Non sei autorizzato a visualizzare questa pagina.
-    '404': La pagina che stavi cercando non esiste.
-    '406': Questa pagina non è disponibile nel formato richiesto.
-    '410': La pagina che stavi cercando qui non esiste più.
-    '422':
+    "400": La richiesta che hai inviato non è valida o non è corretta.
+    "403": Non sei autorizzato a visualizzare questa pagina.
+    "404": La pagina che stavi cercando non esiste.
+    "406": Questa pagina non è disponibile nel formato richiesto.
+    "410": La pagina che stavi cercando qui non esiste più.
+    "422":
       content: Verifica di sicurezza non riuscita. Stai bloccando i cookies?
       title: Verifica di sicurezza non riuscita
-    '429': Limitato
-    '500':
+    "429": Limitato
+    "500":
       content: Siamo spiacenti, ma qualcosa non ha funzionato dal nostro lato.
       title: Questa pagina non è corretta
-    '503': La pagina non può essere trasmessa a causa di un errore temporaneo del server.
+    "503": La pagina non può essere trasmessa a causa di un errore temporaneo del server.
     noscript_html: Per usare l'interfaccia web di Mastodon dovi abilitare JavaScript. In alternativa puoi provare una delle <a href="%{apps_path}">app native</a> per Mastodon per la tua piattaforma.
   existing_username_validator:
     not_found: impossibile trovare un utente locale con quel nome utente
@@ -1665,8 +1665,8 @@ it:
     errors:
       empty: File CSV vuoto
       incompatible_type: Incompatibile con il tipo di importazione selezionato
-      invalid_csv_file: 'File CSV non valido. Errore: %{error}'
-      invalid_json_file: 'File JSON non valido. Errore: %{error}'
+      invalid_csv_file: "File CSV non valido. Errore: %{error}"
+      invalid_json_file: "File JSON non valido. Errore: %{error}"
       over_rows_processing_limit: contiene più di %{count} righe
       status_not_found_warning: Alcuni dei tuoi filtri nascondono post specifici che non sono noti a questo server. Questi post non verranno filtrati automaticamente se vengono scoperti in seguito dal server.
       too_large: Il file è troppo grande
@@ -1756,16 +1756,16 @@ it:
     delete: Disattiva
     expired: Scaduto
     expires_in:
-      '1800': 30 minuti
-      '21600': 6 ore
-      '3600': 1 ora
-      '43200': 12 ore
-      '604800': 1 settimana
-      '86400': 1 giorno
+      "1800": 30 minuti
+      "21600": 6 ore
+      "3600": 1 ora
+      "43200": 12 ore
+      "604800": 1 settimana
+      "86400": 1 giorno
     expires_in_prompt: Mai
     generate: Genera
     invalid: Questo invito non è valido
-    invited_by: 'Sei stato invitato da:'
+    invited_by: "Sei stato invitato da:"
     max_uses:
       one: un uso
       other: "%{count} utilizzi"
@@ -1826,7 +1826,7 @@ it:
     set_redirect: Imposta reindirizzamento
     warning:
       backreference_required: Il nuovo account deve essere prima configurato per collegarsi a questo
-      before: 'Prima di procedere, leggi attentamente queste avvertenze:'
+      before: "Prima di procedere, leggi attentamente queste avvertenze:"
       cooldown: Dopo il trasferimento c'è un periodo di pausa durante il quale non potrai trasferirti di nuovo
       disabled_account: Il tuo account attuale non sarà più pienamente utilizzabile. Tuttavia, avrai accesso all'esportazione dei dati e alla riattivazione.
       followers: Questa azione sposterà tutti i follower dall'account attuale al nuovo account
@@ -1838,7 +1838,7 @@ it:
   move_handler:
     carry_blocks_over_text: Questo utente si è spostato da %{acct} che hai bloccato.
     carry_mutes_over_text: Questo utente si è spostato da %{acct} che hai silenziato.
-    copy_account_note_text: 'Questo utente si è spostato da %{acct}, ecco le tue note precedenti su di loro:'
+    copy_account_note_text: "Questo utente si è spostato da %{acct}, ecco le tue note precedenti su di loro:"
   navigation:
     toggle_menu: Cambia menu
   notification_fallbacks:
@@ -1869,7 +1869,7 @@ it:
       sign_up:
         subject: "%{name} si è iscritto"
     favourite:
-      body: 'Il tuo status è stato apprezzato da %{name}:'
+      body: "Il tuo status è stato apprezzato da %{name}:"
       subject: "%{name} ha apprezzato il tuo status"
       title: Nuovo preferito
     follow:
@@ -1879,11 +1879,11 @@ it:
     follow_request:
       action: Gestisci richieste di essere seguito
       body: "%{name} ha chiesto di seguirti"
-      subject: 'Follower in attesa: %{name}'
+      subject: "Follower in attesa: %{name}"
       title: Nuova richiesta di essere seguito
     mention:
       action: Rispondi
-      body: 'Sei stato menzionato da %{name} su:'
+      body: "Sei stato menzionato da %{name} su:"
       subject: Sei stato menzionato da %{name}
       title: Nuova menzione
     moderation_warning:
@@ -1891,13 +1891,13 @@ it:
     poll:
       subject: Un sondaggio da %{name} è terminato
     quote:
-      body: 'Il tuo post è stato citato da %{name}:'
+      body: "Il tuo post è stato citato da %{name}:"
       subject: "%{name} ha citato il tuo post"
       title: Nuova citazione
     quoted_update:
       subject: "%{name} ha modificato un post che hai citato"
     reblog:
-      body: 'Il tuo post è stato condiviso da %{name}:'
+      body: "Il tuo post è stato condiviso da %{name}:"
       subject: "%{name} ha condiviso il tuo status"
       title: Nuova condivisione
     severed_relationships:
@@ -1909,7 +1909,7 @@ it:
   notifications:
     administration_emails: Notifiche e-mail dell'amministrazione
     email_events: Eventi per notifiche e-mail
-    email_events_hint: 'Seleziona gli eventi per i quali vuoi ricevere le notifiche:'
+    email_events_hint: "Seleziona gli eventi per i quali vuoi ricevere le notifiche:"
   number:
     human:
       decimal_units:
@@ -1925,7 +1925,7 @@ it:
     description_html: Se abiliti <strong>l'autenticazione a due fattori</strong> utilizzando un'app di autenticazione, per accedere sarà necessario essere in possesso del telefono, che genererà dei codici per l'accesso.
     enable: Abilita
     instructions_html: "<strong>Scansiona questo codice QR in Google Authenticator o in un'applicazione TOTP simile sul tuo telefono</strong>. D'ora in poi, quell'app genererà i codici che dovrai inserire quando accedi."
-    manual_instructions: 'Se non riesci a scansionare il codice QR e hai bisogno di inserirlo manualmente, questo è il codice segreto in chiaro:'
+    manual_instructions: "Se non riesci a scansionare il codice QR e hai bisogno di inserirlo manualmente, questo è il codice segreto in chiaro:"
     setup: Configura
     wrong_code: Il codice inserito non è valido! Controlla che l'ora del server e l'ora del dispositivo siano esatte.
   pagination:
@@ -2000,10 +2000,10 @@ it:
     errors:
       invalid_rules: non fa riferimento a regole valide
   rss:
-    content_warning: 'Avviso sul contenuto:'
+    content_warning: "Avviso sul contenuto:"
     descriptions:
       account: Post pubblici di @%{acct}
-      tag: 'Post pubblici taggati #%{hashtag}'
+      tag: "Post pubblici taggati #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Hai superato il limite di %{limit} post programmati per questo giorno
     over_total_limit: Hai superato il limite di %{limit} post programmati
@@ -2097,7 +2097,7 @@ it:
       audio:
         one: "%{count} audio"
         other: "%{count} audio"
-      description: 'Allegato: %{attached}'
+      description: "Allegato: %{attached}"
       image:
         one: "%{count} immagine"
         other: "%{count} immagini"
@@ -2105,14 +2105,14 @@ it:
         one: "%{count} video"
         other: "%{count} video"
     boosted_from_html: Condiviso da %{acct_link}
-    content_warning: 'Avviso di contenuto: %{warning}'
+    content_warning: "Avviso di contenuto: %{warning}"
     content_warnings:
       hide: Nascondi il post
       show: Mostra di più
     default_language: Come la lingua dell'interfaccia
     disallowed_hashtags:
-      one: 'contiene un hashtag non permesso: %{tags}'
-      other: 'contiene gli hashtags non permessi: %{tags}'
+      one: "contiene un hashtag non permesso: %{tags}"
+      other: "contiene gli hashtags non permessi: %{tags}"
     edited_at_html: Modificato il %{date}
     errors:
       in_reply_not_found: Il post a cui stai tentando di rispondere non sembra esistere.
@@ -2163,14 +2163,14 @@ it:
     keep_self_fav: Conserva post che hai marcato come apprezzato
     keep_self_fav_hint: Non cancella i tuoi post se li hai marcati come apprezzati
     min_age:
-      '1209600': 2 settimane
-      '15778476': 6 mesi
-      '2629746': 1 mese
-      '31556952': 1 anno
-      '5259492': 2 mesi
-      '604800': 1 settimana
-      '63113904': 2 anni
-      '7889238': 3 mesi
+      "1209600": 2 settimane
+      "15778476": 6 mesi
+      "2629746": 1 mese
+      "31556952": 1 anno
+      "5259492": 2 mesi
+      "604800": 1 settimana
+      "63113904": 2 anni
+      "7889238": 3 mesi
     min_age_label: Soglia di età
     min_favs: Conserva i post preferiti più di
     min_favs_hint: Non cancella nessuno dei tuoi post che ha ricevuto almeno questo numero di preferiti. Lascia vuoto per cancellare i post indipendentemente dal loro numero di preferiti
@@ -2243,7 +2243,7 @@ it:
         title: Disiscriverti da %{type}?
   user_mailer:
     announcement_published:
-      description: 'Gli amministratori di %{domain} stanno facendo un annuncio:'
+      description: "Gli amministratori di %{domain} stanno facendo un annuncio:"
       subject: Annuncio di servizio
       title: Annuncio di servizio da %{domain}
     appeal_approved:
@@ -2263,22 +2263,22 @@ it:
       subject: Il tuo archivio è pronto per essere scaricato
       title: Esportazione archivio
     failed_2fa:
-      details: 'Questi sono i dettagli del tentativo di accesso:'
+      details: "Questi sono i dettagli del tentativo di accesso:"
       explanation: Qualcuno ha tentato di accedere al tuo account ma ha fornito un secondo fattore di autenticazione non valido.
       further_actions_html: Se non eri tu, ti consigliamo di %{action} immediatamente poiché potrebbe essere compromesso.
       subject: Errore di autenticazione del secondo fattore
       title: Autenticazione del secondo fattore non riuscita
     suspicious_sign_in:
       change_password: cambiare la tua password
-      details: 'Questi sono i dettagli del tentativo di accesso:'
+      details: "Questi sono i dettagli del tentativo di accesso:"
       explanation: Abbiamo rilevato un accesso al tuo account da un nuovo indirizzo IP.
       further_actions_html: Se non eri tu, ti consigliamo di %{action} subito e di abilitare l'autenticazione a due fattori per mantenere il tuo account al sicuro.
       subject: C'è stato un accesso al tuo account da un nuovo indirizzo IP
       title: Un nuovo accesso
     terms_of_service_changed:
       agreement: Continuando a usare %{domain}, accetti questi termini. Se non sei d'accordo con i termini aggiornati, puoi terminare il tuo accordo con %{domain} in qualsiasi momento eliminando il tuo account.
-      changelog: 'Ecco, in sintesi, cosa significa per te questo aggiornamento:'
-      description: 'Stai ricevendo questa e-mail perché stiamo apportando alcune modifiche ai nostri termini di servizio su %{domain}. Questi aggiornamenti entreranno in vigore il %{date}. Ti invitiamo a leggere i termini aggiornati per intero qui:'
+      changelog: "Ecco, in sintesi, cosa significa per te questo aggiornamento:"
+      description: "Stai ricevendo questa e-mail perché stiamo apportando alcune modifiche ai nostri termini di servizio su %{domain}. Questi aggiornamenti entreranno in vigore il %{date}. Ti invitiamo a leggere i termini aggiornati per intero qui:"
       description_html: Stai ricevendo questa e-mail perché stiamo apportando alcune modifiche ai nostri termini di servizio su %{domain}. Questi aggiornamenti entreranno in vigore il <strong>%{date}</strong>. Ti invitiamo a leggere i <a href="%{path}" target="_blank">termini aggiornati per intero qui</a>.
       sign_off: Il team di %{domain}
       subject: Aggiornamenti ai nostri termini di servizio
@@ -2297,8 +2297,8 @@ it:
         sensitive: D'ora in poi, tutti i file multimediali che hai caricato saranno contrassegnati come sensibili e nascosti dietro un avviso click-through.
         silence: Puoi ancora utilizzare il tuo account, ma solo le persone che già ti seguono possono vedere i tuoi post su questo server, e potresti essere escluso da varie funzionalità di ricerca. Gli altri utenti possono comunque seguirti manualmente.
         suspend: Non puoi più utilizzare il tuo account, e il tuo profilo e gli altri dati non sono più accessibili. Puoi ancora effettuare il login per richiedere un backup dei dati fino a quando i dati non saranno completamente cancellati nei prossimi 30 giorni, ma conserveremo alcuni dati di base per impedirti di eludere la sospensione.
-      reason: 'Motivo:'
-      statuses: 'Post citati:'
+      reason: "Motivo:"
+      statuses: "Post citati:"
       subject:
         delete_statuses: I tuoi post su %{acct} sono stati eliminati
         disable: Il tuo account %{acct} è stato congelato
@@ -2320,7 +2320,7 @@ it:
       apps_ios_action: Scarica dall'App Store
       apps_step: Scarica le nostre app ufficiali.
       apps_title: App di Mastodon
-      checklist_subtitle: 'Iniziamo su questa nuova frontiera sociale:'
+      checklist_subtitle: "Iniziamo su questa nuova frontiera sociale:"
       checklist_title: Lista di controllo di Benvenuto
       edit_profile_action: Personalizza
       edit_profile_step: Gli altri hanno maggiori probabilità di interagire con te se completi il tuo profilo.
@@ -2362,7 +2362,7 @@ it:
     otp_lost_help_html: Se perdessi l'accesso ad entrambi, puoi entrare in contatto con %{email}
     rate_limited: Troppi tentativi di autenticazione, per favore riprova più tardi.
     seamless_external_login: Hai effettuato l'accesso tramite un servizio esterno, pertanto le impostazioni relative alla password e all'e-mail non sono disponibili.
-    signed_in_as: 'Hai effettuato l''accesso come:'
+    signed_in_as: "Hai effettuato l'accesso come:"
   verification:
     extra_instructions_html: <strong>Suggerimento:</strong> il collegamento sul tuo sito web può essere invisibile. La parte importante è <code>rel="me"</code> che impedisce l'impersonificazione su siti web con contenuti generati dagli utenti. Puoi anche usare un tag <code>link</code> nell'intestazione della pagina invece di <code>a</code>, ma l'HTML deve essere accessibile senza eseguire JavaScript.
     here_is_how: Ecco come

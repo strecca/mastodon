@@ -7,15 +7,15 @@
   font-size: 13px;
   color: var(--color-text-secondary);
 
-  &[data-context='default'] {
+  &[data-context="default"] {
     padding: 20px 0;
   }
 
-  &[data-context='multi-column'] {
+  &[data-context="multi-column"] {
     padding: 15px;
   }
 
-  &[data-context='about'] {
+  &[data-context="about"] {
     margin-top: 60px;
     text-align: center;
     font-size: 15px;
@@ -40,10 +40,10 @@
     display: inline;
 
     &:not(:last-child)::after {
-      content: ' · ';
+      content: " · ";
 
-      @supports (content: 'x' / 'y') {
-        content: ' · ' / '';
+      @supports (content: "x" / "y") {
+        content: " · " / "";
       }
     }
   }

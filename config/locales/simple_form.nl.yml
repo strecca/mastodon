@@ -8,7 +8,7 @@ nl:
         display_name: Jouw volledige naam of een leuke bijnaam.
         fields: Jouw website, persoonlijke voornaamwoorden, leeftijd, alles wat je maar kwijt wilt.
         indexable: Jouw openbare berichten kunnen in de zoekresultaten op Mastodon verschijnen. Mensen die op jouw berichten hebben gereageerd kunnen ze sowieso doorzoeken.
-        note: 'Je kunt andere mensen @vermelden of #hashtags gebruiken.'
+        note: "Je kunt andere mensen @vermelden of #hashtags gebruiken."
         show_collections: Mensen kunnen zien wie jij volgt en wie jou volgen.
         unlocked: Mensen kunnen jou volgen zonder daarvoor toestemming te hoeven vragen. Wanneer je nieuwe volgers handmatig wil goedkeuren moet je deze optie deselecteren.
       account_alias:
@@ -76,7 +76,7 @@ nl:
         domain: Dit kan de domeinnaam zijn die wordt weergegeven in het e-mailadres of in het MX-record dat het gebruikt. Ze worden gecontroleerd tijdens de registratie.
         with_dns_records: Er wordt een poging gewaagd om de desbetreffende DNS-records op te zoeken, waarna de resultaten ook worden geblokkeerd
       featured_tag:
-        name: 'Hier zijn enkele van de hashtags die je onlangs hebt gebruikt:'
+        name: "Hier zijn enkele van de hashtags die je onlangs hebt gebruikt:"
       filters:
         action: Kies welke acties uitgevoerd moeten wanneer een bericht met het filter overeenkomt
         actions:
@@ -132,7 +132,7 @@ nl:
         hint: Optioneel. Verstrek meer details over de regel
         text: Omschrijf een regel of vereiste voor gebruikers op deze server. Probeer het kort en simpel te houden
       sessions:
-        otp: 'Voer de tweestaps-toegangscode vanaf jouw mobiele telefoon in of gebruik een van jouw herstelcodes:'
+        otp: "Voer de tweestaps-toegangscode vanaf jouw mobiele telefoon in of gebruik een van jouw herstelcodes:"
         webauthn: Wanneer het een USB-sleutel is, zorg er dan voor dat je deze in de computer steekt en, wanneer nodig, activeert.
       settings:
         email_subscriptions: Het uitschakelen behoudt bestaande abonnees, maar stopt met het verzenden van e-mails.
@@ -149,7 +149,7 @@ nl:
         arbitration_address: Kan hetzelfde zijn als bovenstaand vestigingsadres of "N/A" bij gebruik van e-mail.
         arbitration_website: Kan een webformulier zijn, of "N/A" wanneer e-mail wordt gebruikt.
         choice_of_law: Stad, regio, grondgebied of staat waar de interne materiële wetten van toepassing zijn op alle aanspraken.
-        dmca_address: 'Gebruik voor beheerders in de VS: het adres dat is geregistreerd in de DMCA Designated Agent Directory. Op verzoek is er een postbuslijst beschikbaar. Gebruik het DMCA Designated Agent Post Office Box Waiver Request om het Copyright Office te e-mailen en te beschrijven dat je een vanaf huis opererende inhoudsmoderator bent, die wraak of vergelding vreest voor je moderator-acties en daarom een postbus moet gebruiken om jouw huisadres uit het publieke domein te houden.'
+        dmca_address: "Gebruik voor beheerders in de VS: het adres dat is geregistreerd in de DMCA Designated Agent Directory. Op verzoek is er een postbuslijst beschikbaar. Gebruik het DMCA Designated Agent Post Office Box Waiver Request om het Copyright Office te e-mailen en te beschrijven dat je een vanaf huis opererende inhoudsmoderator bent, die wraak of vergelding vreest voor je moderator-acties en daarom een postbus moet gebruiken om jouw huisadres uit het publieke domein te houden."
         dmca_email: Kan hetzelfde e-mailadres zijn dat gebruikt wordt voor "E-mailadres voor juridische berichten" hierboven.
         domain: Een unieke identificatie van de online dienst die je levert.
         jurisdiction: Vermeld het land waar de persoon woont die de rekeningen betaalt. Is het een bedrijf of iets dergelijks, vermeld dan het land waar het ingeschreven staat en de stad, de regio, het grondgebied of de staat, voor zover van toepassing.
@@ -408,7 +408,7 @@ nl:
         events: Ingeschakelde gebeurtenissen
         template: Sjabloon Payload
         url: Eindpunt URL
-    'no': Nee
+    "no": Nee
     not_recommended: Niet aanbevolen
     overridden: Overschreven
     recommended: Aanbevolen
@@ -418,4 +418,4 @@ nl:
     title:
       sessions:
         webauthn: Gebruik een van uw beveiligingssleutels om in te loggen
-    'yes': Ja
+    "yes": Ja

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 const normalizeFrequencies = (arr: Float32Array): number[] => {
   return new Array(...arr).map((value: number) => {
@@ -23,9 +23,7 @@ export const useAudioVisualizer = ({
 }: AudioVisualiserOptions) => {
   const analyzerRef = useRef<AnalyserNode>();
 
-  const [frequencyBands, setFrequencyBands] = useState<number[]>(
-    new Array(numBands).fill(0),
-  );
+  const [frequencyBands, setFrequencyBands] = useState<number[]>(new Array(numBands).fill(0));
 
   useEffect(() => {
     if (audioContextRef.current) {
@@ -62,9 +60,7 @@ export const useAudioVisualizer = ({
     const updateProgress = () => {
       analyzer.getFloatFrequencyData(frequencyData);
 
-      const normalizedFrequencies = normalizeFrequencies(
-        frequencyData.slice(100, 600),
-      );
+      const normalizedFrequencies = normalizeFrequencies(frequencyData.slice(100, 600));
       const bands: number[] = [];
       const chunkSize = Math.ceil(normalizedFrequencies.length / numBands);
 

@@ -1,11 +1,6 @@
 // See app/serializers/rest/media_attachment_serializer.rb
 
-export type MediaAttachmentType =
-  | 'image'
-  | 'gifv'
-  | 'video'
-  | 'unknown'
-  | 'audio';
+export type MediaAttachmentType = "image" | "gifv" | "video" | "unknown" | "audio";
 
 export interface ApiMediaAttachmentJSON {
   id: string;

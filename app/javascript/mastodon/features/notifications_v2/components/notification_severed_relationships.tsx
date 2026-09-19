@@ -1,5 +1,5 @@
-import { RelationshipsSeveranceEvent } from 'mastodon/features/notifications/components/relationships_severance_event';
-import type { NotificationGroupSeveredRelationships } from 'mastodon/models/notification_group';
+import { RelationshipsSeveranceEvent } from "mastodon/features/notifications/components/relationships_severance_event";
+import type { NotificationGroupSeveredRelationships } from "mastodon/models/notification_group";
 
 export const NotificationSeveredRelationships: React.FC<{
   notification: NotificationGroupSeveredRelationships;

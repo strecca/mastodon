@@ -1,46 +1,46 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
+import { useCallback, useMemo, useState, useEffect } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import { isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled } from "@reduxjs/toolkit";
 
-import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
+import MoreHorizIcon from "@/material-icons/400-24px/more_horiz.svg?react";
 import {
   fetchHashtag,
   followHashtag,
   unfollowHashtag,
   featureHashtag,
   unfeatureHashtag,
-} from 'flavours/glitch/actions/tags_typed';
-import type { ApiHashtagJSON } from 'flavours/glitch/api_types/tags';
-import { Button } from 'flavours/glitch/components/button';
-import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
-import { ShortNumber } from 'flavours/glitch/components/short_number';
-import { useIdentity } from 'flavours/glitch/identity_context';
-import { PERMISSION_MANAGE_TAXONOMIES } from 'flavours/glitch/permissions';
-import { useAppDispatch } from 'flavours/glitch/store';
+} from "flavours/glitch/actions/tags_typed";
+import type { ApiHashtagJSON } from "flavours/glitch/api_types/tags";
+import { Button } from "flavours/glitch/components/button";
+import { Dropdown } from "flavours/glitch/components/dropdown_menu";
+import { ShortNumber } from "flavours/glitch/components/short_number";
+import { useIdentity } from "flavours/glitch/identity_context";
+import { PERMISSION_MANAGE_TAXONOMIES } from "flavours/glitch/permissions";
+import { useAppDispatch } from "flavours/glitch/store";
 
 const messages = defineMessages({
-  followHashtag: { id: 'hashtag.follow', defaultMessage: 'Follow hashtag' },
+  followHashtag: { id: "hashtag.follow", defaultMessage: "Follow hashtag" },
   unfollowHashtag: {
-    id: 'hashtag.unfollow',
-    defaultMessage: 'Unfollow hashtag',
+    id: "hashtag.unfollow",
+    defaultMessage: "Unfollow hashtag",
   },
   adminModeration: {
-    id: 'hashtag.admin_moderation',
-    defaultMessage: 'Open moderation interface for #{name}',
+    id: "hashtag.admin_moderation",
+    defaultMessage: "Open moderation interface for #{name}",
   },
-  feature: { id: 'hashtag.feature', defaultMessage: 'Feature on profile' },
+  feature: { id: "hashtag.feature", defaultMessage: "Feature on profile" },
   unfeature: {
-    id: 'hashtag.unfeature',
+    id: "hashtag.unfeature",
     defaultMessage: "Don't feature on profile",
   },
 });
 
 const usesRenderer = (displayNumber: React.ReactNode, pluralReady: number) => (
   <FormattedMessage
-    id='hashtag.counter_by_uses'
-    defaultMessage='{count, plural, one {{counter} post} other {{counter} posts}}'
+    id="hashtag.counter_by_uses"
+    defaultMessage="{count, plural, one {{counter} post} other {{counter} posts}}"
     values={{
       count: pluralReady,
       counter: <strong>{displayNumber}</strong>,
@@ -48,13 +48,10 @@ const usesRenderer = (displayNumber: React.ReactNode, pluralReady: number) => (
   />
 );
 
-const peopleRenderer = (
-  displayNumber: React.ReactNode,
-  pluralReady: number,
-) => (
+const peopleRenderer = (displayNumber: React.ReactNode, pluralReady: number) => (
   <FormattedMessage
-    id='hashtag.counter_by_accounts'
-    defaultMessage='{count, plural, one {{counter} participant} other {{counter} participants}}'
+    id="hashtag.counter_by_accounts"
+    defaultMessage="{count, plural, one {{counter} participant} other {{counter} participants}}"
     values={{
       count: pluralReady,
       counter: <strong>{displayNumber}</strong>,
@@ -62,13 +59,10 @@ const peopleRenderer = (
   />
 );
 
-const usesTodayRenderer = (
-  displayNumber: React.ReactNode,
-  pluralReady: number,
-) => (
+const usesTodayRenderer = (displayNumber: React.ReactNode, pluralReady: number) => (
   <FormattedMessage
-    id='hashtag.counter_by_uses_today'
-    defaultMessage='{count, plural, one {{counter} post} other {{counter} posts}} today'
+    id="hashtag.counter_by_uses_today"
+    defaultMessage="{count, plural, one {{counter} post} other {{counter} posts}} today"
     values={{
       count: pluralReady,
       counter: <strong>{displayNumber}</strong>,
@@ -90,7 +84,7 @@ export const HashtagHeader: React.FC<{
         setTag(result.payload);
       }
 
-      return '';
+      return "";
     });
   }, [dispatch, tagId, setTag]);
 
@@ -105,7 +99,7 @@ export const HashtagHeader: React.FC<{
               setTag(result.payload);
             }
 
-            return '';
+            return "";
           });
         } else {
           void dispatch(featureHashtag({ tagId })).then((result) => {
@@ -113,24 +107,19 @@ export const HashtagHeader: React.FC<{
               setTag(result.payload);
             }
 
-            return '';
+            return "";
           });
         }
       };
 
       arr.push({
-        text: intl.formatMessage(
-          tag.featuring ? messages.unfeature : messages.feature,
-        ),
+        text: intl.formatMessage(tag.featuring ? messages.unfeature : messages.feature),
         action: handleFeature,
       });
 
       arr.push(null);
 
-      if (
-        (permissions & PERMISSION_MANAGE_TAXONOMIES) ===
-        PERMISSION_MANAGE_TAXONOMIES
-      ) {
+      if ((permissions & PERMISSION_MANAGE_TAXONOMIES) === PERMISSION_MANAGE_TAXONOMIES) {
         arr.push({
           text: intl.formatMessage(messages.adminModeration, { name: tagId }),
           href: `/admin/tags/${tag.id}`,
@@ -154,7 +143,7 @@ export const HashtagHeader: React.FC<{
           setTag(result.payload);
         }
 
-        return '';
+        return "";
       });
     } else {
       setTag((hashtag) => hashtag && { ...hashtag, following: true });
@@ -164,7 +153,7 @@ export const HashtagHeader: React.FC<{
           setTag(result.payload);
         }
 
-        return '';
+        return "";
       });
     }
   }, [dispatch, setTag, signedIn, tag, tagId]);
@@ -174,25 +163,22 @@ export const HashtagHeader: React.FC<{
   }
 
   const [uses, people] = tag.history.reduce(
-    (arr, day) => [
-      arr[0] + parseInt(day.uses),
-      arr[1] + parseInt(day.accounts),
-    ],
+    (arr, day) => [arr[0] + parseInt(day.uses), arr[1] + parseInt(day.accounts)],
     [0, 0],
   );
-  const dividingCircle = <span aria-hidden>{' · '}</span>;
+  const dividingCircle = <span aria-hidden>{" · "}</span>;
 
   return (
-    <div className='hashtag-header'>
-      <div className='hashtag-header__header'>
+    <div className="hashtag-header">
+      <div className="hashtag-header__header">
         <h1>#{tag.name}</h1>
 
-        <div className='hashtag-header__header__buttons'>
+        <div className="hashtag-header__header__buttons">
           {menu.length > 0 && (
             <Dropdown
               disabled={menu.length === 0}
               items={menu}
-              icon='ellipsis-v'
+              icon="ellipsis-v"
               iconComponent={MoreHorizIcon}
             />
           )}
@@ -201,9 +187,7 @@ export const HashtagHeader: React.FC<{
             <Button
               onClick={handleFollow}
               text={intl.formatMessage(
-                tag.following
-                  ? messages.unfollowHashtag
-                  : messages.followHashtag,
+                tag.following ? messages.unfollowHashtag : messages.followHashtag,
               )}
             />
           )}
@@ -215,10 +199,7 @@ export const HashtagHeader: React.FC<{
         {dividingCircle}
         <ShortNumber value={people} renderer={peopleRenderer} />
         {dividingCircle}
-        <ShortNumber
-          value={parseInt(tag.history[0].uses)}
-          renderer={usesTodayRenderer}
-        />
+        <ShortNumber value={parseInt(tag.history[0].uses)} renderer={usesTodayRenderer} />
       </div>
     </div>
   );

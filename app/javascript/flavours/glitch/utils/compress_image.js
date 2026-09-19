@@ -51,14 +51,14 @@ export const compressImage = (file, { maxPx = 1280, quality = 0.82, onLargeFile 
     const sizeMB = file.size / 1024 / 1024;
 
     if (sizeMB > MAX_REJECT_MB) {
-      const err = new Error('too_large');
+      const err = new Error("too_large");
       err.sizeMB = Math.round(sizeMB);
       reject(err);
       return;
     }
     if (sizeMB > WARN_ABOVE_MB) onLargeFile?.(Math.round(sizeMB));
 
-    if (!file.type.startsWith('image/') || file.type === 'image/gif') {
+    if (!file.type.startsWith("image/") || file.type === "image/gif") {
       resolve(file);
       return;
     }
@@ -69,33 +69,40 @@ export const compressImage = (file, { maxPx = 1280, quality = 0.82, onLargeFile 
     img.onload = () => {
       URL.revokeObjectURL(blobUrl);
 
-      if (file.type === 'image/jpeg' && img.width <= maxPx && img.height <= maxPx) {
+      if (file.type === "image/jpeg" && img.width <= maxPx && img.height <= maxPx) {
         resolve(file);
         return;
       }
 
-      const scale  = Math.min(1, maxPx / img.width, maxPx / img.height);
-      const width  = Math.round(img.width * scale);
+      const scale = Math.min(1, maxPx / img.width, maxPx / img.height);
+      const width = Math.round(img.width * scale);
       const height = Math.round(img.height * scale);
 
-      const canvas = document.createElement('canvas');
-      canvas.width  = width;
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
       canvas.height = height;
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0, width, height);
 
-      const keepAsPng = file.type === 'image/png' && hasRealTransparency(ctx, width, height);
+      const keepAsPng = file.type === "image/png" && hasRealTransparency(ctx, width, height);
 
-      canvas.toBlob((blob) => {
-        if (!blob || blob.size >= file.size) {
-          resolve(file); // compression didn't help (or failed) -- use original
-          return;
-        }
-        const extension = keepAsPng ? '.png' : '.jpg';
-        resolve(new File([blob], file.name.replace(/\.[^.]+$/, extension), { type: blob.type }));
-      }, keepAsPng ? 'image/png' : 'image/jpeg', keepAsPng ? undefined : quality);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob || blob.size >= file.size) {
+            resolve(file); // compression didn't help (or failed) -- use original
+            return;
+          }
+          const extension = keepAsPng ? ".png" : ".jpg";
+          resolve(new File([blob], file.name.replace(/\.[^.]+$/, extension), { type: blob.type }));
+        },
+        keepAsPng ? "image/png" : "image/jpeg",
+        keepAsPng ? undefined : quality,
+      );
     };
 
-    img.onerror = () => { URL.revokeObjectURL(blobUrl); resolve(file); };
+    img.onerror = () => {
+      URL.revokeObjectURL(blobUrl);
+      resolve(file);
+    };
     img.src = blobUrl;
   });

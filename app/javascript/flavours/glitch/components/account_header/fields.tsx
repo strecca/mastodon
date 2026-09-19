@@ -1,40 +1,40 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import type { FC } from 'react';
+import { useCallback, useMemo, useRef, useState } from "react";
+import type { FC } from "react";
 
-import { defineMessage, useIntl } from 'react-intl';
+import { defineMessage, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { openModal } from '@/flavours/glitch/actions/modal';
-import { useFieldHtml } from '@/flavours/glitch/features/account_timeline/hooks/useFieldHtml';
-import { cleanExtraEmojis } from '@/flavours/glitch/features/emoji/normalize';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import { useResizeObserver } from '@/flavours/glitch/hooks/useObserver';
-import type { AccountFieldShape } from '@/flavours/glitch/models/account';
-import { useAppDispatch } from '@/flavours/glitch/store';
-import IconVerified from '@/images/icons/icon_verified.svg?react';
-import MoreIcon from '@/material-icons/400-24px/more_horiz.svg?react';
+import { openModal } from "@/flavours/glitch/actions/modal";
+import { useFieldHtml } from "@/flavours/glitch/features/account_timeline/hooks/useFieldHtml";
+import { cleanExtraEmojis } from "@/flavours/glitch/features/emoji/normalize";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import { useResizeObserver } from "@/flavours/glitch/hooks/useObserver";
+import type { AccountFieldShape } from "@/flavours/glitch/models/account";
+import { useAppDispatch } from "@/flavours/glitch/store";
+import IconVerified from "@/images/icons/icon_verified.svg?react";
+import MoreIcon from "@/material-icons/400-24px/more_horiz.svg?react";
 
-import { CustomEmojiProvider } from '../emoji/context';
-import type { EmojiHTMLProps } from '../emoji/html';
-import { EmojiHTML } from '../emoji/html';
-import { Icon } from '../icon';
-import { IconButton } from '../icon_button';
-import { MiniCard } from '../mini_card';
-import { useElementHandledLink } from '../status/handled_link';
+import { CustomEmojiProvider } from "../emoji/context";
+import type { EmojiHTMLProps } from "../emoji/html";
+import { EmojiHTML } from "../emoji/html";
+import { Icon } from "../icon";
+import { IconButton } from "../icon_button";
+import { MiniCard } from "../mini_card";
+import { useElementHandledLink } from "../status/handled_link";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const verifyMessage = defineMessage({
-  id: 'account.link_verified_on',
-  defaultMessage: 'Ownership of this link was checked on {date}',
+  id: "account.link_verified_on",
+  defaultMessage: "Ownership of this link was checked on {date}",
 });
 const dateFormatOptions: Intl.DateTimeFormatOptions = {
-  month: 'short',
-  day: 'numeric',
-  year: 'numeric',
-  hour: '2-digit',
-  minute: '2-digit',
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
 };
 
 export interface AccountField extends AccountFieldShape {
@@ -43,15 +43,10 @@ export interface AccountField extends AccountFieldShape {
   valueHasEmojis: boolean;
 }
 
-export const AccountHeaderFields: FC<{ accountId: string }> = ({
-  accountId,
-}) => {
+export const AccountHeaderFields: FC<{ accountId: string }> = ({ accountId }) => {
   const account = useAccount(accountId);
 
-  const emojis = useMemo(
-    () => cleanExtraEmojis(account?.emojis),
-    [account?.emojis],
-  );
+  const emojis = useMemo(() => cleanExtraEmojis(account?.emojis), [account?.emojis]);
   const accountFields = account?.fields;
   const fields: AccountField[] = useMemo(() => {
     const fields = accountFields?.toJS();
@@ -63,7 +58,7 @@ export const AccountHeaderFields: FC<{ accountId: string }> = ({
       return fields.map((field) => ({
         ...field,
         nameHasEmojis: false,
-        value_plain: field.value_plain ?? '',
+        value_plain: field.value_plain ?? "",
         valueHasEmojis: false,
       }));
     }
@@ -71,13 +66,9 @@ export const AccountHeaderFields: FC<{ accountId: string }> = ({
     const shortcodes = Object.keys(emojis);
     return fields.map((field) => ({
       ...field,
-      nameHasEmojis: shortcodes.some((code) =>
-        field.name.includes(`:${code}:`),
-      ),
-      value_plain: field.value_plain ?? '',
-      valueHasEmojis: shortcodes.some((code) =>
-        field.value_plain?.includes(`:${code}:`),
-      ),
+      nameHasEmojis: shortcodes.some((code) => field.name.includes(`:${code}:`)),
+      value_plain: field.value_plain ?? "",
+      valueHasEmojis: shortcodes.some((code) => field.value_plain?.includes(`:${code}:`)),
     }));
   }, [accountFields, emojis]);
 
@@ -107,22 +98,15 @@ const FieldCard: FC<{
   field: AccountField;
 }> = ({ htmlHandlers, field }) => {
   const intl = useIntl();
-  const {
-    name_emojified,
-    nameHasEmojis,
-    value_emojified,
-    valueHasEmojis,
-    verified_at,
-  } = field;
+  const { name_emojified, nameHasEmojis, value_emojified, valueHasEmojis, verified_at } = field;
 
-  const { wrapperRef, isLabelOverflowing, isValueOverflowing } =
-    useFieldOverflow();
+  const { wrapperRef, isLabelOverflowing, isValueOverflowing } = useFieldOverflow();
 
   const dispatch = useAppDispatch();
   const handleOverflowClick = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'ACCOUNT_FIELD_OVERFLOW',
+        modalType: "ACCOUNT_FIELD_OVERFLOW",
         modalProps: { field },
       }),
     );
@@ -130,15 +114,12 @@ const FieldCard: FC<{
 
   return (
     <MiniCard
-      className={classNames(
-        classes.fieldItem,
-        verified_at && classes.fieldVerified,
-      )}
+      className={classNames(classes.fieldItem, verified_at && classes.fieldVerified)}
       label={
         <FieldHTML
           text={name_emojified}
           textHasCustomEmoji={nameHasEmojis}
-          className='translate'
+          className="translate"
           isOverflowing={isLabelOverflowing}
           onOverflowClick={handleOverflowClick}
           {...htmlHandlers}
@@ -162,7 +143,7 @@ const FieldCard: FC<{
             date: intl.formatDate(verified_at, dateFormatOptions),
           })}
         >
-          <Icon id='verified' icon={IconVerified} noFill />
+          <Icon id="verified" icon={IconVerified} noFill />
         </span>
       )}
     </MiniCard>
@@ -174,7 +155,7 @@ type FieldHTMLProps = {
   textHasCustomEmoji: boolean;
   isOverflowing?: boolean;
   onOverflowClick?: () => void;
-} & Omit<EmojiHTMLProps, 'htmlString'>;
+} & Omit<EmojiHTMLProps, "htmlString">;
 
 const FieldHTML: FC<FieldHTMLProps> = ({
   className,
@@ -190,7 +171,7 @@ const FieldHTML: FC<FieldHTMLProps> = ({
 
   const html = (
     <EmojiHTML
-      as='span'
+      as="span"
       htmlString={text}
       className={className}
       onElement={handleElement}
@@ -206,11 +187,11 @@ const FieldHTML: FC<FieldHTMLProps> = ({
     <>
       {html}
       <IconButton
-        icon='ellipsis'
+        icon="ellipsis"
         iconComponent={MoreIcon}
         title={intl.formatMessage({
-          id: 'account.field_overflow',
-          defaultMessage: 'Show full content',
+          id: "account.field_overflow",
+          defaultMessage: "Show full content",
         })}
         className={classes.fieldOverflowButton}
         onClick={onOverflowClick}
@@ -230,8 +211,8 @@ function useColumnWrap() {
 
     // Calculate dimensions from styles and element size to determine column spans.
     const styles = getComputedStyle(listEle);
-    const gap = parseFloat(styles.columnGap || styles.gap || '0');
-    const columnCount = parseInt(styles.getPropertyValue('--cols')) || 2;
+    const gap = parseFloat(styles.columnGap || styles.gap || "0");
+    const columnCount = parseInt(styles.getPropertyValue("--cols")) || 2;
     const listWidth = listEle.offsetWidth;
     const colWidth = (listWidth - gap * (columnCount - 1)) / columnCount;
     const halfColSpan = columnCount / 2;
@@ -247,24 +228,19 @@ function useColumnWrap() {
       }
 
       // This uses a data attribute to detect which elements to measure that overflow.
-      const contents = child.querySelectorAll('[data-contents]');
+      const contents = child.querySelectorAll("[data-contents]");
 
       const childStyles = getComputedStyle(child);
-      const padding =
-        parseFloat(childStyles.paddingLeft) +
-        parseFloat(childStyles.paddingRight);
+      const padding = parseFloat(childStyles.paddingLeft) + parseFloat(childStyles.paddingRight);
 
       const contentWidth =
-        Math.max(
-          ...Array.from(contents).map((content) => content.scrollWidth),
-        ) + padding;
+        Math.max(...Array.from(contents).map((content) => content.scrollWidth)) + padding;
 
       const contentSpan = Math.ceil(contentWidth / colWidth);
       const maxColSpan = Math.min(contentSpan, columnCount);
 
       const curRow = itemGrid[currentRow] ?? [];
-      const availableCols =
-        columnCount - curRow.reduce((carry, curr) => carry + curr.span, 0);
+      const availableCols = columnCount - curRow.reduce((carry, curr) => carry + curr.span, 0);
       // Move to next row if current item doesn't fit.
       if (maxColSpan > availableCols) {
         currentRow++;
@@ -344,19 +320,11 @@ function useFieldOverflow() {
       parseFloat(wrapperStyles.borderRightWidth);
     const availableContentWidth = wrapperEle.offsetWidth - nonContentWidth;
 
-    const label = wrapperEle.querySelector<HTMLSpanElement>(
-      'dt > [data-contents]',
-    );
-    const value = wrapperEle.querySelector<HTMLSpanElement>(
-      'dd > [data-contents]',
-    );
+    const label = wrapperEle.querySelector<HTMLSpanElement>("dt > [data-contents]");
+    const value = wrapperEle.querySelector<HTMLSpanElement>("dd > [data-contents]");
 
-    setIsLabelOverflowing(
-      label ? label.scrollWidth > availableContentWidth : false,
-    );
-    setIsValueOverflowing(
-      value ? value.scrollWidth > availableContentWidth : false,
-    );
+    setIsLabelOverflowing(label ? label.scrollWidth > availableContentWidth : false);
+    setIsValueOverflowing(value ? value.scrollWidth > availableContentWidth : false);
   }, []);
 
   const observer = useResizeObserver(handleRecalculate);

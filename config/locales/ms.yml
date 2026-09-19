@@ -1,7 +1,7 @@
 ---
 ms:
   about:
-    about_mastodon_html: 'Rangkaian sosial masa hadapan: Tiada iklan, tiada pengawasan korporat, reka bentuk beretika, dan desentralisasi! Miliki data anda dengan Mastodon!'
+    about_mastodon_html: "Rangkaian sosial masa hadapan: Tiada iklan, tiada pengawasan korporat, reka bentuk beretika, dan desentralisasi! Miliki data anda dengan Mastodon!"
     contact_missing: Tidak ditetapkan
     contact_unavailable: Tidak tersedia
     hosted_on: Mastodon dihoskan di %{domain}
@@ -421,10 +421,10 @@ ms:
       import:
         description_html: Anda akan mengimport senarai blok domain. Sila semak senarai ini dengan teliti, terutamanya jika anda belum mengarang senarai ini sendiri.
         existing_relationships_warning: Hubungan ikut sedia ada
-        private_comment_description_html: 'Untuk membantu anda menjejak dari mana datangnya blok yang diimport, blok yang diimport akan dibuat dengan ulasan peribadi berikut: <q>%{comment}</q>'
+        private_comment_description_html: "Untuk membantu anda menjejak dari mana datangnya blok yang diimport, blok yang diimport akan dibuat dengan ulasan peribadi berikut: <q>%{comment}</q>"
         private_comment_template: Diimport daripada %{source} pada %{date}
         title: Import blok domain
-      invalid_domain_block: 'Satu atau lebih blok domain telah dilangkau kerana ralat berikut: %{error}'
+      invalid_domain_block: "Satu atau lebih blok domain telah dilangkau kerana ralat berikut: %{error}"
       new:
         title: Import blok domain
       no_file: Tiada fail yang dipilih
@@ -515,12 +515,12 @@ ms:
       created_msg: Telah berjaya menambah peraturan alamat IP baharu
       delete: Padam
       expires_in:
-        '1209600': 2 minggu
-        '15778476': 6 bulan
-        '2629746': 1 bulan
-        '31556952': 1 tahun
-        '86400': 1 hari
-        '94670856': 3 tahun
+        "1209600": 2 minggu
+        "15778476": 6 bulan
+        "2629746": 1 bulan
+        "31556952": 1 tahun
+        "86400": 1 hari
+        "94670856": 3 tahun
       new:
         title: Cipta peraturan alamat IP baharu
       no_ip_block_selected: Tiada peraturan alamat IP diubah kerana tiada yang dipilih
@@ -569,7 +569,7 @@ ms:
       category_description_html: Sebab akaun dan/atau kandungan ini dilaporkan akan disebut dalam komunikasi dengan akaun yang dilaporkan
       comment:
         none: Tiada
-      comment_description_html: 'Untuk memberikan maklumat lanjut, %{name} menulis:'
+      comment_description_html: "Untuk memberikan maklumat lanjut, %{name} menulis:"
       confirm: Konfirm
       confirm_action: Sahkan tindakan penyederhanaan terhadap @%{acct}
       created_at: Dilaporkan
@@ -587,11 +587,11 @@ ms:
         placeholder: Terangkan tindakan apa yang telah diambil, atau sebarang kemas kini lain yang berkaitan...
         title: Catatan
       notes_description_html: Lihat dan tinggalkan nota kepada moderator lain dan diri masa depan anda
-      processed_msg: 'Laporan #%{id} berjaya diproses'
-      quick_actions_description_html: 'Ambil tindakan pantas atau tatal ke bawah untuk melihat kandungan yang dilaporkan:'
+      processed_msg: "Laporan #%{id} berjaya diproses"
+      quick_actions_description_html: "Ambil tindakan pantas atau tatal ke bawah untuk melihat kandungan yang dilaporkan:"
       remote_user_placeholder: pengguna jauh dari %{instance}
       reopen: Buka semula laporan
-      report: 'Laporan #%{id}'
+      report: "Laporan #%{id}"
       reported_account: Akaun yang dilaporkan
       reported_by: Dilaporkan oleh
       resolved: Diselesaikan
@@ -601,16 +601,16 @@ ms:
       statuses_description_html: Kandungan yang menyinggung perasaan akan disebut dalam komunikasi dengan akaun yang dilaporkan
       summary:
         action_preambles:
-          delete_html: 'Anda akan <strong>mengalih keluar</strong> beberapa siaran <strong>@%{acct}</strong>. Ini akan:'
-          mark_as_sensitive_html: 'Anda akan <strong>menandai</strong> beberapa siaran <strong>@%{acct}</strong> sebagai <strong>sensitif</strong>. Ini akan:'
-          silence_html: 'Anda akan <strong>menghadkan</strong> akaun <strong>@%{acct}</strong>. Ini akan:'
-          suspend_html: 'Anda akan <strong>menggantung</strong> akaun <strong>@%{acct}</strong>. Ini akan:'
+          delete_html: "Anda akan <strong>mengalih keluar</strong> beberapa siaran <strong>@%{acct}</strong>. Ini akan:"
+          mark_as_sensitive_html: "Anda akan <strong>menandai</strong> beberapa siaran <strong>@%{acct}</strong> sebagai <strong>sensitif</strong>. Ini akan:"
+          silence_html: "Anda akan <strong>menghadkan</strong> akaun <strong>@%{acct}</strong>. Ini akan:"
+          suspend_html: "Anda akan <strong>menggantung</strong> akaun <strong>@%{acct}</strong>. Ini akan:"
         actions:
           delete_html: Alih keluar pos yang menyinggung perasaan
           mark_as_sensitive_html: Tandai media pos yang menyinggung perasaan sebagai sensitif
           silence_html: Hadkan capaian <strong>@%{acct}</strong> dengan ketat dengan menjadikan profil dan kandungan mereka hanya kelihatan kepada orang yang sudah mengikuti mereka atau melihat profil itu secara manual
           suspend_html: Gantung <strong>@%{acct}</strong>, menjadikan profil dan kandungan mereka tidak boleh diakses dan mustahil untuk berinteraksi dengannya
-        close_report: 'Tandai laporan #%{id} sebagai diselesaikan'
+        close_report: "Tandai laporan #%{id} sebagai diselesaikan"
         close_reports_html: Tandai <strong>semua</strong> laporan terhadap <strong>@%{acct}</strong> sebagai telah diselesaikan
         delete_data_html: Padamkan profil dan kandungan <strong>@%{acct}</strong> 30 hari dari sekarang melainkan mereka dibatalkan penggantungan buat sementara waktu
         preview_preamble_html: "<strong>@%{acct}</strong> akan menerima amaran dengan kandungan berikut:"
@@ -619,7 +619,7 @@ ms:
       target_origin: Asalan akaun yang dilaporkan
       title: Laporan
       unassign: Nyahtugaskan
-      unknown_action_msg: 'Tindakan tidak diketahui: %{action}'
+      unknown_action_msg: "Tindakan tidak diketahui: %{action}"
       unresolved: Nyahselesaikan
       updated_at: Dikemaskini
       view_profile: Lihat profil
@@ -802,7 +802,7 @@ ms:
       elasticsearch_running_check:
         message_html: Tidak dapat menyambung ke Elasticsearch. Sila semak sama ada ia sedang berjalan atau lumpuhkan carian teks penuh
       elasticsearch_version_check:
-        message_html: 'Versi Elasticsearch tidak serasi: %{value}'
+        message_html: "Versi Elasticsearch tidak serasi: %{value}"
         version_comparison: Elasticsearch %{running_version} sedang berjalan manakala %{required_version} diperlukan
       rules_check:
         action: Urus peraturan server
@@ -879,7 +879,7 @@ ms:
         peaked_on_and_decaying: Di atas pada %{date}, kini menurun
         title: Tanda pagar sedang sohor kini
         trendable: Boleh muncul di bawah sohor kini
-        trending_rank: 'Sohor kini #%{rank}'
+        trending_rank: "Sohor kini #%{rank}"
         usable: Boleh digunakan
         usage_comparison: Digunakan %{today} kali hari ini, berbanding %{yesterday} semalam
         used_by_over_week:
@@ -936,7 +936,7 @@ ms:
       body: Versi baharu Mastodon telah dikeluarkan, anda mungkin mahu mengemas kini!
       subject: Versi baharu Mastodon telah tersedia untuk %{instance}!
     new_trends:
-      body: 'Item berikut memerlukan semakan sebelum boleh dipaparkan secara terbuka:'
+      body: "Item berikut memerlukan semakan sebelum boleh dipaparkan secara terbuka:"
       new_trending_links:
         title: Pautan sohor kini
       new_trending_statuses:
@@ -962,7 +962,7 @@ ms:
   application_mailer:
     salutation: "%{name},"
     unsubscribe: Nyahlanggan
-    view: 'Lihat:'
+    view: "Lihat:"
     view_profile: Lihat profil
     view_status: Lihat hantaran
   applications:
@@ -1011,7 +1011,7 @@ ms:
     rules:
       accept: Terima
       back: Kembali
-      invited_by: 'Anda boleh menyertai %{domain} terima kasih kepada jemputan yang anda terima daripada:'
+      invited_by: "Anda boleh menyertai %{domain} terima kasih kepada jemputan yang anda terima daripada:"
       preamble: Ini ditetapkan dan dikuatkuasakan oleh penyederhana %{domain}.
       preamble_invited: Sebelum anda meneruskan, sila pertimbangkan peraturan asas yang ditetapkan oleh penyederhana %{domain}.
       title: Beberapa peraturan asas.
@@ -1068,7 +1068,7 @@ ms:
     proceed: Padam akaun
     success_msg: Akaun anda telah berjaya dipadamkan
     warning:
-      before: 'Sebelum meneruskan, sila baca nota ini dengan teliti:'
+      before: "Sebelum meneruskan, sila baca nota ini dengan teliti:"
       caches: Kandungan yang telah dicache oleh server lain mungkin berterusan
       data_removal: Pos anda dan data lain akan dialih keluar secara kekal
       irreversible: Anda tidak akan dapat memulihkan atau mengaktifkan semula akaun anda
@@ -1091,7 +1091,7 @@ ms:
       description_html: Ini ialah tindakan yang diambil terhadap akaun anda dan amaran telah dihantarkan kepada anda oleh staf %{instance}.
       recipient: Ditujukan kepada
       reject_appeal: Tolak rayuan
-      status: 'Hantaran #%{id}'
+      status: "Hantaran #%{id}"
       status_removed: Hantaran sudah dikeluarkan daripada sistem
       title: "%{action} dari %{date}"
       title_actions:
@@ -1108,19 +1108,19 @@ ms:
   edit_profile:
     other: Lain-lain
   errors:
-    '400': Permintaan yang anda serahkan tidak sah atau salah bentuk.
-    '403': Anda tidak mempunyai kebenaran untuk melihat halaman ini.
-    '404': Halaman yang anda cari tiada di sini.
-    '406': Halaman ini tidak tersedia dalam format yang diminta.
-    '410': Halaman yang anda cari tidak wujud di sini lagi.
-    '422':
+    "400": Permintaan yang anda serahkan tidak sah atau salah bentuk.
+    "403": Anda tidak mempunyai kebenaran untuk melihat halaman ini.
+    "404": Halaman yang anda cari tiada di sini.
+    "406": Halaman ini tidak tersedia dalam format yang diminta.
+    "410": Halaman yang anda cari tidak wujud di sini lagi.
+    "422":
       content: Pengesahan keselamatan gagal. Adakah anda menyekat kuki?
       title: Pengesahan keselamatan gagal
-    '429': Terlalu banyak permintaan
-    '500':
+    "429": Terlalu banyak permintaan
+    "500":
       content: Kami minta maaf, tetapi ada masalah di pihak kami.
       title: Halaman ini tidak betul
-    '503': Halaman tidak dapat disampaikan kerana kegagalan pelayan sementara.
+    "503": Halaman tidak dapat disampaikan kerana kegagalan pelayan sementara.
     noscript_html: Untuk menggunakan aplikasi web Mastodon, sila dayakan JavaScript. Sebagai alternatif, cuba salah satu <a href="%{apps_path}">apl asli</a> untuk Mastodon untuk platform anda.
   existing_username_validator:
     not_found: tidak dapat mencari pengguna tempatan dengan nama pengguna itu
@@ -1200,7 +1200,7 @@ ms:
     errors:
       empty: Fail CSV kosong
       incompatible_type: Tidak serasi dengan jenis import yang dipilih
-      invalid_csv_file: 'Fail CSV tidak sah. Ralat: %{error}'
+      invalid_csv_file: "Fail CSV tidak sah. Ralat: %{error}"
       over_rows_processing_limit: mengandungi lebih daripada %{count} baris
       too_large: Fail terlalu besar
     failures: Kegagalan
@@ -1244,15 +1244,15 @@ ms:
     delete: Nyahaktifkan
     expired: Tamat tempoh
     expires_in:
-      '1800': 30 minit
-      '21600': 6 jam
-      '3600': Sejam
-      '43200': 12 jam
-      '604800': Seminggu
-      '86400': Sehari
+      "1800": 30 minit
+      "21600": 6 jam
+      "3600": Sejam
+      "43200": 12 jam
+      "604800": Seminggu
+      "86400": Sehari
     expires_in_prompt: Jangan
     generate: Hasilkan pautan jemputan
-    invited_by: 'Anda telah dijemput oleh:'
+    invited_by: "Anda telah dijemput oleh:"
     max_uses_prompt: Tiada had
     prompt: Jana dan kongsi pautan dengan orang lain untuk memberikan akses kepada server ini
     table:
@@ -1300,7 +1300,7 @@ ms:
     set_redirect: Tetapkan ubah hala
     warning:
       backreference_required: Akaun baharu mesti terlebih dahulu dikonfigurasikan untuk merujuk semula akaun ini
-      before: 'Sebelum meneruskan, sila baca nota ini dengan teliti:'
+      before: "Sebelum meneruskan, sila baca nota ini dengan teliti:"
       cooldown: Selepas berpindah terdapat tempoh menunggu di mana anda tidak akan dapat bergerak lagi
       disabled_account: Akaun semasa anda tidak akan dapat digunakan sepenuhnya selepas itu. Walau bagaimanapun, anda akan mempunyai akses kepada eksport data serta pengaktifan semula.
       followers: Tindakan ini akan mengalihkan semua pengikut daripada akaun semasa ke akaun baharu
@@ -1311,7 +1311,7 @@ ms:
   move_handler:
     carry_blocks_over_text: Pengguna ini berpindah dari %{acct}, yang telah anda sekat.
     carry_mutes_over_text: Pengguna ini berpindah dari %{acct}, yang telah anda redamkan.
-    copy_account_note_text: 'Pengguna ini berpindah dari %{acct}, berikut ialah nota anda yang terdahulu tentang mereka:'
+    copy_account_note_text: "Pengguna ini berpindah dari %{acct}, berikut ialah nota anda yang terdahulu tentang mereka:"
   navigation:
     toggle_menu: Togol menu
   notification_mailer:
@@ -1321,7 +1321,7 @@ ms:
       sign_up:
         subject: "%{name} telah mendaftar"
     favourite:
-      body: 'Hantaran anda disukai oleh %{name}:'
+      body: "Hantaran anda disukai oleh %{name}:"
       subject: "%{name} menyukai hantaran anda"
       title: Sukaan baharu
     follow:
@@ -1331,17 +1331,17 @@ ms:
     follow_request:
       action: Urus permintaan ikut
       body: "%{name} telah meminta untuk mengikuti anda"
-      subject: 'Pengikut belum selesai: %{name}'
+      subject: "Pengikut belum selesai: %{name}"
       title: Permintaan ikutan baru
     mention:
       action: Balas
-      body: 'Anda telah disebut oleh %{name} dalam:'
+      body: "Anda telah disebut oleh %{name} dalam:"
       subject: Anda telah disebut oleh %{name}
       title: Sebutan baru
     poll:
       subject: Tinjauan pendapat oleh %{name} telah tamat
     reblog:
-      body: 'Siaran anda telah dirangsang oleh %{name}:'
+      body: "Siaran anda telah dirangsang oleh %{name}:"
       subject: "%{name} meningkatkan siaran anda"
       title: Rangsangan baru
     status:
@@ -1349,7 +1349,7 @@ ms:
     update:
       subject: "%{name} telah menyunting satu hantaran"
   notifications:
-    email_events_hint: 'Pilih acara yang ingin anda terima pemberitahuan:'
+    email_events_hint: "Pilih acara yang ingin anda terima pemberitahuan:"
   number:
     human:
       decimal_units:
@@ -1365,7 +1365,7 @@ ms:
     description_html: Jika anda mendayakan <strong>pengesahan dua faktor</strong> menggunakan apl pengesah, log masuk memerlukan anda untuk memiliki telefon anda, yang akan menjana token untuk anda masukkan.
     enable: Dayakan
     instructions_html: "<strong>Imbas kod QR ini ke dalam Google Authenticator atau apl TOTP serupa pada telefon anda</strong>. Mulai sekarang, aplikasi itu akan menjana token yang perlu anda masukkan semasa log masuk."
-    manual_instructions: 'Jika anda tidak dapat mengimbas kod QR dan perlu memasukkannya secara manual, berikut ialah rahsia teks biasa:'
+    manual_instructions: "Jika anda tidak dapat mengimbas kod QR dan perlu memasukkannya secara manual, berikut ialah rahsia teks biasa:"
     setup: Sediakan
     wrong_code: Kod yang dimasukkan adalah tidak sah! Adakah masa server dan masa peranti betul?
   pagination:
@@ -1432,10 +1432,10 @@ ms:
     errors:
       invalid_rules: tidak merujuk peraturan yang sah
   rss:
-    content_warning: 'Amaran kandungan:'
+    content_warning: "Amaran kandungan:"
     descriptions:
       account: Pos awam daripada @%{acct}
-      tag: 'Siaran awam ditandakan #%{hashtag}'
+      tag: "Siaran awam ditandakan #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Anda telah melebihi had %{limit} pos berjadual untuk hari ini
     over_total_limit: Anda telah melebihi had %{limit} pos berjadual
@@ -1512,16 +1512,16 @@ ms:
     attached:
       audio:
         other: "%{count} audio"
-      description: 'Dilampirkan: %{attached}'
+      description: "Dilampirkan: %{attached}"
       image:
         other: "%{count} imej"
       video:
         other: "%{count} video"
     boosted_from_html: Dirangsang daripada %{acct_link}
-    content_warning: 'Amaran kandungan: %{warning}'
+    content_warning: "Amaran kandungan: %{warning}"
     default_language: Sama dengan bahasa antara muka
     disallowed_hashtags:
-      other: 'mengandungi hashtag yang tidak dibenarkan: %{tags}'
+      other: "mengandungi hashtag yang tidak dibenarkan: %{tags}"
     edited_at_html: Disunting %{date}
     errors:
       in_reply_not_found: Pos yang anda cuba balas nampaknya tidak wujud.
@@ -1554,14 +1554,14 @@ ms:
     keep_self_fav: Simpan hantaran yang anda gemarkan
     keep_self_fav_hint: Tidak memadamkan hantaran anda jika anda telah menggemarkannya
     min_age:
-      '1209600': 2 minggu
-      '15778476': 6 bulan
-      '2629746': Sebulan
-      '31556952': Setahun
-      '5259492': 2 bulan
-      '604800': Seminggu
-      '63113904': 2 tahun
-      '7889238': 3 bulan
+      "1209600": 2 minggu
+      "15778476": 6 bulan
+      "2629746": Sebulan
+      "31556952": Setahun
+      "5259492": 2 bulan
+      "604800": Seminggu
+      "63113904": 2 tahun
+      "7889238": 3 bulan
     min_age_label: Ambang umur
     min_favs: Simpan hantaran digemarkan sekurang-kurangnya
     min_favs_hint: Tidak memadamkan mana-mana pos anda yang telah menerima sekurang-kurangnya bilangan kegemaran ini. Biarkan kosong untuk memadamkan pos tanpa mengira bilangan kegemaran mereka
@@ -1613,7 +1613,7 @@ ms:
       title: Arkibkan bawa pulang
     suspicious_sign_in:
       change_password: tukar kata laluan anda
-      details: 'Berikut ialah butiran log masuk:'
+      details: "Berikut ialah butiran log masuk:"
       explanation: Kami telah mengesan log masuk ke akaun anda daripada alamat IP baharu.
       further_actions_html: Jika ini bukan anda, kami mengesyorkan agar anda %{action} dengan segera dan dayakan pengesahan dua faktor untuk memastikan akaun anda selamat.
       subject: Akaun anda telah diakses daripada alamat IP baharu
@@ -1631,8 +1631,8 @@ ms:
         sensitive: Mulai sekarang, semua fail media anda yang dimuat naik akan ditandakan sebagai sensitif dan tersembunyi di sebalik amaran klik lalu.
         silence: Anda masih boleh menggunakan akaun anda tetapi hanya orang yang sudah mengikuti anda akan melihat pos anda pada server ini dan anda mungkin dikecualikan daripada pelbagai ciri penemuan. Walau bagaimanapun, orang lain mungkin masih mengikuti anda secara manual.
         suspend: Anda tidak lagi boleh menggunakan akaun anda dan profil anda serta data lain tidak lagi boleh diakses. Anda masih boleh log masuk untuk meminta sandaran data anda sehingga data dialih keluar sepenuhnya dalam masa kira-kira 30 hari, tetapi kami akan mengekalkan beberapa data asas untuk menghalang anda daripada mengelak daripada penggantungan.
-      reason: 'Sebab:'
-      statuses: 'Catatan yang dipetik:'
+      reason: "Sebab:"
+      statuses: "Catatan yang dipetik:"
       subject:
         delete_statuses: Pos anda pada %{acct} telah dialih keluar
         disable: Akaun %{acct} anda telah dibekukan
@@ -1658,7 +1658,7 @@ ms:
     go_to_sso_account_settings: Pergi ke tetapan akaun pembekal identiti anda
     invalid_otp_token: Kod dua faktor tidak sah
     otp_lost_help_html: Jika anda kehilangan akses kepada kedua-duanya, anda boleh menghubungi %{email}
-    signed_in_as: 'Didaftar masuk sebagai:'
+    signed_in_as: "Didaftar masuk sebagai:"
   verification:
     extra_instructions_html: <strong>Petua:</strong> Pautan di tapak web anda mungkin tidak kelihatan. Bahagian penting ialah <code>rel="me"</code> yang menghalang penyamaran pada tapak web dengan kandungan yang dijana pengguna. Anda juga boleh menggunakan tag <code>link</code> dalam pengepala halaman dan bukannya <code>a</code>, tetapi HTML mesti boleh diakses tanpa melaksanakan JavaScript.
     here_is_how: Ini caranya

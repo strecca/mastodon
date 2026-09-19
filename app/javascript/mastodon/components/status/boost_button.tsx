@@ -1,38 +1,31 @@
-import { useCallback, useMemo } from 'react';
-import type { FC, KeyboardEvent, MouseEvent, MouseEventHandler } from 'react';
+import { useCallback, useMemo } from "react";
+import type { FC, KeyboardEvent, MouseEvent, MouseEventHandler } from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { quoteComposeById } from '@/mastodon/actions/compose_typed';
-import { toggleReblog } from '@/mastodon/actions/interactions';
-import { openModal } from '@/mastodon/actions/modal';
-import { fetchStatus } from '@/mastodon/actions/statuses';
-import { quickBoosting } from '@/mastodon/initial_state';
-import type { ActionMenuItem } from '@/mastodon/models/dropdown_menu';
-import type { Status } from '@/mastodon/models/status';
-import { useAppDispatch, useAppSelector } from '@/mastodon/store';
-import type { SomeRequired } from '@/mastodon/utils/types';
+import { quoteComposeById } from "@/mastodon/actions/compose_typed";
+import { toggleReblog } from "@/mastodon/actions/interactions";
+import { openModal } from "@/mastodon/actions/modal";
+import { fetchStatus } from "@/mastodon/actions/statuses";
+import { quickBoosting } from "@/mastodon/initial_state";
+import type { ActionMenuItem } from "@/mastodon/models/dropdown_menu";
+import type { Status } from "@/mastodon/models/status";
+import { useAppDispatch, useAppSelector } from "@/mastodon/store";
+import type { SomeRequired } from "@/mastodon/utils/types";
 
-import type { RenderItemFn } from '../dropdown_menu';
-import { Dropdown, DropdownMenuItemContent } from '../dropdown_menu';
-import { IconButton } from '../icon_button';
+import type { RenderItemFn } from "../dropdown_menu";
+import { Dropdown, DropdownMenuItemContent } from "../dropdown_menu";
+import { IconButton } from "../icon_button";
 
-import {
-  boostItemState,
-  messages,
-  quoteItemState,
-  selectStatusState,
-} from './boost_button_utils';
+import { boostItemState, messages, quoteItemState, selectStatusState } from "./boost_button_utils";
 
 const StandaloneBoostButton: FC<ReblogButtonProps> = ({ status, counters }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
 
-  const statusState = useAppSelector((state) =>
-    selectStatusState(state, status),
-  );
+  const statusState = useAppSelector((state) => selectStatusState(state, status));
   const { title, meta, iconComponent, disabled } = useMemo(
     () => boostItemState(statusState),
     [statusState],
@@ -41,15 +34,15 @@ const StandaloneBoostButton: FC<ReblogButtonProps> = ({ status, counters }) => {
   const handleClick: MouseEventHandler = useCallback(
     (event) => {
       if (statusState.isLoggedIn) {
-        dispatch(toggleReblog(status.get('id') as string, event.shiftKey));
+        dispatch(toggleReblog(status.get("id") as string, event.shiftKey));
       } else {
         dispatch(
           openModal({
-            modalType: 'INTERACTION',
+            modalType: "INTERACTION",
             modalProps: {
-              intent: 'reblog',
-              accountId: status.getIn(['account', 'id']),
-              url: status.get('uri'),
+              intent: "reblog",
+              accountId: status.getIn(["account", "id"]),
+              url: status.get("uri"),
             },
           }),
         );
@@ -61,16 +54,15 @@ const StandaloneBoostButton: FC<ReblogButtonProps> = ({ status, counters }) => {
   return (
     <IconButton
       disabled={disabled}
-      active={!!status.get('reblogged')}
+      active={!!status.get("reblogged")}
       title={intl.formatMessage(meta ?? title)}
-      icon='retweet'
+      icon="retweet"
       iconComponent={iconComponent}
-      className='status__action-bar__button'
+      className="status__action-bar__button"
       onClick={!disabled ? handleClick : undefined}
       counter={
         counters
-          ? (status.get('reblogs_count') as number) +
-            (status.get('quotes_count') as number)
+          ? (status.get("reblogs_count") as number) + (status.get("quotes_count") as number)
           : undefined
       }
     />
@@ -78,12 +70,7 @@ const StandaloneBoostButton: FC<ReblogButtonProps> = ({ status, counters }) => {
 };
 
 const renderMenuItem: RenderItemFn<ActionMenuItem> = (item, index, onClick) => (
-  <ReblogMenuItem
-    index={index}
-    item={item}
-    onClick={onClick}
-    key={`${item.text}-${index}`}
-  />
+  <ReblogMenuItem index={index} item={item} onClick={onClick} key={`${item.text}-${index}`} />
 );
 
 interface ReblogButtonProps {
@@ -91,14 +78,12 @@ interface ReblogButtonProps {
   counters?: boolean;
 }
 
-type ActionMenuItemWithIcon = SomeRequired<ActionMenuItem, 'icon'>;
+type ActionMenuItemWithIcon = SomeRequired<ActionMenuItem, "icon">;
 
 const BoostOrQuoteMenu: FC<ReblogButtonProps> = ({ status, counters }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const statusState = useAppSelector((state) =>
-    selectStatusState(state, status),
-  );
+  const statusState = useAppSelector((state) => selectStatusState(state, status));
   const {
     isLoggedIn,
     isReblogged,
@@ -108,22 +93,20 @@ const BoostOrQuoteMenu: FC<ReblogButtonProps> = ({ status, counters }) => {
   } = statusState;
 
   const isMenuDisabled =
-    !isQuoteAutomaticallyAccepted &&
-    !isQuoteManuallyAccepted &&
-    !isReblogAllowed;
+    !isQuoteAutomaticallyAccepted && !isQuoteManuallyAccepted && !isReblogAllowed;
 
-  const statusId = status.get('id') as string;
-  const wasBoosted = !!status.get('reblogged');
-  const quoteApproval = status.get('quote_approval');
+  const statusId = status.get("id") as string;
+  const wasBoosted = !!status.get("reblogged");
+  const quoteApproval = status.get("quote_approval");
 
   const showLoginPrompt = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'INTERACTION',
+        modalType: "INTERACTION",
         modalProps: {
-          intent: 'reblog',
-          accountId: status.getIn(['account', 'id']),
-          url: status.get('uri'),
+          intent: "reblog",
+          accountId: status.getIn(["account", "id"]),
+          url: status.get("uri"),
         },
       }),
     );
@@ -135,9 +118,7 @@ const BoostOrQuoteMenu: FC<ReblogButtonProps> = ({ status, counters }) => {
     return [
       {
         text: intl.formatMessage(boostItem.title),
-        description: boostItem.meta
-          ? intl.formatMessage(boostItem.meta)
-          : undefined,
+        description: boostItem.meta ? intl.formatMessage(boostItem.meta) : undefined,
         icon: boostItem.iconComponent,
         highlighted: wasBoosted,
         disabled: boostItem.disabled,
@@ -147,9 +128,7 @@ const BoostOrQuoteMenu: FC<ReblogButtonProps> = ({ status, counters }) => {
       },
       {
         text: intl.formatMessage(quoteItem.title),
-        description: quoteItem.meta
-          ? intl.formatMessage(quoteItem.meta)
-          : undefined,
+        description: quoteItem.meta ? intl.formatMessage(quoteItem.meta) : undefined,
         icon: quoteItem.iconComponent,
         disabled: quoteItem.disabled,
         action: () => {
@@ -169,14 +148,12 @@ const BoostOrQuoteMenu: FC<ReblogButtonProps> = ({ status, counters }) => {
       }
 
       if (event.shiftKey) {
-        dispatch(toggleReblog(status.get('id'), true));
+        dispatch(toggleReblog(status.get("id"), true));
         return false;
       }
 
       if (quoteApproval === null) {
-        dispatch(
-          fetchStatus(statusId, { forceFetch: true, alsoFetchContext: false }),
-        );
+        dispatch(fetchStatus(statusId, { forceFetch: true, alsoFetchContext: false }));
       }
 
       return true;
@@ -186,7 +163,7 @@ const BoostOrQuoteMenu: FC<ReblogButtonProps> = ({ status, counters }) => {
 
   return (
     <Dropdown
-      placement='bottom-start'
+      placement="bottom-start"
       offset={[-19, 5]} // This aligns button icon with menu icons
       items={items}
       renderItem={renderMenuItem}
@@ -197,13 +174,12 @@ const BoostOrQuoteMenu: FC<ReblogButtonProps> = ({ status, counters }) => {
         title={intl.formatMessage(
           isMenuDisabled ? messages.all_disabled : messages.reblog_or_quote,
         )}
-        icon='retweet'
-        className='status__action-bar__button'
+        icon="retweet"
+        className="status__action-bar__button"
         iconComponent={boostIcon}
         counter={
           counters
-            ? (status.get('reblogs_count') as number) +
-              (status.get('quotes_count') as number)
+            ? (status.get("reblogs_count") as number) + (status.get("quotes_count") as number)
             : undefined
         }
         active={isReblogged}
@@ -223,17 +199,12 @@ const ReblogMenuItem: FC<ReblogMenuItemProps> = ({ index, item, onClick }) => {
 
   return (
     <li
-      className={classNames('dropdown-menu__item reblog-menu-item', {
-        'dropdown-menu__item--highlighted': highlighted,
+      className={classNames("dropdown-menu__item reblog-menu-item", {
+        "dropdown-menu__item--highlighted": highlighted,
       })}
       key={`${text}-${index}`}
     >
-      <button
-        onClick={onClick}
-        aria-disabled={disabled}
-        data-index={index}
-        type='button'
-      >
+      <button onClick={onClick} aria-disabled={disabled} data-index={index} type="button">
         <DropdownMenuItemContent item={item} />
       </button>
     </li>
@@ -242,6 +213,4 @@ const ReblogMenuItem: FC<ReblogMenuItemProps> = ({ index, item, onClick }) => {
 
 // Switch between the standalone boost button or the
 // "Boost or quote" menu based on the quickBoosting preference
-export const BoostButton = quickBoosting
-  ? StandaloneBoostButton
-  : BoostOrQuoteMenu;
+export const BoostButton = quickBoosting ? StandaloneBoostButton : BoostOrQuoteMenu;

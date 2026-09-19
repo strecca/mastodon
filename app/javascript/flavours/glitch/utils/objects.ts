@@ -1,4 +1,4 @@
-import { isPlainObject } from '@reduxjs/toolkit';
+import { isPlainObject } from "@reduxjs/toolkit";
 
 export type RecordObject = Record<PropertyKey, unknown>;
 
@@ -21,14 +21,8 @@ export function getNestedProperty<
   TObject extends RecordObject,
   const TKeys extends readonly PropertyKey[],
 >(object: TObject, ...keys: TKeys): NestedProperty<TObject, TKeys> | undefined;
-export function getNestedProperty(
-  object: unknown,
-  ...keys: PropertyKey[]
-): unknown;
-export function getNestedProperty(
-  object: unknown,
-  ...keys: PropertyKey[]
-): unknown {
+export function getNestedProperty(object: unknown, ...keys: PropertyKey[]): unknown;
+export function getNestedProperty(object: unknown, ...keys: PropertyKey[]): unknown {
   if (!isRecordObject(object) || keys.length === 0) {
     return undefined;
   }

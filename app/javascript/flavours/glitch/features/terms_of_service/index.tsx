@@ -1,26 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import {
-  FormattedMessage,
-  FormattedDate,
-  useIntl,
-  defineMessages,
-} from 'react-intl';
+import { FormattedMessage, FormattedDate, useIntl, defineMessages } from "react-intl";
 
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import { NavigationFocusTarget } from '@/flavours/glitch/components/navigation_focus_target';
-import { apiGetTermsOfService } from 'flavours/glitch/api/instance';
-import type { ApiTermsOfServiceJSON } from 'flavours/glitch/api_types/instance';
-import { Column } from 'flavours/glitch/components/column';
-import { BundleColumnError } from 'flavours/glitch/features/ui/components/bundle_column_error';
+import { NavigationFocusTarget } from "@/flavours/glitch/components/navigation_focus_target";
+import { apiGetTermsOfService } from "flavours/glitch/api/instance";
+import type { ApiTermsOfServiceJSON } from "flavours/glitch/api_types/instance";
+import { Column } from "flavours/glitch/components/column";
+import { BundleColumnError } from "flavours/glitch/features/ui/components/bundle_column_error";
 
-import { getColumnSkipLinkId } from '../ui/components/skip_links';
+import { getColumnSkipLinkId } from "../ui/components/skip_links";
 
 const messages = defineMessages({
-  title: { id: 'terms_of_service.title', defaultMessage: 'Terms of Service' },
+  title: { id: "terms_of_service.title", defaultMessage: "Terms of Service" },
 });
 
 interface Params {
@@ -40,7 +35,7 @@ const TermsOfService: React.FC<{
       .then((data) => {
         setResponse(data);
         setLoading(false);
-        return '';
+        return "";
       })
       .catch(() => {
         setLoading(false);
@@ -48,49 +43,43 @@ const TermsOfService: React.FC<{
   }, [date]);
 
   if (!loading && !response) {
-    return <BundleColumnError multiColumn={multiColumn} errorType='routing' />;
+    return <BundleColumnError multiColumn={multiColumn} errorType="routing" />;
   }
 
   return (
-    <Column
-      bindToDocument={!multiColumn}
-      label={intl.formatMessage(messages.title)}
-    >
-      <div className='scrollable privacy-policy'>
-        <div className='column-title'>
-          <NavigationFocusTarget as='h1' id={getColumnSkipLinkId(1)}>
-            <FormattedMessage
-              id='terms_of_service.title'
-              defaultMessage='Terms of Service'
-            />
+    <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)}>
+      <div className="scrollable privacy-policy">
+        <div className="column-title">
+          <NavigationFocusTarget as="h1" id={getColumnSkipLinkId(1)}>
+            <FormattedMessage id="terms_of_service.title" defaultMessage="Terms of Service" />
           </NavigationFocusTarget>
-          <p className='prose'>
+          <p className="prose">
             {response?.effective ? (
               <FormattedMessage
-                id='privacy_policy.last_updated'
-                defaultMessage='Last updated {date}'
+                id="privacy_policy.last_updated"
+                defaultMessage="Last updated {date}"
                 values={{
                   date: (
                     <FormattedDate
                       value={response.effective_date}
-                      year='numeric'
-                      month='short'
-                      day='2-digit'
+                      year="numeric"
+                      month="short"
+                      day="2-digit"
                     />
                   ),
                 }}
               />
             ) : (
               <FormattedMessage
-                id='terms_of_service.effective_as_of'
-                defaultMessage='Effective as of {date}'
+                id="terms_of_service.effective_as_of"
+                defaultMessage="Effective as of {date}"
                 values={{
                   date: (
                     <FormattedDate
                       value={response?.effective_date}
-                      year='numeric'
-                      month='short'
-                      day='2-digit'
+                      year="numeric"
+                      month="short"
+                      day="2-digit"
                     />
                   ),
                 }}
@@ -99,18 +88,18 @@ const TermsOfService: React.FC<{
 
             {response?.succeeded_by && (
               <>
-                {' · '}
+                {" · "}
                 <Link to={`/terms-of-service/${response.succeeded_by}`}>
                   <FormattedMessage
-                    id='terms_of_service.upcoming_changes_on'
-                    defaultMessage='Upcoming changes on {date}'
+                    id="terms_of_service.upcoming_changes_on"
+                    defaultMessage="Upcoming changes on {date}"
                     values={{
                       date: (
                         <FormattedDate
                           value={response.succeeded_by}
-                          year='numeric'
-                          month='short'
-                          day='2-digit'
+                          year="numeric"
+                          month="short"
+                          day="2-digit"
                         />
                       ),
                     }}
@@ -123,7 +112,7 @@ const TermsOfService: React.FC<{
 
         {response && (
           <div
-            className='privacy-policy__body prose'
+            className="privacy-policy__body prose"
             dangerouslySetInnerHTML={{ __html: response.content }}
           />
         )}
@@ -131,7 +120,7 @@ const TermsOfService: React.FC<{
 
       <Helmet>
         <title>{intl.formatMessage(messages.title)}</title>
-        <meta name='robots' content='all' />
+        <meta name="robots" content="all" />
       </Helmet>
     </Column>
   );

@@ -1,26 +1,22 @@
-import type { FC } from 'react';
-import { useEffect, useCallback, useState } from 'react';
+import type { FC } from "react";
+import { useEffect, useCallback, useState } from "react";
 
-import { FormattedMessage, FormattedList } from 'react-intl';
+import { FormattedMessage, FormattedList } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { fetchFeaturedTags } from '@/flavours/glitch/actions/featured_tags';
-import { Callout } from '@/flavours/glitch/components/callout';
-import { useCurrentAccountId } from '@/flavours/glitch/hooks/useAccountId';
-import { useDismissible } from '@/flavours/glitch/hooks/useDismissible';
+import { fetchFeaturedTags } from "@/flavours/glitch/actions/featured_tags";
+import { Callout } from "@/flavours/glitch/components/callout";
+import { useCurrentAccountId } from "@/flavours/glitch/hooks/useAccountId";
+import { useDismissible } from "@/flavours/glitch/hooks/useDismissible";
 import {
   fetchProfile,
   fetchSuggestedTags,
   addFeaturedTags,
-} from '@/flavours/glitch/reducers/slices/profile_edit';
-import {
-  useAppSelector,
-  useAppDispatch,
-  createAppSelector,
-} from '@/flavours/glitch/store';
+} from "@/flavours/glitch/reducers/slices/profile_edit";
+import { useAppSelector, useAppDispatch, createAppSelector } from "@/flavours/glitch/store";
 
-import classes from '../styles.module.scss';
+import classes from "../styles.module.scss";
 
 const MAX_SUGGESTED_TAGS = 3;
 
@@ -30,9 +26,7 @@ const selectSuggestedTags = createAppSelector(
 );
 
 export const TagSuggestions: FC = () => {
-  const { dismiss, wasDismissed } = useDismissible(
-    'profile/featured_tag_suggestions',
-  );
+  const { dismiss, wasDismissed } = useDismissible("profile/featured_tag_suggestions");
 
   const suggestedTags = useAppSelector(selectSuggestedTags);
   const existingTagCount = useAppSelector(
@@ -58,9 +52,7 @@ export const TagSuggestions: FC = () => {
     }
 
     const addTags = async () => {
-      await dispatch(
-        addFeaturedTags({ names: suggestedTags.map((tag) => tag.name) }),
-      );
+      await dispatch(addFeaturedTags({ names: suggestedTags.map((tag) => tag.name) }));
       await dispatch(fetchFeaturedTags({ accountId: me }));
       setSuccessNotice(true);
       dismiss();
@@ -75,62 +67,45 @@ export const TagSuggestions: FC = () => {
   if (showSuccessNotice) {
     return (
       <Callout
-        variant='subtle'
+        variant="subtle"
         className={classes.tagSuggestions}
         onClose={handleDismissSuccessNotice}
       >
         <FormattedMessage
-          id='featured_tags.suggestions.added'
-          defaultMessage='Manage your featured hashtags at any time under <link>Edit Profile > Featured hashtags</link>.'
+          id="featured_tags.suggestions.added"
+          defaultMessage="Manage your featured hashtags at any time under <link>Edit Profile > Featured hashtags</link>."
           values={{
-            link: (chunks) => <Link to='/profile/featured_tags'>{chunks}</Link>,
+            link: (chunks) => <Link to="/profile/featured_tags">{chunks}</Link>,
           }}
-          tagName='span'
+          tagName="span"
         />
       </Callout>
     );
   }
 
-  if (
-    isLoading ||
-    !suggestedTags.length ||
-    existingTagCount > 0 ||
-    wasDismissed
-  ) {
+  if (isLoading || !suggestedTags.length || existingTagCount > 0 || wasDismissed) {
     return null;
   }
 
   return (
     <Callout
-      id='featured_tags.suggestions'
-      variant='subtle'
+      id="featured_tags.suggestions"
+      variant="subtle"
       className={classes.tagSuggestions}
       onPrimary={handleAdd}
-      primaryLabel={
-        <FormattedMessage
-          id='featured_tags.suggestions.add'
-          defaultMessage='Add'
-        />
-      }
+      primaryLabel={<FormattedMessage id="featured_tags.suggestions.add" defaultMessage="Add" />}
       onSecondary={dismiss}
       secondaryLabel={
-        <FormattedMessage
-          id='featured_tags.suggestions.dismiss'
-          defaultMessage='No thanks'
-        />
+        <FormattedMessage id="featured_tags.suggestions.dismiss" defaultMessage="No thanks" />
       }
     >
       <FormattedMessage
-        id='featured_tags.suggestions'
-        defaultMessage='Lately you’ve posted about {items}. Add these as featured hashtags?'
+        id="featured_tags.suggestions"
+        defaultMessage="Lately you’ve posted about {items}. Add these as featured hashtags?"
         values={{
-          items: (
-            <FormattedList
-              value={suggestedTags.map(({ name }) => `#${name}`)}
-            />
-          ),
+          items: <FormattedList value={suggestedTags.map(({ name }) => `#${name}`)} />,
         }}
-        tagName='span'
+        tagName="span"
       />
     </Callout>
   );

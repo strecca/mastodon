@@ -1,13 +1,12 @@
 //  Package imports
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { Icon } from 'flavours/glitch/components/icon';
+import { Icon } from "flavours/glitch/components/icon";
 
 export default class LocalSettingsPage extends PureComponent {
-
   static propTypes = {
     active: PropTypes.bool,
     className: PropTypes.string,
@@ -27,45 +26,33 @@ export default class LocalSettingsPage extends PureComponent {
     }
   };
 
-  render () {
+  render() {
     const { handleClick } = this;
-    const {
-      active,
-      className,
-      href,
-      icon,
-      iconComponent,
-      onNavigate,
-      title,
-    } = this.props;
+    const { active, className, href, icon, iconComponent, onNavigate, title } = this.props;
 
-    const finalClassName = classNames('glitch', 'local-settings__navigation__item', {
-      active,
-    }, className);
+    const finalClassName = classNames(
+      "glitch",
+      "local-settings__navigation__item",
+      {
+        active,
+      },
+      className,
+    );
 
     const iconElem = icon ? <Icon id={icon} icon={iconComponent} /> : null;
 
-    if (href) return (
-      <a
-        href={href}
-        className={finalClassName}
-        title={title}
-        aria-label={title}
-      >
-        {iconElem} <span>{title}</span>
-      </a>
-    );
-    else if (onNavigate) return (
-      <button
-        onClick={handleClick}
-        className={finalClassName}
-        title={title}
-        aria-label={title}
-      >
-        {iconElem} <span>{title}</span>
-      </button>
-    );
+    if (href)
+      return (
+        <a href={href} className={finalClassName} title={title} aria-label={title}>
+          {iconElem} <span>{title}</span>
+        </a>
+      );
+    else if (onNavigate)
+      return (
+        <button onClick={handleClick} className={finalClassName} title={title} aria-label={title}>
+          {iconElem} <span>{title}</span>
+        </button>
+      );
     else return null;
   }
-
 }

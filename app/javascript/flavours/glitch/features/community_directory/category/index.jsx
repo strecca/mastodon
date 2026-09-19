@@ -1,28 +1,31 @@
 // app/javascript/flavours/glitch/features/community_directory/category/index.jsx
-import React, { useEffect, useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchResources } from '../../../actions/community_directory';
-import ResourceCard from '../components/resource_card';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchResources } from "../../../actions/community_directory";
+import ResourceCard from "../components/resource_card";
+import { Link } from "react-router-dom";
 
 const CommunityDirectoryCategory = ({ match }) => {
   const { category } = match.params || {};
   const dispatch = useDispatch();
 
-  const resources = useSelector(state => state.getIn(['community_directory', 'resources'], []));
-  const formConfig = useSelector(state => state.getIn(['community_directory', 'formConfig'], {}));
-  const loading = useSelector(state => state.getIn(['community_directory', 'loading'], false));
-  const error = useSelector(state => state.getIn(['community_directory', 'error']));
+  const resources = useSelector((state) => state.getIn(["community_directory", "resources"], []));
+  const formConfig = useSelector((state) => state.getIn(["community_directory", "formConfig"], {}));
+  const loading = useSelector((state) => state.getIn(["community_directory", "loading"], false));
+  const error = useSelector((state) => state.getIn(["community_directory", "error"]));
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [filters, setFilters] = useState({});
 
   const debounceRef = React.useRef(null);
 
-  const performSearch = useCallback((searchQuery) => {
-    if (!category) return;
-    dispatch(fetchResources(category, searchQuery));
-  }, [dispatch, category]);
+  const performSearch = useCallback(
+    (searchQuery) => {
+      if (!category) return;
+      dispatch(fetchResources(category, searchQuery));
+    },
+    [dispatch, category],
+  );
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -38,10 +41,14 @@ const CommunityDirectoryCategory = ({ match }) => {
 
   const handleSearchChange = (e) => setQuery(e.target.value);
 
-  const searchableFields = formConfig.get('fields')?.filter(f => f.get('searchable')) || [];
+  const searchableFields = formConfig.get("fields")?.filter((f) => f.get("searchable")) || [];
 
   if (error) {
-    return <div className="status error">Error loading {category}: {error}</div>;
+    return (
+      <div className="status error">
+        Error loading {category}: {error}
+      </div>
+    );
   }
 
   if (!category) {
@@ -84,12 +91,8 @@ const CommunityDirectoryCategory = ({ match }) => {
       {!loading && (
         <div className="status-list">
           {resources.size > 0 ? (
-            resources.map(resource => (
-              <ResourceCard 
-                key={resource.get('id')} 
-                resource={resource} 
-                category={category} 
-              />
+            resources.map((resource) => (
+              <ResourceCard key={resource.get("id")} resource={resource} category={category} />
             ))
           ) : (
             <div className="status">

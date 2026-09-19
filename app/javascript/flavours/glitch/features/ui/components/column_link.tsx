@@ -1,11 +1,11 @@
-import type { MouseEventHandler } from 'react';
+import type { MouseEventHandler } from "react";
 
-import classNames from 'classnames';
-import { useRouteMatch, NavLink } from 'react-router-dom';
+import classNames from "classnames";
+import { useRouteMatch, NavLink } from "react-router-dom";
 
-import { Icon } from 'flavours/glitch/components/icon';
-import type { IconProp } from 'flavours/glitch/components/icon';
-import type { MastodonLocationDescriptor } from 'flavours/glitch/components/router';
+import { Icon } from "flavours/glitch/components/icon";
+import type { IconProp } from "flavours/glitch/components/icon";
+import type { MastodonLocationDescriptor } from "flavours/glitch/components/router";
 
 export const ColumnLink: React.FC<{
   icon: React.ReactNode;
@@ -41,21 +41,21 @@ export const ColumnLink: React.FC<{
   className: customClassName,
   ...other
 }) => {
-  const match = useRouteMatch(
-    (typeof to === 'string' ? to : to?.pathname) ?? '',
+  const match = useRouteMatch((typeof to === "string" ? to : to?.pathname) ?? "");
+  const className = classNames(
+    "column-link",
+    {
+      "column-link--transparent": transparent,
+    },
+    customClassName,
   );
-  const className = classNames('column-link', {
-    'column-link--transparent': transparent,
-  }, customClassName);
   const badgeElement =
-    typeof badge !== 'undefined' ? (
-      <span className='column-link__badge'>{badge}</span>
-    ) : null;
+    typeof badge !== "undefined" ? <span className="column-link__badge">{badge}</span> : null;
   const iconElement = iconComponent ? (
     <Icon
-      id={typeof icon === 'string' ? icon : ''}
+      id={typeof icon === "string" ? icon : ""}
       icon={iconComponent}
-      className='column-link__icon'
+      className="column-link__icon"
     />
   ) : (
     icon
@@ -64,9 +64,9 @@ export const ColumnLink: React.FC<{
     activeIcon ??
     (activeIconComponent ? (
       <Icon
-        id={typeof icon === 'string' ? icon : ''}
+        id={typeof icon === "string" ? icon : ""}
         icon={activeIconComponent}
-        className='column-link__icon'
+        className="column-link__icon"
       />
     ) : (
       iconElement
@@ -92,13 +92,7 @@ export const ColumnLink: React.FC<{
   } else {
     return (
       // eslint-disable-next-line jsx-a11y/anchor-is-valid -- intentional to have the same look and feel as other menu items
-      <a
-        href='#'
-        onClick={onClick}
-        className={className}
-        {...other}
-        tabIndex={0}
-      >
+      <a href="#" onClick={onClick} className={className} {...other} tabIndex={0}>
         {iconElement}
         <span>{text}</span>
         {badgeElement}

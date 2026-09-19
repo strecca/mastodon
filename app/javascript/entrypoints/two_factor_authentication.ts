@@ -1,20 +1,18 @@
-import * as WebAuthnJSON from '@github/webauthn-json';
-import axios, { AxiosError } from 'axios';
+import * as WebAuthnJSON from "@github/webauthn-json";
+import axios, { AxiosError } from "axios";
 
-import ready from '../mastodon/ready';
+import ready from "../mastodon/ready";
 
-import 'regenerator-runtime/runtime';
+import "regenerator-runtime/runtime";
 
 type PublicKeyCredentialCreationOptionsJSON =
-  WebAuthnJSON.CredentialCreationOptionsJSON['publicKey'];
+  WebAuthnJSON.CredentialCreationOptionsJSON["publicKey"];
 
-function exceptionHasAxiosError(
-  error: unknown,
-): error is AxiosError<{ error: unknown }> {
+function exceptionHasAxiosError(error: unknown): error is AxiosError<{ error: unknown }> {
   return (
     error instanceof AxiosError &&
-    typeof error.response?.data === 'object' &&
-    'error' in error.response.data
+    typeof error.response?.data === "object" &&
+    "error" in error.response.data
   );
 }
 
@@ -25,12 +23,12 @@ function logAxiosResponseError(error: unknown) {
 function getCSRFToken() {
   return document
     .querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
-    ?.getAttribute('content');
+    ?.getAttribute("content");
 }
 
 function hideFlashMessages() {
-  document.querySelectorAll('.flash-message').forEach((flashMessage) => {
-    flashMessage.classList.add('hidden');
+  document.querySelectorAll(".flash-message").forEach((flashMessage) => {
+    flashMessage.classList.add("hidden");
   });
 }
 
@@ -46,25 +44,19 @@ async function callback(
       },
 ) {
   try {
-    const response = await axios.post<{ redirect_path: string }>(
-      url,
-      JSON.stringify(body),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          'X-CSRF-Token': getCSRFToken(),
-        },
+    const response = await axios.post<{ redirect_path: string }>(url, JSON.stringify(body), {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "X-CSRF-Token": getCSRFToken(),
       },
-    );
+    });
 
     window.location.replace(response.data.redirect_path);
   } catch (error) {
     if (error instanceof AxiosError && error.response?.status === 422) {
-      const errorMessage = document.getElementById(
-        'security-key-error-message',
-      );
-      errorMessage?.classList.remove('hidden');
+      const errorMessage = document.getElementById("security-key-error-message");
+      errorMessage?.classList.remove("hidden");
 
       logAxiosResponseError(error);
     } else {
@@ -76,7 +68,7 @@ async function callback(
 async function handleWebauthnCredentialRegistration(nickname: string) {
   try {
     const response = await axios.get<PublicKeyCredentialCreationOptionsJSON>(
-      '/settings/security_keys/options',
+      "/settings/security_keys/options",
     );
 
     const credentialOptions = response.data;
@@ -91,12 +83,10 @@ async function handleWebauthnCredentialRegistration(nickname: string) {
         nickname: nickname,
       };
 
-      await callback('/settings/security_keys', params);
+      await callback("/settings/security_keys", params);
     } catch (error) {
-      const errorMessage = document.getElementById(
-        'security-key-error-message',
-      );
-      errorMessage?.classList.remove('hidden');
+      const errorMessage = document.getElementById("security-key-error-message");
+      errorMessage?.classList.remove("hidden");
       console.error(error);
     }
   } catch (error) {
@@ -107,7 +97,7 @@ async function handleWebauthnCredentialRegistration(nickname: string) {
 async function handleWebauthnCredentialAuthentication() {
   try {
     const response = await axios.get<PublicKeyCredentialCreationOptionsJSON>(
-      'sessions/security_key_options',
+      "sessions/security_key_options",
     );
 
     const credentialOptions = response.data;
@@ -118,12 +108,10 @@ async function handleWebauthnCredentialAuthentication() {
       });
 
       const params = { user: { credential: credential } };
-      void callback('sign_in', params);
+      void callback("sign_in", params);
     } catch (error) {
-      const errorMessage = document.getElementById(
-        'security-key-error-message',
-      );
-      errorMessage?.classList.remove('hidden');
+      const errorMessage = document.getElementById("security-key-error-message");
+      errorMessage?.classList.remove("hidden");
       console.error(error);
     }
   } catch (error) {
@@ -133,22 +121,19 @@ async function handleWebauthnCredentialAuthentication() {
 
 ready(() => {
   if (!WebAuthnJSON.supported()) {
-    const unsupported_browser_message = document.getElementById(
-      'unsupported-browser-message',
-    );
+    const unsupported_browser_message = document.getElementById("unsupported-browser-message");
     if (unsupported_browser_message) {
-      unsupported_browser_message.classList.remove('hidden');
-      const button = document.querySelector<HTMLButtonElement>(
-        'button.btn.js-webauthn',
-      );
+      unsupported_browser_message.classList.remove("hidden");
+      const button = document.querySelector<HTMLButtonElement>("button.btn.js-webauthn");
       if (button) button.disabled = true;
     }
   }
 
-  const webAuthnCredentialRegistrationForm =
-    document.querySelector<HTMLFormElement>('form#new_webauthn_credential');
+  const webAuthnCredentialRegistrationForm = document.querySelector<HTMLFormElement>(
+    "form#new_webauthn_credential",
+  );
   if (webAuthnCredentialRegistrationForm) {
-    webAuthnCredentialRegistrationForm.addEventListener('submit', (event) => {
+    webAuthnCredentialRegistrationForm.addEventListener("submit", (event) => {
       event.preventDefault();
 
       if (!(event.target instanceof HTMLFormElement)) return;
@@ -165,30 +150,27 @@ ready(() => {
     });
   }
 
-  const webAuthnCredentialAuthenticationForm =
-    document.getElementById('webauthn-form');
+  const webAuthnCredentialAuthenticationForm = document.getElementById("webauthn-form");
   if (webAuthnCredentialAuthenticationForm) {
-    webAuthnCredentialAuthenticationForm.addEventListener('submit', (event) => {
+    webAuthnCredentialAuthenticationForm.addEventListener("submit", (event) => {
       event.preventDefault();
       void handleWebauthnCredentialAuthentication();
     });
 
-    const otpAuthenticationForm = document.getElementById(
-      'otp-authentication-form',
-    );
+    const otpAuthenticationForm = document.getElementById("otp-authentication-form");
 
-    const linkToOtp = document.getElementById('link-to-otp');
+    const linkToOtp = document.getElementById("link-to-otp");
 
-    linkToOtp?.addEventListener('click', () => {
-      webAuthnCredentialAuthenticationForm.classList.add('hidden');
-      otpAuthenticationForm?.classList.remove('hidden');
+    linkToOtp?.addEventListener("click", () => {
+      webAuthnCredentialAuthenticationForm.classList.add("hidden");
+      otpAuthenticationForm?.classList.remove("hidden");
       hideFlashMessages();
     });
 
-    const linkToWebAuthn = document.getElementById('link-to-webauthn');
-    linkToWebAuthn?.addEventListener('click', () => {
-      otpAuthenticationForm?.classList.add('hidden');
-      webAuthnCredentialAuthenticationForm.classList.remove('hidden');
+    const linkToWebAuthn = document.getElementById("link-to-webauthn");
+    linkToWebAuthn?.addEventListener("click", () => {
+      otpAuthenticationForm?.classList.add("hidden");
+      webAuthnCredentialAuthenticationForm.classList.remove("hidden");
       hideFlashMessages();
     });
   }

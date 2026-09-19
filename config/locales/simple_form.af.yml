@@ -7,7 +7,7 @@ af:
       defaults:
         autofollow: Mense wat aanmeld deur die uitnodiging te aanvaar, sal jou outomaties volg
       featured_tag:
-        name: 'Hier is van die hutsetikette wat jy onlangs gebruik het:'
+        name: "Hier is van die hutsetikette wat jy onlangs gebruik het:"
       webhook:
         events: Kies gebeurtenisse vir stuur
         url: Waarheen gebeurtenisse gestuur sal word

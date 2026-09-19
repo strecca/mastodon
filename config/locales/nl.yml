@@ -1,7 +1,7 @@
 ---
 nl:
   about:
-    about_mastodon_html: 'Het sociale netwerk van de toekomst: geen reclame, geen meekijkende bedrijven, ethisch ontwerp, en gedecentraliseerd! Met Mastodon ben je baas over je eigen gegevens!'
+    about_mastodon_html: "Het sociale netwerk van de toekomst: geen reclame, geen meekijkende bedrijven, ethisch ontwerp, en gedecentraliseerd! Met Mastodon ben je baas over je eigen gegevens!"
     contact_missing: Niet ingesteld
     contact_unavailable: n.v.t
     default_thumbnail_description: Twee glimlachende getekende mastodonten (die op olifanten lijken) gooien een papieren vliegtuigje tussen elkaar in. Ze zijn omringd door een heldere blauwe lucht en zwevende planeten met bomen en meer mastodonten erop.
@@ -334,7 +334,7 @@ nl:
         title: Nieuwe mededeling
       preview:
         disclaimer: Omdat gebruikers zich niet voor deze e-mails kunnen afmelden, moeten e-mailmeldingen worden beperkt tot belangrijke aankondigingen, zoals het lekken van gebruikersgegevens of meldingen over het sluiten van deze server.
-        explanation_html: 'De e-mail wordt verzonden naar <strong>%{display_count} gebruikers</strong>. De volgende tekst wordt in het bericht opgenomen:'
+        explanation_html: "De e-mail wordt verzonden naar <strong>%{display_count} gebruikers</strong>. De volgende tekst wordt in het bericht opgenomen:"
         title: Voorbeeld van mededeling
       publish: Inschakelen
       published_msg: Publiceren van mededeling geslaagd!
@@ -349,7 +349,7 @@ nl:
       back_to_account: Terug naar de accountpagina
       back_to_report: Terug naar de rapportagepagina
       batch:
-        add_to_report: 'Aan rapportage #%{id} toevoegen'
+        add_to_report: "Aan rapportage #%{id} toevoegen"
         remove_from_report: Uit de rapportage verwijderen
         report: Rapportage
       collection_title: Verzameling van %{name}
@@ -584,10 +584,10 @@ nl:
       import:
         description_html: Je staat op het punt een lijst met domeinblokkades te importeren. Controleer deze lijst zeer zorgvuldig, vooral als je deze lijst niet zelf hebt gemaakt.
         existing_relationships_warning: Bestaande volgrelaties
-        private_comment_description_html: 'Om je te helpen bijhouden waar de geïmporteerde blokkades vandaan komen, worden de geïmporteerde blokkades met de volgende privé-opmerking aangemaakt: <q>%{comment}</q>'
+        private_comment_description_html: "Om je te helpen bijhouden waar de geïmporteerde blokkades vandaan komen, worden de geïmporteerde blokkades met de volgende privé-opmerking aangemaakt: <q>%{comment}</q>"
         private_comment_template: Geïmporteerd van %{source} op %{date}
         title: Domeinblokkades importeren
-      invalid_domain_block: 'Een of meer domeinblokkades zijn overgeslagen vanwege de volgende fout(en): %{error}'
+      invalid_domain_block: "Een of meer domeinblokkades zijn overgeslagen vanwege de volgende fout(en): %{error}"
       new:
         title: Domeinblokkades importeren
       no_file: Geen bestand geselecteerd
@@ -721,12 +721,12 @@ nl:
       created_msg: Het toevoegen van een nieuwe IP-regel is geslaagd
       delete: Verwijderen
       expires_in:
-        '1209600': 2 weken
-        '15778476': 6 maanden
-        '2629746': 1 maand
-        '31556952': 1 jaar
-        '86400': 1 dag
-        '94670856': 3 jaar
+        "1209600": 2 weken
+        "15778476": 6 maanden
+        "2629746": 1 maand
+        "31556952": 1 jaar
+        "86400": 1 dag
+        "94670856": 3 jaar
       new:
         title: Nieuwe IP-regel aanmaken
       no_ip_block_selected: Er zijn geen IP-regels veranderd, omdat er geen een was geselecteerd
@@ -783,7 +783,7 @@ nl:
       collections: Verzamelingen (%{count})
       comment:
         none: Geen
-      comment_description_html: 'Om meer informatie te verstrekken, schreef %{name}:'
+      comment_description_html: "Om meer informatie te verstrekken, schreef %{name}:"
       confirm: Bevestigen
       confirm_action: Bevestig moderatiemaatregel tegen @%{acct}
       created_at: Gerapporteerd op
@@ -803,11 +803,11 @@ nl:
         placeholder: Beschrijf welke maatregelen zijn genomen of andere gerelateerde opmerkingen...
         title: Opmerkingen
       notes_description_html: Opmerkingen bekijken, en voor jezelf en andere moderatoren achterlaten
-      processed_msg: 'Rapportage #%{id} succesvol afgehandeld'
-      quick_actions_description_html: 'Neem een snelle maatregel of scroll naar beneden om de gerapporteerde inhoud te bekijken:'
+      processed_msg: "Rapportage #%{id} succesvol afgehandeld"
+      quick_actions_description_html: "Neem een snelle maatregel of scroll naar beneden om de gerapporteerde inhoud te bekijken:"
       remote_user_placeholder: de externe gebruiker van %{instance}
       reopen: Rapportage heropenen
-      report: 'Rapportage #%{id}'
+      report: "Rapportage #%{id}"
       reported_account: Gerapporteerde account
       reported_by: Gerapporteerd door
       reported_content: Gerapporteerde inhoud
@@ -820,16 +820,16 @@ nl:
       statuses_description_html: De problematische inhoud wordt aan het gerapporteerde account medegedeeld
       summary:
         action_preambles:
-          delete_html: 'Je staat op het punt om enkele berichten van <strong>@%{acct}</strong> te <strong>verwijderen</strong>. Dit zal:'
-          mark_as_sensitive_html: 'Je staat op het punt om enkele berichten van <strong>@%{acct}</strong> als <strong>gevoelig te markeren</strong>. Dit zal:'
-          silence_html: 'Je staat op het punt om het account van <strong>@%{acct}</strong> te <strong>beperken</strong>. Dit zal:'
-          suspend_html: 'Je staat op het punt om het account van <strong>@%{acct}</strong> <strong>op te schorten</strong>. Dit zal:'
+          delete_html: "Je staat op het punt om enkele berichten van <strong>@%{acct}</strong> te <strong>verwijderen</strong>. Dit zal:"
+          mark_as_sensitive_html: "Je staat op het punt om enkele berichten van <strong>@%{acct}</strong> als <strong>gevoelig te markeren</strong>. Dit zal:"
+          silence_html: "Je staat op het punt om het account van <strong>@%{acct}</strong> te <strong>beperken</strong>. Dit zal:"
+          suspend_html: "Je staat op het punt om het account van <strong>@%{acct}</strong> <strong>op te schorten</strong>. Dit zal:"
         actions:
           delete_html: De aanstootgevende berichten verwijderen
           mark_as_sensitive_html: De media in de aanstootgevende berichten als gevoelig markeren
           silence_html: Het account van <strong>@%{acct}</strong> ernstig beperken, door diens profiel en inhoud alleen zichtbaar te maken aan mensen die dit account al volgen of aan mensen die het account handmatig opzoeken
           suspend_html: Het account van <strong>@%{acct}</strong> opschorten, waarmee diens profiel en inhoud niet toegankelijk zijn en het onmogelijk is om interactie te hebben
-        close_report: 'Rapportage #%{id} als opgelost markeren'
+        close_report: "Rapportage #%{id} als opgelost markeren"
         close_reports_html: "<strong>Alle</strong> rapportages tegen <strong>@%{acct}</strong> als opgelost markeren"
         delete_data_html: Het account en inhoud van <strong>@%{acct}</strong> over 30 dagen verwijderen, tenzij die in de tussentijd wordt gedeblokkeerd
         preview_preamble_html: "<strong>@%{acct}</strong> ontvangt een waarschuwing met de volgende inhoud:"
@@ -839,7 +839,7 @@ nl:
       target_origin: Herkomst van de gerapporteerde accounts
       title: Rapportages
       unassign: Niet langer toewijzen
-      unknown_action_msg: 'Onbekende actie: %{action}'
+      unknown_action_msg: "Onbekende actie: %{action}"
       unresolved: Onopgelost
       updated_at: Bijgewerkt
       view_profile: Profiel bekijken
@@ -1018,7 +1018,7 @@ nl:
       back_to_account: Terug naar accountpagina
       back_to_report: Terug naar de rapportage
       batch:
-        add_to_report: 'Toevoegen aan rapport #%{id}'
+        add_to_report: "Toevoegen aan rapport #%{id}"
         remove_from_report: Uit de rapportage verwijderen
         report: Rapportage
       contents: Inhoud
@@ -1079,7 +1079,7 @@ nl:
       elasticsearch_running_check:
         message_html: Kon geen verbinding maken met Elasticsearch. Controleer dat Elasticsearch wordt uitgevoerd of schakel full-text-zoeken uit
       elasticsearch_version_check:
-        message_html: 'Incompatibele Elasticsearch-versie: %{value}'
+        message_html: "Incompatibele Elasticsearch-versie: %{value}"
         version_comparison: Je gebruikt Elasticsearch %{running_version}, maar %{required_version} is vereist
       rules_check:
         action: Serverregels beheren
@@ -1141,7 +1141,7 @@ nl:
       notified_on_html: Gebruikers geïnformeerd op %{date}
       notify_users: Gebruikers informeren
       preview:
-        explanation_html: 'De e-mail wordt verzonden naar <strong>%{display_count} gebruikers</strong> die zich hebben aangemeld voor %{date}. De volgende tekst zal in de e-mail worden opgenomen:'
+        explanation_html: "De e-mail wordt verzonden naar <strong>%{display_count} gebruikers</strong> die zich hebben aangemeld voor %{date}. De volgende tekst zal in de e-mail worden opgenomen:"
         send_preview: Voorbeeld verzenden naar %{email}
         send_to_all:
           one: "%{display_count} e-mail verzenden"
@@ -1218,7 +1218,7 @@ nl:
         peaked_on_and_decaying: Piekte op %{date} en is nu weer op diens retour
         title: Trending hashtags
         trendable: Kan onder trends verschijnen
-        trending_rank: 'Trending #%{rank}'
+        trending_rank: "Trending #%{rank}"
         usable: Kan worden gebruikt
         usage_comparison: "%{today} keer vandaag gebruikt, vergeleken met %{yesterday} keer gisteren"
         used_by_over_week:
@@ -1301,7 +1301,7 @@ nl:
       body: Nieuwe versies van Mastodon zijn vrijgegeven. Je wilt misschien bijwerken!
       subject: Nieuwe versies van Mastodon zijn beschikbaar voor %{instance}!
     new_trends:
-      body: 'De volgende items moeten worden beoordeeld voordat ze openbaar kunnen worden getoond:'
+      body: "De volgende items moeten worden beoordeeld voordat ze openbaar kunnen worden getoond:"
       new_trending_links:
         title: Trending links
       new_trending_statuses:
@@ -1331,7 +1331,7 @@ nl:
     notification_preferences: E-mailvoorkeuren wijzigen
     salutation: "%{name},"
     unsubscribe: Afmelden
-    view: 'Bekijk:'
+    view: "Bekijk:"
     view_profile: Profiel bekijken
     view_status: Bericht bekijken
   applications:
@@ -1392,7 +1392,7 @@ nl:
     rules:
       accept: Accepteren
       back: Terug
-      invited_by: 'Je kunt je registreren op %{domain} dankzij de uitnodiging die je hebt ontvangen van:'
+      invited_by: "Je kunt je registreren op %{domain} dankzij de uitnodiging die je hebt ontvangen van:"
       preamble: Deze zijn vastgesteld en worden gehandhaafd door de moderatoren van %{domain}.
       preamble_invited: Voordat je verder gaat, moet je eerst kennisnemen van de basisregels die door de moderatoren van %{domain} zijn vastgesteld.
       read_more: Meer lezen
@@ -1428,7 +1428,7 @@ nl:
   author_attribution:
     example_title: Voorbeeldtekst
     hint_html: Schrijf je nieuws- of blogartikelen buiten Mastodon? Bepaal hoe je geattribueerd wordt als deze gedeeld worden op Mastodon.
-    instructions: 'Zorg ervoor dat deze code in de HTML van je artikel zit:'
+    instructions: "Zorg ervoor dat deze code in de HTML van je artikel zit:"
     more_from_html: Meer van %{name}
     s_blog: De weblog van %{name}
     then_instructions: Voeg vervolgens de domeinnaam van de publicatie toe in het onderstaande veld.
@@ -1473,7 +1473,7 @@ nl:
     proceed: Account verwijderen
     success_msg: Jouw account is succesvol verwijderd
     warning:
-      before: 'Lees deze tekst zorgvuldig voordat je verder gaat:'
+      before: "Lees deze tekst zorgvuldig voordat je verder gaat:"
       caches: Berichten en media die op andere servers zijn opgeslagen kunnen daar achterblijven
       data_removal: Jouw berichten en andere gegevens worden permanent verwijderd
       email_change_html: Je kunt <a href="%{path}">je e-mailadres wijzigen</a> zonder dat je jouw account hoeft te verwijderen
@@ -1499,7 +1499,7 @@ nl:
       description_html: Dit zijn maatregelen die tegen jouw account zijn genomen en waarschuwingen die door medewerkers van %{instance} naar je zijn gestuurd.
       recipient: Geadresseerd aan
       reject_appeal: Bezwaar afgewezen
-      status: 'Bericht #%{id}'
+      status: "Bericht #%{id}"
       status_removed: Bericht is al van de server verwijderd
       title: "%{action} van %{date}"
       title_actions:
@@ -1558,19 +1558,19 @@ nl:
     native: Systeemeigen
     twemoji: Twemoji
   errors:
-    '400': De aanvraag die je hebt ingediend was ongeldig of foutief.
-    '403': Jij hebt geen toestemming om deze pagina te bekijken.
-    '404': De pagina waarnaar jij op zoek bent bestaat niet.
-    '406': Deze pagina is niet beschikbaar in het opgevraagde formaat.
-    '410': De pagina waarnaar jij op zoek bent bestaat niet meer.
-    '422':
+    "400": De aanvraag die je hebt ingediend was ongeldig of foutief.
+    "403": Jij hebt geen toestemming om deze pagina te bekijken.
+    "404": De pagina waarnaar jij op zoek bent bestaat niet.
+    "406": Deze pagina is niet beschikbaar in het opgevraagde formaat.
+    "410": De pagina waarnaar jij op zoek bent bestaat niet meer.
+    "422":
       content: Veiligheidsverificatie mislukt. Blokkeer je toevallig cookies?
       title: Veiligheidsverificatie mislukt
-    '429': Te veel verbindingsaanvragen
-    '500':
+    "429": Te veel verbindingsaanvragen
+    "500":
       content: Het spijt ons, er is aan onze kant iets fout gegaan.
       title: Er is iets mis
-    '503': De pagina kon door een tijdelijke serverstoring niet worden geladen.
+    "503": De pagina kon door een tijdelijke serverstoring niet worden geladen.
     noscript_html: Schakel JavaScript in om de webapp van Mastodon te kunnen gebruiken. Als alternatief kan je een <a href="%{apps_path}">Mastodon-app</a> zoeken voor jouw platform.
   existing_username_validator:
     not_found: Kon geen lokale gebruiker met die gebruikersnaam vinden
@@ -1665,8 +1665,8 @@ nl:
     errors:
       empty: Leeg CSV-bestand
       incompatible_type: Incompatibel met het geselecteerde importtype
-      invalid_csv_file: 'Ongeldig CSV-bestand. Fout: %{error}'
-      invalid_json_file: 'Ongeldig JSON-bestand. Foutmelding: %{error}'
+      invalid_csv_file: "Ongeldig CSV-bestand. Fout: %{error}"
+      invalid_json_file: "Ongeldig JSON-bestand. Foutmelding: %{error}"
       over_rows_processing_limit: bevat meer dan %{count} rijen
       status_not_found_warning: Sommige van je filters verbergen specifieke berichten die niet bekend zijn bij deze server. Deze berichten worden niet automatisch gefilterd wanneer ze later alsnog door de server worden ontdekt.
       too_large: Bestand is te groot
@@ -1756,16 +1756,16 @@ nl:
     delete: Deactiveren
     expired: Verlopen
     expires_in:
-      '1800': 30 minuten
-      '21600': 6 uur
-      '3600': 1 uur
-      '43200': 12 uur
-      '604800': 1 week
-      '86400': 1 dag
+      "1800": 30 minuten
+      "21600": 6 uur
+      "3600": 1 uur
+      "43200": 12 uur
+      "604800": 1 week
+      "86400": 1 dag
     expires_in_prompt: Nooit
     generate: Uitnodigingslink genereren
     invalid: Deze uitnodiging is niet geldig
-    invited_by: 'Jij bent uitgenodigd door:'
+    invited_by: "Jij bent uitgenodigd door:"
     max_uses:
       one: 1 keer
       other: "%{count} keer"
@@ -1826,7 +1826,7 @@ nl:
     set_redirect: Doorverwijzing instellen
     warning:
       backreference_required: Het nieuwe account moet eerst worden ingesteld om naar dit account te kunnen terugverwijzen
-      before: 'Lees eerst goed deze tekst, alvorens verder te gaan:'
+      before: "Lees eerst goed deze tekst, alvorens verder te gaan:"
       cooldown: Na de verhuizing kun je tijdelijk niet opnieuw verhuizen
       disabled_account: Jouw huidige account is hierna niet meer volledig bruikbaar. Je hebt echter wel toegang tot het exporteren van je gegevens en tot het opnieuw activeren van je account.
       followers: Deze actie verhuist alle volgers vanaf het huidige account naar het nieuwe account
@@ -1838,7 +1838,7 @@ nl:
   move_handler:
     carry_blocks_over_text: Deze gebruiker is verhuisd vanaf %{acct}. Je hebt dat account geblokkeerd.
     carry_mutes_over_text: Deze gebruiker is verhuisd vanaf %{acct}. Je hebt dat account genegeerd.
-    copy_account_note_text: 'Deze gebruiker is verhuisd vanaf %{acct}. Je hebt de volgende opmerkingen over dat account gemaakt:'
+    copy_account_note_text: "Deze gebruiker is verhuisd vanaf %{acct}. Je hebt de volgende opmerkingen over dat account gemaakt:"
   navigation:
     toggle_menu: Menu tonen/verbergen
   notification_fallbacks:
@@ -1869,7 +1869,7 @@ nl:
       sign_up:
         subject: "%{name} heeft zich geregistreerd"
     favourite:
-      body: 'Jouw bericht werd door %{name} als favoriet gemarkeerd:'
+      body: "Jouw bericht werd door %{name} als favoriet gemarkeerd:"
       subject: "%{name} markeerde jouw bericht als favoriet"
       title: Nieuwe favoriet
     follow:
@@ -1879,11 +1879,11 @@ nl:
     follow_request:
       action: Volgverzoeken beheren
       body: "%{name} wil jou graag volgen"
-      subject: 'Volgen in afwachting: %{name}'
+      subject: "Volgen in afwachting: %{name}"
       title: Nieuw volgverzoek
     mention:
       action: Reageren
-      body: 'Je bent door %{name} vermeld in:'
+      body: "Je bent door %{name} vermeld in:"
       subject: Je bent vermeld door %{name}
       title: Nieuwe vermelding
     moderation_warning:
@@ -1891,13 +1891,13 @@ nl:
     poll:
       subject: Een peiling van %{name} is beëindigd
     quote:
-      body: 'Jouw bericht werd door %{name} geciteerd:'
+      body: "Jouw bericht werd door %{name} geciteerd:"
       subject: "%{name} heeft jouw bericht geciteerd"
       title: Nieuw citaat
     quoted_update:
       subject: "%{name} bewerkte een door jou geciteerd bericht"
     reblog:
-      body: 'Jouw bericht werd door %{name} geboost:'
+      body: "Jouw bericht werd door %{name} geboost:"
       subject: "%{name} boostte jouw bericht"
       title: Nieuwe boost
     severed_relationships:
@@ -1909,7 +1909,7 @@ nl:
   notifications:
     administration_emails: E-mailmeldingen beheerder
     email_events: E-mailmeldingen voor gebeurtenissen
-    email_events_hint: 'Selecteer gebeurtenissen waarvoor je meldingen wilt ontvangen:'
+    email_events_hint: "Selecteer gebeurtenissen waarvoor je meldingen wilt ontvangen:"
   number:
     human:
       decimal_units:
@@ -1925,7 +1925,7 @@ nl:
     description_html: Na het instellen van <strong>tweestapsverificatie</strong> met een authenticatie-app, kun je alleen inloggen als je jouw mobiele telefoon bij je hebt. Hiermee genereer je namelijk de in te voeren toegangscode.
     enable: Inschakelen
     instructions_html: "<strong>Scan deze QR-code in Google Authenticator of een soortgelijke app op jouw mobiele telefoon</strong>. Vanaf nu genereert deze app toegangscodes die je bij het inloggen moet invoeren."
-    manual_instructions: 'Voor het geval je de QR-code niet kunt scannen en het handmatig moet invoeren, vind je hieronder de geheime code in platte tekst:'
+    manual_instructions: "Voor het geval je de QR-code niet kunt scannen en het handmatig moet invoeren, vind je hieronder de geheime code in platte tekst:"
     setup: Instellen
     wrong_code: De ingevoerde code is ongeldig! Klopt de systeemtijd van de server en die van jouw apparaat?
   pagination:
@@ -2000,10 +2000,10 @@ nl:
     errors:
       invalid_rules: verwijst niet naar geldige regels
   rss:
-    content_warning: 'Inhoudswaarschuwing:'
+    content_warning: "Inhoudswaarschuwing:"
     descriptions:
       account: Openbare berichten van @%{acct}
-      tag: 'Openbare berichten met hashtag #%{hashtag}'
+      tag: "Openbare berichten met hashtag #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Je hebt de limiet van %{limit} in te plannen berichten voor vandaag overschreden
     over_total_limit: Je hebt de limiet van %{limit} in te plannen berichten overschreden
@@ -2097,7 +2097,7 @@ nl:
       audio:
         one: "%{count} geluidsbestand"
         other: "%{count} geluidsbestanden"
-      description: 'Bijlagen: %{attached}'
+      description: "Bijlagen: %{attached}"
       image:
         one: "%{count} afbeelding"
         other: "%{count} afbeeldingen"
@@ -2105,14 +2105,14 @@ nl:
         one: "%{count} video"
         other: "%{count} video's"
     boosted_from_html: Geboost van %{acct_link}
-    content_warning: 'Inhoudswaarschuwing: %{warning}'
+    content_warning: "Inhoudswaarschuwing: %{warning}"
     content_warnings:
       hide: Bericht verbergen
       show: Meer tonen
     default_language: Hetzelfde als de taal van de gebruikersomgeving
     disallowed_hashtags:
-      one: 'bevatte een niet toegestane hashtag: %{tags}'
-      other: 'bevatte niet toegestane hashtags: %{tags}'
+      one: "bevatte een niet toegestane hashtag: %{tags}"
+      other: "bevatte niet toegestane hashtags: %{tags}"
     edited_at_html: Bewerkt op %{date}
     errors:
       in_reply_not_found: Het bericht waarop je probeert te reageren lijkt niet te bestaan.
@@ -2163,14 +2163,14 @@ nl:
     keep_self_fav: Favorieten behouden
     keep_self_fav_hint: Eigen berichten die je als favoriet hebt gemarkeerd worden niet verwijderd
     min_age:
-      '1209600': 2 weken
-      '15778476': 6 maanden
-      '2629746': 1 maand
-      '31556952': 1 jaar
-      '5259492': 2 maanden
-      '604800': 1 week
-      '63113904': 2 jaar
-      '7889238': 3 maanden
+      "1209600": 2 weken
+      "15778476": 6 maanden
+      "2629746": 1 maand
+      "31556952": 1 jaar
+      "5259492": 2 maanden
+      "604800": 1 week
+      "63113904": 2 jaar
+      "7889238": 3 maanden
     min_age_label: Te verwijderen na
     min_favs: Berichten die tenminste zoveel keer als favoriet zijn gemarkeerd behouden
     min_favs_hint: Verwijdert geen berichten die tenminste zoveel keer als favoriet zijn gemarkeerd. Laat leeg om berichten ongeacht het aantal favorieten te verwijderen
@@ -2243,7 +2243,7 @@ nl:
         title: Van %{type} afmelden?
   user_mailer:
     announcement_published:
-      description: 'De beheerders van %{domain} doen een mededeling:'
+      description: "De beheerders van %{domain} doen een mededeling:"
       subject: Service-aankondiging
       title: "%{domain} service aankondiging"
     appeal_approved:
@@ -2263,22 +2263,22 @@ nl:
       subject: Jouw archief staat klaar om te worden gedownload
       title: Archief ophalen
     failed_2fa:
-      details: 'Hier zijn de details van de inlogpoging:'
+      details: "Hier zijn de details van de inlogpoging:"
       explanation: Iemand heeft geprobeerd om in te loggen op jouw account maar heeft een ongeldige tweede verificatiefactor opgegeven.
       further_actions_html: Als jij dit niet was, raden we je aan om onmiddellijk %{action} aangezien het in gevaar kan zijn.
       subject: Tweestapsverificatiefout
       title: Tweestapsverificatie mislukt
     suspicious_sign_in:
       change_password: je wachtwoord te wijzigen
-      details: 'Hier zijn de details van het inloggen:'
+      details: "Hier zijn de details van het inloggen:"
       explanation: We hebben vastgesteld dat iemand vanaf een nieuw IP-adres op jouw account is ingelogd.
       further_actions_html: Wanneer jij dit niet was, adviseren wij om onmiddellijk %{action} en om tweestapsverificatie in te schakelen, om zo je account veilig te houden.
       subject: Jouw account is vanaf een nieuw IP-adres benaderd
       title: Een nieuwe registratie
     terms_of_service_changed:
       agreement: Door %{domain} te blijven gebruiken, ga je akkoord met deze voorwaarden. Als je het niet eens bent met de bijgewerkte voorwaarden, kun je je overeenkomst met %{domain} op elk gewenst moment beëindigen door je account te verwijderen.
-      changelog: 'In een oogopslag betekent deze update voor jou:'
-      description: 'Je ontvangt dit bericht, omdat we enkele wijzigingen aanbrengen in onze gebruiksvoorwaarden op %{domain}. Deze aanpassingen worden van kracht op %{date}. We raden je aan om de bijgewerkte voorwaarden hier volledig te bekijken:'
+      changelog: "In een oogopslag betekent deze update voor jou:"
+      description: "Je ontvangt dit bericht, omdat we enkele wijzigingen aanbrengen in onze gebruiksvoorwaarden op %{domain}. Deze aanpassingen worden van kracht op %{date}. We raden je aan om de bijgewerkte voorwaarden hier volledig te bekijken:"
       description_html: Je ontvangt dit bericht, omdat we enkele wijzigingen aanbrengen in onze gebruiksvoorwaarden op %{domain}. Deze aanpassingen worden van kracht op <strong>%{date}</strong>. We raden je aan om de <a href="%{path}" target="_blank">bijgewerkte voorwaarden hier</a> volledig te bestuderen.
       sign_off: Het %{domain}-team
       subject: Onze bijgewerkte gebruiksvoorwaarden
@@ -2297,8 +2297,8 @@ nl:
         sensitive: Vanaf nu worden al jouw geüploade media als gevoelig gemarkeerd en verborgen achter een waarschuwing.
         silence: Je kunt nog steeds jouw account gebruiken, maar alleen mensen die jou al volgen kunnen jouw berichten zien, en je kunt minder goed worden gevonden. Andere kunnen je echter nog wel steeds handmatig volgen.
         suspend: Je kunt niet langer jouw account gebruiken, en jouw profiel en andere gegevens zijn niet langer toegankelijk. Je kunt nog steeds inloggen om een backup van jouw gegevens op te vragen, totdat deze na 30 dagen volledig worden verwijderd. We behouden wel enkele basisgegevens, om te voorkomen dat je onder je schorsing uit probeert te komen.
-      reason: 'Reden:'
-      statuses: 'Gerapporteerde berichten:'
+      reason: "Reden:"
+      statuses: "Gerapporteerde berichten:"
       subject:
         delete_statuses: Deze berichten van %{acct} zijn verwijderd
         disable: Jouw account %{acct} is bevroren
@@ -2320,7 +2320,7 @@ nl:
       apps_ios_action: Via de App Store downloaden
       apps_step: Onze officiële apps downloaden.
       apps_title: Mastodon-apps
-      checklist_subtitle: 'Laten we aan dit nieuwe sociale avontuur beginnen:'
+      checklist_subtitle: "Laten we aan dit nieuwe sociale avontuur beginnen:"
       checklist_title: Welkomstchecklist
       edit_profile_action: Personaliseren
       edit_profile_step: Wanneer je meer over jezelf vertelt, krijg je meer interactie met andere mensen.
@@ -2362,7 +2362,7 @@ nl:
     otp_lost_help_html: Als je toegang tot beiden kwijt bent geraakt, neem dan contact op via %{email}
     rate_limited: Te veel authenticatiepogingen, probeer het later opnieuw.
     seamless_external_login: Je bent ingelogd via een externe dienst, daarom zijn wachtwoorden en e-mailinstellingen niet beschikbaar.
-    signed_in_as: 'Ingelogd als:'
+    signed_in_as: "Ingelogd als:"
   verification:
     extra_instructions_html: <strong>Tip:</strong> De link op je website kan onzichtbaar zijn. Het belangrijke onderdeel is <code>rel="me"</code> dat impersonatie op websites met user-generated content voorkomt. Je kunt zelfs een <code>link</code>-tag gebruiken in de header van de pagina in plaats van <code>a</code>, maar de HTML moet ook zonder JavaScript toegankelijk zijn.
     here_is_how: Zo werkt het

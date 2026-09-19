@@ -7,7 +7,7 @@ sk:
         display_name: Vaše meno a priezvisko alebo prezývka.
         fields: Váš web, zámená, vek, čokoľvek, čo chcete o sebe uviesť.
         indexable: Vaše verejné príspevky sa môžu zobrazovať vo výsledkoch vyhľadávania na Mastodone. Ľudia, ktorí s nimi interagovali, ich môžu nájsť vždy.
-        note: 'Môžete @označiť iných ľudí alebo #hashtagy.'
+        note: "Môžete @označiť iných ľudí alebo #hashtagy."
         show_collections: Ľudia si budú môcť prezrieť, ktoré účty sledujete a ktoré účty sledujú vás. Ľudia, ktorých sledujete, o tom budú vždy vedieť.
         unlocked: Ľudia vás budú môcť sledovať bez vášho schválenia. Zrušenie vám dá možnosť kontrolovať žiadosti o sledovanie a rozhodovať sa o prijímaní alebo zamietaní nových sledujúcich.
       account_alias:
@@ -47,11 +47,11 @@ sk:
       domain_allow:
         domain: Táto doména bude schopná získavať dáta z tohto servera, a prichádzajúce dáta ním budú spracovávané a uložené
       featured_tag:
-        name: 'Nedávno ste použili napríklad tieto hashtagy:'
+        name: "Nedávno ste použili napríklad tieto hashtagy:"
       form_admin_settings:
         site_contact_email: Spôsob, ako vás môžu ľudia kontaktovať pre právne účely alebo podporu.
         site_contact_username: Ako vás môžu ľudia na Mastodone nájsť.
-        thumbnail: 'Obrázok v pomere približne 2 : 1, ktorý sa zobrazí pri informáciách o serveri.'
+        thumbnail: "Obrázok v pomere približne 2 : 1, ktorý sa zobrazí pri informáciách o serveri."
       form_challenge:
         current_password: Vstupuješ do zabezpečenej časti
       imports:
@@ -62,7 +62,7 @@ sk:
         severities:
           sign_up_block: Nové registrácie nebudú možné
       sessions:
-        otp: 'Napíš sem dvoj-faktorový kód z telefónu, alebo použi jeden z tvojích obnovovacích kódov:'
+        otp: "Napíš sem dvoj-faktorový kód z telefónu, alebo použi jeden z tvojích obnovovacích kódov:"
       settings:
         indexable: Váš profil sa môže zobraziť vo výsledkoch vyhľadávania cez Google, Bing a ďalšie.
         show_application: Tebe sa táto informácia zobrazí vždy.
@@ -199,8 +199,8 @@ sk:
         trendable: Povoliť zobrazovanie tohto hashtagu medzi trendujúcimi
       user:
         time_zone: Časové pásmo
-    'no': Nie
+    "no": Nie
     recommended: Odporúčané
     required:
       text: povinné
-    'yes': Áno
+    "yes": Áno

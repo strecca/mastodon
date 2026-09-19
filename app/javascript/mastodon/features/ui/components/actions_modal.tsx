@@ -1,23 +1,20 @@
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import { DropdownMenuItemContent } from 'mastodon/components/dropdown_menu';
-import type { MenuItem } from 'mastodon/models/dropdown_menu';
-import {
-  isActionItem,
-  isExternalLinkItem,
-} from 'mastodon/models/dropdown_menu';
+import { DropdownMenuItemContent } from "mastodon/components/dropdown_menu";
+import type { MenuItem } from "mastodon/models/dropdown_menu";
+import { isActionItem, isExternalLinkItem } from "mastodon/models/dropdown_menu";
 
 export const ActionsModal: React.FC<{
   actions: MenuItem[];
   onClick: React.MouseEventHandler;
   className?: string;
 }> = ({ actions, onClick, className }) => (
-  <div className={classNames('modal-root__modal actions-modal', className)}>
+  <div className={classNames("modal-root__modal actions-modal", className)}>
     <ul>
       {actions.map((option, i: number) => {
         if (option === null) {
-          return <li key={`sep-${i}`} className='dropdown-menu__separator' />;
+          return <li key={`sep-${i}`} className="dropdown-menu__separator" />;
         }
 
         const { text, highlighted, disabled, dangerous } = option;
@@ -26,12 +23,7 @@ export const ActionsModal: React.FC<{
 
         if (isActionItem(option)) {
           element = (
-            <button
-              onClick={onClick}
-              data-index={i}
-              disabled={disabled}
-              type='button'
-            >
+            <button onClick={onClick} data-index={i} disabled={disabled} type="button">
               <DropdownMenuItemContent item={option} />
             </button>
           );
@@ -39,9 +31,9 @@ export const ActionsModal: React.FC<{
           element = (
             <a
               href={option.href}
-              target={option.target ?? '_target'}
+              target={option.target ?? "_target"}
               data-method={option.method}
-              rel='noopener'
+              rel="noopener"
               onClick={onClick}
               data-index={i}
             >
@@ -58,9 +50,9 @@ export const ActionsModal: React.FC<{
 
         return (
           <li
-            className={classNames('dropdown-menu__item', {
-              'dropdown-menu__item--dangerous': dangerous,
-              'dropdown-menu__item--highlighted': highlighted,
+            className={classNames("dropdown-menu__item", {
+              "dropdown-menu__item--dangerous": dangerous,
+              "dropdown-menu__item--highlighted": highlighted,
             })}
             key={`${text}-${i}`}
           >

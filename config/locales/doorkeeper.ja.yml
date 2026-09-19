@@ -52,7 +52,7 @@ ja:
         callback_urls: コールバックURL
         scopes: アクセス権
         secret: クライアントシークレット
-        title: 'アプリ: %{name}'
+        title: "アプリ: %{name}"
     authorizations:
       buttons:
         authorize: 承認
@@ -86,7 +86,7 @@ ja:
         invalid_grant: 指定された認証許可は無効であるか、期限切れ、取り消されている、リダイレクトURIの不一致、または別のクライアントに発行されています。
         invalid_redirect_uri: 無効なリダイレクトURIが含まれています。
         invalid_request:
-          missing_param: '必須パラメータがありません: %{value}'
+          missing_param: "必須パラメータがありません: %{value}"
           request_not_authorized: リクエストを承認する必要があります。リクエストを認可するために必要なパラメータがありません。
           unknown: リクエストに必要なパラメータが欠けているか、サポートされていないパラメータが含まれている、または不正なフォーマットです。
         invalid_resource_owner: 指定されたリソース所有者のクレデンシャルが無効であるか、リソース所有者が見つかりません

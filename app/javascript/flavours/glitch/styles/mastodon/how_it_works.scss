@@ -39,7 +39,10 @@
     border-radius: 10px;
     transition: opacity 0.15s ease;
 
-    &:hover, &:focus-visible { opacity: 0.85; }
+    &:hover,
+    &:focus-visible {
+      opacity: 0.85;
+    }
   }
 
   &__logo-image {
@@ -57,7 +60,9 @@
     color: #1a1a1a;
     margin: 0 0 12px;
 
-    @media (width <=480px) { font-size: 21px; }
+    @media (width <=480px) {
+      font-size: 21px;
+    }
   }
 
   &__intro {
@@ -79,7 +84,9 @@
     border-radius: 999px;
     text-decoration: none;
 
-    &:hover { background: #5152e0; }
+    &:hover {
+      background: #5152e0;
+    }
   }
 
   &__admin-bar {
@@ -91,7 +98,9 @@
     color: #888;
     text-decoration: none;
 
-    &:hover { text-decoration: underline; }
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__bio {
@@ -136,7 +145,9 @@
     line-height: 1.6;
     margin: 0 0 8px;
 
-    &:last-child { margin-bottom: 0; }
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   // Self-contained card: opaque background, not a tint over the ambient
@@ -166,7 +177,9 @@
     flex-direction: column;
     gap: 8px;
 
-    li { padding-left: 2px; }
+    li {
+      padding-left: 2px;
+    }
   }
 
   &__intro-card {
@@ -193,7 +206,9 @@
     flex-direction: column;
     gap: 8px;
 
-    li { padding-left: 2px; }
+    li {
+      padding-left: 2px;
+    }
   }
 
   // Self-contained card, same pattern as &__tip above -- phone-only install
@@ -260,7 +275,9 @@
     gap: 32px;
     flex-wrap: wrap;
 
-    @media (width <=480px) { gap: 20px; }
+    @media (width <=480px) {
+      gap: 20px;
+    }
   }
 
   &__sections {
@@ -324,7 +341,9 @@
     color: #6364ff;
     text-decoration: none;
 
-    &:hover { text-decoration: underline; }
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -376,7 +395,9 @@
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: 22%;
-    box-shadow: 0 0 0 2px #fff, 0 0 8px 2px rgb(99 100 255 / 70%);
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 8px 2px rgb(99 100 255 / 70%);
   }
 
   &__app-label {
@@ -407,7 +428,9 @@
     height: 100%;
     object-fit: cover;
     border-radius: 22%;
-    box-shadow: 0 0 0 2px #fff, 0 0 8px 2px rgb(99 100 255 / 60%);
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 8px 2px rgb(99 100 255 / 60%);
   }
 
   &__ripple {

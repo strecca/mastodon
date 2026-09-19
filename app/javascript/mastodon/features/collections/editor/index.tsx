@@ -1,54 +1,44 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import {
-  Switch,
-  Route,
-  useParams,
-  useRouteMatch,
-  matchPath,
-  useLocation,
-} from 'react-router-dom';
+import { Switch, Route, useParams, useRouteMatch, matchPath, useLocation } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import ListAltIcon from '@/material-icons/400-24px/list_alt.svg?react';
-import { Callout } from 'mastodon/components/callout';
-import { Column } from 'mastodon/components/column';
-import { ColumnHeader } from 'mastodon/components/column_header';
-import { LoadingIndicator } from 'mastodon/components/loading_indicator';
-import { NotSignedInIndicator } from 'mastodon/components/not_signed_in_indicator';
-import { useIdentity } from 'mastodon/identity_context';
-import { initialState } from 'mastodon/initial_state';
-import {
-  collectionEditorActions,
-  fetchCollection,
-} from 'mastodon/reducers/slices/collections';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+import ListAltIcon from "@/material-icons/400-24px/list_alt.svg?react";
+import { Callout } from "mastodon/components/callout";
+import { Column } from "mastodon/components/column";
+import { ColumnHeader } from "mastodon/components/column_header";
+import { LoadingIndicator } from "mastodon/components/loading_indicator";
+import { NotSignedInIndicator } from "mastodon/components/not_signed_in_indicator";
+import { useIdentity } from "mastodon/identity_context";
+import { initialState } from "mastodon/initial_state";
+import { collectionEditorActions, fetchCollection } from "mastodon/reducers/slices/collections";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
-import { useCollectionsCreatedBy } from '../overview/created_by_account';
+import { useCollectionsCreatedBy } from "../overview/created_by_account";
 
-import { CollectionAccounts } from './accounts';
-import { CollectionDetails } from './details';
-import classes from './styles.module.scss';
+import { CollectionAccounts } from "./accounts";
+import { CollectionDetails } from "./details";
+import classes from "./styles.module.scss";
 
 export const messages = defineMessages({
   create: {
-    id: 'collections.create_collection',
-    defaultMessage: 'Create collection',
+    id: "collections.create_collection",
+    defaultMessage: "Create collection",
   },
   newCollection: {
-    id: 'collections.new_collection',
-    defaultMessage: 'New collection',
+    id: "collections.new_collection",
+    defaultMessage: "New collection",
   },
   editDetails: {
-    id: 'collections.edit_details',
-    defaultMessage: 'Edit details',
+    id: "collections.edit_details",
+    defaultMessage: "Edit details",
   },
   manageAccounts: {
-    id: 'collections.manage_accounts',
-    defaultMessage: 'Manage accounts',
+    id: "collections.manage_accounts",
+    defaultMessage: "Manage accounts",
   },
 });
 
@@ -65,7 +55,7 @@ function usePageTitle(id: string | null) {
   } else if (matchPath(location.pathname, { path: `${path}/details` })) {
     return messages.editDetails;
   } else {
-    throw new Error('No page title defined for route');
+    throw new Error("No page title defined for route");
   }
 }
 
@@ -87,12 +77,12 @@ export const CollectionEditorPage: React.FC<{
 
   // When creating a new collection, we load the current account's collections
   // to determine if they're allowed to create more.
-  const { collections: collectionList, status: collectionListStatus } =
-    useCollectionsCreatedBy(isEditMode ? null : accountId);
+  const { collections: collectionList, status: collectionListStatus } = useCollectionsCreatedBy(
+    isEditMode ? null : accountId,
+  );
 
   const isLoading =
-    (isEditMode && !collection) ||
-    (!isEditMode && collectionListStatus === 'loading');
+    (isEditMode && !collection) || (!isEditMode && collectionListStatus === "loading");
 
   const canCreateMoreCollections =
     signedIn && (isEditMode || collectionList.length < userCollectionLimit);
@@ -121,13 +111,13 @@ export const CollectionEditorPage: React.FC<{
     <Column bindToDocument={!multiColumn} label={pageTitle}>
       <ColumnHeader
         title={pageTitle}
-        icon='list-ul'
+        icon="list-ul"
         iconComponent={ListAltIcon}
         multiColumn={multiColumn}
         showBackButton
       />
 
-      <div className='scrollable'>
+      <div className="scrollable">
         {isLoading ? (
           <LoadingIndicator />
         ) : !signedIn ? (
@@ -154,27 +144,25 @@ export const CollectionEditorPage: React.FC<{
 
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );
 };
 
-export const MaxCollectionsCallout: React.FC<{ className?: string }> = ({
-  className,
-}) => (
+export const MaxCollectionsCallout: React.FC<{ className?: string }> = ({ className }) => (
   <Callout
     className={className}
     title={
       <FormattedMessage
-        id='collections.maximum_collection_count_reached'
-        defaultMessage='You have created the maximum number of collections'
+        id="collections.maximum_collection_count_reached"
+        defaultMessage="You have created the maximum number of collections"
       />
     }
   >
     <FormattedMessage
-      id='collections.maximum_collection_count_description'
-      defaultMessage='Your server allows creation of up to {count} collections.'
+      id="collections.maximum_collection_count_description"
+      defaultMessage="Your server allows creation of up to {count} collections."
       values={{ count: userCollectionLimit }}
     />
   </Callout>

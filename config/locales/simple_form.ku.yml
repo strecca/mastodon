@@ -55,7 +55,7 @@ ku:
         domain: Ev dikare bibe navê navperek ku di navnîşana e-nameyê de an tomara MX ya ku ew bi kar tîne de xuya dike. Ew ê di dema tomarkirinê de werin kontrolkirin.
         with_dns_records: Hewl tê dayîn ku tomarên DNSê yên li qada jê re hatine dayîn were çareserkirin û encamên wê jî were astengkirin
       featured_tag:
-        name: 'Li virê çend haştag hene ku te demên dawî bi kar anîne:'
+        name: "Li virê çend haştag hene ku te demên dawî bi kar anîne:"
       filters:
         actions:
           hide: Naveroka parzûnkirî bi tevahî veşêre, mîna ku ew tune be tevbigere
@@ -94,7 +94,7 @@ ku:
       rule:
         text: Ji bo bikarhênerên li ser vê rajekarê rêzikek an jî pêdivîyê pênase bike. Hewl bide ku rêzikê kin û xwerû bigire
       sessions:
-        otp: 'Koda du-gavî a telefona xwe têkevê an jî yek ji wan kodên xilaskirinê têkevê:'
+        otp: "Koda du-gavî a telefona xwe têkevê an jî yek ji wan kodên xilaskirinê têkevê:"
         webauthn: Ku kilîta USB be, jê ewle be ku wê têxî û ku pêdivî be, pê li wê bike.
       tag:
         name: Tu dikarî tenê mezinahiya tîpan biguherînî bo mînak, da ku ew bêtir were xwendin
@@ -267,7 +267,7 @@ ku:
       webhook:
         events: Bûyerên çalakkirî
         url: Girêdana xala dawîbûnê
-    'no': Na
+    "no": Na
     not_recommended: Nayê pêşniyarkirin
     recommended: Pêşniyarkirî
     required:
@@ -276,4 +276,4 @@ ku:
     title:
       sessions:
         webauthn: Yek ji kilîtên ewlehiyê yên xwe bi kar bîne bo têketinê
-    'yes': Erê
+    "yes": Erê

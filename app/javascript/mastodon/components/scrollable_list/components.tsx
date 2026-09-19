@@ -1,26 +1,22 @@
-import type { ComponentPropsWithoutRef } from 'react';
-import { forwardRef } from 'react';
+import type { ComponentPropsWithoutRef } from "react";
+import { forwardRef } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { hasReactChildren } from '@/mastodon/utils/has_react_children';
+import { hasReactChildren } from "@/mastodon/utils/has_react_children";
 
-import { LoadingIndicator } from '../loading_indicator';
+import { LoadingIndicator } from "../loading_indicator";
 
 export const Scrollable = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<'div'> & {
+  ComponentPropsWithoutRef<"div"> & {
     flex?: boolean;
     fullscreen?: boolean;
   }
 >(({ flex = true, fullscreen, className, children, ...otherProps }, ref) => {
   return (
     <div
-      className={classNames(
-        'scrollable',
-        { 'scrollable--flex': flex, fullscreen },
-        className,
-      )}
+      className={classNames("scrollable", { "scrollable--flex": flex, fullscreen }, className)}
       ref={ref}
       {...otherProps}
     >
@@ -29,18 +25,18 @@ export const Scrollable = forwardRef<
   );
 });
 
-Scrollable.displayName = 'Scrollable';
+Scrollable.displayName = "Scrollable";
 
 export const ItemList = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<'div'> & {
+  ComponentPropsWithoutRef<"div"> & {
     isLoading?: boolean;
     emptyMessage?: React.ReactNode;
   }
 >(({ isLoading, emptyMessage, className, children, ...otherProps }, ref) => {
   if (!isLoading && !hasReactChildren(children) && emptyMessage) {
     return (
-      <div className='empty-column-indicator'>
+      <div className="empty-column-indicator">
         <span>{emptyMessage}</span>
       </div>
     );
@@ -48,16 +44,11 @@ export const ItemList = forwardRef<
 
   return (
     <>
-      <div
-        role='feed'
-        className={classNames('item-list', className)}
-        ref={ref}
-        {...otherProps}
-      >
+      <div role="feed" className={classNames("item-list", className)} ref={ref} {...otherProps}>
         {!isLoading && children}
       </div>
       {isLoading && (
-        <div className='scrollable__append'>
+        <div className="scrollable__append">
           <LoadingIndicator />
         </div>
       )}
@@ -65,15 +56,15 @@ export const ItemList = forwardRef<
   );
 });
 
-ItemList.displayName = 'ItemList';
+ItemList.displayName = "ItemList";
 
 export const Article = forwardRef<
   HTMLElement,
-  ComponentPropsWithoutRef<'article'> & {
+  ComponentPropsWithoutRef<"article"> & {
     focusable?: boolean;
-    'data-id'?: string;
-    'aria-posinset': number;
-    'aria-setsize': number;
+    "data-id"?: string;
+    "aria-posinset": number;
+    "aria-setsize": number;
   }
 >(({ focusable, className, children, ...otherProps }, ref) => {
   return (
@@ -88,4 +79,4 @@ export const Article = forwardRef<
   );
 });
 
-Article.displayName = 'Article';
+Article.displayName = "Article";

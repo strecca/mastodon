@@ -1,15 +1,12 @@
-import { Map as ImmutableMap, List } from 'immutable';
+import { Map as ImmutableMap, List } from "immutable";
 
-import type { ApiRelationshipJSON } from '@/mastodon/api_types/relationships';
-import type { ApiStatusJSON } from '@/mastodon/api_types/statuses';
-import type {
-  CustomEmojiData,
-  UnicodeEmojiData,
-} from '@/mastodon/features/emoji/types';
-import { createAccountFromServerJSON } from '@/mastodon/models/account';
-import type { AnnualReport } from '@/mastodon/models/annual_report';
-import type { Status } from '@/mastodon/models/status';
-import type { ApiAccountJSON } from 'mastodon/api_types/accounts';
+import type { ApiRelationshipJSON } from "@/mastodon/api_types/relationships";
+import type { ApiStatusJSON } from "@/mastodon/api_types/statuses";
+import type { CustomEmojiData, UnicodeEmojiData } from "@/mastodon/features/emoji/types";
+import { createAccountFromServerJSON } from "@/mastodon/models/account";
+import type { AnnualReport } from "@/mastodon/models/annual_report";
+import type { Status } from "@/mastodon/models/status";
+import type { ApiAccountJSON } from "mastodon/api_types/accounts";
 
 type FactoryOptions<T> = {
   id?: string;
@@ -17,66 +14,59 @@ type FactoryOptions<T> = {
 
 type FactoryFunction<T> = (options?: FactoryOptions<T>) => T;
 
-export const accountFactory: FactoryFunction<ApiAccountJSON> = ({
-  id,
-  ...data
-} = {}) => ({
-  id: id ?? '1',
-  acct: 'testuser',
-  avatar: '/avatars/original/missing.png',
-  avatar_static: '/avatars/original/missing.png',
-  avatar_description: '',
-  username: 'testuser',
-  display_name: 'Test User',
+export const accountFactory: FactoryFunction<ApiAccountJSON> = ({ id, ...data } = {}) => ({
+  id: id ?? "1",
+  acct: "testuser",
+  avatar: "/avatars/original/missing.png",
+  avatar_static: "/avatars/original/missing.png",
+  avatar_description: "",
+  username: "testuser",
+  display_name: "Test User",
   bot: false,
-  created_at: '2023-01-01T00:00:00.000Z',
+  created_at: "2023-01-01T00:00:00.000Z",
   discoverable: true,
   emojis: [],
   feature_approval: {
     automatic: [],
     manual: [],
-    current_user: 'missing',
+    current_user: "missing",
   },
   fields: [],
   followers_count: 0,
   following_count: 0,
   group: false,
-  header: '/header.png',
-  header_static: '/header_static.png',
-  header_description: '',
+  header: "/header.png",
+  header_static: "/header_static.png",
+  header_description: "",
   indexable: true,
-  last_status_at: '2023-01-01',
+  last_status_at: "2023-01-01",
   locked: false,
   show_featured: true,
   show_media: true,
   show_media_replies: true,
   mute_expires_at: null,
-  note: 'This is a test user account.',
+  note: "This is a test user account.",
   statuses_count: 0,
   suspended: false,
-  url: '/@testuser',
-  uri: '/users/testuser',
+  url: "/@testuser",
+  uri: "/users/testuser",
   noindex: false,
   roles: [],
   hide_collections: false,
   ...data,
 });
 
-export const accountFactoryState = (
-  options: FactoryOptions<ApiAccountJSON> = {},
-) => createAccountFromServerJSON(accountFactory(options));
+export const accountFactoryState = (options: FactoryOptions<ApiAccountJSON> = {}) =>
+  createAccountFromServerJSON(accountFactory(options));
 
-export const statusFactory: FactoryFunction<ApiStatusJSON> = ({
-  id,
-  ...data
-} = {}) => ({
-  id: id ?? '1',
-  created_at: '2023-01-01T00:00:00.000Z',
+export const statusFactory: FactoryFunction<ApiStatusJSON> = ({ id, ...data } = {}) => ({
+  id: id ?? "1",
+  created_at: "2023-01-01T00:00:00.000Z",
   sensitive: false,
-  visibility: 'public',
-  language: 'en',
-  uri: 'https://example.com/status/1',
-  url: 'https://example.com/status/1',
+  visibility: "public",
+  language: "en",
+  uri: "https://example.com/status/1",
+  url: "https://example.com/status/1",
   replies_count: 0,
   reblogs_count: 0,
   quotes_count: 0,
@@ -86,16 +76,14 @@ export const statusFactory: FactoryFunction<ApiStatusJSON> = ({
   mentions: [],
   tags: [],
   emojis: [],
-  contentHtml: data.text ?? '<p>This is a test status.</p>',
+  contentHtml: data.text ?? "<p>This is a test status.</p>",
   ...data,
 });
 
-export const statusFactoryState = (
-  options: FactoryOptions<ApiStatusJSON> = {},
-) =>
+export const statusFactoryState = (options: FactoryOptions<ApiStatusJSON> = {}) =>
   ImmutableMap<string, unknown>({
     ...(statusFactory(options) as unknown as Record<string, unknown>),
-    account: options.account?.id ?? '1',
+    account: options.account?.id ?? "1",
     tags: List(options.tags),
   }) as unknown as Status;
 
@@ -103,7 +91,7 @@ export const relationshipsFactory: FactoryFunction<ApiRelationshipJSON> = ({
   id,
   ...data
 } = {}) => ({
-  id: id ?? '1',
+  id: id ?? "1",
   following: false,
   followed_by: false,
   blocking: false,
@@ -112,7 +100,7 @@ export const relationshipsFactory: FactoryFunction<ApiRelationshipJSON> = ({
   muting: false,
   muting_notifications: false,
   muting_expires_at: null,
-  note: '',
+  note: "",
   requested_by: false,
   requested: false,
   domain_blocking: false,
@@ -122,62 +110,58 @@ export const relationshipsFactory: FactoryFunction<ApiRelationshipJSON> = ({
   ...data,
 });
 
-export function unicodeEmojiFactory(
-  data: Partial<UnicodeEmojiData> = {},
-): UnicodeEmojiData {
+export function unicodeEmojiFactory(data: Partial<UnicodeEmojiData> = {}): UnicodeEmojiData {
   return {
     emoticons: undefined,
-    hexcode: 'test',
-    label: 'Test',
-    unicode: '🧪',
-    shortcodes: ['test_emoji'],
-    tokens: ['test', 'emoji'],
+    hexcode: "test",
+    label: "Test",
+    unicode: "🧪",
+    shortcodes: ["test_emoji"],
+    tokens: ["test", "emoji"],
     group: 1,
     order: 1,
     ...data,
   };
 }
 
-export function customEmojiFactory(
-  data: Partial<CustomEmojiData> = {},
-): CustomEmojiData {
+export function customEmojiFactory(data: Partial<CustomEmojiData> = {}): CustomEmojiData {
   return {
-    shortcode: 'custom',
-    static_url: '/custom-emoji/logo.svg',
-    url: '/custom-emoji/logo.svg',
+    shortcode: "custom",
+    static_url: "/custom-emoji/logo.svg",
+    url: "/custom-emoji/logo.svg",
     visible_in_picker: true,
-    tokens: ['custom'],
+    tokens: ["custom"],
     ...data,
   };
 }
 
 interface AnnualReportState {
-  state: 'available';
+  state: "available";
   report: AnnualReport;
 }
 
 interface AnnualReportFactoryOptions {
   account_id?: string;
   status_id?: string;
-  archetype?: AnnualReport['data']['archetype'];
+  archetype?: AnnualReport["data"]["archetype"];
   year?: number;
-  top_hashtag?: AnnualReport['data']['top_hashtags'][0];
+  top_hashtag?: AnnualReport["data"]["top_hashtags"][0];
   without_posts?: boolean;
 }
 
 export function annualReportFactory({
-  account_id = '1',
-  status_id = '1',
-  archetype = 'lurker',
+  account_id = "1",
+  status_id = "1",
+  archetype = "lurker",
   year,
   top_hashtag,
   without_posts = false,
 }: AnnualReportFactoryOptions = {}): AnnualReportState {
   return {
-    state: 'available',
+    state: "available",
     report: {
       schema_version: 2,
-      share_url: '#',
+      share_url: "#",
       account_id,
       year: year ?? 2025,
       data: {

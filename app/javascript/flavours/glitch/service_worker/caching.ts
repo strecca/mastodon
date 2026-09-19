@@ -1,35 +1,35 @@
 /// <reference lib="WebWorker" />
 /// <reference types="vite/client" />
 
-import { DAY } from '../utils/time';
+import { DAY } from "../utils/time";
 
-const CACHE_NAME_PREFIX = 'mastodon-';
-const CACHE_HEADER_TTL = 'x-timestamp';
+const CACHE_NAME_PREFIX = "mastodon-";
+const CACHE_HEADER_TTL = "x-timestamp";
 
 export async function cacheRoot() {
   const cache = await openWebCache();
-  const response = await fetch('/', {
-    credentials: 'include',
-    redirect: 'manual',
+  const response = await fetch("/", {
+    credentials: "include",
+    redirect: "manual",
   });
-  await cache.put('/', response);
+  await cache.put("/", response);
 }
 
 export function handleFetch(event: FetchEvent) {
   const url = new URL(event.request.url);
 
-  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
     return;
   }
 
-  if (url.pathname === '/auth/sign_out') {
+  if (url.pathname === "/auth/sign_out") {
     event.respondWith(handleLogout(event));
   } else if (/intl\/.*\.js$/.test(url.pathname)) {
-    event.respondWith(cacheFirst({ event, name: 'locales' }));
-  } else if (event.request.destination === 'font') {
-    event.respondWith(cacheFirst({ event, name: 'fonts' }));
-  } else if (event.request.destination === 'image') {
-    event.respondWith(cacheFirst({ event, name: 'images', ttl: DAY * 7 }));
+    event.respondWith(cacheFirst({ event, name: "locales" }));
+  } else if (event.request.destination === "font") {
+    event.respondWith(cacheFirst({ event, name: "fonts" }));
+  } else if (event.request.destination === "image") {
+    event.respondWith(cacheFirst({ event, name: "images", ttl: DAY * 7 }));
   }
 }
 
@@ -53,9 +53,7 @@ async function cacheFirst({
 
   if (cachedResponse) {
     // If we have a cached response, check the TTL header.
-    const ttlHeader = Number.parseInt(
-      cachedResponse.headers.get(CACHE_HEADER_TTL) ?? '0',
-    );
+    const ttlHeader = Number.parseInt(cachedResponse.headers.get(CACHE_HEADER_TTL) ?? "0");
 
     if (!ttlHeader || ttlHeader + ttl > Date.now()) {
       return cachedResponse;
@@ -105,9 +103,7 @@ export async function expireCachedItems({
       continue;
     }
 
-    const timestamp = Number.parseInt(
-      cachedResponse.headers.get(CACHE_HEADER_TTL) ?? '0',
-    );
+    const timestamp = Number.parseInt(cachedResponse.headers.get(CACHE_HEADER_TTL) ?? "0");
 
     if (!timestamp || timestamp + ttl > now) {
       validKeys.push({ key, timestamp: timestamp || Number.POSITIVE_INFINITY });
@@ -121,13 +117,9 @@ export async function expireCachedItems({
     return;
   }
 
-  const sortedValidKeys = validKeys.toSorted(
-    ({ timestamp: a }, { timestamp: b }) => a - b,
-  );
+  const sortedValidKeys = validKeys.toSorted(({ timestamp: a }, { timestamp: b }) => a - b);
   await Promise.all(
-    sortedValidKeys
-      .slice(0, sortedValidKeys.length - max)
-      .map(({ key }) => cache.delete(key)),
+    sortedValidKeys.slice(0, sortedValidKeys.length - max).map(({ key }) => cache.delete(key)),
   );
 }
 
@@ -138,9 +130,9 @@ function openWebCache() {
 async function handleLogout(event: FetchEvent) {
   const response = await fetch(event.request);
 
-  if (response.ok || response.type === 'opaqueredirect') {
+  if (response.ok || response.type === "opaqueredirect") {
     const cache = await openWebCache();
-    await cache.delete('/');
+    await cache.delete("/");
   }
 
   return response;

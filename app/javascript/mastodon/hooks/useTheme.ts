@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { isDarkMode } from '../utils/theme';
+import { isDarkMode } from "../utils/theme";
 
 export function useTheme() {
   const [darkMode, setDarkMode] = useState(() => isDarkMode());
@@ -11,7 +11,7 @@ export function useTheme() {
     });
     mutationObserver.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['data-color-scheme'],
+      attributeFilter: ["data-color-scheme"],
     });
 
     return () => {
@@ -19,5 +19,5 @@ export function useTheme() {
     };
   }, []);
 
-  return darkMode ? 'dark' : 'light';
+  return darkMode ? "dark" : "light";
 }

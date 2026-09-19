@@ -1,20 +1,12 @@
-import type { Reducer } from '@reduxjs/toolkit';
-import { Map as ImmutableMap } from 'immutable';
+import type { Reducer } from "@reduxjs/toolkit";
+import { Map as ImmutableMap } from "immutable";
 
-import {
-  createList,
-  updateList,
-  fetchLists,
-} from 'mastodon/actions/lists_typed';
-import type { ApiListJSON } from 'mastodon/api_types/lists';
-import { createList as createListFromJSON } from 'mastodon/models/list';
-import type { List } from 'mastodon/models/list';
+import { createList, updateList, fetchLists } from "mastodon/actions/lists_typed";
+import type { ApiListJSON } from "mastodon/api_types/lists";
+import { createList as createListFromJSON } from "mastodon/models/list";
+import type { List } from "mastodon/models/list";
 
-import {
-  LIST_FETCH_SUCCESS,
-  LIST_FETCH_FAIL,
-  LIST_DELETE_SUCCESS,
-} from '../actions/lists';
+import { LIST_FETCH_SUCCESS, LIST_FETCH_FAIL, LIST_DELETE_SUCCESS } from "../actions/lists";
 
 const initialState = ImmutableMap<string, List | null>();
 type State = typeof initialState;
@@ -31,10 +23,7 @@ const normalizeLists = (state: State, lists: ApiListJSON[]) => {
 };
 
 export const listsReducer: Reducer<State> = (state = initialState, action) => {
-  if (
-    createList.fulfilled.match(action) ||
-    updateList.fulfilled.match(action)
-  ) {
+  if (createList.fulfilled.match(action) || updateList.fulfilled.match(action)) {
     return normalizeList(state, action.payload);
   } else if (fetchLists.fulfilled.match(action)) {
     return normalizeLists(state, action.payload);

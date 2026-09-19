@@ -1,15 +1,15 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "@reduxjs/toolkit";
 
-import { compareId } from 'flavours/glitch/compare_id';
-import type { NotificationGroup } from 'flavours/glitch/models/notification_group';
-import type { NotificationGap } from 'flavours/glitch/reducers/notification_groups';
-import type { RootState } from 'flavours/glitch/store';
+import { compareId } from "flavours/glitch/compare_id";
+import type { NotificationGroup } from "flavours/glitch/models/notification_group";
+import type { NotificationGap } from "flavours/glitch/reducers/notification_groups";
+import type { RootState } from "flavours/glitch/store";
 
 import {
   selectSettingsNotificationsExcludedTypes,
   selectSettingsNotificationsQuickFilterActive,
   selectSettingsNotificationsQuickFilterShow,
-} from './settings';
+} from "./settings";
 
 const filterNotificationsByAllowedTypes = (
   showFilterBar: boolean,
@@ -17,22 +17,21 @@ const filterNotificationsByAllowedTypes = (
   excludedTypes: string[],
   notifications: (NotificationGroup | NotificationGap)[],
 ) => {
-  if (!showFilterBar || allowedType === 'all') {
+  if (!showFilterBar || allowedType === "all") {
     // used if user changed the notification settings after loading the notifications from the server
     // otherwise a list of notifications will come pre-filtered from the backend
     // we need to turn it off for FilterBar in order not to block ourselves from seeing a specific category
     return notifications.filter(
-      (item) => item.type === 'gap' || !excludedTypes.includes(item.type),
+      (item) => item.type === "gap" || !excludedTypes.includes(item.type),
     );
   }
   return notifications.filter(
     (item) =>
-      item.type === 'gap' ||
+      item.type === "gap" ||
       allowedType === item.type ||
-      (allowedType === 'mention' && item.type === 'quote') ||
-      (allowedType === 'collection' &&
-        (item.type === 'collection_update' ||
-          item.type === 'added_to_collection')),
+      (allowedType === "mention" && item.type === "quote") ||
+      (allowedType === "collection" &&
+        (item.type === "collection_update" || item.type === "added_to_collection")),
   );
 };
 
@@ -66,13 +65,13 @@ export const selectUnreadNotificationGroupsCount = createSelector(
     return (
       groups.filter(
         (group) =>
-          group.type !== 'gap' &&
+          group.type !== "gap" &&
           group.page_max_id &&
           compareId(group.page_max_id, notificationMarker) > 0,
       ).length +
       pendingGroups.filter(
         (group) =>
-          group.type !== 'gap' &&
+          group.type !== "gap" &&
           group.page_max_id &&
           compareId(group.page_max_id, notificationMarker) > 0,
       ).length
@@ -82,14 +81,11 @@ export const selectUnreadNotificationGroupsCount = createSelector(
 
 // Whether there is any unread notification according to the user-facing state
 export const selectAnyPendingNotification = createSelector(
-  [
-    (s: RootState) => s.notificationGroups.readMarkerId,
-    selectNotificationGroups,
-  ],
+  [(s: RootState) => s.notificationGroups.readMarkerId, selectNotificationGroups],
   (notificationMarker, groups) => {
     return groups.some(
       (group) =>
-        group.type !== 'gap' &&
+        group.type !== "gap" &&
         group.page_max_id &&
         compareId(group.page_max_id, notificationMarker) > 0,
     );
@@ -98,6 +94,5 @@ export const selectAnyPendingNotification = createSelector(
 
 export const selectPendingNotificationGroupsCount = createSelector(
   [selectPendingNotificationGroups],
-  (pendingGroups) =>
-    pendingGroups.filter((group) => group.type !== 'gap').length,
+  (pendingGroups) => pendingGroups.filter((group) => group.type !== "gap").length,
 );

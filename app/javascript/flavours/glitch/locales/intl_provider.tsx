@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { IntlProvider as BaseIntlProvider } from 'react-intl';
+import { IntlProvider as BaseIntlProvider } from "react-intl";
 
-import { useViewingLocale } from 'flavours/glitch/hooks/useViewingLocale';
-import { isProduction } from 'flavours/glitch/utils/environment';
+import { useViewingLocale } from "flavours/glitch/hooks/useViewingLocale";
+import { isProduction } from "flavours/glitch/utils/environment";
 
-import type { LocaleData } from './global_locale';
-import { getLocale, isLocaleLoaded } from './global_locale';
-import { loadLocale, loadLocaleData } from './load_locale';
+import type { LocaleData } from "./global_locale";
+import { getLocale, isLocaleLoaded } from "./global_locale";
+import { loadLocale, loadLocaleData } from "./load_locale";
 
 function onProviderError(error: unknown) {
   // Silent the error, like upstream does
@@ -17,7 +17,7 @@ function onProviderError(error: unknown) {
   // As-per the spec, the browser should select the best matching locale
   if (
     error &&
-    typeof error === 'object' &&
+    typeof error === "object" &&
     error instanceof Error &&
     /MISSING_DATA/.exec(error.message)
   ) {
@@ -28,7 +28,7 @@ function onProviderError(error: unknown) {
 }
 
 export const IntlProvider: React.FC<
-  Omit<React.ComponentProps<typeof BaseIntlProvider>, 'locale' | 'messages'>
+  Omit<React.ComponentProps<typeof BaseIntlProvider>, "locale" | "messages">
 > = ({ children, ...props }) => {
   const [localeLoaded, setLocaleLoaded] = useState(false);
   const [baseLocale, setBaseLocale] = useState<LocaleData | null>(null);
@@ -38,8 +38,7 @@ export const IntlProvider: React.FC<
   // this, react-intl's own locale/messages stay frozen at whatever was
   // baked into the page on load.
   const { viewingLocale } = useViewingLocale();
-  const [viewingLocaleData, setViewingLocaleData] =
-    useState<LocaleData | null>(null);
+  const [viewingLocaleData, setViewingLocaleData] = useState<LocaleData | null>(null);
 
   useEffect(() => {
     async function loadInitialLocale() {
@@ -71,9 +70,7 @@ export const IntlProvider: React.FC<
   // currently-selected viewingLocale — avoids a stale flash of a previous
   // selection while the new one is still loading.
   const activeLocale =
-    viewingLocale && viewingLocaleData?.locale === viewingLocale
-      ? viewingLocaleData
-      : baseLocale;
+    viewingLocale && viewingLocaleData?.locale === viewingLocale ? viewingLocaleData : baseLocale;
 
   return (
     <BaseIntlProvider

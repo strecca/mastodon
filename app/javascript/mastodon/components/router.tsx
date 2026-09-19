@@ -1,20 +1,16 @@
-import type { PropsWithChildren } from 'react';
-import type React from 'react';
+import type { PropsWithChildren } from "react";
+import type React from "react";
 
-import type { useLocation } from 'react-router';
-import { Router as OriginalRouter, useHistory } from 'react-router';
+import type { useLocation } from "react-router";
+import { Router as OriginalRouter, useHistory } from "react-router";
 
-import type {
-  LocationDescriptor,
-  LocationDescriptorObject,
-  Path,
-} from 'history';
-import { createBrowserHistory } from 'history';
+import type { LocationDescriptor, LocationDescriptorObject, Path } from "history";
+import { createBrowserHistory } from "history";
 
-import { layoutFromWindow } from 'mastodon/is_mobile';
-import { isDevelopment } from 'mastodon/utils/environment';
+import { layoutFromWindow } from "mastodon/is_mobile";
+import { isDevelopment } from "mastodon/utils/environment";
 
-import type { FocusTarget } from './navigation_focus_target';
+import type { FocusTarget } from "./navigation_focus_target";
 
 interface MastodonLocationState {
   fromMastodon?: boolean;
@@ -47,25 +43,21 @@ function normalizePath(
   path: HistoryPath,
   state?: LocationState,
 ): LocationDescriptorObject<LocationState> {
-  const location = typeof path === 'string' ? { pathname: path } : { ...path };
+  const location = typeof path === "string" ? { pathname: path } : { ...path };
 
   if (location.state === undefined && state !== undefined) {
     location.state = state;
-  } else if (
-    location.state !== undefined &&
-    state !== undefined &&
-    isDevelopment()
-  ) {
+  } else if (location.state !== undefined && state !== undefined && isDevelopment()) {
     // eslint-disable-next-line no-console
     console.log(
-      'You should avoid providing a 2nd state argument to push when the 1st argument is a location-like object that already has state; it is ignored',
+      "You should avoid providing a 2nd state argument to push when the 1st argument is a location-like object that already has state; it is ignored",
     );
   }
 
   if (
-    layoutFromWindow() === 'multi-column' &&
+    layoutFromWindow() === "multi-column" &&
     location.pathname &&
-    !location.pathname.startsWith('/deck')
+    !location.pathname.startsWith("/deck")
   ) {
     location.pathname = `/deck${location.pathname}`;
   }

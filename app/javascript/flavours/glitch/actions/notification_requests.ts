@@ -6,18 +6,18 @@ import {
   apiDismissNotificationRequest,
   apiAcceptNotificationRequests,
   apiDismissNotificationRequests,
-} from 'flavours/glitch/api/notifications';
-import type { ApiAccountJSON } from 'flavours/glitch/api_types/accounts';
+} from "flavours/glitch/api/notifications";
+import type { ApiAccountJSON } from "flavours/glitch/api_types/accounts";
 import type {
   ApiNotificationGroupJSON,
   ApiNotificationJSON,
-} from 'flavours/glitch/api_types/notifications';
-import type { ApiStatusJSON } from 'flavours/glitch/api_types/statuses';
-import type { AppDispatch } from 'flavours/glitch/store';
-import { createDataLoadingThunk } from 'flavours/glitch/store/typed_functions';
+} from "flavours/glitch/api_types/notifications";
+import type { ApiStatusJSON } from "flavours/glitch/api_types/statuses";
+import type { AppDispatch } from "flavours/glitch/store";
+import { createDataLoadingThunk } from "flavours/glitch/store/typed_functions";
 
-import { importFetchedAccounts, importFetchedStatuses } from './importer';
-import { decreasePendingRequestsCount } from './notification_policies';
+import { importFetchedAccounts, importFetchedStatuses } from "./importer";
+import { decreasePendingRequestsCount } from "./notification_policies";
 
 // TODO: refactor with notification_groups
 function dispatchAssociatedRecords(
@@ -28,28 +28,26 @@ function dispatchAssociatedRecords(
   const fetchedStatuses: ApiStatusJSON[] = [];
 
   notifications.forEach((notification) => {
-    if (notification.type === 'admin.report') {
+    if (notification.type === "admin.report") {
       fetchedAccounts.push(notification.report.target_account);
     }
 
-    if (notification.type === 'moderation_warning') {
+    if (notification.type === "moderation_warning") {
       fetchedAccounts.push(notification.moderation_warning.target_account);
     }
 
-    if ('status' in notification && notification.status) {
+    if ("status" in notification && notification.status) {
       fetchedStatuses.push(notification.status);
     }
   });
 
-  if (fetchedAccounts.length > 0)
-    dispatch(importFetchedAccounts(fetchedAccounts));
+  if (fetchedAccounts.length > 0) dispatch(importFetchedAccounts(fetchedAccounts));
 
-  if (fetchedStatuses.length > 0)
-    dispatch(importFetchedStatuses(fetchedStatuses));
+  if (fetchedStatuses.length > 0) dispatch(importFetchedStatuses(fetchedStatuses));
 }
 
 export const fetchNotificationRequests = createDataLoadingThunk(
-  'notificationRequests/fetch',
+  "notificationRequests/fetch",
   async (_params, { getState }) => {
     let sinceId = undefined;
 
@@ -62,20 +60,19 @@ export const fetchNotificationRequests = createDataLoadingThunk(
     });
   },
   ({ requests, links }, { dispatch }) => {
-    const next = links.refs.find((link) => link.rel === 'next');
+    const next = links.refs.find((link) => link.rel === "next");
 
     dispatch(importFetchedAccounts(requests.map((request) => request.account)));
 
     return { requests, next: next?.uri };
   },
   {
-    condition: (_params, { getState }) =>
-      !getState().notificationRequests.isLoading,
+    condition: (_params, { getState }) => !getState().notificationRequests.isLoading,
   },
 );
 
 export const fetchNotificationRequest = createDataLoadingThunk(
-  'notificationRequest/fetch',
+  "notificationRequest/fetch",
   async ({ id }: { id: string }) => apiFetchNotificationRequest(id),
   {
     condition: ({ id }, { getState }) =>
@@ -87,15 +84,15 @@ export const fetchNotificationRequest = createDataLoadingThunk(
 );
 
 export const expandNotificationRequests = createDataLoadingThunk(
-  'notificationRequests/expand',
+  "notificationRequests/expand",
   async (_, { getState }) => {
     const nextUrl = getState().notificationRequests.next;
-    if (!nextUrl) throw new Error('missing URL');
+    if (!nextUrl) throw new Error("missing URL");
 
     return apiFetchNotificationRequests(undefined, nextUrl);
   },
   ({ requests, links }, { dispatch }) => {
-    const next = links.refs.find((link) => link.rel === 'next');
+    const next = links.refs.find((link) => link.rel === "next");
 
     dispatch(importFetchedAccounts(requests.map((request) => request.account)));
 
@@ -103,20 +100,19 @@ export const expandNotificationRequests = createDataLoadingThunk(
   },
   {
     condition: (_, { getState }) =>
-      !!getState().notificationRequests.next &&
-      !getState().notificationRequests.isLoading,
+      !!getState().notificationRequests.next && !getState().notificationRequests.isLoading,
   },
 );
 
 export const fetchNotificationsForRequest = createDataLoadingThunk(
-  'notificationRequest/fetchNotifications',
+  "notificationRequest/fetchNotifications",
   async ({ accountId }: { accountId: string }, { getState }) => {
     const sinceId =
       // @ts-expect-error current.notifications.items is not yet typed
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      getState().notificationRequests.current.notifications.items[0]?.get(
-        'id',
-      ) as string | undefined;
+      getState().notificationRequests.current.notifications.items[0]?.get("id") as
+        | string
+        | undefined;
 
     return apiFetchNotifications({
       since_id: sinceId,
@@ -124,7 +120,7 @@ export const fetchNotificationsForRequest = createDataLoadingThunk(
     });
   },
   ({ notifications, links }, { dispatch }) => {
-    const next = links.refs.find((link) => link.rel === 'next');
+    const next = links.refs.find((link) => link.rel === "next");
 
     dispatchAssociatedRecords(dispatch, notifications);
 
@@ -133,24 +129,21 @@ export const fetchNotificationsForRequest = createDataLoadingThunk(
   {
     condition: ({ accountId }, { getState }) => {
       const current = getState().notificationRequests.current;
-      return !(
-        current.item?.account_id === accountId &&
-        current.notifications.isLoading
-      );
+      return !(current.item?.account_id === accountId && current.notifications.isLoading);
     },
   },
 );
 
 export const expandNotificationsForRequest = createDataLoadingThunk(
-  'notificationRequest/expandNotifications',
+  "notificationRequest/expandNotifications",
   async (_, { getState }) => {
     const nextUrl = getState().notificationRequests.current.notifications.next;
-    if (!nextUrl) throw new Error('missing URL');
+    if (!nextUrl) throw new Error("missing URL");
 
     return apiFetchNotifications(undefined, nextUrl);
   },
   ({ notifications, links }, { dispatch }) => {
-    const next = links.refs.find((link) => link.rel === 'next');
+    const next = links.refs.find((link) => link.rel === "next");
 
     dispatchAssociatedRecords(dispatch, notifications);
 
@@ -170,7 +163,7 @@ export const expandNotificationsForRequest = createDataLoadingThunk(
 );
 
 export const acceptNotificationRequest = createDataLoadingThunk(
-  'notificationRequest/accept',
+  "notificationRequest/accept",
   ({ id }: { id: string }) => apiAcceptNotificationRequest(id),
   (_data, { dispatch, discardLoadData }) => {
     dispatch(decreasePendingRequestsCount(1));
@@ -181,7 +174,7 @@ export const acceptNotificationRequest = createDataLoadingThunk(
 );
 
 export const dismissNotificationRequest = createDataLoadingThunk(
-  'notificationRequest/dismiss',
+  "notificationRequest/dismiss",
   ({ id }: { id: string }) => apiDismissNotificationRequest(id),
   (_data, { dispatch, discardLoadData }) => {
     dispatch(decreasePendingRequestsCount(1));
@@ -192,7 +185,7 @@ export const dismissNotificationRequest = createDataLoadingThunk(
 );
 
 export const acceptNotificationRequests = createDataLoadingThunk(
-  'notificationRequests/acceptBulk',
+  "notificationRequests/acceptBulk",
   ({ ids }: { ids: string[] }) => apiAcceptNotificationRequests(ids),
   (_data, { dispatch, discardLoadData, actionArg: { ids } }) => {
     dispatch(decreasePendingRequestsCount(ids.length));
@@ -203,7 +196,7 @@ export const acceptNotificationRequests = createDataLoadingThunk(
 );
 
 export const dismissNotificationRequests = createDataLoadingThunk(
-  'notificationRequests/dismissBulk',
+  "notificationRequests/dismissBulk",
   ({ ids }: { ids: string[] }) => apiDismissNotificationRequests(ids),
   (_data, { dispatch, discardLoadData, actionArg: { ids } }) => {
     dispatch(decreasePendingRequestsCount(ids.length));

@@ -8,7 +8,7 @@ fr:
         display_name: Votre nom complet ou votre nom rigolo.
         fields: Votre page personnelle, vos pronoms, votre âge, ce que vous voulez.
         indexable: Vos messages publics peuvent apparaître dans les résultats de recherche sur Mastodon. Les personnes qui ont interagi avec vos messages peuvent les trouver dans une recherche quoi qu’il arrive.
-        note: 'Vous pouvez @mentionner d’autres personnes ou des #hashtags.'
+        note: "Vous pouvez @mentionner d’autres personnes ou des #hashtags."
         show_collections: Les gens pourront voir les personnes que vous suivez et qui vous suivent. Ceux que vous suivez verront que vous les suivez dans tous les cas.
         unlocked: Les personnes pourront vous suivre sans en demander d'approbation. Décochez cette case si vous souhaitez examiner les demandes d'abonnement et choisir de les accepter ou de les rejeter.
       account_alias:
@@ -76,7 +76,7 @@ fr:
         domain: Cela peut être le nom de domaine qui apparaît dans l'adresse courriel ou l'enregistrement MX qu'il utilise. Une vérification sera faite à l'inscription.
         with_dns_records: Une tentative de résolution DNS du domaine donné sera faite et les résultats seront également bloqués
       featured_tag:
-        name: 'Voici quelques hashtags que vous avez utilisés récemment :'
+        name: "Voici quelques hashtags que vous avez utilisés récemment :"
       filters:
         action: Choisir l'action à effectuer quand un message correspond au filtre
         actions:
@@ -132,7 +132,7 @@ fr:
         hint: Optionnel. Fournissez plus de détails sur la règle
         text: Décrivez une règle ou une exigence pour les utilisateurs sur ce serveur. Essayez de la garder courte et simple
       sessions:
-        otp: 'Entrez le code d’authentification à deux facteurs généré par l’application de votre téléphone ou utilisez un de vos codes de récupération :'
+        otp: "Entrez le code d’authentification à deux facteurs généré par l’application de votre téléphone ou utilisez un de vos codes de récupération :"
         webauthn: Si c'est une clé USB, assurez-vous de l'insérer et, si nécessaire, de la tapoter.
       settings:
         email_subscriptions: La désactivation conserve les abonné·e·s mais arrête l'envoie de courriels.
@@ -408,7 +408,7 @@ fr:
         events: Événements activés
         template: Modèle de payload
         url: URL du point de terminaison
-    'no': Non
+    "no": Non
     not_recommended: Non recommandé
     overridden: Surchargé
     recommended: Recommandé
@@ -418,4 +418,4 @@ fr:
     title:
       sessions:
         webauthn: Utilisez l'une de vos clés de sécurité pour vous connecter
-    'yes': Oui
+    "yes": Oui

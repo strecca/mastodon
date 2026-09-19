@@ -1,11 +1,11 @@
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from "react-intl";
 
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from "react-router";
 
-import type { RenderOptions } from '@testing-library/react';
-import { render as rtlRender } from '@testing-library/react';
+import type { RenderOptions } from "@testing-library/react";
+import { render as rtlRender } from "@testing-library/react";
 
-import { IdentityContext } from '@/mastodon/identity_context';
+import { IdentityContext } from "@/mastodon/identity_context";
 
 beforeAll(() => {
   global.requestIdleCallback = vi.fn((cb: IdleRequestCallback) => {
@@ -19,14 +19,14 @@ beforeAll(() => {
 function render(
   ui: React.ReactElement,
   {
-    locale = 'en',
+    locale = "en",
     signedIn = true,
     ...renderOptions
   }: RenderOptions & { locale?: string; signedIn?: boolean } = {},
 ) {
   const fakeIdentity = {
     signedIn: signedIn,
-    accountId: '123',
+    accountId: "123",
     disabledAccountId: undefined,
     permissions: 0,
   };
@@ -35,9 +35,7 @@ function render(
     return (
       <MemoryRouter>
         <IntlProvider locale={locale}>
-          <IdentityContext.Provider value={fakeIdentity}>
-            {props.children}
-          </IdentityContext.Provider>
+          <IdentityContext.Provider value={fakeIdentity}>{props.children}</IdentityContext.Provider>
         </IntlProvider>
       </MemoryRouter>
     );
@@ -46,7 +44,7 @@ function render(
 }
 
 // re-export everything
-export * from '@testing-library/react';
+export * from "@testing-library/react";
 
 // override render method
 export { render };

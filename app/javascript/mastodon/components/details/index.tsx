@@ -1,13 +1,13 @@
-import { forwardRef } from 'react';
-import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { forwardRef } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import ExpandArrowIcon from '@/material-icons/400-24px/expand_more.svg?react';
+import ExpandArrowIcon from "@/material-icons/400-24px/expand_more.svg?react";
 
-import { Icon } from '../icon';
+import { Icon } from "../icon";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 export const Details = forwardRef<
   HTMLDetailsElement,
@@ -15,21 +15,17 @@ export const Details = forwardRef<
     summary: ReactNode;
     children: ReactNode;
     className?: string;
-  } & ComponentPropsWithoutRef<'details'>
+  } & ComponentPropsWithoutRef<"details">
 >(({ summary, children, className, ...rest }, ref) => {
   return (
-    <details
-      ref={ref}
-      className={classNames(classes.details, className)}
-      {...rest}
-    >
+    <details ref={ref} className={classNames(classes.details, className)} {...rest}>
       <summary>
         {summary}
-        <Icon icon={ExpandArrowIcon} id='arrow' />
+        <Icon icon={ExpandArrowIcon} id="arrow" />
       </summary>
 
       {children}
     </details>
   );
 });
-Details.displayName = 'Details';
+Details.displayName = "Details";

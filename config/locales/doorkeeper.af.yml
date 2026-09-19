@@ -52,7 +52,7 @@ af:
         callback_urls: Terugroep-URL'e
         scopes: Omvange
         secret: Kliëntgeheim
-        title: 'Toepassing: %{name}'
+        title: "Toepassing: %{name}"
     authorizations:
       buttons:
         authorize: Magtig

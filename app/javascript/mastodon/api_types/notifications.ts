@@ -1,53 +1,53 @@
 // See app/serializers/rest/notification_group_serializer.rb
 
-import type { AccountWarningAction } from 'mastodon/models/notification_group';
+import type { AccountWarningAction } from "mastodon/models/notification_group";
 
-import type { ApiAccountJSON } from './accounts';
-import type { ApiCollectionJSON } from './collections';
-import type { ApiReportJSON } from './reports';
-import type { ApiStatusJSON } from './statuses';
+import type { ApiAccountJSON } from "./accounts";
+import type { ApiCollectionJSON } from "./collections";
+import type { ApiReportJSON } from "./reports";
+import type { ApiStatusJSON } from "./statuses";
 
 // See app/model/notification.rb
 export const allNotificationTypes: NotificationType[] = [
-  'follow',
-  'follow_request',
-  'favourite',
-  'reblog',
-  'mention',
-  'quote',
-  'poll',
-  'status',
-  'update',
-  'admin.sign_up',
-  'admin.report',
-  'moderation_warning',
-  'severed_relationships',
-  'annual_report',
-  'added_to_collection',
-  'collection_update',
+  "follow",
+  "follow_request",
+  "favourite",
+  "reblog",
+  "mention",
+  "quote",
+  "poll",
+  "status",
+  "update",
+  "admin.sign_up",
+  "admin.report",
+  "moderation_warning",
+  "severed_relationships",
+  "annual_report",
+  "added_to_collection",
+  "collection_update",
 ];
 
 export type NotificationWithStatusType =
-  | 'favourite'
-  | 'reblog'
-  | 'status'
-  | 'mention'
-  | 'quote'
-  | 'poll'
-  | 'update'
-  | 'quoted_update';
+  | "favourite"
+  | "reblog"
+  | "status"
+  | "mention"
+  | "quote"
+  | "poll"
+  | "update"
+  | "quoted_update";
 
 export type NotificationType =
   | NotificationWithStatusType
-  | 'follow'
-  | 'follow_request'
-  | 'moderation_warning'
-  | 'severed_relationships'
-  | 'admin.sign_up'
-  | 'admin.report'
-  | 'annual_report'
-  | 'added_to_collection'
-  | 'collection_update';
+  | "follow"
+  | "follow_request"
+  | "moderation_warning"
+  | "severed_relationships"
+  | "admin.sign_up"
+  | "admin.report"
+  | "annual_report"
+  | "added_to_collection"
+  | "collection_update";
 
 export interface BaseNotificationJSON {
   id: string;
@@ -79,36 +79,36 @@ interface NotificationWithStatusJSON extends BaseNotificationJSON {
 }
 
 interface ReportNotificationGroupJSON extends BaseNotificationGroupJSON {
-  type: 'admin.report';
+  type: "admin.report";
   report: ApiReportJSON;
 }
 
 interface ReportNotificationJSON extends BaseNotificationJSON {
-  type: 'admin.report';
+  type: "admin.report";
   report: ApiReportJSON;
 }
 
 interface AddedToCollectionNotificationGroupJSON extends BaseNotificationGroupJSON {
-  type: 'added_to_collection';
+  type: "added_to_collection";
   collection: ApiCollectionJSON | null;
 }
 
 interface AddedToCollectionNotificationJSON extends BaseNotificationJSON {
-  type: 'added_to_collection';
+  type: "added_to_collection";
   collection: ApiCollectionJSON | null;
 }
 
 interface CollectionUpdateNotificationGroupJSON extends BaseNotificationGroupJSON {
-  type: 'collection_update';
+  type: "collection_update";
   collection: ApiCollectionJSON | null;
 }
 
 interface CollectionUpdateNotificationJSON extends BaseNotificationJSON {
-  type: 'collection_update';
+  type: "collection_update";
   collection: ApiCollectionJSON | null;
 }
 
-type SimpleNotificationTypes = 'follow' | 'follow_request' | 'admin.sign_up';
+type SimpleNotificationTypes = "follow" | "follow_request" | "admin.sign_up";
 interface SimpleNotificationGroupJSON extends BaseNotificationGroupJSON {
   type: SimpleNotificationTypes;
 }
@@ -128,18 +128,18 @@ export interface ApiAccountWarningJSON {
 }
 
 interface ModerationWarningNotificationGroupJSON extends BaseNotificationGroupJSON {
-  type: 'moderation_warning';
+  type: "moderation_warning";
   moderation_warning: ApiAccountWarningJSON;
 }
 
 interface ModerationWarningNotificationJSON extends BaseNotificationJSON {
-  type: 'moderation_warning';
+  type: "moderation_warning";
   moderation_warning: ApiAccountWarningJSON;
 }
 
 export interface ApiAccountRelationshipSeveranceEventJSON {
   id: string;
-  type: 'account_suspension' | 'domain_block' | 'user_domain_block';
+  type: "account_suspension" | "domain_block" | "user_domain_block";
   purged: boolean;
   target_name: string;
   followers_count: number;
@@ -148,12 +148,12 @@ export interface ApiAccountRelationshipSeveranceEventJSON {
 }
 
 interface AccountRelationshipSeveranceNotificationGroupJSON extends BaseNotificationGroupJSON {
-  type: 'severed_relationships';
+  type: "severed_relationships";
   event: ApiAccountRelationshipSeveranceEventJSON;
 }
 
 interface AccountRelationshipSeveranceNotificationJSON extends BaseNotificationJSON {
-  type: 'severed_relationships';
+  type: "severed_relationships";
   event: ApiAccountRelationshipSeveranceEventJSON;
 }
 
@@ -162,7 +162,7 @@ export interface ApiAnnualReportEventJSON {
 }
 
 interface AnnualReportNotificationGroupJSON extends BaseNotificationGroupJSON {
-  type: 'annual_report';
+  type: "annual_report";
   annual_report: ApiAnnualReportEventJSON;
 }
 

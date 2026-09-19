@@ -1,11 +1,8 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback } from "react";
 
 type Position = [number, number];
 
-export const useSelectableClick = (
-  onClick: React.MouseEventHandler,
-  maxDelta = 5,
-) => {
+export const useSelectableClick = (onClick: React.MouseEventHandler, maxDelta = 5) => {
   const clickPositionRef = useRef<Position | null>(null);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -19,18 +16,15 @@ export const useSelectableClick = (
       }
 
       const [startX, startY] = clickPositionRef.current;
-      const [deltaX, deltaY] = [
-        Math.abs(e.clientX - startX),
-        Math.abs(e.clientY - startY),
-      ];
+      const [deltaX, deltaY] = [Math.abs(e.clientX - startX), Math.abs(e.clientY - startY)];
 
       let element: EventTarget | null = e.target;
 
       while (element && element instanceof HTMLElement) {
         if (
-          element.localName === 'button' ||
-          element.localName === 'a' ||
-          element.localName === 'label'
+          element.localName === "button" ||
+          element.localName === "a" ||
+          element.localName === "label"
         ) {
           return;
         }
@@ -38,11 +32,7 @@ export const useSelectableClick = (
         element = element.parentNode;
       }
 
-      if (
-        deltaX + deltaY < maxDelta &&
-        (e.button === 0 || e.button === 1) &&
-        e.detail >= 1
-      ) {
+      if (deltaX + deltaY < maxDelta && (e.button === 0 || e.button === 1) && e.detail >= 1) {
         onClick(e);
       }
 

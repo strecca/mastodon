@@ -2,9 +2,9 @@
 // Tools for performance debugging, only enabled in development mode.
 // Open up Chrome Dev Tools, then Timeline, then User Timing to see output.
 
-import * as marky from 'marky';
+import * as marky from "marky";
 
-import { isDevelopment } from './environment';
+import { isDevelopment } from "./environment";
 
 export function start(name: string) {
   if (isDevelopment()) {

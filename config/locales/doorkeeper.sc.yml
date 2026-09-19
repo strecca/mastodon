@@ -52,7 +52,7 @@ sc:
         callback_urls: URL de torrada
         scopes: Àmbitos
         secret: Segretu de cliente
-        title: 'Aplicatzione: %{name}'
+        title: "Aplicatzione: %{name}"
     authorizations:
       buttons:
         authorize: Autoriza
@@ -79,7 +79,7 @@ sc:
         invalid_grant: Su permissu de autorizatzione est invàlidu, iscadidu, revocadu, non currispondet a s'URI de re-indiritzamentu impreadu in sa rechesta de autorizatzione, o est istadu frunidu a un'àteru cliente.
         invalid_redirect_uri: S'URI de re-indiritzamentu no est vàlidu.
         invalid_request:
-          missing_param: 'Ammancat unu paràmetru de cunfiguratzione rechestu: %{value}.'
+          missing_param: "Ammancat unu paràmetru de cunfiguratzione rechestu: %{value}."
           request_not_authorized: Sa rechesta depet èssere autorizada. Ammancat unu paràmetru pro s'autorizatzione de sa rechesta, o puru no est vàlidu.
           unknown: Ammancat unu paràmetru rechestu, o cuntenet unu paràmetru chi no est cumpatìbile, o no est formadu bene.
         invalid_resource_owner: Is credentziales de su mere de sa risursa frunidas non sunt vàlidas, o su mere de sa risursa non podet èssere agatadu

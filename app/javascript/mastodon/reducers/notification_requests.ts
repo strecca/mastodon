@@ -1,9 +1,6 @@
-import { createReducer, isAnyOf } from '@reduxjs/toolkit';
+import { createReducer, isAnyOf } from "@reduxjs/toolkit";
 
-import {
-  blockAccountSuccess,
-  muteAccountSuccess,
-} from 'mastodon/actions/accounts';
+import { blockAccountSuccess, muteAccountSuccess } from "mastodon/actions/accounts";
 import {
   fetchNotificationRequests,
   expandNotificationRequests,
@@ -14,11 +11,11 @@ import {
   dismissNotificationRequest,
   acceptNotificationRequests,
   dismissNotificationRequests,
-} from 'mastodon/actions/notification_requests';
-import type { NotificationRequest } from 'mastodon/models/notification_request';
-import { createNotificationRequestFromJSON } from 'mastodon/models/notification_request';
+} from "mastodon/actions/notification_requests";
+import type { NotificationRequest } from "mastodon/models/notification_request";
+import { createNotificationRequestFromJSON } from "mastodon/models/notification_request";
 
-import { notificationToMap } from './notifications';
+import { notificationToMap } from "./notifications";
 
 interface NotificationsListState {
   items: unknown[]; // TODO
@@ -64,10 +61,7 @@ const removeRequest = (state: NotificationRequestsState, id: string) => {
   state.items = state.items.filter((item) => item.id !== id);
 };
 
-const removeRequestByAccount = (
-  state: NotificationRequestsState,
-  account_id: string,
-) => {
+const removeRequestByAccount = (state: NotificationRequestsState, account_id: string) => {
   if (state.current.item?.account_id === account_id) {
     state.current.removed = true;
   }
@@ -75,8 +69,9 @@ const removeRequestByAccount = (
   state.items = state.items.filter((item) => item.account_id !== account_id);
 };
 
-export const notificationRequestsReducer =
-  createReducer<NotificationRequestsState>(initialState, (builder) => {
+export const notificationRequestsReducer = createReducer<NotificationRequestsState>(
+  initialState,
+  (builder) => {
     builder
       .addCase(fetchNotificationRequests.fulfilled, (state, action) => {
         state.items = action.payload.requests
@@ -124,37 +119,25 @@ export const notificationRequestsReducer =
         state.current.notifications.next = action.payload.next ?? null;
       })
       .addMatcher(
-        isAnyOf(
-          fetchNotificationRequests.pending,
-          expandNotificationRequests.pending,
-        ),
+        isAnyOf(fetchNotificationRequests.pending, expandNotificationRequests.pending),
         (state) => {
           state.isLoading = true;
         },
       )
       .addMatcher(
-        isAnyOf(
-          fetchNotificationRequests.rejected,
-          expandNotificationRequests.rejected,
-        ),
+        isAnyOf(fetchNotificationRequests.rejected, expandNotificationRequests.rejected),
         (state) => {
           state.isLoading = false;
         },
       )
       .addMatcher(
-        isAnyOf(
-          acceptNotificationRequest.pending,
-          dismissNotificationRequest.pending,
-        ),
+        isAnyOf(acceptNotificationRequest.pending, dismissNotificationRequest.pending),
         (state, action) => {
           removeRequest(state, action.meta.arg.id);
         },
       )
       .addMatcher(
-        isAnyOf(
-          acceptNotificationRequests.pending,
-          dismissNotificationRequests.pending,
-        ),
+        isAnyOf(acceptNotificationRequests.pending, dismissNotificationRequests.pending),
         (state, action) => {
           action.meta.arg.ids.forEach((id) => {
             removeRequest(state, id);
@@ -162,21 +145,16 @@ export const notificationRequestsReducer =
         },
       )
       .addMatcher(
-        isAnyOf(
-          fetchNotificationsForRequest.pending,
-          expandNotificationsForRequest.pending,
-        ),
+        isAnyOf(fetchNotificationsForRequest.pending, expandNotificationsForRequest.pending),
         (state) => {
           state.current.notifications.isLoading = true;
         },
       )
       .addMatcher(
-        isAnyOf(
-          fetchNotificationsForRequest.rejected,
-          expandNotificationsForRequest.rejected,
-        ),
+        isAnyOf(fetchNotificationsForRequest.rejected, expandNotificationsForRequest.rejected),
         (state) => {
           state.current.notifications.isLoading = false;
         },
       );
-  });
+  },
+);

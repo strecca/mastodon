@@ -1,35 +1,30 @@
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import type {
-  ComponentPropsWithoutRef,
-  ComponentType,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import type { ComponentPropsWithoutRef, ComponentType, ReactElement, ReactNode } from "react";
 
-import type { MessageDescriptor } from 'react-intl';
-import { defineMessages, useIntl } from 'react-intl';
+import type { MessageDescriptor } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { usePrevious } from '@dnd-kit/utilities';
-import { animated, useSpring } from '@react-spring/web';
-import { useDrag } from '@use-gesture/react';
+import { usePrevious } from "@dnd-kit/utilities";
+import { animated, useSpring } from "@react-spring/web";
+import { useDrag } from "@use-gesture/react";
 
-import type { CarouselPaginationProps } from './pagination';
-import { CarouselPagination } from './pagination';
+import type { CarouselPaginationProps } from "./pagination";
+import { CarouselPagination } from "./pagination";
 
-import './styles.scss';
+import "./styles.scss";
 
 const defaultMessages = defineMessages({
-  previous: { id: 'lightbox.previous', defaultMessage: 'Previous' },
-  next: { id: 'lightbox.next', defaultMessage: 'Next' },
+  previous: { id: "lightbox.previous", defaultMessage: "Previous" },
+  next: { id: "lightbox.next", defaultMessage: "Next" },
   current: {
-    id: 'carousel.current',
-    defaultMessage: '<sr>Slide</sr> {current, number} / {max, number}',
+    id: "carousel.current",
+    defaultMessage: "<sr>Slide</sr> {current, number} / {max, number}",
   },
   slide: {
-    id: 'carousel.slide',
-    defaultMessage: 'Slide {current, number} of {max, number}',
+    id: "carousel.slide",
+    defaultMessage: "Slide {current, number} of {max, number}",
   },
 });
 
@@ -39,13 +34,13 @@ export interface CarouselSlideProps {
   id: string | number;
 }
 
-export type RenderSlideFn<
-  SlideProps extends CarouselSlideProps = CarouselSlideProps,
-> = (item: SlideProps, active: boolean, index: number) => ReactElement;
+export type RenderSlideFn<SlideProps extends CarouselSlideProps = CarouselSlideProps> = (
+  item: SlideProps,
+  active: boolean,
+  index: number,
+) => ReactElement;
 
-export interface CarouselProps<
-  SlideProps extends CarouselSlideProps = CarouselSlideProps,
-> {
+export interface CarouselProps<SlideProps extends CarouselSlideProps = CarouselSlideProps> {
   items: SlideProps[];
   renderItem: RenderSlideFn<SlideProps>;
   onChangeSlide?: (index: number, ref: Element) => void;
@@ -57,9 +52,7 @@ export interface CarouselProps<
   slideClassName?: string;
 }
 
-export const Carousel = <
-  SlideProps extends CarouselSlideProps = CarouselSlideProps,
->({
+export const Carousel = <SlideProps extends CarouselSlideProps = CarouselSlideProps>({
   items,
   renderItem,
   onChangeSlide,
@@ -69,10 +62,10 @@ export const Carousel = <
   children,
   emptyFallback = null,
   className,
-  classNamePrefix = 'carousel',
+  classNamePrefix = "carousel",
   slideClassName,
   ...wrapperProps
-}: CarouselProps<SlideProps> & ComponentPropsWithoutRef<'div'>) => {
+}: CarouselProps<SlideProps> & ComponentPropsWithoutRef<"div">) => {
   // Handle slide change
   const [slideIndex, setSlideIndex] = useState(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -151,8 +144,8 @@ export const Carousel = <
   return (
     <div
       {...bind()}
-      aria-roledescription='carousel'
-      role='region'
+      aria-roledescription="carousel"
+      role="region"
       className={classNames(classNamePrefix, className)}
       {...wrapperProps}
     >
@@ -205,7 +198,7 @@ type CarouselSlideWrapperProps<SlideProps extends CarouselSlideProps> = {
   active: boolean;
   item: SlideProps;
   index: number;
-} & Pick<CarouselProps<SlideProps>, 'renderItem'>;
+} & Pick<CarouselProps<SlideProps>, "renderItem">;
 
 const CarouselSlideWrapper = <SlideProps extends CarouselSlideProps>({
   observer,
@@ -233,9 +226,9 @@ const CarouselSlideWrapper = <SlideProps extends CarouselSlideProps>({
     <div
       ref={handleRef}
       className={className}
-      role='group'
-      aria-roledescription='slide'
-      inert={active ? undefined : ''}
+      role="group"
+      aria-roledescription="slide"
+      inert={active ? undefined : ""}
       data-index={index}
     >
       {children}

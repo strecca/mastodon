@@ -1,25 +1,25 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { revokeQuote } from 'flavours/glitch/actions/interactions_typed';
-import { useAppDispatch } from 'flavours/glitch/store';
+import { revokeQuote } from "flavours/glitch/actions/interactions_typed";
+import { useAppDispatch } from "flavours/glitch/store";
 
-import type { BaseConfirmationModalProps } from './confirmation_modal';
-import { ConfirmationModal } from './confirmation_modal';
+import type { BaseConfirmationModalProps } from "./confirmation_modal";
+import { ConfirmationModal } from "./confirmation_modal";
 
 const messages = defineMessages({
   revokeQuoteTitle: {
-    id: 'confirmations.revoke_quote.title',
-    defaultMessage: 'Remove post?',
+    id: "confirmations.revoke_quote.title",
+    defaultMessage: "Remove post?",
   },
   revokeQuoteMessage: {
-    id: 'confirmations.revoke_quote.message',
-    defaultMessage: 'This action cannot be undone.',
+    id: "confirmations.revoke_quote.message",
+    defaultMessage: "This action cannot be undone.",
   },
   revokeQuoteConfirm: {
-    id: 'confirmations.revoke_quote.confirm',
-    defaultMessage: 'Remove post',
+    id: "confirmations.revoke_quote.confirm",
+    defaultMessage: "Remove post",
   },
 });
 

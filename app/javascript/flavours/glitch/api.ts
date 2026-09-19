@@ -1,9 +1,9 @@
-import type { AxiosResponse, Method, RawAxiosRequestHeaders } from 'axios';
-import axios from 'axios';
-import LinkHeader from 'http-link-header';
+import type { AxiosResponse, Method, RawAxiosRequestHeaders } from "axios";
+import axios from "axios";
+import LinkHeader from "http-link-header";
 
-import { getAccessToken } from './initial_state';
-import ready from './ready';
+import { getAccessToken } from "./initial_state";
+import ready from "./ready";
 
 export const getLinks = (response: AxiosResponse) => {
   const value = response.headers.link as string | undefined;
@@ -21,14 +21,10 @@ export interface AsyncRefreshHeader {
 }
 
 const isAsyncRefreshHeader = (obj: object): obj is AsyncRefreshHeader =>
-  'id' in obj && 'retry' in obj;
+  "id" in obj && "retry" in obj;
 
-export const getAsyncRefreshHeader = (
-  response: AxiosResponse,
-): AsyncRefreshHeader | null => {
-  const value = response.headers['mastodon-async-refresh'] as
-    | string
-    | undefined;
+export const getAsyncRefreshHeader = (response: AxiosResponse): AsyncRefreshHeader | null => {
+  const value = response.headers["mastodon-async-refresh"] as string | undefined;
 
   if (!value) {
     return null;
@@ -37,11 +33,11 @@ export const getAsyncRefreshHeader = (
   const asyncRefreshHeader: Record<string, unknown> = {};
 
   value.split(/,\s*/).forEach((pair) => {
-    const [key, val] = pair.split('=', 2);
+    const [key, val] = pair.split("=", 2);
 
     let typedValue: string | number;
 
-    if (key && ['id', 'retry'].includes(key) && val) {
+    if (key && ["id", "retry"].includes(key) && val) {
       if (val.startsWith('"')) {
         typedValue = val.slice(1, -1);
       } else {
@@ -62,12 +58,10 @@ export const getAsyncRefreshHeader = (
 const csrfHeader: RawAxiosRequestHeaders = {};
 
 const setCSRFHeader = () => {
-  const csrfToken = document.querySelector<HTMLMetaElement>(
-    'meta[name=csrf-token]',
-  );
+  const csrfToken = document.querySelector<HTMLMetaElement>("meta[name=csrf-token]");
 
   if (csrfToken) {
-    csrfHeader['X-CSRF-Token'] = csrfToken.content;
+    csrfHeader["X-CSRF-Token"] = csrfToken.content;
   }
 };
 
@@ -106,13 +100,10 @@ export default function api(withAuthorization = true) {
   });
 }
 
-type ApiUrl = `v${1 | '1_alpha' | 2}/${string}`;
+type ApiUrl = `v${1 | "1_alpha" | 2}/${string}`;
 type RequestParamsOrData<T = unknown> = T | Record<string, unknown>;
 
-export async function apiRequest<
-  ApiResponse = unknown,
-  ApiParamsOrData = unknown,
->(
+export async function apiRequest<ApiResponse = unknown, ApiParamsOrData = unknown>(
   method: Method,
   url: string,
   args: {
@@ -124,7 +115,7 @@ export async function apiRequest<
 ) {
   const { data } = await api().request<ApiResponse>({
     method,
-    url: '/api/' + url,
+    url: "/api/" + url,
     ...args,
   });
 
@@ -139,33 +130,33 @@ export async function apiRequestGet<ApiResponse = unknown, ApiParams = unknown>(
     timeout?: number;
   } = {},
 ) {
-  return apiRequest<ApiResponse>('GET', url, { params, ...args });
+  return apiRequest<ApiResponse>("GET", url, { params, ...args });
 }
 
 export async function apiRequestPost<ApiResponse = unknown, ApiData = unknown>(
   url: ApiUrl,
   data?: RequestParamsOrData<ApiData>,
 ) {
-  return apiRequest<ApiResponse>('POST', url, { data });
+  return apiRequest<ApiResponse>("POST", url, { data });
 }
 
 export async function apiRequestPut<ApiResponse = unknown, ApiData = unknown>(
   url: ApiUrl,
   data?: RequestParamsOrData<ApiData>,
 ) {
-  return apiRequest<ApiResponse>('PUT', url, { data });
+  return apiRequest<ApiResponse>("PUT", url, { data });
 }
 
-export async function apiRequestDelete<
-  ApiResponse = unknown,
-  ApiParams = unknown,
->(url: ApiUrl, params?: RequestParamsOrData<ApiParams>) {
-  return apiRequest<ApiResponse>('DELETE', url, { params });
+export async function apiRequestDelete<ApiResponse = unknown, ApiParams = unknown>(
+  url: ApiUrl,
+  params?: RequestParamsOrData<ApiParams>,
+) {
+  return apiRequest<ApiResponse>("DELETE", url, { params });
 }
 
 export async function apiRequestPatch<ApiResponse = unknown, ApiData = unknown>(
   url: ApiUrl,
   data?: RequestParamsOrData<ApiData>,
 ) {
-  return apiRequest<ApiResponse>('PATCH', url, { data });
+  return apiRequest<ApiResponse>("PATCH", url, { data });
 }

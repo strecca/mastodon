@@ -1,26 +1,24 @@
-import { useCallback, useEffect, useState } from 'react';
-import type { FC, MouseEventHandler } from 'react';
+import { useCallback, useEffect, useState } from "react";
+import type { FC, MouseEventHandler } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
-import { useParams } from 'react-router';
+import classNames from "classnames";
+import { useParams } from "react-router";
 
-import { fetchFeaturedTags } from '@/flavours/glitch/actions/featured_tags';
-import { useAppHistory } from '@/flavours/glitch/components/router';
-import { Tag } from '@/flavours/glitch/components/tags/tag';
-import { useOverflowButton } from '@/flavours/glitch/hooks/useOverflow';
-import { selectAccountFeaturedTags } from '@/flavours/glitch/selectors/accounts';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import { fetchFeaturedTags } from "@/flavours/glitch/actions/featured_tags";
+import { useAppHistory } from "@/flavours/glitch/components/router";
+import { Tag } from "@/flavours/glitch/components/tags/tag";
+import { useOverflowButton } from "@/flavours/glitch/hooks/useOverflow";
+import { selectAccountFeaturedTags } from "@/flavours/glitch/selectors/accounts";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
 
-import { useAccountContext } from '../hooks/useAccountContext';
-import classes from '../styles.module.scss';
+import { useAccountContext } from "../hooks/useAccountContext";
+import classes from "../styles.module.scss";
 
 export const FeaturedTags: FC<{ accountId: string }> = ({ accountId }) => {
   // Fetch tags.
-  const featuredTags = useAppSelector((state) =>
-    selectAccountFeaturedTags(state, accountId),
-  );
+  const featuredTags = useAppSelector((state) => selectAccountFeaturedTags(state, accountId));
   const dispatch = useAppDispatch();
   useEffect(() => {
     void dispatch(fetchFeaturedTags({ accountId }));
@@ -28,8 +26,7 @@ export const FeaturedTags: FC<{ accountId: string }> = ({ accountId }) => {
 
   // Get list of tags with overflow handling.
   const [showOverflow, setShowOverflow] = useState(false);
-  const { hiddenCount, wrapperRef, listRef, hiddenIndex, maxWidth } =
-    useOverflowButton();
+  const { hiddenCount, wrapperRef, listRef, hiddenIndex, maxWidth } = useOverflowButton();
 
   // Handle whether to show all tags.
   const handleOverflowClick: MouseEventHandler = useCallback(() => {
@@ -45,10 +42,7 @@ export const FeaturedTags: FC<{ accountId: string }> = ({ accountId }) => {
   return (
     <div className={classes.tagsWrapper} ref={wrapperRef}>
       <div
-        className={classNames(
-          classes.tagsList,
-          showOverflow && classes.tagsListShowAll,
-        )}
+        className={classNames(classes.tagsList, showOverflow && classes.tagsListShowAll)}
         style={{ maxWidth }}
         ref={listRef}
       >
@@ -56,7 +50,7 @@ export const FeaturedTags: FC<{ accountId: string }> = ({ accountId }) => {
           <Tag
             name={name}
             key={id}
-            inert={hiddenIndex > 0 && index >= hiddenIndex ? '' : undefined}
+            inert={hiddenIndex > 0 && index >= hiddenIndex ? "" : undefined}
             onClick={onClick}
             active={currentTag === name}
             data-name={name}
@@ -68,8 +62,8 @@ export const FeaturedTags: FC<{ accountId: string }> = ({ accountId }) => {
           onClick={handleOverflowClick}
           name={
             <FormattedMessage
-              id='featured_tags.more_items'
-              defaultMessage='+{count}'
+              id="featured_tags.more_items"
+              defaultMessage="+{count}"
               values={{ count: hiddenCount }}
             />
           }
@@ -88,7 +82,7 @@ function useTagNavigate() {
 
   const handleTagClick: MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {
-      const name = event.currentTarget.getAttribute('data-name');
+      const name = event.currentTarget.getAttribute("data-name");
       if (!name || !acct) {
         return;
       }
@@ -102,10 +96,10 @@ function useTagNavigate() {
       // Append filters.
       const params = new URLSearchParams();
       if (boosts) {
-        params.append('boosts', '1');
+        params.append("boosts", "1");
       }
       if (replies) {
-        params.append('replies', '1');
+        params.append("replies", "1");
       }
 
       history.push({

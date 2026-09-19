@@ -24,7 +24,7 @@ tok:
         account:
           attributes:
             username:
-              invalid: 'la ni taso li ken lon: sitelen nimi, en sitelen nanpa, en sitelen pi linja anpa'
+              invalid: "la ni taso li ken lon: sitelen nimi, en sitelen nanpa, en sitelen pi linja anpa"
               reserved: la jan ante li jo e nimi ni
         admin/webhook:
           attributes:

@@ -52,7 +52,7 @@ vi:
         callback_urls: Gọi lại URLs
         scopes: Quyền
         secret: Bí ẩn của Client
-        title: 'Ứng dụng: %{name}'
+        title: "Ứng dụng: %{name}"
     authorizations:
       buttons:
         authorize: Cho phép
@@ -88,7 +88,7 @@ vi:
         invalid_grant: Yêu cầu không hợp lệ, hết hạn, bị gỡ hoặc không khớp với tài khoản đã cấp phép. Hoặc xung đột với ứng dụng khác.
         invalid_redirect_uri: URL chuyển hướng không hợp lệ.
         invalid_request:
-          missing_param: 'Thiếu tham số bắt buộc: %{value}.'
+          missing_param: "Thiếu tham số bắt buộc: %{value}."
           request_not_authorized: Yêu cầu cần được cho phép trước. Tham số bắt buộc bị thiếu hoặc vô giá trị.
           unknown: Thiếu tham số bắt buộc. Có thể giá trị tham số không được hỗ trợ, hoặc không đúng định dạng.
         invalid_resource_owner: Thông tin xác minh chủ sở hữu tài nguyên được cung cấp không hợp lệ hoặc không thể tìm thấy chủ sở hữu tài nguyên

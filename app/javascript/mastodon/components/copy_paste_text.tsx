@@ -1,12 +1,12 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import ContentCopyIcon from '@/material-icons/400-24px/content_copy.svg?react';
-import { Icon } from 'mastodon/components/icon';
-import { useTimeout } from 'mastodon/hooks/useTimeout';
+import ContentCopyIcon from "@/material-icons/400-24px/content_copy.svg?react";
+import { Icon } from "mastodon/components/icon";
+import { useTimeout } from "mastodon/hooks/useTimeout";
 
 export const CopyPasteText: React.FC<{ value: string }> = ({ value }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -39,7 +39,7 @@ export const CopyPasteText: React.FC<{ value: string }> = ({ value }) => {
 
   const handleKeyUp = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key !== ' ') return;
+      if (e.key !== " ") return;
       void navigator.clipboard.writeText(value);
       setCopied(true);
       setAnimationTimeout(() => {
@@ -59,9 +59,9 @@ export const CopyPasteText: React.FC<{ value: string }> = ({ value }) => {
 
   return (
     <div
-      className={classNames('copy-paste-text', { copied, focused })}
+      className={classNames("copy-paste-text", { copied, focused })}
       tabIndex={0}
-      role='button'
+      role="button"
       onClick={handleInputClick}
       onKeyUp={handleKeyUp}
     >
@@ -74,15 +74,12 @@ export const CopyPasteText: React.FC<{ value: string }> = ({ value }) => {
         onBlur={handleBlur}
       />
 
-      <button className='button' onClick={handleButtonClick} type='button'>
-        <Icon id='copy' icon={ContentCopyIcon} />{' '}
+      <button className="button" onClick={handleButtonClick} type="button">
+        <Icon id="copy" icon={ContentCopyIcon} />{" "}
         {copied ? (
-          <FormattedMessage id='copypaste.copied' defaultMessage='Copied' />
+          <FormattedMessage id="copypaste.copied" defaultMessage="Copied" />
         ) : (
-          <FormattedMessage
-            id='copypaste.copy_to_clipboard'
-            defaultMessage='Copy to clipboard'
-          />
+          <FormattedMessage id="copypaste.copy_to_clipboard" defaultMessage="Copy to clipboard" />
         )}
       </button>
     </div>

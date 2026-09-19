@@ -1,16 +1,16 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import PublicIcon from '@/material-icons/400-24px/public.svg?react';
-import { openNavigation } from 'flavours/glitch/actions/navigation';
-import { Icon } from 'flavours/glitch/components/icon';
-import { useAppDispatch } from 'flavours/glitch/store';
+import PublicIcon from "@/material-icons/400-24px/public.svg?react";
+import { openNavigation } from "flavours/glitch/actions/navigation";
+import { Icon } from "flavours/glitch/components/icon";
+import { useAppDispatch } from "flavours/glitch/store";
 
 const messages = defineMessages({
   languageAndMore: {
-    id: 'navigation_bar.language_and_more',
-    defaultMessage: 'Language & More Links',
+    id: "navigation_bar.language_and_more",
+    defaultMessage: "Language & More Links",
   },
 });
 
@@ -28,12 +28,8 @@ export const NavPanelFab: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <button
-      type='button'
-      className='nav-panel-fab'
-      onClick={handleClick}
-    >
-      <Icon id='' icon={PublicIcon} className='nav-panel-fab__icon' />
+    <button type="button" className="nav-panel-fab" onClick={handleClick}>
+      <Icon id="" icon={PublicIcon} className="nav-panel-fab__icon" />
       <span>{intl.formatMessage(messages.languageAndMore)}</span>
     </button>
   );

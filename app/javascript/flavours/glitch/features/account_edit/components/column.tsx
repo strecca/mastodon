@@ -1,18 +1,18 @@
-import type { FC } from 'react';
+import type { FC } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import { Column } from '@/flavours/glitch/components/column';
-import { ColumnHeader } from '@/flavours/glitch/components/column_header';
-import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
-import { BundleColumnError } from '@/flavours/glitch/features/ui/components/bundle_column_error';
+import { Column } from "@/flavours/glitch/components/column";
+import { ColumnHeader } from "@/flavours/glitch/components/column_header";
+import { LoadingIndicator } from "@/flavours/glitch/components/loading_indicator";
+import { BundleColumnError } from "@/flavours/glitch/features/ui/components/bundle_column_error";
 
-import { useColumnsContext } from '../../ui/util/columns_context';
-import classes from '../styles.module.scss';
+import { useColumnsContext } from "../../ui/util/columns_context";
+import classes from "../styles.module.scss";
 
 export const AccountEditEmptyColumn: FC<{
   notFound?: boolean;
@@ -20,7 +20,7 @@ export const AccountEditEmptyColumn: FC<{
   const { multiColumn } = useColumnsContext();
 
   if (notFound) {
-    return <BundleColumnError multiColumn={multiColumn} errorType='routing' />;
+    return <BundleColumnError multiColumn={multiColumn} errorType="routing" />;
   }
 
   return (
@@ -45,16 +45,13 @@ export const AccountEditColumn: FC<{
           className={classes.columnHeader}
           showBackButton
           extraButton={
-            <Link to={to} className='button'>
-              <FormattedMessage
-                id='account_edit.column_button'
-                defaultMessage='Done'
-              />
+            <Link to={to} className="button">
+              <FormattedMessage id="account_edit.column_button" defaultMessage="Done" />
             </Link>
           }
         />
 
-        <div className='scrollable'>{children}</div>
+        <div className="scrollable">{children}</div>
       </Column>
       <Helmet>
         <title>{title}</title>

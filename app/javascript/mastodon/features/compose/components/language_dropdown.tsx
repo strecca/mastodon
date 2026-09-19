@@ -1,37 +1,37 @@
-import { useCallback, useRef, useState, useEffect, useMemo } from 'react';
+import { useCallback, useRef, useState, useEffect, useMemo } from "react";
 
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { createSelector } from '@reduxjs/toolkit';
-import { Map as ImmutableMap } from 'immutable';
+import { createSelector } from "@reduxjs/toolkit";
+import { Map as ImmutableMap } from "immutable";
 
-import fuzzysort from 'fuzzysort';
-import Overlay from 'react-overlays/Overlay';
-import type { State, Placement } from 'react-overlays/usePopper';
+import fuzzysort from "fuzzysort";
+import Overlay from "react-overlays/Overlay";
+import type { State, Placement } from "react-overlays/usePopper";
 
-import CancelIcon from '@/material-icons/400-24px/cancel-fill.svg?react';
-import SearchIcon from '@/material-icons/400-24px/search.svg?react';
-import TranslateIcon from '@/material-icons/400-24px/translate.svg?react';
-import { changeComposeLanguage } from 'mastodon/actions/compose';
-import { Icon } from 'mastodon/components/icon';
-import { languages as preloadedLanguages } from 'mastodon/initial_state';
-import type { RootState } from 'mastodon/store';
-import { useAppSelector, useAppDispatch } from 'mastodon/store';
+import CancelIcon from "@/material-icons/400-24px/cancel-fill.svg?react";
+import SearchIcon from "@/material-icons/400-24px/search.svg?react";
+import TranslateIcon from "@/material-icons/400-24px/translate.svg?react";
+import { changeComposeLanguage } from "mastodon/actions/compose";
+import { Icon } from "mastodon/components/icon";
+import { languages as preloadedLanguages } from "mastodon/initial_state";
+import type { RootState } from "mastodon/store";
+import { useAppSelector, useAppDispatch } from "mastodon/store";
 
-import { debouncedGuess } from '../util/language_detection';
+import { debouncedGuess } from "../util/language_detection";
 
 const messages = defineMessages({
   changeLanguage: {
-    id: 'compose.language.change',
-    defaultMessage: 'Change language',
+    id: "compose.language.change",
+    defaultMessage: "Change language",
   },
   search: {
-    id: 'compose.language.search',
-    defaultMessage: 'Search languages...',
+    id: "compose.language.search",
+    defaultMessage: "Search languages...",
   },
-  clear: { id: 'emoji_button.clear', defaultMessage: 'Clear' },
+  clear: { id: "emoji_button.clear", defaultMessage: "Clear" },
 });
 
 type Language = [string, string, string];
@@ -40,17 +40,14 @@ const getFrequentlyUsedLanguages = createSelector(
   [
     (state: RootState) =>
       (state.settings as ImmutableMap<string, unknown>).get(
-        'frequentlyUsedLanguages',
+        "frequentlyUsedLanguages",
         ImmutableMap(),
       ) as ImmutableMap<string, number>,
   ],
   (languageCounters) =>
     languageCounters
       .keySeq()
-      .sort(
-        (a, b) =>
-          (languageCounters.get(a) ?? 0) - (languageCounters.get(b) ?? 0),
-      )
+      .sort((a, b) => (languageCounters.get(a) ?? 0) - (languageCounters.get(b) ?? 0))
       .reverse()
       .toArray(),
 );
@@ -65,7 +62,7 @@ const LanguageDropdownMenu: React.FC<{
 }> = ({ value, guess, onClose, onChange }) => {
   const languages = preloadedLanguages as Language[];
   const intl = useIntl();
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const nodeRef = useRef<HTMLDivElement>(null);
   const listNodeRef = useRef<HTMLDivElement>(null);
 
@@ -80,7 +77,7 @@ const LanguageDropdownMenu: React.FC<{
 
   const handleClick = useCallback(
     (e: React.MouseEvent | React.KeyboardEvent) => {
-      const value = e.currentTarget.getAttribute('data-index');
+      const value = e.currentTarget.getAttribute("data-index");
 
       if (!value) {
         return;
@@ -107,38 +104,30 @@ const LanguageDropdownMenu: React.FC<{
       let element = null;
 
       switch (e.key) {
-        case 'Escape':
+        case "Escape":
           onClose();
           break;
-        case ' ':
-        case 'Enter':
+        case " ":
+        case "Enter":
           handleClick(e);
           break;
-        case 'ArrowDown':
-          element =
-            listNodeRef.current.childNodes[index + 1] ??
-            listNodeRef.current.firstChild;
+        case "ArrowDown":
+          element = listNodeRef.current.childNodes[index + 1] ?? listNodeRef.current.firstChild;
           break;
-        case 'ArrowUp':
-          element =
-            listNodeRef.current.childNodes[index - 1] ??
-            listNodeRef.current.lastChild;
+        case "ArrowUp":
+          element = listNodeRef.current.childNodes[index - 1] ?? listNodeRef.current.lastChild;
           break;
-        case 'Tab':
+        case "Tab":
           if (e.shiftKey) {
-            element =
-              listNodeRef.current.childNodes[index - 1] ??
-              listNodeRef.current.lastChild;
+            element = listNodeRef.current.childNodes[index - 1] ?? listNodeRef.current.lastChild;
           } else {
-            element =
-              listNodeRef.current.childNodes[index + 1] ??
-              listNodeRef.current.firstChild;
+            element = listNodeRef.current.childNodes[index + 1] ?? listNodeRef.current.firstChild;
           }
           break;
-        case 'Home':
+        case "Home":
           element = listNodeRef.current.firstChild;
           break;
-        case 'End':
+        case "End":
           element = listNodeRef.current.lastChild;
           break;
       }
@@ -161,8 +150,8 @@ const LanguageDropdownMenu: React.FC<{
       }
 
       switch (e.key) {
-        case 'Tab':
-        case 'ArrowDown':
+        case "Tab":
+        case "ArrowDown":
           element = listNodeRef.current.firstChild;
 
           if (element && element instanceof HTMLElement) {
@@ -172,11 +161,11 @@ const LanguageDropdownMenu: React.FC<{
           }
 
           break;
-        case 'Enter':
+        case "Enter":
           element = listNodeRef.current.firstChild;
 
           if (element && element instanceof HTMLElement) {
-            const value = element.getAttribute('data-index');
+            const value = element.getAttribute("data-index");
 
             if (value) {
               onChange(value);
@@ -184,10 +173,10 @@ const LanguageDropdownMenu: React.FC<{
             }
           }
           break;
-        case 'Escape':
-          if (searchValue !== '') {
+        case "Escape":
+          if (searchValue !== "") {
             e.preventDefault();
-            setSearchValue('');
+            setSearchValue("");
           }
 
           break;
@@ -197,10 +186,10 @@ const LanguageDropdownMenu: React.FC<{
   );
 
   const handleClear = useCallback(() => {
-    setSearchValue('');
+    setSearchValue("");
   }, [setSearchValue]);
 
-  const isSearching = searchValue !== '';
+  const isSearching = searchValue !== "";
 
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
@@ -214,26 +203,24 @@ const LanguageDropdownMenu: React.FC<{
       }
     };
 
-    document.addEventListener('click', handleDocumentClick, { capture: true });
+    document.addEventListener("click", handleDocumentClick, { capture: true });
 
     // Because of https://github.com/react-bootstrap/react-bootstrap/issues/2614 we need
     // to wait for a frame before focusing
     requestAnimationFrame(() => {
       if (nodeRef.current) {
-        const element = nodeRef.current.querySelector<HTMLInputElement>(
-          'input[type="search"]',
-        );
+        const element = nodeRef.current.querySelector<HTMLInputElement>('input[type="search"]');
         if (element) element.focus();
       }
     });
 
     return () => {
-      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener("click", handleDocumentClick);
     };
   }, [onClose]);
 
   const results = useMemo(() => {
-    if (searchValue === '') {
+    if (searchValue === "") {
       return [...languages].sort((a, b) => {
         if (guess && a[0] === guess) {
           // Push guessed language higher than current selection
@@ -251,17 +238,14 @@ const LanguageDropdownMenu: React.FC<{
           const indexOfA = frequentlyUsedLanguages.indexOf(a[0]);
           const indexOfB = frequentlyUsedLanguages.indexOf(b[0]);
 
-          return (
-            (indexOfA > -1 ? indexOfA : Infinity) -
-            (indexOfB > -1 ? indexOfB : Infinity)
-          );
+          return (indexOfA > -1 ? indexOfA : Infinity) - (indexOfB > -1 ? indexOfB : Infinity);
         }
       });
     }
 
     return fuzzysort
       .go(searchValue, languages, {
-        keys: ['0', '1', '2'],
+        keys: ["0", "1", "2"],
         limit: 5,
         threshold: -10000,
       })
@@ -270,51 +254,50 @@ const LanguageDropdownMenu: React.FC<{
 
   return (
     <div ref={nodeRef}>
-      <div className='emoji-mart-search'>
+      <div className="emoji-mart-search">
         <input
-          type='search'
+          type="search"
           value={searchValue}
           onChange={handleSearchChange}
           onKeyDown={handleSearchKeyDown}
           placeholder={intl.formatMessage(messages.search)}
         />
         <button
-          type='button'
-          className='emoji-mart-search-icon'
+          type="button"
+          className="emoji-mart-search-icon"
           disabled={!isSearching}
           aria-label={intl.formatMessage(messages.clear)}
           onClick={handleClear}
         >
-          <Icon id='' icon={!isSearching ? SearchIcon : CancelIcon} />
+          <Icon id="" icon={!isSearching ? SearchIcon : CancelIcon} />
         </button>
       </div>
 
       <div
-        className='language-dropdown__dropdown__results emoji-mart-scroll'
-        role='listbox'
+        className="language-dropdown__dropdown__results emoji-mart-scroll"
+        role="listbox"
         ref={listNodeRef}
       >
         {results.map((lang) => (
           <div
             key={lang[0]}
-            role='option'
+            role="option"
             tabIndex={0}
             data-index={lang[0]}
-            className={classNames(
-              'language-dropdown__dropdown__results__item',
-              { active: lang[0] === value },
-            )}
+            className={classNames("language-dropdown__dropdown__results__item", {
+              active: lang[0] === value,
+            })}
             aria-selected={lang[0] === value}
             onClick={handleClick}
             onKeyDown={handleKeyDown}
           >
             <span
-              className='language-dropdown__dropdown__results__item__native-name'
+              className="language-dropdown__dropdown__results__item__native-name"
               lang={lang[0]}
             >
               {lang[2]}
-            </span>{' '}
-            <span className='language-dropdown__dropdown__results__item__common-name'>
+            </span>{" "}
+            <span className="language-dropdown__dropdown__results__item__common-name">
               ({lang[1]})
             </span>
           </div>
@@ -326,21 +309,18 @@ const LanguageDropdownMenu: React.FC<{
 
 export const LanguageDropdown: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState<Placement | undefined>('bottom');
-  const [guess, setGuess] = useState('');
+  const [placement, setPlacement] = useState<Placement | undefined>("bottom");
+  const [guess, setGuess] = useState("");
   const activeElementRef = useRef<HTMLElement | null>(null);
   const targetRef = useRef(null);
 
   const intl = useIntl();
 
   const dispatch = useAppDispatch();
-  const value = useAppSelector(
-    (state) => state.compose.get('language') as string,
-  );
-  const text = useAppSelector((state) => state.compose.get('text') as string);
+  const value = useAppSelector((state) => state.compose.get("language") as string);
+  const text = useAppSelector((state) => state.compose.get("text") as string);
 
-  const current =
-    (preloadedLanguages as Language[]).find((lang) => lang[0] === value) ?? [];
+  const current = (preloadedLanguages as Language[]).find((lang) => lang[0] === value) ?? [];
 
   const handleMouseDown = useCallback(() => {
     if (!open && document.activeElement instanceof HTMLElement) {
@@ -349,15 +329,13 @@ export const LanguageDropdown: React.FC = () => {
   }, [open]);
 
   const handleToggle = useCallback(() => {
-    if (open && activeElementRef.current)
-      activeElementRef.current.focus({ preventScroll: true });
+    if (open && activeElementRef.current) activeElementRef.current.focus({ preventScroll: true });
 
     setOpen(!open);
   }, [open, setOpen]);
 
   const handleClose = useCallback(() => {
-    if (open && activeElementRef.current)
-      activeElementRef.current.focus({ preventScroll: true });
+    if (open && activeElementRef.current) activeElementRef.current.focus({ preventScroll: true });
 
     setOpen(false);
   }, [open, setOpen]);
@@ -387,33 +365,31 @@ export const LanguageDropdown: React.FC = () => {
   // Keeping track of the previous render's text length here
   // to be able to reset the guess when the text length drops
   // below the threshold needed to make a guess
-  const [wasLongText, setWasLongText] = useState(() =>
-    isTextLongEnoughForGuess(text),
-  );
+  const [wasLongText, setWasLongText] = useState(() => isTextLongEnoughForGuess(text));
   if (wasLongText !== isTextLongEnoughForGuess(text)) {
     setWasLongText(isTextLongEnoughForGuess(text));
 
     if (wasLongText) {
-      setGuess('');
+      setGuess("");
     }
   }
 
   return (
     <>
       <button
-        type='button'
+        type="button"
         ref={targetRef}
         title={intl.formatMessage(messages.changeLanguage)}
         aria-expanded={open}
         onClick={handleToggle}
         onMouseDown={handleMouseDown}
-        className={classNames('dropdown-button', {
+        className={classNames("dropdown-button", {
           active: open,
-          warning: guess !== '' && guess !== value,
+          warning: guess !== "" && guess !== value,
         })}
       >
-        <Icon id='translate' icon={TranslateIcon} />
-        <span className='dropdown-button__label'>{current[2] ?? value}</span>
+        <Icon id="translate" icon={TranslateIcon} />
+        <span className="dropdown-button__label">{current[2] ?? value}</span>
       </button>
 
       <Overlay
@@ -422,13 +398,11 @@ export const LanguageDropdown: React.FC = () => {
         placement={placement}
         flip
         target={targetRef}
-        popperConfig={{ strategy: 'fixed', onFirstUpdate: handleOverlayEnter }}
+        popperConfig={{ strategy: "fixed", onFirstUpdate: handleOverlayEnter }}
       >
         {({ props, placement }) => (
           <div {...props}>
-            <div
-              className={`dropdown-animation language-dropdown__dropdown ${placement}`}
-            >
+            <div className={`dropdown-animation language-dropdown__dropdown ${placement}`}>
               <LanguageDropdownMenu
                 value={value}
                 guess={guess}

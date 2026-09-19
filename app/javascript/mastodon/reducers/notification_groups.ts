@@ -1,14 +1,14 @@
-import { createReducer, isAnyOf } from '@reduxjs/toolkit';
+import { createReducer, isAnyOf } from "@reduxjs/toolkit";
 
 import {
   authorizeFollowRequestSuccess,
   blockAccountSuccess,
   muteAccountSuccess,
   rejectFollowRequestSuccess,
-} from 'mastodon/actions/accounts_typed';
-import { focusApp, unfocusApp } from 'mastodon/actions/app';
-import { blockDomainSuccess } from 'mastodon/actions/domain_blocks_typed';
-import { fetchMarkers } from 'mastodon/actions/markers';
+} from "mastodon/actions/accounts_typed";
+import { focusApp, unfocusApp } from "mastodon/actions/app";
+import { blockDomainSuccess } from "mastodon/actions/domain_blocks_typed";
+import { fetchMarkers } from "mastodon/actions/markers";
 import {
   clearNotifications,
   fetchNotifications,
@@ -21,29 +21,26 @@ import {
   unmountNotifications,
   refreshStaleNotificationGroups,
   pollRecentNotifications,
-} from 'mastodon/actions/notification_groups';
-import {
-  disconnectTimeline,
-  timelineDelete,
-} from 'mastodon/actions/timelines_typed';
+} from "mastodon/actions/notification_groups";
+import { disconnectTimeline, timelineDelete } from "mastodon/actions/timelines_typed";
 import type {
   ApiNotificationJSON,
   ApiNotificationGroupJSON,
   NotificationType,
-} from 'mastodon/api_types/notifications';
-import { compareId } from 'mastodon/compare_id';
-import { usePendingItems } from 'mastodon/initial_state';
+} from "mastodon/api_types/notifications";
+import { compareId } from "mastodon/compare_id";
+import { usePendingItems } from "mastodon/initial_state";
 import {
   NOTIFICATIONS_GROUP_MAX_AVATARS,
   createNotificationGroupFromJSON,
   createNotificationGroupFromNotificationJSON,
-} from 'mastodon/models/notification_group';
-import type { NotificationGroup } from 'mastodon/models/notification_group';
+} from "mastodon/models/notification_group";
+import type { NotificationGroup } from "mastodon/models/notification_group";
 
 const NOTIFICATIONS_TRIM_LIMIT = 50;
 
 export interface NotificationGap {
-  type: 'gap';
+  type: "gap";
   maxId?: string;
   sinceId?: string;
 }
@@ -57,7 +54,7 @@ interface NotificationGroupsState {
   readMarkerId: string;
   mounted: number;
   isTabVisible: boolean;
-  mergedNotifications: 'ok' | 'pending' | 'needs-reload';
+  mergedNotifications: "ok" | "pending" | "needs-reload";
 }
 
 const initialState: NotificationGroupsState = {
@@ -66,30 +63,25 @@ const initialState: NotificationGroupsState = {
   scrolledToTop: false,
   isLoading: false,
   // this is used to track whether we need to refresh notifications after accepting requests
-  mergedNotifications: 'ok',
+  mergedNotifications: "ok",
   // The following properties are used to track unread notifications
-  lastReadId: '0', // used internally for unread notifications
-  readMarkerId: '0', // user-facing and updated when focus changes
+  lastReadId: "0", // used internally for unread notifications
+  readMarkerId: "0", // user-facing and updated when focus changes
   mounted: 0, // number of mounted notification list components, usually 0 or 1
   isTabVisible: true,
 };
 
 function filterNotificationsForAccounts(
-  groups: NotificationGroupsState['groups'],
+  groups: NotificationGroupsState["groups"],
   accountIds: string[],
   onlyForType?: string,
 ) {
   groups = groups
     .map((group) => {
-      if (
-        group.type !== 'gap' &&
-        (!onlyForType || group.type === onlyForType)
-      ) {
+      if (group.type !== "gap" && (!onlyForType || group.type === onlyForType)) {
         const previousLength = group.sampleAccountIds.length;
 
-        group.sampleAccountIds = group.sampleAccountIds.filter(
-          (id) => !accountIds.includes(id),
-        );
+        group.sampleAccountIds = group.sampleAccountIds.filter((id) => !accountIds.includes(id));
 
         const newLength = group.sampleAccountIds.length;
         const removed = previousLength - newLength;
@@ -99,22 +91,14 @@ function filterNotificationsForAccounts(
 
       return group;
     })
-    .filter(
-      (group) => group.type === 'gap' || group.sampleAccountIds.length > 0,
-    );
+    .filter((group) => group.type === "gap" || group.sampleAccountIds.length > 0);
   mergeGaps(groups);
   return groups;
 }
 
-function filterNotificationsForStatus(
-  groups: NotificationGroupsState['groups'],
-  statusId: string,
-) {
+function filterNotificationsForStatus(groups: NotificationGroupsState["groups"], statusId: string) {
   groups = groups.filter(
-    (group) =>
-      group.type === 'gap' ||
-      !('statusId' in group) ||
-      group.statusId !== statusId,
+    (group) => group.type === "gap" || !("statusId" in group) || group.statusId !== statusId,
   );
   mergeGaps(groups);
   return groups;
@@ -125,11 +109,7 @@ function removeNotificationsForAccounts(
   accountIds: string[],
   onlyForType?: string,
 ) {
-  state.groups = filterNotificationsForAccounts(
-    state.groups,
-    accountIds,
-    onlyForType,
-  );
+  state.groups = filterNotificationsForAccounts(state.groups, accountIds, onlyForType);
   state.pendingGroups = filterNotificationsForAccounts(
     state.pendingGroups,
     accountIds,
@@ -137,41 +117,35 @@ function removeNotificationsForAccounts(
   );
 }
 
-function removeNotificationsForStatus(
-  state: NotificationGroupsState,
-  statusId: string,
-) {
+function removeNotificationsForStatus(state: NotificationGroupsState, statusId: string) {
   state.groups = filterNotificationsForStatus(state.groups, statusId);
-  state.pendingGroups = filterNotificationsForStatus(
-    state.pendingGroups,
-    statusId,
-  );
+  state.pendingGroups = filterNotificationsForStatus(state.pendingGroups, statusId);
 }
 
 function isNotificationGroup(
   groupOrGap: NotificationGroup | NotificationGap,
 ): groupOrGap is NotificationGroup {
-  return groupOrGap.type !== 'gap';
+  return groupOrGap.type !== "gap";
 }
 
 // Merge adjacent gaps in `groups` in-place
-function mergeGaps(groups: NotificationGroupsState['groups']) {
+function mergeGaps(groups: NotificationGroupsState["groups"]) {
   for (let i = 0; i < groups.length; i++) {
     const firstGroupOrGap = groups[i];
 
-    if (firstGroupOrGap?.type === 'gap') {
+    if (firstGroupOrGap?.type === "gap") {
       let lastGap = firstGroupOrGap;
       let j = i + 1;
 
       for (; j < groups.length; j++) {
         const groupOrGap = groups[j];
-        if (groupOrGap?.type === 'gap') lastGap = groupOrGap;
+        if (groupOrGap?.type === "gap") lastGap = groupOrGap;
         else break;
       }
 
       if (j - i > 1) {
         groups.splice(i, j - i, {
-          type: 'gap',
+          type: "gap",
           maxId: firstGroupOrGap.maxId,
           sinceId: lastGap.sinceId,
         });
@@ -181,20 +155,14 @@ function mergeGaps(groups: NotificationGroupsState['groups']) {
 }
 
 // Checks if `groups[index-1]` and `groups[index]` are gaps, and merge them in-place if they are
-function mergeGapsAround(
-  groups: NotificationGroupsState['groups'],
-  index: number,
-) {
+function mergeGapsAround(groups: NotificationGroupsState["groups"], index: number) {
   if (index > 0) {
     const potentialFirstGap = groups[index - 1];
     const potentialSecondGap = groups[index];
 
-    if (
-      potentialFirstGap?.type === 'gap' &&
-      potentialSecondGap?.type === 'gap'
-    ) {
+    if (potentialFirstGap?.type === "gap" && potentialSecondGap?.type === "gap") {
       groups.splice(index - 1, 2, {
-        type: 'gap',
+        type: "gap",
         maxId: potentialFirstGap.maxId,
         sinceId: potentialSecondGap.sinceId,
       });
@@ -203,7 +171,7 @@ function mergeGapsAround(
 }
 
 function processNewNotification(
-  groups: NotificationGroupsState['groups'],
+  groups: NotificationGroupsState["groups"],
   notification: ApiNotificationJSON,
   groupedTypes: NotificationType[],
 ) {
@@ -215,13 +183,12 @@ function processNewNotification(
   }
 
   const existingGroupIndex = groups.findIndex(
-    (group) =>
-      group.type !== 'gap' && group.group_key === notification.group_key,
+    (group) => group.type !== "gap" && group.group_key === notification.group_key,
   );
 
   // In any case, we are going to add a group at the top
   // If there is currently a gap at the top, now is the time to update it
-  if (groups.length > 0 && groups[0]?.type === 'gap') {
+  if (groups.length > 0 && groups[0]?.type === "gap") {
     groups[0].maxId = notification.id;
   }
 
@@ -230,7 +197,7 @@ function processNewNotification(
 
     if (
       existingGroup &&
-      existingGroup.type !== 'gap' &&
+      existingGroup.type !== "gap" &&
       !existingGroup.sampleAccountIds.includes(notification.account.id) // This can happen for example if you like, then unlike, then like again the same post
     ) {
       // Update the existing group
@@ -264,42 +231,24 @@ function trimNotifications(state: NotificationGroupsState) {
 }
 
 function shouldMarkNewNotificationsAsRead(
-  {
-    isTabVisible,
-    scrolledToTop,
-    mounted,
-    lastReadId,
-    groups,
-  }: NotificationGroupsState,
+  { isTabVisible, scrolledToTop, mounted, lastReadId, groups }: NotificationGroupsState,
   ignoreScroll = false,
 ) {
   const isMounted = mounted > 0;
   const oldestGroup = groups.findLast(isNotificationGroup);
-  const hasMore = groups.at(-1)?.type === 'gap';
+  const hasMore = groups.at(-1)?.type === "gap";
   const oldestGroupReached =
     !hasMore ||
-    lastReadId === '0' ||
-    (oldestGroup?.page_min_id &&
-      compareId(oldestGroup.page_min_id, lastReadId) <= 0);
+    lastReadId === "0" ||
+    (oldestGroup?.page_min_id && compareId(oldestGroup.page_min_id, lastReadId) <= 0);
 
-  return (
-    isTabVisible &&
-    (ignoreScroll || scrolledToTop) &&
-    isMounted &&
-    oldestGroupReached
-  );
+  return isTabVisible && (ignoreScroll || scrolledToTop) && isMounted && oldestGroupReached;
 }
 
-function updateLastReadId(
-  state: NotificationGroupsState,
-  group?: NotificationGroup,
-) {
+function updateLastReadId(state: NotificationGroupsState, group?: NotificationGroup) {
   if (shouldMarkNewNotificationsAsRead(state)) {
     group = group ?? state.groups.find(isNotificationGroup);
-    if (
-      group?.page_max_id &&
-      compareId(state.lastReadId, group.page_max_id) < 0
-    )
+    if (group?.page_max_id && compareId(state.lastReadId, group.page_max_id) < 0)
       state.lastReadId = group.page_max_id;
   }
 }
@@ -311,14 +260,14 @@ function commitLastReadId(state: NotificationGroupsState) {
 }
 
 function fillNotificationsGap(
-  groups: NotificationGroupsState['groups'],
+  groups: NotificationGroupsState["groups"],
   gap: NotificationGap,
   notifications: ApiNotificationGroupJSON[],
-): NotificationGroupsState['groups'] {
+): NotificationGroupsState["groups"] {
   // find the gap in the existing notifications
   const gapIndex = groups.findIndex(
     (groupOrGap) =>
-      groupOrGap.type === 'gap' &&
+      groupOrGap.type === "gap" &&
       groupOrGap.sinceId === gap.sinceId &&
       groupOrGap.maxId === gap.maxId,
   );
@@ -348,27 +297,21 @@ function fillNotificationsGap(
     .filter(isNotificationGroup)
     .map((group) => group.group_key);
 
-  const toInsert: NotificationGroupsState['groups'] = notifications
+  const toInsert: NotificationGroupsState["groups"] = notifications
     .map((json) => createNotificationGroupFromJSON(json))
     .filter((notification) => !newerGroupKeys.includes(notification.group_key));
 
-  const apiGroupKeys = (toInsert as NotificationGroup[]).map(
-    (group) => group.group_key,
-  );
+  const apiGroupKeys = (toInsert as NotificationGroup[]).map((group) => group.group_key);
 
   const sinceId = gap.sinceId;
   if (
     notifications.length > 0 &&
-    !(
-      oldestPageNotification &&
-      sinceId &&
-      compareId(oldestPageNotification, sinceId) <= 0
-    )
+    !(oldestPageNotification && sinceId && compareId(oldestPageNotification, sinceId) <= 0)
   ) {
     // If we get an empty page, it means we reached the bottom, so we do not need to insert a new gap
     // Similarly, if we've fetched more than the gap's, this means we have completely filled it
     toInsert.push({
-      type: 'gap',
+      type: "gap",
       maxId: notifications.at(-1)?.page_max_id,
       sinceId,
     } as NotificationGap);
@@ -376,8 +319,7 @@ function fillNotificationsGap(
 
   // Remove older groups covered by the API
   groups = groups.filter(
-    (groupOrGap) =>
-      groupOrGap.type !== 'gap' && !apiGroupKeys.includes(groupOrGap.group_key),
+    (groupOrGap) => groupOrGap.type !== "gap" && !apiGroupKeys.includes(groupOrGap.group_key),
   );
 
   // Replace the gap with API results (+ the new gap if needed)
@@ -391,17 +333,15 @@ function fillNotificationsGap(
 }
 
 // Ensure the groups list starts with a gap, mutating it to prepend one if needed
-function ensureLeadingGap(
-  groups: NotificationGroupsState['groups'],
-): NotificationGap {
-  if (groups[0]?.type === 'gap') {
+function ensureLeadingGap(groups: NotificationGroupsState["groups"]): NotificationGap {
+  if (groups[0]?.type === "gap") {
     // We're expecting new notifications, so discard the maxId if there is one
     groups[0].maxId = undefined;
 
     return groups[0];
   } else {
     const gap: NotificationGap = {
-      type: 'gap',
+      type: "gap",
       sinceId: groups[0]?.page_min_id,
     };
 
@@ -411,19 +351,17 @@ function ensureLeadingGap(
 }
 
 // Ensure the groups list ends with a gap suitable for loading more, mutating it to append one if needed
-function ensureTrailingGap(
-  groups: NotificationGroupsState['groups'],
-): NotificationGap {
+function ensureTrailingGap(groups: NotificationGroupsState["groups"]): NotificationGap {
   const groupOrGap = groups.at(-1);
 
-  if (groupOrGap?.type === 'gap') {
+  if (groupOrGap?.type === "gap") {
     // We're expecting older notifications, so discard sinceId if it's set
     groupOrGap.sinceId = undefined;
 
     return groupOrGap;
   } else {
     const gap: NotificationGap = {
-      type: 'gap',
+      type: "gap",
       maxId: groupOrGap?.page_min_id,
     };
 
@@ -438,10 +376,10 @@ export const notificationGroupsReducer = createReducer<NotificationGroupsState>(
     builder
       .addCase(fetchNotifications.fulfilled, (state, action) => {
         state.groups = action.payload.map((json) =>
-          json.type === 'gap' ? json : createNotificationGroupFromJSON(json),
+          json.type === "gap" ? json : createNotificationGroupFromJSON(json),
         );
         state.isLoading = false;
-        state.mergedNotifications = 'ok';
+        state.mergedNotifications = "ok";
         updateLastReadId(state);
       })
       .addCase(fetchNotificationsGap.fulfilled, (state, action) => {
@@ -464,11 +402,7 @@ export const notificationGroupsReducer = createReducer<NotificationGroupsState>(
           );
         } else {
           const gap = ensureLeadingGap(state.groups);
-          state.groups = fillNotificationsGap(
-            state.groups,
-            gap,
-            action.payload.notifications,
-          );
+          state.groups = fillNotificationsGap(state.groups, gap, action.payload.notifications);
         }
 
         state.isLoading = false;
@@ -490,11 +424,11 @@ export const notificationGroupsReducer = createReducer<NotificationGroupsState>(
         }
       })
       .addCase(disconnectTimeline, (state, action) => {
-        if (action.payload.timeline === 'home') {
+        if (action.payload.timeline === "home") {
           const groups = usePendingItems ? state.pendingGroups : state.groups;
-          if (groups.length > 0 && groups[0]?.type !== 'gap') {
+          if (groups.length > 0 && groups[0]?.type !== "gap") {
             groups.unshift({
-              type: 'gap',
+              type: "gap",
               sinceId: groups[0]?.page_min_id,
             });
           }
@@ -512,9 +446,7 @@ export const notificationGroupsReducer = createReducer<NotificationGroupsState>(
       })
       .addCase(muteAccountSuccess, (state, action) => {
         if (action.payload.relationship.muting_notifications)
-          removeNotificationsForAccounts(state, [
-            action.payload.relationship.id,
-          ]);
+          removeNotificationsForAccounts(state, [action.payload.relationship.id]);
       })
       .addCase(blockDomainSuccess, (state, action) => {
         removeNotificationsForAccounts(
@@ -525,18 +457,16 @@ export const notificationGroupsReducer = createReducer<NotificationGroupsState>(
       .addCase(loadPending, (state) => {
         // First, remove any existing group and merge data
         state.pendingGroups.forEach((group) => {
-          if (group.type !== 'gap') {
+          if (group.type !== "gap") {
             const existingGroupIndex = state.groups.findIndex(
               (groupOrGap) =>
-                isNotificationGroup(groupOrGap) &&
-                groupOrGap.group_key === group.group_key,
+                isNotificationGroup(groupOrGap) && groupOrGap.group_key === group.group_key,
             );
             if (existingGroupIndex > -1) {
               const existingGroup = state.groups[existingGroupIndex];
-              if (existingGroup && existingGroup.type !== 'gap') {
+              if (existingGroup && existingGroup.type !== "gap") {
                 if (group.partial) {
-                  group.notifications_count +=
-                    existingGroup.notifications_count;
+                  group.notifications_count += existingGroup.notifications_count;
                   group.sampleAccountIds = group.sampleAccountIds
                     .concat(existingGroup.sampleAccountIds)
                     .slice(0, NOTIFICATIONS_GROUP_MAX_AVATARS);
@@ -573,14 +503,10 @@ export const notificationGroupsReducer = createReducer<NotificationGroupsState>(
       .addCase(fetchMarkers.fulfilled, (state, action) => {
         if (
           action.payload.markers.notifications &&
-          compareId(
-            state.lastReadId,
-            action.payload.markers.notifications.last_read_id,
-          ) < 0
+          compareId(state.lastReadId, action.payload.markers.notifications.last_read_id) < 0
         ) {
           state.lastReadId = action.payload.markers.notifications.last_read_id;
-          state.readMarkerId =
-            action.payload.markers.notifications.last_read_id;
+          state.readMarkerId = action.payload.markers.notifications.last_read_id;
         }
       })
       .addCase(mountNotifications.fulfilled, (state) => {
@@ -600,17 +526,12 @@ export const notificationGroupsReducer = createReducer<NotificationGroupsState>(
         state.isTabVisible = false;
       })
       .addCase(refreshStaleNotificationGroups.fulfilled, (state, action) => {
-        if (action.payload.deferredRefresh)
-          state.mergedNotifications = 'needs-reload';
+        if (action.payload.deferredRefresh) state.mergedNotifications = "needs-reload";
       })
       .addMatcher(
         isAnyOf(authorizeFollowRequestSuccess, rejectFollowRequestSuccess),
         (state, action) => {
-          removeNotificationsForAccounts(
-            state,
-            [action.payload.id],
-            'follow_request',
-          );
+          removeNotificationsForAccounts(state, [action.payload.id], "follow_request");
         },
       )
       .addMatcher(

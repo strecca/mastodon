@@ -1,16 +1,13 @@
-import type {
-  ActionCreatorWithPreparedPayload,
-  GetThunkAPI,
-} from '@reduxjs/toolkit';
+import type { ActionCreatorWithPreparedPayload, GetThunkAPI } from "@reduxjs/toolkit";
 import {
   createAsyncThunk as rtkCreateAsyncThunk,
   createSelector,
   createAction,
-} from '@reduxjs/toolkit';
+} from "@reduxjs/toolkit";
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-import type { AppDispatch, RootState } from './store';
+import type { AppDispatch, RootState } from "./store";
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
@@ -40,17 +37,11 @@ interface AppThunkConfig {
   fulfilledMeta: AppMeta;
   rejectedMeta: AppMeta;
 }
-export type AppThunkApi = Pick<
-  GetThunkAPI<AppThunkConfig>,
-  'getState' | 'dispatch' | 'requestId'
->;
+export type AppThunkApi = Pick<GetThunkAPI<AppThunkConfig>, "getState" | "dispatch" | "requestId">;
 
 interface AppThunkOptions<Arg> {
   useLoadingBar?: boolean;
-  condition?: (
-    arg: Arg,
-    { getState }: { getState: AppThunkApi['getState'] },
-  ) => boolean;
+  condition?: (arg: Arg, { getState }: { getState: AppThunkApi["getState"] }) => boolean;
 }
 
 // Type definitions for the sync thunks.
@@ -60,14 +51,11 @@ type AppThunk<Arg = void, Returned = void> = (
 
 type AppThunkCreator<Arg = void, Returned = void, ExtraArg = unknown> = (
   arg: Arg,
-  api: Pick<AppThunkApi, 'getState' | 'dispatch'>,
+  api: Pick<AppThunkApi, "getState" | "dispatch">,
   extra?: ExtraArg,
 ) => Returned;
 
-type AppThunkActionCreator<
-  Arg = void,
-  Returned = void,
-> = ActionCreatorWithPreparedPayload<
+type AppThunkActionCreator<Arg = void, Returned = void> = ActionCreatorWithPreparedPayload<
   [Returned, Arg],
   Returned,
   string,
@@ -94,7 +82,7 @@ export function createAppThunk<Arg = void, Returned = void, ExtraArg = unknown>(
   maybeCreatorOrExtra?: AppThunkCreator<Arg, Returned, ExtraArg> | ExtraArg,
   maybeExtra?: ExtraArg,
 ) {
-  const isDispatcher = typeof nameOrCreator === 'string';
+  const isDispatcher = typeof nameOrCreator === "string";
   const name = isDispatcher ? nameOrCreator : undefined;
   const creator = isDispatcher
     ? (maybeCreatorOrExtra as AppThunkCreator<Arg, Returned, ExtraArg>)
@@ -141,10 +129,7 @@ export function createAsyncThunk<Arg = void, Returned = void>(
 ) {
   return createBaseAsyncThunk(
     name,
-    async (
-      arg: Arg,
-      { getState, dispatch, requestId, fulfillWithValue, rejectWithValue },
-    ) => {
+    async (arg: Arg, { getState, dispatch, requestId, fulfillWithValue, rejectWithValue }) => {
       try {
         const result = await creator(arg, { dispatch, getState, requestId });
 
@@ -170,7 +155,7 @@ export function createAsyncThunk<Arg = void, Returned = void>(
   );
 }
 
-const discardLoadDataInPayload = Symbol('discardLoadDataInPayload');
+const discardLoadDataInPayload = Symbol("discardLoadDataInPayload");
 type DiscardLoadData = typeof discardLoadDataInPayload;
 
 type OnData<ActionArg, LoadDataResult, ReturnedData> = (
@@ -181,10 +166,7 @@ type OnData<ActionArg, LoadDataResult, ReturnedData> = (
   },
 ) => ReturnedData | DiscardLoadData | Promise<ReturnedData | DiscardLoadData>;
 
-type LoadData<Args, LoadDataResult> = (
-  args: Args,
-  api: AppThunkApi,
-) => Promise<LoadDataResult>;
+type LoadData<Args, LoadDataResult> = (args: Args, api: AppThunkApi) => Promise<LoadDataResult>;
 
 type ArgsType = Record<string, unknown> | undefined;
 
@@ -199,9 +181,7 @@ export function createDataLoadingThunk<LoadDataResult, Args extends ArgsType>(
 export function createDataLoadingThunk<LoadDataResult, Args extends ArgsType>(
   name: string,
   loadData: LoadData<Args, LoadDataResult>,
-  onDataOrThunkOptions?:
-    | AppThunkOptions<Args>
-    | OnData<Args, LoadDataResult, DiscardLoadData>,
+  onDataOrThunkOptions?: AppThunkOptions<Args> | OnData<Args, LoadDataResult, DiscardLoadData>,
   thunkOptions?: AppThunkOptions<Args>,
 ): ReturnType<typeof createAsyncThunk<Args, void>>;
 
@@ -209,23 +189,15 @@ export function createDataLoadingThunk<LoadDataResult, Args extends ArgsType>(
 export function createDataLoadingThunk<LoadDataResult, Args extends ArgsType>(
   name: string,
   loadData: LoadData<Args, LoadDataResult>,
-  onDataOrThunkOptions?:
-    | AppThunkOptions<Args>
-    | OnData<Args, LoadDataResult, void>,
+  onDataOrThunkOptions?: AppThunkOptions<Args> | OnData<Args, LoadDataResult, void>,
   thunkOptions?: AppThunkOptions<Args>,
 ): ReturnType<typeof createAsyncThunk<Args, LoadDataResult>>;
 
 // Overload when there is an `onData` method returning something
-export function createDataLoadingThunk<
-  LoadDataResult,
-  Args extends ArgsType,
-  Returned,
->(
+export function createDataLoadingThunk<LoadDataResult, Args extends ArgsType, Returned>(
   name: string,
   loadData: LoadData<Args, LoadDataResult>,
-  onDataOrThunkOptions?:
-    | AppThunkOptions<Args>
-    | OnData<Args, LoadDataResult, Returned>,
+  onDataOrThunkOptions?: AppThunkOptions<Args> | OnData<Args, LoadDataResult, Returned>,
   thunkOptions?: AppThunkOptions<Args>,
 ): ReturnType<typeof createAsyncThunk<Args, Returned>>;
 
@@ -255,24 +227,17 @@ export function createDataLoadingThunk<
  *   - `condition` is passed to `createAsyncThunk` (https://redux-toolkit.js.org/api/createAsyncThunk#canceling-before-execution)
  * @returns The created thunk
  */
-export function createDataLoadingThunk<
-  LoadDataResult,
-  Args extends ArgsType,
-  Returned,
->(
+export function createDataLoadingThunk<LoadDataResult, Args extends ArgsType, Returned>(
   name: string,
   loadData: LoadData<Args, LoadDataResult>,
-  onDataOrThunkOptions?:
-    | AppThunkOptions<Args>
-    | OnData<Args, LoadDataResult, Returned>,
+  onDataOrThunkOptions?: AppThunkOptions<Args> | OnData<Args, LoadDataResult, Returned>,
   maybeThunkOptions?: AppThunkOptions<Args>,
 ) {
   let onData: OnData<Args, LoadDataResult, Returned> | undefined;
   let thunkOptions: AppThunkOptions<Args> | undefined;
 
-  if (typeof onDataOrThunkOptions === 'function') onData = onDataOrThunkOptions;
-  else if (typeof onDataOrThunkOptions === 'object')
-    thunkOptions = onDataOrThunkOptions;
+  if (typeof onDataOrThunkOptions === "function") onData = onDataOrThunkOptions;
+  else if (typeof onDataOrThunkOptions === "object") thunkOptions = onDataOrThunkOptions;
 
   if (maybeThunkOptions) {
     thunkOptions = maybeThunkOptions;
@@ -298,10 +263,9 @@ export function createDataLoadingThunk<
       });
 
       // if there is no return in `onData`, we return the `onData` result
-      if (typeof result === 'undefined') return data as Returned;
+      if (typeof result === "undefined") return data as Returned;
       // the user explicitely asked to discard the payload
-      else if (result === discardLoadDataInPayload)
-        return undefined as Returned;
+      else if (result === discardLoadDataInPayload) return undefined as Returned;
       else return result;
     },
     {

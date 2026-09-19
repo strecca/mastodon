@@ -1,7 +1,7 @@
-import type { MutableRefObject, RefCallback } from 'react';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import type { MutableRefObject, RefCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
-import { useMutationObserver, useResizeObserver } from './useObserver';
+import { useMutationObserver, useResizeObserver } from "./useObserver";
 
 /**
  * Hook to manage overflow of items in a container with a "more" button.
@@ -17,7 +17,7 @@ export function useOverflowButton({
 }: { autoResize?: boolean; padding?: number } = {}) {
   const [hiddenIndex, setHiddenIndex] = useState(-1);
   const [hiddenCount, setHiddenCount] = useState(0);
-  const [maxWidth, setMaxWidth] = useState<number | 'none'>('none');
+  const [maxWidth, setMaxWidth] = useState<number | "none">("none");
 
   // This is the item container element.
   const listRef = useRef<HTMLElement | null>(null);
@@ -30,7 +30,7 @@ export function useOverflowButton({
     const reset = () => {
       setHiddenIndex(-1);
       setHiddenCount(0);
-      setMaxWidth('none');
+      setMaxWidth("none");
     };
 
     // Calculate the width via the parent element, minus the more button, minus the padding.
@@ -74,8 +74,7 @@ export function useOverflowButton({
 
   useEffect(() => {
     if (listRef.current && autoResize) {
-      listRef.current.style.maxWidth =
-        typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth;
+      listRef.current.style.maxWidth = typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth;
     }
   }, [autoResize, maxWidth]);
 
@@ -95,10 +94,7 @@ export function useOverflowButton({
   };
 }
 
-export function useOverflowScroll({
-  widthOffset = 200,
-  absoluteDistance = false,
-} = {}) {
+export function useOverflowScroll({ widthOffset = 200, absoluteDistance = false } = {}) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
@@ -110,17 +106,15 @@ export function useOverflowScroll({
       return;
     }
 
-    if (getComputedStyle(bodyRef.current).direction === 'rtl') {
+    if (getComputedStyle(bodyRef.current).direction === "rtl") {
       setCanScrollLeft(
-        bodyRef.current.clientWidth - bodyRef.current.scrollLeft <
-          bodyRef.current.scrollWidth,
+        bodyRef.current.clientWidth - bodyRef.current.scrollLeft < bodyRef.current.scrollWidth,
       );
       setCanScrollRight(bodyRef.current.scrollLeft < 0);
     } else {
       setCanScrollLeft(bodyRef.current.scrollLeft > 0);
       setCanScrollRight(
-        bodyRef.current.scrollLeft + bodyRef.current.clientWidth <
-          bodyRef.current.scrollWidth,
+        bodyRef.current.scrollLeft + bodyRef.current.clientWidth < bodyRef.current.scrollWidth,
       );
     }
   }, []);
@@ -177,9 +171,7 @@ export function useOverflowObservers({
 }: {
   onRecalculate: () => void;
   onListRef?: RefCallback<HTMLElement> | MutableRefObject<HTMLElement | null>;
-  onWrapperRef?:
-    | RefCallback<HTMLElement>
-    | MutableRefObject<HTMLElement | null>;
+  onWrapperRef?: RefCallback<HTMLElement> | MutableRefObject<HTMLElement | null>;
 }) {
   // This is the item container element.
   const listRef = useRef<HTMLElement | null>(null);
@@ -219,9 +211,9 @@ export function useOverflowObservers({
       if (node) {
         wrapperRef.current = node; // eslint-disable-line react-hooks/immutability -- https://github.com/facebook/react/issues/34955
         handleObserve();
-        if (typeof onWrapperRef === 'function') {
+        if (typeof onWrapperRef === "function") {
           onWrapperRef(node);
-        } else if (onWrapperRef && 'current' in onWrapperRef) {
+        } else if (onWrapperRef && "current" in onWrapperRef) {
           onWrapperRef.current = node; // eslint-disable-line react-hooks/immutability -- https://github.com/facebook/react/issues/34955
         }
       }
@@ -235,9 +227,9 @@ export function useOverflowObservers({
       if (node) {
         listRef.current = node;
         handleObserve();
-        if (typeof onListRef === 'function') {
+        if (typeof onListRef === "function") {
           onListRef(node);
-        } else if (onListRef && 'current' in onListRef) {
+        } else if (onListRef && "current" in onListRef) {
           onListRef.current = node; // eslint-disable-line react-hooks/immutability -- https://github.com/facebook/react/issues/34955
         }
       }

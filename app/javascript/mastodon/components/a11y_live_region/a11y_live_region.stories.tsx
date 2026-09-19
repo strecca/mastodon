@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { A11yLiveRegion } from '.';
+import { A11yLiveRegion } from ".";
 
 const meta = {
-  title: 'Components/A11yLiveRegion',
+  title: "Components/A11yLiveRegion",
   component: A11yLiveRegion,
 } satisfies Meta<typeof A11yLiveRegion>;
 
@@ -20,6 +20,6 @@ export const Polite: Story = {
 export const Assertive: Story = {
   args: {
     ...Polite.args,
-    role: 'alert',
+    role: "alert",
   },
 };

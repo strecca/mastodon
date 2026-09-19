@@ -1,10 +1,10 @@
-import { useIntl } from 'react-intl';
-import type { MessageDescriptor } from 'react-intl';
+import { useIntl } from "react-intl";
+import type { MessageDescriptor } from "react-intl";
 
-import { useTransition, animated } from '@react-spring/web';
+import { useTransition, animated } from "@react-spring/web";
 
-import { Icon } from 'mastodon/components/icon';
-import type { IconProp } from 'mastodon/components/icon';
+import { Icon } from "mastodon/components/icon";
+import type { IconProp } from "mastodon/components/icon";
 
 export interface HotkeyEvent {
   key: number;
@@ -31,9 +31,9 @@ export const HotkeyIndicator: React.FC<{
   return (
     <>
       {transitions((style, item) => (
-        <animated.div className='video-player__hotkey-indicator' style={style}>
-          <Icon id='' icon={item.icon} />
-          <span className='video-player__hotkey-indicator__label'>
+        <animated.div className="video-player__hotkey-indicator" style={style}>
+          <Icon id="" icon={item.icon} />
+          <span className="video-player__hotkey-indicator__label">
             {intl.formatMessage(item.label)}
           </span>
         </animated.div>

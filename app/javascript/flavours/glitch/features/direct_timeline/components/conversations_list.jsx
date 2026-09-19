@@ -1,26 +1,34 @@
-import PropTypes from 'prop-types';
-import { useRef, useMemo, useCallback } from 'react';
+import PropTypes from "prop-types";
+import { useRef, useMemo, useCallback } from "react";
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 
-import { expandConversations } from 'flavours/glitch/actions/conversations';
-import ScrollableList from 'flavours/glitch/components/scrollable_list';
+import { expandConversations } from "flavours/glitch/actions/conversations";
+import ScrollableList from "flavours/glitch/components/scrollable_list";
 
-import { Conversation } from './conversation';
+import { Conversation } from "./conversation";
 
 export const ConversationsList = ({ scrollKey, ...other }) => {
   const listRef = useRef();
-  const conversations = useSelector(state => state.getIn(['conversations', 'items']));
-  const isLoading = useSelector(state => state.getIn(['conversations', 'isLoading'], true));
-  const hasMore = useSelector(state => state.getIn(['conversations', 'hasMore'], false));
+  const conversations = useSelector((state) => state.getIn(["conversations", "items"]));
+  const isLoading = useSelector((state) => state.getIn(["conversations", "isLoading"], true));
+  const hasMore = useSelector((state) => state.getIn(["conversations", "hasMore"], false));
   const dispatch = useDispatch();
-  const lastStatusId = conversations.last()?.get('last_status');
+  const lastStatusId = conversations.last()?.get("last_status");
 
-  const debouncedLoadMore = useMemo(() => debounce(id => {
-    dispatch(expandConversations({ maxId: id }));
-  }, 300, { leading: true }), [dispatch]);
+  const debouncedLoadMore = useMemo(
+    () =>
+      debounce(
+        (id) => {
+          dispatch(expandConversations({ maxId: id }));
+        },
+        300,
+        { leading: true },
+      ),
+    [dispatch],
+  );
 
   const handleLoadMore = useCallback(() => {
     if (lastStatusId) {
@@ -29,13 +37,17 @@ export const ConversationsList = ({ scrollKey, ...other }) => {
   }, [debouncedLoadMore, lastStatusId]);
 
   return (
-    <ScrollableList {...other} scrollKey={scrollKey} isLoading={isLoading} showLoading={isLoading && conversations.isEmpty()} hasMore={hasMore} onLoadMore={handleLoadMore} ref={listRef}>
-      {conversations.map(item => (
-        <Conversation
-          key={item.get('id')}
-          conversation={item}
-          scrollKey={scrollKey}
-        />
+    <ScrollableList
+      {...other}
+      scrollKey={scrollKey}
+      isLoading={isLoading}
+      showLoading={isLoading && conversations.isEmpty()}
+      hasMore={hasMore}
+      onLoadMore={handleLoadMore}
+      ref={listRef}
+    >
+      {conversations.map((item) => (
+        <Conversation key={item.get("id")} conversation={item} scrollKey={scrollKey} />
       ))}
     </ScrollableList>
   );

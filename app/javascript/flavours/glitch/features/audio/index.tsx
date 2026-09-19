@@ -1,48 +1,48 @@
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useCallback, useState } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { useSpring, animated, config } from '@react-spring/web';
+import { useSpring, animated, config } from "@react-spring/web";
 
-import DownloadIcon from '@/material-icons/400-24px/download.svg?react';
-import Forward5Icon from '@/material-icons/400-24px/forward_5-fill.svg?react';
-import PauseIcon from '@/material-icons/400-24px/pause-fill.svg?react';
-import PlayArrowIcon from '@/material-icons/400-24px/play_arrow-fill.svg?react';
-import Replay5Icon from '@/material-icons/400-24px/replay_5-fill.svg?react';
-import VolumeOffIcon from '@/material-icons/400-24px/volume_off-fill.svg?react';
-import VolumeUpIcon from '@/material-icons/400-24px/volume_up-fill.svg?react';
-import { Blurhash } from 'flavours/glitch/components/blurhash';
-import { Icon } from 'flavours/glitch/components/icon';
-import { SpoilerButton } from 'flavours/glitch/components/spoiler_button';
-import { formatTime, getPointerPosition } from 'flavours/glitch/features/video';
-import { useAudioContext } from 'flavours/glitch/hooks/useAudioContext';
-import { useAudioVisualizer } from 'flavours/glitch/hooks/useAudioVisualizer';
-import { displayMedia, useBlurhash } from 'flavours/glitch/initial_state';
-import { playerSettings } from 'flavours/glitch/settings';
+import DownloadIcon from "@/material-icons/400-24px/download.svg?react";
+import Forward5Icon from "@/material-icons/400-24px/forward_5-fill.svg?react";
+import PauseIcon from "@/material-icons/400-24px/pause-fill.svg?react";
+import PlayArrowIcon from "@/material-icons/400-24px/play_arrow-fill.svg?react";
+import Replay5Icon from "@/material-icons/400-24px/replay_5-fill.svg?react";
+import VolumeOffIcon from "@/material-icons/400-24px/volume_off-fill.svg?react";
+import VolumeUpIcon from "@/material-icons/400-24px/volume_up-fill.svg?react";
+import { Blurhash } from "flavours/glitch/components/blurhash";
+import { Icon } from "flavours/glitch/components/icon";
+import { SpoilerButton } from "flavours/glitch/components/spoiler_button";
+import { formatTime, getPointerPosition } from "flavours/glitch/features/video";
+import { useAudioContext } from "flavours/glitch/hooks/useAudioContext";
+import { useAudioVisualizer } from "flavours/glitch/hooks/useAudioVisualizer";
+import { displayMedia, useBlurhash } from "flavours/glitch/initial_state";
+import { playerSettings } from "flavours/glitch/settings";
 
-import { AudioVisualizer } from './visualizer';
+import { AudioVisualizer } from "./visualizer";
 
 const messages = defineMessages({
-  play: { id: 'video.play', defaultMessage: 'Play' },
-  pause: { id: 'video.pause', defaultMessage: 'Pause' },
-  mute: { id: 'video.mute', defaultMessage: 'Mute' },
-  unmute: { id: 'video.unmute', defaultMessage: 'Unmute' },
-  download: { id: 'video.download', defaultMessage: 'Download file' },
-  hide: { id: 'audio.hide', defaultMessage: 'Hide audio' },
-  skipForward: { id: 'video.skip_forward', defaultMessage: 'Skip forward' },
-  skipBackward: { id: 'video.skip_backward', defaultMessage: 'Skip backward' },
+  play: { id: "video.play", defaultMessage: "Play" },
+  pause: { id: "video.pause", defaultMessage: "Pause" },
+  mute: { id: "video.mute", defaultMessage: "Mute" },
+  unmute: { id: "video.unmute", defaultMessage: "Unmute" },
+  download: { id: "video.download", defaultMessage: "Download file" },
+  hide: { id: "audio.hide", defaultMessage: "Hide audio" },
+  skipForward: { id: "video.skip_forward", defaultMessage: "Skip forward" },
+  skipBackward: { id: "video.skip_backward", defaultMessage: "Skip backward" },
 });
 
 const persistVolume = (volume: number, muted: boolean) => {
-  playerSettings.set('volume', volume);
-  playerSettings.set('muted', muted);
+  playerSettings.set("volume", volume);
+  playerSettings.set("muted", muted);
 };
 
 const restoreVolume = (audio: HTMLAudioElement) => {
-  const volume = playerSettings.get('volume') ?? 0.5;
-  const muted = playerSettings.get('muted') ?? false;
+  const volume = playerSettings.get("volume") ?? 0.5;
+  const muted = playerSettings.get("muted") ?? false;
 
   audio.volume = volume;
   audio.muted = muted;
@@ -93,9 +93,9 @@ export const Audio: React.FC<{
   blurhash,
   visible,
   onToggleVisibility,
-  backgroundColor = '#000000',
-  foregroundColor = '#ffffff',
-  accentColor = '#ffffff',
+  backgroundColor = "#000000",
+  foregroundColor = "#ffffff",
+  accentColor = "#ffffff",
   startTime,
   startPlaying,
   startVolume,
@@ -119,8 +119,9 @@ export const Audio: React.FC<{
   const volumeRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>();
 
-  const { audioContextRef, sourceRef, gainNodeRef, playAudio, pauseAudio } =
-    useAudioContext({ audioElementRef: audioRef });
+  const { audioContextRef, sourceRef, gainNodeRef, playAudio, pauseAudio } = useAudioContext({
+    audioElementRef: audioRef,
+  });
 
   const frequencyBands = useAudioVisualizer({
     audioContextRef,
@@ -129,15 +130,15 @@ export const Audio: React.FC<{
   });
 
   const [style, spring] = useSpring(() => ({
-    progress: '0%',
-    buffer: '0%',
-    volume: '0%',
+    progress: "0%",
+    buffer: "0%",
+    volume: "0%",
   }));
 
   const handleAudioRef = useCallback(
     (c: HTMLVideoElement | null) => {
       if (audioRef.current && !audioRef.current.paused && c === null) {
-        deployPictureInPicture?.('audio', {
+        deployPictureInPicture?.("audio", {
           src,
           poster,
           backgroundColor,
@@ -189,13 +190,10 @@ export const Audio: React.FC<{
   }, [volume, muted, gainNodeRef]);
 
   useEffect(() => {
-    if (typeof visible !== 'undefined') {
+    if (typeof visible !== "undefined") {
       setRevealed(visible);
     } else {
-      setRevealed(
-        displayMedia === 'show_all' ||
-          (displayMedia !== 'hide_all' && !sensitive),
-      );
+      setRevealed(displayMedia === "show_all" || (displayMedia !== "hide_all" && !sensitive));
     }
   }, [visible, sensitive]);
 
@@ -290,8 +288,7 @@ export const Audio: React.FC<{
       return;
     }
 
-    const effectivelyMuted =
-      audioRef.current.muted || audioRef.current.volume === 0;
+    const effectivelyMuted = audioRef.current.muted || audioRef.current.volume === 0;
 
     if (effectivelyMuted) {
       audioRef.current.muted = false;
@@ -315,8 +312,8 @@ export const Audio: React.FC<{
   const handleVolumeMouseDown = useCallback(
     (e: React.MouseEvent) => {
       const handleVolumeMouseUp = () => {
-        document.removeEventListener('mousemove', handleVolumeMouseMove, true);
-        document.removeEventListener('mouseup', handleVolumeMouseUp, true);
+        document.removeEventListener("mousemove", handleVolumeMouseMove, true);
+        document.removeEventListener("mouseup", handleVolumeMouseUp, true);
       };
 
       const handleVolumeMouseMove = (e: MouseEvent) => {
@@ -333,8 +330,8 @@ export const Audio: React.FC<{
         }
       };
 
-      document.addEventListener('mousemove', handleVolumeMouseMove, true);
-      document.addEventListener('mouseup', handleVolumeMouseUp, true);
+      document.addEventListener("mousemove", handleVolumeMouseMove, true);
+      document.addEventListener("mouseup", handleVolumeMouseUp, true);
 
       handleVolumeMouseMove(e.nativeEvent);
 
@@ -347,8 +344,8 @@ export const Audio: React.FC<{
   const handleSeekMouseDown = useCallback(
     (e: React.MouseEvent) => {
       const handleSeekMouseUp = () => {
-        document.removeEventListener('mousemove', handleSeekMouseMove, true);
-        document.removeEventListener('mouseup', handleSeekMouseUp, true);
+        document.removeEventListener("mousemove", handleSeekMouseMove, true);
+        document.removeEventListener("mouseup", handleSeekMouseUp, true);
 
         setDragging(false);
         playAudio();
@@ -368,8 +365,8 @@ export const Audio: React.FC<{
         }
       };
 
-      document.addEventListener('mousemove', handleSeekMouseMove, true);
-      document.addEventListener('mouseup', handleSeekMouseUp, true);
+      document.addEventListener("mousemove", handleSeekMouseMove, true);
+      document.addEventListener("mouseup", handleSeekMouseUp, true);
 
       setDragging(true);
       audioRef.current?.pause();
@@ -432,15 +429,15 @@ export const Audio: React.FC<{
 
     setDuration(audioRef.current.duration);
 
-    if (typeof startTime !== 'undefined') {
+    if (typeof startTime !== "undefined") {
       audioRef.current.currentTime = startTime;
     }
 
-    if (typeof startVolume !== 'undefined') {
+    if (typeof startVolume !== "undefined") {
       audioRef.current.volume = startVolume;
     }
 
-    if (typeof startMuted !== 'undefined') {
+    if (typeof startMuted !== "undefined") {
       audioRef.current.muted = startMuted;
     }
   }, [setDuration, startTime, startVolume, startMuted]);
@@ -468,7 +465,7 @@ export const Audio: React.FC<{
       // On the audio element or the seek bar, we can safely use the space bar
       // for playback control because there are no buttons to press
 
-      if (e.key === ' ') {
+      if (e.key === " ") {
         e.preventDefault();
         e.stopPropagation();
         togglePlay();
@@ -501,35 +498,35 @@ export const Audio: React.FC<{
       };
 
       switch (e.key) {
-        case 'k':
-        case ' ':
+        case "k":
+        case " ":
           e.preventDefault();
           e.stopPropagation();
           togglePlay();
           break;
-        case 'm':
+        case "m":
           e.preventDefault();
           e.stopPropagation();
           toggleMute();
           break;
-        case 'j':
-        case 'ArrowLeft':
+        case "j":
+        case "ArrowLeft":
           e.preventDefault();
           e.stopPropagation();
           seekBy(-5);
           break;
-        case 'l':
-        case 'ArrowRight':
+        case "l":
+        case "ArrowRight":
           e.preventDefault();
           e.stopPropagation();
           seekBy(5);
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           e.preventDefault();
           e.stopPropagation();
           updateVolumeBy(0.15);
           break;
-        case 'ArrowDown':
+        case "ArrowDown":
           e.preventDefault();
           e.stopPropagation();
           updateVolumeBy(-0.15);
@@ -544,20 +541,20 @@ export const Audio: React.FC<{
 
   return (
     <div
-      className={classNames('audio-player', { inactive: !revealed })}
+      className={classNames("audio-player", { inactive: !revealed })}
       ref={playerRef}
       style={
         {
-          '--player-background-color': backgroundColor,
-          '--player-foreground-color': foregroundColor,
-          '--player-accent-color': accentColor,
+          "--player-background-color": backgroundColor,
+          "--player-foreground-color": foregroundColor,
+          "--player-accent-color": accentColor,
         } as React.CSSProperties
       }
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onTouchEnd={handleTouchEnd}
-      role='button'
+      role="button"
       tabIndex={0}
       onKeyDownCapture={handleKeyDown}
       aria-label={alt}
@@ -566,8 +563,8 @@ export const Audio: React.FC<{
       {blurhash && (
         <Blurhash
           hash={blurhash}
-          className={classNames('media-gallery__preview', {
-            'media-gallery__preview--hidden': revealed,
+          className={classNames("media-gallery__preview", {
+            "media-gallery__preview--hidden": revealed,
           })}
           dummy={!useBlurhash}
         />
@@ -576,7 +573,7 @@ export const Audio: React.FC<{
       <audio /* eslint-disable-line jsx-a11y/media-has-caption */
         src={src}
         ref={handleAudioRef}
-        preload={startPlaying ? 'auto' : 'none'}
+        preload={startPlaying ? "auto" : "none"}
         onPlay={handlePlay}
         onPause={handlePause}
         onProgress={handleProgress}
@@ -584,78 +581,67 @@ export const Audio: React.FC<{
         onCanPlayThrough={handleCanPlayThrough}
         onTimeUpdate={handleTimeUpdate}
         onVolumeChange={handleVolumeChange}
-        crossOrigin='anonymous'
+        crossOrigin="anonymous"
       />
 
       <div
-        className='video-player__seek'
+        className="video-player__seek"
         aria-valuemin={0}
         aria-valuenow={progress}
         aria-valuemax={100}
         onMouseDown={handleSeekMouseDown}
         onKeyDownCapture={handleAudioKeyDown}
         ref={seekRef}
-        role='slider'
+        role="slider"
         tabIndex={0}
       >
-        <animated.div
-          className='video-player__seek__buffer'
-          style={{ width: style.buffer }}
-        />
-        <animated.div
-          className='video-player__seek__progress'
-          style={{ width: style.progress }}
-        />
+        <animated.div className="video-player__seek__buffer" style={{ width: style.buffer }} />
+        <animated.div className="video-player__seek__progress" style={{ width: style.progress }} />
 
         <animated.span
-          className={classNames('video-player__seek__handle', {
+          className={classNames("video-player__seek__handle", {
             active: dragging,
           })}
           style={{ left: style.progress }}
         />
       </div>
 
-      <div className='audio-player__controls'>
-        <div className='audio-player__controls__play'>
+      <div className="audio-player__controls">
+        <div className="audio-player__controls__play">
           <button
-            type='button'
+            type="button"
             title={intl.formatMessage(messages.skipBackward)}
             aria-label={intl.formatMessage(messages.skipBackward)}
-            className='player-button'
+            className="player-button"
             onClick={handleSkipBackward}
           >
-            <Icon id='' icon={Replay5Icon} />
+            <Icon id="" icon={Replay5Icon} />
           </button>
         </div>
 
-        <div className='audio-player__controls__play'>
+        <div className="audio-player__controls__play">
           <AudioVisualizer frequencyBands={frequencyBands} poster={poster} />
 
           <button
-            type='button'
+            type="button"
             title={intl.formatMessage(paused ? messages.play : messages.pause)}
-            aria-label={intl.formatMessage(
-              paused ? messages.play : messages.pause,
-            )}
-            className='player-button'
+            aria-label={intl.formatMessage(paused ? messages.play : messages.pause)}
+            className="player-button"
             onClick={togglePlay}
           >
-            <Icon
-              id={paused ? 'play' : 'pause'}
-              icon={paused ? PlayArrowIcon : PauseIcon}
-            />
+            <Icon id={paused ? "play" : "pause"} icon={paused ? PlayArrowIcon : PauseIcon} />
           </button>
         </div>
 
-        <div className='audio-player__controls__play'>
+        <div className="audio-player__controls__play">
           <button
-            type='button'
+            type="button"
             title={intl.formatMessage(messages.skipForward)}
             aria-label={intl.formatMessage(messages.skipForward)}
-            className='player-button'
+            className="player-button"
             onClick={handleSkipForward}
           >
-            <Icon id='' icon={Forward5Icon} />
+            <Icon id="" icon={Forward5Icon} />
           </button>
         </div>
       </div>
@@ -667,82 +653,69 @@ export const Audio: React.FC<{
         matchedFilters={matchedFilters}
       />
 
-      <div
-        className={classNames('video-player__controls', { active: hovered })}
-      >
-        <div className='video-player__buttons-bar'>
-          <div className='video-player__buttons left'>
+      <div className={classNames("video-player__controls", { active: hovered })}>
+        <div className="video-player__buttons-bar">
+          <div className="video-player__buttons left">
             <button
-              type='button'
-              title={intl.formatMessage(
-                muted ? messages.unmute : messages.mute,
-              )}
-              aria-label={intl.formatMessage(
-                muted ? messages.unmute : messages.mute,
-              )}
-              className='player-button'
+              type="button"
+              title={intl.formatMessage(muted ? messages.unmute : messages.mute)}
+              aria-label={intl.formatMessage(muted ? messages.unmute : messages.mute)}
+              className="player-button"
               onClick={toggleMute}
             >
               <Icon
-                id={muted ? 'volume-off' : 'volume-up'}
+                id={muted ? "volume-off" : "volume-up"}
                 icon={muted ? VolumeOffIcon : VolumeUpIcon}
               />
             </button>
 
             <div
-              className='video-player__volume active'
+              className="video-player__volume active"
               ref={volumeRef}
               onMouseDown={handleVolumeMouseDown}
-              role='slider'
+              role="slider"
               aria-valuemin={0}
               aria-valuenow={effectivelyMuted ? 0 : volume * 100}
               aria-valuemax={100}
               tabIndex={0}
             >
               <animated.div
-                className='video-player__volume__current'
+                className="video-player__volume__current"
                 style={{ width: style.volume }}
               />
 
               <animated.span
-                className={classNames('video-player__volume__handle')}
+                className={classNames("video-player__volume__handle")}
                 style={{ left: style.volume }}
               />
             </div>
 
-            <span className='video-player__time'>
-              <span className='video-player__time-current'>
+            <span className="video-player__time">
+              <span className="video-player__time-current">
                 {formatTime(Math.floor(currentTime))}
               </span>
-              <span className='video-player__time-sep'>/</span>
-              <span className='video-player__time-total'>
+              <span className="video-player__time-sep">/</span>
+              <span className="video-player__time-total">
                 {formatTime(Math.floor(loadedDuration))}
               </span>
             </span>
           </div>
 
-          <div className='video-player__buttons right'>
+          <div className="video-player__buttons right">
             {!editable && (
               <>
-                <button
-                  type='button'
-                  className='player-button'
-                  onClick={toggleReveal}
-                >
-                  <FormattedMessage
-                    id='media_gallery.hide'
-                    defaultMessage='Hide'
-                  />
+                <button type="button" className="player-button" onClick={toggleReveal}>
+                  <FormattedMessage id="media_gallery.hide" defaultMessage="Hide" />
                 </button>
 
                 <a
                   title={intl.formatMessage(messages.download)}
                   aria-label={intl.formatMessage(messages.download)}
-                  className='video-player__download__icon player-button'
+                  className="video-player__download__icon player-button"
                   href={src}
                   download
                 >
-                  <Icon id='download' icon={DownloadIcon} />
+                  <Icon id="download" icon={DownloadIcon} />
                 </a>
               </>
             )}

@@ -1,4 +1,4 @@
-import { length } from 'stringz';
+import { length } from "stringz";
 
 export const CharacterCounter: React.FC<{
   text: string;
@@ -7,10 +7,8 @@ export const CharacterCounter: React.FC<{
   const diff = max - length(text);
 
   if (diff < 0) {
-    return (
-      <span className='character-counter character-counter--over'>{diff}</span>
-    );
+    return <span className="character-counter character-counter--over">{diff}</span>;
   }
 
-  return <span className='character-counter'>{diff}</span>;
+  return <span className="character-counter">{diff}</span>;
 };

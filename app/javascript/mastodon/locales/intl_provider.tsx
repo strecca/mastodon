@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { IntlProvider as BaseIntlProvider } from 'react-intl';
+import { IntlProvider as BaseIntlProvider } from "react-intl";
 
-import { isProduction } from 'mastodon/utils/environment';
+import { isProduction } from "mastodon/utils/environment";
 
-import { getLocale, isLocaleLoaded } from './global_locale';
-import { loadLocale } from './load_locale';
+import { getLocale, isLocaleLoaded } from "./global_locale";
+import { loadLocale } from "./load_locale";
 
 function onProviderError(error: unknown) {
   // Silent the error, like upstream does
@@ -15,7 +15,7 @@ function onProviderError(error: unknown) {
   // As-per the spec, the browser should select the best matching locale
   if (
     error &&
-    typeof error === 'object' &&
+    typeof error === "object" &&
     error instanceof Error &&
     /MISSING_DATA/.exec(error.message)
   ) {
@@ -26,7 +26,7 @@ function onProviderError(error: unknown) {
 }
 
 export const IntlProvider: React.FC<
-  Omit<React.ComponentProps<typeof BaseIntlProvider>, 'locale' | 'messages'>
+  Omit<React.ComponentProps<typeof BaseIntlProvider>, "locale" | "messages">
 > = ({ children, ...props }) => {
   const [localeLoaded, setLocaleLoaded] = useState(false);
 
@@ -46,12 +46,7 @@ export const IntlProvider: React.FC<
   const { locale, messages } = getLocale();
 
   return (
-    <BaseIntlProvider
-      locale={locale}
-      messages={messages}
-      onError={onProviderError}
-      {...props}
-    >
+    <BaseIntlProvider locale={locale} messages={messages} onError={onProviderError} {...props}>
       {children}
     </BaseIntlProvider>
   );

@@ -1,55 +1,55 @@
-import { boostModal } from 'mastodon/initial_state';
+import { boostModal } from "mastodon/initial_state";
 
-import api, { getLinks } from '../api';
+import api, { getLinks } from "../api";
 
-import { fetchRelationships } from './accounts';
-import { importFetchedAccounts, importFetchedStatus } from './importer';
-import { unreblog, reblog } from './interactions_typed';
-import { openModal } from './modal';
+import { fetchRelationships } from "./accounts";
+import { importFetchedAccounts, importFetchedStatus } from "./importer";
+import { unreblog, reblog } from "./interactions_typed";
+import { openModal } from "./modal";
 import {
   insertPinnedStatusIntoTimelines,
   removePinnedStatusFromTimelines,
-} from './timelines_typed';
+} from "./timelines_typed";
 
-export const REBLOGS_EXPAND_REQUEST = 'REBLOGS_EXPAND_REQUEST';
-export const REBLOGS_EXPAND_SUCCESS = 'REBLOGS_EXPAND_SUCCESS';
-export const REBLOGS_EXPAND_FAIL = 'REBLOGS_EXPAND_FAIL';
+export const REBLOGS_EXPAND_REQUEST = "REBLOGS_EXPAND_REQUEST";
+export const REBLOGS_EXPAND_SUCCESS = "REBLOGS_EXPAND_SUCCESS";
+export const REBLOGS_EXPAND_FAIL = "REBLOGS_EXPAND_FAIL";
 
-export const FAVOURITE_REQUEST = 'FAVOURITE_REQUEST';
-export const FAVOURITE_SUCCESS = 'FAVOURITE_SUCCESS';
-export const FAVOURITE_FAIL    = 'FAVOURITE_FAIL';
+export const FAVOURITE_REQUEST = "FAVOURITE_REQUEST";
+export const FAVOURITE_SUCCESS = "FAVOURITE_SUCCESS";
+export const FAVOURITE_FAIL = "FAVOURITE_FAIL";
 
-export const UNFAVOURITE_REQUEST = 'UNFAVOURITE_REQUEST';
-export const UNFAVOURITE_SUCCESS = 'UNFAVOURITE_SUCCESS';
-export const UNFAVOURITE_FAIL    = 'UNFAVOURITE_FAIL';
+export const UNFAVOURITE_REQUEST = "UNFAVOURITE_REQUEST";
+export const UNFAVOURITE_SUCCESS = "UNFAVOURITE_SUCCESS";
+export const UNFAVOURITE_FAIL = "UNFAVOURITE_FAIL";
 
-export const REBLOGS_FETCH_REQUEST = 'REBLOGS_FETCH_REQUEST';
-export const REBLOGS_FETCH_SUCCESS = 'REBLOGS_FETCH_SUCCESS';
-export const REBLOGS_FETCH_FAIL    = 'REBLOGS_FETCH_FAIL';
+export const REBLOGS_FETCH_REQUEST = "REBLOGS_FETCH_REQUEST";
+export const REBLOGS_FETCH_SUCCESS = "REBLOGS_FETCH_SUCCESS";
+export const REBLOGS_FETCH_FAIL = "REBLOGS_FETCH_FAIL";
 
-export const FAVOURITES_FETCH_REQUEST = 'FAVOURITES_FETCH_REQUEST';
-export const FAVOURITES_FETCH_SUCCESS = 'FAVOURITES_FETCH_SUCCESS';
-export const FAVOURITES_FETCH_FAIL    = 'FAVOURITES_FETCH_FAIL';
+export const FAVOURITES_FETCH_REQUEST = "FAVOURITES_FETCH_REQUEST";
+export const FAVOURITES_FETCH_SUCCESS = "FAVOURITES_FETCH_SUCCESS";
+export const FAVOURITES_FETCH_FAIL = "FAVOURITES_FETCH_FAIL";
 
-export const FAVOURITES_EXPAND_REQUEST = 'FAVOURITES_EXPAND_REQUEST';
-export const FAVOURITES_EXPAND_SUCCESS = 'FAVOURITES_EXPAND_SUCCESS';
-export const FAVOURITES_EXPAND_FAIL = 'FAVOURITES_EXPAND_FAIL';
+export const FAVOURITES_EXPAND_REQUEST = "FAVOURITES_EXPAND_REQUEST";
+export const FAVOURITES_EXPAND_SUCCESS = "FAVOURITES_EXPAND_SUCCESS";
+export const FAVOURITES_EXPAND_FAIL = "FAVOURITES_EXPAND_FAIL";
 
-export const PIN_REQUEST = 'PIN_REQUEST';
-export const PIN_SUCCESS = 'PIN_SUCCESS';
-export const PIN_FAIL    = 'PIN_FAIL';
+export const PIN_REQUEST = "PIN_REQUEST";
+export const PIN_SUCCESS = "PIN_SUCCESS";
+export const PIN_FAIL = "PIN_FAIL";
 
-export const UNPIN_REQUEST = 'UNPIN_REQUEST';
-export const UNPIN_SUCCESS = 'UNPIN_SUCCESS';
-export const UNPIN_FAIL    = 'UNPIN_FAIL';
+export const UNPIN_REQUEST = "UNPIN_REQUEST";
+export const UNPIN_SUCCESS = "UNPIN_SUCCESS";
+export const UNPIN_FAIL = "UNPIN_FAIL";
 
-export const BOOKMARK_REQUEST = 'BOOKMARK_REQUEST';
-export const BOOKMARK_SUCCESS = 'BOOKMARKED_SUCCESS';
-export const BOOKMARK_FAIL    = 'BOOKMARKED_FAIL';
+export const BOOKMARK_REQUEST = "BOOKMARK_REQUEST";
+export const BOOKMARK_SUCCESS = "BOOKMARKED_SUCCESS";
+export const BOOKMARK_FAIL = "BOOKMARKED_FAIL";
 
-export const UNBOOKMARK_REQUEST = 'UNBOOKMARKED_REQUEST';
-export const UNBOOKMARK_SUCCESS = 'UNBOOKMARKED_SUCCESS';
-export const UNBOOKMARK_FAIL    = 'UNBOOKMARKED_FAIL';
+export const UNBOOKMARK_REQUEST = "UNBOOKMARKED_REQUEST";
+export const UNBOOKMARK_SUCCESS = "UNBOOKMARKED_SUCCESS";
+export const UNBOOKMARK_FAIL = "UNBOOKMARKED_FAIL";
 
 export * from "./interactions_typed";
 
@@ -57,12 +57,15 @@ export function favourite(status) {
   return function (dispatch) {
     dispatch(favouriteRequest(status));
 
-    api().post(`/api/v1/statuses/${status.get('id')}/favourite`).then(function (response) {
-      dispatch(importFetchedStatus(response.data));
-      dispatch(favouriteSuccess(status));
-    }).catch(function (error) {
-      dispatch(favouriteFail(status, error));
-    });
+    api()
+      .post(`/api/v1/statuses/${status.get("id")}/favourite`)
+      .then(function (response) {
+        dispatch(importFetchedStatus(response.data));
+        dispatch(favouriteSuccess(status));
+      })
+      .catch(function (error) {
+        dispatch(favouriteFail(status, error));
+      });
   };
 }
 
@@ -70,12 +73,15 @@ export function unfavourite(status) {
   return (dispatch) => {
     dispatch(unfavouriteRequest(status));
 
-    api().post(`/api/v1/statuses/${status.get('id')}/unfavourite`).then(response => {
-      dispatch(importFetchedStatus(response.data));
-      dispatch(unfavouriteSuccess(status));
-    }).catch(error => {
-      dispatch(unfavouriteFail(status, error));
-    });
+    api()
+      .post(`/api/v1/statuses/${status.get("id")}/unfavourite`)
+      .then((response) => {
+        dispatch(importFetchedStatus(response.data));
+        dispatch(unfavouriteSuccess(status));
+      })
+      .catch((error) => {
+        dispatch(unfavouriteFail(status, error));
+      });
   };
 }
 
@@ -133,12 +139,15 @@ export function bookmark(status) {
   return function (dispatch) {
     dispatch(bookmarkRequest(status));
 
-    api().post(`/api/v1/statuses/${status.get('id')}/bookmark`).then(function (response) {
-      dispatch(importFetchedStatus(response.data));
-      dispatch(bookmarkSuccess(status, response.data));
-    }).catch(function (error) {
-      dispatch(bookmarkFail(status, error));
-    });
+    api()
+      .post(`/api/v1/statuses/${status.get("id")}/bookmark`)
+      .then(function (response) {
+        dispatch(importFetchedStatus(response.data));
+        dispatch(bookmarkSuccess(status, response.data));
+      })
+      .catch(function (error) {
+        dispatch(bookmarkFail(status, error));
+      });
   };
 }
 
@@ -146,12 +155,15 @@ export function unbookmark(status) {
   return (dispatch) => {
     dispatch(unbookmarkRequest(status));
 
-    api().post(`/api/v1/statuses/${status.get('id')}/unbookmark`).then(response => {
-      dispatch(importFetchedStatus(response.data));
-      dispatch(unbookmarkSuccess(status, response.data));
-    }).catch(error => {
-      dispatch(unbookmarkFail(status, error));
-    });
+    api()
+      .post(`/api/v1/statuses/${status.get("id")}/unbookmark`)
+      .then((response) => {
+        dispatch(importFetchedStatus(response.data));
+        dispatch(unbookmarkSuccess(status, response.data));
+      })
+      .catch((error) => {
+        dispatch(unbookmarkFail(status, error));
+      });
   };
 }
 
@@ -205,14 +217,17 @@ export function fetchReblogs(id) {
   return (dispatch) => {
     dispatch(fetchReblogsRequest(id));
 
-    api().get(`/api/v1/statuses/${id}/reblogged_by`).then(response => {
-      const next = getLinks(response).refs.find(link => link.rel === 'next');
-      dispatch(importFetchedAccounts(response.data));
-      dispatch(fetchReblogsSuccess(id, response.data, next ? next.uri : null));
-      dispatch(fetchRelationships(response.data.map(item => item.id)));
-    }).catch(error => {
-      dispatch(fetchReblogsFail(id, error));
-    });
+    api()
+      .get(`/api/v1/statuses/${id}/reblogged_by`)
+      .then((response) => {
+        const next = getLinks(response).refs.find((link) => link.rel === "next");
+        dispatch(importFetchedAccounts(response.data));
+        dispatch(fetchReblogsSuccess(id, response.data, next ? next.uri : null));
+        dispatch(fetchRelationships(response.data.map((item) => item.id)));
+      })
+      .catch((error) => {
+        dispatch(fetchReblogsFail(id, error));
+      });
   };
 }
 
@@ -242,20 +257,23 @@ export function fetchReblogsFail(id, error) {
 
 export function expandReblogs(id) {
   return (dispatch, getState) => {
-    const url = getState().getIn(['user_lists', 'reblogged_by', id, 'next']);
+    const url = getState().getIn(["user_lists", "reblogged_by", id, "next"]);
     if (url === null) {
       return;
     }
 
     dispatch(expandReblogsRequest(id));
 
-    api().get(url).then(response => {
-      const next = getLinks(response).refs.find(link => link.rel === 'next');
+    api()
+      .get(url)
+      .then((response) => {
+        const next = getLinks(response).refs.find((link) => link.rel === "next");
 
-      dispatch(importFetchedAccounts(response.data));
-      dispatch(expandReblogsSuccess(id, response.data, next ? next.uri : null));
-      dispatch(fetchRelationships(response.data.map(item => item.id)));
-    }).catch(error => dispatch(expandReblogsFail(id, error)));
+        dispatch(importFetchedAccounts(response.data));
+        dispatch(expandReblogsSuccess(id, response.data, next ? next.uri : null));
+        dispatch(fetchRelationships(response.data.map((item) => item.id)));
+      })
+      .catch((error) => dispatch(expandReblogsFail(id, error)));
   };
 }
 
@@ -287,14 +305,17 @@ export function fetchFavourites(id) {
   return (dispatch) => {
     dispatch(fetchFavouritesRequest(id));
 
-    api().get(`/api/v1/statuses/${id}/favourited_by`).then(response => {
-      const next = getLinks(response).refs.find(link => link.rel === 'next');
-      dispatch(importFetchedAccounts(response.data));
-      dispatch(fetchFavouritesSuccess(id, response.data, next ? next.uri : null));
-      dispatch(fetchRelationships(response.data.map(item => item.id)));
-    }).catch(error => {
-      dispatch(fetchFavouritesFail(id, error));
-    });
+    api()
+      .get(`/api/v1/statuses/${id}/favourited_by`)
+      .then((response) => {
+        const next = getLinks(response).refs.find((link) => link.rel === "next");
+        dispatch(importFetchedAccounts(response.data));
+        dispatch(fetchFavouritesSuccess(id, response.data, next ? next.uri : null));
+        dispatch(fetchRelationships(response.data.map((item) => item.id)));
+      })
+      .catch((error) => {
+        dispatch(fetchFavouritesFail(id, error));
+      });
   };
 }
 
@@ -324,20 +345,23 @@ export function fetchFavouritesFail(id, error) {
 
 export function expandFavourites(id) {
   return (dispatch, getState) => {
-    const url = getState().getIn(['user_lists', 'favourited_by', id, 'next']);
+    const url = getState().getIn(["user_lists", "favourited_by", id, "next"]);
     if (url === null) {
       return;
     }
 
     dispatch(expandFavouritesRequest(id));
 
-    api().get(url).then(response => {
-      const next = getLinks(response).refs.find(link => link.rel === 'next');
+    api()
+      .get(url)
+      .then((response) => {
+        const next = getLinks(response).refs.find((link) => link.rel === "next");
 
-      dispatch(importFetchedAccounts(response.data));
-      dispatch(expandFavouritesSuccess(id, response.data, next ? next.uri : null));
-      dispatch(fetchRelationships(response.data.map(item => item.id)));
-    }).catch(error => dispatch(expandFavouritesFail(id, error)));
+        dispatch(importFetchedAccounts(response.data));
+        dispatch(expandFavouritesSuccess(id, response.data, next ? next.uri : null));
+        dispatch(fetchRelationships(response.data.map((item) => item.id)));
+      })
+      .catch((error) => dispatch(expandFavouritesFail(id, error)));
   };
 }
 
@@ -369,13 +393,16 @@ export function pin(status) {
   return (dispatch) => {
     dispatch(pinRequest(status));
 
-    api().post(`/api/v1/statuses/${status.get('id')}/pin`).then(response => {
-      dispatch(importFetchedStatus(response.data));
-      dispatch(pinSuccess(status));
-      dispatch(insertPinnedStatusIntoTimelines(status));
-    }).catch(error => {
-      dispatch(pinFail(status, error));
-    });
+    api()
+      .post(`/api/v1/statuses/${status.get("id")}/pin`)
+      .then((response) => {
+        dispatch(importFetchedStatus(response.data));
+        dispatch(pinSuccess(status));
+        dispatch(insertPinnedStatusIntoTimelines(status));
+      })
+      .catch((error) => {
+        dispatch(pinFail(status, error));
+      });
   };
 }
 
@@ -404,17 +431,20 @@ export function pinFail(status, error) {
   };
 }
 
-export function unpin (status) {
+export function unpin(status) {
   return (dispatch) => {
     dispatch(unpinRequest(status));
 
-    api().post(`/api/v1/statuses/${status.get('id')}/unpin`).then(response => {
-      dispatch(importFetchedStatus(response.data));
-      dispatch(unpinSuccess(status));
-      dispatch(removePinnedStatusFromTimelines(status));
-    }).catch(error => {
-      dispatch(unpinFail(status, error));
-    });
+    api()
+      .post(`/api/v1/statuses/${status.get("id")}/unpin`)
+      .then((response) => {
+        dispatch(importFetchedStatus(response.data));
+        dispatch(unpinSuccess(status));
+        dispatch(removePinnedStatusFromTimelines(status));
+      })
+      .catch((error) => {
+        dispatch(unpinFail(status, error));
+      });
   };
 }
 
@@ -445,10 +475,10 @@ export function unpinFail(status, error) {
 
 function toggleReblogWithoutConfirmation(status, visibility) {
   return (dispatch) => {
-    if (status.get('reblogged')) {
-      dispatch(unreblog({ statusId: status.get('id') }));
+    if (status.get("reblogged")) {
+      dispatch(unreblog({ statusId: status.get("id") }));
     } else {
-      dispatch(reblog({ statusId: status.get('id'), visibility }));
+      dispatch(reblog({ statusId: status.get("id"), visibility }));
     }
   };
 }
@@ -458,15 +488,23 @@ export function toggleReblog(statusId, skipModal = false) {
     const state = getState();
     let status = state.statuses.get(statusId);
 
-    if (!status)
-      return;
+    if (!status) return;
 
     // The reblog modal expects a pre-filled account in status
     // TODO: fix this by having the reblog modal get a statusId and do the work itself
-    status = status.set('account', state.accounts.get(status.get('account')));
+    status = status.set("account", state.accounts.get(status.get("account")));
 
     if (boostModal && !skipModal) {
-      dispatch(openModal({ modalType: 'BOOST', modalProps: { status, onReblog: (status, privacy) => dispatch(toggleReblogWithoutConfirmation(status, privacy)) } }));
+      dispatch(
+        openModal({
+          modalType: "BOOST",
+          modalProps: {
+            status,
+            onReblog: (status, privacy) =>
+              dispatch(toggleReblogWithoutConfirmation(status, privacy)),
+          },
+        }),
+      );
     } else {
       dispatch(toggleReblogWithoutConfirmation(status));
     }
@@ -478,10 +516,9 @@ export function toggleFavourite(statusId) {
     const state = getState();
     const status = state.statuses.get(statusId);
 
-    if (!status)
-      return;
+    if (!status) return;
 
-    if (status.get('favourited')) {
+    if (status.get("favourited")) {
       dispatch(unfavourite(status));
     } else {
       dispatch(favourite(status));

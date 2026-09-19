@@ -1,10 +1,7 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from "react";
 
 export const InterceptStatusClicks: React.FC<{
-  onPreventedClick: (
-    clickedArea: 'account' | 'post',
-    event: React.MouseEvent,
-  ) => void;
+  onPreventedClick: (clickedArea: "account" | "post", event: React.MouseEvent) => void;
   children: React.ReactNode;
 }> = ({ onPreventedClick, children }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -13,10 +10,8 @@ export const InterceptStatusClicks: React.FC<{
     (e: React.MouseEvent) => {
       const clickTarget = e.target as Element;
       const allowedElementsSelector =
-        '.video-player, .audio-player, .media-gallery, .content-warning';
-      const allowedElements = wrapperRef.current?.querySelectorAll(
-        allowedElementsSelector,
-      );
+        ".video-player, .audio-player, .media-gallery, .content-warning";
+      const allowedElements = wrapperRef.current?.querySelectorAll(allowedElementsSelector);
       const isTargetClickAllowed =
         allowedElements &&
         Array.from(allowedElements).some((element) => {
@@ -27,11 +22,9 @@ export const InterceptStatusClicks: React.FC<{
         e.preventDefault();
         e.stopPropagation();
 
-        const wasAccountAreaClicked = !!clickTarget.closest(
-          'a.status__display-name',
-        );
+        const wasAccountAreaClicked = !!clickTarget.closest("a.status__display-name");
 
-        onPreventedClick(wasAccountAreaClicked ? 'account' : 'post', e);
+        onPreventedClick(wasAccountAreaClicked ? "account" : "post", e);
       }
     },
     [onPreventedClick],

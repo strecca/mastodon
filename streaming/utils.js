@@ -1,16 +1,6 @@
 // @ts-check
 
-const FALSE_VALUES = [
-  false,
-  0,
-  '0',
-  'f',
-  'F',
-  'false',
-  'FALSE',
-  'off',
-  'OFF',
-];
+const FALSE_VALUES = [false, 0, "0", "f", "F", "false", "FALSE", "off", "OFF"];
 
 /**
  * @typedef {typeof FALSE_VALUES[number]} FalseValue
@@ -28,15 +18,17 @@ export function isTruthy(value) {
  * See app/lib/ascii_folder.rb for the canon definitions
  * of these constants
  */
-const NON_ASCII_CHARS        = 'ÀÁÂÃÄÅàáâãäåĀāĂăĄąÇçĆćĈĉĊċČčÐðĎďĐđÈÉÊËèéêëĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħÌÍÎÏìíîïĨĩĪīĬĭĮįİıĴĵĶķĸĹĺĻļĽľĿŀŁłÑñŃńŅņŇňŉŊŋÒÓÔÕÖØòóôõöøŌōŎŏŐőŔŕŖŗŘřŚśŜŝŞşŠšſŢţŤťŦŧÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųŴŵÝýÿŶŷŸŹźŻżŽž';
-const EQUIVALENT_ASCII_CHARS = 'AAAAAAaaaaaaAaAaAaCcCcCcCcCcDdDdDdEEEEeeeeEeEeEeEeEeGgGgGgGgHhHhIIIIiiiiIiIiIiIiIiJjKkkLlLlLlLlLlNnNnNnNnnNnOOOOOOooooooOoOoOoRrRrRrSsSsSsSssTtTtTtUUUUuuuuUuUuUuUuUuUuWwYyyYyYZzZzZz';
-const FOLDTOASCII_REGEX = new RegExp(NON_ASCII_CHARS.split('').join('|'), 'g');
+const NON_ASCII_CHARS =
+  "ÀÁÂÃÄÅàáâãäåĀāĂăĄąÇçĆćĈĉĊċČčÐðĎďĐđÈÉÊËèéêëĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħÌÍÎÏìíîïĨĩĪīĬĭĮįİıĴĵĶķĸĹĺĻļĽľĿŀŁłÑñŃńŅņŇňŉŊŋÒÓÔÕÖØòóôõöøŌōŎŏŐőŔŕŖŗŘřŚśŜŝŞşŠšſŢţŤťŦŧÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųŴŵÝýÿŶŷŸŹźŻżŽž";
+const EQUIVALENT_ASCII_CHARS =
+  "AAAAAAaaaaaaAaAaAaCcCcCcCcCcDdDdDdEEEEeeeeEeEeEeEeEeGgGgGgGgHhHhIIIIiiiiIiIiIiIiIiJjKkkLlLlLlLlLlNnNnNnNnnNnOOOOOOooooooOoOoOoRrRrRrSsSsSsSssTtTtTtUUUUuuuuUuUuUuUuUuUuWwYyyYyYZzZzZz";
+const FOLDTOASCII_REGEX = new RegExp(NON_ASCII_CHARS.split("").join("|"), "g");
 /**
  * @param {string} str
  * @returns {string}
  */
 export function foldToASCII(str) {
-  return str.replace(FOLDTOASCII_REGEX, function(match) {
+  return str.replace(FOLDTOASCII_REGEX, function (match) {
     const index = NON_ASCII_CHARS.indexOf(match);
     return EQUIVALENT_ASCII_CHARS[index];
   });
@@ -47,7 +39,10 @@ export function foldToASCII(str) {
  * @returns {string}
  */
 export function normalizeHashtag(str) {
-  return foldToASCII(str.normalize('NFKC').toLowerCase()).replace(/[^\p{L}\p{N}_\u00b7\u200c]/gu, '');
+  return foldToASCII(str.normalize("NFKC").toLowerCase()).replace(
+    /[^\p{L}\p{N}_\u00b7\u200c]/gu,
+    "",
+  );
 }
 
 /**
@@ -71,7 +66,7 @@ export function firstParam(arrayOrString) {
  * @returns {number}
  */
 export function parseIntFromEnvValue(value, defaultValue, variableName) {
-  if (typeof value === 'string' && value.length > 0) {
+  if (typeof value === "string" && value.length > 0) {
     const parsedValue = parseInt(value, 10);
     if (isNaN(parsedValue)) {
       throw new Error(`Invalid ${variableName} environment variable: ${value}`);

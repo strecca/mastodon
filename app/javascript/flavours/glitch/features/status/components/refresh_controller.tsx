@@ -1,23 +1,23 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo } from "react";
 
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages } from "react-intl";
 
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 
 import {
   fetchContext,
   completeContextRefresh,
   showPendingReplies,
   clearPendingReplies,
-} from 'flavours/glitch/actions/statuses';
-import type { AsyncRefreshHeader } from 'flavours/glitch/api';
-import { apiGetAsyncRefresh } from 'flavours/glitch/api/async_refreshes';
-import { Alert } from 'flavours/glitch/components/alert';
-import { ExitAnimationWrapper } from 'flavours/glitch/components/exit_animation_wrapper';
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { useInterval } from 'flavours/glitch/hooks/useInterval';
-import { useIsDocumentVisible } from 'flavours/glitch/hooks/useIsDocumentVisible';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
+} from "flavours/glitch/actions/statuses";
+import type { AsyncRefreshHeader } from "flavours/glitch/api";
+import { apiGetAsyncRefresh } from "flavours/glitch/api/async_refreshes";
+import { Alert } from "flavours/glitch/components/alert";
+import { ExitAnimationWrapper } from "flavours/glitch/components/exit_animation_wrapper";
+import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
+import { useInterval } from "flavours/glitch/hooks/useInterval";
+import { useIsDocumentVisible } from "flavours/glitch/hooks/useIsDocumentVisible";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
 const AnimatedAlert: React.FC<
   React.ComponentPropsWithoutRef<typeof Alert> & { withEntryDelay?: boolean }
@@ -29,32 +29,32 @@ const AnimatedAlert: React.FC<
 
 const messages = defineMessages({
   moreFound: {
-    id: 'status.context.more_replies_found',
-    defaultMessage: 'More replies found',
+    id: "status.context.more_replies_found",
+    defaultMessage: "More replies found",
   },
   show: {
-    id: 'status.context.show',
-    defaultMessage: 'Show',
+    id: "status.context.show",
+    defaultMessage: "Show",
   },
   loadingInitial: {
-    id: 'status.context.loading',
-    defaultMessage: 'Loading',
+    id: "status.context.loading",
+    defaultMessage: "Loading",
   },
   success: {
-    id: 'status.context.loading_success',
-    defaultMessage: 'New replies loaded',
+    id: "status.context.loading_success",
+    defaultMessage: "New replies loaded",
   },
   error: {
-    id: 'status.context.loading_error',
+    id: "status.context.loading_error",
     defaultMessage: "Couldn't load new replies",
   },
   retry: {
-    id: 'status.context.retry',
-    defaultMessage: 'Retry',
+    id: "status.context.retry",
+    defaultMessage: "Retry",
   },
 });
 
-type LoadingState = 'idle' | 'more-available' | 'loading' | 'success' | 'error';
+type LoadingState = "idle" | "more-available" | "loading" | "success" | "error";
 
 /**
  * Age of thread below which we consider it new & fetch
@@ -107,10 +107,7 @@ function useCheckForRemoteReplies({
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
 
-    const scheduleRefresh = (
-      refresh: AsyncRefreshHeader,
-      iteration: number,
-    ) => {
+    const scheduleRefresh = (refresh: AsyncRefreshHeader, iteration: number) => {
       timeoutId = setTimeout(() => {
         void apiGetAsyncRefresh(refresh.id).then((result) => {
           const { status, result_count } = result.async_refresh;
@@ -121,21 +118,21 @@ function useCheckForRemoteReplies({
 
           // If the refresh status is not finished and not long-running,
           // we just schedule another refresh and exit
-          if (status === 'running' && !isLongRunning) {
+          if (status === "running" && !isLongRunning) {
             scheduleRefresh(refresh, iteration + 1);
             return;
           }
 
           // If refresh status is finished, clear `refreshHeader`
           // (we don't want to do this if it's just a long-running job)
-          if (status === 'finished') {
+          if (status === "finished") {
             dispatch(completeContextRefresh({ statusId }));
           }
 
           // Exit if there's nothing to fetch
           if (result_count === 0) {
-            if (status === 'finished') {
-              onChangeLoadingState('idle');
+            if (status === "finished") {
+              onChangeLoadingState("idle");
             } else {
               scheduleRefresh(refresh, iteration + 1);
             }
@@ -151,8 +148,8 @@ function useCheckForRemoteReplies({
               // Reset loading state to `idle`. If the fetch has
               // resulted in new pending replies, the `hasPendingReplies`
               // flag will switch the loading state to 'more-available'
-              if (status === 'finished') {
-                onChangeLoadingState('idle');
+              if (status === "finished") {
+                onChangeLoadingState("idle");
               } else {
                 // Keep background fetch going if `isLongRunning` is true
                 scheduleRefresh(refresh, iteration + 1);
@@ -160,7 +157,7 @@ function useCheckForRemoteReplies({
             })
             .catch(() => {
               // Show an error if the fetch failed
-              onChangeLoadingState('error');
+              onChangeLoadingState("error");
             });
         });
       }, refresh.retry * 1000);
@@ -169,7 +166,7 @@ function useCheckForRemoteReplies({
     // Initialise a refresh
     if (refreshHeader && isEnabled) {
       scheduleRefresh(refreshHeader, 1);
-      onChangeLoadingState('loading');
+      onChangeLoadingState("loading");
     }
 
     return () => {
@@ -206,16 +203,14 @@ export const RefreshController: React.FC<{
     (state) => !!state.contexts.pendingReplies[statusId]?.length,
   );
   const [partialLoadingState, setLoadingState] = useState<LoadingState>(
-    refreshHeader ? 'loading' : 'idle',
+    refreshHeader ? "loading" : "idle",
   );
-  const loadingState = hasPendingReplies
-    ? 'more-available'
-    : partialLoadingState;
+  const loadingState = hasPendingReplies ? "more-available" : partialLoadingState;
 
   const [wasDismissed, setWasDismissed] = useState(false);
   const dismissPrompt = useCallback(() => {
     setWasDismissed(true);
-    setLoadingState('idle');
+    setLoadingState("idle");
     dispatch(clearPendingReplies({ statusId }));
   }, [dispatch, statusId]);
 
@@ -235,7 +230,7 @@ export const RefreshController: React.FC<{
   const isDocumentVisible = useIsDocumentVisible({
     onChange: (isVisible) => {
       // Auto-fetch new replies when the page is refocused
-      if (isVisible && partialLoadingState !== 'loading' && !wasDismissed) {
+      if (isVisible && partialLoadingState !== "loading" && !wasDismissed) {
         debouncedFetchContext();
       }
     },
@@ -251,7 +246,7 @@ export const RefreshController: React.FC<{
 
   // Only auto-fetch new replies if there's no ongoing remote replies check
   const shouldAutoFetchReplies =
-    isDocumentVisible && partialLoadingState !== 'loading' && !wasDismissed;
+    isDocumentVisible && partialLoadingState !== "loading" && !wasDismissed;
 
   const autoFetchInterval = useMemo(
     () =>
@@ -268,16 +263,16 @@ export const RefreshController: React.FC<{
 
   useEffect(() => {
     // Hide success message after a short delay
-    if (loadingState === 'success') {
+    if (loadingState === "success") {
       const timeoutId = setTimeout(() => {
-        setLoadingState('idle');
+        setLoadingState("idle");
       }, 2500);
 
       return () => {
         clearTimeout(timeoutId);
       };
     }
-    return () => '';
+    return () => "";
   }, [loadingState]);
 
   useEffect(() => {
@@ -289,15 +284,15 @@ export const RefreshController: React.FC<{
 
   const showPending = useCallback(() => {
     dispatch(showPendingReplies({ statusId }));
-    setLoadingState('success');
+    setLoadingState("success");
   }, [dispatch, statusId]);
 
-  if (loadingState === 'loading') {
+  if (loadingState === "loading") {
     return (
       <div
-        className='load-more load-more--large'
+        className="load-more load-more--large"
         aria-busy
-        aria-live='polite'
+        aria-live="polite"
         aria-label={intl.formatMessage(messages.loadingInitial)}
       >
         <LoadingIndicator />
@@ -306,29 +301,29 @@ export const RefreshController: React.FC<{
   }
 
   return (
-    <div className='column__alert' role='status' aria-live='polite'>
+    <div className="column__alert" role="status" aria-live="polite">
       <AnimatedAlert
-        isActive={loadingState === 'more-available'}
+        isActive={loadingState === "more-available"}
         message={intl.formatMessage(messages.moreFound)}
         action={intl.formatMessage(messages.show)}
         onActionClick={showPending}
         onDismiss={dismissPrompt}
-        animateFrom='below'
+        animateFrom="below"
       />
       <AnimatedAlert
         withEntryDelay
-        isActive={loadingState === 'error'}
+        isActive={loadingState === "error"}
         message={intl.formatMessage(messages.error)}
         action={intl.formatMessage(messages.retry)}
         onActionClick={showPending}
         onDismiss={dismissPrompt}
-        animateFrom='below'
+        animateFrom="below"
       />
       <AnimatedAlert
         withEntryDelay
-        isActive={loadingState === 'success'}
+        isActive={loadingState === "success"}
         message={intl.formatMessage(messages.success)}
-        animateFrom='below'
+        animateFrom="below"
       />
     </div>
   );

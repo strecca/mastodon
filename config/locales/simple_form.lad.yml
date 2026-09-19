@@ -6,7 +6,7 @@ lad:
         display_name: Tu nombre para amostrar.
         fields: Tu deskripsyon, pronombres, edad, todo lo ke keras.
         indexable: Tus publikasyones publikas pueden apareser en rezultados de bushkeda en Mastodon. Personas ke enteraktuaron kon tus publikasyones syempre pueden bushkarlas inkluzo si trokes esta preferensya.
-        note: 'Puedes @enmentar a otra djente o #etiketas.'
+        note: "Puedes @enmentar a otra djente o #etiketas."
         show_collections: Otra djente podra ver tus segidos i suivantes. Personas a las kualas siges siempre podran ver que las estas sigiendo.
         unlocked: Djente va poder segirte sin solisitar tu achetasyon. Deseleksyona si keres revizar solisitasyones de segimyento i dechidir si keres achetar o refuzar a muevos suivantes.
       account_alias:
@@ -65,7 +65,7 @@ lad:
         domain: Este puede ser el nombre de domeno ke aparese en el adreso de posta elektronika o el rejistro MX ke utiliza. Se komprovaran al registrarse.
         with_dns_records: Se ara un intento de rezolver los rejistros DNS del domeno dado i los rizultados seran tamyen puestos en lista preta
       featured_tag:
-        name: 'Aki estan algunas de las etiketas ke mas tienes utilizado resientemente:'
+        name: "Aki estan algunas de las etiketas ke mas tienes utilizado resientemente:"
       filters:
         actions:
           hide: Eskonde kompletamente el kontenido filtrado komo si no existiera
@@ -108,7 +108,7 @@ lad:
         hint: Opsyonal. Adjusta mas detalyos sovre la regla
         text: Deskrive una norma o rekerensya para los utilizadores de este sirvidor. Aprova fazerla kurta i kolay
       sessions:
-        otp: 'Introduse el kodiche de autentifikasyon de dos pasos djenerado por tu aplikasyon de telefon o uza uno de tus kodiches de recuperasyon:'
+        otp: "Introduse el kodiche de autentifikasyon de dos pasos djenerado por tu aplikasyon de telefon o uza uno de tus kodiches de recuperasyon:"
         webauthn: Si es una yave USB, asigurete de insertarla y, si es necesario, pulsala.
       settings:
         indexable: Tu pajina de profil puede apareser en rezultados de bushkeda en Google, Bing i otros.
@@ -324,7 +324,7 @@ lad:
         events: Evenimientos kapasitados
         template: Modelo de kontenido
         url: URL de Endpoint
-    'no': 'No'
+    "no": "No"
     not_recommended: No rekomendado
     overridden: Sovreskrive
     recommended: Rekomendado
@@ -334,4 +334,4 @@ lad:
     title:
       sessions:
         webauthn: Uza una de tus yaves de sigurita para konektarte
-    'yes': Si
+    "yes": Si

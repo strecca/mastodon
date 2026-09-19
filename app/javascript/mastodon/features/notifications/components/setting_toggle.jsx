@@ -1,12 +1,11 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import ImmutablePropTypes from "react-immutable-proptypes";
 
-import { Toggle } from '@/mastodon/components/form_fields/toggle_field';
+import { Toggle } from "@/mastodon/components/form_fields/toggle_field";
 
 export default class SettingToggle extends PureComponent {
-
   static propTypes = {
     prefix: PropTypes.string,
     settings: ImmutablePropTypes.map.isRequired,
@@ -21,16 +20,24 @@ export default class SettingToggle extends PureComponent {
     this.props.onChange(this.props.settingPath, target.checked);
   };
 
-  render () {
+  render() {
     const { prefix, settings, settingPath, label, defaultValue, disabled } = this.props;
-    const id = ['setting-toggle', prefix, ...settingPath].filter(Boolean).join('-');
+    const id = ["setting-toggle", prefix, ...settingPath].filter(Boolean).join("-");
 
     return (
-      <div className='setting-toggle'>
-        <Toggle disabled={disabled} id={id} checked={settings.getIn(settingPath, defaultValue)} onChange={this.onChange} onKeyDown={this.onKeyDown} size={16} />
-        <label htmlFor={id} className='setting-toggle__label'>{label}</label>
+      <div className="setting-toggle">
+        <Toggle
+          disabled={disabled}
+          id={id}
+          checked={settings.getIn(settingPath, defaultValue)}
+          onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
+          size={16}
+        />
+        <label htmlFor={id} className="setting-toggle__label">
+          {label}
+        </label>
       </div>
     );
   }
-
 }

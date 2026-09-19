@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 .emoji-mart {
   font-size: 13px;
@@ -42,11 +42,7 @@
   color: var(--color-text-secondary);
 
   &:hover {
-    color: color-mix(
-      in oklab,
-      var(--color-text-primary),
-      var(--color-text-secondary)
-    );
+    color: color-mix(in oklab, var(--color-text-primary), var(--color-text-secondary));
   }
 }
 
@@ -163,7 +159,7 @@
 
   &:hover::before {
     z-index: -1;
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     inset-inline-start: 0;

@@ -475,10 +475,10 @@ ja:
       import:
         description_html: ドメインブロックのリストをインポートしようとしています。このリストを自分で作成していない場合は、慎重に確認してください。
         existing_relationships_warning: 既存のフォロー関係
-        private_comment_description_html: 'ブロックのインポート元を判別できるようにするため、ブロックは次のプライベートコメントを追加してインポートされます: <q>%{comment}</q>'
+        private_comment_description_html: "ブロックのインポート元を判別できるようにするため、ブロックは次のプライベートコメントを追加してインポートされます: <q>%{comment}</q>"
         private_comment_template: "%{source} から %{date} にインポートしました"
         title: ドメインブロックをインポート
-      invalid_domain_block: 'エラーが発生したため、ブロックできなかったドメインがあります: %{error}'
+      invalid_domain_block: "エラーが発生したため、ブロックできなかったドメインがあります: %{error}"
       new:
         title: ドメインブロックをインポート
       no_file: ファイルが選択されていません
@@ -607,12 +607,12 @@ ja:
       created_msg: IPルールを追加しました
       delete: 削除
       expires_in:
-        '1209600': 2週間
-        '15778476': 半年
-        '2629746': 1ヶ月
-        '31556952': 1年
-        '86400': 1日
-        '94670856': 3年
+        "1209600": 2週間
+        "15778476": 半年
+        "2629746": 1ヶ月
+        "31556952": 1年
+        "86400": 1日
+        "94670856": 3年
       new:
         title: 新規IPルール
       no_ip_block_selected: 何も選択されていないためIPルールを変更しませんでした
@@ -686,11 +686,11 @@ ja:
         placeholder: どのような措置が取られたか、または関連する更新を記述してください…
         title: メモ
       notes_description_html: 他のモデレーターと将来の自分にメモを残してください
-      processed_msg: '通報 #%{id} が正常に処理されました'
-      quick_actions_description_html: 'クイックアクションを実行するかスクロールして報告された通報を確認してください:'
+      processed_msg: "通報 #%{id} が正常に処理されました"
+      quick_actions_description_html: "クイックアクションを実行するかスクロールして報告された通報を確認してください:"
       remote_user_placeholder: "%{instance}からのリモートユーザー"
       reopen: 未解決に戻す
-      report: '通報 #%{id}'
+      report: "通報 #%{id}"
       reported_account: 報告対象アカウント
       reported_by: 報告者
       reported_with_application: 報告に使用されたアプリ
@@ -710,7 +710,7 @@ ja:
           mark_as_sensitive_html: 当該の投稿に含まれるメディアを閲覧注意にします
           silence_html: "<strong>@%{acct}</strong>さんのプロフィールとコンテンツの表示範囲をフォロー中の人や意図的にプロフィールにアクセスした人のみに制限することで、アカウントを発見されにくくします"
           suspend_html: "<strong>@%{acct}</strong>さんのアカウントが凍結され、プロフィールとコンテンツへのアクセス、および投稿ができなくなります"
-        close_report: '通報 #%{id} を解決済みにします'
+        close_report: "通報 #%{id} を解決済みにします"
         close_reports_html: "<strong>@%{acct}</strong>さんに対する<strong>すべての</strong>通報を解決済みにします"
         delete_data_html: 停止が解除されないまま30日経過すると、<strong>@%{acct}</strong>さんのプロフィールとコンテンツは削除されます
         preview_preamble_html: "<strong>@%{acct}</strong>さんに次の内容の警告を通知します:"
@@ -720,7 +720,7 @@ ja:
       target_origin: 報告されたアカウントの起源
       title: 通報
       unassign: 担当を外す
-      unknown_action_msg: '不明なアクションです: %{action}'
+      unknown_action_msg: "不明なアクションです: %{action}"
       unresolved: 未解決
       updated_at: 更新日時
       view_profile: プロフィールを表示
@@ -876,7 +876,7 @@ ja:
       back_to_account: アカウントページに戻る
       back_to_report: 通報ページに戻る
       batch:
-        add_to_report: 'レポート #%{id} に追加'
+        add_to_report: "レポート #%{id} に追加"
         remove_from_report: 通報から削除
         report: 通報
       contents: 投稿内容
@@ -921,9 +921,9 @@ ja:
       elasticsearch_analysis_index_mismatch:
         message_html: Elasticsearch インデックスアナライザの設定が古くなっています。 <code>tootctl search deploy --only-mapping --only=%{value}</code>を実行してください
       elasticsearch_health_red:
-        message_html: 'Elasticsearchクラスターに異常があります(status: red)。検索機能が利用できなくなっています'
+        message_html: "Elasticsearchクラスターに異常があります(status: red)。検索機能が利用できなくなっています"
       elasticsearch_health_yellow:
-        message_html: 'Elasticsearchクラスターに異常があります(status: yellow)。必要に応じて対策を実施してください'
+        message_html: "Elasticsearchクラスターに異常があります(status: yellow)。必要に応じて対策を実施してください"
       elasticsearch_index_mismatch:
         message_html: Elasticsearchのインデックスのマッピング定義が古くなっています。<code>tootctl search deploy --only=%{value}</code> を実行してインデックスを更新してください
       elasticsearch_preset:
@@ -937,7 +937,7 @@ ja:
       elasticsearch_running_check:
         message_html: Elasticsearchに接続できませんでした。Elasticsearchが実行されていることを確認するか、全文検索を無効にしてください。
       elasticsearch_version_check:
-        message_html: '互換性のない Elasticsearch バージョン: %{value}'
+        message_html: "互換性のない Elasticsearch バージョン: %{value}"
         version_comparison: Elasticsearch %{running_version}が実行されていますが、%{required_version}が必要です
       rules_check:
         action: サーバーのルールを管理
@@ -1073,7 +1073,7 @@ ja:
         peaked_on_and_decaying: "%{date}以降、しばらく使われていません"
         title: トレンドタグ
         trendable: トレンドに表示する
-        trending_rank: '人気: %{rank}位'
+        trending_rank: "人気: %{rank}位"
         usable: 使用を許可
         usage_comparison: 今日は%{today}回、昨日は%{yesterday}回使用されました。
         used_by_over_week:
@@ -1180,7 +1180,7 @@ ja:
     notification_preferences: メール設定の変更
     salutation: "%{name}さん"
     unsubscribe: 購読解除
-    view: 'リンク:'
+    view: "リンク:"
     view_profile: プロフィールを表示
     view_status: 投稿を表示
   applications:
@@ -1240,7 +1240,7 @@ ja:
     rules:
       accept: 同意する
       back: 戻る
-      invited_by: '以下のユーザーから %{domain} への招待を受けました:'
+      invited_by: "以下のユーザーから %{domain} への招待を受けました:"
       preamble: これらは %{domain} モデレータによって設定され、実施されます。
       preamble_invited: 次に進む前に、 %{domain} のモデレーターが定めたルールを確認してください。
       title: いくつかのルールがあります。
@@ -1320,7 +1320,7 @@ ja:
     proceed: アカウントを削除する
     success_msg: アカウントは正常に削除されました
     warning:
-      before: '続行する前に、次の点を再度確認してください:'
+      before: "続行する前に、次の点を再度確認してください:"
       caches: 他のサーバーにコンテンツのキャッシュがずっと残る場合があります
       data_removal: あなたの投稿やその他のデータはこのサーバーから完全に削除されます
       email_change_html: アカウントを削除しなくても<a href="%{path}">メールアドレスを変更</a>できます
@@ -1346,7 +1346,7 @@ ja:
       description_html: これらは、%{instance}のスタッフがあなたのアカウントに対して行った措置や、あなたに送られた警告です。
       recipient: 送信元
       reject_appeal: 異議申立を却下
-      status: '投稿 #%{id}'
+      status: "投稿 #%{id}"
       status_removed: 既に削除されています
       title: "%{date}に%{action}"
       title_actions:
@@ -1367,19 +1367,19 @@ ja:
     native: ネイティブ
     twemoji: Twemoji
   errors:
-    '400': 送信されたリクエストは無効であるか、または不正なフォーマットです。
-    '403': このページを表示する権限がありません。
-    '404': お探しのページは見つかりませんでした。
-    '406': このページは要求された形式では利用できません。
-    '410': お探しのページはもう存在しません。
-    '422':
+    "400": 送信されたリクエストは無効であるか、または不正なフォーマットです。
+    "403": このページを表示する権限がありません。
+    "404": お探しのページは見つかりませんでした。
+    "406": このページは要求された形式では利用できません。
+    "410": お探しのページはもう存在しません。
+    "422":
       content: セキュリティ認証に失敗しました。Cookieをブロックしていませんか？
       title: セキュリティ認証に失敗
-    '429': リクエストの制限に達しました
-    '500':
+    "429": リクエストの制限に達しました
+    "500":
       content: もうしわけありませんが、なにかが間違っています。
       title: このページは正しくありません
-    '503': 一時的なサーバー障害のため利用することができません。
+    "503": 一時的なサーバー障害のため利用することができません。
     noscript_html: Mastodonのウェブアプリケーションを利用する場合はJavaScriptを有効にしてください。またはあなたのプラットフォーム向けの<a href="%{apps_path}">Mastodonネイティブアプリ</a>を探すことができます。
   existing_username_validator:
     not_found: そのようなユーザー名はローカルに見つかりませんでした
@@ -1465,7 +1465,7 @@ ja:
     errors:
       empty: CSVファイルの内容がありません
       incompatible_type: 選択したインポート項目とファイルの内容が異なります
-      invalid_csv_file: '無効なCSVファイルです。エラー: %{error}'
+      invalid_csv_file: "無効なCSVファイルです。エラー: %{error}"
       over_rows_processing_limit: "%{count}行以上"
       too_large: ファイルが大きすぎます
     failures: 失敗
@@ -1535,16 +1535,16 @@ ja:
     delete: 無効化
     expired: 期限切れ
     expires_in:
-      '1800': 30分
-      '21600': 6時間
-      '3600': 1時間
-      '43200': 12時間
-      '604800': 1週間
-      '86400': 1日
+      "1800": 30分
+      "21600": 6時間
+      "3600": 1時間
+      "43200": 12時間
+      "604800": 1週間
+      "86400": 1日
     expires_in_prompt: 無期限
     generate: 招待リンクを作成
     invalid: この招待は無効です
-    invited_by: '次の人に招待されました:'
+    invited_by: "次の人に招待されました:"
     max_uses:
       other: "%{count}"
     max_uses_prompt: 無制限
@@ -1600,7 +1600,7 @@ ja:
     set_redirect: 引っ越しを設定
     warning:
       backreference_required: まずは引っ越し先のアカウントでこのアカウントに対しエイリアスを作成する必要があります
-      before: '続行する前に、次の点を再度確認してください:'
+      before: "続行する前に、次の点を再度確認してください:"
       cooldown: 引っ越し後はクールダウン期間があります。その間再度引っ越すことはできません
       disabled_account: 引っ越した後はデータのエクスポートと再有効化を除きほとんどの機能が利用できなくなります
       followers: すべてのフォロワーを現在のアカウントから新しいアカウントに引き継ぎます
@@ -1651,7 +1651,7 @@ ja:
   notifications:
     administration_emails: 管理にかかわるメール通知
     email_events: メールによる通知
-    email_events_hint: '受信する通知を選択:'
+    email_events_hint: "受信する通知を選択:"
   number:
     human:
       decimal_units:
@@ -1667,7 +1667,7 @@ ja:
     description_html: "<strong>二要素認証</strong>を有効にすると、ログイン時に認証アプリからコードを入力する必要があります。"
     enable: 有効化
     instructions_html: "<strong>Google Authenticatorか、もしくはほかのTOTPアプリでこのQRコードをスキャンしてください。</strong>これ以降、ログインするときはそのアプリで生成されるコードが必要になります。"
-    manual_instructions: 'QRコードがスキャンできず、手動での登録を希望の場合はこのシークレットコードを利用してください。:'
+    manual_instructions: "QRコードがスキャンできず、手動での登録を希望の場合はこのシークレットコードを利用してください。:"
     setup: セットアップ
     wrong_code: コードが間違っています。サーバーとデバイスの時計にずれがあるかもしれません。
   pagination:
@@ -1740,7 +1740,7 @@ ja:
     errors:
       invalid_rules: 有効なルールを参照していません
   rss:
-    content_warning: '閲覧注意:'
+    content_warning: "閲覧注意:"
     descriptions:
       account: "@%{acct}からの公開投稿"
       tag: "#%{hashtag}が付けられた公開投稿"
@@ -1836,16 +1836,16 @@ ja:
     attached:
       audio:
         other: "%{count}本のオーディオ"
-      description: '添付: %{attached}'
+      description: "添付: %{attached}"
       image:
         other: "%{count}枚の画像"
       video:
         other: "%{count}本の動画"
     boosted_from_html: "%{acct_link}からブースト"
-    content_warning: '閲覧注意: %{warning}'
+    content_warning: "閲覧注意: %{warning}"
     default_language: UIの表示言語
     disallowed_hashtags:
-      other: '許可されていないハッシュタグが含まれています: %{tags}'
+      other: "許可されていないハッシュタグが含まれています: %{tags}"
     edited_at_html: "%{date} 編集済み"
     errors:
       in_reply_not_found: あなたが返信しようとしている投稿は存在しないようです。
@@ -1889,14 +1889,14 @@ ja:
     keep_self_fav: お気に入りに登録した投稿を保持
     keep_self_fav_hint: 自分自身でお気に入りに登録した投稿を削除せずに残します
     min_age:
-      '1209600': 2週間
-      '15778476': 半年
-      '2629746': 1ヶ月
-      '31556952': 1年
-      '5259492': 2ヶ月
-      '604800': 1週間
-      '63113904': 2年
-      '7889238': 3ヶ月
+      "1209600": 2週間
+      "15778476": 半年
+      "2629746": 1ヶ月
+      "31556952": 1年
+      "5259492": 2ヶ月
+      "604800": 1週間
+      "63113904": 2年
+      "7889238": 3ヶ月
     min_age_label: 投稿を保持する期間
     min_favs: お気に入りの基準値
     min_favs_hint: この数以上、お気に入り登録された投稿を削除せずに残します。空白にしておくと、お気に入りの数に関わらず投稿を削除します。
@@ -1963,14 +1963,14 @@ ja:
       subject: アーカイブの準備ができました
       title: アーカイブの取り出し
     failed_2fa:
-      details: '試行されたログインの詳細は以下のとおりです:'
+      details: "試行されたログインの詳細は以下のとおりです:"
       explanation: アカウントへのログインが試行されましたが、二要素認証で不正な回答が送信されました。
       further_actions_html: このログインに心当たりがない場合は、ただちに%{action}してください。
       subject: 二要素認証に失敗しました
       title: 二要素認証に失敗した記録があります
     suspicious_sign_in:
       change_password: パスワードを変更
-      details: 'ログインの詳細は以下のとおりです:'
+      details: "ログインの詳細は以下のとおりです:"
       explanation: 新しいIPアドレスからあなたのアカウントへのサインインが検出されました。
       further_actions_html: あなたがログインしていない場合は、すぐに%{action}し、アカウントを安全に保つために二要素認証を有効にすることをお勧めします。
       subject: 新しいIPアドレスからのアクセスがありました
@@ -1997,8 +1997,8 @@ ja:
         sensitive: 今後、アップロードされたすべてのメディアファイルは閲覧注意としてマークされ、クリック解除式の警告で覆われるようになります。
         silence: アカウントが制限されています。このサーバーでは既にフォローしている人だけがあなたの投稿を見ることができます。 様々な発見機能から除外されるかもしれません。他の人があなたを手動でフォローすることは可能です。
         suspend: アカウントは使用できなくなり、プロフィールなどのデータにもアクセスできなくなります。約30日後にデータが完全に削除されるまでは、ログインしてデータのバックアップを要求することができますが、アカウントの停止回避を防ぐために一部の基本データを保持します。
-      reason: '理由:'
-      statuses: '投稿:'
+      reason: "理由:"
+      statuses: "投稿:"
       subject:
         delete_statuses: "%{acct}さんの投稿が削除されました"
         disable: あなたのアカウント %{acct}は凍結されました
@@ -2061,7 +2061,7 @@ ja:
     otp_lost_help_html: どちらも使用できない場合、%{email}に連絡を取ると解決できるかもしれません
     rate_limited: 認証に失敗した回数が多すぎます。時間をおいてからログインしてください。
     seamless_external_login: あなたは外部サービスを介してログインしているため、パスワードとメールアドレスの設定は利用できません。
-    signed_in_as: '下記でログイン中:'
+    signed_in_as: "下記でログイン中:"
   verification:
     extra_instructions_html: <strong>ワンポイント:</strong> webサイト上のプロフィールへのリンクは表示上見えなくてもかまいません。重要な部分は <code>rel="me"</code> で、これはユーザーが自由にリンクを作成可能なサイトを悪用してなりすまされるのを防ぐための情報です。<code>a</code> タグを配置する代わりに <code>link</code> タグをHTMLヘッダーに挿入することでも認証が可能です。ただし、HTMLにはJavaScriptを使わなくてもアクセスできるようにしてください。
     here_is_how: 認証方法

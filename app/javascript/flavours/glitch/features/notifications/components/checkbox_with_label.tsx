@@ -1,7 +1,7 @@
-import type { PropsWithChildren } from 'react';
-import { useCallback } from 'react';
+import type { PropsWithChildren } from "react";
+import { useCallback } from "react";
 
-import { Toggle } from '@/flavours/glitch/components/form_fields/toggle_field';
+import { Toggle } from "@/flavours/glitch/components/form_fields/toggle_field";
 
 interface Props {
   checked: boolean;
@@ -23,16 +23,12 @@ export const CheckboxWithLabel: React.FC<PropsWithChildren<Props>> = ({
   );
 
   return (
-    <label className='app-form__toggle'>
-      <div className='app-form__toggle__label'>{children}</div>
+    <label className="app-form__toggle">
+      <div className="app-form__toggle__label">{children}</div>
 
-      <div className='app-form__toggle__toggle'>
+      <div className="app-form__toggle__toggle">
         <div>
-          <Toggle
-            checked={checked}
-            onChange={handleChange}
-            disabled={disabled}
-          />
+          <Toggle checked={checked} onChange={handleChange} disabled={disabled} />
         </div>
       </div>
     </label>

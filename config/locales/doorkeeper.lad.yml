@@ -52,7 +52,7 @@ lad:
         callback_urls: URLs de callback
         scopes: Ambitos
         secret: Mushteri sekreto
-        title: 'Aplikasyon: %{name}'
+        title: "Aplikasyon: %{name}"
     authorizations:
       buttons:
         authorize: Autoriza
@@ -85,7 +85,7 @@ lad:
         invalid_grant: La konsesyon de autorizasyon ofresida es invalida, kadukada, revokada, no koensida kon el URI de readreso utilizado en la solisitud de autorizasyon, o fue emitida para otro mushteri.
         invalid_redirect_uri: El URI de readreso inkluydo no es valido.
         invalid_request:
-          missing_param: 'Parametro rekerido no topado: %{value}.'
+          missing_param: "Parametro rekerido no topado: %{value}."
           request_not_authorized: Solisitud deve ser autorizada. Parametro rekerido para autorizar la solisitud no topado o no valido.
           unknown: La solisitud no tiene un parametro rekerido, inkluye una valuta de parametro no suportada o es yerrado de otra forma.
         invalid_resource_owner: Las kredensyalas de patron del rekurso no son validas o patron del rekurso no topado

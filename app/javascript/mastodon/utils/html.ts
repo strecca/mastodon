@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import htmlConfig from '../../config/html-tags.json';
+import htmlConfig from "../../config/html-tags.json";
 
 // NB: This function can still return unsafe HTML
 export const unescapeHTML = (html: string) => {
-  const wrapper = document.createElement('div');
+  const wrapper = document.createElement("div");
   wrapper.innerHTML = html
-    .replace(/<br\s*\/?>/g, '\n')
-    .replace(/<\/p><p>/g, '\n\n')
-    .replace(/<[^>]*>/g, '');
+    .replace(/<br\s*\/?>/g, "\n")
+    .replace(/<\/p><p>/g, "\n\n")
+    .replace(/<[^>]*>/g, "");
   return wrapper.textContent;
 };
 
@@ -32,18 +32,14 @@ interface QueueItem {
   depth: number;
 }
 
-export type OnElementHandler<
-  Arg extends Record<string, unknown> = Record<string, unknown>,
-> = (
+export type OnElementHandler<Arg extends Record<string, unknown> = Record<string, unknown>> = (
   element: HTMLElement,
   props: Record<string, unknown>,
   children: React.ReactNode[],
   extra: Arg,
 ) => React.ReactNode;
 
-export type OnAttributeHandler<
-  Arg extends Record<string, unknown> = Record<string, unknown>,
-> = (
+export type OnAttributeHandler<Arg extends Record<string, unknown> = Record<string, unknown>> = (
   name: string,
   value: string,
   tagName: string,
@@ -67,13 +63,11 @@ export function htmlStringToComponents<Arg extends Record<string, unknown>>(
   htmlString: string,
   options: HTMLToStringOptions<Arg> = {},
 ) {
-  const wrapper = document.createElement('template');
+  const wrapper = document.createElement("template");
   wrapper.innerHTML = htmlString;
 
   const rootChildren: React.ReactNode[] = [];
-  const queue: QueueItem[] = [
-    { node: wrapper.content, parent: rootChildren, depth: 0 },
-  ];
+  const queue: QueueItem[] = [{ node: wrapper.content, parent: rootChildren, depth: 0 }];
 
   const {
     maxDepth = 10,
@@ -121,7 +115,7 @@ export function htmlStringToComponents<Arg extends Record<string, unknown>>(
       // Process elements with attributes and then their children.
       case Node.ELEMENT_NODE: {
         if (!(node instanceof HTMLElement)) {
-          console.warn('Expected HTMLElement, got', node);
+          console.warn("Expected HTMLElement, got", node);
           continue;
         }
 
@@ -166,18 +160,18 @@ export function htmlStringToComponents<Arg extends Record<string, unknown>>(
           }
 
           // Rename if needed.
-          if (typeof tagAttr === 'string') {
+          if (typeof tagAttr === "string") {
             name = tagAttr;
-          } else if (typeof globalAttr === 'string') {
+          } else if (typeof globalAttr === "string") {
             name = globalAttr;
           }
 
           let value: string | boolean | number = attr.value;
 
           // Handle boolean attributes.
-          if (value === 'true') {
+          if (value === "true") {
             value = true;
-          } else if (value === 'false') {
+          } else if (value === "false") {
             value = false;
           }
 

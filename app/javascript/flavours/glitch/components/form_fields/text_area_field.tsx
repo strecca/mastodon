@@ -1,17 +1,17 @@
-import type { ComponentPropsWithoutRef } from 'react';
-import { forwardRef, useCallback } from 'react';
+import type { ComponentPropsWithoutRef } from "react";
+import { forwardRef, useCallback } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { TextareaAutosizeProps } from 'react-textarea-autosize';
-import TextAreaAutosize from 'react-textarea-autosize';
+import type { TextareaAutosizeProps } from "react-textarea-autosize";
+import TextAreaAutosize from "react-textarea-autosize";
 
-import { FormFieldWrapper } from './form_field_wrapper';
-import type { CommonFieldWrapperProps } from './form_field_wrapper';
-import classes from './text_input.module.scss';
+import { FormFieldWrapper } from "./form_field_wrapper";
+import type { CommonFieldWrapperProps } from "./form_field_wrapper";
+import classes from "./text_input.module.scss";
 
 export type TextAreaProps =
-  | ({ autoSize?: false } & ComponentPropsWithoutRef<'textarea'>)
+  | ({ autoSize?: false } & ComponentPropsWithoutRef<"textarea">)
   | ({ autoSize: true } & TextareaAutosizeProps);
 
 /**
@@ -24,32 +24,27 @@ export type TextAreaProps =
 export const TextAreaField = forwardRef<
   HTMLTextAreaElement,
   TextAreaProps & CommonFieldWrapperProps
->(
-  (
-    { id, label, hint, required, status, wrapperClassName, ...otherProps },
-    ref,
-  ) => (
-    <FormFieldWrapper
-      label={label}
-      hint={hint}
-      required={required}
-      status={status}
-      inputId={id}
-      className={wrapperClassName}
-    >
-      {(inputProps) => <TextArea {...otherProps} {...inputProps} ref={ref} />}
-    </FormFieldWrapper>
-  ),
-);
+>(({ id, label, hint, required, status, wrapperClassName, ...otherProps }, ref) => (
+  <FormFieldWrapper
+    label={label}
+    hint={hint}
+    required={required}
+    status={status}
+    inputId={id}
+    className={wrapperClassName}
+  >
+    {(inputProps) => <TextArea {...otherProps} {...inputProps} ref={ref} />}
+  </FormFieldWrapper>
+));
 
-TextAreaField.displayName = 'TextAreaField';
+TextAreaField.displayName = "TextAreaField";
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ className, onKeyDown, autoSize, ...otherProps }, ref) => {
     const handleSubmitHotkey = useCallback(
       (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         onKeyDown?.(e);
-        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
           const targetForm = e.currentTarget.form;
           targetForm?.requestSubmit();
         }
@@ -79,4 +74,4 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   },
 );
 
-TextArea.displayName = 'TextArea';
+TextArea.displayName = "TextArea";

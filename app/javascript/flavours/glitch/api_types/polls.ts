@@ -1,4 +1,4 @@
-import type { ApiCustomEmojiJSON } from './custom_emoji';
+import type { ApiCustomEmojiJSON } from "./custom_emoji";
 
 // See app/serializers/rest/poll_serializer.rb
 

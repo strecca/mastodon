@@ -1,15 +1,15 @@
-import type { Locale } from 'emojibase';
-import { SUPPORTED_LOCALES } from 'emojibase';
+import type { Locale } from "emojibase";
+import { SUPPORTED_LOCALES } from "emojibase";
 
-import { EMOJI_DB_NAME_SHORTCODES, EMOJI_TYPE_CUSTOM } from './constants';
-import type { CacheKey, LocaleOrCustom, LocaleWithShortcodes } from './types';
+import { EMOJI_DB_NAME_SHORTCODES, EMOJI_TYPE_CUSTOM } from "./constants";
+import type { CacheKey, LocaleOrCustom, LocaleWithShortcodes } from "./types";
 
 export function toSupportedLocale(localeBase: string): Locale {
   const locale = localeBase.toLowerCase();
   if (isSupportedLocale(locale)) {
     return locale;
   }
-  return 'en'; // Default to English if unsupported
+  return "en"; // Default to English if unsupported
 }
 
 export function toSupportedLocaleOrCustom(locale: string): LocaleOrCustom {
@@ -33,8 +33,8 @@ export function toValidCacheKey(input: string): CacheKey {
 }
 
 export function localeToSegmenter(locale: Locale): Intl.Segmenter | null {
-  if (typeof Intl.Segmenter === 'function') {
-    return new Intl.Segmenter(locale, { granularity: 'word' });
+  if (typeof Intl.Segmenter === "function") {
+    return new Intl.Segmenter(locale, { granularity: "word" });
   }
   return null;
 }
@@ -44,7 +44,7 @@ function isSupportedLocale(locale: string): locale is Locale {
 }
 
 function isLocaleWithShortcodes(input: string): input is LocaleWithShortcodes {
-  const [baseLocale, shortcodes] = input.split('-');
+  const [baseLocale, shortcodes] = input.split("-");
   return (
     !!baseLocale &&
     !!shortcodes &&

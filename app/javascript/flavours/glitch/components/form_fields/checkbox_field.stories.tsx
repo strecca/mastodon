@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Checkbox, CheckboxField } from './checkbox_field';
-import { Fieldset } from './fieldset';
+import { Checkbox, CheckboxField } from "./checkbox_field";
+import { Fieldset } from "./fieldset";
 
 const meta = {
-  title: 'Components/Form Fields/CheckboxField',
+  title: "Components/Form Fields/CheckboxField",
   component: CheckboxField,
   args: {
-    label: 'Label',
-    hint: 'This is a description of this form field',
+    label: "Label",
+    hint: "This is a description of this form field",
     disabled: false,
   },
   argTypes: {
     size: {
-      control: { type: 'range', min: 10, max: 64, step: 1 },
+      control: { type: "range", min: 10, max: 64, step: 1 },
     },
   },
 } satisfies Meta<typeof CheckboxField>;
@@ -33,13 +33,10 @@ export const WithoutHint: Story = {
 export const InFieldset: Story = {
   render() {
     return (
-      <Fieldset
-        legend='Choose your options'
-        hint='This is a description of this set of options'
-      >
-        <CheckboxField label='Option 1' />
-        <CheckboxField label='Option 2' />
-        <CheckboxField label='Option 3' defaultChecked />
+      <Fieldset legend="Choose your options" hint="This is a description of this set of options">
+        <CheckboxField label="Option 1" />
+        <CheckboxField label="Option 2" />
+        <CheckboxField label="Option 3" defaultChecked />
       </Fieldset>
     );
   },
@@ -49,13 +46,13 @@ export const InFieldsetHorizontal: Story = {
   render() {
     return (
       <Fieldset
-        legend='Choose your options'
-        hint='This is a description of this set of options'
-        layout='horizontal'
+        legend="Choose your options"
+        hint="This is a description of this set of options"
+        layout="horizontal"
       >
-        <CheckboxField label='Option 1' />
-        <CheckboxField label='Option 2' />
-        <CheckboxField label='Option 3' defaultChecked />
+        <CheckboxField label="Option 1" />
+        <CheckboxField label="Option 2" />
+        <CheckboxField label="Option 3" defaultChecked />
       </Fieldset>
     );
   },
@@ -76,7 +73,7 @@ export const Optional: Story = {
 export const WithError: Story = {
   args: {
     required: false,
-    status: 'error',
+    status: "error",
   },
 };
 

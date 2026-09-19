@@ -1,29 +1,29 @@
-import { useCallback, useId, useState } from 'react';
-import type { FC } from 'react';
+import { useCallback, useId, useState } from "react";
+import type { FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { EmojiTextAreaField } from '@/flavours/glitch/components/form_fields';
-import type { TextAreaProps } from '@/flavours/glitch/components/form_fields/text_area_field';
-import type { BaseConfirmationModalProps } from '@/flavours/glitch/features/ui/components/confirmation_modals';
-import { ConfirmationModal } from '@/flavours/glitch/features/ui/components/confirmation_modals';
-import { patchProfile } from '@/flavours/glitch/reducers/slices/profile_edit';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import { EmojiTextAreaField } from "@/flavours/glitch/components/form_fields";
+import type { TextAreaProps } from "@/flavours/glitch/components/form_fields/text_area_field";
+import type { BaseConfirmationModalProps } from "@/flavours/glitch/features/ui/components/confirmation_modals";
+import { ConfirmationModal } from "@/flavours/glitch/features/ui/components/confirmation_modals";
+import { patchProfile } from "@/flavours/glitch/reducers/slices/profile_edit";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   addTitle: {
-    id: 'account_edit.bio_modal.add_title',
-    defaultMessage: 'Add bio',
+    id: "account_edit.bio_modal.add_title",
+    defaultMessage: "Add bio",
   },
   editTitle: {
-    id: 'account_edit.bio_modal.edit_title',
-    defaultMessage: 'Edit bio',
+    id: "account_edit.bio_modal.edit_title",
+    defaultMessage: "Edit bio",
   },
   save: {
-    id: 'account_edit.save',
-    defaultMessage: 'Save',
+    id: "account_edit.save",
+    defaultMessage: "Save",
   },
 });
 
@@ -31,10 +31,8 @@ export const BioModal: FC<BaseConfirmationModalProps> = ({ onClose }) => {
   const intl = useIntl();
   const titleId = useId();
 
-  const { profile: { bio } = {}, isPending } = useAppSelector(
-    (state) => state.profileEdit,
-  );
-  const [newBio, setNewBio] = useState(bio ?? '');
+  const { profile: { bio } = {}, isPending } = useAppSelector((state) => state.profileEdit);
+  const [newBio, setNewBio] = useState(bio ?? "");
   const maxLength = useAppSelector(
     (state) => state.server.server.item?.configuration.accounts.max_note_length,
   );
@@ -64,7 +62,7 @@ export const BioModal: FC<BaseConfirmationModalProps> = ({ onClose }) => {
       noFocusButton
     >
       <EmojiTextAreaField
-        label=''
+        label=""
         value={newBio}
         onChange={setNewBio}
         aria-labelledby={titleId}

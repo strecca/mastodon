@@ -1,5 +1,5 @@
 ---
-'no':
+"no":
   about:
     about_mastodon_html: Mastodon er et sosialt nettverk laget med <em>fri programvare</em>. Et <em>desentralisert</em> alternativ til kommersielle plattformer. Slik kan det unngå risikoene ved å ha et enkelt selskap som monopoliserer din kommunikasjon. Velg en tjener du stoler på &mdash; uansett hvilken du velger så kan du kommunisere med alle andre. Alle kan kjøre sin egen Mastodon og delta sømløst i det sosiale nettverket.
     contact_missing: Ikke innstilt
@@ -437,10 +437,10 @@
       import:
         description_html: Du er i ferd med å importere en liste med domeneblokkeringer. Se gjennom listen svært nøye, spesielt hvis du ikke har laget denne listen selv.
         existing_relationships_warning: Nåværende følgeforhold
-        private_comment_description_html: 'For å hjelpe deg med å holde oversikt over hvor importerte blokkeringer kommer fra, vil de bli opprettet med følgende private kommentar: <q>%{comment}</q>'
+        private_comment_description_html: "For å hjelpe deg med å holde oversikt over hvor importerte blokkeringer kommer fra, vil de bli opprettet med følgende private kommentar: <q>%{comment}</q>"
         private_comment_template: Importert fra %{source} den %{date}
         title: Importer domeneblokkeringer
-      invalid_domain_block: 'En eller flere domeneblokker ble hoppet over på grunn av følgende feil(er): %{error}'
+      invalid_domain_block: "En eller flere domeneblokker ble hoppet over på grunn av følgende feil(er): %{error}"
       new:
         title: Importer domeneblokkeringer
       no_file: Ingen fil valgt
@@ -534,12 +534,12 @@
       created_msg: La vellykket til en ny IP-regel
       delete: Slett
       expires_in:
-        '1209600': 2 uker
-        '15778476': 6 måneder
-        '2629746': 1 måned
-        '31556952': 1 år
-        '86400': 1 dag
-        '94670856': 3 år
+        "1209600": 2 uker
+        "15778476": 6 måneder
+        "2629746": 1 måned
+        "31556952": 1 år
+        "86400": 1 dag
+        "94670856": 3 år
       new:
         title: Opprett ny IP-regel
       no_ip_block_selected: Ingen IP-regler ble endret da ingen ble valgt
@@ -589,7 +589,7 @@
       category_description_html: Årsaken til at denne kontoen og/eller innholdet er blitt rapportert vil bli henvist i forbindelse med den rapporterte kontoen
       comment:
         none: Ingen
-      comment_description_html: 'For å gi mer informasjon, %{name} skrev:'
+      comment_description_html: "For å gi mer informasjon, %{name} skrev:"
       confirm: Bekreft
       confirm_action: Bekreft moderasjonshandling mot @%{acct}
       created_at: Rapportert
@@ -608,11 +608,11 @@
         placeholder: Beskriv hvilke handlinger som har blitt tatt, eller andre relaterte oppdateringer...
         title: Notater
       notes_description_html: Se og skriv notater til andre moderatorer og deg selv i fremtiden
-      processed_msg: 'Rapport #%{id} er behandlet'
-      quick_actions_description_html: 'Ta en rask handling eller bla ned for å se rapportert innhold:'
+      processed_msg: "Rapport #%{id} er behandlet"
+      quick_actions_description_html: "Ta en rask handling eller bla ned for å se rapportert innhold:"
       remote_user_placeholder: ekstern bruker fra %{instance}
       reopen: Gjenåpne rapporten
-      report: 'Rapporter #%{id}'
+      report: "Rapporter #%{id}"
       reported_account: Rapportert konto
       reported_by: Rapportert av
       resolved: Løst
@@ -622,16 +622,16 @@
       statuses_description_html: Innholdet som tilbys, vil bli nevnt i forbindelse med den rapporterte kontoen
       summary:
         action_preambles:
-          delete_html: 'Du er i ferd med å <strong>fjerne</strong> noe av <strong>@%{acct}</strong> sine innlegg. Dette vil:'
-          mark_as_sensitive_html: 'Du er i ferd med å <strong>markere</strong> noen av <strong>@%{acct}</strong> sine innlegg som <strong>sensitivt</strong>. Dette vil:'
-          silence_html: 'Du er i ferd med å <strong>avgrense</strong> <strong>@%{acct}</strong> sin konto. Dette vil:'
-          suspend_html: 'Du er i ferd med å <strong>stoppe</strong> <strong>@%{acct}</strong> sin konto. Dette vil:'
+          delete_html: "Du er i ferd med å <strong>fjerne</strong> noe av <strong>@%{acct}</strong> sine innlegg. Dette vil:"
+          mark_as_sensitive_html: "Du er i ferd med å <strong>markere</strong> noen av <strong>@%{acct}</strong> sine innlegg som <strong>sensitivt</strong>. Dette vil:"
+          silence_html: "Du er i ferd med å <strong>avgrense</strong> <strong>@%{acct}</strong> sin konto. Dette vil:"
+          suspend_html: "Du er i ferd med å <strong>stoppe</strong> <strong>@%{acct}</strong> sin konto. Dette vil:"
         actions:
           delete_html: Fjerne fornærmede innlegg
           mark_as_sensitive_html: Merk fornærmede innlegg medier som sensitivt
           silence_html: Sterkt begrense <strong>@%{acct}</strong>ved å gjøre deres profil og innhold kun synlig for personer som allerede følger dem, eller manuelt ser etter den
           suspend_html: Suspender <strong>@%{acct}</strong>, og gjøre profilen og innholdet utilgjengelig og umulig å samhandle med
-        close_report: 'Marker rapport #%{id} som løst'
+        close_report: "Marker rapport #%{id} som løst"
         close_reports_html: Merk <strong>alle</strong> rapporter mot <strong>@%{acct}</strong> som løst
         delete_data_html: Slett <strong>@%{acct}</strong> sin profil og innhold 30 dager fra nå med mindre de blir suspendert i mellomtiden
         preview_preamble_html: "<strong>@%{acct}</strong> vil motta en advarsel med følgende innhold:"
@@ -640,7 +640,7 @@
       target_origin: Opprinnelse for innrapportert konto
       title: Rapporter
       unassign: Fjern tilegning
-      unknown_action_msg: 'Ukjent handling: %{action}'
+      unknown_action_msg: "Ukjent handling: %{action}"
       unresolved: Uløst
       updated_at: Oppdatert
       view_profile: Vis profil
@@ -827,7 +827,7 @@
       elasticsearch_running_check:
         message_html: Kunne ikke koble til Elasticsearch. Kontroller at den kjører, eller deaktiver fulltekstsøk
       elasticsearch_version_check:
-        message_html: 'Inkompatibel Elasticsearch-versjon: %{value}'
+        message_html: "Inkompatibel Elasticsearch-versjon: %{value}"
         version_comparison: Elasticsearch %{running_version} kjører mens %{required_version} er påkrevd
       rules_check:
         action: Behandle serverregler
@@ -923,7 +923,7 @@
         peaked_on_and_decaying: Høyeste på %{date}, nå faller
         title: Populære emneknagger
         trendable: Kan vises under populært
-        trending_rank: 'Populært #%{rank}'
+        trending_rank: "Populært #%{rank}"
         usable: Kan brukes
         usage_comparison: Brukt %{today} ganger i dag, sammenlignet med %{yesterday} i går
         used_by_over_week:
@@ -984,7 +984,7 @@
       body: Nye versjoner av Mastodoner har blitt utgitt, du ønsker kanskje å oppdatere!
       subject: Nye versjoner av Mastodon er tilgjengelige for %{instance}!
     new_trends:
-      body: 'Følgende elementer trenger en gjennomgang før de kan vises offentlig:'
+      body: "Følgende elementer trenger en gjennomgang før de kan vises offentlig:"
       new_trending_links:
         title: Populære lenker
       new_trending_statuses:
@@ -1010,7 +1010,7 @@
   application_mailer:
     salutation: "%{name},"
     unsubscribe: Avslutt abonnement
-    view: 'Se:'
+    view: "Se:"
     view_profile: Vis Profil
     view_status: Vis innlegg
   applications:
@@ -1068,7 +1068,7 @@
     rules:
       accept: Godta
       back: Tilbake
-      invited_by: 'Du kan bli med %{domain} takket være invitasjonen du fikk fra:'
+      invited_by: "Du kan bli med %{domain} takket være invitasjonen du fikk fra:"
       preamble: Disse angis og håndheves av %{domain}-moderatorene.
       preamble_invited: Før du fortsetter, vennligst gå gjennom reglene som er satt av moderatorene av %{domain}.
       title: Noen grunnregler.
@@ -1126,7 +1126,7 @@
     proceed: Slett konto
     success_msg: Din konto ble slettet
     warning:
-      before: 'Før du fortsetter, vennligst les disse notisene nøye:'
+      before: "Før du fortsetter, vennligst les disse notisene nøye:"
       caches: Innhold som har blitt mellomlagret av andre tjenere kan kanskje fortsette å eksistere
       data_removal: Dine innlegg og andre data vil bli permanent fjernet
       irreversible: Du vil ikke kunne gjenopprette eller reaktivere kontoen din
@@ -1149,7 +1149,7 @@
       description_html: Dette er tiltakene mot din konto og advarsler som har blitt sent til deg av %{instance}-personalet.
       recipient: Adressert til
       reject_appeal: Avvis anke
-      status: 'Innlegg #%{id}'
+      status: "Innlegg #%{id}"
       status_removed: Innlegg allerede fjernet fra systemet
       title: "%{action} fra %{date}"
       title_actions:
@@ -1166,19 +1166,19 @@
   edit_profile:
     other: Annet
   errors:
-    '400': Forespørselen du sendte inn var ugyldig eller feil.
-    '403': Du har ikke tillatelse til å vise denne siden.
-    '404': Siden du leter etter finnes ikke.
-    '406': Denne siden er ikke tilgjengelig i ønsket format.
-    '410': Siden du leter etter finnes ikke lenger.
-    '422':
+    "400": Forespørselen du sendte inn var ugyldig eller feil.
+    "403": Du har ikke tillatelse til å vise denne siden.
+    "404": Siden du leter etter finnes ikke.
+    "406": Denne siden er ikke tilgjengelig i ønsket format.
+    "410": Siden du leter etter finnes ikke lenger.
+    "422":
       content: Sikkerhetsverifisering feilet. Blokkerer du informasjonskapsler?
       title: Sikkerhetsverifisering feilet
-    '429': Overfyllt
-    '500':
+    "429": Overfyllt
+    "500":
       content: Beklager men noe gikk galt ved vår ende.
       title: Denne siden er ikke korrekt
-    '503': Siden kunne ikke vises på grunn av en midlertidig serverfeil.
+    "503": Siden kunne ikke vises på grunn av en midlertidig serverfeil.
     noscript_html: For å bruke Mastodon webapplikasjon må du aktivere JavaScript. Alternativt kan du forsøke en av de mange <a href="%{apps_path}">integrerte appene</a> for Mastodon til din plattform.
   existing_username_validator:
     not_found: kunne ikke finne en lokal bruker med det brukernavnet
@@ -1271,7 +1271,7 @@
     errors:
       empty: Tom CSV-fil
       incompatible_type: Ikke kompatibel med den valgte importtypen
-      invalid_csv_file: 'Ugyldig CSV-fil. Feil: %{error}'
+      invalid_csv_file: "Ugyldig CSV-fil. Feil: %{error}"
       over_rows_processing_limit: inneholder flere enn %{count} rader
       too_large: Filen er for stor
     failures: Feil
@@ -1315,16 +1315,16 @@
     delete: Deaktiver
     expired: Utløpt
     expires_in:
-      '1800': 30 minutter
-      '21600': 6 timer
-      '3600': 1 time
-      '43200': 12 timer
-      '604800': 1 uke
-      '86400': 1 dag
+      "1800": 30 minutter
+      "21600": 6 timer
+      "3600": 1 time
+      "43200": 12 timer
+      "604800": 1 uke
+      "86400": 1 dag
     expires_in_prompt: Aldri
     generate: Generer
     invalid: Denne invitasjonen er ikke gyldig
-    invited_by: 'Du ble invitert av:'
+    invited_by: "Du ble invitert av:"
     max_uses:
       one: 1 bruk
       other: "%{count} bruk"
@@ -1376,7 +1376,7 @@
     set_redirect: Bestem omdirigering
     warning:
       backreference_required: Den nye kontoen må først settes opp til å henvise tilbake til denne
-      before: 'Før du fortsetter, vennligst les disse notisene nøye:'
+      before: "Før du fortsetter, vennligst les disse notisene nøye:"
       cooldown: Etter flytting er det en nedkjølingsperiode der du ikke vil kunne flytte igjen
       disabled_account: Din nåværende konto vil ikke være fullt brukbar etterpå. Men du vil ha tilgang til dataeksportering såvel som reaktivering.
       followers: Denne handlingen vil flytte alle følgere fra den nåværende kontoen til den nye kontoen
@@ -1387,7 +1387,7 @@
   move_handler:
     carry_blocks_over_text: Denne brukeren flyttet fra %{acct}, som du hadde blokkert.
     carry_mutes_over_text: Denne brukeren flyttet fra %{acct}, som du hadde dempet.
-    copy_account_note_text: 'Denne brukeren flyttet fra %{acct}, her var dine tidligere notater om dem:'
+    copy_account_note_text: "Denne brukeren flyttet fra %{acct}, her var dine tidligere notater om dem:"
   navigation:
     toggle_menu: Vis/Skjul meny
   notification_mailer:
@@ -1397,7 +1397,7 @@
       sign_up:
         subject: "%{name} registrerte seg"
     favourite:
-      body: 'Innlegget ditt ble favorittmarkert av %{name}:'
+      body: "Innlegget ditt ble favorittmarkert av %{name}:"
       subject: "%{name} favorittmarkerte innlegget ditt"
       title: Ny favoritt
     follow:
@@ -1407,17 +1407,17 @@
     follow_request:
       action: Behandle følgerforespørsler
       body: "%{name} har bedt om lov til å følge deg"
-      subject: 'Ventende følginger: %{name}'
+      subject: "Ventende følginger: %{name}"
       title: Ny følgerforespørsel
     mention:
       action: Svar
-      body: 'Du ble nevnt av %{name} i:'
+      body: "Du ble nevnt av %{name} i:"
       subject: Du ble nevnt av %{name}
       title: Ny nevning
     poll:
       subject: En avstemming av %{name} er avsluttet
     reblog:
-      body: 'Ditt innlegg ble fremhevet av %{name}:'
+      body: "Ditt innlegg ble fremhevet av %{name}:"
       subject: "%{name} fremhevet ditt innlegg"
       title: Ny fremheving
     status:
@@ -1425,7 +1425,7 @@
     update:
       subject: "%{name} redigerte et innlegg"
   notifications:
-    email_events_hint: 'Velg hendelser som du vil motta varslinger for:'
+    email_events_hint: "Velg hendelser som du vil motta varslinger for:"
   number:
     human:
       decimal_units:
@@ -1441,7 +1441,7 @@
     description_html: Hvis du skrur på <strong>2-trinnsautentisering</strong> ved hjelp av en autentiseringsapp, vil pålogging kreve at du er i besittelse av autentiseringsenheten din, som genererer sjetonger som du skal skrive inn.
     enable: Aktiver
     instructions_html: "<strong>Skann denne QR-koden i Authy, Google Autentisering, eller en lignende TOTP-app på en av dine enheter</strong>. Fra nå av, vil den appen generere sjetonger som du vil måtte skrive inn når du logger på."
-    manual_instructions: 'Hvis du ikke kan skanne QR-koden og må skrive den inn manuelt, her er tekstkoden i ren tekst:'
+    manual_instructions: "Hvis du ikke kan skanne QR-koden og må skrive den inn manuelt, her er tekstkoden i ren tekst:"
     setup: Sett opp
     wrong_code: Den innskrevne koden var ugyldig! Er tjenertiden og enhetstiden riktige?
   pagination:
@@ -1511,10 +1511,10 @@
     errors:
       invalid_rules: refererer ikke til gyldige regler
   rss:
-    content_warning: 'Innholdsadvarsel:'
+    content_warning: "Innholdsadvarsel:"
     descriptions:
       account: Offentlige innlegg fra @%{acct}
-      tag: 'Offentlige innlegg merket med #%{hashtag}'
+      tag: "Offentlige innlegg merket med #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Du har overskredet grensen på %{limit} planlagte innlegg for i dag
     over_total_limit: Du har overskredet grensen på %{limit} planlagte innlegg
@@ -1596,7 +1596,7 @@
       audio:
         one: "%{count} lyd"
         other: "%{count} lyd"
-      description: 'Vedlagt: %{attached}'
+      description: "Vedlagt: %{attached}"
       image:
         one: "%{count} bilde"
         other: "%{count} bilder"
@@ -1604,11 +1604,11 @@
         one: "%{count} video"
         other: "%{count} videoer"
     boosted_from_html: Boostet fra %{acct_link}
-    content_warning: 'Innholdsvarsel: %{warning}'
+    content_warning: "Innholdsvarsel: %{warning}"
     default_language: Samme språk som brukergrensesnittet
     disallowed_hashtags:
-      one: 'inneholdt en ikke tillatt hashtag: %{tags}'
-      other: 'inneholdt de ikke tillatte hashtaggene: %{tags}'
+      one: "inneholdt en ikke tillatt hashtag: %{tags}"
+      other: "inneholdt de ikke tillatte hashtaggene: %{tags}"
     edited_at_html: Redigert %{date}
     errors:
       in_reply_not_found: Posten du prøver å svare ser ikke ut til eksisterer.
@@ -1641,14 +1641,14 @@
     keep_self_fav: Behold innlegg som favoritt
     keep_self_fav_hint: Sletter ikke dine egne innlegg hvis du har favorittmarkert de
     min_age:
-      '1209600': 2 uker
-      '15778476': 6 måneder
-      '2629746': 1 måned
-      '31556952': 1 år
-      '5259492': 2 måneder
-      '604800': 1 uke
-      '63113904': 2 år
-      '7889238': 3 måneder
+      "1209600": 2 uker
+      "15778476": 6 måneder
+      "2629746": 1 måned
+      "31556952": 1 år
+      "5259492": 2 måneder
+      "604800": 1 uke
+      "63113904": 2 år
+      "7889238": 3 måneder
     min_age_label: Terskel for alder
     min_favs: Behold innlegg som er favorittmarkert av minst
     min_favs_hint: Sletter ikke noen av dine innlegg som har mottatt minst dette antall favorittmarkeringer. La stå tom for å slette innlegg uavhengig av antall favorittmarkeringer
@@ -1706,14 +1706,14 @@
       subject: Arkivet ditt er klart til å lastes ned
       title: Nedlasting av arkiv
     failed_2fa:
-      details: 'Her er detaljer om påloggingsforsøket:'
+      details: "Her er detaljer om påloggingsforsøket:"
       explanation: Noen har prøvd å logge på kontoen din, men ga en ugyldig andre-autentiseringsfaktor.
       further_actions_html: Hvis dette ikke var deg, anbefaler vi at du %{action} umiddelbart fordi det kan ha blitt kompromittert.
       subject: Andre-autentiseringsfaktorfeil
       title: Mislykket andre-autentiseringsfaktor
     suspicious_sign_in:
       change_password: endre passord
-      details: 'Her er detaljer om påloggingen:'
+      details: "Her er detaljer om påloggingen:"
       explanation: Vi har oppdaget en pålogging til din konto fra en ny IP-adresse.
       further_actions_html: Hvis dette ikke var deg, anbefaler vi at du %{action} umiddelbart og aktiverer tofaktorautentisering for å holde kontoen din sikker.
       subject: Din konto ble tatt i bruk fra en ny IP-adresse
@@ -1731,8 +1731,8 @@
         sensitive: Fra nå av, vil alle dine opplastede mediefiler bli merket som følsomme og skjult bak et klikk-advarsel.
         silence: Du kan fortsatt bruke din konto, men bare personer som allerede følger deg vil se dine innlegg på denne serveren, og du kan bli ekskludert fra ulike funnfunksjoner. Andre kan fremdeles følge deg manuelt.
         suspend: Du kan ikke lenger bruke kontoen din, og profilen din og andre data er ikke lenger tilgjengelige. Du kan fortsatt logge inn for å be om en sikkerhetskopi av dataene dine til dataene er fullstendig fjernet i løpet av omtrent 30 dager. men vi vil holde på noen grunndata for å forhindre at du unngår suspensjonen.
-      reason: 'Årsak:'
-      statuses: 'Innlegg angitt:'
+      reason: "Årsak:"
+      statuses: "Innlegg angitt:"
       subject:
         delete_statuses: Dine innlegg på %{acct} har blitt fjernet
         disable: Kontoen din, %{acct}, har blitt fryst
@@ -1781,7 +1781,7 @@
     invalid_otp_token: Ugyldig to-faktorkode
     otp_lost_help_html: Hvis du mistet tilgangen til begge deler, kan du komme i kontakt med %{email}
     rate_limited: For mange autentiseringsforsøk, prøv igjen senere.
-    signed_in_as: 'Innlogget som:'
+    signed_in_as: "Innlogget som:"
   verification:
     extra_instructions_html: <strong>Tips:</strong> Lenken på din nettside kan være usynlig. Den viktige delen er <code>rel="me"</code> som sikrer at nettsteder med brukergenerert innhold ikke kan utgi seg for å være deg. Du kan til og med bruke en <code>link</code> lenke i sidens topptekst i stedet for <code>a</code>, men HTML-koden må være tilgjengelig uten å kjøre JavaScript.
     here_is_how: Slik gjør du

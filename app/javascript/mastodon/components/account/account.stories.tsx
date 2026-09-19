@@ -1,67 +1,67 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps } from "react";
 
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { accountFactoryState, relationshipsFactory } from '@/testing/factories';
+import { accountFactoryState, relationshipsFactory } from "@/testing/factories";
 
-import { Account } from './index';
+import { Account } from "./index";
 
-type Props = Omit<ComponentProps<typeof Account>, 'id'> & {
+type Props = Omit<ComponentProps<typeof Account>, "id"> & {
   name: string;
   username: string;
 };
 
 const meta = {
-  title: 'Components/Account',
+  title: "Components/Account",
   argTypes: {
     name: {
-      type: 'string',
-      description: 'The display name of the account',
-      reduxPath: 'accounts.1.display_name_html',
+      type: "string",
+      description: "The display name of the account",
+      reduxPath: "accounts.1.display_name_html",
     },
     username: {
-      type: 'string',
-      description: 'The username of the account',
-      reduxPath: 'accounts.1.acct',
+      type: "string",
+      description: "The username of the account",
+      reduxPath: "accounts.1.acct",
     },
     size: {
-      type: 'number',
-      description: 'Size of the avatar in pixels',
+      type: "number",
+      description: "Size of the avatar in pixels",
     },
     hidden: {
-      type: 'boolean',
-      description: 'Whether the account is hidden or not',
+      type: "boolean",
+      description: "Whether the account is hidden or not",
     },
     minimal: {
-      type: 'boolean',
-      description: 'Whether to display a minimal version of the account',
+      type: "boolean",
+      description: "Whether to display a minimal version of the account",
     },
     defaultAction: {
-      type: 'string',
-      control: 'select',
-      options: ['block', 'mute'],
-      description: 'Default action to take on the account',
+      type: "string",
+      control: "select",
+      options: ["block", "mute"],
+      description: "Default action to take on the account",
     },
     withBio: {
-      type: 'boolean',
-      description: 'Whether to display the account bio or not',
+      type: "boolean",
+      description: "Whether to display the account bio or not",
     },
     withMenu: {
-      type: 'boolean',
-      description: 'Whether to display the account menu or not',
+      type: "boolean",
+      description: "Whether to display the account menu or not",
     },
     withBorder: {
-      type: 'boolean',
-      description: 'Whether to display the bottom border or not',
+      type: "boolean",
+      description: "Whether to display the bottom border or not",
     },
   },
   args: {
-    name: 'Test User',
-    username: 'testuser',
+    name: "Test User",
+    username: "testuser",
     size: 46,
     hidden: false,
     minimal: false,
-    defaultAction: 'mute',
+    defaultAction: "mute",
     withBio: false,
     withMenu: true,
     withBorder: true,
@@ -69,12 +69,12 @@ const meta = {
   parameters: {
     state: {
       accounts: {
-        '1': accountFactoryState(),
+        "1": accountFactoryState(),
       },
     },
   },
   render(args) {
-    return <Account id='1' {...args} />;
+    return <Account id="1" {...args} />;
   },
 } satisfies Meta<Props>;
 
@@ -116,12 +116,12 @@ export const NoBorder: Story = {
 
 export const Blocked: Story = {
   args: {
-    defaultAction: 'block',
+    defaultAction: "block",
   },
   parameters: {
     state: {
       relationships: {
-        '1': relationshipsFactory({
+        "1": relationshipsFactory({
           blocking: true,
         }),
       },
@@ -134,7 +134,7 @@ export const Muted: Story = {
   parameters: {
     state: {
       relationships: {
-        '1': relationshipsFactory({
+        "1": relationshipsFactory({
           muting: true,
         }),
       },

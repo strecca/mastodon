@@ -1,5 +1,5 @@
-import { Children } from 'react';
-import type { ReactNode } from 'react';
+import { Children } from "react";
+import type { ReactNode } from "react";
 
 export function hasReactChildren(children: ReactNode): boolean {
   if (!children) {

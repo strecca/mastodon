@@ -13,15 +13,15 @@
    correctly regardless of the URL the worker is served from.
 */
 
-import type { Plugin, ResolvedConfig } from 'vite';
+import type { Plugin, ResolvedConfig } from "vite";
 
-const SERVICE_WORKER_FILENAME = 'sw.js';
+const SERVICE_WORKER_FILENAME = "sw.js";
 
 export function MastodonServiceWorkerChunkPaths(): Plugin {
   let config: ResolvedConfig;
 
   return {
-    name: 'mastodon-sw-chunk-paths',
+    name: "mastodon-sw-chunk-paths",
     configResolved(resolvedConfig) {
       config = resolvedConfig;
     },

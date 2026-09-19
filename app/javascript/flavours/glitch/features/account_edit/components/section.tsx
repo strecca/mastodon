@@ -1,11 +1,11 @@
-import type { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from "react";
 
-import type { MessageDescriptor } from 'react-intl';
-import { FormattedMessage } from 'react-intl';
+import type { MessageDescriptor } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import classes from '../styles.module.scss';
+import classes from "../styles.module.scss";
 
 interface AccountEditSectionProps {
   title: MessageDescriptor;

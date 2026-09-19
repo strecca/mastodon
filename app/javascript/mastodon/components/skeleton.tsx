@@ -4,7 +4,7 @@ interface Props {
 }
 
 export const Skeleton: React.FC<Props> = ({ width, height }) => (
-  <span className='skeleton' style={{ width, height }}>
+  <span className="skeleton" style={{ width, height }}>
     &zwnj;
   </span>
 );

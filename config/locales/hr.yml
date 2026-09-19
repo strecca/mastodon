@@ -1,7 +1,7 @@
 ---
 hr:
   about:
-    about_mastodon_html: 'Društvena mreža budućnosti: bez oglasa, bez korporativnog nadzora, etički dizajn i decentralizacija! Budite u vlasništvu svojih podataka pomoću Mastodona!'
+    about_mastodon_html: "Društvena mreža budućnosti: bez oglasa, bez korporativnog nadzora, etički dizajn i decentralizacija! Budite u vlasništvu svojih podataka pomoću Mastodona!"
     contact_missing: Nije postavljeno
     title: O aplikaciji
   accounts:
@@ -82,7 +82,7 @@ hr:
       body: Mastodon prevode dobrovoljci.
       guide_link_text: Svi mogu doprinjeti.
   application_mailer:
-    view: 'Vidi:'
+    view: "Vidi:"
   auth:
     forgot_password: Zaboravljena lozinka?
     login: Prijavi se
@@ -133,15 +133,15 @@ hr:
   invites:
     expired: Isteklo
     expires_in:
-      '1800': 30 minuta
-      '21600': 6 sati
-      '3600': 1 sat
-      '43200': 12 sati
-      '604800': 1 tjedan
-      '86400': 1 dan
+      "1800": 30 minuta
+      "21600": 6 sati
+      "3600": 1 sat
+      "43200": 12 sati
+      "604800": 1 tjedan
+      "86400": 1 dan
     expires_in_prompt: Nikad
     generate: Generiraj poveznicu za pozivanje
-    invited_by: 'Poziva Vas:'
+    invited_by: "Poziva Vas:"
     max_uses:
       few: "%{count} korištenja"
       one: 1 korištenje
@@ -156,12 +156,12 @@ hr:
       subject: "%{name} Vas sada prati"
     follow_request:
       body: "%{name} je zatražio/la da Vas prati"
-      subject: 'Pratitelj na čekanju: %{name}'
+      subject: "Pratitelj na čekanju: %{name}"
     mention:
-      body: 'Spomenuo/la Vas je %{name} u:'
+      body: "Spomenuo/la Vas je %{name} u:"
       subject: Spomenuo/la Vas je %{name}
     reblog:
-      body: 'Vaš status boostao/la je %{name}:'
+      body: "Vaš status boostao/la je %{name}:"
       subject: "%{name} boostao/la je Vaš status"
   number:
     human:
@@ -227,7 +227,7 @@ hr:
       subject: Dobro došli na Mastodon
   users:
     invalid_otp_token: Nevažeći dvo-faktorski kôd
-    signed_in_as: 'Prijavljeni kao:'
+    signed_in_as: "Prijavljeni kao:"
   verification:
     verification: Verifikacija
   webauthn_credentials:

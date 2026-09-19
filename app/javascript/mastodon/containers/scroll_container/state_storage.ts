@@ -1,6 +1,6 @@
-import type { LocationBase, ScrollPosition } from 'scroll-behavior';
+import type { LocationBase, ScrollPosition } from "scroll-behavior";
 
-const STATE_KEY_PREFIX = '@@scroll|';
+const STATE_KEY_PREFIX = "@@scroll|";
 
 interface LocationBaseWithKey extends LocationBase {
   key?: string;
@@ -15,10 +15,7 @@ interface LocationBaseWithKey extends LocationBase {
  */
 
 export class SessionStorage {
-  read(
-    location: LocationBaseWithKey,
-    key: string | null,
-  ): ScrollPosition | null {
+  read(location: LocationBaseWithKey, key: string | null): ScrollPosition | null {
     const stateKey = this.getStateKey(location, key);
 
     try {

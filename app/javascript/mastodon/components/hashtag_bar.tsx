@@ -1,14 +1,14 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import type { List, Record } from 'immutable';
+import type { List, Record } from "immutable";
 
-import { groupBy, minBy } from 'lodash';
+import { groupBy, minBy } from "lodash";
 
-import { getStatusContent } from './status_content';
+import { getStatusContent } from "./status_content";
 
 // Fit on a single line on desktop
 const VISIBLE_HASHTAGS = 3;
@@ -24,20 +24,17 @@ export type StatusLike = Record<{
 }>;
 
 function normalizeHashtag(hashtag: string) {
-  return (
-    !!hashtag && hashtag.startsWith('#') ? hashtag.slice(1) : hashtag
-  ).normalize('NFKC');
+  return (!!hashtag && hashtag.startsWith("#") ? hashtag.slice(1) : hashtag).normalize("NFKC");
 }
 
 function isNodeLinkHashtag(element: Node): element is HTMLLinkElement {
   return (
     element instanceof HTMLAnchorElement &&
     // it may be a <a> starting with a hashtag
-    (element.textContent.startsWith('#') ||
+    (element.textContent.startsWith("#") ||
       // or a #<a>
-      element.previousSibling?.textContent?.[
-        element.previousSibling.textContent.length - 1
-      ] === '#')
+      element.previousSibling?.textContent?.[element.previousSibling.textContent.length - 1] ===
+        "#")
   );
 }
 
@@ -48,9 +45,7 @@ function isNodeLinkHashtag(element: Node): element is HTMLLinkElement {
  * @returns The input hashtags, but with only 1 occurence of each (case-insensitive)
  */
 function uniqueHashtagsWithCaseHandling(hashtags: string[]) {
-  const groups = groupBy(hashtags, (tag) =>
-    tag.normalize('NFKD').toLowerCase(),
-  );
+  const groups = groupBy(hashtags, (tag) => tag.normalize("NFKD").toLowerCase());
 
   return Object.values(groups).map((tags) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we know that the array has at least one element
@@ -76,14 +71,14 @@ function uniqueHashtagsWithCaseHandling(hashtags: string[]) {
 
 // Create the collator once, this is much more efficient
 const collator = new Intl.Collator(undefined, {
-  sensitivity: 'base', // we use this to emulate the ASCII folding done on the server-side, hopefuly more efficiently
+  sensitivity: "base", // we use this to emulate the ASCII folding done on the server-side, hopefuly more efficiently
 });
 
 function localeAwareInclude(collection: string[], value: string) {
-  const normalizedValue = value.normalize('NFKC');
+  const normalizedValue = value.normalize("NFKC");
 
   return !!collection.find(
-    (item) => collator.compare(item.normalize('NFKC'), normalizedValue) === 0,
+    (item) => collator.compare(item.normalize("NFKC"), normalizedValue) === 0,
   );
 }
 
@@ -95,8 +90,8 @@ export function computeHashtagBarForStatus(status: StatusLike): {
   let statusContent = getStatusContent(status);
 
   const tagNames = status
-    .get('tags')
-    .map((tag) => tag.get('name'))
+    .get("tags")
+    .map((tag) => tag.get("name"))
     .toJS();
 
   // this is returned if we stop the processing early, it does not change what is displayed
@@ -108,7 +103,7 @@ export function computeHashtagBarForStatus(status: StatusLike): {
   // return early if this status does not have any tags
   if (tagNames.length === 0) return defaultResult;
 
-  const template = document.createElement('template');
+  const template = document.createElement("template");
   template.innerHTML = statusContent.trim();
 
   const lastChild = template.content.lastChild;
@@ -120,7 +115,7 @@ export function computeHashtagBarForStatus(status: StatusLike): {
 
   // First, try to parse
   const contentHashtags = Array.from(
-    contentWithoutLastLine.content.querySelectorAll<HTMLLinkElement>('a[href]'),
+    contentWithoutLastLine.content.querySelectorAll<HTMLLinkElement>("a[href]"),
   ).reduce<string[]>((result, link) => {
     if (isNodeLinkHashtag(link)) {
       if (link.textContent) result.push(normalizeHashtag(link.textContent));
@@ -133,7 +128,7 @@ export function computeHashtagBarForStatus(status: StatusLike): {
   // try to see if the last line is only hashtags
   let onlyHashtags = true;
 
-  const normalizedTagNames = tagNames.map((tag) => tag.normalize('NFKC'));
+  const normalizedTagNames = tagNames.map((tag) => tag.normalize("NFKC"));
 
   Array.from(lastChild.childNodes).forEach((node) => {
     if (isNodeLinkHashtag(node) && node.textContent) {
@@ -155,7 +150,7 @@ export function computeHashtagBarForStatus(status: StatusLike): {
   });
 
   const hashtagsInBar = tagNames.filter((tag) => {
-    const normalizedTag = tag.normalize('NFKC');
+    const normalizedTag = tag.normalize("NFKC");
     // the tag does not appear at all in the status content, it is an out-of-band tag
     return (
       !localeAwareInclude(contentHashtags, normalizedTag) &&
@@ -164,8 +159,8 @@ export function computeHashtagBarForStatus(status: StatusLike): {
   });
 
   const isOnlyOneLine = contentWithoutLastLine.content.childElementCount === 0;
-  const hasMedia = status.get('media_attachments').size > 0;
-  const hasSpoiler = !!status.get('spoiler_text');
+  const hasMedia = status.get("media_attachments").size > 0;
+  const hasSpoiler = !!status.get("spoiler_text");
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- due to https://github.com/microsoft/TypeScript/issues/9998
   if (onlyHashtags && ((hasMedia && !hasSpoiler) || !isOnlyOneLine)) {
@@ -191,16 +186,12 @@ export function computeHashtagBarForStatus(status: StatusLike): {
  * @returns Props to be passed to the <StatusContent> component, and the hashtagBar to render
  */
 export function getHashtagBarForStatus(status: StatusLike) {
-  const { statusContentProps, hashtagsInBar } =
-    computeHashtagBarForStatus(status);
+  const { statusContentProps, hashtagsInBar } = computeHashtagBarForStatus(status);
 
   return {
     statusContentProps,
     hashtagBar: (
-      <HashtagBar
-        hashtags={hashtagsInBar}
-        accountId={status.getIn(['account', 'id']) as string}
-      />
+      <HashtagBar hashtags={hashtagsInBar} accountId={status.getIn(["account", "id"]) as string} />
     ),
   };
 }
@@ -218,27 +209,21 @@ const HashtagBar: React.FC<{
     return null;
   }
 
-  const revealedHashtags = expanded
-    ? hashtags
-    : hashtags.slice(0, VISIBLE_HASHTAGS);
+  const revealedHashtags = expanded ? hashtags : hashtags.slice(0, VISIBLE_HASHTAGS);
 
   return (
-    <div className='hashtag-bar'>
+    <div className="hashtag-bar">
       {revealedHashtags.map((hashtag) => (
-        <Link
-          key={hashtag}
-          to={`/tags/${hashtag}`}
-          data-menu-hashtag={accountId}
-        >
+        <Link key={hashtag} to={`/tags/${hashtag}`} data-menu-hashtag={accountId}>
           #<span>{hashtag}</span>
         </Link>
       ))}
 
       {!expanded && hashtags.length > VISIBLE_HASHTAGS && (
-        <button className='link-button' onClick={handleClick} type='button'>
+        <button className="link-button" onClick={handleClick} type="button">
           <FormattedMessage
-            id='hashtags.and_other'
-            defaultMessage='…and {count, plural, other {# more}}'
+            id="hashtags.and_other"
+            defaultMessage="…and {count, plural, other {# more}}"
             values={{ count: hashtags.length - VISIBLE_HASHTAGS }}
           />
         </button>

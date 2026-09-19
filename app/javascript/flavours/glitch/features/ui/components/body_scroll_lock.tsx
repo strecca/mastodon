@@ -1,14 +1,10 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect } from "react";
 
-import { createAppSelector, useAppSelector } from 'flavours/glitch/store';
+import { createAppSelector, useAppSelector } from "flavours/glitch/store";
 
 const getShouldLockBodyScroll = createAppSelector(
-  [
-    (state) => state.navigation.open,
-    (state) => state.modal.get('stack').size > 0,
-  ],
-  (isMobileMenuOpen: boolean, isModalOpen: boolean) =>
-    isMobileMenuOpen || isModalOpen,
+  [(state) => state.navigation.open, (state) => state.modal.get("stack").size > 0],
+  (isMobileMenuOpen: boolean, isModalOpen: boolean) => isMobileMenuOpen || isModalOpen,
 );
 
 /**
@@ -20,10 +16,7 @@ export const BodyScrollLock: React.FC = () => {
   const shouldLockBodyScroll = useAppSelector(getShouldLockBodyScroll);
 
   useLayoutEffect(() => {
-    document.documentElement.classList.toggle(
-      'has-modal',
-      shouldLockBodyScroll,
-    );
+    document.documentElement.classList.toggle("has-modal", shouldLockBodyScroll);
   }, [shouldLockBodyScroll]);
 
   return null;

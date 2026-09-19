@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { DAY } from '@/flavours/glitch/utils/time';
+import { DAY } from "@/flavours/glitch/utils/time";
 
-import { RelativeTimestamp } from './index';
+import { RelativeTimestamp } from "./index";
 
 const meta = {
-  title: 'Components/RelativeTimestamp',
+  title: "Components/RelativeTimestamp",
   component: RelativeTimestamp,
   args: {
     timestamp: new Date(Date.now() - DAY * 3).toISOString(),
@@ -15,7 +15,7 @@ const meta = {
   },
   argTypes: {
     timestamp: {
-      control: 'date',
+      control: "date",
     },
   },
   render(props) {
@@ -57,7 +57,7 @@ function toDateString(timestamp?: number | string) {
     return new Date().toISOString();
   }
 
-  if (typeof timestamp === 'number') {
+  if (typeof timestamp === "number") {
     return new Date(timestamp).toISOString();
   }
 

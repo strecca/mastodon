@@ -1,12 +1,6 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
-import { useStorageState } from '@/mastodon/hooks/useStorage';
+import { useStorageState } from "@/mastodon/hooks/useStorage";
 
 interface AccountTimelineContextValue {
   accountId: string | null;
@@ -18,36 +12,25 @@ interface AccountTimelineContextValue {
   onShowAllPinned: () => void;
 }
 
-export const AccountTimelineContext =
-  createContext<AccountTimelineContextValue | null>(null);
+export const AccountTimelineContext = createContext<AccountTimelineContextValue | null>(null);
 
 export function useAccountContext() {
   const values = useContext(AccountTimelineContext);
   if (!values) {
-    throw new Error(
-      'useAccountFilters must be used within an AccountTimelineProvider',
-    );
+    throw new Error("useAccountFilters must be used within an AccountTimelineProvider");
   }
   return values;
 }
 
 export const useAccountContextValue = (accountId?: string | null) => {
   const storageOptions = {
-    type: 'local',
-    prefix: 'account-filters',
+    type: "local",
+    prefix: "account-filters",
   } as const;
 
-  const [boosts, setBoosts] = useStorageState<boolean>(
-    'boosts',
-    true,
-    storageOptions,
-  );
+  const [boosts, setBoosts] = useStorageState<boolean>("boosts", true, storageOptions);
 
-  const [replies, setReplies] = useStorageState<boolean>(
-    'replies',
-    false,
-    storageOptions,
-  );
+  const [replies, setReplies] = useStorageState<boolean>("replies", false, storageOptions);
 
   const handleSetBoosts = useCallback(
     (value: boolean) => {

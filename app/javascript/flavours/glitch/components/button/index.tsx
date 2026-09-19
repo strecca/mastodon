@@ -1,14 +1,11 @@
-import type { PropsWithChildren, JSX } from 'react';
-import { useCallback } from 'react';
+import type { PropsWithChildren, JSX } from "react";
+import { useCallback } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
+import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
 
-interface BaseProps extends Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  'children'
-> {
+interface BaseProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   block?: boolean;
   secondary?: boolean;
   plain?: boolean;
@@ -33,7 +30,7 @@ type Props = PropsWithText | PropsChildren;
  */
 
 export const Button: React.FC<Props> = ({
-  type = 'button',
+  type = "button",
   onClick,
   disabled,
   block,
@@ -64,12 +61,12 @@ export const Button: React.FC<Props> = ({
 
   return (
     <button
-      className={classNames('button', className, {
-        'button-secondary': secondary,
-        'button--plain': plain,
-        'button--compact': compact,
-        'button--block': block,
-        'button--dangerous': dangerous,
+      className={classNames("button", className, {
+        "button-secondary": secondary,
+        "button--plain": plain,
+        "button--compact": compact,
+        "button--block": block,
+        "button--dangerous": dangerous,
         loading,
       })}
       // Disabled buttons can't have focus, so we don't really
@@ -77,7 +74,7 @@ export const Button: React.FC<Props> = ({
       disabled={disabled && !loading}
       aria-disabled={loading}
       // If the loading prop is used, announce label changes
-      aria-live={loading !== undefined ? 'polite' : undefined}
+      aria-live={loading !== undefined ? "polite" : undefined}
       onClick={handleClick}
       title={title}
       // eslint-disable-next-line react/button-has-type -- set correctly via TS
@@ -86,8 +83,8 @@ export const Button: React.FC<Props> = ({
     >
       {loading ? (
         <>
-          <span className='button__label-wrapper'>{label}</span>
-          <LoadingIndicator role='none' />
+          <span className="button__label-wrapper">{label}</span>
+          <LoadingIndicator role="none" />
         </>
       ) : (
         label

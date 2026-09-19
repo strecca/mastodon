@@ -1,4 +1,4 @@
-import type { ApiAccountJSON } from './accounts';
+import type { ApiAccountJSON } from "./accounts";
 
 export interface ApiTermsOfServiceJSON {
   effective_date: string;

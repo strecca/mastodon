@@ -1,18 +1,18 @@
 // See app/serializers/rest/status_serializer.rb
 
-import type { ApiAccountJSON } from './accounts';
-import type { ApiCustomEmojiJSON } from './custom_emoji';
-import type { ApiMediaAttachmentJSON } from './media_attachments';
-import type { ApiPollJSON } from './polls';
-import type { ApiQuoteJSON, ApiQuotePolicyJSON } from './quotes';
+import type { ApiAccountJSON } from "./accounts";
+import type { ApiCustomEmojiJSON } from "./custom_emoji";
+import type { ApiMediaAttachmentJSON } from "./media_attachments";
+import type { ApiPollJSON } from "./polls";
+import type { ApiQuoteJSON, ApiQuotePolicyJSON } from "./quotes";
 
 // See app/modals/status.rb
 export type StatusVisibility =
-  | 'public'
-  | 'unlisted'
-  | 'private'
+  | "public"
+  | "unlisted"
+  | "private"
   // | 'limited' // This is never exposed to the API (they become `private`)
-  | 'direct';
+  | "direct";
 
 export interface ApiStatusApplicationJSON {
   name: string;
@@ -42,7 +42,7 @@ export interface ApiPreviewCardJSON {
   title: string;
   description: string;
   language: string | null;
-  type: 'video' | 'link';
+  type: "video" | "link";
   author_name: string;
   author_url: string;
   provider_name: string;
@@ -58,19 +58,14 @@ export interface ApiPreviewCardJSON {
   authors: ApiPreviewCardAuthorJSON[];
 }
 
-export type FilterContext =
-  | 'home'
-  | 'notifications'
-  | 'public'
-  | 'thread'
-  | 'account';
+export type FilterContext = "home" | "notifications" | "public" | "thread" | "account";
 
 export interface ApiFilterJSON {
   id: string;
   title: string;
   context: FilterContext;
   expires_at: string;
-  filter_action: 'warn' | 'hide';
+  filter_action: "warn" | "hide";
   keywords?: unknown[]; // TODO: FilterKeywordSerializer
   statuses?: unknown[]; // TODO: FilterStatusSerializer
 }
@@ -134,8 +129,6 @@ export interface ApiStatusSourceJSON {
   spoiler_text: string;
 }
 
-export function isStatusVisibility(
-  visibility: string,
-): visibility is StatusVisibility {
-  return ['public', 'unlisted', 'private', 'direct'].includes(visibility);
+export function isStatusVisibility(visibility: string): visibility is StatusVisibility {
+  return ["public", "unlisted", "private", "direct"].includes(visibility);
 }

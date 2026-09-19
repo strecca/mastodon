@@ -8,7 +8,7 @@ de:
         display_name: Dein richtiger Name oder dein Fantasiename.
         fields: Deine Website, Pronomen, dein Alter – alles, was du möchtest.
         indexable: Deine öffentlichen Beiträge können in den Suchergebnissen auf Mastodon erscheinen. Profile, die bereits mit deinen Beiträgen interagiert haben, können deine Beiträge immer auffinden.
-        note: 'Du kannst andere @Profile erwähnen oder #Hashtags verwenden.'
+        note: "Du kannst andere @Profile erwähnen oder #Hashtags verwenden."
         show_collections: Andere können deine Follower und „Folge ich“ durchstöbern. Profile, denen du folgst, werden immer sehen können, dass du ihnen folgst.
         unlocked: Andere können dir folgen, ohne vorher manuell genehmigt werden zu müssen. Wenn du Follower-Anfragen manuell akzeptieren oder ablehnen möchtest, dann lass diese Einstellung deaktiviert.
       account_alias:
@@ -64,7 +64,7 @@ de:
         setting_display_media_default: Vor der Anzeige von Medien, die eine Inhaltswarnung enthalten, hinweisen
         setting_display_media_hide_all: Vor der Anzeige von allen Medien hinweisen
         setting_display_media_show_all: Alle Medien anzeigen – auch Medien, die eine Inhaltswarnung enthalten
-        setting_emoji_style: 'Wie Emojis dargestellt werden: „Automatisch“ verwendet native Emojis, für veraltete Browser wird jedoch Twemoji verwendet.'
+        setting_emoji_style: "Wie Emojis dargestellt werden: „Automatisch“ verwendet native Emojis, für veraltete Browser wird jedoch Twemoji verwendet."
         setting_quick_boosting_html: Dadurch wird der Beitrag beim Anklicken des %{boost_icon} Teilen-Symbols sofort geteilt, anstatt das Drop-down-Menü zu öffnen. Die Möglichkeit zum Zitieren wird dabei in %{options_icon} Mehr verschoben.
         setting_use_blurhash: Der Farbverlauf basiert auf den Farben der ausgeblendeten Medien, verschleiert aber jegliche Details
         setting_use_pending_items: Neue Beiträge hinter einem Klick verstecken, anstatt automatisch zu scrollen
@@ -76,7 +76,7 @@ de:
         domain: Das kann die Domain aus einer E-Mail-Adresse oder einem MX-Eintrag sein. Bei der Registrierung eines neuen Profils wird beides überprüft.
         with_dns_records: Ein Versuch, die DNS-Einträge der Domain aufzulösen, wurde unternommen, und diese Ergebnisse werden unter anderem auch blockiert
       featured_tag:
-        name: 'Hier sind ein paar Hashtags, die du in letzter Zeit am häufigsten genutzt hast:'
+        name: "Hier sind ein paar Hashtags, die du in letzter Zeit am häufigsten genutzt hast:"
       filters:
         action: Auswählen, welche Aktion ausgeführt werden soll, wenn ein Beitrag dem Filter entspricht
         actions:
@@ -132,7 +132,7 @@ de:
         hint: "(Optional) Gib weitere Details zu dieser Regel an"
         text: Führe eine Regel oder Auflage für Profile auf diesem Server ein. Bleib dabei kurz und knapp
       sessions:
-        otp: 'Gib den Zwei-Faktor-Code von deinem Smartphone ein oder verwende einen deiner Wiederherstellungscodes:'
+        otp: "Gib den Zwei-Faktor-Code von deinem Smartphone ein oder verwende einen deiner Wiederherstellungscodes:"
         webauthn: Wenn es sich um einen USB-Schlüssel handelt, vergewissere dich, dass du ihn einsteckst und – falls erforderlich – antippst.
       settings:
         email_subscriptions: Wenn deaktiviert, werden zukünftig keine E-Mails mehr versendet. Bestehende Abonnements bleiben jedoch erhalten.
@@ -408,7 +408,7 @@ de:
         events: Aktivierte Ereignisse
         template: Nutzdaten-Vorlage
         url: Endpunkt-URL
-    'no': Nein
+    "no": Nein
     not_recommended: Nicht empfohlen
     overridden: Überschrieben
     recommended: Empfohlen
@@ -418,4 +418,4 @@ de:
     title:
       sessions:
         webauthn: Verwende einen deiner Sicherheitsschlüssel zum Anmelden
-    'yes': Ja
+    "yes": Ja

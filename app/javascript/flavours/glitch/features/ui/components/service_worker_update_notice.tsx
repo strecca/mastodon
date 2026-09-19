@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { Alert } from 'flavours/glitch/components/alert';
-import { useInterval } from 'flavours/glitch/hooks/useInterval';
+import { Alert } from "flavours/glitch/components/alert";
+import { useInterval } from "flavours/glitch/hooks/useInterval";
 
 // Browsers only check for a new service worker on a fresh page navigation,
 // or when explicitly told to via registration.update() -- they do NOT
@@ -15,17 +15,17 @@ const UPDATE_CHECK_INTERVAL = 60_000;
 
 const messages = defineMessages({
   title: {
-    id: 'service_worker_update_notice.title',
-    defaultMessage: 'Update ready',
+    id: "service_worker_update_notice.title",
+    defaultMessage: "Update ready",
   },
   message: {
-    id: 'service_worker_update_notice.message',
+    id: "service_worker_update_notice.message",
     defaultMessage:
       "A newer, improved version of MiaCivezza.com is ready for you. You'll be back to browsing and posting in under a minute.",
   },
   action: {
-    id: 'service_worker_update_notice.action',
-    defaultMessage: 'Update now',
+    id: "service_worker_update_notice.action",
+    defaultMessage: "Update now",
   },
 });
 
@@ -39,15 +39,13 @@ const messages = defineMessages({
  */
 export const ServiceWorkerUpdateNotice: React.FC = () => {
   const intl = useIntl();
-  const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(
-    null,
-  );
+  const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
   const [updating, setUpdating] = useState(false);
   const hasReloaded = useRef(false);
   const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
 
   useEffect(() => {
-    if (!('serviceWorker' in navigator)) {
+    if (!("serviceWorker" in navigator)) {
       return;
     }
 
@@ -57,7 +55,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
         return;
       }
 
-      newWorker.addEventListener('statechange', () => {
+      newWorker.addEventListener("statechange", () => {
         // 'installed' with registration.active already populated means an
         // older worker was already running -- a genuine update, not the
         // very first install on a fresh visit (which also passes through
@@ -71,7 +69,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
         // still undefined on the very page that registered it). Checking
         // the worker's own lifecycle state instead of this page's
         // controller relationship is the more reliable signal.
-        if (newWorker.state === 'installed' && registration.active) {
+        if (newWorker.state === "installed" && registration.active) {
           setWaitingWorker(newWorker);
         }
       });
@@ -90,7 +88,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
         setWaitingWorker(registration.waiting);
       }
 
-      registration.addEventListener('updatefound', () => {
+      registration.addEventListener("updatefound", () => {
         handleUpdateFound(registration);
       });
 
@@ -107,31 +105,22 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
         window.location.reload();
       }
     };
-    navigator.serviceWorker.addEventListener(
-      'controllerchange',
-      handleControllerChange,
-    );
+    navigator.serviceWorker.addEventListener("controllerchange", handleControllerChange);
 
     // iOS throttles background JS timers unreliably, so don't depend on the
     // interval alone -- also check the moment the page becomes visible
     // again (switching back from another app, reopening from the home
     // screen), which is driven by an actual event, not a timer.
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === "visible") {
         void registrationRef.current?.update();
       }
     };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      navigator.serviceWorker.removeEventListener(
-        'controllerchange',
-        handleControllerChange,
-      );
-      document.removeEventListener(
-        'visibilitychange',
-        handleVisibilityChange,
-      );
+      navigator.serviceWorker.removeEventListener("controllerchange", handleControllerChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
@@ -147,7 +136,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
       return;
     }
     setUpdating(true);
-    waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+    waitingWorker.postMessage({ type: "SKIP_WAITING" });
   }, [waitingWorker]);
 
   if (!waitingWorker) {
@@ -155,11 +144,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
   }
 
   return (
-    <div
-      className='service-worker-update-notice'
-      role='status'
-      aria-live='polite'
-    >
+    <div className="service-worker-update-notice" role="status" aria-live="polite">
       <Alert
         isActive
         isLoading={updating}
@@ -167,7 +152,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
         message={intl.formatMessage(messages.message)}
         action={updating ? undefined : intl.formatMessage(messages.action)}
         onActionClick={handleUpdateClick}
-        animateFrom='below'
+        animateFrom="below"
       />
     </div>
   );

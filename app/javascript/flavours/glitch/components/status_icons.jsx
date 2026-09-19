@@ -1,23 +1,23 @@
 //  Package imports.
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { defineMessages } from 'react-intl';
+import { defineMessages } from "react-intl";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import ImmutablePropTypes from "react-immutable-proptypes";
 
-import ForumIcon from '@/material-icons/400-24px/forum.svg?react';
-import HomeIcon from '@/material-icons/400-24px/home.svg?react';
-import { Icon } from 'flavours/glitch/components/icon';
-import { MediaIcon } from 'flavours/glitch/components/media_icon';
-import { languages } from 'flavours/glitch/initial_state';
-import { injectIntl } from '@/flavours/glitch/components/intl';
+import ForumIcon from "@/material-icons/400-24px/forum.svg?react";
+import HomeIcon from "@/material-icons/400-24px/home.svg?react";
+import { Icon } from "flavours/glitch/components/icon";
+import { MediaIcon } from "flavours/glitch/components/media_icon";
+import { languages } from "flavours/glitch/initial_state";
+import { injectIntl } from "@/flavours/glitch/components/intl";
 
-import { VisibilityIcon } from './visibility_icon';
+import { VisibilityIcon } from "./visibility_icon";
 
 const messages = defineMessages({
-  inReplyTo: { id: 'status.in_reply_to', defaultMessage: 'This toot is a reply' },
-  localOnly: { id: 'status.local_only', defaultMessage: 'Only visible from your instance' },
+  inReplyTo: { id: "status.in_reply_to", defaultMessage: "This toot is a reply" },
+  localOnly: { id: "status.local_only", defaultMessage: "Only visible from your instance" },
 });
 
 const LanguageIcon = ({ language }) => {
@@ -27,7 +27,7 @@ const LanguageIcon = ({ language }) => {
   if (!lang) return null;
 
   return (
-    <span className='text-icon' title={`${lang[2]} (${lang[1]})`} aria-hidden='true'>
+    <span className="text-icon" title={`${lang[2]} (${lang[1]})`} aria-hidden="true">
       {lang[0].toUpperCase()}
     </span>
   );
@@ -38,7 +38,6 @@ LanguageIcon.propTypes = {
 };
 
 class StatusIcons extends PureComponent {
-
   static propTypes = {
     status: ImmutablePropTypes.map.isRequired,
     mediaIcons: PropTypes.arrayOf(PropTypes.string),
@@ -46,37 +45,34 @@ class StatusIcons extends PureComponent {
     settings: ImmutablePropTypes.map.isRequired,
   };
 
-  render () {
-    const {
-      status,
-      mediaIcons,
-      settings,
-      intl,
-    } = this.props;
+  render() {
+    const { status, mediaIcons, settings, intl } = this.props;
 
     return (
-      <div className='status__info__icons'>
-        {settings.get('language') && status.get('language') && <LanguageIcon language={status.get('language')} />}
-        {settings.get('reply') && status.get('in_reply_to_id', null) !== null ? (
+      <div className="status__info__icons">
+        {settings.get("language") && status.get("language") && (
+          <LanguageIcon language={status.get("language")} />
+        )}
+        {settings.get("reply") && status.get("in_reply_to_id", null) !== null ? (
           <Icon
-            className='status__reply-icon'
-            id='comment'
+            className="status__reply-icon"
+            id="comment"
             icon={ForumIcon}
             aria-label={intl.formatMessage(messages.inReplyTo)}
           />
         ) : null}
-        {settings.get('local_only') && status.get('local_only') &&
-          <Icon
-            id='home'
-            icon={HomeIcon}
-            aria-label={intl.formatMessage(messages.localOnly)}
-          />}
-        {settings.get('media') && !!mediaIcons && mediaIcons.map(icon => (<MediaIcon key={`media-icon--${icon}`} className='status__media-icon' icon={icon} />))}
-        {settings.get('visibility') && <VisibilityIcon visibility={status.get('visibility')} />}
+        {settings.get("local_only") && status.get("local_only") && (
+          <Icon id="home" icon={HomeIcon} aria-label={intl.formatMessage(messages.localOnly)} />
+        )}
+        {settings.get("media") &&
+          !!mediaIcons &&
+          mediaIcons.map((icon) => (
+            <MediaIcon key={`media-icon--${icon}`} className="status__media-icon" icon={icon} />
+          ))}
+        {settings.get("visibility") && <VisibilityIcon visibility={status.get("visibility")} />}
       </div>
     );
   }
-
 }
 
 export default injectIntl(StatusIcons);

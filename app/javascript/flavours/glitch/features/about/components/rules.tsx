@@ -1,22 +1,22 @@
-import { useCallback, useState } from 'react';
-import type { ChangeEventHandler, FC } from 'react';
+import { useCallback, useState } from "react";
+import type { ChangeEventHandler, FC } from "react";
 
-import type { IntlShape } from 'react-intl';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import type { IntlShape } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "@reduxjs/toolkit";
 
-import type { ApiRuleJSON } from '@/flavours/glitch/api_types/instance';
-import type { SelectItem } from '@/flavours/glitch/components/dropdown_selector';
-import { Select } from '@/flavours/glitch/components/form_fields';
-import type { RootState } from '@/flavours/glitch/store';
-import { useAppSelector } from '@/flavours/glitch/store';
+import type { ApiRuleJSON } from "@/flavours/glitch/api_types/instance";
+import type { SelectItem } from "@/flavours/glitch/components/dropdown_selector";
+import { Select } from "@/flavours/glitch/components/form_fields";
+import type { RootState } from "@/flavours/glitch/store";
+import { useAppSelector } from "@/flavours/glitch/store";
 
-import { Section } from './section';
+import { Section } from "./section";
 
 const messages = defineMessages({
-  rules: { id: 'about.rules', defaultMessage: 'Server rules' },
-  defaultLocale: { id: 'about.default_locale', defaultMessage: 'Default' },
+  rules: { id: "about.rules", defaultMessage: "Server rules" },
+  defaultLocale: { id: "about.default_locale", defaultMessage: "Default" },
 });
 
 interface RulesSectionProps {
@@ -33,41 +33,29 @@ interface Rule extends BaseRule {
   translations?: Record<string, BaseRule>;
 }
 
-function getDefaultSelectedLocale(
-  currentUiLocale: string,
-  localeOptions: SelectItem[],
-) {
-  const preciseMatch = localeOptions.find(
-    (option) => option.value === currentUiLocale,
-  );
+function getDefaultSelectedLocale(currentUiLocale: string, localeOptions: SelectItem[]) {
+  const preciseMatch = localeOptions.find((option) => option.value === currentUiLocale);
   if (preciseMatch) {
     return preciseMatch.value;
   }
 
-  const partialLocale = currentUiLocale.split('-')[0];
-  const partialMatch = localeOptions.find(
-    (option) => option.value.split('-')[0] === partialLocale,
-  );
+  const partialLocale = currentUiLocale.split("-")[0];
+  const partialMatch = localeOptions.find((option) => option.value.split("-")[0] === partialLocale);
 
-  return partialMatch?.value ?? 'default';
+  return partialMatch?.value ?? "default";
 }
 
 export const RulesSection: FC<RulesSectionProps> = ({ isLoading = false }) => {
   const intl = useIntl();
-  const localeOptions = useAppSelector((state) =>
-    localeOptionsSelector(state, intl),
-  );
+  const localeOptions = useAppSelector((state) => localeOptionsSelector(state, intl));
   const [selectedLocale, setSelectedLocale] = useState(() =>
     getDefaultSelectedLocale(intl.locale, localeOptions),
   );
   const rules = useAppSelector((state) => rulesSelector(state, selectedLocale));
 
-  const handleLocaleChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
-    (e) => {
-      setSelectedLocale(e.currentTarget.value);
-    },
-    [],
-  );
+  const handleLocaleChange: ChangeEventHandler<HTMLSelectElement> = useCallback((e) => {
+    setSelectedLocale(e.currentTarget.value);
+  }, []);
 
   if (isLoading) {
     return <Section title={intl.formatMessage(messages.rules)} />;
@@ -78,8 +66,8 @@ export const RulesSection: FC<RulesSectionProps> = ({ isLoading = false }) => {
       <Section title={intl.formatMessage(messages.rules)}>
         <p>
           <FormattedMessage
-            id='about.not_available'
-            defaultMessage='This information has not been made available on this server.'
+            id="about.not_available"
+            defaultMessage="This information has not been made available on this server."
           />
         </p>
       </Section>
@@ -88,28 +76,21 @@ export const RulesSection: FC<RulesSectionProps> = ({ isLoading = false }) => {
 
   return (
     <Section title={intl.formatMessage(messages.rules)}>
-      <ol className='rules-list'>
+      <ol className="rules-list">
         {rules.map((rule) => (
           <li key={rule.id}>
-            <div className='rules-list__text'>{rule.text}</div>
-            {!!rule.hint && <div className='rules-list__hint'>{rule.hint}</div>}
+            <div className="rules-list__text">{rule.text}</div>
+            {!!rule.hint && <div className="rules-list__hint">{rule.hint}</div>}
           </li>
         ))}
       </ol>
 
       {localeOptions.length > 1 && (
-        <div className='rules-languages'>
-          <label htmlFor='language-select'>
-            <FormattedMessage
-              id='about.language_label'
-              defaultMessage='Language'
-            />
+        <div className="rules-languages">
+          <label htmlFor="language-select">
+            <FormattedMessage id="about.language_label" defaultMessage="Language" />
           </label>
-          <Select
-            onChange={handleLocaleChange}
-            id='language-select'
-            value={selectedLocale}
-          >
+          <Select onChange={handleLocaleChange} id="language-select" value={selectedLocale}>
             {localeOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.text}
@@ -139,7 +120,7 @@ const rulesSelector = createSelector(
       }
 
       const translatedRule: ApiRuleJSON = { ...rule };
-      const partialLocale = locale.split('-')[0];
+      const partialLocale = locale.split("-")[0];
       if (partialLocale && translations[partialLocale]) {
         translatedRule.text = translations[partialLocale].text;
         translatedRule.hint = translations[partialLocale].hint;
@@ -160,7 +141,7 @@ const localeOptionsSelector = createSelector(
   (rules, intl): SelectItem[] => {
     const langs: Record<string, SelectItem> = {
       default: {
-        value: 'default',
+        value: "default",
         text: intl.formatMessage(messages.defaultLocale),
       },
     };
@@ -170,7 +151,7 @@ const localeOptionsSelector = createSelector(
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       Intl.DisplayNames &&
       (new Intl.DisplayNames(intl.locale, {
-        type: 'language',
+        type: "language",
       }) as Intl.DisplayNames | undefined);
     for (const { translations } of rules) {
       for (const locale in translations) {

@@ -12,7 +12,7 @@ tok:
       edit:
         title: o ante e ilo nanpa
       form:
-        error: 'pakala a! o lukin e ni: lipu sina li jo ala jo e pakala.'
+        error: "pakala a! o lukin e ni: lipu sina li jo ala jo e pakala."
       index:
         delete: o weka
         empty: sina li jo e ilo nanpa ala.

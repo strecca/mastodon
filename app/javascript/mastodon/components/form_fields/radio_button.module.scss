@@ -20,7 +20,7 @@
 
   /* Increase clickable area, prevents misclicks and covers gap between control and label */
   &::after {
-    content: '';
+    content: "";
     position: absolute;
 
     --spread: calc(var(--border-width) + var(--form-field-label-gap, 8px));

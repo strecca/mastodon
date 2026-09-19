@@ -8,28 +8,28 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react';
+} from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import Overlay from 'react-overlays/Overlay';
+import Overlay from "react-overlays/Overlay";
 
-import KeyboardArrowDownIcon from '@/material-icons/400-24px/keyboard_arrow_down.svg?react';
-import KeyboardArrowUpIcon from '@/material-icons/400-24px/keyboard_arrow_up.svg?react';
-import SearchIcon from '@/material-icons/400-24px/search.svg?react';
-import { matchWidth } from 'mastodon/components/dropdown/utils';
-import { IconButton } from 'mastodon/components/icon_button';
-import { useOnClickOutside } from 'mastodon/hooks/useOnClickOutside';
+import KeyboardArrowDownIcon from "@/material-icons/400-24px/keyboard_arrow_down.svg?react";
+import KeyboardArrowUpIcon from "@/material-icons/400-24px/keyboard_arrow_up.svg?react";
+import SearchIcon from "@/material-icons/400-24px/search.svg?react";
+import { matchWidth } from "mastodon/components/dropdown/utils";
+import { IconButton } from "mastodon/components/icon_button";
+import { useOnClickOutside } from "mastodon/hooks/useOnClickOutside";
 
-import { LoadingIndicator } from '../loading_indicator';
+import { LoadingIndicator } from "../loading_indicator";
 
-import classes from './combobox.module.scss';
-import { FormFieldWrapper } from './form_field_wrapper';
-import type { CommonFieldWrapperProps } from './form_field_wrapper';
-import { TextInput } from './text_input_field';
-import type { TextInputProps } from './text_input_field';
+import classes from "./combobox.module.scss";
+import { FormFieldWrapper } from "./form_field_wrapper";
+import type { CommonFieldWrapperProps } from "./form_field_wrapper";
+import { TextInput } from "./text_input_field";
+import type { TextInputProps } from "./text_input_field";
 
 interface ComboboxItem {
   id: string;
@@ -40,10 +40,10 @@ export interface ComboboxItemState {
   isDisabled: boolean;
 }
 
-interface ComboboxProps<
-  Item extends ComboboxItem,
-  GroupKey extends string,
-> extends Omit<TextInputProps, 'icon'> {
+interface ComboboxProps<Item extends ComboboxItem, GroupKey extends string> extends Omit<
+  TextInputProps,
+  "icon"
+> {
   /**
    * The value of the combobox's text input
    */
@@ -79,20 +79,14 @@ interface ComboboxProps<
    * Customise the rendering of each option.
    * The rendered content must not contain other interactive content!
    */
-  renderItem: (
-    item: Item,
-    state: ComboboxItemState,
-  ) => React.ReactElement | string;
+  renderItem: (item: Item, state: ComboboxItemState) => React.ReactElement | string;
   /**
    * Customise the rendering of group titles.
    * The `titleId` must be attached to the element that provides the
    * accessible name for the group.
    * Return `null` to omit rendering the group title.
    */
-  renderGroupTitle?: (
-    groupKey: GroupKey,
-    titleId: string,
-  ) => React.ReactElement | null;
+  renderGroupTitle?: (groupKey: GroupKey, titleId: string) => React.ReactElement | null;
   /**
    * The main selection handler, called when an option is selected or deselected.
    */
@@ -100,7 +94,7 @@ interface ComboboxProps<
   /**
    * Icon to be displayed in the text input
    */
-  icon?: TextInputProps['icon'] | null;
+  icon?: TextInputProps["icon"] | null;
   /**
    * Set to true to open as soon as there is focus
    */
@@ -119,26 +113,22 @@ interface Props<Item extends ComboboxItem, GroupKey extends string>
   extends ComboboxProps<Item, GroupKey>, CommonFieldWrapperProps {}
 
 interface ComboboxItemPropsContext {
-  role: 'option';
-  'data-highlighted': boolean;
-  'aria-selected': boolean;
-  'aria-disabled': boolean;
-  'data-item-id': string;
+  role: "option";
+  "data-highlighted": boolean;
+  "aria-selected": boolean;
+  "aria-disabled": boolean;
+  "data-item-id": string;
   onMouseEnter: React.MouseEventHandler<HTMLLIElement>;
   onClick: React.MouseEventHandler<HTMLLIElement>;
 }
 
-const ComboboxItemPropsContext = createContext<ComboboxItemPropsContext | null>(
-  null,
-);
+const ComboboxItemPropsContext = createContext<ComboboxItemPropsContext | null>(null);
 
 export function useComboboxItemProps() {
   const context = useContext(ComboboxItemPropsContext);
 
   if (context === null) {
-    throw new Error(
-      'useComboboxItemProps must be used within a Combobox component',
-    );
+    throw new Error("useComboboxItemProps must be used within a Combobox component");
   }
 
   return context;
@@ -156,15 +146,13 @@ export const ComboboxMenuItem: React.FC<{
   );
 };
 
-export const ComboboxMenuGroupTitle: React.FC<
-  React.ComponentPropsWithoutRef<'li'>
-> = ({ className, children, ...otherProps }) => {
+export const ComboboxMenuGroupTitle: React.FC<React.ComponentPropsWithoutRef<"li">> = ({
+  className,
+  children,
+  ...otherProps
+}) => {
   return (
-    <li
-      {...otherProps}
-      role='presentation'
-      className={classNames(className, classes.groupTitle)}
-    >
+    <li {...otherProps} role="presentation" className={classNames(className, classes.groupTitle)}>
       {children}
     </li>
   );
@@ -179,20 +167,11 @@ export const ComboboxMenuGroupTitle: React.FC<
  * [research & implementations](https://sarahmhigley.com/writing/select-your-poison/).
  */
 
-export const ComboboxFieldWithRef = <
-  Item extends ComboboxItem,
-  GroupKey extends string,
->(
+export const ComboboxFieldWithRef = <Item extends ComboboxItem, GroupKey extends string>(
   { id, label, hint, status, required, ...otherProps }: Props<Item, GroupKey>,
   ref: React.ForwardedRef<HTMLInputElement>,
 ) => (
-  <FormFieldWrapper
-    label={label}
-    hint={hint}
-    required={required}
-    status={status}
-    inputId={id}
-  >
+  <FormFieldWrapper label={label} hint={hint} required={required} status={status} inputId={id}>
     {(inputProps) => <Combobox {...otherProps} {...inputProps} ref={ref} />}
   </FormFieldWrapper>
 );
@@ -208,7 +187,7 @@ export const ComboboxField = forwardRef(ComboboxFieldWithRef) as {
   displayName: string;
 };
 
-ComboboxField.displayName = 'ComboboxField';
+ComboboxField.displayName = "ComboboxField";
 
 const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
   {
@@ -244,9 +223,7 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
   // when focus is returned to the input.
   const wasMenuJustClosedRef = useRef(false);
 
-  const [highlightedItemId, setHighlightedItemId] = useState<string | null>(
-    null,
-  );
+  const [highlightedItemId, setHighlightedItemId] = useState<string | null>(null);
   const [shouldMenuOpen, setShouldMenuOpen] = useState(false);
 
   const hasGroups = !Array.isArray(items);
@@ -265,12 +242,9 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
     isLoading,
     itemCount: flatItems.length,
   });
-  const showStatusMessageInMenu =
-    !!statusMessage && value.length > 0 && flatItems.length === 0;
+  const showStatusMessageInMenu = !!statusMessage && value.length > 0 && flatItems.length === 0;
   const hasMenuContent =
-    !disabled &&
-    !suppressMenu &&
-    (flatItems.length > 0 || showStatusMessageInMenu);
+    !disabled && !suppressMenu && (flatItems.length > 0 || showStatusMessageInMenu);
   const isMenuOpen = shouldMenuOpen && hasMenuContent;
 
   const openMenu = useCallback(() => {
@@ -398,9 +372,7 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
         }
 
         const newHighlightedItem = flatItems[newIndex];
-        highlightItem(
-          newHighlightedItem ? getItemId(newHighlightedItem) : null,
-        );
+        highlightItem(newHighlightedItem ? getItemId(newHighlightedItem) : null);
       }
     },
     [getItemId, highlightItem, highlightedItemId, flatItems],
@@ -412,7 +384,7 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       onKeyDown?.(e);
 
-      if (e.key === 'ArrowUp') {
+      if (e.key === "ArrowUp") {
         e.preventDefault();
         if (isMenuOpen) {
           moveHighlight(-1);
@@ -420,7 +392,7 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
           openMenu();
         }
       }
-      if (e.key === 'ArrowDown') {
+      if (e.key === "ArrowDown") {
         e.preventDefault();
         if (isMenuOpen) {
           moveHighlight(1);
@@ -428,33 +400,26 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
           openMenu();
         }
       }
-      if (e.key === 'Tab') {
+      if (e.key === "Tab") {
         if (isMenuOpen) {
           selectHighlightedItem();
           closeMenu();
         }
       }
-      if (e.key === 'Enter') {
+      if (e.key === "Enter") {
         if (isMenuOpen) {
           e.preventDefault();
           selectHighlightedItem();
         }
       }
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         if (isMenuOpen) {
           e.preventDefault();
           closeMenu();
         }
       }
     },
-    [
-      closeMenu,
-      isMenuOpen,
-      moveHighlight,
-      onKeyDown,
-      openMenu,
-      selectHighlightedItem,
-    ],
+    [closeMenu, isMenuOpen, moveHighlight, onKeyDown, openMenu, selectHighlightedItem],
   );
 
   const renderItems = (items: Item[]) =>
@@ -465,18 +430,16 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
       // If `getIsItemSelected` is defined, we assume 'multi-select'
       // behaviour and don't set `aria-selected` based on highlight,
       // but based on selected item state.
-      const isSelected = getIsItemSelected
-        ? getIsItemSelected(item)
-        : isHighlighted;
+      const isSelected = getIsItemSelected ? getIsItemSelected(item) : isHighlighted;
       return (
         <ComboboxItemPropsContext.Provider
           key={id}
           value={{
-            role: 'option',
-            'data-highlighted': isHighlighted,
-            'aria-selected': isSelected,
-            'aria-disabled': isDisabled,
-            'data-item-id': id,
+            role: "option",
+            "data-highlighted": isHighlighted,
+            "aria-selected": isSelected,
+            "aria-disabled": isDisabled,
+            "data-item-id": id,
             onMouseEnter: handleItemMouseEnter,
             onClick: handleSelectItem,
           }}
@@ -492,7 +455,7 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
   const mergeRefs = useCallback(
     (element: HTMLInputElement | null) => {
       inputRef.current = element;
-      if (typeof ref === 'function') {
+      if (typeof ref === "function") {
         ref(element);
       } else if (ref) {
         ref.current = element;
@@ -507,18 +470,16 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
   return (
     <div className={classes.wrapper} ref={wrapperRef}>
       <TextInput
-        role='combobox'
+        role="combobox"
         {...otherProps}
         disabled={disabled}
         aria-controls={listId}
-        aria-expanded={isMenuOpen ? 'true' : 'false'}
-        aria-haspopup='listbox'
-        aria-activedescendant={
-          isMenuOpen && highlightedItemId ? highlightedItemId : undefined
-        }
-        aria-autocomplete='list'
-        autoComplete='off'
-        spellCheck='false'
+        aria-expanded={isMenuOpen ? "true" : "false"}
+        aria-haspopup="listbox"
+        aria-activedescendant={isMenuOpen && highlightedItemId ? highlightedItemId : undefined}
+        aria-autocomplete="list"
+        autoComplete="off"
+        spellCheck="false"
         value={value}
         onFocus={handleFocus}
         onChange={handleInputChange}
@@ -532,29 +493,27 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
           title={
             isMenuOpen
               ? intl.formatMessage({
-                  id: 'combobox.close_results',
-                  defaultMessage: 'Close results',
+                  id: "combobox.close_results",
+                  defaultMessage: "Close results",
                 })
               : intl.formatMessage({
-                  id: 'combobox.open_results',
-                  defaultMessage: 'Open results',
+                  id: "combobox.open_results",
+                  defaultMessage: "Open results",
                 })
           }
           className={classes.menuButton}
-          icon='results'
-          iconComponent={
-            isMenuOpen ? KeyboardArrowUpIcon : KeyboardArrowDownIcon
-          }
+          icon="results"
+          iconComponent={isMenuOpen ? KeyboardArrowUpIcon : KeyboardArrowDownIcon}
           onClick={isMenuOpen ? closeMenu : openMenu}
         />
       )}
-      <span role='status' aria-live='polite' className='sr-only'>
+      <span role="status" aria-live="polite" className="sr-only">
         {isMenuOpen && statusMessage}
       </span>
       <Overlay
         show={isMenuOpen}
         offset={[0, 1]}
-        placement='bottom-start'
+        placement="bottom-start"
         onHide={closeMenu}
         ref={popoverRef}
         target={inputRef as React.RefObject<HTMLInputElement>}
@@ -571,14 +530,11 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
               status={statusMessage}
             >
               {hasGroups ? (
-                <div role='listbox' id={listId} tabIndex={-1}>
+                <div role="listbox" id={listId} tabIndex={-1}>
                   {(Object.keys(items) as GroupKey[]).map((groupKey) => {
                     const groupItems = items[groupKey];
                     const groupTitleId = `${listId}-group-${groupKey}`;
-                    const customGroupTitle = renderGroupTitle?.(
-                      groupKey,
-                      groupTitleId,
-                    );
+                    const customGroupTitle = renderGroupTitle?.(groupKey, groupTitleId);
                     const hasTitle = customGroupTitle !== null;
 
                     if (!groupItems?.length) return null;
@@ -586,7 +542,7 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
                     return (
                       <ul
                         key={groupKey}
-                        role='group'
+                        role="group"
                         aria-labelledby={hasTitle ? groupTitleId : undefined}
                       >
                         {hasTitle &&
@@ -601,7 +557,7 @@ const ComboboxWithRef = <Item extends ComboboxItem, GroupKey extends string>(
                   })}
                 </div>
               ) : (
-                <ul role='listbox' id={listId} tabIndex={-1}>
+                <ul role="listbox" id={listId} tabIndex={-1}>
                   {renderItems(items)}
                 </ul>
               )}
@@ -624,7 +580,7 @@ export const Combobox = forwardRef(ComboboxWithRef) as {
   displayName: string;
 };
 
-Combobox.displayName = 'Combobox';
+Combobox.displayName = "Combobox";
 
 const StatusMessageWrapper: React.FC<{
   showStatus: boolean;
@@ -637,7 +593,7 @@ const StatusMessageWrapper: React.FC<{
       <span className={classes.emptyMessage}>
         {isLoading && (
           <span className={classes.loadingIndicator}>
-            <LoadingIndicator role='none' />
+            <LoadingIndicator role="none" />
           </span>
         )}
         {status}
@@ -661,31 +617,31 @@ function useGetA11yStatusMessage({
 
   if (isLoading) {
     return intl.formatMessage({
-      id: 'combobox.loading',
-      defaultMessage: 'Loading',
+      id: "combobox.loading",
+      defaultMessage: "Loading",
     });
   }
 
   if (value.length && !itemCount) {
     return intl.formatMessage({
-      id: 'combobox.no_results_found',
-      defaultMessage: 'No results for this search',
+      id: "combobox.no_results_found",
+      defaultMessage: "No results for this search",
     });
   }
 
   if (itemCount > 0) {
     return intl.formatMessage(
       {
-        id: 'combobox.results_available',
+        id: "combobox.results_available",
         defaultMessage:
-          '{count, plural, one {# suggestion} other {# suggestions}} available. Use up and down arrow keys to navigate. Press Enter key to select.',
+          "{count, plural, one {# suggestion} other {# suggestions}} available. Use up and down arrow keys to navigate. Press Enter key to select.",
       },
       {
         count: itemCount,
       },
     );
   }
-  return '';
+  return "";
 }
 
 const SCROLL_MARGIN = 6;
@@ -699,11 +655,7 @@ function scrollItemIntoView(item: HTMLElement, scrollParent: HTMLElement) {
     scrollParent.scrollTop = itemTopEdge - SCROLL_MARGIN;
   }
   // If item is below scroll area, scroll down
-  else if (
-    itemBottomEdge >
-    scrollParent.scrollTop + scrollParent.offsetHeight
-  ) {
-    scrollParent.scrollTop =
-      itemBottomEdge - scrollParent.offsetHeight + SCROLL_MARGIN;
+  else if (itemBottomEdge > scrollParent.scrollTop + scrollParent.offsetHeight) {
+    scrollParent.scrollTop = itemBottomEdge - scrollParent.offsetHeight + SCROLL_MARGIN;
   }
 }

@@ -1,26 +1,26 @@
 // app/javascript/flavours/glitch/features/alt_text_modal/__tests__/index-test.tsx
 
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from "react-intl";
 
-import { List, Map } from 'immutable';
+import { List, Map } from "immutable";
 
-import { render } from '@testing-library/react';
-import { vi } from 'vitest';
+import { render } from "@testing-library/react";
+import { vi } from "vitest";
 
-import { FocusTargetProvider } from '@/flavours/glitch/components/navigation_focus_target';
-import { Router } from '@/flavours/glitch/components/router';
-import type { RootState } from 'flavours/glitch/store';
-import { useAppSelector } from 'flavours/glitch/store';
+import { FocusTargetProvider } from "@/flavours/glitch/components/navigation_focus_target";
+import { Router } from "@/flavours/glitch/components/router";
+import type { RootState } from "flavours/glitch/store";
+import { useAppSelector } from "flavours/glitch/store";
 
-import { AltTextModal } from '../index';
+import { AltTextModal } from "../index";
 
-vi.mock('flavours/glitch/store', () => ({
+vi.mock("flavours/glitch/store", () => ({
   useAppSelector: vi.fn(),
   useAppDispatch: () => vi.fn(),
 }));
 
-describe('<AltTextModal />', () => {
-  const mediaId = '123';
+describe("<AltTextModal />", () => {
+  const mediaId = "123";
   const handleClose = vi.fn();
 
   beforeEach(() => {
@@ -31,7 +31,7 @@ describe('<AltTextModal />', () => {
     return render(
       <Router>
         <FocusTargetProvider>
-          <IntlProvider locale='en' messages={{}}>
+          <IntlProvider locale="en" messages={{}}>
             <AltTextModal mediaId={mediaId} onClose={handleClose} />
           </IntlProvider>
         </FocusTargetProvider>
@@ -39,59 +39,55 @@ describe('<AltTextModal />', () => {
     );
   };
 
-  it('renders thumbnail upload button when video is unattached', () => {
-    vi.mocked(useAppSelector).mockImplementation(
-      (selector: (state: RootState) => unknown) => {
-        const mockState = {
-          compose: Map({
-            language: 'en',
-            media_attachments: List([
-              Map({
-                id: mediaId,
-                type: 'video',
-                unattached: true,
-                meta: Map({ focus: Map({ x: 0, y: 0 }) }),
-              }),
-            ]),
-          }),
-          accounts: Map(),
-        } as unknown as RootState;
+  it("renders thumbnail upload button when video is unattached", () => {
+    vi.mocked(useAppSelector).mockImplementation((selector: (state: RootState) => unknown) => {
+      const mockState = {
+        compose: Map({
+          language: "en",
+          media_attachments: List([
+            Map({
+              id: mediaId,
+              type: "video",
+              unattached: true,
+              meta: Map({ focus: Map({ x: 0, y: 0 }) }),
+            }),
+          ]),
+        }),
+        accounts: Map(),
+      } as unknown as RootState;
 
-        return selector(mockState);
-      },
-    );
+      return selector(mockState);
+    });
 
     const { container } = renderComponent();
 
-    const uploadInput = container.querySelector('#upload-modal__thumbnail');
+    const uploadInput = container.querySelector("#upload-modal__thumbnail");
     expect(uploadInput).not.toBeNull();
   });
 
-  it('hides thumbnail upload button when video is attached', () => {
-    vi.mocked(useAppSelector).mockImplementation(
-      (selector: (state: RootState) => unknown) => {
-        const mockState = {
-          compose: Map({
-            language: 'en',
-            media_attachments: List([
-              Map({
-                id: mediaId,
-                type: 'video',
-                unattached: false,
-                meta: Map({ focus: Map({ x: 0, y: 0 }) }),
-              }),
-            ]),
-          }),
-          accounts: Map(),
-        } as unknown as RootState;
+  it("hides thumbnail upload button when video is attached", () => {
+    vi.mocked(useAppSelector).mockImplementation((selector: (state: RootState) => unknown) => {
+      const mockState = {
+        compose: Map({
+          language: "en",
+          media_attachments: List([
+            Map({
+              id: mediaId,
+              type: "video",
+              unattached: false,
+              meta: Map({ focus: Map({ x: 0, y: 0 }) }),
+            }),
+          ]),
+        }),
+        accounts: Map(),
+      } as unknown as RootState;
 
-        return selector(mockState);
-      },
-    );
+      return selector(mockState);
+    });
 
     const { container } = renderComponent();
 
-    const uploadInput = container.querySelector('#upload-modal__thumbnail');
+    const uploadInput = container.querySelector("#upload-modal__thumbnail");
     expect(uploadInput).toBeNull();
   });
 });

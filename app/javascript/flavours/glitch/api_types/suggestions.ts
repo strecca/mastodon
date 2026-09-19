@@ -1,11 +1,11 @@
-import type { ApiAccountJSON } from 'flavours/glitch/api_types/accounts';
+import type { ApiAccountJSON } from "flavours/glitch/api_types/accounts";
 
 export type ApiSuggestionSourceJSON =
-  | 'featured'
-  | 'most_followed'
-  | 'most_interactions'
-  | 'similar_to_recently_followed'
-  | 'friends_of_friends';
+  | "featured"
+  | "most_followed"
+  | "most_interactions"
+  | "similar_to_recently_followed"
+  | "friends_of_friends";
 
 export interface ApiSuggestionJSON {
   sources: [ApiSuggestionSourceJSON, ...ApiSuggestionSourceJSON[]];

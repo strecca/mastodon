@@ -1,10 +1,6 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit";
 
-import {
-  openNavigation,
-  closeNavigation,
-  toggleNavigation,
-} from 'mastodon/actions/navigation';
+import { openNavigation, closeNavigation, toggleNavigation } from "mastodon/actions/navigation";
 
 interface State {
   open: boolean;

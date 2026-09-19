@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 
-import { fetchRelationships } from 'mastodon/actions/accounts';
-import { importFetchedAccounts } from 'mastodon/actions/importer';
-import { apiRequest } from 'mastodon/api';
-import type { ApiAccountJSON } from 'mastodon/api_types/accounts';
-import { useAppDispatch } from 'mastodon/store';
+import { fetchRelationships } from "mastodon/actions/accounts";
+import { importFetchedAccounts } from "mastodon/actions/importer";
+import { apiRequest } from "mastodon/api";
+import type { ApiAccountJSON } from "mastodon/api_types/accounts";
+import { useAppDispatch } from "mastodon/store";
 
-import { useCurrentAccountId } from './useAccountId';
+import { useCurrentAccountId } from "./useAccountId";
 
 export function useSearchAccounts({
   onSettled,
@@ -26,9 +26,7 @@ export function useSearchAccounts({
   const dispatch = useAppDispatch();
 
   const [accounts, setAccounts] = useState<ApiAccountJSON[]>([]);
-  const [loadingState, setLoadingState] = useState<
-    'idle' | 'loading' | 'error'
-  >('idle');
+  const [loadingState, setLoadingState] = useState<"idle" | "loading" | "error">("idle");
 
   const searchRequestRef = useRef<AbortController | null>(null);
 
@@ -39,39 +37,35 @@ export function useSearchAccounts({
       }
 
       if (value.trim().length === 0) {
-        onSettled?.('');
+        onSettled?.("");
         if (resetOnInputClear) {
           setAccounts([]);
         }
         return;
       }
 
-      setLoadingState('loading');
+      setLoadingState("loading");
 
       searchRequestRef.current = new AbortController();
 
       try {
-        const accounts = await apiRequest<ApiAccountJSON[]>(
-          'GET',
-          'v1/accounts/search',
-          {
-            signal: searchRequestRef.current.signal,
-            params: {
-              q: value,
-              resolve: true,
-            },
+        const accounts = await apiRequest<ApiAccountJSON[]>("GET", "v1/accounts/search", {
+          signal: searchRequestRef.current.signal,
+          params: {
+            q: value,
+            resolve: true,
           },
-        );
+        });
         const accountIds = accounts.map((a) => a.id);
         dispatch(importFetchedAccounts(accounts));
         if (withRelationships) {
           dispatch(fetchRelationships(accountIds));
         }
         setAccounts(accounts);
-        setLoadingState('idle');
+        setLoadingState("idle");
         onSettled?.(value);
       } catch {
-        setLoadingState('error');
+        setLoadingState("error");
         onSettled?.(value);
       }
     },
@@ -91,14 +85,12 @@ export function useSearchAccounts({
   }, []);
 
   const currentUserId = useCurrentAccountId();
-  const [defaultAccounts, setDefaultAccounts] = useState<
-    ApiAccountJSON[] | null
-  >(null);
+  const [defaultAccounts, setDefaultAccounts] = useState<ApiAccountJSON[] | null>(null);
 
   useEffect(() => {
     if (
       !currentUserId ||
-      loadingState !== 'idle' ||
+      loadingState !== "idle" ||
       defaultAccounts !== null ||
       !withDefaultFollows
     ) {
@@ -106,10 +98,10 @@ export function useSearchAccounts({
     }
 
     async function doRequest() {
-      setLoadingState('loading');
+      setLoadingState("loading");
       try {
         const accounts = await apiRequest<ApiAccountJSON[]>(
-          'GET',
+          "GET",
           `v1/accounts/${currentUserId}/following`,
           { params: { limit: 40 } },
         );
@@ -119,9 +111,9 @@ export function useSearchAccounts({
           dispatch(fetchRelationships(accountIds));
         }
         setDefaultAccounts(accounts);
-        setLoadingState('idle');
+        setLoadingState("idle");
       } catch {
-        setLoadingState('error');
+        setLoadingState("error");
       }
     }
     void doRequest();
@@ -137,9 +129,7 @@ export function useSearchAccounts({
   ]);
 
   const accountsToReturn =
-    accounts.length === 0 && withDefaultFollows
-      ? (defaultAccounts ?? [])
-      : accounts;
+    accounts.length === 0 && withDefaultFollows ? (defaultAccounts ?? []) : accounts;
 
   const filteredAccounts = filterResults
     ? accountsToReturn.filter(filterResults)
@@ -149,7 +139,7 @@ export function useSearchAccounts({
     searchAccounts: startSearch,
     resetAccounts,
     accounts: filteredAccounts,
-    isLoading: loadingState === 'loading',
-    isError: loadingState === 'error',
+    isLoading: loadingState === "loading",
+    isError: loadingState === "error",
   };
 }

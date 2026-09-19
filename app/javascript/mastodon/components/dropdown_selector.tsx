@@ -1,17 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { supportsPassiveEvents } from 'detect-passive-events';
+import { supportsPassiveEvents } from "detect-passive-events";
 
-import InfoIcon from '@/material-icons/400-24px/info.svg?react';
+import InfoIcon from "@/material-icons/400-24px/info.svg?react";
 
-import type { IconProp } from './icon';
-import { Icon } from './icon';
+import type { IconProp } from "./icon";
+import { Icon } from "./icon";
 
-const listenerOptions = supportsPassiveEvents
-  ? { passive: true, capture: true }
-  : true;
+const listenerOptions = supportsPassiveEvents ? { passive: true, capture: true } : true;
 
 export interface SelectItem<Value extends string = string> {
   value: Value;
@@ -35,7 +33,7 @@ export const DropdownSelector: React.FC<Props> = ({
   style,
   items,
   value,
-  classNamePrefix = 'privacy-dropdown',
+  classNamePrefix = "privacy-dropdown",
   onClose,
   onChange,
 }) => {
@@ -44,10 +42,8 @@ export const DropdownSelector: React.FC<Props> = ({
   const [currentValue, setCurrentValue] = useState(value);
 
   const handleClick = useCallback(
-    (
-      e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>,
-    ) => {
-      const value = e.currentTarget.getAttribute('data-index');
+    (e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>) => {
+      const value = e.currentTarget.getAttribute("data-index");
 
       e.preventDefault();
 
@@ -59,50 +55,42 @@ export const DropdownSelector: React.FC<Props> = ({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLLIElement>) => {
-      const value = e.currentTarget.getAttribute('data-index');
+      const value = e.currentTarget.getAttribute("data-index");
       const index = items.findIndex((item) => item.value === value);
 
       let element: Element | null | undefined = null;
 
       switch (e.key) {
-        case 'Escape':
+        case "Escape":
           onClose();
           break;
-        case ' ':
-        case 'Enter':
+        case " ":
+        case "Enter":
           handleClick(e);
           break;
-        case 'ArrowDown':
-          element =
-            listRef.current?.children[index + 1] ??
-            listRef.current?.firstElementChild;
+        case "ArrowDown":
+          element = listRef.current?.children[index + 1] ?? listRef.current?.firstElementChild;
           break;
-        case 'ArrowUp':
-          element =
-            listRef.current?.children[index - 1] ??
-            listRef.current?.lastElementChild;
+        case "ArrowUp":
+          element = listRef.current?.children[index - 1] ?? listRef.current?.lastElementChild;
           break;
-        case 'Tab':
+        case "Tab":
           if (e.shiftKey) {
-            element =
-              listRef.current?.children[index - 1] ??
-              listRef.current?.lastElementChild;
+            element = listRef.current?.children[index - 1] ?? listRef.current?.lastElementChild;
           } else {
-            element =
-              listRef.current?.children[index + 1] ??
-              listRef.current?.firstElementChild;
+            element = listRef.current?.children[index + 1] ?? listRef.current?.firstElementChild;
           }
           break;
-        case 'Home':
+        case "Home":
           element = listRef.current?.firstElementChild;
           break;
-        case 'End':
+        case "End":
           element = listRef.current?.lastElementChild;
           break;
       }
 
       if (element && element instanceof HTMLElement) {
-        const selectedValue = element.getAttribute('data-index');
+        const selectedValue = element.getAttribute("data-index");
         element.focus();
         if (selectedValue) setCurrentValue(selectedValue);
         e.preventDefault();
@@ -114,38 +102,30 @@ export const DropdownSelector: React.FC<Props> = ({
 
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent | TouchEvent) => {
-      if (
-        listRef.current &&
-        e.target instanceof Node &&
-        !listRef.current.contains(e.target)
-      ) {
+      if (listRef.current && e.target instanceof Node && !listRef.current.contains(e.target)) {
         onClose();
         e.stopPropagation();
       }
     };
 
-    document.addEventListener('click', handleDocumentClick, { capture: true });
-    document.addEventListener('touchend', handleDocumentClick, listenerOptions);
+    document.addEventListener("click", handleDocumentClick, { capture: true });
+    document.addEventListener("touchend", handleDocumentClick, listenerOptions);
 
     focusedItemRef.current?.focus({ preventScroll: true });
 
     return () => {
-      document.removeEventListener('click', handleDocumentClick, {
+      document.removeEventListener("click", handleDocumentClick, {
         capture: true,
       });
-      document.removeEventListener(
-        'touchend',
-        handleDocumentClick,
-        listenerOptions,
-      );
+      document.removeEventListener("touchend", handleDocumentClick, listenerOptions);
     };
   }, [onClose]);
 
   return (
-    <ul style={style} role='listbox' ref={listRef}>
+    <ul style={style} role="listbox" ref={listRef}>
       {items.map((item) => (
         <li
-          role='option'
+          role="option"
           tabIndex={0}
           key={item.value}
           data-index={item.value}
@@ -169,11 +149,8 @@ export const DropdownSelector: React.FC<Props> = ({
           </div>
 
           {item.extra && (
-            <div
-              className={`${classNamePrefix}__option__additional`}
-              title={item.extra}
-            >
-              <Icon id='info-circle' icon={InfoIcon} />
+            <div className={`${classNamePrefix}__option__additional`} title={item.extra}>
+              <Icon id="info-circle" icon={InfoIcon} />
             </div>
           )}
         </li>

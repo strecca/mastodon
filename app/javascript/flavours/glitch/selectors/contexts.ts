@@ -1,4 +1,4 @@
-import { createAppSelector } from 'flavours/glitch/store';
+import { createAppSelector } from "flavours/glitch/store";
 
 export const getAncestorsIds = createAppSelector(
   [(_, id: string) => id, (state) => state.contexts.inReplyTos],
@@ -17,11 +17,7 @@ export const getAncestorsIds = createAppSelector(
 );
 
 export const getDescendantsIds = createAppSelector(
-  [
-    (_, id: string) => id,
-    (state) => state.contexts.replies,
-    (state) => state.statuses,
-  ],
+  [(_, id: string) => id, (state) => state.contexts.replies, (state) => state.statuses],
   (statusId, contextReplies, statuses) => {
     const descendantsIds: string[] = [];
 
@@ -60,10 +56,8 @@ export const getDescendantsIds = createAppSelector(
         return false;
       }
 
-      const inReplyToAccountId = status.get('in_reply_to_account_id') as
-        | string
-        | null;
-      const accountId = status.get('account') as string;
+      const inReplyToAccountId = status.get("in_reply_to_account_id") as string | null;
+      const accountId = status.get("account") as string;
 
       return inReplyToAccountId !== accountId;
     });
@@ -76,10 +70,8 @@ export const getDescendantsIds = createAppSelector(
           return;
         }
 
-        const inReplyToAccountId = status.get('in_reply_to_account_id') as
-          | string
-          | null;
-        const accountId = status.get('account') as string;
+        const inReplyToAccountId = status.get("in_reply_to_account_id") as string | null;
+        const accountId = status.get("account") as string;
 
         if (idx > insertAt && inReplyToAccountId === accountId) {
           descendantsIds.splice(idx, 1);

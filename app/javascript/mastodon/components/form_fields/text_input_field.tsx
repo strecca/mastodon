@@ -1,16 +1,16 @@
-import type { ComponentPropsWithoutRef } from 'react';
-import { forwardRef } from 'react';
+import type { ComponentPropsWithoutRef } from "react";
+import { forwardRef } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { IconProp } from 'mastodon/components/icon';
-import { Icon } from 'mastodon/components/icon';
+import type { IconProp } from "mastodon/components/icon";
+import { Icon } from "mastodon/components/icon";
 
-import { FormFieldWrapper } from './form_field_wrapper';
-import type { CommonFieldWrapperProps } from './form_field_wrapper';
-import classes from './text_input.module.scss';
+import { FormFieldWrapper } from "./form_field_wrapper";
+import type { CommonFieldWrapperProps } from "./form_field_wrapper";
+import classes from "./text_input.module.scss";
 
-export interface TextInputProps extends ComponentPropsWithoutRef<'input'> {
+export interface TextInputProps extends ComponentPropsWithoutRef<"input"> {
   icon?: IconProp;
 }
 
@@ -24,10 +24,7 @@ interface Props extends TextInputProps, CommonFieldWrapperProps {}
  */
 
 export const TextInputField = forwardRef<HTMLInputElement, Props>(
-  (
-    { id, label, hint, status, required, wrapperClassName, ...otherProps },
-    ref,
-  ) => (
+  ({ id, label, hint, status, required, wrapperClassName, ...otherProps }, ref) => (
     <FormFieldWrapper
       label={label}
       hint={hint}
@@ -41,10 +38,10 @@ export const TextInputField = forwardRef<HTMLInputElement, Props>(
   ),
 );
 
-TextInputField.displayName = 'TextInputField';
+TextInputField.displayName = "TextInputField";
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ type = 'text', icon, className, ...otherProps }, ref) => (
+  ({ type = "text", icon, className, ...otherProps }, ref) => (
     <WrapFieldWithIcon icon={icon}>
       <input
         type={type}
@@ -56,7 +53,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   ),
 );
 
-TextInput.displayName = 'TextInput';
+TextInput.displayName = "TextInput";
 
 const WrapFieldWithIcon: React.FC<{
   icon?: IconProp;
@@ -65,7 +62,7 @@ const WrapFieldWithIcon: React.FC<{
   if (icon) {
     return (
       <div className={classes.iconWrapper}>
-        <Icon icon={icon} id='input-icon' className={classes.icon} />
+        <Icon icon={icon} id="input-icon" className={classes.icon} />
         {children}
       </div>
     );

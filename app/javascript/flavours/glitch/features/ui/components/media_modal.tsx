@@ -1,37 +1,37 @@
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
-import type { RefCallback, FC } from 'react';
+import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
+import type { RefCallback, FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { List as ImmutableList } from 'immutable';
+import type { List as ImmutableList } from "immutable";
 
-import { animated, useSpring } from '@react-spring/web';
-import { useDrag } from '@use-gesture/react';
+import { animated, useSpring } from "@react-spring/web";
+import { useDrag } from "@use-gesture/react";
 
-import type { MediaAttachment } from '@/flavours/glitch/models/status';
-import ChevronLeftIcon from '@/material-icons/400-24px/chevron_left.svg?react';
-import ChevronRightIcon from '@/material-icons/400-24px/chevron_right.svg?react';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import FitScreenIcon from '@/material-icons/400-24px/fit_screen.svg?react';
-import ActualSizeIcon from '@/svg-icons/actual_size.svg?react';
-import type { RGB } from 'flavours/glitch/blurhash';
-import { getAverageFromBlurhash } from 'flavours/glitch/blurhash';
-import { GIFV } from 'flavours/glitch/components/gifv';
-import { Icon } from 'flavours/glitch/components/icon';
-import { IconButton } from 'flavours/glitch/components/icon_button';
-import { Footer } from 'flavours/glitch/features/picture_in_picture/components/footer';
-import { Video } from 'flavours/glitch/features/video';
+import type { MediaAttachment } from "@/flavours/glitch/models/status";
+import ChevronLeftIcon from "@/material-icons/400-24px/chevron_left.svg?react";
+import ChevronRightIcon from "@/material-icons/400-24px/chevron_right.svg?react";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import FitScreenIcon from "@/material-icons/400-24px/fit_screen.svg?react";
+import ActualSizeIcon from "@/svg-icons/actual_size.svg?react";
+import type { RGB } from "flavours/glitch/blurhash";
+import { getAverageFromBlurhash } from "flavours/glitch/blurhash";
+import { GIFV } from "flavours/glitch/components/gifv";
+import { Icon } from "flavours/glitch/components/icon";
+import { IconButton } from "flavours/glitch/components/icon_button";
+import { Footer } from "flavours/glitch/features/picture_in_picture/components/footer";
+import { Video } from "flavours/glitch/features/video";
 
-import { ZoomableImage } from './zoomable_image';
+import { ZoomableImage } from "./zoomable_image";
 
 const messages = defineMessages({
-  close: { id: 'lightbox.close', defaultMessage: 'Close' },
-  previous: { id: 'lightbox.previous', defaultMessage: 'Previous' },
-  next: { id: 'lightbox.next', defaultMessage: 'Next' },
-  zoomIn: { id: 'lightbox.zoom_in', defaultMessage: 'Zoom to actual size' },
-  zoomOut: { id: 'lightbox.zoom_out', defaultMessage: 'Zoom to fit' },
+  close: { id: "lightbox.close", defaultMessage: "Close" },
+  previous: { id: "lightbox.previous", defaultMessage: "Previous" },
+  next: { id: "lightbox.next", defaultMessage: "Next" },
+  zoomIn: { id: "lightbox.zoom_in", defaultMessage: "Zoom to actual size" },
+  zoomOut: { id: "lightbox.zoom_out", defaultMessage: "Zoom to fit" },
 });
 
 interface MediaModalProps {
@@ -47,7 +47,7 @@ interface MediaModalProps {
 }
 
 const MIN_SWIPE_DISTANCE = 400;
-const isLtrDir = getComputedStyle(document.body).direction !== 'rtl';
+const isLtrDir = getComputedStyle(document.body).direction !== "rtl";
 
 export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
   (
@@ -68,7 +68,7 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
     const [zoomedIn, setZoomedIn] = useState(false);
     const currentMedia = media.get(index);
 
-    const sign = isLtrDir ? '-' : '';
+    const sign = isLtrDir ? "-" : "";
 
     const [wrapperStyles, api] = useSpring(() => ({
       x: `${sign}${index * 100}%`,
@@ -100,10 +100,10 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
 
     const handleKeyDown = useCallback(
       (event: KeyboardEvent) => {
-        const prevKey = isLtrDir ? 'ArrowLeft' : 'ArrowRight';
-        const nextKey = isLtrDir ? 'ArrowRight' : 'ArrowLeft';
+        const prevKey = isLtrDir ? "ArrowLeft" : "ArrowRight";
+        const nextKey = isLtrDir ? "ArrowRight" : "ArrowLeft";
 
-        if (event.key === 'Escape') {
+        if (event.key === "Escape") {
           onClose();
           event.preventDefault();
           event.stopPropagation();
@@ -128,16 +128,13 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
         }
 
         // If dragging and swipe distance is enough, change the index.
-        if (
-          active &&
-          Math.abs(mx) > Math.min(window.innerWidth / 4, MIN_SWIPE_DISTANCE)
-        ) {
+        if (active && Math.abs(mx) > Math.min(window.innerWidth / 4, MIN_SWIPE_DISTANCE)) {
           handleChangeIndex(isLtrDir ? index - xDir : index + xDir);
           cancel();
         }
         // Set the x position via calc to ensure proper centering regardless of screen size.
         const x = active ? mx : 0;
-        const operator = isLtrDir ? '+' : '-';
+        const operator = isLtrDir ? "+" : "-";
         void api.start({
           x: `calc(${sign}${index * 100}% ${operator} ${x}px)`,
         });
@@ -146,15 +143,15 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
     );
 
     useEffect(() => {
-      window.addEventListener('keydown', handleKeyDown, false);
+      window.addEventListener("keydown", handleKeyDown, false);
 
       return () => {
-        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener("keydown", handleKeyDown);
       };
     }, [handleKeyDown]);
 
     useEffect(() => {
-      const blurhash = currentMedia?.get('blurhash') as string | undefined;
+      const blurhash = currentMedia?.get("blurhash") as string | undefined;
       if (blurhash) {
         const backgroundColor = getAverageFromBlurhash(blurhash);
         if (backgroundColor) {
@@ -172,7 +169,7 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
     }>({ width: 0, height: 0 });
     const handleRef: RefCallback<HTMLDivElement> = useCallback(
       (ele) => {
-        if (typeof _ref === 'function') {
+        if (typeof _ref === "function") {
           _ref(ele);
         } else if (_ref) {
           _ref.current = ele;
@@ -189,11 +186,9 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
     );
 
     const zoomable =
-      currentMedia?.get('type') === 'image' &&
-      ((currentMedia.getIn(['meta', 'original', 'width']) as number) >
-        viewportDimensions.width ||
-        (currentMedia.getIn(['meta', 'original', 'height']) as number) >
-          viewportDimensions.height);
+      currentMedia?.get("type") === "image" &&
+      ((currentMedia.getIn(["meta", "original", "width"]) as number) > viewportDimensions.width ||
+        (currentMedia.getIn(["meta", "original", "height"]) as number) > viewportDimensions.height);
     const handleZoomClick = useCallback(() => {
       setZoomedIn((prev) => !prev);
     }, []);
@@ -206,18 +201,15 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
     const content = useMemo(
       () =>
         media.map((item, idx) => {
-          const url = item.get('url') as string;
-          const blurhash = item.get('blurhash') as string;
-          const width = item.getIn(['meta', 'original', 'width'], 0) as number;
-          const height = item.getIn(
-            ['meta', 'original', 'height'],
-            0,
-          ) as number;
+          const url = item.get("url") as string;
+          const blurhash = item.get("blurhash") as string;
+          const width = item.getIn(["meta", "original", "width"], 0) as number;
+          const height = item.getIn(["meta", "original", "height"], 0) as number;
           const description = item.getIn(
-            ['translation', 'description'],
-            item.get('description'),
+            ["translation", "description"],
+            item.get("description"),
           ) as string;
-          if (item.get('type') === 'image') {
+          if (item.get("type") === "image") {
             return (
               <ZoomableImage
                 src={url}
@@ -234,17 +226,13 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
                 zoomedIn={zoomedIn && idx === index}
               />
             );
-          } else if (item.get('type') === 'video') {
+          } else if (item.get("type") === "video") {
             return (
               <Video
-                preview={item.get('preview_url') as string | undefined}
+                preview={item.get("preview_url") as string | undefined}
                 blurhash={blurhash}
                 src={url}
-                frameRate={
-                  item.getIn(['meta', 'original', 'frame_rate']) as
-                    | string
-                    | undefined
-                }
+                frameRate={item.getIn(["meta", "original", "frame_rate"]) as string | undefined}
                 aspectRatio={`${width} / ${height}`}
                 startTime={currentTime ?? 0}
                 startPlaying={autoPlay ?? false}
@@ -256,7 +244,7 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
                 key={url}
               />
             );
-          } else if (item.get('type') === 'gifv') {
+          } else if (item.get("type") === "gifv") {
             return (
               <GIFV
                 src={url}
@@ -288,61 +276,55 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
 
     const prevNav = media.size > 1 && (
       <button
-        className='media-modal__nav media-modal__nav--prev'
+        className="media-modal__nav media-modal__nav--prev"
         onClick={handlePrevClick}
         aria-label={intl.formatMessage(messages.previous)}
-        type='button'
+        type="button"
       >
-        <Icon id='chevron-left' icon={ChevronLeftIcon} />
+        <Icon id="chevron-left" icon={ChevronLeftIcon} />
       </button>
     );
     const nextNav = media.size > 1 && (
       <button
-        className='media-modal__nav  media-modal__nav--next'
+        className="media-modal__nav  media-modal__nav--next"
         onClick={handleNextClick}
         aria-label={intl.formatMessage(messages.next)}
-        type='button'
+        type="button"
       >
-        <Icon id='chevron-right' icon={ChevronRightIcon} />
+        <Icon id="chevron-right" icon={ChevronRightIcon} />
       </button>
     );
 
     return (
-      <div
-        {...bind()}
-        className='modal-root__modal media-modal'
-        ref={handleRef}
-      >
+      <div {...bind()} className="modal-root__modal media-modal" ref={handleRef}>
         <animated.div
           style={wrapperStyles}
-          className='media-modal__closer'
-          role='presentation'
+          className="media-modal__closer"
+          role="presentation"
           onClick={onClose}
         >
           {content}
         </animated.div>
 
-        <div className='media-modal__persistent-close'>
+        <div className="media-modal__persistent-close">
           <IconButton
             title={intl.formatMessage(messages.close)}
-            icon='times'
+            icon="times"
             iconComponent={CloseIcon}
             onClick={onClose}
           />
         </div>
 
         <div
-          className={classNames('media-modal__navigation', {
-            'media-modal__navigation--hidden': navigationHidden,
+          className={classNames("media-modal__navigation", {
+            "media-modal__navigation--hidden": navigationHidden,
           })}
         >
-          <div className='media-modal__buttons'>
+          <div className="media-modal__buttons">
             {zoomable && (
               <IconButton
-                title={intl.formatMessage(
-                  zoomedIn ? messages.zoomOut : messages.zoomIn,
-                )}
-                icon=''
+                title={intl.formatMessage(zoomedIn ? messages.zoomOut : messages.zoomIn)}
+                icon=""
                 iconComponent={zoomedIn ? FitScreenIcon : ActualSizeIcon}
                 onClick={handleZoomClick}
               />
@@ -352,22 +334,20 @@ export const MediaModal = forwardRef<HTMLDivElement, MediaModalProps>(
           {prevNav}
           {nextNav}
 
-          <div className='media-modal__overlay'>
+          <div className="media-modal__overlay">
             <MediaPagination
               itemsCount={media.size}
               index={index}
               onChangeIndex={handleChangeIndex}
             />
-            {statusId && (
-              <Footer statusId={statusId} withOpenButton onClose={onClose} />
-            )}
+            {statusId && <Footer statusId={statusId} withOpenButton onClose={onClose} />}
           </div>
         </div>
       </div>
     );
   },
 );
-MediaModal.displayName = 'MediaModal';
+MediaModal.displayName = "MediaModal";
 
 interface MediaPaginationProps {
   itemsCount: number;
@@ -375,11 +355,7 @@ interface MediaPaginationProps {
   onChangeIndex: (newIndex: number) => void;
 }
 
-const MediaPagination: FC<MediaPaginationProps> = ({
-  itemsCount,
-  index,
-  onChangeIndex,
-}) => {
+const MediaPagination: FC<MediaPaginationProps> = ({ itemsCount, index, onChangeIndex }) => {
   const handleChangeIndex = useCallback(
     (curIndex: number) => {
       return () => {
@@ -394,15 +370,15 @@ const MediaPagination: FC<MediaPaginationProps> = ({
   }
 
   return (
-    <ul className='media-modal__pagination'>
+    <ul className="media-modal__pagination">
       {Array.from({ length: itemsCount }).map((_, i) => (
         <button
           key={i}
-          className={classNames('media-modal__page-dot', {
+          className={classNames("media-modal__page-dot", {
             active: i === index,
           })}
           onClick={handleChangeIndex(i)}
-          type='button'
+          type="button"
         >
           {i + 1}
         </button>

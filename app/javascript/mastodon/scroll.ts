@@ -1,15 +1,6 @@
-const easingOutQuint = (
-  x: number,
-  t: number,
-  b: number,
-  c: number,
-  d: number,
-) => c * ((t = t / d - 1) * t * t * t * t + 1) + b;
-const scroll = (
-  node: Element,
-  key: 'scrollTop' | 'scrollLeft',
-  target: number,
-) => {
+const easingOutQuint = (x: number, t: number, b: number, c: number, d: number) =>
+  c * ((t = t / d - 1) * t * t * t * t + 1) + b;
+const scroll = (node: Element, key: "scrollTop" | "scrollLeft", target: number) => {
   const startTime = Date.now();
   const offset = node[key];
   const gap = target - offset;
@@ -35,23 +26,22 @@ const scroll = (
   };
 };
 
-const isScrollBehaviorSupported =
-  'scrollBehavior' in document.documentElement.style;
+const isScrollBehaviorSupported = "scrollBehavior" in document.documentElement.style;
 
 export const scrollRight = (node: Element, position: number) =>
   requestIdleCallback(() => {
     if (isScrollBehaviorSupported) {
-      node.scrollTo({ left: position, behavior: 'smooth' });
+      node.scrollTo({ left: position, behavior: "smooth" });
     } else {
-      scroll(node, 'scrollLeft', position);
+      scroll(node, "scrollLeft", position);
     }
   });
 
 export const scrollTop = (node: Element) =>
   requestIdleCallback(() => {
     if (isScrollBehaviorSupported) {
-      node.scrollTo({ top: 0, behavior: 'smooth' });
+      node.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      scroll(node, 'scrollTop', 0);
+      scroll(node, "scrollTop", 0);
     }
   });

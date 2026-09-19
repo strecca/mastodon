@@ -52,7 +52,7 @@ ca:
         callback_urls: URL de retorn
         scopes: Àmbits
         secret: Clau secreta de client
-        title: 'Aplicació: %{name}'
+        title: "Aplicació: %{name}"
     authorizations:
       buttons:
         authorize: Autoritza
@@ -86,7 +86,7 @@ ca:
         invalid_grant: La concessió d'autorizació oferta és invàlida, ha vençut, s'ha revocat, no coincideix amb l'URI de redirecció utilizada en la petició d'autorizació, o fou emesa per a un altre client.
         invalid_redirect_uri: L'uri de redirecció inclòsa no és vàlida.
         invalid_request:
-          missing_param: 'Falta paràmetre requerit: %{value}.'
+          missing_param: "Falta paràmetre requerit: %{value}."
           request_not_authorized: La petició ha de ser autoritzada. Falta o és invàlid un paràmetre requerit per l'autorització de la petició.
           unknown: En la petició manca un paràmetre necessari o inclou un valor de paràmetre no suportat o te un altre tipus de format incorrecte.
         invalid_resource_owner: Les credencials del propietari del recurs proporcionat no son vàlides, o el propietari del recurs no pot ser trobat

@@ -1,13 +1,10 @@
-import type { Reducer } from '@reduxjs/toolkit';
+import type { Reducer } from "@reduxjs/toolkit";
 
-import { importPolls } from 'flavours/glitch/actions/importer/polls';
-import { createPollOptionTranslationFromServerJSON } from 'flavours/glitch/models/poll';
-import type { Poll } from 'flavours/glitch/models/poll';
+import { importPolls } from "flavours/glitch/actions/importer/polls";
+import { createPollOptionTranslationFromServerJSON } from "flavours/glitch/models/poll";
+import type { Poll } from "flavours/glitch/models/poll";
 
-import {
-  STATUS_TRANSLATE_SUCCESS,
-  STATUS_TRANSLATE_UNDO,
-} from '../actions/statuses';
+import { STATUS_TRANSLATE_SUCCESS, STATUS_TRANSLATE_UNDO } from "../actions/statuses";
 
 const initialState: Record<string, Poll> = {};
 type PollsState = typeof initialState;
@@ -33,10 +30,7 @@ const statusTranslateUndo = (state: PollsState, id: string) => {
   });
 };
 
-export const pollsReducer: Reducer<PollsState> = (
-  draft = initialState,
-  action,
-) => {
+export const pollsReducer: Reducer<PollsState> = (draft = initialState, action) => {
   if (importPolls.match(action)) {
     action.payload.polls.forEach((poll) => {
       draft[poll.id] = poll;

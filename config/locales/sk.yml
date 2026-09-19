@@ -416,7 +416,7 @@ sk:
     export_domain_blocks:
       import:
         existing_relationships_warning: Existujúce vzťahy nasledovania
-        private_comment_template: 'Importované z: %{source} dňa %{date}'
+        private_comment_template: "Importované z: %{source} dňa %{date}"
         title: Nahraj zákazy domén
       new:
         title: Nahraj zákazy domén
@@ -493,12 +493,12 @@ sk:
       created_msg: Nové IP pravidlo úspešne pridané
       delete: Vymazať
       expires_in:
-        '1209600': 2 týždne
-        '15778476': 6 mesiacov
-        '2629746': 1 mesiac
-        '31556952': 1 rok
-        '86400': 1 deň
-        '94670856': 3 roky
+        "1209600": 2 týždne
+        "15778476": 6 mesiacov
+        "2629746": 1 mesiac
+        "31556952": 1 rok
+        "86400": 1 deň
+        "94670856": 3 roky
       new:
         title: Vytvor nové IP pravidlo
       no_ip_block_selected: Žiadne IP pravidlá neboli zmenené, keďže si žiadne nemal/a zvolené
@@ -566,7 +566,7 @@ sk:
         title: Poznámky
       remote_user_placeholder: vzdialený užívateľ z %{instance}
       reopen: Znovu otvor report
-      report: 'Nahlásiť #%{id}'
+      report: "Nahlásiť #%{id}"
       reported_account: Nahlásený účet
       reported_by: Nahlásené užívateľom
       resolved: Vyriešené
@@ -575,16 +575,16 @@ sk:
       status: Stav
       summary:
         action_preambles:
-          suspend_html: 'Chystáš sa <strong>pozastaviť</strong> účet <strong>@%{acct}</strong>. To urobí:'
+          suspend_html: "Chystáš sa <strong>pozastaviť</strong> účet <strong>@%{acct}</strong>. To urobí:"
         actions:
           delete_html: Vymazať príspevky porušujúce pravidlá
           mark_as_sensitive_html: Označiť médiá v príspevkoch porušujúcich pravidlá ako citlivé
           silence_html: Zásadne obmedzí dosah profilu <strong>@%{acct}</strong> zmenou jeho viditeľnosti spolu s jeho obsahom iba pre ľudí, ktorí ho už sledujú alebo si ho ručne vyhľadali
-        close_report: 'Označ hlásenie #%{id} za vyriešené'
+        close_report: "Označ hlásenie #%{id} za vyriešené"
       target_origin: Pôvod nahláseného účtu
       title: Hlásenia
       unassign: Odober
-      unknown_action_msg: 'Neznáma akcia: %{action}'
+      unknown_action_msg: "Neznáma akcia: %{action}"
       unresolved: Nevyriešené
       updated_at: Aktualizované
       view_profile: Zobraz profil
@@ -757,7 +757,7 @@ sk:
         not_usable: Nemôže byť použitý
         title: Populárne štítky
         trendable: Môže sa objaviť medzi trendmi
-        trending_rank: 'Populárne #%{rank}'
+        trending_rank: "Populárne #%{rank}"
         usable: Môže byť použitý
       trending: Populárne
     warning_presets:
@@ -808,7 +808,7 @@ sk:
     sensitive_content: Citlivý obsah
   application_mailer:
     unsubscribe: Prestaň odoberať
-    view: 'Zobraziť:'
+    view: "Zobraziť:"
     view_profile: Zobraz profil
     view_status: Zobraz status
   applications:
@@ -876,7 +876,7 @@ sk:
   author_attribution:
     example_title: Názorný text
     hint_html: Píšete novinové alebo blogové články mimo Mastodonu? Rozhodujte o tom, ako sú vám pripisované, keď ich niekto zdieľa na Mastodone.
-    instructions: 'Vložte tento kód do kódu HTML vo vašom článku:'
+    instructions: "Vložte tento kód do kódu HTML vo vašom článku:"
     more_from_html: Viac od %{name}
     s_blog: Blog %{name}
     then_instructions: Potom do poľa nižšie zadajte názov domény média.
@@ -907,7 +907,7 @@ sk:
     proceed: Odstrániť účet
     success_msg: Tvoj účet bol úspešne vymazaný
     warning:
-      before: 'Než budeš pokračovať, prosím pozorne si prečítaj tieto poznámky:'
+      before: "Než budeš pokračovať, prosím pozorne si prečítaj tieto poznámky:"
       caches: Obsah, ktorý bol predčítaný inými servermi môže zanechať pozostatky
       data_removal: Tvoje príspevky a iné dáta budú natrvalo odstránené
       irreversible: Nebudeš môcť navrátiť, alebo znova aktivovať svoj účet
@@ -936,19 +936,19 @@ sk:
   edit_profile:
     other: Ostatné
   errors:
-    '400': Požiadavka, ktorú si odoslal/a, bola buď nesprávna, alebo znehodnotená.
-    '403': Nemáš povolenie pre zobrazenie tejto stránky.
-    '404': Stránka ktorú hľadáš nieje tu.
-    '406': Táto stránka nie je dostupná v požadovanom formáte.
-    '410': Stránka ktorú si tu hľadal/a sa tu už viac nenachádza.
-    '422':
+    "400": Požiadavka, ktorú si odoslal/a, bola buď nesprávna, alebo znehodnotená.
+    "403": Nemáš povolenie pre zobrazenie tejto stránky.
+    "404": Stránka ktorú hľadáš nieje tu.
+    "406": Táto stránka nie je dostupná v požadovanom formáte.
+    "410": Stránka ktorú si tu hľadal/a sa tu už viac nenachádza.
+    "422":
       content: Bezpečtnostné overenie zlyhalo. Blokuješ cookies?
       title: Bezpečtnostné overenie zlyhalo
-    '429': Zamlčané
-    '500':
+    "429": Zamlčané
+    "500":
       content: Ospravedlňujem sa. Niečo sa pokazilo na našom konci.
       title: Táto stránka nieje v poriadku
-    '503': Táto stránka nemôže byť načítaná, kvôli dočasnému výpadku servera.
+    "503": Táto stránka nemôže byť načítaná, kvôli dočasnému výpadku servera.
     noscript_html: Aby bolo možné používať Mastodon web aplikáciu, povoľ prosím JavaScript. Alebo skús jednu z <a href="%{apps_path}"> aplikácii </a> dostupných pre vašu platformu.
   existing_username_validator:
     not_found: nepodarilo sa nájsť miestného užívateľa s takouto prezývkou
@@ -1046,16 +1046,16 @@ sk:
     delete: Deaktivuj
     expired: Neplatné
     expires_in:
-      '1800': 30 minút
-      '21600': 6 hodín
-      '3600': 1 hodina
-      '43200': 12 hodín
-      '604800': 1 týždeň
-      '86400': 1 deň
+      "1800": 30 minút
+      "21600": 6 hodín
+      "3600": 1 hodina
+      "43200": 12 hodín
+      "604800": 1 týždeň
+      "86400": 1 deň
     expires_in_prompt: Nikdy
     generate: Vygeneruj
     invalid: Táto pozvánka je neplatná
-    invited_by: 'Bol/a si pozvaný/á užívateľom:'
+    invited_by: "Bol/a si pozvaný/á užívateľom:"
     max_uses:
       few: "%{count} využití"
       many: "%{count} využití"
@@ -1103,7 +1103,7 @@ sk:
     set_redirect: Nastav presmerovanie
     warning:
       backreference_required: Nový účet musí byť najskôr nastavený tak, aby spätne odkazoval na tento
-      before: 'Než budeš pokračovať, prosím pozorne si prečítaj tieto poznámky:'
+      before: "Než budeš pokračovať, prosím pozorne si prečítaj tieto poznámky:"
       cooldown: Po presunutí je tu istá zahrievacia doba, počas ktorej sa nebudeš môcť znova presunúť
       disabled_account: Tvoj súčasný účet už po tomto nebude plne použiteľný. Stále ale budeš mať prístup ku stiahnutiu dát a možnosti znovu-aktivácie.
       followers: Tento úkon presunie všetkých následovateľov zo súčasného účtu na nový účet
@@ -1146,7 +1146,7 @@ sk:
   notifications:
     administration_emails: Administrátorské e-mailové upozornenia
     email_events: Udalosti pre e-mailové upozornenia
-    email_events_hint: 'Vyberte udalosti, pre ktoré chcete dostávať upozornenia:'
+    email_events_hint: "Vyberte udalosti, pre ktoré chcete dostávať upozornenia:"
   otp_authentication:
     enable: Povoľ
   pagination:
@@ -1211,10 +1211,10 @@ sk:
   remote_follow:
     missing_resource: Nemožno nájsť potrebnú presmerovaciu adresu k tvojmu účtu
   rss:
-    content_warning: 'Varovanie o obsahu:'
+    content_warning: "Varovanie o obsahu:"
     descriptions:
       account: Verejné príspevky od @%{acct}
-      tag: 'Verejné príspevky otagované #%{hashtag}'
+      tag: "Verejné príspevky otagované #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Prekročil/a si denný limit %{limit} predplánovaných príspevkov
     over_total_limit: Prekročil/a si limit %{limit} predplánovaných príspevkov
@@ -1281,20 +1281,20 @@ sk:
     type: Udalosť
   statuses:
     attached:
-      description: 'Priložené: %{attached}'
+      description: "Priložené: %{attached}"
       image:
         few: "%{count} obrázkov"
         many: "%{count} obrázkov"
         one: "%{count} obrázok"
         other: "%{count} obrázky"
     boosted_from_html: Zdieľané od %{acct_link}
-    content_warning: 'Varovanie o obsahu: %{warning}'
+    content_warning: "Varovanie o obsahu: %{warning}"
     default_language: Rovnaký ako jazyk rozhrania
     disallowed_hashtags:
-      few: 'obsahoval nepovolené hashtagy: %{tags}'
-      many: 'obsahoval nepovolené hashtagy: %{tags}'
-      one: 'obsahoval nepovolený hashtag: %{tags}'
-      other: 'obsahoval nepovolené hashtagy: %{tags}'
+      few: "obsahoval nepovolené hashtagy: %{tags}"
+      many: "obsahoval nepovolené hashtagy: %{tags}"
+      one: "obsahoval nepovolený hashtag: %{tags}"
+      other: "obsahoval nepovolené hashtagy: %{tags}"
     edited_at_html: Upravené %{date}
     errors:
       in_reply_not_found: Príspevok, na ktorý sa snažíš odpovedať, pravdepodobne neexistuje.
@@ -1331,14 +1331,14 @@ sk:
     keep_self_fav: Ponechať ohviezdičkované príspevky
     keep_self_fav_hint: Vaše ohviezdičkované príspevky nebudú vymazané
     min_age:
-      '1209600': 2 týždne
-      '15778476': 6 mesiacov
-      '2629746': 1 mesiac
-      '31556952': 1 rok
-      '5259492': 2 mesiace
-      '604800': 1 týždeň
-      '63113904': 2 roky
-      '7889238': 3 mesiace
+      "1209600": 2 týždne
+      "15778476": 6 mesiacov
+      "2629746": 1 mesiac
+      "31556952": 1 rok
+      "5259492": 2 mesiace
+      "604800": 1 týždeň
+      "63113904": 2 roky
+      "7889238": 3 mesiace
     min_age_label: Časová hranica
     min_favs: Ponechať príspevky s aspoň týmto počtom hviezdičiek
     min_favs_hint: Vaše príspevky, ktoré majú aspoň tento počet hviezdičiek, nebudú vymazané. Nevypĺňajte, pokiaľ chcete mazať príspevky bez ohľadu na ich počet hviezdičiek
@@ -1383,13 +1383,13 @@ sk:
       subject: Váš archív je pripravený na stiahnutie
       title: Odber archívu
     failed_2fa:
-      details: 'Tu sú podrobnosti o pokuse o prihlásenie:'
+      details: "Tu sú podrobnosti o pokuse o prihlásenie:"
     suspicious_sign_in:
       change_password: zmeň svoje heslo
       title: Nové prihlásenie
     warning:
       appeal: Pošli námietku
-      reason: 'Dôvod:'
+      reason: "Dôvod:"
       subject:
         disable: Tvoj účet %{acct} bol zamrazený
         none: Varovanie pre %{acct}
@@ -1426,7 +1426,7 @@ sk:
     invalid_otp_token: Neplatný kód pre dvojfaktorovú autentikáciu
     otp_lost_help_html: Pokiaľ si stratil/a prístup k obom, môžeš dať vedieť %{email}
     rate_limited: Príliš veľa pokusov o overenie, skús to znova neskôr.
-    signed_in_as: 'Prihlásená/ý ako:'
+    signed_in_as: "Prihlásená/ý ako:"
   verification:
     extra_instructions_html: <strong>Tip:</strong> Odkaz na vašom webe môže byť neviditeľný. Najdôležitejšia časť je <code>rel="me"</code>, zabraňuje tomu, že sa za vás bude niekto vydávať na weboch s obsahom generovaným používateľmi. V záhlaví stránky môžete dokonca namiesto tagu <code>a</code> použiť tag <code>link</code>, ale kód HTML musí byť prístupný bez potreby spustenia JavaScriptu.
     here_is_how: Ako na to

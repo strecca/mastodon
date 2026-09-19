@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from "react";
 
 const breakpoints = {
   narrow: 479, // Device width under which horizontal space is constrained
@@ -15,10 +15,10 @@ export const useBreakpoint = (breakpoint: Breakpoint) => {
     (callback) => {
       const mediaWatcher = window.matchMedia(query);
 
-      mediaWatcher.addEventListener('change', callback);
+      mediaWatcher.addEventListener("change", callback);
 
       return () => {
-        mediaWatcher.removeEventListener('change', callback);
+        mediaWatcher.removeEventListener("change", callback);
       };
     },
     () => window.matchMedia(query).matches,
@@ -33,7 +33,7 @@ interface WithBreakpointType {
 
 export function withBreakpoint<P>(
   Component: React.ComponentType<P & WithBreakpointType>,
-  breakpoint: Breakpoint = 'full',
+  breakpoint: Breakpoint = "full",
 ) {
   const displayName = `withMobileLayout(${Component.displayName ?? Component.name})`;
 

@@ -1,6 +1,6 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { LoadingIndicator } from './loading_indicator';
+import { LoadingIndicator } from "./loading_indicator";
 
 interface Props {
   onClick: (event: React.MouseEvent) => void;
@@ -16,16 +16,16 @@ export const LoadMore: React.FC<Props> = ({
 }) => {
   return (
     <button
-      type='button'
-      className='load-more'
+      type="button"
+      className="load-more"
       disabled={disabled || loading || !visible}
-      style={{ visibility: visible ? 'visible' : 'hidden' }}
+      style={{ visibility: visible ? "visible" : "hidden" }}
       onClick={onClick}
     >
       {loading ? (
         <LoadingIndicator />
       ) : (
-        <FormattedMessage id='status.load_more' defaultMessage='Load more' />
+        <FormattedMessage id="status.load_more" defaultMessage="Load more" />
       )}
     </button>
   );

@@ -1,43 +1,38 @@
-import { useCallback, useEffect } from 'react';
-import type { FC } from 'react';
+import { useCallback, useEffect } from "react";
+import type { FC } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { Callout } from '@/mastodon/components/callout';
-import { LoadingIndicator } from '@/mastodon/components/loading_indicator';
-import { Tag } from '@/mastodon/components/tags/tag';
-import { useAccount } from '@/mastodon/hooks/useAccount';
-import { useCurrentAccountId } from '@/mastodon/hooks/useAccountId';
-import type { TagData } from '@/mastodon/reducers/slices/profile_edit';
+import { Callout } from "@/mastodon/components/callout";
+import { LoadingIndicator } from "@/mastodon/components/loading_indicator";
+import { Tag } from "@/mastodon/components/tags/tag";
+import { useAccount } from "@/mastodon/hooks/useAccount";
+import { useCurrentAccountId } from "@/mastodon/hooks/useAccountId";
+import type { TagData } from "@/mastodon/reducers/slices/profile_edit";
 import {
   addFeaturedTags,
   deleteFeaturedTag,
   fetchProfile,
   fetchSuggestedTags,
-} from '@/mastodon/reducers/slices/profile_edit';
-import {
-  createAppSelector,
-  useAppDispatch,
-  useAppSelector,
-} from '@/mastodon/store';
+} from "@/mastodon/reducers/slices/profile_edit";
+import { createAppSelector, useAppDispatch, useAppSelector } from "@/mastodon/store";
 
-import { AccountEditColumn, AccountEditEmptyColumn } from './components/column';
-import { AccountEditItemList } from './components/item_list';
-import { AccountEditTagSearch } from './components/tag_search';
-import classes from './styles.module.scss';
+import { AccountEditColumn, AccountEditEmptyColumn } from "./components/column";
+import { AccountEditItemList } from "./components/item_list";
+import { AccountEditTagSearch } from "./components/tag_search";
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   columnTitle: {
-    id: 'account_edit_tags.column_title',
-    defaultMessage: 'Edit Tags',
+    id: "account_edit_tags.column_title",
+    defaultMessage: "Edit Tags",
   },
 });
 
 const selectTags = createAppSelector(
   [
     (state) => state.profileEdit,
-    (state) =>
-      state.server.server.item?.configuration.accounts.max_featured_tags ?? 0,
+    (state) => state.server.server.item?.configuration.accounts.max_featured_tags ?? 0,
   ],
   (profileEdit, maxTags) => ({
     tags: profileEdit.profile?.featuredTags ?? [],
@@ -53,8 +48,7 @@ export const AccountEditFeaturedTags: FC = () => {
   const account = useAccount(accountId);
   const intl = useIntl();
 
-  const { tags, tagSuggestions, isLoading, isPending, maxTags } =
-    useAppSelector(selectTags);
+  const { tags, tagSuggestions, isLoading, isPending, maxTags } = useAppSelector(selectTags);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -76,25 +70,19 @@ export const AccountEditFeaturedTags: FC = () => {
   const canAddMoreTags = tags.length < maxTags;
 
   return (
-    <AccountEditColumn
-      title={intl.formatMessage(messages.columnTitle)}
-      to='/profile/edit'
-    >
+    <AccountEditColumn title={intl.formatMessage(messages.columnTitle)} to="/profile/edit">
       <div className={classes.wrapper}>
         <FormattedMessage
-          id='account_edit_tags.help_text'
-          defaultMessage='Featured hashtags help users discover and interact with your profile. They appear as filters on your Profile page’s Activity view.'
-          tagName='p'
+          id="account_edit_tags.help_text"
+          defaultMessage="Featured hashtags help users discover and interact with your profile. They appear as filters on your Profile page’s Activity view."
+          tagName="p"
         />
 
         {canAddMoreTags && <AccountEditTagSearch />}
 
         {tagSuggestions.length > 0 && canAddMoreTags && (
           <div className={classes.tagSuggestions}>
-            <FormattedMessage
-              id='account_edit_tags.suggestions'
-              defaultMessage='Suggestions:'
-            />
+            <FormattedMessage id="account_edit_tags.suggestions" defaultMessage="Suggestions:" />
             {tagSuggestions.map((tag) => (
               <SuggestedTag name={tag.name} key={tag.id} disabled={isPending} />
             ))}
@@ -104,8 +92,8 @@ export const AccountEditFeaturedTags: FC = () => {
         {!canAddMoreTags && (
           <Callout icon={false} className={classes.maxTagsWarning}>
             <FormattedMessage
-              id='account_edit_tags.max_tags_reached'
-              defaultMessage='You have reached the maximum number of featured hashtags.'
+              id="account_edit_tags.max_tags_reached"
+              defaultMessage="You have reached the maximum number of featured hashtags."
             />
           </Callout>
         )}
@@ -129,20 +117,17 @@ function renderTag(tag: TagData) {
       <h4>#{tag.name}</h4>
       {tag.statusesCount > 0 && (
         <FormattedMessage
-          id='account_edit_tags.tag_status_count'
-          defaultMessage='{count, plural, one {# post} other {# posts}}'
+          id="account_edit_tags.tag_status_count"
+          defaultMessage="{count, plural, one {# post} other {# posts}}"
           values={{ count: tag.statusesCount }}
-          tagName='p'
+          tagName="p"
         />
       )}
     </div>
   );
 }
 
-const SuggestedTag: FC<{ name: string; disabled?: boolean }> = ({
-  name,
-  disabled,
-}) => {
+const SuggestedTag: FC<{ name: string; disabled?: boolean }> = ({ name, disabled }) => {
   const dispatch = useAppDispatch();
   const handleAddTag = useCallback(() => {
     void dispatch(addFeaturedTags({ names: [name] }));

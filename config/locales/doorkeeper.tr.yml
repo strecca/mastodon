@@ -52,7 +52,7 @@ tr:
         callback_urls: Geri Dönüş bağlantıları
         scopes: Kapsamlar
         secret: İstemci gizli anahtarı
-        title: 'Uygulama: %{name}'
+        title: "Uygulama: %{name}"
     authorizations:
       buttons:
         authorize: Yetkilendir
@@ -89,7 +89,7 @@ tr:
         invalid_grant: Sağlanan yetkilendirme izni geçersiz, süresi dolmuş, iptal edilmiş, yetkilendirme isteğinde kullanılan yönlendirme URL'siyle eşleşmiyor veya başka bir istemciye verilmiş.
         invalid_redirect_uri: Dahil edilmiş yönlendirme uri'si geçersiz.
         invalid_request:
-          missing_param: 'Gerekli parametre eksik: %{value}.'
+          missing_param: "Gerekli parametre eksik: %{value}."
           request_not_authorized: İsteğin yetkilendirilmesi gerekiyor. İsteği yetkilendirmek için gereken parametre eksik veya geçersiz.
           unknown: İstekte gerekli bir parametre eksik, desteklenmeyen bir parametre değeri içeriyor veya aksi durumda hatalı biçimlendirilmiş.
         invalid_resource_owner: Sağlanan kaynak sahibi kimlik bilgileri geçerli değil veya kaynak sahibi bulunamıyor

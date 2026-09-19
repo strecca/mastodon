@@ -3,7 +3,7 @@ br:
   simple_form:
     hints:
       account:
-        note: 'Gallout a rit @menegiñ tud all pe #gerioù-klik.'
+        note: "Gallout a rit @menegiñ tud all pe #gerioù-klik."
       defaults:
         avatar: WEBP, PNG, GIF pe JPG. Bihanoc'h eget %{size}. A vo izelaet betek %{dimensions}px
         email: Kaset e vo deoc'h ur postel kadarnaat
@@ -118,7 +118,7 @@ br:
         permissions_as_keys: Aotreoù
       webhook:
         events: Darvoudoù gweredekaet
-    'no': Ket
+    "no": Ket
     not_recommended: Ket erbedet
     recommended: Erbedet
     required:
@@ -127,4 +127,4 @@ br:
     title:
       sessions:
         webauthn: Implijout unan eus hoc'h alc'hwezioù surentez da gevreañ
-    'yes': Ya
+    "yes": Ya

@@ -8,7 +8,7 @@ es-MX:
         display_name: Tu nombre completo o tu apodo.
         fields: Tu página de inicio, pronombres, edad, lo que quieras.
         indexable: Tus publicaciones públicas pueden aparecer en los resultados de búsqueda en Mastodon. Las personas que han interactuado con tus publicaciones pueden buscarlas en cualquier momento.
-        note: 'Puedes @mencionar a otra gente o #etiquetas.'
+        note: "Puedes @mencionar a otra gente o #etiquetas."
         show_collections: Las personas pueden navegar a través de tus seguidos y seguidores. Las personas que te siguen pueden ver que las sigues.
         unlocked: La gente podrá seguirte sin solicitar aprobación. Desmarca si quieres revisar las solicitudes de seguimiento y elige si quieres aceptar o rechazar nuevos seguidores.
       account_alias:
@@ -76,7 +76,7 @@ es-MX:
         domain: Este puede ser el nombre de dominio que se muestra en la dirección de correo o el registro MX que utiliza. Se comprobarán al registrarse.
         with_dns_records: Se hará un intento de resolver los registros DNS del dominio dado y los resultados serán también puestos en lista negra
       featured_tag:
-        name: 'Estas son algunas de las etiquetas que más has utilizado recientemente:'
+        name: "Estas son algunas de las etiquetas que más has utilizado recientemente:"
       filters:
         action: Elige qué acción realizar cuando una publicación coincida con el filtro
         actions:
@@ -132,7 +132,7 @@ es-MX:
         hint: Opcional. Proporciona más detalles sobre la regla
         text: Describe una norma o requisito para los usuarios de este servidor. Intenta hacerla corta y sencilla
       sessions:
-        otp: 'Introduce el código de autenticación de dos factores generado por tu aplicación de teléfono o usa uno de tus códigos de recuperación:'
+        otp: "Introduce el código de autenticación de dos factores generado por tu aplicación de teléfono o usa uno de tus códigos de recuperación:"
         webauthn: Si es una tecla USB, asegúrese de insertarla y, si es necesario, púlsela.
       settings:
         email_subscriptions: Al desactivar la función, se conservan los suscriptores actuales, pero se deja de enviar correos electrónicos.
@@ -408,7 +408,7 @@ es-MX:
         events: Eventos habilitados
         template: Plantilla de carga
         url: URL de Endpoint
-    'no': 'No'
+    "no": "No"
     not_recommended: No recomendado
     overridden: Reemplazado
     recommended: Recomendado
@@ -418,4 +418,4 @@ es-MX:
     title:
       sessions:
         webauthn: Utilice una de sus claves de seguridad para iniciar sesión
-    'yes': Sí
+    "yes": Sí

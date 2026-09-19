@@ -1,22 +1,18 @@
-import type { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef } from "react";
 
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import type { IconProp } from '@/mastodon/components/icon';
-import { Icon } from '@/mastodon/components/icon';
-import { polymorphicForwardRef } from '@/types/polymorphic';
+import type { IconProp } from "@/mastodon/components/icon";
+import { Icon } from "@/mastodon/components/icon";
+import { polymorphicForwardRef } from "@/types/polymorphic";
 
-import classes from './subheading.module.scss';
+import classes from "./subheading.module.scss";
 
-export const Subheading = polymorphicForwardRef<'h2'>(
-  ({ as: Component = 'h2', children, className, ...props }, ref) => {
+export const Subheading = polymorphicForwardRef<"h2">(
+  ({ as: Component = "h2", children, className, ...props }, ref) => {
     return (
-      <Component
-        ref={ref}
-        className={classNames(classes.subheading, className)}
-        {...props}
-      >
+      <Component ref={ref} className={classNames(classes.subheading, className)} {...props}>
         {children}
       </Component>
     );
@@ -35,7 +31,7 @@ export const SubheadingLink: React.FC<SubheadingLinkProps> = ({
 }) => {
   return (
     <Link className={classNames(classes.link, className)} {...props}>
-      <Icon id='subheading-icon' icon={icon} />
+      <Icon id="subheading-icon" icon={icon} />
       {children}
     </Link>
   );

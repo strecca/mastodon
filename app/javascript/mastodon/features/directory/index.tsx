@@ -1,43 +1,38 @@
-import type { ChangeEventHandler } from 'react';
-import { useCallback, useEffect, useRef } from 'react';
+import type { ChangeEventHandler } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { List as ImmutableList } from 'immutable';
+import { List as ImmutableList } from "immutable";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import PeopleIcon from '@/material-icons/400-24px/group.svg?react';
-import {
-  addColumn,
-  removeColumn,
-  moveColumn,
-  changeColumnParams,
-} from 'mastodon/actions/columns';
-import { fetchDirectory, expandDirectory } from 'mastodon/actions/directory';
-import { Column } from 'mastodon/components/column';
-import type { ColumnRef } from 'mastodon/components/column';
-import { ColumnHeader } from 'mastodon/components/column_header';
-import { LoadMore } from 'mastodon/components/load_more';
-import { LoadingIndicator } from 'mastodon/components/loading_indicator';
-import { RadioButton } from 'mastodon/components/radio_button';
-import { ScrollContainer } from 'mastodon/containers/scroll_container';
-import { useSearchParam } from 'mastodon/hooks/useSearchParam';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+import PeopleIcon from "@/material-icons/400-24px/group.svg?react";
+import { addColumn, removeColumn, moveColumn, changeColumnParams } from "mastodon/actions/columns";
+import { fetchDirectory, expandDirectory } from "mastodon/actions/directory";
+import { Column } from "mastodon/components/column";
+import type { ColumnRef } from "mastodon/components/column";
+import { ColumnHeader } from "mastodon/components/column_header";
+import { LoadMore } from "mastodon/components/load_more";
+import { LoadingIndicator } from "mastodon/components/loading_indicator";
+import { RadioButton } from "mastodon/components/radio_button";
+import { ScrollContainer } from "mastodon/containers/scroll_container";
+import { useSearchParam } from "mastodon/hooks/useSearchParam";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
-import { AccountCard } from './components/account_card';
+import { AccountCard } from "./components/account_card";
 
 const messages = defineMessages({
-  title: { id: 'column.directory', defaultMessage: 'Browse profiles' },
+  title: { id: "column.directory", defaultMessage: "Browse profiles" },
   recentlyActive: {
-    id: 'directory.recently_active',
-    defaultMessage: 'Recently active',
+    id: "directory.recently_active",
+    defaultMessage: "Recently active",
   },
-  newArrivals: { id: 'directory.new_arrivals', defaultMessage: 'New arrivals' },
-  local: { id: 'directory.local', defaultMessage: 'From {domain} only' },
+  newArrivals: { id: "directory.new_arrivals", defaultMessage: "New arrivals" },
+  local: { id: "directory.local", defaultMessage: "From {domain} only" },
   federated: {
-    id: 'directory.federated',
-    defaultMessage: 'From known fediverse',
+    id: "directory.federated",
+    defaultMessage: "From known fediverse",
   },
 });
 
@@ -51,41 +46,35 @@ export const Directory: React.FC<{
 
   const column = useRef<ColumnRef>(null);
 
-  const [orderParam, setOrderParam] = useSearchParam('order');
-  const [localParam, setLocalParam] = useSearchParam('local');
+  const [orderParam, setOrderParam] = useSearchParam("order");
+  const [localParam, setLocalParam] = useSearchParam("local");
 
   let localParamBool: boolean | undefined;
 
-  if (localParam === 'false') {
+  if (localParam === "false") {
     localParamBool = false;
   }
 
-  const order = orderParam ?? params?.order ?? 'active';
+  const order = orderParam ?? params?.order ?? "active";
   const local = localParamBool ?? params?.local ?? true;
 
   const handlePin = useCallback(() => {
     if (columnId) {
       dispatch(removeColumn(columnId));
     } else {
-      dispatch(addColumn('DIRECTORY', { order, local }));
+      dispatch(addColumn("DIRECTORY", { order, local }));
     }
   }, [dispatch, columnId, order, local]);
 
-  const domain = useAppSelector((s) => s.meta.get('domain') as string);
+  const domain = useAppSelector((s) => s.meta.get("domain") as string);
   const accountIds = useAppSelector(
     (state) =>
-      state.user_lists.getIn(
-        ['directory', 'items'],
-        ImmutableList(),
-      ) as ImmutableList<string>,
+      state.user_lists.getIn(["directory", "items"], ImmutableList()) as ImmutableList<string>,
   );
   const isLoading = useAppSelector(
-    (state) =>
-      state.user_lists.getIn(['directory', 'isLoading'], true) as boolean,
+    (state) => state.user_lists.getIn(["directory", "isLoading"], true) as boolean,
   );
-  const hasMore = useAppSelector(
-    (state) => !!state.user_lists.getIn(['directory', 'next']),
-  );
+  const hasMore = useAppSelector((state) => !!state.user_lists.getIn(["directory", "next"]));
 
   useEffect(() => {
     void dispatch(fetchDirectory({ order, local }));
@@ -105,7 +94,7 @@ export const Directory: React.FC<{
   const handleChangeOrder = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (e) => {
       if (columnId) {
-        dispatch(changeColumnParams(columnId, ['order'], e.target.value));
+        dispatch(changeColumnParams(columnId, ["order"], e.target.value));
       } else {
         setOrderParam(e.target.value);
       }
@@ -116,13 +105,11 @@ export const Directory: React.FC<{
   const handleChangeLocal = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (e) => {
       if (columnId) {
-        dispatch(
-          changeColumnParams(columnId, ['local'], e.target.value === '1'),
-        );
-      } else if (e.target.value === '1') {
-        setLocalParam('true');
+        dispatch(changeColumnParams(columnId, ["local"], e.target.value === "1"));
+      } else if (e.target.value === "1") {
+        setLocalParam("true");
       } else {
-        setLocalParam('false');
+        setLocalParam("false");
       }
     },
     [dispatch, columnId, setLocalParam],
@@ -136,36 +123,36 @@ export const Directory: React.FC<{
   const initialLoad = isLoading && accountIds.size === 0;
 
   const scrollableArea = (
-    <div className='scrollable'>
-      <div className='filter-form'>
-        <div className='filter-form__column' role='group'>
+    <div className="scrollable">
+      <div className="filter-form">
+        <div className="filter-form__column" role="group">
           <RadioButton
-            name='order'
-            value='active'
+            name="order"
+            value="active"
             label={intl.formatMessage(messages.recentlyActive)}
-            checked={order === 'active'}
+            checked={order === "active"}
             onChange={handleChangeOrder}
           />
           <RadioButton
-            name='order'
-            value='new'
+            name="order"
+            value="new"
             label={intl.formatMessage(messages.newArrivals)}
-            checked={order === 'new'}
+            checked={order === "new"}
             onChange={handleChangeOrder}
           />
         </div>
 
-        <div className='filter-form__column' role='group'>
+        <div className="filter-form__column" role="group">
           <RadioButton
-            name='local'
-            value='1'
+            name="local"
+            value="1"
             label={intl.formatMessage(messages.local, { domain })}
             checked={local}
             onChange={handleChangeLocal}
           />
           <RadioButton
-            name='local'
-            value='0'
+            name="local"
+            value="0"
             label={intl.formatMessage(messages.federated)}
             checked={!local}
             onChange={handleChangeLocal}
@@ -173,32 +160,22 @@ export const Directory: React.FC<{
         </div>
       </div>
 
-      <div className='directory__list'>
+      <div className="directory__list">
         {initialLoad ? (
           <LoadingIndicator />
         ) : (
-          accountIds.map((accountId) => (
-            <AccountCard accountId={accountId} key={accountId} />
-          ))
+          accountIds.map((accountId) => <AccountCard accountId={accountId} key={accountId} />)
         )}
       </div>
 
-      <LoadMore
-        onClick={handleLoadMore}
-        visible={!initialLoad && hasMore}
-        loading={isLoading}
-      />
+      <LoadMore onClick={handleLoadMore} visible={!initialLoad && hasMore} loading={isLoading} />
     </div>
   );
 
   return (
-    <Column
-      bindToDocument={!multiColumn}
-      ref={column}
-      label={intl.formatMessage(messages.title)}
-    >
+    <Column bindToDocument={!multiColumn} ref={column} label={intl.formatMessage(messages.title)}>
       <ColumnHeader
-        icon='address-book-o'
+        icon="address-book-o"
         iconComponent={PeopleIcon}
         title={intl.formatMessage(messages.title)}
         onPin={handlePin}
@@ -209,16 +186,14 @@ export const Directory: React.FC<{
       />
 
       {multiColumn && !pinned ? (
-        <ScrollContainer scrollKey='directory'>
-          {scrollableArea}
-        </ScrollContainer>
+        <ScrollContainer scrollKey="directory">{scrollableArea}</ScrollContainer>
       ) : (
         scrollableArea
       )}
 
       <Helmet>
         <title>{intl.formatMessage(messages.title)}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 .modal-layout {
   background: var(--color-bg-primary);
@@ -40,7 +40,7 @@
   isolation: isolate;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: auto 0 0;
     height: 32px;

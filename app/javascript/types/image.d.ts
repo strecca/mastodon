@@ -1,27 +1,27 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 /* eslint-disable import/no-default-export */
-declare module '*.avif' {
+declare module "*.avif" {
   const path: string;
   export default path;
 }
 
-declare module '*.gif' {
+declare module "*.gif" {
   const path: string;
   export default path;
 }
 
-declare module '*.jpg' {
+declare module "*.jpg" {
   const path: string;
   export default path;
 }
 
-declare module '*.png' {
+declare module "*.png" {
   const path: string;
   export default path;
 }
 
-declare module '*.webp' {
+declare module "*.webp" {
   const path: string;
   export default path;
 }

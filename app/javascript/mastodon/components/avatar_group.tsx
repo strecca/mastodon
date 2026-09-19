@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import classNames from "classnames";
 
 /**
  * Wrapper for displaying a number of Avatar components horizontally,
@@ -11,11 +11,9 @@ export const AvatarGroup: React.FC<{
   children: React.ReactNode;
 }> = ({ children, compact = false, avatarHeight }) => (
   <div
-    className={classNames('avatar-group', { 'avatar-group--compact': compact })}
+    className={classNames("avatar-group", { "avatar-group--compact": compact })}
     style={
-      avatarHeight
-        ? ({ '--avatar-height': `${avatarHeight}px` } as React.CSSProperties)
-        : undefined
+      avatarHeight ? ({ "--avatar-height": `${avatarHeight}px` } as React.CSSProperties) : undefined
     }
   >
     {children}

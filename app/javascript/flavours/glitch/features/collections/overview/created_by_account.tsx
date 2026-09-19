@@ -1,43 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import AddIcon from '@/material-icons/400-24px/add.svg?react';
-import { DisplayName } from 'flavours/glitch/components/display_name';
-import { EmptyState } from 'flavours/glitch/components/empty_state';
-import { Icon } from 'flavours/glitch/components/icon';
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { ItemList } from 'flavours/glitch/components/scrollable_list/components';
-import { useAccount } from 'flavours/glitch/hooks/useAccount';
-import {
-  useAccountId,
-  useCurrentAccountId,
-} from 'flavours/glitch/hooks/useAccountId';
+import AddIcon from "@/material-icons/400-24px/add.svg?react";
+import { DisplayName } from "flavours/glitch/components/display_name";
+import { EmptyState } from "flavours/glitch/components/empty_state";
+import { Icon } from "flavours/glitch/components/icon";
+import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
+import { ItemList } from "flavours/glitch/components/scrollable_list/components";
+import { useAccount } from "flavours/glitch/hooks/useAccount";
+import { useAccountId, useCurrentAccountId } from "flavours/glitch/hooks/useAccountId";
 import {
   fetchCollectionsCreatedByAccount,
   selectAccountCollections,
-} from 'flavours/glitch/reducers/slices/collections';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
+} from "flavours/glitch/reducers/slices/collections";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
-import { CollectionListItem } from '../components/collection_list_item';
-import {
-  messages as editorMessages,
-  MaxCollectionsCallout,
-  userCollectionLimit,
-} from '../editor';
-import classes from '../styles.module.scss';
+import { CollectionListItem } from "../components/collection_list_item";
+import { messages as editorMessages, MaxCollectionsCallout, userCollectionLimit } from "../editor";
+import classes from "../styles.module.scss";
 
-export const NewCollectionButton: React.FC<{ onClick?: () => void }> = ({
-  onClick,
-}) => (
-  <Link
-    to='/collections/new'
-    className='button button--compact'
-    onClick={onClick}
-  >
-    <Icon id='plus' icon={AddIcon} />
+export const NewCollectionButton: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
+  <Link to="/collections/new" className="button button--compact" onClick={onClick}>
+    <Icon id="plus" icon={AddIcon} />
     <FormattedMessage {...editorMessages.newCollection} />
   </Link>
 );
@@ -48,8 +35,8 @@ export const CollectionListError: React.FC = () => (
     className={classes.error}
     message={
       <FormattedMessage
-        id='collections.error_loading_collections'
-        defaultMessage='There was an error when trying to load these collections.'
+        id="collections.error_loading_collections"
+        defaultMessage="There was an error when trying to load these collections."
       />
     }
   />
@@ -64,9 +51,7 @@ export function useCollectionsCreatedBy(accountId: string | null | undefined) {
     }
   }, [dispatch, accountId]);
 
-  return useAppSelector((state) =>
-    selectAccountCollections(state, accountId, 'createdBy'),
-  );
+  return useAppSelector((state) => selectAccountCollections(state, accountId, "createdBy"));
 }
 
 export const CollectionsCreatedByAccount: React.FC = () => {
@@ -78,14 +63,13 @@ export const CollectionsCreatedByAccount: React.FC = () => {
 
   const canCreateMoreCollections = collections.length < userCollectionLimit;
   const isOwnCollectionPage = accountId === me;
-  const showCreateButton =
-    isOwnCollectionPage && status === 'idle' && canCreateMoreCollections;
+  const showCreateButton = isOwnCollectionPage && status === "idle" && canCreateMoreCollections;
 
-  if (status === 'error' || !accountId) {
+  if (status === "error" || !accountId) {
     return <CollectionListError />;
   }
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return <LoadingIndicator />;
   }
 
@@ -95,14 +79,14 @@ export const CollectionsCreatedByAccount: React.FC = () => {
         <EmptyState
           title={
             <FormattedMessage
-              id='empty_column.account_featured_self.showcase_accounts'
-              defaultMessage='Showcase your favorite accounts'
+              id="empty_column.account_featured_self.showcase_accounts"
+              defaultMessage="Showcase your favorite accounts"
             />
           }
           message={
             <FormattedMessage
-              id='empty_column.account_featured_self.showcase_accounts_desc'
-              defaultMessage='Collections are curated lists of accounts to help others discover more of the Fediverse.'
+              id="empty_column.account_featured_self.showcase_accounts_desc"
+              defaultMessage="Collections are curated lists of accounts to help others discover more of the Fediverse."
             />
           }
         >
@@ -114,10 +98,10 @@ export const CollectionsCreatedByAccount: React.FC = () => {
         <EmptyState
           title={
             <FormattedMessage
-              id='empty_column.collections'
-              defaultMessage='{acct} has not created any collections yet.'
+              id="empty_column.collections"
+              defaultMessage="{acct} has not created any collections yet."
               values={{
-                acct: <DisplayName variant='simple' account={account} />,
+                acct: <DisplayName variant="simple" account={account} />,
               }}
             />
           }
@@ -131,8 +115,8 @@ export const CollectionsCreatedByAccount: React.FC = () => {
       <div className={classes.listHeader}>
         <h2 className={classes.subHeading}>
           <FormattedMessage
-            id='collections.list.collections_with_count'
-            defaultMessage='{count, plural, one {# Collection} other {# Collections}}'
+            id="collections.list.collections_with_count"
+            defaultMessage="{count, plural, one {# Collection} other {# Collections}}"
             values={{
               count: collections.length,
             }}

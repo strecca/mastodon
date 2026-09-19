@@ -1,7 +1,7 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "@reduxjs/toolkit";
 
-import type { RootState } from 'flavours/glitch/store';
-import { toServerSideType } from 'flavours/glitch/utils/filters';
+import type { RootState } from "flavours/glitch/store";
+import { toServerSideType } from "flavours/glitch/utils/filters";
 
 // TODO: move to `app/javascript/flavours/glitch/models` and use more globally
 type Filter = Immutable.Map<string, unknown>;
@@ -23,12 +23,9 @@ export const getFilters = createSelector(
     const serverSideType = toServerSideType(contextType);
 
     return filters.filter((filter) => {
-      const context = filter.get('context') as Immutable.List<string>;
-      const expiration = filter.get('expires_at') as Date | null;
-      return (
-        context.includes(serverSideType) &&
-        (expiration === null || expiration > now)
-      );
+      const context = filter.get("context") as Immutable.List<string>;
+      const expiration = filter.get("expires_at") as Date | null;
+      return context.includes(serverSideType) && (expiration === null || expiration > now);
     });
   },
 );
@@ -40,11 +37,10 @@ export const getStatusHidden = (
   const filters = getFilters(state, { contextType });
   if (filters === null) return false;
 
-  const filtered = state.statuses.getIn([id, 'filtered']) as
+  const filtered = state.statuses.getIn([id, "filtered"]) as
     | Immutable.List<FilterResult>
     | undefined;
   return filtered?.some(
-    (result) =>
-      filters.getIn([result.get('filter'), 'filter_action']) === 'hide',
+    (result) => filters.getIn([result.get("filter"), "filter_action"]) === "hide",
   );
 };

@@ -1,39 +1,39 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps } from "react";
 
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { customEmojiFactory } from '@/testing/factories';
+import { customEmojiFactory } from "@/testing/factories";
 
-import { CustomEmojiProvider } from './context';
-import { Emoji } from './index';
+import { CustomEmojiProvider } from "./context";
+import { Emoji } from "./index";
 
 type EmojiProps = ComponentProps<typeof Emoji> & {
-  style: 'auto' | 'native' | 'twemoji';
+  style: "auto" | "native" | "twemoji";
 };
 
 const meta = {
-  title: 'Components/Emoji',
+  title: "Components/Emoji",
   component: Emoji,
   args: {
-    code: '🖤',
-    style: 'auto',
+    code: "🖤",
+    style: "auto",
   },
   argTypes: {
     code: {
-      name: 'Emoji',
+      name: "Emoji",
     },
     style: {
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          auto: 'Auto',
-          native: 'Native',
-          twemoji: 'Twemoji',
+          auto: "Auto",
+          native: "Native",
+          twemoji: "Twemoji",
         },
       },
-      options: ['auto', 'native', 'twemoji'],
-      name: 'Emoji Style',
-      reduxPath: 'meta.emoji_style',
+      options: ["auto", "native", "twemoji"],
+      name: "Emoji Style",
+      reduxPath: "meta.emoji_style",
     },
   },
   render(args) {
@@ -53,6 +53,6 @@ export const Default: Story = {};
 
 export const CustomEmoji: Story = {
   args: {
-    code: ':custom:',
+    code: ":custom:",
   },
 };

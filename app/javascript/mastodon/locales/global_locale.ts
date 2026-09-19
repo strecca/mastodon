@@ -1,4 +1,4 @@
-import { isDevelopment } from 'mastodon/utils/environment';
+import { isDevelopment } from "mastodon/utils/environment";
 
 export interface LocaleData {
   locale: string;
@@ -14,9 +14,9 @@ export function setLocale(locale: LocaleData) {
 export function getLocale(): LocaleData {
   if (!loadedLocale) {
     if (isDevelopment()) {
-      throw new Error('getLocale() called before any locale has been set');
+      throw new Error("getLocale() called before any locale has been set");
     } else {
-      return { locale: 'unknown', messages: {} };
+      return { locale: "unknown", messages: {} };
     }
   }
 

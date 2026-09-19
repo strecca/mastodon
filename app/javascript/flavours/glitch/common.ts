@@ -1,4 +1,4 @@
-import { setupLinkListeners } from './utils/links';
+import { setupLinkListeners } from "./utils/links";
 
 export function start() {
   setupLinkListeners();

@@ -5,7 +5,7 @@
  * override it in let statements.
  * @type {string}
  */
-export const UNEXPECTED_ERROR_MESSAGE = 'An unexpected error occurred';
+export const UNEXPECTED_ERROR_MESSAGE = "An unexpected error occurred";
 
 /**
  * Extracts the status and message properties from the error object, if

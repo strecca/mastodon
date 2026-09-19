@@ -1,14 +1,13 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 
-import type { LayoutType } from '../is_mobile';
+import type { LayoutType } from "../is_mobile";
 
-export const focusApp = createAction('APP_FOCUS');
-export const unfocusApp = createAction('APP_UNFOCUS');
+export const focusApp = createAction("APP_FOCUS");
+export const unfocusApp = createAction("APP_UNFOCUS");
 
 interface ChangeLayoutPayload {
   layout: LayoutType;
 }
-export const changeLayout =
-  createAction<ChangeLayoutPayload>('APP_LAYOUT_CHANGE');
+export const changeLayout = createAction<ChangeLayoutPayload>("APP_LAYOUT_CHANGE");
 
-export const needsReload = createAction('APP_NEED_RELOAD');
+export const needsReload = createAction("APP_NEED_RELOAD");

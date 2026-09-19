@@ -7,17 +7,17 @@
   color: var(--color-text-primary);
   font-size: 15px;
 
-  &[data-input-placement^='inline'] {
+  &[data-input-placement^="inline"] {
     flex-direction: row;
 
     --form-field-label-gap: 8px;
   }
 
-  &[data-input-placement='inline-start'] {
+  &[data-input-placement="inline-start"] {
     align-items: start;
   }
 
-  &[data-input-placement='inline-end'] {
+  &[data-input-placement="inline-end"] {
     align-items: center;
   }
 }
@@ -32,11 +32,11 @@
 .label {
   font-weight: 500;
 
-  &[data-has-parent-fieldset='true'] {
+  &[data-has-parent-fieldset="true"] {
     font-weight: normal;
   }
 
-  [data-has-error='true'] & {
+  [data-has-error="true"] & {
     color: var(--color-text-error);
   }
 }
@@ -53,7 +53,7 @@
     margin-top: calc(-1 * var(--form-field-label-gap));
   }
 
-  [data-input-placement^='inline'] &:empty {
+  [data-input-placement^="inline"] &:empty {
     margin-inline-start: calc(-1 * var(--form-field-label-gap));
   }
 }

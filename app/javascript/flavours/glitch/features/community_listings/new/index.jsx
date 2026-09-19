@@ -1,43 +1,50 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import { Column } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import { withIdentity } from 'flavours/glitch/identity_context';
-import { useAppDispatch } from 'flavours/glitch/store';
-import { createListing } from 'flavours/glitch/actions/community_listings';
+import { Column } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import { withIdentity } from "flavours/glitch/identity_context";
+import { useAppDispatch } from "flavours/glitch/store";
+import { createListing } from "flavours/glitch/actions/community_listings";
 
-import { ListingForm } from '../components/listing_form';
+import { ListingForm } from "../components/listing_form";
 
 const CommunityListingsNew = ({ multiColumn }) => {
   const dispatch = useAppDispatch();
   const [saving, setSaving] = useState(false);
-  const [error,  setError]  = useState(null);
+  const [error, setError] = useState(null);
   const history = useHistory();
 
-  const handleSubmit = useCallback(async (formData) => {
-    setSaving(true);
-    setError(null);
-    try {
-      const listing = await dispatch(createListing(formData));
-      history.push(`/community_listings/${listing.id}`);
-    } catch (err) {
-      setError(err.response?.data?.error ?? 'Something went wrong');
-      setSaving(false);
-    }
-  }, [dispatch, history]);
+  const handleSubmit = useCallback(
+    async (formData) => {
+      setSaving(true);
+      setError(null);
+      try {
+        const listing = await dispatch(createListing(formData));
+        history.push(`/community_listings/${listing.id}`);
+      } catch (err) {
+        setError(err.response?.data?.error ?? "Something went wrong");
+        setSaving(false);
+      }
+    },
+    [dispatch, history],
+  );
 
   return (
     <Column>
-      <ColumnHeader icon='tag' title='New Listing' multiColumn={multiColumn} />
-      <Helmet><title>New Listing · miacivezza</title></Helmet>
-      <div className='cl-form-page'>
-        <Link to='/community_listings' className='cl-detail__back'>← All Listings</Link>
-        <h2 className='cl-form-page__heading'>Post a Listing</h2>
-        {error && <div className='cl-form-page__error'>{error}</div>}
+      <ColumnHeader icon="tag" title="New Listing" multiColumn={multiColumn} />
+      <Helmet>
+        <title>New Listing · miacivezza</title>
+      </Helmet>
+      <div className="cl-form-page">
+        <Link to="/community_listings" className="cl-detail__back">
+          ← All Listings
+        </Link>
+        <h2 className="cl-form-page__heading">Post a Listing</h2>
+        {error && <div className="cl-form-page__error">{error}</div>}
         <ListingForm onSubmit={handleSubmit} saving={saving} />
       </div>
     </Column>

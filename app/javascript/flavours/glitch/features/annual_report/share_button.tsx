@@ -1,38 +1,38 @@
-import { useCallback } from 'react';
-import type { FC } from 'react';
+import { useCallback } from "react";
+import type { FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { showAlert } from '@/flavours/glitch/actions/alerts';
-import { resetCompose, focusCompose } from '@/flavours/glitch/actions/compose';
-import { closeModal } from '@/flavours/glitch/actions/modal';
-import { Button } from '@/flavours/glitch/components/button';
-import type { AnnualReport as AnnualReportData } from '@/flavours/glitch/models/annual_report';
-import { useAppDispatch } from '@/flavours/glitch/store';
+import { showAlert } from "@/flavours/glitch/actions/alerts";
+import { resetCompose, focusCompose } from "@/flavours/glitch/actions/compose";
+import { closeModal } from "@/flavours/glitch/actions/modal";
+import { Button } from "@/flavours/glitch/components/button";
+import type { AnnualReport as AnnualReportData } from "@/flavours/glitch/models/annual_report";
+import { useAppDispatch } from "@/flavours/glitch/store";
 
-import { archetypeNames } from './archetype';
-import styles from './index.module.scss';
+import { archetypeNames } from "./archetype";
+import styles from "./index.module.scss";
 
 const messages = defineMessages({
   share_message: {
-    id: 'annual_report.summary.share_message',
-    defaultMessage: 'I got the {archetype} archetype!',
+    id: "annual_report.summary.share_message",
+    defaultMessage: "I got the {archetype} archetype!",
   },
   share_on_mastodon: {
-    id: 'annual_report.summary.share_on_mastodon',
-    defaultMessage: 'Share on Mastodon',
+    id: "annual_report.summary.share_on_mastodon",
+    defaultMessage: "Share on Mastodon",
   },
   share_elsewhere: {
-    id: 'annual_report.summary.share_elsewhere',
-    defaultMessage: 'Share elsewhere',
+    id: "annual_report.summary.share_elsewhere",
+    defaultMessage: "Share elsewhere",
   },
   copy_link: {
-    id: 'annual_report.summary.copy_link',
-    defaultMessage: 'Copy link',
+    id: "annual_report.summary.copy_link",
+    defaultMessage: "Copy link",
   },
   copied: {
-    id: 'copy_icon_button.copied',
-    defaultMessage: 'Copied to clipboard',
+    id: "copy_icon_button.copied",
+    defaultMessage: "Copied to clipboard",
   },
 });
 
@@ -42,9 +42,7 @@ export const ShareButton: FC<{ report: AnnualReportData }> = ({ report }) => {
 
   const handleShareClick = useCallback(() => {
     // Generate the share message.
-    const archetypeName = intl.formatMessage(
-      archetypeNames[report.data.archetype],
-    );
+    const archetypeName = intl.formatMessage(archetypeNames[report.data.archetype]);
     const shareLines = [
       intl.formatMessage(messages.share_message, {
         archetype: archetypeName,
@@ -58,11 +56,11 @@ export const ShareButton: FC<{ report: AnnualReportData }> = ({ report }) => {
 
     // Reset the composer and focus it with the share message, then close the modal.
     dispatch(resetCompose());
-    dispatch(focusCompose(shareLines.join('\n\n')));
-    dispatch(closeModal({ modalType: 'ANNUAL_REPORT', ignoreFocus: false }));
+    dispatch(focusCompose(shareLines.join("\n\n")));
+    dispatch(closeModal({ modalType: "ANNUAL_REPORT", ignoreFocus: false }));
   }, [report, intl, dispatch]);
 
-  const supportsNativeShare = 'share' in navigator;
+  const supportsNativeShare = "share" in navigator;
 
   const handleSecondaryShare = useCallback(() => {
     if (report.schema_version === 2 && report.share_url) {
@@ -79,10 +77,7 @@ export const ShareButton: FC<{ report: AnnualReportData }> = ({ report }) => {
 
   return (
     <div className={styles.shareButtonWrapper}>
-      <Button
-        text={intl.formatMessage(messages.share_on_mastodon)}
-        onClick={handleShareClick}
-      />
+      <Button text={intl.formatMessage(messages.share_on_mastodon)} onClick={handleShareClick} />
       <Button
         plain
         className={styles.secondaryShareButton}

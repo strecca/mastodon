@@ -1,24 +1,23 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
-import { createPortal } from 'react-dom';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
+import { createPortal } from "react-dom";
 
-import { fromJS } from 'immutable';
+import { fromJS } from "immutable";
 
-import { ImmutableHashtag as Hashtag } from 'mastodon/components/hashtag';
-import MediaGallery from 'mastodon/components/media_gallery';
-import ModalRoot from 'mastodon/components/modal_root';
-import { Poll } from 'mastodon/components/poll';
-import { Audio } from 'mastodon/features/audio';
-import Card from 'mastodon/features/status/components/card';
-import { MediaModal } from 'mastodon/features/ui/components/media_modal';
-import { Video } from 'mastodon/features/video';
-import { IntlProvider } from 'mastodon/locales';
-import { createPollFromServerJSON } from 'mastodon/models/poll';
+import { ImmutableHashtag as Hashtag } from "mastodon/components/hashtag";
+import MediaGallery from "mastodon/components/media_gallery";
+import ModalRoot from "mastodon/components/modal_root";
+import { Poll } from "mastodon/components/poll";
+import { Audio } from "mastodon/features/audio";
+import Card from "mastodon/features/status/components/card";
+import { MediaModal } from "mastodon/features/ui/components/media_modal";
+import { Video } from "mastodon/features/video";
+import { IntlProvider } from "mastodon/locales";
+import { createPollFromServerJSON } from "mastodon/models/poll";
 
 const MEDIA_COMPONENTS = { MediaGallery, Video, Card, Poll, Hashtag, Audio };
 
 export default class MediaContainer extends PureComponent {
-
   static propTypes = {
     components: PropTypes.object.isRequired,
   };
@@ -38,7 +37,7 @@ export default class MediaContainer extends PureComponent {
 
   handleOpenVideo = (lang, options) => {
     const { components } = this.props;
-    const { media } = JSON.parse(components[options.componentIndex].getAttribute('data-props'));
+    const { media } = JSON.parse(components[options.componentIndex].getAttribute("data-props"));
     const mediaList = fromJS(media);
 
     this.setState({ media: mediaList, lang, options });
@@ -54,11 +53,11 @@ export default class MediaContainer extends PureComponent {
     });
   };
 
-  setBackgroundColor = color => {
+  setBackgroundColor = (color) => {
     this.setState({ backgroundColor: color });
   };
 
-  render () {
+  render() {
     const { components } = this.props;
 
     let handleOpenVideo;
@@ -72,28 +71,29 @@ export default class MediaContainer extends PureComponent {
       <IntlProvider>
         <>
           {Array.from(components).map((component, i) => {
-            const componentName = component.getAttribute('data-component');
+            const componentName = component.getAttribute("data-component");
             const Component = MEDIA_COMPONENTS[componentName];
-            const { media, card, poll, hashtag, ...props } = JSON.parse(component.getAttribute('data-props'));
+            const { media, card, poll, hashtag, ...props } = JSON.parse(
+              component.getAttribute("data-props"),
+            );
 
             Object.assign(props, {
-              ...(media   ? { media:   fromJS(media)   } : {}),
-              ...(card    ? { card:    fromJS(card)    } : {}),
-              ...(poll    ? { poll:    createPollFromServerJSON(poll)    } : {}),
+              ...(media ? { media: fromJS(media) } : {}),
+              ...(card ? { card: fromJS(card) } : {}),
+              ...(poll ? { poll: createPollFromServerJSON(poll) } : {}),
               ...(hashtag ? { hashtag: fromJS(hashtag) } : {}),
 
-              ...(componentName === 'Video' ? {
-                componentIndex: i,
-                onOpenVideo: handleOpenVideo,
-              } : {
-                onOpenMedia: this.handleOpenMedia,
-              }),
+              ...(componentName === "Video"
+                ? {
+                    componentIndex: i,
+                    onOpenVideo: handleOpenVideo,
+                  }
+                : {
+                    onOpenMedia: this.handleOpenMedia,
+                  }),
             });
 
-            return createPortal(
-              <Component {...props} key={`media-${i}`} />,
-              component,
-            );
+            return createPortal(<Component {...props} key={`media-${i}`} />, component);
           })}
 
           <ModalRoot backgroundColor={this.state.backgroundColor} onClose={this.handleCloseMedia}>
@@ -114,5 +114,4 @@ export default class MediaContainer extends PureComponent {
       </IntlProvider>
     );
   }
-
 }

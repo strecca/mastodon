@@ -52,7 +52,7 @@ an:
         callback_urls: URLs de callback
         scopes: Ambitos
         secret: Secreto
-        title: 'Aplicación: %{name}'
+        title: "Aplicación: %{name}"
     authorizations:
       buttons:
         authorize: Autorizar
@@ -85,7 +85,7 @@ an:
         invalid_grant: La concesión d'autorización ofrida ye invalida, venció, se revocó, no coincide con a URI de redirección utilizada en a petición d'autorización, u estió emitida pa unatro client.
         invalid_redirect_uri: La URI de redirección incluyida no ye valida.
         invalid_request:
-          missing_param: 'Falta este parametro requeriu: %{value}.'
+          missing_param: "Falta este parametro requeriu: %{value}."
           request_not_authorized: La solicitut ha d'estar autorizada. I hai un parametro requeriu pa autorizar la solicitut que falta u no ye valido.
           unknown: Falta un parametro requeriu en a solicitut, u esta incluye una valor no admitida de parametro, u bien ye mal formulada.
         invalid_resource_owner: Las credencials proporcionadas d'o propietario d'o recurso no son validas, u lo propietario d'o recurso no puede estar trobau

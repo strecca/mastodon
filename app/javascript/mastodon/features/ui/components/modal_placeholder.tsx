@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { Button } from 'mastodon/components/button';
-import { GIF } from 'mastodon/components/gif';
-import { LoadingIndicator } from 'mastodon/components/loading_indicator';
+import { Button } from "mastodon/components/button";
+import { GIF } from "mastodon/components/gif";
+import { LoadingIndicator } from "mastodon/components/loading_indicator";
 
 export const ModalPlaceholder: React.FC<{
   loading: boolean;
@@ -20,37 +20,27 @@ export const ModalPlaceholder: React.FC<{
   }, [onRetry]);
 
   return (
-    <div className='modal-root__modal modal-placeholder' aria-busy={loading}>
+    <div className="modal-root__modal modal-placeholder" aria-busy={loading}>
       {loading ? (
         <LoadingIndicator />
       ) : (
-        <div className='modal-placeholder__error'>
-          <GIF
-            src='/oops.gif'
-            staticSrc='/oops.png'
-            className='modal-placeholder__error__image'
-          />
+        <div className="modal-placeholder__error">
+          <GIF src="/oops.gif" staticSrc="/oops.png" className="modal-placeholder__error__image" />
 
-          <div className='modal-placeholder__error__message'>
+          <div className="modal-placeholder__error__message">
             <p>
               <FormattedMessage
-                id='bundle_modal_error.message'
-                defaultMessage='Something went wrong while loading this screen.'
+                id="bundle_modal_error.message"
+                defaultMessage="Something went wrong while loading this screen."
               />
             </p>
 
-            <div className='modal-placeholder__error__message__actions'>
+            <div className="modal-placeholder__error__message__actions">
               <Button onClick={handleRetry}>
-                <FormattedMessage
-                  id='bundle_modal_error.retry'
-                  defaultMessage='Try again'
-                />
+                <FormattedMessage id="bundle_modal_error.retry" defaultMessage="Try again" />
               </Button>
-              <Button onClick={handleClose} className='button button-secondary'>
-                <FormattedMessage
-                  id='bundle_modal_error.close'
-                  defaultMessage='Close'
-                />
+              <Button onClick={handleClose} className="button button-secondary">
+                <FormattedMessage id="bundle_modal_error.close" defaultMessage="Close" />
               </Button>
             </div>
           </div>

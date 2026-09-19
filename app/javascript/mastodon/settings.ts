@@ -1,4 +1,4 @@
-import type { RecentSearch } from './models/search';
+import type { RecentSearch } from "./models/search";
 
 export class Settings<T extends Record<string, unknown>> {
   keyBase: string | null;
@@ -8,8 +8,8 @@ export class Settings<T extends Record<string, unknown>> {
   }
 
   private generateKey(id: string | number | symbol): string {
-    const idStr = typeof id === 'string' ? id : String(id);
-    return this.keyBase ? [this.keyBase, `id${idStr}`].join('.') : idStr;
+    const idStr = typeof id === "string" ? id : String(id);
+    return this.keyBase ? [this.keyBase, `id${idStr}`].join(".") : idStr;
   }
 
   set<K extends keyof T>(id: K, data: T[K]): T[K] | null {
@@ -48,21 +48,15 @@ export class Settings<T extends Record<string, unknown>> {
   }
 }
 
-export const pushNotificationsSetting = new Settings<
-  Record<string, { alerts: unknown }>
->('mastodon_push_notification_data');
-export const tagHistory = new Settings<Record<string, string[]>>(
-  'mastodon_tag_history',
+export const pushNotificationsSetting = new Settings<Record<string, { alerts: unknown }>>(
+  "mastodon_push_notification_data",
 );
-export const bannerSettings = new Settings<Record<string, boolean>>(
-  'mastodon_banner_settings',
-);
+export const tagHistory = new Settings<Record<string, string[]>>("mastodon_tag_history");
+export const bannerSettings = new Settings<Record<string, boolean>>("mastodon_banner_settings");
 export const searchHistory = new Settings<Record<string, RecentSearch[]>>(
-  'mastodon_search_history',
+  "mastodon_search_history",
 );
-export const playerSettings = new Settings<{ volume: number; muted: boolean }>(
-  'mastodon_player',
+export const playerSettings = new Settings<{ volume: number; muted: boolean }>("mastodon_player");
+export const wrapstodonSettings = new Settings<Record<string, { archetypeRevealed: boolean }>>(
+  "wrapstodon",
 );
-export const wrapstodonSettings = new Settings<
-  Record<string, { archetypeRevealed: boolean }>
->('wrapstodon');

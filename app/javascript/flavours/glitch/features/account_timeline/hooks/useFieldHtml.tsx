@@ -1,8 +1,8 @@
-import type { Key } from 'react';
-import { useCallback } from 'react';
+import type { Key } from "react";
+import { useCallback } from "react";
 
-import htmlConfig from '@/config/html-tags.json';
-import type { OnElementHandler } from '@/flavours/glitch/utils/html';
+import htmlConfig from "@/config/html-tags.json";
+import type { OnElementHandler } from "@/flavours/glitch/utils/html";
 
 export function useFieldHtml(
   hasCustomEmoji: boolean,

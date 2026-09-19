@@ -1,9 +1,9 @@
-import { forwardRef, useRef, useImperativeHandle } from 'react';
-import type { Ref } from 'react';
+import { forwardRef, useRef, useImperativeHandle } from "react";
+import type { Ref } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { scrollTop } from 'mastodon/scroll';
+import { scrollTop } from "mastodon/scroll";
 
 export interface ColumnRef {
   scrollTop: () => void;
@@ -30,7 +30,7 @@ export const Column = forwardRef<ColumnRef, ColumnProps>(
         if (bindToDocument) {
           scrollable = document.scrollingElement;
         } else {
-          scrollable = nodeRef.current?.querySelector('.scrollable');
+          scrollable = nodeRef.current?.querySelector(".scrollable");
         }
 
         if (!scrollable) {
@@ -43,9 +43,9 @@ export const Column = forwardRef<ColumnRef, ColumnProps>(
 
     return (
       <div
-        role='region'
+        role="region"
         aria-label={label}
-        className={classNames('column', className)}
+        className={classNames("column", className)}
         ref={nodeRef}
       >
         {children}
@@ -54,7 +54,7 @@ export const Column = forwardRef<ColumnRef, ColumnProps>(
   },
 );
 
-Column.displayName = 'Column';
+Column.displayName = "Column";
 
 // eslint-disable-next-line import/no-default-export
 export default Column;

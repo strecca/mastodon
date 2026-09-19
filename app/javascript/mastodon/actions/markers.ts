@@ -1,55 +1,50 @@
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 
-import type { MarkerJSON } from 'mastodon/api_types/markers';
-import { getAccessToken } from 'mastodon/initial_state';
-import type { AppDispatch, RootState } from 'mastodon/store';
-import { createAppAsyncThunk } from 'mastodon/store/typed_functions';
+import type { MarkerJSON } from "mastodon/api_types/markers";
+import { getAccessToken } from "mastodon/initial_state";
+import type { AppDispatch, RootState } from "mastodon/store";
+import { createAppAsyncThunk } from "mastodon/store/typed_functions";
 
-import api from '../api';
-import { compareId } from '../compare_id';
+import api from "../api";
+import { compareId } from "../compare_id";
 
 export const synchronouslySubmitMarkers = createAppAsyncThunk(
-  'markers/submit',
+  "markers/submit",
   async (_args, { getState }) => {
     const accessToken = getAccessToken();
     const params = buildPostMarkersParams(getState());
 
-    if (
-      Object.keys(params).length === 0 ||
-      !accessToken ||
-      accessToken === ''
-    ) {
+    if (Object.keys(params).length === 0 || !accessToken || accessToken === "") {
       return;
     }
 
     // The Fetch API allows us to perform requests that will be carried out
     // after the page closes. But that only works if the `keepalive` attribute
     // is supported.
-    if ('fetch' in window && 'keepalive' in new Request('')) {
-      await fetch('/api/v1/markers', {
+    if ("fetch" in window && "keepalive" in new Request("")) {
+      await fetch("/api/v1/markers", {
         keepalive: true,
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(params),
       });
 
       return;
-    } else if ('sendBeacon' in navigator) {
+    } else if ("sendBeacon" in navigator) {
       // Failing that, we can use sendBeacon, but we have to encode the data as
       // FormData for DoorKeeper to recognize the token.
       const formData = new FormData();
 
-      formData.append('bearer_token', accessToken);
+      formData.append("bearer_token", accessToken);
 
       for (const [id, value] of Object.entries(params)) {
-        if (value.last_read_id)
-          formData.append(`${id}[last_read_id]`, value.last_read_id);
+        if (value.last_read_id) formData.append(`${id}[last_read_id]`, value.last_read_id);
       }
 
-      if (navigator.sendBeacon('/api/v1/markers', formData)) {
+      if (navigator.sendBeacon("/api/v1/markers", formData)) {
         return;
       }
     }
@@ -59,9 +54,9 @@ export const synchronouslySubmitMarkers = createAppAsyncThunk(
     try {
       const client = new XMLHttpRequest();
 
-      client.open('POST', '/api/v1/markers', false);
-      client.setRequestHeader('Content-Type', 'application/json');
-      client.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+      client.open("POST", "/api/v1/markers", false);
+      client.setRequestHeader("Content-Type", "application/json");
+      client.setRequestHeader("Authorization", `Bearer ${accessToken}`);
       client.send(JSON.stringify(params));
     } catch {
       // Do not make the BeforeUnload handler error out
@@ -82,10 +77,7 @@ const buildPostMarkersParams = (state: RootState) => {
 
   const lastNotificationId = getLastNotificationId(state);
 
-  if (
-    lastNotificationId &&
-    compareId(lastNotificationId, state.markers.notifications) > 0
-  ) {
+  if (lastNotificationId && compareId(lastNotificationId, state.markers.notifications) > 0) {
     params.notifications = {
       last_read_id: lastNotificationId,
     };
@@ -97,15 +89,15 @@ const buildPostMarkersParams = (state: RootState) => {
 export const submitMarkersAction = createAppAsyncThunk<{
   home: string | undefined;
   notifications: string | undefined;
-}>('markers/submitAction', async (_args, { getState }) => {
+}>("markers/submitAction", async (_args, { getState }) => {
   const accessToken = getAccessToken();
   const params = buildPostMarkersParams(getState());
 
-  if (Object.keys(params).length === 0 || !accessToken || accessToken === '') {
+  if (Object.keys(params).length === 0 || !accessToken || accessToken === "") {
     return { home: undefined, notifications: undefined };
   }
 
-  await api().post<MarkerJSON>('/api/v1/markers', params);
+  await api().post<MarkerJSON>("/api/v1/markers", params);
 
   return {
     home: params.home?.last_read_id,
@@ -125,7 +117,7 @@ const debouncedSubmitMarkers = debounce(
 );
 
 export const submitMarkers = createAppAsyncThunk(
-  'markers/submit',
+  "markers/submit",
   (params: { immediate?: boolean }, { dispatch }) => {
     debouncedSubmitMarkers(dispatch);
 
@@ -135,11 +127,10 @@ export const submitMarkers = createAppAsyncThunk(
   },
 );
 
-export const fetchMarkers = createAppAsyncThunk('markers/fetch', async () => {
-  const response = await api().get<Record<string, MarkerJSON>>(
-    `/api/v1/markers`,
-    { params: { timeline: ['notifications'] } },
-  );
+export const fetchMarkers = createAppAsyncThunk("markers/fetch", async () => {
+  const response = await api().get<Record<string, MarkerJSON>>(`/api/v1/markers`, {
+    params: { timeline: ["notifications"] },
+  });
 
   return { markers: response.data };
 });

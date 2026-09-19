@@ -1,16 +1,13 @@
-import type { CategoryName, CustomEmoji } from 'emoji-mart';
+import type { CategoryName, CustomEmoji } from "emoji-mart";
 
-import { autoPlayGif } from '@/mastodon/initial_state';
-import {
-  createAppSelector,
-  useAppSelector,
-} from '@/mastodon/store/typed_functions';
-import { createLimitedCache } from '@/mastodon/utils/cache';
+import { autoPlayGif } from "@/mastodon/initial_state";
+import { createAppSelector, useAppSelector } from "@/mastodon/store/typed_functions";
+import { createLimitedCache } from "@/mastodon/utils/cache";
 
-import { search } from './search';
-import { emojiLogger } from './utils';
+import { search } from "./search";
+import { emojiLogger } from "./utils";
 
-const log = emojiLogger('picker');
+const log = emojiLogger("picker");
 
 const searchCache = createLimitedCache<LegacyEmoji[]>({ maxSize: 10, log });
 
@@ -27,7 +24,7 @@ export async function emojiMartSearch(
   locale: string,
   limit = 5,
 ): Promise<LegacyEmoji[]> {
-  const query = token.replace(':', '').trim();
+  const query = token.replace(":", "").trim();
   if (!query.length) {
     return [];
   }
@@ -40,10 +37,10 @@ export async function emojiMartSearch(
 
   const results = await search({ query, locale, limit });
   const legacyResults = results.map((emoji) =>
-    'shortcode' in emoji
+    "shortcode" in emoji
       ? ({ id: emoji.shortcode, custom: true } as const)
       : {
-          id: emoji.label.replaceAll(' ', '_').toLowerCase(),
+          id: emoji.label.replaceAll(" ", "_").toLowerCase(),
           native: emoji.unicode,
         },
   );
@@ -53,14 +50,14 @@ export async function emojiMartSearch(
 }
 
 const defaultCategories = [
-  'people',
-  'nature',
-  'foods',
-  'activity',
-  'places',
-  'objects',
-  'symbols',
-  'flags',
+  "people",
+  "nature",
+  "foods",
+  "activity",
+  "places",
+  "objects",
+  "symbols",
+  "flags",
 ] as CategoryName[];
 
 const selectPickerData = createAppSelector(
@@ -96,13 +93,13 @@ const selectPickerData = createAppSelector(
     }
 
     searchCache.clear();
-    log('regenerated the picker data');
+    log("regenerated the picker data");
 
     return {
       emojis: customEmojis,
       categories: [
-        'recent',
-        'custom',
+        "recent",
+        "custom",
         ...Object.keys(categories)
           .toSorted()
           .map((category) => `custom-${category}`),

@@ -1,18 +1,18 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 
 import {
   apiRemoveAccountFromFollowers,
   apiGetEndorsedAccounts,
   apiGetAccounts,
-} from 'mastodon/api/accounts';
-import type { ApiRelationshipJSON } from 'mastodon/api_types/relationships';
-import { createDataLoadingThunk } from 'mastodon/store/typed_functions';
+} from "mastodon/api/accounts";
+import type { ApiRelationshipJSON } from "mastodon/api_types/relationships";
+import { createDataLoadingThunk } from "mastodon/store/typed_functions";
 
-import { importFetchedAccounts } from './importer';
+import { importFetchedAccounts } from "./importer";
 
 export const revealAccount = createAction<{
   id: string;
-}>('accounts/revealAccount');
+}>("accounts/revealAccount");
 
 function actionWithSkipLoadingTrue<Args extends object>(args: Args) {
   return {
@@ -24,7 +24,7 @@ function actionWithSkipLoadingTrue<Args extends object>(args: Args) {
 }
 
 export const followAccountSuccess = createAction(
-  'accounts/followAccount/SUCCESS',
+  "accounts/followAccount/SUCCESS",
   actionWithSkipLoadingTrue<{
     relationship: ApiRelationshipJSON;
     alreadyFollowing: boolean;
@@ -32,7 +32,7 @@ export const followAccountSuccess = createAction(
 );
 
 export const unfollowAccountSuccess = createAction(
-  'accounts/unfollowAccount/SUCCESS',
+  "accounts/unfollowAccount/SUCCESS",
   actionWithSkipLoadingTrue<{
     relationship: ApiRelationshipJSON;
     statuses: unknown;
@@ -41,73 +41,72 @@ export const unfollowAccountSuccess = createAction(
 );
 
 export const authorizeFollowRequestSuccess = createAction<{ id: string }>(
-  'accounts/followRequestAuthorize/SUCCESS',
+  "accounts/followRequestAuthorize/SUCCESS",
 );
 
 export const rejectFollowRequestSuccess = createAction<{ id: string }>(
-  'accounts/followRequestReject/SUCCESS',
+  "accounts/followRequestReject/SUCCESS",
 );
 
 export const followAccountRequest = createAction(
-  'accounts/follow/REQUEST',
+  "accounts/follow/REQUEST",
   actionWithSkipLoadingTrue<{ id: string; locked: boolean }>,
 );
 
 export const followAccountFail = createAction(
-  'accounts/follow/FAIL',
+  "accounts/follow/FAIL",
   actionWithSkipLoadingTrue<{ id: string; error: string; locked: boolean }>,
 );
 
 export const unfollowAccountRequest = createAction(
-  'accounts/unfollow/REQUEST',
+  "accounts/unfollow/REQUEST",
   actionWithSkipLoadingTrue<{ id: string }>,
 );
 
 export const unfollowAccountFail = createAction(
-  'accounts/unfollow/FAIL',
+  "accounts/unfollow/FAIL",
   actionWithSkipLoadingTrue<{ id: string; error: string }>,
 );
 
 export const blockAccountSuccess = createAction<{
   relationship: ApiRelationshipJSON;
   statuses: unknown;
-}>('accounts/block/SUCCESS');
+}>("accounts/block/SUCCESS");
 
 export const unblockAccountSuccess = createAction<{
   relationship: ApiRelationshipJSON;
-}>('accounts/unblock/SUCCESS');
+}>("accounts/unblock/SUCCESS");
 
 export const muteAccountSuccess = createAction<{
   relationship: ApiRelationshipJSON;
   statuses: unknown;
-}>('accounts/mute/SUCCESS');
+}>("accounts/mute/SUCCESS");
 
 export const unmuteAccountSuccess = createAction<{
   relationship: ApiRelationshipJSON;
-}>('accounts/unmute/SUCCESS');
+}>("accounts/unmute/SUCCESS");
 
 export const pinAccountSuccess = createAction<{
   relationship: ApiRelationshipJSON;
-}>('accounts/pin/SUCCESS');
+}>("accounts/pin/SUCCESS");
 
 export const unpinAccountSuccess = createAction<{
   relationship: ApiRelationshipJSON;
-}>('accounts/unpin/SUCCESS');
+}>("accounts/unpin/SUCCESS");
 
 export const fetchRelationshipsSuccess = createAction(
-  'relationships/fetch/SUCCESS',
+  "relationships/fetch/SUCCESS",
   actionWithSkipLoadingTrue<{ relationships: ApiRelationshipJSON[] }>,
 );
 
 export const removeAccountFromFollowers = createDataLoadingThunk(
-  'accounts/remove_from_followers',
-  ({ accountId }: { accountId: string }) =>
-    apiRemoveAccountFromFollowers(accountId),
+  "accounts/remove_from_followers",
+  ({ accountId }: { accountId: string }) => apiRemoveAccountFromFollowers(accountId),
   (relationship) => ({ relationship }),
 );
 
 export const fetchEndorsedAccounts = createDataLoadingThunk(
-  'accounts/endorsements',
+  "accounts/endorsements",
   ({ accountId }: { accountId: string }) => apiGetEndorsedAccounts(accountId),
   (data, { dispatch }) => {
     dispatch(importFetchedAccounts(data));
@@ -116,7 +115,7 @@ export const fetchEndorsedAccounts = createDataLoadingThunk(
 );
 
 export const fetchAccounts = createDataLoadingThunk(
-  'accounts/multi_accounts',
+  "accounts/multi_accounts",
   ({ accountIds }: { accountIds: string[] }) => apiGetAccounts(accountIds),
   (data, { dispatch }) => {
     dispatch(importFetchedAccounts(data));

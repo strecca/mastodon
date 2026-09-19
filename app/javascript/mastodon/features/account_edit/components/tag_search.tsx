@@ -1,29 +1,29 @@
-import type { ChangeEventHandler, FC } from 'react';
-import { useCallback, useId, useState } from 'react';
+import type { ChangeEventHandler, FC } from "react";
+import { useCallback, useId, useState } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { Combobox } from '@/mastodon/components/form_fields';
-import { ComboboxMenuItem } from '@/mastodon/components/form_fields/combobox_field';
-import { useSearchTags } from '@/mastodon/hooks/useSearchTags';
-import type { TagSearchResult } from '@/mastodon/hooks/useSearchTags';
-import { addFeaturedTags } from '@/mastodon/reducers/slices/profile_edit';
-import { useAppDispatch } from '@/mastodon/store';
-import SearchIcon from '@/material-icons/400-24px/search.svg?react';
+import { Combobox } from "@/mastodon/components/form_fields";
+import { ComboboxMenuItem } from "@/mastodon/components/form_fields/combobox_field";
+import { useSearchTags } from "@/mastodon/hooks/useSearchTags";
+import type { TagSearchResult } from "@/mastodon/hooks/useSearchTags";
+import { addFeaturedTags } from "@/mastodon/reducers/slices/profile_edit";
+import { useAppDispatch } from "@/mastodon/store";
+import SearchIcon from "@/material-icons/400-24px/search.svg?react";
 
-import classes from '../styles.module.scss';
+import classes from "../styles.module.scss";
 
 const messages = defineMessages({
   placeholder: {
-    id: 'account_edit_tags.search_placeholder',
-    defaultMessage: 'Enter a hashtag…',
+    id: "account_edit_tags.search_placeholder",
+    defaultMessage: "Enter a hashtag…",
   },
 });
 
 export const AccountEditTagSearch: FC = () => {
   const intl = useIntl();
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const {
     tags: suggestedTags,
     searchTags,
@@ -47,7 +47,7 @@ export const AccountEditTagSearch: FC = () => {
   const handleSelect = useCallback(
     (item: TagSearchResult) => {
       resetSearch();
-      setQuery('');
+      setQuery("");
       void dispatch(addFeaturedTags({ names: [item.name] }));
     },
     [dispatch, resetSearch],
@@ -58,7 +58,7 @@ export const AccountEditTagSearch: FC = () => {
 
   return (
     <>
-      <label htmlFor={inputId} className='sr-only'>
+      <label htmlFor={inputId} className="sr-only">
         {inputLabel}
       </label>
       <Combobox
@@ -72,7 +72,7 @@ export const AccountEditTagSearch: FC = () => {
         onSelectItem={handleSelect}
         className={classes.autoComplete}
         icon={SearchIcon}
-        type='search'
+        type="search"
       />
     </>
   );

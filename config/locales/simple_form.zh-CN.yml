@@ -8,7 +8,7 @@ zh-CN:
         display_name: 你的全名或昵称。
         fields: 你的主页、人称代词、年龄，以及任何你想要添加的内容。
         indexable: 你的公开嘟文会出现在 Mastodon 的搜索结果中。无论是否勾选，与你的嘟文有过交互的人都可能通过搜索找到它们。
-        note: '你可以提及 @其他人 或 #话题 。'
+        note: "你可以提及 @其他人 或 #话题 。"
         show_collections: 人们将能够浏览你的关注和追随者。你关注的人会看到你关注他们。
         unlocked: 人们将能够在不请求批准的情况下关注你。如果你希望审核关注请求并选择接受或拒绝新的关注者，请取消勾选此项。
       account_alias:
@@ -407,7 +407,7 @@ zh-CN:
         events: 已启用事件
         template: Payload 模板
         url: 端点 URL
-    'no': 否
+    "no": 否
     not_recommended: 不推荐
     overridden: 已覆盖
     recommended: 推荐
@@ -417,4 +417,4 @@ zh-CN:
     title:
       sessions:
         webauthn: 使用你的安全密钥登录
-    'yes': 是
+    "yes": 是

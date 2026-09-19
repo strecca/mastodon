@@ -1,49 +1,47 @@
 //  Package imports
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { defineMessages } from 'react-intl';
+import { defineMessages } from "react-intl";
 
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import EditIcon from '@/material-icons/400-24px/edit.svg?react';
-import ImageIcon from '@/material-icons/400-24px/image.svg?react';
-import ManufacturingIcon from '@/material-icons/400-24px/manufacturing.svg?react';
-import SettingsIcon from '@/material-icons/400-24px/settings-fill.svg?react';
-import WarningIcon from '@/material-icons/400-24px/warning.svg?react';
-import { injectIntl } from '@/flavours/glitch/components/intl';
-import { preferencesLink } from 'flavours/glitch/utils/backend_links';
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import EditIcon from "@/material-icons/400-24px/edit.svg?react";
+import ImageIcon from "@/material-icons/400-24px/image.svg?react";
+import ManufacturingIcon from "@/material-icons/400-24px/manufacturing.svg?react";
+import SettingsIcon from "@/material-icons/400-24px/settings-fill.svg?react";
+import WarningIcon from "@/material-icons/400-24px/warning.svg?react";
+import { injectIntl } from "@/flavours/glitch/components/intl";
+import { preferencesLink } from "flavours/glitch/utils/backend_links";
 
-import LocalSettingsNavigationItem from './item';
+import LocalSettingsNavigationItem from "./item";
 
 const messages = defineMessages({
-  general: {  id: 'settings.general', defaultMessage: 'General' },
-  compose: {  id: 'settings.compose_box_opts', defaultMessage: 'Compose box' },
-  content_warnings: { id: 'settings.content_warnings', defaultMessage: 'Content Warnings' },
-  media: { id: 'settings.media', defaultMessage: 'Media' },
-  preferences: { id: 'settings.preferences', defaultMessage: 'Preferences' },
-  close: { id: 'settings.close', defaultMessage: 'Close' },
+  general: { id: "settings.general", defaultMessage: "General" },
+  compose: { id: "settings.compose_box_opts", defaultMessage: "Compose box" },
+  content_warnings: { id: "settings.content_warnings", defaultMessage: "Content Warnings" },
+  media: { id: "settings.media", defaultMessage: "Media" },
+  preferences: { id: "settings.preferences", defaultMessage: "Preferences" },
+  close: { id: "settings.close", defaultMessage: "Close" },
 });
 
 class LocalSettingsNavigation extends PureComponent {
-
   static propTypes = {
-    index      : PropTypes.number,
-    intl       : PropTypes.object.isRequired,
-    onClose    : PropTypes.func.isRequired,
-    onNavigate : PropTypes.func.isRequired,
+    index: PropTypes.number,
+    intl: PropTypes.object.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onNavigate: PropTypes.func.isRequired,
   };
 
-  render () {
-
+  render() {
     const { index, intl, onClose, onNavigate } = this.props;
 
     return (
-      <nav className='glitch local-settings__navigation'>
+      <nav className="glitch local-settings__navigation">
         <LocalSettingsNavigationItem
           active={index === 0}
           index={0}
           onNavigate={onNavigate}
-          icon='cogs'
+          icon="cogs"
           iconComponent={ManufacturingIcon}
           title={intl.formatMessage(messages.general)}
         />
@@ -51,7 +49,7 @@ class LocalSettingsNavigation extends PureComponent {
           active={index === 1}
           index={1}
           onNavigate={onNavigate}
-          icon='pencil'
+          icon="pencil"
           iconComponent={EditIcon}
           title={intl.formatMessage(messages.compose)}
         />
@@ -59,7 +57,7 @@ class LocalSettingsNavigation extends PureComponent {
           active={index === 2}
           index={2}
           onNavigate={onNavigate}
-          icon='warning'
+          icon="warning"
           iconComponent={WarningIcon}
           title={intl.formatMessage(messages.content_warnings)}
         />
@@ -67,7 +65,7 @@ class LocalSettingsNavigation extends PureComponent {
           active={index === 3}
           index={3}
           onNavigate={onNavigate}
-          icon='image'
+          icon="image"
           iconComponent={ImageIcon}
           title={intl.formatMessage(messages.media)}
         />
@@ -75,23 +73,22 @@ class LocalSettingsNavigation extends PureComponent {
           active={index === 4}
           href={preferencesLink}
           index={4}
-          icon='cog'
+          icon="cog"
           iconComponent={SettingsIcon}
           title={intl.formatMessage(messages.preferences)}
         />
         <LocalSettingsNavigationItem
           active={index === 5}
-          className='close'
+          className="close"
           index={5}
           onNavigate={onClose}
-          icon='times'
+          icon="times"
           iconComponent={CloseIcon}
           title={intl.formatMessage(messages.close)}
         />
       </nav>
     );
   }
-
 }
 
 export default injectIntl(LocalSettingsNavigation);

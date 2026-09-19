@@ -1,26 +1,23 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete */
-import { createReducer } from '@reduxjs/toolkit';
-import type { Draft, UnknownAction } from '@reduxjs/toolkit';
-import type { List as ImmutableList } from 'immutable';
+import { createReducer } from "@reduxjs/toolkit";
+import type { Draft, UnknownAction } from "@reduxjs/toolkit";
+import type { List as ImmutableList } from "immutable";
 
-import { timelineDelete } from 'mastodon/actions/timelines_typed';
-import type { AsyncRefreshHeader } from 'mastodon/api';
-import type { ApiRelationshipJSON } from 'mastodon/api_types/relationships';
-import type {
-  ApiStatusJSON,
-  ApiContextJSON,
-} from 'mastodon/api_types/statuses';
-import type { Status } from 'mastodon/models/status';
+import { timelineDelete } from "mastodon/actions/timelines_typed";
+import type { AsyncRefreshHeader } from "mastodon/api";
+import type { ApiRelationshipJSON } from "mastodon/api_types/relationships";
+import type { ApiStatusJSON, ApiContextJSON } from "mastodon/api_types/statuses";
+import type { Status } from "mastodon/models/status";
 
-import { blockAccountSuccess, muteAccountSuccess } from '../actions/accounts';
+import { blockAccountSuccess, muteAccountSuccess } from "../actions/accounts";
 import {
   fetchContext,
   completeContextRefresh,
   showPendingReplies,
   clearPendingReplies,
-} from '../actions/statuses';
-import { TIMELINE_UPDATE } from '../actions/timelines';
-import { compareId } from '../compare_id';
+} from "../actions/statuses";
+import { TIMELINE_UPDATE } from "../actions/timelines";
+import { compareId } from "../compare_id";
 
 interface TimelineUpdateAction extends UnknownAction {
   timeline: string;
@@ -31,10 +28,7 @@ interface TimelineUpdateAction extends UnknownAction {
 interface State {
   inReplyTos: Record<string, string>;
   replies: Record<string, string[]>;
-  pendingReplies: Record<
-    string,
-    Pick<ApiStatusJSON, 'id' | 'in_reply_to_id'>[]
-  >;
+  pendingReplies: Record<string, Pick<ApiStatusJSON, "id" | "in_reply_to_id">[]>;
   refreshing: Record<string, AsyncRefreshHeader>;
 }
 
@@ -47,7 +41,7 @@ const initialState: State = {
 
 const addReply = (
   state: Draft<State>,
-  { id, in_reply_to_id }: Pick<ApiStatusJSON, 'id' | 'in_reply_to_id'>,
+  { id, in_reply_to_id }: Pick<ApiStatusJSON, "id" | "in_reply_to_id">,
 ) => {
   if (!in_reply_to_id) {
     return;
@@ -120,9 +114,7 @@ const deleteFromContexts = (state: Draft<State>, ids: string[]): void => {
       const siblings = state.replies[inReplyToIdOfId];
 
       if (siblings) {
-        state.replies[inReplyToIdOfId] = siblings.filter(
-          (sibling) => sibling !== id,
-        );
+        state.replies[inReplyToIdOfId] = siblings.filter((sibling) => sibling !== id);
       }
     }
 
@@ -143,8 +135,8 @@ const filterContexts = (
   statuses: ImmutableList<Status>,
 ): void => {
   const ownedStatusIds = statuses
-    .filter((status) => (status.get('account') as string) === relationship.id)
-    .map((status) => status.get('id') as string);
+    .filter((status) => (status.get("account") as string) === relationship.id)
+    .map((status) => status.get("id") as string);
 
   deleteFromContexts(state, ownedStatusIds.toArray());
 };
@@ -170,17 +162,9 @@ export const contextsReducer = createReducer(initialState, (builder) => {
       const hasReplies = currentReplies.length > 0;
       // Ignore prefetchOnly if there are no replies - then we can load them immediately
       if (action.payload.prefetchOnly && hasReplies) {
-        storePrefetchedReplies(
-          state,
-          action.meta.arg.statusId,
-          action.payload.context,
-        );
+        storePrefetchedReplies(state, action.meta.arg.statusId, action.payload.context);
       } else {
-        normalizeContext(
-          state,
-          action.meta.arg.statusId,
-          action.payload.context,
-        );
+        normalizeContext(state, action.meta.arg.statusId, action.payload.context);
 
         if (action.payload.refresh && !action.payload.prefetchOnly) {
           state.refreshing[action.meta.arg.statusId] = action.payload.refresh;
@@ -214,8 +198,7 @@ export const contextsReducer = createReducer(initialState, (builder) => {
       deleteFromContexts(state, [action.payload.statusId]);
     })
     .addMatcher(
-      (action: UnknownAction): action is TimelineUpdateAction =>
-        action.type === TIMELINE_UPDATE,
+      (action: UnknownAction): action is TimelineUpdateAction => action.type === TIMELINE_UPDATE,
       (state, action) => {
         updateContext(state, action.status);
       },

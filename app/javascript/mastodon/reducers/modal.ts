@@ -1,10 +1,10 @@
-import type { Reducer } from '@reduxjs/toolkit';
-import { Record as ImmutableRecord, Stack } from 'immutable';
+import type { Reducer } from "@reduxjs/toolkit";
+import { Record as ImmutableRecord, Stack } from "immutable";
 
-import { timelineDelete } from 'mastodon/actions/timelines_typed';
+import { timelineDelete } from "mastodon/actions/timelines_typed";
 
-import type { ModalType } from '../actions/modal';
-import { openModal, closeModal } from '../actions/modal';
+import type { ModalType } from "../actions/modal";
+import { openModal, closeModal } from "../actions/modal";
 
 export type ModalProps = Record<string, unknown>;
 interface Modal {
@@ -13,11 +13,11 @@ interface Modal {
 }
 
 const Modal = ImmutableRecord<Modal>({
-  modalType: 'ACTIONS',
+  modalType: "ACTIONS",
   modalProps: ImmutableRecord({})(),
 });
 
-export const IGNORE_FOCUS_ON_OPEN = 'on-open';
+export const IGNORE_FOCUS_ON_OPEN = "on-open";
 
 interface ModalState {
   ignoreFocus: boolean | typeof IGNORE_FOCUS_ON_OPEN;
@@ -34,17 +34,9 @@ interface PopModalOption {
   modalType: ModalType | undefined;
   ignoreFocus: boolean;
 }
-const popModal = (
-  state: State,
-  { modalType, ignoreFocus }: PopModalOption,
-): State => {
-  if (
-    modalType === undefined ||
-    modalType === state.get('stack').get(0)?.get('modalType')
-  ) {
-    return state
-      .set('ignoreFocus', ignoreFocus)
-      .update('stack', (stack) => stack.shift());
+const popModal = (state: State, { modalType, ignoreFocus }: PopModalOption): State => {
+  if (modalType === undefined || modalType === state.get("stack").get(0)?.get("modalType")) {
+    return state.set("ignoreFocus", ignoreFocus).update("stack", (stack) => stack.shift());
   } else {
     return state;
   }
@@ -58,8 +50,8 @@ const pushModal = (
   ignoreFocusOnOpen = false,
 ): State => {
   return state.withMutations((record) => {
-    record.set('ignoreFocus', ignoreFocusOnOpen ? IGNORE_FOCUS_ON_OPEN : false);
-    record.update('stack', (stack) => {
+    record.set("ignoreFocus", ignoreFocusOnOpen ? IGNORE_FOCUS_ON_OPEN : false);
+    record.update("stack", (stack) => {
       let tmp = stack;
 
       // With this option, we update the previously opened modal, so that when the
@@ -100,10 +92,8 @@ export const modalReducer: Reducer<State> = (state = initialState, action) => {
   else if (closeModal.match(action)) return popModal(state, action.payload);
   // TODO: type those actions
   else if (timelineDelete.match(action))
-    return state.update('stack', (stack) =>
-      stack.filterNot(
-        (modal) => modal.get('modalProps').statusId === action.payload.statusId,
-      ),
+    return state.update("stack", (stack) =>
+      stack.filterNot((modal) => modal.get("modalProps").statusId === action.payload.statusId),
     );
   else return state;
 };

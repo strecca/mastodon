@@ -1,7 +1,7 @@
 ---
 ro:
   about:
-    about_mastodon_html: 'Rețeaua socială a viitorului: Fără reclame, fără supraveghere corporativă, design etic și descentralizare! Dețineți-vă datele cu Mastodon!'
+    about_mastodon_html: "Rețeaua socială a viitorului: Fără reclame, fără supraveghere corporativă, design etic și descentralizare! Dețineți-vă datele cu Mastodon!"
     contact_missing: Nesetat
     contact_unavailable: Indisponibil
     hosted_on: Mastodon găzduit de %{domain}
@@ -336,12 +336,12 @@ ro:
       total_blocked_by_us: Blocat de către noi
     ip_blocks:
       expires_in:
-        '1209600': 2 săptămâni
-        '15778476': 6 luni
-        '2629746': o lună
-        '31556952': un an
-        '86400': o zi
-        '94670856': 3 ani
+        "1209600": 2 săptămâni
+        "15778476": 6 luni
+        "2629746": o lună
+        "31556952": un an
+        "86400": o zi
+        "94670856": 3 ani
       new:
         title: Creează o regulă IP nouă
       no_ip_block_selected: Nicio regulă IP nu a fost modificată deoarece niciuna nu era selectată
@@ -361,7 +361,7 @@ ro:
       category_description_html: Motivul pentru care acest cont și/sau conținut a fost raportat va fi citat în comunicarea trimisă contului raportat
       comment:
         none: Niciunul
-      comment_description_html: 'Pentru a furniza mai multe informaţii, %{name} a scris:'
+      comment_description_html: "Pentru a furniza mai multe informaţii, %{name} a scris:"
       created_at: Raportat
       forwarded: Redirecționat
       forwarded_to: Redirecționat către %{domain}
@@ -439,7 +439,7 @@ ro:
       guide_link_text: Toată lumea poate contribui.
     sensitive_content: Conținut sensibil
   application_mailer:
-    view: 'Vizualizare:'
+    view: "Vizualizare:"
     view_profile: Vizualizați profilul
     view_status: Vezi starea
   applications:
@@ -498,18 +498,18 @@ ro:
     proceed: Șterge contul
     success_msg: Contul tău a fost șterg. Nu mai poate fi recuperat :D
     warning:
-      before: 'Înainte de a continua, vă rugăm să citiţi aceste note cu atenţie:'
+      before: "Înainte de a continua, vă rugăm să citiţi aceste note cu atenţie:"
       caches: Conținutul care a fost memorat de alte servere poate persista
       data_removal: Postările tale și alte date vor fi șterse permanent
   errors:
-    '403': Nu ai permisiunea să vizitezi această pagină.
-    '404': Pagina pe care o cauți nu există.
-    '410': Pagina pe care o cauți nu mai există.
-    '422':
+    "403": Nu ai permisiunea să vizitezi această pagină.
+    "404": Pagina pe care o cauți nu există.
+    "410": Pagina pe care o cauți nu mai există.
+    "422":
       content: Verificarea securității a eșuat. Ai blocat cookiurile?
       title: Verificarea securității a eșuat
-    '429': Strangulat
-    '500':
+    "429": Strangulat
+    "500":
       content: Ne pare rău, dar ceva a funcționat greșit. Încercați din nou!?
       title: Această pagină nu este corectă
     noscript_html: Pentru a utiliza o aplicație web Mastodon, te rog activează JavaScript. Alternativ, încearcă una din <a href="%{apps_path}">aplicațiile native</a> Mastodon pentru platforma ta.
@@ -557,15 +557,15 @@ ro:
     delete: Dezactivați
     expired: Expirat
     expires_in:
-      '1800': 30 de minute
-      '21600': 6 ore
-      '3600': 1 oră
-      '43200': 12 ore
-      '604800': 1 săptămână
-      '86400': 1 zi
+      "1800": 30 de minute
+      "21600": 6 ore
+      "3600": 1 oră
+      "43200": 12 ore
+      "604800": 1 săptămână
+      "86400": 1 zi
     expires_in_prompt: Niciodată
     generate: Generează link de invitație
-    invited_by: 'Ai fost invitat de:'
+    invited_by: "Ai fost invitat de:"
     max_uses:
       few: "%{count} utilizări"
       one: 1 utilizare
@@ -604,7 +604,7 @@ ro:
     set_redirect: Setați redirecționarea
   notification_mailer:
     reblog:
-      body: 'Postarea ta a fost impulsionată de %{name}:'
+      body: "Postarea ta a fost impulsionată de %{name}:"
       subject: "%{name} ți-a impulsionat postarea"
       title: Impuls nou
   number:
@@ -670,11 +670,11 @@ ro:
         one: "%{count} imagine"
         other: "%{count} de imagini"
     boosted_from_html: Impuls de la %{acct_link}
-    content_warning: 'Avertisment privind conținutul: %{warning}'
+    content_warning: "Avertisment privind conținutul: %{warning}"
     disallowed_hashtags:
-      few: 'conținea aceste hashtag-uri nepermise: %{tags}'
-      one: 'conținea un hashtag nepermis: %{tags}'
-      other: 'conținea aceste hashtag-uri nepermise: %{tags}'
+      few: "conținea aceste hashtag-uri nepermise: %{tags}"
+      one: "conținea un hashtag nepermis: %{tags}"
+      other: "conținea aceste hashtag-uri nepermise: %{tags}"
     errors:
       in_reply_not_found: Postarea la care încercați să răspundeți nu pare să existe.
     over_character_limit: s-a depășit limita de caracter %{max}
@@ -722,6 +722,6 @@ ro:
     follow_limit_reached: Nu poți urmări mai mult de %{limit} persoane
     invalid_otp_token: Cod doi pași nevalid
     otp_lost_help_html: Dacă ai pierdut accesul la ambele, poți lua legătura cu %{email}
-    signed_in_as: 'Conectat ca:'
+    signed_in_as: "Conectat ca:"
   verification:
     verification: Verificare

@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
-import type { FC } from 'react';
+import { useCallback } from "react";
+import type { FC } from "react";
 
-import { useDismissible } from '@/flavours/glitch/hooks/useDismissible';
+import { useDismissible } from "@/flavours/glitch/hooks/useDismissible";
 
-import { Callout } from '.';
-import type { CalloutProps } from '.';
+import { Callout } from ".";
+import type { CalloutProps } from ".";
 
 type DismissibleCalloutProps = CalloutProps & {
   id: string;

@@ -1,4 +1,4 @@
-import { polymorphicForwardRef } from '@/types/polymorphic';
+import { polymorphicForwardRef } from "@/types/polymorphic";
 
 /**
  * A live region is a content region that announces changes of its contents
@@ -12,12 +12,12 @@ import { polymorphicForwardRef } from '@/types/polymorphic';
  * the to-be announced content is rendered into it.
  */
 
-export const A11yLiveRegion = polymorphicForwardRef<'div'>(
-  ({ role = 'status', as: Component = 'div', children, ...props }, ref) => {
+export const A11yLiveRegion = polymorphicForwardRef<"div">(
+  ({ role = "status", as: Component = "div", children, ...props }, ref) => {
     return (
       <Component
         role={role}
-        aria-live={role === 'alert' ? 'assertive' : 'polite'}
+        aria-live={role === "alert" ? "assertive" : "polite"}
         ref={ref}
         {...props}
       >

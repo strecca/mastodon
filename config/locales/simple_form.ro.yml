@@ -6,7 +6,7 @@ ro:
         display_name: Numele dvs. complet sau numele dvs. amuzant.
         fields: Pagina ta principală, pronumele tale, vârsta, sau orice îți dorești.
         indexable: Postările tale publice pot apărea în rezultatele căutărilor pe Mastodon. Persoanele care au interacționat cu postările tale vor putea să le caute oricând.
-        note: 'Poți @menționa alte persoane sau #hashtag-uri.'
+        note: "Poți @menționa alte persoane sau #hashtag-uri."
         show_collections: Oamenii vor putea să răsfoiască urmăriți și urmăritorii dvs. Oamenii pe care îi urmăriți vor vedea că îi urmăriți indiferent.
         unlocked: Alte persoane vă vor putea urmări fără a solicita aprobare. Debifați dacă doriți să revizuiți cererile de urmărire și să alegeți dacă doriți să acceptați sau să respingeți noii urmăritori.
       account_alias:
@@ -65,7 +65,7 @@ ro:
         domain: Acesta poate fi numele de domeniu care apare în adresa de e-mail sau în înregistrarea MX pe care o utilizează. Acestea vor fi verificate la înscriere.
         with_dns_records: Se va face o încercare de a rezolva înregistrările DNS ale domeniului dat și rezultatele vor fi de asemenea afișate pe lista neagră
       featured_tag:
-        name: 'Iată câteva dintre hashtag-urile pe care le-ai folosit cel mai recent:'
+        name: "Iată câteva dintre hashtag-urile pe care le-ai folosit cel mai recent:"
       filters:
         actions:
           hide: Ascunde complet conținutul filtrat, ca și cum nu ar exista
@@ -113,7 +113,7 @@ ro:
         hint: Opțional. Oferiți mai multe detalii despre regulă
         text: Descrieți o regulă sau o cerință pentru utilizatorii de pe acest server. Încercați să o faceți scurtă și simplă
       sessions:
-        otp: 'Introdu codul pentru dubla protecție generat de telefonul mobil sau unul din codurile de rezervă:'
+        otp: "Introdu codul pentru dubla protecție generat de telefonul mobil sau unul din codurile de rezervă:"
         webauthn: Dacă este o cheie USB, asigurați-vă că o introduceți și, dacă este necesar, atingeți-o.
       settings:
         indexable: Pagina dvs. de profil poate apărea în rezultatele căutării pe Google, Bing și altele.
@@ -221,9 +221,9 @@ ro:
       tag:
         listable: Permite acestui hashtag să apară în căutări și în directorul de profil
         trendable: Permite acestui hashtag să apară sub tendințe
-    'no': Nu
+    "no": Nu
     recommended: Recomandat
     required:
       mark: "*"
       text: obligatoriu
-    'yes': Da
+    "yes": Da

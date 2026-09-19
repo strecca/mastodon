@@ -1,34 +1,35 @@
-import type { ComponentPropsWithoutRef, FC } from 'react';
+import type { ComponentPropsWithoutRef, FC } from "react";
 
-import type { LinkProps } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import type { LinkProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import type { Account } from '@/mastodon/models/account';
+import type { Account } from "@/mastodon/models/account";
 
-import { DisplayNameDefault } from './default';
-import { DisplayNameWithoutDomain } from './no-domain';
-import { DisplayNameSimple } from './simple';
+import { DisplayNameDefault } from "./default";
+import { DisplayNameWithoutDomain } from "./no-domain";
+import { DisplayNameSimple } from "./simple";
 
 export interface DisplayNameProps {
   account?: Account;
   localDomain?: string;
-  variant?: 'default' | 'simple' | 'noDomain';
+  variant?: "default" | "simple" | "noDomain";
 }
 
-export const DisplayName: FC<
-  DisplayNameProps & ComponentPropsWithoutRef<'span'>
-> = ({ variant = 'default', ...props }) => {
-  if (variant === 'simple') {
+export const DisplayName: FC<DisplayNameProps & ComponentPropsWithoutRef<"span">> = ({
+  variant = "default",
+  ...props
+}) => {
+  if (variant === "simple") {
     return <DisplayNameSimple {...props} />;
-  } else if (variant === 'noDomain') {
+  } else if (variant === "noDomain") {
     return <DisplayNameWithoutDomain {...props} />;
   }
   return <DisplayNameDefault {...props} />;
 };
 
 export const LinkedDisplayName: FC<
-  Omit<LinkProps, 'to'> & {
-    displayProps: DisplayNameProps & ComponentPropsWithoutRef<'span'>;
+  Omit<LinkProps, "to"> & {
+    displayProps: DisplayNameProps & ComponentPropsWithoutRef<"span">;
   }
 > = ({ displayProps, children, ...linkProps }) => {
   const { account } = displayProps;

@@ -1,17 +1,17 @@
-import { forwardRef } from 'react';
-import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { forwardRef } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { OmitUnion } from '@/mastodon/utils/types';
+import type { OmitUnion } from "@/mastodon/utils/types";
 
-import { Icon } from '../icon';
-import type { IconProp } from '../icon';
+import { Icon } from "../icon";
+import type { IconProp } from "../icon";
 
-import classes from './styles.module.css';
+import classes from "./styles.module.css";
 
 export type MiniCardProps = OmitUnion<
-  ComponentPropsWithoutRef<'div'>,
+  ComponentPropsWithoutRef<"div">,
   {
     label: ReactNode;
     value: ReactNode;
@@ -22,20 +22,7 @@ export type MiniCardProps = OmitUnion<
 >;
 
 export const MiniCard = forwardRef<HTMLDivElement, MiniCardProps>(
-  (
-    {
-      label,
-      value,
-      className,
-      hidden,
-      icon,
-      iconId,
-      iconClassName,
-      children,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ label, value, className, hidden, icon, iconId, iconClassName, children, ...props }, ref) => {
     if (!label) {
       return null;
     }
@@ -43,16 +30,12 @@ export const MiniCard = forwardRef<HTMLDivElement, MiniCardProps>(
     return (
       <div
         {...props}
-        className={classNames(
-          classes.card,
-          icon && classes.cardWithIcon,
-          className,
-        )}
+        className={classNames(classes.card, icon && classes.cardWithIcon, className)}
         ref={ref}
       >
         {icon && (
           <Icon
-            id={iconId ?? 'minicard'}
+            id={iconId ?? "minicard"}
             icon={icon}
             className={classNames(classes.icon, iconClassName)}
             noFill
@@ -65,4 +48,4 @@ export const MiniCard = forwardRef<HTMLDivElement, MiniCardProps>(
     );
   },
 );
-MiniCard.displayName = 'MiniCard';
+MiniCard.displayName = "MiniCard";

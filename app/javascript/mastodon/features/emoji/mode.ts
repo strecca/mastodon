@@ -1,28 +1,22 @@
 // Credit to Nolan Lawson for the original implementation.
 // See: https://github.com/nolanlawson/emoji-picker-element/blob/master/src/picker/utils/testColorEmojiSupported.js
 
-import { createAppSelector, useAppSelector } from '@/mastodon/store';
-import { assetHost } from '@/mastodon/utils/config';
-import { isDevelopment } from '@/mastodon/utils/environment';
-import { isDarkMode } from '@/mastodon/utils/theme';
+import { createAppSelector, useAppSelector } from "@/mastodon/store";
+import { assetHost } from "@/mastodon/utils/config";
+import { isDevelopment } from "@/mastodon/utils/environment";
+import { isDarkMode } from "@/mastodon/utils/theme";
 
-import {
-  EMOJI_MODE_NATIVE,
-  EMOJI_MODE_NATIVE_WITH_FLAGS,
-  EMOJI_MODE_TWEMOJI,
-} from './constants';
-import { toSupportedLocale } from './locale';
-import type { EmojiAppState, EmojiMode } from './types';
+import { EMOJI_MODE_NATIVE, EMOJI_MODE_NATIVE_WITH_FLAGS, EMOJI_MODE_TWEMOJI } from "./constants";
+import { toSupportedLocale } from "./locale";
+import type { EmojiAppState, EmojiMode } from "./types";
 
 const modeSelector = createAppSelector(
-  [(state) => state.meta.get('emoji_style') as string],
+  [(state) => state.meta.get("emoji_style") as string],
   (emoji_style) => determineEmojiMode(emoji_style),
 );
 
 export function useEmojiAppState(): EmojiAppState {
-  const locale = useAppSelector((state) =>
-    toSupportedLocale(state.meta.get('locale') as string),
-  );
+  const locale = useAppSelector((state) => toSupportedLocale(state.meta.get("locale") as string));
   const mode = useAppSelector(modeSelector);
 
   return {
@@ -36,28 +30,24 @@ export function useEmojiAppState(): EmojiAppState {
 export function getEmojiAppState(): EmojiAppState {
   const currentLocale = toSupportedLocale(document.documentElement.lang);
 
-  let emojiStyle = 'auto';
-  const initialStateText =
-    document.getElementById('initial-state')?.textContent;
+  let emojiStyle = "auto";
+  const initialStateText = document.getElementById("initial-state")?.textContent;
   if (initialStateText) {
     try {
       const state = JSON.parse(initialStateText) as unknown;
       if (
         state !== null &&
-        typeof state === 'object' &&
-        'meta' in state &&
+        typeof state === "object" &&
+        "meta" in state &&
         state.meta !== null &&
-        typeof state.meta === 'object' &&
-        'emoji_style' in state.meta &&
-        typeof state.meta.emoji_style === 'string'
+        typeof state.meta === "object" &&
+        "emoji_style" in state.meta &&
+        typeof state.meta.emoji_style === "string"
       ) {
         emojiStyle = state.meta.emoji_style;
       }
     } catch (err: unknown) {
-      console.warn(
-        'Failed to parse initial state for emoji, defaulting to auto. Error:',
-        err,
-      );
+      console.warn("Failed to parse initial state for emoji, defaulting to auto. Error:", err);
     }
   }
 
@@ -77,18 +67,18 @@ const FONT_FAMILY =
   '"Noto Color Emoji","EmojiOne Color","Android Emoji",sans-serif';
 
 function getTextFeature(text: string, color: string) {
-  const canvas = document.createElement('canvas');
+  const canvas = document.createElement("canvas");
   canvas.width = canvas.height = 1;
 
-  const ctx = canvas.getContext('2d', {
+  const ctx = canvas.getContext("2d", {
     // Improves the performance of `getImageData()`
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getContextAttributes#willreadfrequently
     willReadFrequently: true,
   });
   if (!ctx) {
-    throw new Error('Canvas context not available');
+    throw new Error("Canvas context not available");
   }
-  ctx.textBaseline = 'top';
+  ctx.textBaseline = "top";
   ctx.font = `100px ${FONT_FAMILY}`;
   ctx.fillStyle = color;
   ctx.scale(0.01, 0.01);
@@ -98,24 +88,24 @@ function getTextFeature(text: string, color: string) {
 }
 
 function compareFeatures(feature1: Feature, feature2: Feature) {
-  const feature1Str = [...feature1].join(',');
-  const feature2Str = [...feature2].join(',');
+  const feature1Str = [...feature1].join(",");
+  const feature2Str = [...feature2].join(",");
   // This is RGBA, so for 0,0,0, we are checking that the first RGB is not all zeroes.
   // Most of the time when unsupported this is 0,0,0,0, but on Chrome on Mac it is
   // 0,0,0,61 - there is a transparency here.
-  return feature1Str === feature2Str && !feature1Str.startsWith('0,0,0,');
+  return feature1Str === feature2Str && !feature1Str.startsWith("0,0,0,");
 }
 
 function testEmojiSupport(text: string) {
   // Render white and black and then compare them to each other and ensure they're the same
   // color, and neither one is black. This shows that the emoji was rendered in color.
-  const feature1 = getTextFeature(text, '#000');
-  const feature2 = getTextFeature(text, '#fff');
+  const feature1 = getTextFeature(text, "#000");
+  const feature2 = getTextFeature(text, "#fff");
   return compareFeatures(feature1, feature2);
 }
 
-const EMOJI_VERSION_TEST_EMOJI = '🫩'; // face with bags under eyes, from Unicode 16.0.
-const EMOJI_FLAG_TEST_EMOJI = '🇨🇭';
+const EMOJI_VERSION_TEST_EMOJI = "🫩"; // face with bags under eyes, from Unicode 16.0.
+const EMOJI_FLAG_TEST_EMOJI = "🇨🇭";
 
 export function determineEmojiMode(style: string): EmojiMode {
   if (style === EMOJI_MODE_NATIVE) {
@@ -139,7 +129,7 @@ export function determineEmojiMode(style: string): EmojiMode {
 }
 
 export function shouldUseTwemoji(): boolean {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return false;
   }
   try {
@@ -148,10 +138,7 @@ export function shouldUseTwemoji(): boolean {
   } catch (err: unknown) {
     // If an error occurs, fall back to Twemoji to be safe.
     if (isDevelopment()) {
-      console.warn(
-        'Emoji rendering test failed, defaulting to Twemoji. Error:',
-        err,
-      );
+      console.warn("Emoji rendering test failed, defaulting to Twemoji. Error:", err);
     }
     return true;
   }
@@ -159,7 +146,7 @@ export function shouldUseTwemoji(): boolean {
 
 // Based on https://github.com/talkjs/country-flag-emoji-polyfill/blob/master/src/index.ts#L19
 export function shouldReplaceFlags(): boolean {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return false;
   }
   try {
@@ -168,10 +155,7 @@ export function shouldReplaceFlags(): boolean {
   } catch (err: unknown) {
     // If an error occurs, assume flags should be replaced.
     if (isDevelopment()) {
-      console.warn(
-        'Flag emoji rendering test failed, defaulting to replacement. Error:',
-        err,
-      );
+      console.warn("Flag emoji rendering test failed, defaulting to replacement. Error:", err);
     }
     return true;
   }

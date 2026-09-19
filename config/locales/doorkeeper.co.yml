@@ -52,7 +52,7 @@ co:
         callback_urls: URL di richjama
         scopes: Scopi
         secret: Sicretu di u clientu
-        title: 'Applicazione : %{name}'
+        title: "Applicazione : %{name}"
     authorizations:
       buttons:
         authorize: Appruvà
@@ -78,7 +78,7 @@ co:
         invalid_grant: L’accunsentu d’auturizazione furnitu ùn hè currettu, hè spiratu, sguassatu, ùn và micca cù l’indirizzu di ridirezzione usatu in a dumanda d’auturizazione, o hè statu emessu per un’altru cliente.
         invalid_redirect_uri: L’URI di ridirezzione ùn hè curretta.
         invalid_request:
-          missing_param: 'Parametru richiestu mancante: %{value}.'
+          missing_param: "Parametru richiestu mancante: %{value}."
           request_not_authorized: A dumanda deve esse auturizata. Ci manca o hè invalidu un parametru richiestu per a dumanda d'auturizazione.
           unknown: Ci manca un parametru richiestu indè a dumanda, cuntene un parametru ch’ùn esiste micca, o altru sbagliu di forma.
         invalid_resource_owner: L’idintificanti di u pruprietariu di a risorsa ùn sò curretti, o u pruprietariu ùn pò micca esse trovu

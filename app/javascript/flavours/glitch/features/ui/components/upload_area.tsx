@@ -1,8 +1,8 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { animated, config, useSpring } from '@react-spring/web';
+import { animated, config, useSpring } from "@react-spring/web";
 
 interface UploadAreaProps {
   active?: boolean;
@@ -12,7 +12,7 @@ interface UploadAreaProps {
 export const UploadArea: React.FC<UploadAreaProps> = ({ active, onClose }) => {
   const handleKeyUp = useCallback(
     (e: KeyboardEvent) => {
-      if (active && e.key === 'Escape') {
+      if (active && e.key === "Escape") {
         e.preventDefault();
         e.stopPropagation();
         onClose();
@@ -22,10 +22,10 @@ export const UploadArea: React.FC<UploadAreaProps> = ({ active, onClose }) => {
   );
 
   useEffect(() => {
-    window.addEventListener('keyup', handleKeyUp, false);
+    window.addEventListener("keyup", handleKeyUp, false);
 
     return () => {
-      window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener("keyup", handleKeyUp);
     };
   }, [handleKeyUp]);
 
@@ -40,10 +40,10 @@ export const UploadArea: React.FC<UploadAreaProps> = ({ active, onClose }) => {
   });
   const backgroundAnimStyles = useSpring({
     from: {
-      transform: 'scale(0.95)',
+      transform: "scale(0.95)",
     },
     to: {
-      transform: 'scale(1)',
+      transform: "scale(1)",
     },
     reverse: !active,
     config: config.wobbly,
@@ -51,22 +51,16 @@ export const UploadArea: React.FC<UploadAreaProps> = ({ active, onClose }) => {
 
   return (
     <animated.div
-      className='upload-area'
+      className="upload-area"
       style={{
         ...wrapperAnimStyles,
-        visibility: active ? 'visible' : 'hidden',
+        visibility: active ? "visible" : "hidden",
       }}
     >
-      <div className='upload-area__drop'>
-        <animated.div
-          className='upload-area__background'
-          style={backgroundAnimStyles}
-        />
-        <div className='upload-area__content'>
-          <FormattedMessage
-            id='upload_area.title'
-            defaultMessage='Drag & drop to upload'
-          />
+      <div className="upload-area__drop">
+        <animated.div className="upload-area__background" style={backgroundAnimStyles} />
+        <div className="upload-area__content">
+          <FormattedMessage id="upload_area.title" defaultMessage="Drag & drop to upload" />
         </div>
       </div>
     </animated.div>

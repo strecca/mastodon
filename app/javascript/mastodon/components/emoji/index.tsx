@@ -1,26 +1,20 @@
-import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import type { FC } from "react";
+import { useContext, useEffect, useState } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import {
-  EMOJI_TYPE_CUSTOM,
-  EMOJI_TYPE_UNICODE,
-} from '@/mastodon/features/emoji/constants';
-import { useEmojiAppState } from '@/mastodon/features/emoji/mode';
-import {
-  emojiToInversionClassName,
-  unicodeHexToUrl,
-} from '@/mastodon/features/emoji/normalize';
+import { EMOJI_TYPE_CUSTOM, EMOJI_TYPE_UNICODE } from "@/mastodon/features/emoji/constants";
+import { useEmojiAppState } from "@/mastodon/features/emoji/mode";
+import { emojiToInversionClassName, unicodeHexToUrl } from "@/mastodon/features/emoji/normalize";
 import {
   isStateLoaded,
   loadEmojiDataToState,
   shouldRenderImage,
   stringToEmojiState,
   tokenizeText,
-} from '@/mastodon/features/emoji/render';
+} from "@/mastodon/features/emoji/render";
 
-import { AnimateEmojiContext, CustomEmojiContext } from './context';
+import { AnimateEmojiContext, CustomEmojiContext } from "./context";
 
 interface EmojiProps {
   code: string;
@@ -28,17 +22,11 @@ interface EmojiProps {
   showLoading?: boolean;
 }
 
-export const Emoji: FC<EmojiProps> = ({
-  code,
-  showFallback = true,
-  showLoading = true,
-}) => {
+export const Emoji: FC<EmojiProps> = ({ code, showFallback = true, showLoading = true }) => {
   const customEmoji = useContext(CustomEmojiContext);
 
   // First, set the emoji state based on the input code.
-  const [state, setState] = useState(() =>
-    stringToEmojiState(code, customEmoji),
-  );
+  const [state, setState] = useState(() => stringToEmojiState(code, customEmoji));
 
   // If we don't have data, then load emoji data asynchronously.
   const appState = useEmojiAppState();
@@ -59,14 +47,13 @@ export const Emoji: FC<EmojiProps> = ({
 
   if (!isStateLoaded(state)) {
     if (showLoading) {
-      return <span className='emojione emoji-loading' title={code} />;
+      return <span className="emojione emoji-loading" title={code} />;
     }
     return fallback;
   }
 
   const inversionClass =
-    state.type === EMOJI_TYPE_UNICODE &&
-    emojiToInversionClassName(state.data.unicode);
+    state.type === EMOJI_TYPE_UNICODE && emojiToInversionClassName(state.data.unicode);
 
   if (!shouldRenderImage(state, appState.mode)) {
     if (state.type === EMOJI_TYPE_UNICODE) {
@@ -82,8 +69,8 @@ export const Emoji: FC<EmojiProps> = ({
         src={animate ? state.data.url : state.data.static_url}
         alt={shortcode}
         title={shortcode}
-        className='emojione custom-emoji'
-        loading='lazy'
+        className="emojione custom-emoji"
+        loading="lazy"
       />
     );
   }
@@ -98,8 +85,8 @@ export const Emoji: FC<EmojiProps> = ({
       src={src}
       alt={state.data.unicode}
       title={state.data.label}
-      className={classNames('emojione', inversionClass)}
-      loading='lazy'
+      className={classNames("emojione", inversionClass)}
+      loading="lazy"
     />
   );
 };
@@ -110,7 +97,7 @@ export const Emoji: FC<EmojiProps> = ({
  */
 export function textToEmojis(text: string) {
   return tokenizeText(text).map((token, index) => {
-    if (typeof token === 'string') {
+    if (typeof token === "string") {
       return token;
     }
     return <Emoji code={token.code} key={`emoji-${token.code}-${index}`} />;

@@ -5,27 +5,33 @@
 // filterable list of entries with cards. Public can browse; logged-in users
 // see an "Add entry" button.
 
-import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 
-import { useIntl, defineMessages } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { useIntl, defineMessages } from "react-intl";
+import { Link } from "react-router-dom";
 
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity_context';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
+import { identityContextPropShape, withIdentity } from "flavours/glitch/identity_context";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
-import { fetchEntries } from 'flavours/glitch/actions/community_entries';
+import { fetchEntries } from "flavours/glitch/actions/community_entries";
 
-import { CategoryBannerLink } from './category_banner_link';
-import { EntryCard } from './entry_card';
-import { SearchFilters } from './search_filters';
+import { CategoryBannerLink } from "./category_banner_link";
+import { EntryCard } from "./entry_card";
+import { SearchFilters } from "./search_filters";
 
 const messages = defineMessages({
-  addEntry:       { id: 'community.entry_list.add',         defaultMessage: 'Add new entry' },
-  noResults:      { id: 'community.entry_list.empty',       defaultMessage: 'No entries found.' },
-  noResultsQuery: { id: 'community.entry_list.empty_query', defaultMessage: 'No entries match your search.' },
-  beFirst:        { id: 'community.entry_list.be_first',    defaultMessage: 'Be the first to add an entry' },
-  count:          { id: 'community.entry_list.count',       defaultMessage: '{count, plural, one {# entry} other {# entries}}' },
+  addEntry: { id: "community.entry_list.add", defaultMessage: "Add new entry" },
+  noResults: { id: "community.entry_list.empty", defaultMessage: "No entries found." },
+  noResultsQuery: {
+    id: "community.entry_list.empty_query",
+    defaultMessage: "No entries match your search.",
+  },
+  beFirst: { id: "community.entry_list.be_first", defaultMessage: "Be the first to add an entry" },
+  count: {
+    id: "community.entry_list.count",
+    defaultMessage: "{count, plural, one {# entry} other {# entries}}",
+  },
 });
 
 const EntryListInner = ({ config, multiColumn, identity }) => {
@@ -37,19 +43,19 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
   const apiEndpoint = config.api_endpoint;
   const featureKey = `community_${categoryKey}`;
 
-  const catState = useAppSelector(state => state.community_entries.get(categoryKey));
-  const entries = catState?.get('entries');
-  const loading = catState?.get('entriesLoading') || false;
-  const total   = catState?.get('total') || 0;
-  const fetchError = catState?.get('error') || null;
+  const catState = useAppSelector((state) => state.community_entries.get(categoryKey));
+  const entries = catState?.get("entries");
+  const loading = catState?.get("entriesLoading") || false;
+  const total = catState?.get("total") || 0;
+  const fetchError = catState?.get("error") || null;
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState({});
-  const [sort, setSort] = useState('newest');
+  const [sort, setSort] = useState("newest");
   const isFirstRender = useRef(true);
 
   const searchableFields = useMemo(
-    () => config.fields.filter(f => f.searchable),
+    () => config.fields.filter((f) => f.searchable),
     [config.fields],
   );
 
@@ -57,19 +63,19 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
   // Text search is handled server-side via ILIKE; JSONB/option fields are filtered here.
   const filteredEntries = useMemo(() => {
     if (!entries) return entries;
-    const hasFilters = Object.values(activeFilters).some(v => Array.isArray(v) && v.length > 0);
+    const hasFilters = Object.values(activeFilters).some((v) => Array.isArray(v) && v.length > 0);
     if (!hasFilters) return entries;
 
-    return entries.filter(entry => {
+    return entries.filter((entry) => {
       return Object.entries(activeFilters).every(([fieldName, values]) => {
         if (!Array.isArray(values) || values.length === 0) return true;
         const entryVal = entry.get(fieldName);
         // ImmutableList (JSONB checkboxes field)
-        if (entryVal && typeof entryVal.includes === 'function') {
-          return values.some(v => entryVal.includes(v));
+        if (entryVal && typeof entryVal.includes === "function") {
+          return values.some((v) => entryVal.includes(v));
         }
         // Plain string (select / radio)
-        return values.some(v => entryVal === v);
+        return values.some((v) => entryVal === v);
       });
     });
   }, [entries, activeFilters]);
@@ -99,7 +105,7 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
   }, []);
 
   const handleFilterChange = useCallback((fieldName, values) => {
-    setActiveFilters(prev => ({ ...prev, [fieldName]: values }));
+    setActiveFilters((prev) => ({ ...prev, [fieldName]: values }));
   }, []);
 
   const { signedIn } = identity;
@@ -107,7 +113,7 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
   const isInitialLoad = loading && !(entries && entries.size > 0);
 
   return (
-    <div className='scrollable community-entry-list'>
+    <div className="scrollable community-entry-list">
       <CategoryBannerLink />
 
       {/* Search + filters bar */}
@@ -125,8 +131,8 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
 
       {/* Add entry button for logged-in users */}
       {signedIn && (
-        <div className='community-entry-list__add-bar'>
-          <Link to={`/${featureKey}/new`} className='button'>
+        <div className="community-entry-list__add-bar">
+          <Link to={`/${featureKey}/new`} className="button">
             {intl.formatMessage(messages.addEntry)}
           </Link>
         </div>
@@ -136,14 +142,14 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
       {isInitialLoad ? (
         <LoadingIndicator />
       ) : fetchError && !hasEntries ? (
-        <div className='empty-column-indicator' style={{ color: '#c62828' }}>
+        <div className="empty-column-indicator" style={{ color: "#c62828" }}>
           <p>⚠ {fetchError}</p>
         </div>
       ) : hasEntries ? (
-        <div className='community-entry-list__entries'>
-          {filteredEntries.map(entry => (
+        <div className="community-entry-list__entries">
+          {filteredEntries.map((entry) => (
             <EntryCard
-              key={entry.get('id')}
+              key={entry.get("id")}
               entry={entry}
               config={config}
               featureKey={featureKey}
@@ -151,10 +157,14 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
           ))}
         </div>
       ) : (
-        <div className='empty-column-indicator'>
-          <p>{query ? intl.formatMessage(messages.noResultsQuery) : intl.formatMessage(messages.noResults)}</p>
+        <div className="empty-column-indicator">
+          <p>
+            {query
+              ? intl.formatMessage(messages.noResultsQuery)
+              : intl.formatMessage(messages.noResults)}
+          </p>
           {signedIn && (
-            <Link to={`/${featureKey}/new`} className='button'>
+            <Link to={`/${featureKey}/new`} className="button">
               {intl.formatMessage(messages.beFirst)}
             </Link>
           )}
@@ -163,7 +173,7 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
 
       {/* Total count */}
       {hasEntries && total > 0 && (
-        <div className='community-entry-list__count'>
+        <div className="community-entry-list__count">
           {intl.formatMessage(messages.count, { count: total })}
         </div>
       )}

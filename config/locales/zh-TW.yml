@@ -347,7 +347,7 @@ zh-TW:
       back_to_account: 返回帳號資訊頁面
       back_to_report: 回到檢舉報告頁面
       batch:
-        add_to_report: '新增至報告 #%{id}'
+        add_to_report: "新增至報告 #%{id}"
         remove_from_report: 自檢舉報告中移除
         report: 檢舉
       collection_title: "%{name} 的收藏名單"
@@ -710,12 +710,12 @@ zh-TW:
       created_msg: 更新 IP 規則成功
       delete: 刪除
       expires_in:
-        '1209600': 2 個星期
-        '15778476': 6 個月
-        '2629746': 1 個月
-        '31556952': 1 年
-        '86400': 1 天
-        '94670856': 3 年
+        "1209600": 2 個星期
+        "15778476": 6 個月
+        "2629746": 1 個月
+        "31556952": 1 年
+        "86400": 1 天
+        "94670856": 3 年
       new:
         title: 建立新的 IP 規則
       no_ip_block_selected: 因未選取任何 IP 規則，所以什麼事都沒發生
@@ -791,11 +791,11 @@ zh-TW:
         placeholder: 記錄已執行的動作，或其他相關的更新...
         title: 備註
       notes_description_html: 檢視及留下些給其他管理員與未來的自己的備註
-      processed_msg: '檢舉報告 #%{id} 已被成功處理'
+      processed_msg: "檢舉報告 #%{id} 已被成功處理"
       quick_actions_description_html: 採取快速行動，或者下捲以檢視檢舉內容：
       remote_user_placeholder: 來自 %{instance} 之遠端使用者
       reopen: 重開檢舉
-      report: '檢舉 #%{id}'
+      report: "檢舉 #%{id}"
       reported_account: 被檢舉使用者
       reported_by: 檢舉人
       reported_content: 被檢舉的內容
@@ -817,7 +817,7 @@ zh-TW:
           mark_as_sensitive_html: 將違反規則之嘟文多媒體標記為敏感內容
           silence_html: 藉由標記他們的個人檔案與內容為僅可見於已跟隨帳號或手動查詢此個人檔案，此將嚴格地限制 <strong>@%{acct}</strong> 之觸及率
           suspend_html: 停權 <strong>@%{acct}</strong>，將他們的個人檔案與內容標記為無法存取及無法與之互動
-        close_report: '將檢舉報告 #%{id} 標記為已處理'
+        close_report: "將檢舉報告 #%{id} 標記為已處理"
         close_reports_html: 將 <strong>所有</strong> 對於 <strong>@%{acct}</strong> 之檢舉報告標記為已處理
         delete_data_html: 於即日起 30 天後刪除 <strong>@%{acct}</strong>之個人檔案與內容，除非他們於期限前被解除停權
         preview_preamble_html: "<strong>@%{acct}</strong> 將收到關於以下內容之警告："
@@ -1006,7 +1006,7 @@ zh-TW:
       back_to_account: 返回帳號資訊頁面
       back_to_report: 回到檢舉報告頁面
       batch:
-        add_to_report: '新增至報告 #%{id}'
+        add_to_report: "新增至報告 #%{id}"
         remove_from_report: 自檢舉報告中移除
         report: 檢舉報告
       contents: 內容
@@ -1203,7 +1203,7 @@ zh-TW:
         peaked_on_and_decaying: 於 %{date} 日最熱門，目前正退燒中
         title: 熱門主題標籤
         trendable: 能登上熱門
-        trending_rank: '熱門 #%{rank}'
+        trending_rank: "熱門 #%{rank}"
         usable: 可被使用
         usage_comparison: 於今日被使用 %{today} 次，相較於昨日 %{yesterday} 次
         used_by_over_week:
@@ -1482,7 +1482,7 @@ zh-TW:
       description_html: 這些是 %{instance} 的管理員向您發送的針對您的帳號採取的措施與警告。
       recipient: 此致
       reject_appeal: 駁回申訴
-      status: '嘟文編號 #%{id}'
+      status: "嘟文編號 #%{id}"
       status_removed: 嘟文已自系統中移除
       title: "%{action} 來自 %{date}"
       title_actions:
@@ -1540,19 +1540,19 @@ zh-TW:
     native: 原生風格
     twemoji: Twemoji
   errors:
-    '400': 您所送出的請求無效或格式不正確。
-    '403': 您沒有檢視這個頁面的權限。
-    '404': 您要找的頁面不存在。
-    '406': 此頁面無法以請求的格式顯示。
-    '410': 您所尋找的網頁此處已不存在。
-    '422':
+    "400": 您所送出的請求無效或格式不正確。
+    "403": 您沒有檢視這個頁面的權限。
+    "404": 您要找的頁面不存在。
+    "406": 此頁面無法以請求的格式顯示。
+    "410": 您所尋找的網頁此處已不存在。
+    "422":
       content: 安全驗證失敗。請確定有開啟瀏覽器 Cookies 功能?
       title: 安全驗證失敗
-    '429': 伺服器繁忙
-    '500':
+    "429": 伺服器繁忙
+    "500":
       content: 抱歉，我們的後台出現問題了。
       title: 這個頁面有問題
-    '503': 此頁面因伺服器暫時發生錯誤而無法提供。
+    "503": 此頁面因伺服器暫時發生錯誤而無法提供。
     noscript_html: 使用 Mastodon 網頁版應用需要啟用 JavaScript。您也可以選擇適用於您的平台的 <a href="%{apps_path}">Mastodon 應用</a>。
   existing_username_validator:
     not_found: 無法於本伺服器找到此使用者帳號
@@ -1717,12 +1717,12 @@ zh-TW:
     delete: 停用
     expired: 已失效
     expires_in:
-      '1800': 30 分鐘後
-      '21600': 6 小時後
-      '3600': 1 小時後
-      '43200': 12 小時後
-      '604800': 1 週後
-      '86400': 1 天後
+      "1800": 30 分鐘後
+      "21600": 6 小時後
+      "3600": 1 小時後
+      "43200": 12 小時後
+      "604800": 1 週後
+      "86400": 1 天後
     expires_in_prompt: 永不過期
     generate: 產生邀請連結
     invalid: 此邀請是無效的
@@ -1962,7 +1962,7 @@ zh-TW:
     content_warning: 內容警告：
     descriptions:
       account: 來自 @%{acct} 之公開嘟文
-      tag: '帶有 #%{hashtag} 之公開嘟文'
+      tag: "帶有 #%{hashtag} 之公開嘟文"
   scheduled_statuses:
     over_daily_limit: 您已經超過了本日排定發嘟的限額 (%{limit})
     over_total_limit: 您已經超過排程發嘟的限額 (%{limit})
@@ -2118,14 +2118,14 @@ zh-TW:
     keep_self_fav: 保留您已標記為最愛之嘟文
     keep_self_fav_hint: 不會刪除您已標記為最愛之嘟文
     min_age:
-      '1209600': 2 週
-      '15778476': 6 個月
-      '2629746': 1 個月
-      '31556952': 1 年
-      '5259492': 2 個月
-      '604800': 1 週
-      '63113904': 2 年
-      '7889238': 3 個月
+      "1209600": 2 週
+      "15778476": 6 個月
+      "2629746": 1 個月
+      "31556952": 1 年
+      "5259492": 2 個月
+      "604800": 1 週
+      "63113904": 2 年
+      "7889238": 3 個月
     min_age_label: 保存期限
     min_favs: 保留超過嘟文最愛門檻
     min_favs_hint: 如果您嘟文已收到超過最愛門檻則不會刪除。留白表示不論最愛數量皆刪除該嘟文。

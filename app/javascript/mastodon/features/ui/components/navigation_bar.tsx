@@ -1,40 +1,40 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
-import { useIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { useIntl, defineMessages, FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import classNames from "classnames";
+import { NavLink, useRouteMatch } from "react-router-dom";
 
-import AddIcon from '@/material-icons/400-24px/add.svg?react';
-import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
-import HomeIcon from '@/material-icons/400-24px/home.svg?react';
-import MenuIcon from '@/material-icons/400-24px/menu.svg?react';
-import NotificationsActiveIcon from '@/material-icons/400-24px/notifications-fill.svg?react';
-import NotificationsIcon from '@/material-icons/400-24px/notifications.svg?react';
-import SearchIcon from '@/material-icons/400-24px/search.svg?react';
-import { openModal } from 'mastodon/actions/modal';
-import { toggleNavigation } from 'mastodon/actions/navigation';
-import { fetchServer } from 'mastodon/actions/server';
-import { Icon } from 'mastodon/components/icon';
-import { IconWithBadge } from 'mastodon/components/icon_with_badge';
-import type { MastodonLocationDescriptor } from 'mastodon/components/router';
-import { useIdentity } from 'mastodon/identity_context';
-import { registrationsOpen, sso_redirect } from 'mastodon/initial_state';
-import { selectUnreadNotificationGroupsCount } from 'mastodon/selectors/notifications';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+import AddIcon from "@/material-icons/400-24px/add.svg?react";
+import HomeActiveIcon from "@/material-icons/400-24px/home-fill.svg?react";
+import HomeIcon from "@/material-icons/400-24px/home.svg?react";
+import MenuIcon from "@/material-icons/400-24px/menu.svg?react";
+import NotificationsActiveIcon from "@/material-icons/400-24px/notifications-fill.svg?react";
+import NotificationsIcon from "@/material-icons/400-24px/notifications.svg?react";
+import SearchIcon from "@/material-icons/400-24px/search.svg?react";
+import { openModal } from "mastodon/actions/modal";
+import { toggleNavigation } from "mastodon/actions/navigation";
+import { fetchServer } from "mastodon/actions/server";
+import { Icon } from "mastodon/components/icon";
+import { IconWithBadge } from "mastodon/components/icon_with_badge";
+import type { MastodonLocationDescriptor } from "mastodon/components/router";
+import { useIdentity } from "mastodon/identity_context";
+import { registrationsOpen, sso_redirect } from "mastodon/initial_state";
+import { selectUnreadNotificationGroupsCount } from "mastodon/selectors/notifications";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
 export const messages = defineMessages({
-  home: { id: 'tabs_bar.home', defaultMessage: 'Home' },
-  search: { id: 'tabs_bar.search', defaultMessage: 'Search' },
-  publish: { id: 'tabs_bar.publish', defaultMessage: 'New Post' },
+  home: { id: "tabs_bar.home", defaultMessage: "Home" },
+  search: { id: "tabs_bar.search", defaultMessage: "Search" },
+  publish: { id: "tabs_bar.publish", defaultMessage: "New Post" },
   notifications: {
-    id: 'tabs_bar.notifications',
-    defaultMessage: 'Notifications',
+    id: "tabs_bar.notifications",
+    defaultMessage: "Notifications",
   },
-  menu: { id: 'tabs_bar.menu', defaultMessage: 'Menu' },
+  menu: { id: "tabs_bar.menu", defaultMessage: "Menu" },
   advancedUiQuickLinks: {
-    id: 'tabs_bar.quick_links',
-    defaultMessage: 'Quick links',
+    id: "tabs_bar.quick_links",
+    defaultMessage: "Quick links",
   },
 });
 
@@ -44,14 +44,12 @@ const IconLabelButton: React.FC<{
   activeIcon?: React.ReactNode;
   title: string;
 }> = ({ to, icon, activeIcon, title }) => {
-  const match = useRouteMatch(
-    typeof to === 'string' ? to : (to.pathname ?? ''),
-  );
+  const match = useRouteMatch(typeof to === "string" ? to : (to.pathname ?? ""));
 
   return (
     <NavLink
-      className='ui__navigation-bar__item'
-      activeClassName='active'
+      className="ui__navigation-bar__item"
+      activeClassName="active"
       to={to}
       aria-label={title}
     >
@@ -66,22 +64,10 @@ const NotificationsButton = () => {
 
   return (
     <IconLabelButton
-      to='/notifications'
-      icon={
-        <IconWithBadge
-          id='bell'
-          icon={NotificationsIcon}
-          count={count}
-          className=''
-        />
-      }
+      to="/notifications"
+      icon={<IconWithBadge id="bell" icon={NotificationsIcon} count={count} className="" />}
       activeIcon={
-        <IconWithBadge
-          id='bell'
-          icon={NotificationsActiveIcon}
-          count={count}
-          className=''
-        />
+        <IconWithBadge id="bell" icon={NotificationsActiveIcon} count={count} className="" />
       }
       title={intl.formatMessage(messages.notifications)}
     />
@@ -91,11 +77,11 @@ const NotificationsButton = () => {
 const LoginOrSignUp: React.FC = () => {
   const dispatch = useAppDispatch();
   const signupUrl = useAppSelector(
-    (state) => state.server.server.item?.registrations.url ?? '/auth/sign_up',
+    (state) => state.server.server.item?.registrations.url ?? "/auth/sign_up",
   );
 
   const openClosedRegistrationsModal = useCallback(() => {
-    dispatch(openModal({ modalType: 'CLOSED_REGISTRATIONS', modalProps: {} }));
+    dispatch(openModal({ modalType: "CLOSED_REGISTRATIONS", modalProps: {} }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -104,16 +90,9 @@ const LoginOrSignUp: React.FC = () => {
 
   if (sso_redirect) {
     return (
-      <div className='ui__navigation-bar__sign-up'>
-        <a
-          href={sso_redirect}
-          data-method='post'
-          className='button button--block button-secondary'
-        >
-          <FormattedMessage
-            id='sign_in_banner.sso_redirect'
-            defaultMessage='Login or Register'
-          />
+      <div className="ui__navigation-bar__sign-up">
+        <a href={sso_redirect} data-method="post" className="button button--block button-secondary">
+          <FormattedMessage id="sign_in_banner.sso_redirect" defaultMessage="Login or Register" />
         </a>
       </div>
     );
@@ -122,36 +101,23 @@ const LoginOrSignUp: React.FC = () => {
 
     if (registrationsOpen) {
       signupButton = (
-        <a href={signupUrl} className='button'>
-          <FormattedMessage
-            id='sign_in_banner.create_account'
-            defaultMessage='Create account'
-          />
+        <a href={signupUrl} className="button">
+          <FormattedMessage id="sign_in_banner.create_account" defaultMessage="Create account" />
         </a>
       );
     } else {
       signupButton = (
-        <button
-          className='button'
-          onClick={openClosedRegistrationsModal}
-          type='button'
-        >
-          <FormattedMessage
-            id='sign_in_banner.create_account'
-            defaultMessage='Create account'
-          />
+        <button className="button" onClick={openClosedRegistrationsModal} type="button">
+          <FormattedMessage id="sign_in_banner.create_account" defaultMessage="Create account" />
         </button>
       );
     }
 
     return (
-      <div className='ui__navigation-bar__sign-up'>
+      <div className="ui__navigation-bar__sign-up">
         {signupButton}
-        <a href='/auth/sign_in' className='button button-secondary'>
-          <FormattedMessage
-            id='sign_in_banner.sign_in'
-            defaultMessage='Login'
-          />
+        <a href="/auth/sign_in" className="button button-secondary">
+          <FormattedMessage id="sign_in_banner.sign_in" defaultMessage="Login" />
         </a>
       </div>
     );
@@ -169,11 +135,11 @@ export const NavigationBar: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className='ui__navigation-bar'>
+    <div className="ui__navigation-bar">
       {!signedIn && <LoginOrSignUp />}
 
       <div
-        className={classNames('ui__navigation-bar__items', {
+        className={classNames("ui__navigation-bar__items", {
           active: signedIn,
         })}
       >
@@ -181,31 +147,31 @@ export const NavigationBar: React.FC = () => {
           <>
             <IconLabelButton
               title={intl.formatMessage(messages.home)}
-              to='/home'
-              icon={<Icon id='' icon={HomeIcon} />}
-              activeIcon={<Icon id='' icon={HomeActiveIcon} />}
+              to="/home"
+              icon={<Icon id="" icon={HomeIcon} />}
+              activeIcon={<Icon id="" icon={HomeActiveIcon} />}
             />
             <IconLabelButton
               title={intl.formatMessage(messages.search)}
-              to='/explore'
-              icon={<Icon id='' icon={SearchIcon} />}
+              to="/explore"
+              icon={<Icon id="" icon={SearchIcon} />}
             />
             <IconLabelButton
               title={intl.formatMessage(messages.publish)}
-              to={{ pathname: '/publish', state: { focusTarget: false } }}
-              icon={<Icon id='' icon={AddIcon} />}
+              to={{ pathname: "/publish", state: { focusTarget: false } }}
+              icon={<Icon id="" icon={AddIcon} />}
             />
             <NotificationsButton />
           </>
         )}
 
         <button
-          className={classNames('ui__navigation-bar__item', { active: open })}
+          className={classNames("ui__navigation-bar__item", { active: open })}
           onClick={handleClick}
           aria-label={intl.formatMessage(messages.menu)}
-          type='button'
+          type="button"
         >
-          <Icon id='' icon={MenuIcon} />
+          <Icon id="" icon={MenuIcon} />
         </button>
       </div>
     </div>

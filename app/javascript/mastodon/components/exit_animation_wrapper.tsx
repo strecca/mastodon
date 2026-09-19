@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 /**
  * A helper component for managing the rendering of components that
@@ -27,9 +27,7 @@ export const ExitAnimationWrapper: React.FC<{
    */
   children: (delayedIsActive: boolean) => React.ReactNode;
 }> = ({ isActive, delayMs = 500, withEntryDelay, children }) => {
-  const [delayedIsActive, setDelayedIsActive] = useState(
-    isActive && !withEntryDelay,
-  );
+  const [delayedIsActive, setDelayedIsActive] = useState(isActive && !withEntryDelay);
 
   useEffect(() => {
     const withDelay = !isActive || withEntryDelay;

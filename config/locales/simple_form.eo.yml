@@ -7,7 +7,7 @@ eo:
         display_name: Via plena nomo aŭ via kromnomo.
         fields: Via retpaĝo, pronomoj, aĝo, ĉio, kion vi volas.
         indexable: Viaj publikaj afiŝoj povas aperi en serĉrezultoj ĉe Mastodon. Homoj, kiuj interagis kun viaj afiŝoj, eble povos serĉi ilin sendepende.
-        note: 'Vi povas @mencii aliajn homojn aŭ #haŝetikedoj.'
+        note: "Vi povas @mencii aliajn homojn aŭ #haŝetikedoj."
         show_collections: Homoj povos foliumi viajn sekvatojn kaj sekvantojn. Homoj, kiujn vi sekvas, vidos, ke vi sekvas ilin ĉiaokaze.
         unlocked: Homoj povos sekvi vin sen peti aprobon. Malmarku ĉu vi volas revizii sekvajn petojn kaj elektu ĉu akcepti aŭ malakcepti novajn sekvantojn.
       account_alias:
@@ -69,7 +69,7 @@ eo:
         domain: Ĉi tio povas esti la domajnnomo kiu montritas en la retadreso au la MX-rekordo uzitas.
         with_dns_records: Provi de regajni DNS-rekordojn de la domajn farotas kaj la rezultaj ankorau blokitas
       featured_tag:
-        name: 'Jen kelkaj el la kradvortoj, kiujn vi uzis lastatempe:'
+        name: "Jen kelkaj el la kradvortoj, kiujn vi uzis lastatempe:"
       filters:
         actions:
           blur: Kaŝi amaskomunikilaron malantaŭ averto, sen kaŝi la tekston mem
@@ -119,7 +119,7 @@ eo:
         hint: Laŭvola. Provizu pliajn detalojn pri la regulo
         text: Priskribu regulon aŭ neceson por uzantoj en ĉi tiu servilo. Provu fari ĝin mallonga kaj simpla
       sessions:
-        otp: 'Enmetu la kodon de dufaktora aŭtentigo el via telefono aŭ uzu unu el viaj realiraj kodoj:'
+        otp: "Enmetu la kodon de dufaktora aŭtentigo el via telefono aŭ uzu unu el viaj realiraj kodoj:"
         webauthn: Se ĝi estas USB-ŝlosilo, certu enmeti ĝin kaj, se necese, frapi ĝin.
       settings:
         indexable: Via profila paĝo povas aperi en serĉrezultoj en Google, Bing kaj aliaj.
@@ -363,7 +363,7 @@ eo:
         events: Ŝaltitaj eventoj
         template: Utilŝarĝa ŝablono
         url: Finpunkto-URL
-    'no': Ne
+    "no": Ne
     not_recommended: Nerekomendita
     overridden: Anstataŭigita
     recommended: Rekomendita
@@ -373,4 +373,4 @@ eo:
     title:
       sessions:
         webauthn: Uzi unu el viaj sekurecaj ŝlosiloj por ensaluti
-    'yes': Jes
+    "yes": Jes

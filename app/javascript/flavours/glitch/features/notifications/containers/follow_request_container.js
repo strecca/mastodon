@@ -1,9 +1,9 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { authorizeFollowRequest, rejectFollowRequest } from 'flavours/glitch/actions/accounts';
-import { makeGetAccount } from 'flavours/glitch/selectors';
+import { authorizeFollowRequest, rejectFollowRequest } from "flavours/glitch/actions/accounts";
+import { makeGetAccount } from "flavours/glitch/selectors";
 
-import FollowRequest from '../components/follow_request';
+import FollowRequest from "../components/follow_request";
 
 const makeMapStateToProps = () => {
   const getAccount = makeGetAccount();
@@ -16,11 +16,11 @@ const makeMapStateToProps = () => {
 };
 
 const mapDispatchToProps = (dispatch, { id }) => ({
-  onAuthorize () {
+  onAuthorize() {
     dispatch(authorizeFollowRequest(id));
   },
 
-  onReject () {
+  onReject() {
     dispatch(rejectFollowRequest(id));
   },
 });

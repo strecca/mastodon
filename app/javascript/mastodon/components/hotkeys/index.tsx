@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-import { normalizeKey, isKeyboardEvent, matchesKeyCode } from './utils';
+import { normalizeKey, isKeyboardEvent, matchesKeyCode } from "./utils";
 
 /**
  * In case of multiple hotkeys matching the pressed key(s),
@@ -37,10 +37,7 @@ type KeyMatcher = (
 function just(keyName: string): KeyMatcher {
   return (event) => ({
     isMatch:
-      normalizeKey(event.key) === keyName &&
-      !event.altKey &&
-      !event.ctrlKey &&
-      !event.metaKey,
+      normalizeKey(event.key) === keyName && !event.altKey && !event.ctrlKey && !event.metaKey,
     priority: hotkeyPriority.singleKey,
   });
 }
@@ -101,13 +98,10 @@ function sequence(...sequence: string[]): KeyMatcher {
     const relevantBufferedKeys = bufferedKeys?.slice(-startOfSequence.length);
 
     const bufferMatchesStartOfSequence =
-      !!relevantBufferedKeys &&
-      startOfSequence.join('') === relevantBufferedKeys.join('');
+      !!relevantBufferedKeys && startOfSequence.join("") === relevantBufferedKeys.join("");
 
     return {
-      isMatch:
-        bufferMatchesStartOfSequence &&
-        normalizeKey(event.key) === lastKeyInSequence,
+      isMatch: bufferMatchesStartOfSequence && normalizeKey(event.key) === lastKeyInSequence,
       priority: hotkeyPriority.sequence,
     };
   };
@@ -119,54 +113,42 @@ function sequence(...sequence: string[]): KeyMatcher {
  * provided to the `useHotkeys` hook or `Hotkeys` component.
  */
 const hotkeyMatcherMap = {
-  help: just('?'),
-  search: any('s', '/'),
-  back: just('backspace'),
-  new: just('n'),
-  forceNew: optionPlus('n'),
-  focusColumn: any('1', '2', '3', '4', '5', '6', '7', '8', '9'),
-  focusLoadMore: just('l'),
-  reply: just('r'),
-  favourite: just('f'),
-  boost: just('b'),
-  quote: just('q'),
-  mention: just('m'),
-  open: any('enter', 'o'),
-  openProfile: just('p'),
-  moveDown: anyMatcher(just('j'), optionPlus('pagedown')),
-  moveUp: anyMatcher(just('k'), optionPlus('pageup')),
-  moveToTop: just('0'),
-  toggleHidden: just('x'),
-  toggleSensitive: just('h'),
-  toggleComposeSpoilers: optionPlus('x'),
-  openMedia: just('e'),
-  onTranslate: just('t'),
-  goToHome: sequence('g', 'h'),
-  goToExplore: sequence('g', 'e'),
-  goToNotifications: sequence('g', 'n'),
-  goToLocal: sequence('g', 'l'),
-  goToFederated: sequence('g', 't'),
-  goToDirect: sequence('g', 'd'),
-  goToStart: sequence('g', 's'),
-  goToFavourites: sequence('g', 'f'),
-  goToPinned: sequence('g', 'p'),
-  goToProfile: sequence('g', 'u'),
-  goToBlocked: sequence('g', 'b'),
-  goToMuted: sequence('g', 'm'),
-  goToRequests: sequence('g', 'r'),
-  cheat: sequence(
-    'up',
-    'up',
-    'down',
-    'down',
-    'left',
-    'right',
-    'left',
-    'right',
-    'b',
-    'a',
-    'enter',
-  ),
+  help: just("?"),
+  search: any("s", "/"),
+  back: just("backspace"),
+  new: just("n"),
+  forceNew: optionPlus("n"),
+  focusColumn: any("1", "2", "3", "4", "5", "6", "7", "8", "9"),
+  focusLoadMore: just("l"),
+  reply: just("r"),
+  favourite: just("f"),
+  boost: just("b"),
+  quote: just("q"),
+  mention: just("m"),
+  open: any("enter", "o"),
+  openProfile: just("p"),
+  moveDown: anyMatcher(just("j"), optionPlus("pagedown")),
+  moveUp: anyMatcher(just("k"), optionPlus("pageup")),
+  moveToTop: just("0"),
+  toggleHidden: just("x"),
+  toggleSensitive: just("h"),
+  toggleComposeSpoilers: optionPlus("x"),
+  openMedia: just("e"),
+  onTranslate: just("t"),
+  goToHome: sequence("g", "h"),
+  goToExplore: sequence("g", "e"),
+  goToNotifications: sequence("g", "n"),
+  goToLocal: sequence("g", "l"),
+  goToFederated: sequence("g", "t"),
+  goToDirect: sequence("g", "d"),
+  goToStart: sequence("g", "s"),
+  goToFavourites: sequence("g", "f"),
+  goToPinned: sequence("g", "p"),
+  goToProfile: sequence("g", "u"),
+  goToBlocked: sequence("g", "b"),
+  goToMuted: sequence("g", "m"),
+  goToRequests: sequence("g", "r"),
+  cheat: sequence("up", "up", "down", "down", "left", "right", "left", "right", "b", "a", "enter"),
 } as const;
 
 type HotkeyName = keyof typeof hotkeyMatcherMap;
@@ -204,11 +186,8 @@ export function useHotkeys<T extends HTMLElement>(handlers: HandlerMap) {
       const shouldHandleEvent =
         isKeyboardEvent(event) &&
         !event.defaultPrevented &&
-        !['input', 'textarea', 'select'].includes(tagName) &&
-        !(
-          ['a', 'button'].includes(tagName) &&
-          normalizeKey(event.key) === 'enter'
-        );
+        !["input", "textarea", "select"].includes(tagName) &&
+        !(["a", "button"].includes(tagName) && normalizeKey(event.key) === "enter");
 
       if (shouldHandleEvent) {
         const matchCandidates: {
@@ -218,21 +197,16 @@ export function useHotkeys<T extends HTMLElement>(handlers: HandlerMap) {
           priority: number;
         }[] = [];
 
-        (Object.keys(hotkeyMatcherMap) as HotkeyName[]).forEach(
-          (handlerName) => {
-            const handler = handlersRef.current[handlerName];
-            const hotkeyMatcher = hotkeyMatcherMap[handlerName];
+        (Object.keys(hotkeyMatcherMap) as HotkeyName[]).forEach((handlerName) => {
+          const handler = handlersRef.current[handlerName];
+          const hotkeyMatcher = hotkeyMatcherMap[handlerName];
 
-            const { isMatch, priority } = hotkeyMatcher(
-              event,
-              bufferedKeys.current,
-            );
+          const { isMatch, priority } = hotkeyMatcher(event, bufferedKeys.current);
 
-            if (isMatch) {
-              matchCandidates.push({ handler, priority });
-            }
-          },
-        );
+          if (isMatch) {
+            matchCandidates.push({ handler, priority });
+          }
+        });
 
         // Sort all matches by priority
         matchCandidates.sort((a, b) => b.priority - a.priority);
@@ -258,10 +232,10 @@ export function useHotkeys<T extends HTMLElement>(handlers: HandlerMap) {
         }, 1000);
       }
     }
-    element.addEventListener('keydown', listener);
+    element.addEventListener("keydown", listener);
 
     return () => {
-      element.removeEventListener('keydown', listener);
+      element.removeEventListener("keydown", listener);
       if (sequenceTimer.current) {
         clearTimeout(sequenceTimer.current);
       }

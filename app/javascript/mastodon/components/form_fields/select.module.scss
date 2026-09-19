@@ -6,7 +6,7 @@
   &::after {
     --icon-size: 11px;
 
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
@@ -60,7 +60,7 @@
     cursor: not-allowed;
   }
 
-  [data-has-error='true'] & {
+  [data-has-error="true"] & {
     border-color: var(--color-border-error);
   }
 }

@@ -1,10 +1,10 @@
-import type { List as ImmutableList } from 'immutable';
+import type { List as ImmutableList } from "immutable";
 
-import type { CompactEmoji, Locale, SkinTone } from 'emojibase';
+import type { CompactEmoji, Locale, SkinTone } from "emojibase";
 
-import type { ApiCustomEmojiJSON } from '@/mastodon/api_types/custom_emoji';
-import type { CustomEmoji } from '@/mastodon/models/custom_emoji';
-import type { RequiredExcept } from '@/mastodon/utils/types';
+import type { ApiCustomEmojiJSON } from "@/mastodon/api_types/custom_emoji";
+import type { CustomEmoji } from "@/mastodon/models/custom_emoji";
+import type { RequiredExcept } from "@/mastodon/utils/types";
 
 import type {
   EMOJI_DB_NAME_SHORTCODES,
@@ -13,7 +13,7 @@ import type {
   EMOJI_MODE_TWEMOJI,
   EMOJI_TYPE_CUSTOM,
   EMOJI_TYPE_UNICODE,
-} from './constants';
+} from "./constants";
 
 export type EmojiMode =
   | typeof EMOJI_MODE_NATIVE
@@ -22,10 +22,7 @@ export type EmojiMode =
 
 export type LocaleOrCustom = Locale | typeof EMOJI_TYPE_CUSTOM;
 export type LocaleWithShortcodes = `${Locale}-shortcodes`;
-export type CacheKey =
-  | LocaleOrCustom
-  | typeof EMOJI_DB_NAME_SHORTCODES
-  | LocaleWithShortcodes;
+export type CacheKey = LocaleOrCustom | typeof EMOJI_DB_NAME_SHORTCODES | LocaleWithShortcodes;
 
 export interface EmojiAppState {
   currentLocale: Locale;
@@ -35,10 +32,7 @@ export interface EmojiAppState {
 }
 
 export type CustomEmojiData = ApiCustomEmojiJSON & { tokens: string[] };
-export interface UnicodeEmojiData extends Omit<
-  CompactEmoji,
-  'emoticon' | 'skins' | 'tags'
-> {
+export interface UnicodeEmojiData extends Omit<CompactEmoji, "emoticon" | "skins" | "tags"> {
   shortcodes: string[];
   tokens: string[];
   emoticons?: string[];
@@ -47,10 +41,7 @@ export interface UnicodeEmojiData extends Omit<
 }
 export type AnyEmojiData = CustomEmojiData | UnicodeEmojiData;
 
-type CustomEmojiRenderFields = Pick<
-  CustomEmojiData,
-  'shortcode' | 'static_url' | 'url'
->;
+type CustomEmojiRenderFields = Pick<CustomEmojiData, "shortcode" | "static_url" | "url">;
 
 export interface EmojiStateUnicode {
   type: typeof EMOJI_TYPE_UNICODE;
@@ -66,7 +57,7 @@ export interface EmojiStateCustom {
 export type EmojiState = EmojiStateUnicode | EmojiStateCustom;
 
 export type EmojiLoadedState =
-  | RequiredExcept<EmojiStateUnicode, 'shortcode'>
+  | RequiredExcept<EmojiStateUnicode, "shortcode">
   | Required<EmojiStateCustom>;
 
 export type CustomEmojiMapArg =
@@ -77,26 +68,26 @@ export type CustomEmojiMapArg =
 
 export type ExtraCustomEmojiMap = Record<
   string,
-  Pick<CustomEmojiData, 'shortcode' | 'static_url' | 'url'>
+  Pick<CustomEmojiData, "shortcode" | "static_url" | "url">
 >;
 
 export type EmojiWorkerMessage =
-  | { type: 'ready' }
-  | { type: 'db-blocked' }
+  | { type: "ready" }
+  | { type: "db-blocked" }
   | {
-      type: 'load';
+      type: "load";
       storeName: string;
     }
   | {
-      type: 'done';
+      type: "done";
       storeName: string;
       importCount: number;
     }
   | {
-      type: 'log';
+      type: "log";
       message: string;
     }
   | {
-      type: 'debug';
+      type: "debug";
       debugValue: string;
     };

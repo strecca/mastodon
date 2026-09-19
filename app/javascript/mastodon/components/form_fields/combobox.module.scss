@@ -14,7 +14,7 @@
 
   &::before {
     // Subtle divider line separating the button from the input field
-    content: '';
+    content: "";
     position: absolute;
     inset-inline-start: 0;
     inset-block: 10px;
@@ -65,11 +65,11 @@
     margin-bottom: 4px;
   }
 
-  &[data-highlighted='true'] {
+  &[data-highlighted="true"] {
     background: var(--color-bg-overlay-highlight);
   }
 
-  &[aria-disabled='true'] {
+  &[aria-disabled="true"] {
     color: var(--color-text-disabled);
     cursor: not-allowed;
   }

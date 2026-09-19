@@ -1,6 +1,6 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps } from "react";
 
-import { FormattedDate } from 'react-intl';
+import { FormattedDate } from "react-intl";
 
 export const FormattedDateWrapper = (
   props: ComponentProps<typeof FormattedDate> & { className?: string },
@@ -16,7 +16,7 @@ export const FormattedDateWrapper = (
 
 const tryIsoString = (date?: string | number | Date): string => {
   if (!date) {
-    return '';
+    return "";
   }
   try {
     return new Date(date).toISOString();

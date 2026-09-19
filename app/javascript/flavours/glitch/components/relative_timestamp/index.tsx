@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import type { FC } from 'react';
+import { useEffect, useMemo, useState } from "react";
+import type { FC } from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
 import {
   formatTime,
@@ -9,14 +9,14 @@ import {
   relativeTimeParts,
   SECOND,
   unitToTime,
-} from '@/flavours/glitch/utils/time';
+} from "@/flavours/glitch/utils/time";
 
 const dateFormatOptions = {
-  year: 'numeric',
-  month: 'short',
-  day: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
+  year: "numeric",
+  month: "short",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
 } as const;
 
 export const RelativeTimestamp: FC<{
@@ -62,7 +62,7 @@ export const RelativeTimestamp: FC<{
     };
   }, [ts]);
 
-  const daysOnly = !timestamp.includes('T') || noTime;
+  const daysOnly = !timestamp.includes("T") || noTime;
   const relativeTime = useMemo(
     () =>
       formatTime({

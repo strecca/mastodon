@@ -528,12 +528,12 @@ zh-HK:
       created_msg: 成功新增 IP 規則
       delete: 刪除
       expires_in:
-        '1209600': 2 週
-        '15778476': 6 個月
-        '2629746': 1 個月
-        '31556952': 1 年
-        '86400': 1 日
-        '94670856': 3 年
+        "1209600": 2 週
+        "15778476": 6 個月
+        "2629746": 1 個月
+        "31556952": 1 年
+        "86400": 1 日
+        "94670856": 3 年
       new:
         title: 新增 IP 規則
       no_ip_block_selected: 因未選擇 IP 規則而未有任何變更。
@@ -604,11 +604,11 @@ zh-HK:
         placeholder: 記錄已執行的動作，或其他相關的更新……
         title: 筆記
       notes_description_html: 查看並給其他管理員和日後的自己留下筆記
-      processed_msg: '已成功處理檢舉報告 #%{id}'
+      processed_msg: "已成功處理檢舉報告 #%{id}"
       quick_actions_description_html: 採取快捷操作或向下捲動以查看檢舉內容：
       remote_user_placeholder: 來自 %{instance} 的遠端使用者
       reopen: 重開舉報個案
-      report: '舉報 #%{id}'
+      report: "舉報 #%{id}"
       reported_account: 舉報用戶
       reported_by: 舉報者
       resolved: 已處理
@@ -627,7 +627,7 @@ zh-HK:
           mark_as_sensitive_html: 將違規帖文的媒體標記為敏感內容
           silence_html: 僅讓 <strong>@%{acct}</strong> 的追蹤者和手動搜尋其個人檔案的人看到他的個人檔案和內容，從而大幅限制其曝光。
           suspend_html: 把 <strong>@%{acct}</strong> 停權，使其個人檔案和內容無法被存取和互動。
-        close_report: '將檢舉報告 #%{id} 標記為已解決'
+        close_report: "將檢舉報告 #%{id} 標記為已解決"
         close_reports_html: 將針對 <strong>@%{acct}</strong> 的<strong>所有</strong>檢舉報告標記為已解決
         delete_data_html: 從現在起 30 天後移除 <strong>@%{acct}</strong> 的個人檔案和內容，除非在此期間撤銷對他們的停權。
         preview_preamble_html: "<strong>@%{acct}</strong> 將收到警告，內容如下："
@@ -920,7 +920,7 @@ zh-HK:
         peaked_on_and_decaying: 在 %{date} 達到高峰，目前正在回落
         title: 熱門標籤
         trendable: 可登上熱門
-        trending_rank: '熱門 #%{rank}'
+        trending_rank: "熱門 #%{rank}"
         usable: 可用
         usage_comparison: 今天被使用了 %{today} 次，相較於昨天 %{yesterday} 次
         used_by_over_week:
@@ -1145,7 +1145,7 @@ zh-HK:
       description_html: 這些是 %{instance} 工作人員針對你的帳號採取的行動和向你發出的警告。
       recipient: 發送至
       reject_appeal: 駁回申訴
-      status: '帖文 #%{id}'
+      status: "帖文 #%{id}"
       status_removed: 帖文已從系統中刪除
       title: "%{action} 於 %{date}"
       title_actions:
@@ -1162,19 +1162,19 @@ zh-HK:
   edit_profile:
     other: 其他
   errors:
-    '400': 你的請求無效或格式不正確。
-    '403': 你沒有觀看本頁的權限。
-    '404': 找不到內容。
-    '406': 無法根據的格式顯示此頁面
-    '410': 內容已被刪除。
-    '422':
+    "400": 你的請求無效或格式不正確。
+    "403": 你沒有觀看本頁的權限。
+    "404": 找不到內容。
+    "406": 無法根據的格式顯示此頁面
+    "410": 內容已被刪除。
+    "422":
       content: 無法確認登入資訊。會不會你阻擋了本站使用 Cookies 的權限？
       title: 無法確認登入資訊
-    '429': 伺服器繁忙
-    '500':
+    "429": 伺服器繁忙
+    "500":
       content: 抱歉，我們的後台出錯了。
       title: 這個頁面有問題
-    '503': 因短暫的伺服器錯誤而未能提供此頁面
+    "503": 因短暫的伺服器錯誤而未能提供此頁面
     noscript_html: 使用 Mastodon 網頁版應用需要啟用 JavaScript。你也可以選擇適用於你的平台的 <a href="%{apps_path}">Mastodon 應用</a>。
   existing_username_validator:
     not_found: 無法找到位於本伺服器的用戶
@@ -1304,12 +1304,12 @@ zh-HK:
     delete: 停用
     expired: 已失效
     expires_in:
-      '1800': 30 分鐘後
-      '21600': 6 小時後
-      '3600': 1 小時後
-      '43200': 12 小時後
-      '604800': 1 週後
-      '86400': 1 天後
+      "1800": 30 分鐘後
+      "21600": 6 小時後
+      "3600": 1 小時後
+      "43200": 12 小時後
+      "604800": 1 週後
+      "86400": 1 天後
     expires_in_prompt: 永不過期
     generate: 生成邀請連結
     invalid: 此邀請無效
@@ -1637,14 +1637,14 @@ zh-HK:
     keep_self_fav: 保留您已標記為最愛之嘟文
     keep_self_fav_hint: 不會刪除您已標記為最愛之嘟文
     min_age:
-      '1209600': 2 週
-      '15778476': 6 個月
-      '2629746': 1 個月
-      '31556952': 1 年
-      '5259492': 2 個月
-      '604800': 一週
-      '63113904': 2 年
-      '7889238': 3 個月
+      "1209600": 2 週
+      "15778476": 6 個月
+      "2629746": 1 個月
+      "31556952": 1 年
+      "5259492": 2 個月
+      "604800": 一週
+      "63113904": 2 年
+      "7889238": 3 個月
     min_age_label: 按時間篩選
     min_favs: 保留超過嘟文最愛門檻
     min_favs_hint: 收到此數量或更多最愛的帖文將不會被刪除。 留空可無視最愛數量刪除帖子

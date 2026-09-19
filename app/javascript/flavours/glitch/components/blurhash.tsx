@@ -1,6 +1,6 @@
-import { memo, useRef, useEffect } from 'react';
+import { memo, useRef, useEffect } from "react";
 
-import { decode } from 'blurhash';
+import { decode } from "blurhash";
 
 interface Props extends React.HTMLAttributes<HTMLCanvasElement> {
   hash: string;
@@ -29,7 +29,7 @@ const Blurhash: React.FC<Props> = ({
 
     try {
       const pixels = decode(hash, width, height);
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext("2d");
       const imageData = ctx?.createImageData(width, height);
       imageData?.data.set(pixels);
 
@@ -37,13 +37,11 @@ const Blurhash: React.FC<Props> = ({
         ctx?.putImageData(imageData, 0, 0);
       }
     } catch (err) {
-      console.error('Blurhash decoding failure', { err, hash });
+      console.error("Blurhash decoding failure", { err, hash });
     }
   }, [dummy, hash, width, height]);
 
-  return (
-    <canvas {...canvasProps} ref={canvasRef} width={width} height={height} />
-  );
+  return <canvas {...canvasProps} ref={canvasRef} width={width} height={height} />;
 };
 
 const MemoizedBlurhash = memo(Blurhash);

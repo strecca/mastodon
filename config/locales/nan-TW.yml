@@ -345,7 +345,7 @@ nan-TW:
       back_to_account: Tńg去口座ê頁
       back_to_report: Tńg去檢舉ê頁
       batch:
-        add_to_report: '加kàu檢舉 #%{id}'
+        add_to_report: "加kàu檢舉 #%{id}"
         remove_from_report: Tuì檢舉suá掉
         report: 檢舉
       collection_title: "%{name} ê收藏"
@@ -708,12 +708,12 @@ nan-TW:
       created_msg: 成功加添新ê IP規則
       delete: Thâi掉
       expires_in:
-        '1209600': 2 禮拜
-        '15778476': 6個月
-        '2629746': 1 個月
-        '31556952': 1 年
-        '86400': 1 kang
-        '94670856': 3 年
+        "1209600": 2 禮拜
+        "15778476": 6個月
+        "2629746": 1 個月
+        "31556952": 1 年
+        "86400": 1 kang
+        "94670856": 3 年
       new:
         title: 建立新ê IP規則
       no_ip_block_selected: 因為無揀任何IP規則，所以lóng無改變
@@ -789,11 +789,11 @@ nan-TW:
         placeholder: 描述有行siánn物行動，á是其他關聯ê更新……
         title: 筆記
       notes_description_html: 檢視á是留筆記hōo別ê管理者kap未來ê家己
-      processed_msg: '檢舉 #%{id} 處理成功ah'
+      processed_msg: "檢舉 #%{id} 處理成功ah"
       quick_actions_description_html: 緊行行動，á是giú kàu下kha，看檢舉ê內容：
       remote_user_placeholder: tuì %{instance} 來ê遠距離用者
       reopen: 重頭phah開檢舉
-      report: '檢舉 #%{id}'
+      report: "檢舉 #%{id}"
       reported_account: 受檢舉ê口座
       reported_by: 檢舉人
       reported_content: 受檢舉ê內容
@@ -815,7 +815,7 @@ nan-TW:
           mark_as_sensitive_html: Kā冒犯êPO文ê媒體標做敏感ê
           silence_html: Kā in ê個人資料kap內容標做kan-ta有跟tuè ê，á是手動tshiau伊ê個人檔案ê，通看見，來嚴嚴限制 <strong>@%{acct}</strong> ê傳播範圍
           suspend_html: Kā <strong>@%{acct}</strong> 停止權限，koh kā in ê 個人資料kap內容標做bē當用，kap bē當hām in互動
-        close_report: 'Kā 檢舉報告 #%{id} 標做解決ah'
+        close_report: "Kā 檢舉報告 #%{id} 標做解決ah"
         close_reports_html: Kā <strong>ta̍k ê</strong>tuì <strong>@%{acct}</strong> ê檢舉標做解決ah
         delete_data_html: Tuì tann起30kang以後，thâi掉 <strong>@%{acct}</strong> ê個人資料kap內容，除非佇tsit ê期限進前，取消停止in ê權限
         preview_preamble_html: "<strong>@%{acct}</strong> ē收著警告，包含下kha ê內容："
@@ -1002,7 +1002,7 @@ nan-TW:
       back_to_account: Tńg去口座ê頁
       back_to_report: Tńg去檢舉ê頁
       batch:
-        add_to_report: '加kàu檢舉 #%{id}'
+        add_to_report: "加kàu檢舉 #%{id}"
         remove_from_report: Tuì檢舉suá掉
         report: 檢舉
       contents: 內容
@@ -1199,7 +1199,7 @@ nan-TW:
         peaked_on_and_decaying: 佇 %{date} 日上烘，tsit-má teh退火
         title: 趨勢ê hashtag
         trendable: 通刊tī趨勢
-        trending_rank: '趨勢 #%{rank}'
+        trending_rank: "趨勢 #%{rank}"
         usable: Ē當用
         usage_comparison: Tī kin-á日hōo %{today} ê lâng用，比較tsa-hng有 %{yesterday} ê
         used_by_over_week:
@@ -1478,7 +1478,7 @@ nan-TW:
       description_html: Tsiah ê是 %{instance} ê人員送hōo lí ê，tuì lí ê口座行ê行動kap警告。
       recipient: 送kàu
       reject_appeal: 拒絕投訴
-      status: 'PO文 #%{id}'
+      status: "PO文 #%{id}"
       status_removed: 嘟文已經tuì系統thâi掉
       title: "%{action} tuì %{date}"
       title_actions:
@@ -1536,19 +1536,19 @@ nan-TW:
     native: 原底ê
     twemoji: Twemoji
   errors:
-    '400': Lí所送ê請求無效，á是格式毋著。
-    '403': Lí bô權限來看tsit頁。
-    '404': Lí teh tshuē ê頁無佇leh。
-    '406': Tsit頁bē當照lí所請求ê格式提供。
-    '410': Lí所tshuē ê頁，無佇tsia ah。
-    '422':
+    "400": Lí所送ê請求無效，á是格式毋著。
+    "403": Lí bô權限來看tsit頁。
+    "404": Lí teh tshuē ê頁無佇leh。
+    "406": Tsit頁bē當照lí所請求ê格式提供。
+    "410": Lí所tshuē ê頁，無佇tsia ah。
+    "422":
       content: 安全驗證出tshê。Lí kám有封鎖cookie？
       title: 安全驗證失敗
-    '429': 請求siunn tsē
-    '500':
+    "429": 請求siunn tsē
+    "500":
       content: 歹勢，guán ê後臺出問題ah。
       title: Tsit頁無正確
-    '503': Tsit頁bē當提供，因為服侍器暫時出tshê。
+    "503": Tsit頁bē當提供，因為服侍器暫時出tshê。
     noscript_html: Beh用Mastodon web app，請拍開JavaScript。另外，請試Mastodon hōo lí ê平臺用ê <a href="%{apps_path}">app</a>。
   existing_username_validator:
     not_found: bē當用tsit ê名tshuē著本地ê用者
@@ -1713,12 +1713,12 @@ nan-TW:
     delete: 停用
     expired: 過期ah
     expires_in:
-      '1800': 30 分以後
-      '21600': 6 點鐘以後
-      '3600': 1 點鐘以後
-      '43200': 12 點鐘以後
-      '604800': 1 禮拜以後
-      '86400': 1 kang以後
+      "1800": 30 分以後
+      "21600": 6 點鐘以後
+      "3600": 1 點鐘以後
+      "43200": 12 點鐘以後
+      "604800": 1 禮拜以後
+      "86400": 1 kang以後
     expires_in_prompt: 永永
     generate: 生邀請ê連結
     invalid: Tsit ê邀請無效
@@ -1958,7 +1958,7 @@ nan-TW:
     content_warning: 內容警告：
     descriptions:
       account: 對 @%{acct} 來ê公開ê PO文
-      tag: '有 #%{hashtag} 標簽ê公開PO文'
+      tag: "有 #%{hashtag} 標簽ê公開PO文"
   scheduled_statuses:
     over_daily_limit: Lí已經超過今á日預排ê PO文khòo-tah（%{limit}）
     over_total_limit: Lí已經超過預排ê PO文khòo-tah（%{limit}）
@@ -2114,14 +2114,14 @@ nan-TW:
     keep_self_fav: 保留lí收藏ê PO文
     keep_self_fav_hint: Bē thâi掉lí家kī有收藏ê PO文
     min_age:
-      '1209600': 2 禮拜
-      '15778476': 6 個月
-      '2629746': 1 個月
-      '31556952': 1 年
-      '5259492': 2 個月
-      '604800': 1 禮拜
-      '63113904': 2 年
-      '7889238': 3 個月
+      "1209600": 2 禮拜
+      "15778476": 6 個月
+      "2629746": 1 個月
+      "31556952": 1 年
+      "5259492": 2 個月
+      "604800": 1 禮拜
+      "63113904": 2 年
+      "7889238": 3 個月
     min_age_label: 保持PO文ê期間
     min_favs: 保留超過下kha ê收藏數ê PO文
     min_favs_hint: 若是lí ê PO文有kàu tsit ê收藏數，就bē受thâi掉。留空白表示毋管收藏數，PO文lóng thâi掉

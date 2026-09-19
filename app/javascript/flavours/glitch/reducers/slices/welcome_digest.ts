@@ -1,15 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import { openModal } from 'flavours/glitch/actions/modal';
-import type { ApiWelcomeDigestState } from 'flavours/glitch/api/member_welcome_digest';
+import { openModal } from "flavours/glitch/actions/modal";
+import type { ApiWelcomeDigestState } from "flavours/glitch/api/member_welcome_digest";
 import {
   apiGetWelcomeDigest,
   apiMarkWelcomeDigestRead,
-} from 'flavours/glitch/api/member_welcome_digest';
-import {
-  createAppThunk,
-  createDataLoadingThunk,
-} from 'flavours/glitch/store/typed_functions';
+} from "flavours/glitch/api/member_welcome_digest";
+import { createAppThunk, createDataLoadingThunk } from "flavours/glitch/store/typed_functions";
 
 interface WelcomeDigestState {
   state?: ApiWelcomeDigestState;
@@ -17,7 +14,7 @@ interface WelcomeDigestState {
 }
 
 const welcomeDigestSlice = createSlice({
-  name: 'welcomeDigest',
+  name: "welcomeDigest",
   initialState: { checked: false } as WelcomeDigestState,
   reducers: {},
   extraReducers(builder) {
@@ -47,15 +44,15 @@ const fetchWelcomeDigest = createDataLoadingThunk(
   `${welcomeDigestSlice.name}/fetchWelcomeDigest`,
   async () => apiGetWelcomeDigest(),
   ({ state, content, refresh }, { dispatch }) => {
-    if (state === 'generating' && refresh) {
+    if (state === "generating" && refresh) {
       // Same poll-while-generating pattern as annual_report's fetchReportState.
       window.setTimeout(() => {
         void dispatch(fetchWelcomeDigest());
       }, 1_000 * refresh.retry);
-    } else if (state === 'available' && content) {
+    } else if (state === "available" && content) {
       dispatch(
         openModal({
-          modalType: 'WELCOME_DIGEST',
+          modalType: "WELCOME_DIGEST",
           modalProps: { content },
         }),
       );

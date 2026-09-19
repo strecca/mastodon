@@ -1,17 +1,25 @@
-import PropTypes from 'prop-types';
-import { useCallback, useState, useRef } from 'react';
+import PropTypes from "prop-types";
+import { useCallback, useState, useRef } from "react";
 
-import Overlay from 'react-overlays/Overlay';
+import Overlay from "react-overlays/Overlay";
 
-import { DropdownSelector } from 'flavours/glitch/components/dropdown_selector';
-import { IconButton } from 'flavours/glitch/components/icon_button';
+import { DropdownSelector } from "flavours/glitch/components/dropdown_selector";
+import { IconButton } from "flavours/glitch/components/icon_button";
 
-export const DropdownIconButton = ({ value, disabled, icon, onChange, iconComponent, title, options }) => {
+export const DropdownIconButton = ({
+  value,
+  disabled,
+  icon,
+  onChange,
+  iconComponent,
+  title,
+  options,
+}) => {
   const containerRef = useRef(null);
 
   const [activeElement, setActiveElement] = useState(null);
   const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState('bottom');
+  const [placement, setPlacement] = useState("bottom");
 
   const handleToggle = useCallback(() => {
     if (open && activeElement) {
@@ -31,9 +39,12 @@ export const DropdownIconButton = ({ value, disabled, icon, onChange, iconCompon
     setOpen(false);
   }, [open, setOpen, activeElement, setActiveElement]);
 
-  const handleOverlayEnter = useCallback((state) => {
-    setPlacement(state.placement);
-  }, [setPlacement]);
+  const handleOverlayEnter = useCallback(
+    (state) => {
+      setPlacement(state.placement);
+    },
+    [setPlacement],
+  );
 
   return (
     <div ref={containerRef}>
@@ -48,7 +59,14 @@ export const DropdownIconButton = ({ value, disabled, icon, onChange, iconCompon
         inverted
       />
 
-      <Overlay show={open} offset={[5, 5]} placement={placement} flip target={containerRef} popperConfig={{ strategy: 'fixed', onFirstUpdate: handleOverlayEnter }}>
+      <Overlay
+        show={open}
+        offset={[5, 5]}
+        placement={placement}
+        flip
+        target={containerRef}
+        popperConfig={{ strategy: "fixed", onFirstUpdate: handleOverlayEnter }}
+      >
         {({ props, placement }) => (
           <div {...props}>
             <div className={`dropdown-animation privacy-dropdown__dropdown ${placement}`}>

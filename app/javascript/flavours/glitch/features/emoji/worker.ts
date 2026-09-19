@@ -1,21 +1,17 @@
-import debug from 'debug';
+import debug from "debug";
 
-import { EMOJI_DB_NAME_SHORTCODES, EMOJI_TYPE_CUSTOM } from './constants';
-import {
-  importCustomEmojiData,
-  importEmojiData,
-  importLegacyShortcodes,
-} from './loader';
-import type { EmojiWorkerMessage } from './types';
+import { EMOJI_DB_NAME_SHORTCODES, EMOJI_TYPE_CUSTOM } from "./constants";
+import { importCustomEmojiData, importEmojiData, importLegacyShortcodes } from "./loader";
+import type { EmojiWorkerMessage } from "./types";
 
-addEventListener('message', handleMessage);
-self.postMessage({ type: 'ready' } satisfies EmojiWorkerMessage); // After the worker is ready, notify the main thread
+addEventListener("message", handleMessage);
+self.postMessage({ type: "ready" } satisfies EmojiWorkerMessage); // After the worker is ready, notify the main thread
 
 function handleMessage(event: MessageEvent<EmojiWorkerMessage>) {
   const { data } = event;
-  if (data.type === 'debug') {
+  if (data.type === "debug") {
     debug.enable(data.debugValue);
-  } else if (data.type === 'load') {
+  } else if (data.type === "load") {
     void loadData(data.storeName);
   }
 }
@@ -32,7 +28,7 @@ async function loadData(storeName: string) {
 
   if (importCount) {
     self.postMessage({
-      type: 'done',
+      type: "done",
       storeName,
       importCount,
     } satisfies EmojiWorkerMessage);

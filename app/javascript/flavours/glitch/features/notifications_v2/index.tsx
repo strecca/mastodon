@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
-import { isEqual } from 'lodash';
-import { useDebouncedCallback } from 'use-debounce';
+import { Helmet } from "@unhead/react/helmet";
+import { isEqual } from "lodash";
+import { useDebouncedCallback } from "use-debounce";
 
-import DoneAllIcon from '@/material-icons/400-24px/done_all.svg?react';
-import NotificationsIcon from '@/material-icons/400-24px/notifications-fill.svg?react';
+import DoneAllIcon from "@/material-icons/400-24px/done_all.svg?react";
+import NotificationsIcon from "@/material-icons/400-24px/notifications-fill.svg?react";
 import {
   fetchNotificationsGap,
   updateScrollPosition,
@@ -15,46 +15,46 @@ import {
   markNotificationsAsRead,
   mountNotifications,
   unmountNotifications,
-} from 'flavours/glitch/actions/notification_groups';
-import { compareId } from 'flavours/glitch/compare_id';
-import { Icon } from 'flavours/glitch/components/icon';
-import { NotSignedInIndicator } from 'flavours/glitch/components/not_signed_in_indicator';
-import { useIdentity } from 'flavours/glitch/identity_context';
-import type { NotificationGap } from 'flavours/glitch/reducers/notification_groups';
+} from "flavours/glitch/actions/notification_groups";
+import { compareId } from "flavours/glitch/compare_id";
+import { Icon } from "flavours/glitch/components/icon";
+import { NotSignedInIndicator } from "flavours/glitch/components/not_signed_in_indicator";
+import { useIdentity } from "flavours/glitch/identity_context";
+import type { NotificationGap } from "flavours/glitch/reducers/notification_groups";
 import {
   selectUnreadNotificationGroupsCount,
   selectPendingNotificationGroupsCount,
   selectAnyPendingNotification,
   selectNotificationGroups,
-} from 'flavours/glitch/selectors/notifications';
+} from "flavours/glitch/selectors/notifications";
 import {
   selectNeedsNotificationPermission,
   selectSettingsNotificationsShowUnread,
-} from 'flavours/glitch/selectors/settings';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+} from "flavours/glitch/selectors/settings";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
-import { addColumn, removeColumn, moveColumn } from '../../actions/columns';
-import { submitMarkers } from '../../actions/markers';
-import { Column } from '../../components/column';
-import type { ColumnRef } from '../../components/column';
-import { ColumnHeader } from '../../components/column_header';
-import { LoadGap } from '../../components/load_gap';
-import ScrollableList from '../../components/scrollable_list';
+import { addColumn, removeColumn, moveColumn } from "../../actions/columns";
+import { submitMarkers } from "../../actions/markers";
+import { Column } from "../../components/column";
+import type { ColumnRef } from "../../components/column";
+import { ColumnHeader } from "../../components/column_header";
+import { LoadGap } from "../../components/load_gap";
+import ScrollableList from "../../components/scrollable_list";
 import {
   FilteredNotificationsBanner,
   FilteredNotificationsIconButton,
-} from '../notifications/components/filtered_notifications_banner';
-import NotificationsPermissionBanner from '../notifications/components/notifications_permission_banner';
-import ColumnSettingsContainer from '../notifications/containers/column_settings_container';
+} from "../notifications/components/filtered_notifications_banner";
+import NotificationsPermissionBanner from "../notifications/components/notifications_permission_banner";
+import ColumnSettingsContainer from "../notifications/containers/column_settings_container";
 
-import { NotificationGroup } from './components/notification_group';
-import { FilterBar } from './filter_bar';
+import { NotificationGroup } from "./components/notification_group";
+import { FilterBar } from "./filter_bar";
 
 const messages = defineMessages({
-  title: { id: 'column.notifications', defaultMessage: 'Notifications' },
+  title: { id: "column.notifications", defaultMessage: "Notifications" },
   markAsRead: {
-    id: 'notifications.mark_as_read',
-    defaultMessage: 'Mark every notification as read',
+    id: "notifications.mark_as_read",
+    defaultMessage: "Mark every notification as read",
   },
 });
 
@@ -66,35 +66,28 @@ export const Notifications: React.FC<{
   const notifications = useAppSelector(selectNotificationGroups, isEqual);
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((s) => s.notificationGroups.isLoading);
-  const hasMore = notifications.at(-1)?.type === 'gap';
+  const hasMore = notifications.at(-1)?.type === "gap";
 
   const lastReadId = useAppSelector((s) =>
-    selectSettingsNotificationsShowUnread(s)
-      ? s.notificationGroups.readMarkerId
-      : '0',
+    selectSettingsNotificationsShowUnread(s) ? s.notificationGroups.readMarkerId : "0",
   );
 
   const numPending = useAppSelector(selectPendingNotificationGroupsCount);
 
-  const unreadNotificationsCount = useAppSelector(
-    selectUnreadNotificationGroupsCount,
-  );
+  const unreadNotificationsCount = useAppSelector(selectUnreadNotificationGroupsCount);
 
   const anyPendingNotification = useAppSelector(selectAnyPendingNotification);
 
   const needsReload = useAppSelector(
-    (state) => state.notificationGroups.mergedNotifications === 'needs-reload',
+    (state) => state.notificationGroups.mergedNotifications === "needs-reload",
   );
 
   const isUnread = unreadNotificationsCount > 0 || needsReload;
 
   const canMarkAsRead =
-    useAppSelector(selectSettingsNotificationsShowUnread) &&
-    anyPendingNotification;
+    useAppSelector(selectSettingsNotificationsShowUnread) && anyPendingNotification;
 
-  const needsNotificationPermission = useAppSelector(
-    selectNeedsNotificationPermission,
-  );
+  const needsNotificationPermission = useAppSelector(selectNeedsNotificationPermission);
 
   const columnRef = useRef<ColumnRef>(null);
 
@@ -118,7 +111,7 @@ export const Notifications: React.FC<{
   const handleLoadOlder = useDebouncedCallback(
     () => {
       const gap = notifications.at(-1);
-      if (gap?.type === 'gap') void dispatch(fetchNotificationsGap({ gap }));
+      if (gap?.type === "gap") void dispatch(fetchNotificationsGap({ gap }));
     },
     300,
     { leading: true },
@@ -148,7 +141,7 @@ export const Notifications: React.FC<{
     if (columnId) {
       dispatch(removeColumn(columnId));
     } else {
-      dispatch(addColumn('NOTIFICATIONS', {}));
+      dispatch(addColumn("NOTIFICATIONS", {}));
     }
   }, [columnId, dispatch]);
 
@@ -171,7 +164,7 @@ export const Notifications: React.FC<{
   const pinned = !!columnId;
   const emptyMessage = (
     <FormattedMessage
-      id='empty_column.notifications'
+      id="empty_column.notifications"
       defaultMessage="You don't have any notifications yet. When other people interact with you, you will see it here."
     />
   );
@@ -184,7 +177,7 @@ export const Notifications: React.FC<{
     if (notifications.length === 0 && !hasMore) return null;
 
     return notifications.map((item) =>
-      item.type === 'gap' ? (
+      item.type === "gap" ? (
         <LoadGap
           key={`${item.maxId}-${item.sinceId}`}
           disabled={isLoading}
@@ -196,9 +189,7 @@ export const Notifications: React.FC<{
           key={item.group_key}
           notificationGroupId={item.group_key}
           unread={
-            lastReadId !== '0' &&
-            !!item.page_max_id &&
-            compareId(item.page_max_id, lastReadId) > 0
+            lastReadId !== "0" && !!item.page_max_id && compareId(item.page_max_id, lastReadId) > 0
           }
         />
       ),
@@ -237,16 +228,16 @@ export const Notifications: React.FC<{
 
   const extraButton = (
     <>
-      <FilteredNotificationsIconButton className='column-header__button' />
+      <FilteredNotificationsIconButton className="column-header__button" />
       {canMarkAsRead && (
         <button
           aria-label={intl.formatMessage(messages.markAsRead)}
           title={intl.formatMessage(messages.markAsRead)}
           onClick={handleMarkAsRead}
-          className='column-header__button'
-          type='button'
+          className="column-header__button"
+          type="button"
         >
-          <Icon id='done-all' icon={DoneAllIcon} />
+          <Icon id="done-all" icon={DoneAllIcon} />
         </button>
       )}
     </>
@@ -259,7 +250,7 @@ export const Notifications: React.FC<{
       label={intl.formatMessage(messages.title)}
     >
       <ColumnHeader
-        icon='bell'
+        icon="bell"
         iconComponent={NotificationsIcon}
         active={isUnread}
         title={intl.formatMessage(messages.title)}
@@ -279,7 +270,7 @@ export const Notifications: React.FC<{
 
       <Helmet>
         <title>{intl.formatMessage(messages.title)}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

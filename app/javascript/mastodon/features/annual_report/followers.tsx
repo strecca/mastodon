@@ -1,8 +1,8 @@
-import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 export const Followers: React.FC<{
   count: number;
@@ -15,8 +15,8 @@ export const Followers: React.FC<{
 
       <div className={styles.title}>
         <FormattedMessage
-          id='annual_report.summary.followers.new_followers'
-          defaultMessage='{count, plural, one {new follower} other {new followers}}'
+          id="annual_report.summary.followers.new_followers"
+          defaultMessage="{count, plural, one {new follower} other {new followers}}"
           values={{ count }}
         />
       </div>

@@ -46,7 +46,7 @@ az:
         actions: Əməliyyatlar
         application_id: Client açarı
         secret: Client sirri
-        title: 'Tətbiq: %{name}'
+        title: "Tətbiq: %{name}"
     authorizations:
       buttons:
         authorize: Səlahiyyət ver

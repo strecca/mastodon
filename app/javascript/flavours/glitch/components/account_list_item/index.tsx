@@ -1,38 +1,35 @@
-import type { ReactNode } from 'react';
-import { useMemo } from 'react';
+import type { ReactNode } from "react";
+import { useMemo } from "react";
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import {
-  FollowsYouBadge,
-  VerifiedBadge,
-} from 'flavours/glitch/components/badge';
-import { useAccount } from 'flavours/glitch/hooks/useAccount';
-import { useRelationship } from 'flavours/glitch/hooks/useRelationship';
-import { domain } from 'flavours/glitch/initial_state';
-import type { Relationship } from 'flavours/glitch/models/relationship';
+import { FollowsYouBadge, VerifiedBadge } from "flavours/glitch/components/badge";
+import { useAccount } from "flavours/glitch/hooks/useAccount";
+import { useRelationship } from "flavours/glitch/hooks/useRelationship";
+import { domain } from "flavours/glitch/initial_state";
+import type { Relationship } from "flavours/glitch/models/relationship";
 
-import { Avatar } from '../avatar';
-import { useAccountHandle } from '../display_name/default';
-import { DisplayNameSimple } from '../display_name/simple';
-import { EmojiHTML } from '../emoji/html';
-import { FollowButton } from '../follow_button';
-import { FormattedDateWrapper } from '../formatted_date';
-import { ListItemLink, ListItemWrapper } from '../list_item';
-import { NumberFields, NumberFieldsItem } from '../number_fields';
-import { RelativeTimestamp } from '../relative_timestamp';
-import { ShortNumber } from '../short_number';
+import { Avatar } from "../avatar";
+import { useAccountHandle } from "../display_name/default";
+import { DisplayNameSimple } from "../display_name/simple";
+import { EmojiHTML } from "../emoji/html";
+import { FollowButton } from "../follow_button";
+import { FormattedDateWrapper } from "../formatted_date";
+import { ListItemLink, ListItemWrapper } from "../list_item";
+import { NumberFields, NumberFieldsItem } from "../number_fields";
+import { RelativeTimestamp } from "../relative_timestamp";
+import { ShortNumber } from "../short_number";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 export interface RenderButtonOptions {
   accountId: string | undefined;
   relationship: Relationship | null | undefined;
 }
 
-type Stat = 'followers' | 'following' | 'posts' | 'joined' | 'last-active';
+type Stat = "followers" | "following" | "posts" | "joined" | "last-active";
 
 interface Props {
   accountId: string | undefined;
@@ -43,7 +40,7 @@ interface Props {
   renderButton?: (options: RenderButtonOptions) => React.ReactNode;
 }
 
-const DEFAULT_STATS: Stat[] = ['followers', 'posts', 'last-active'];
+const DEFAULT_STATS: Stat[] = ["followers", "posts", "last-active"];
 
 /**
  * Extended account list item with bio, verified link badge,
@@ -74,8 +71,7 @@ export const AccountListItem: React.FC<Props> = ({
     return null;
   }
 
-  const badge =
-    badgeProp ?? (relationship?.followed_by ? <FollowsYouBadge /> : null);
+  const badge = badgeProp ?? (relationship?.followed_by ? <FollowsYouBadge /> : null);
 
   const firstVerifiedField = account.fields.find((item) => !!item.verified_at);
 
@@ -85,9 +81,7 @@ export const AccountListItem: React.FC<Props> = ({
         className={classes.main}
         icon={<Avatar account={account} size={40} />}
         sideContent={
-          <span className={classes.button}>
-            {renderButton({ accountId, relationship })}
-          </span>
+          <span className={classes.button}>{renderButton({ accountId, relationship })}</span>
         }
       >
         <ListItemLink
@@ -95,99 +89,67 @@ export const AccountListItem: React.FC<Props> = ({
           data-hover-card-account={accountId}
           subtitle={<span className={classes.handle}>{handle}</span>}
         >
-          <DisplayNameSimple
-            account={account}
-            className={classes.displayName}
-          />
+          <DisplayNameSimple account={account} className={classes.displayName} />
           {badge && <span className={classes.badge}>{badge}</span>}
         </ListItemLink>
       </ListItemWrapper>
 
       <NumberFields>
-        {stats.includes('followers') && (
+        {stats.includes("followers") && (
           <NumberFieldsItem
-            label={
-              <FormattedMessage
-                id='account.followers'
-                defaultMessage='Followers'
-              />
-            }
+            label={<FormattedMessage id="account.followers" defaultMessage="Followers" />}
             hint={intl.formatNumber(account.followers_count)}
           >
             <ShortNumber value={account.followers_count} />
           </NumberFieldsItem>
         )}
-        {stats.includes('following') && (
+        {stats.includes("following") && (
           <NumberFieldsItem
-            label={
-              <FormattedMessage
-                id='account.following'
-                defaultMessage='Following'
-              />
-            }
+            label={<FormattedMessage id="account.following" defaultMessage="Following" />}
             hint={intl.formatNumber(account.following_count)}
             link={`/@${account.acct}/following`}
           >
             <ShortNumber value={account.following_count} />
           </NumberFieldsItem>
         )}
-        {stats.includes('posts') && (
+        {stats.includes("posts") && (
           <NumberFieldsItem
-            label={
-              <FormattedMessage id='account.posts' defaultMessage='Posts' />
-            }
+            label={<FormattedMessage id="account.posts" defaultMessage="Posts" />}
             hint={intl.formatNumber(account.statuses_count)}
           >
             <ShortNumber value={account.statuses_count} />
           </NumberFieldsItem>
         )}
-        {stats.includes('joined') && (
+        {stats.includes("joined") && (
           <NumberFieldsItem
-            label={
-              <FormattedMessage
-                id='account.joined_short'
-                defaultMessage='Joined'
-              />
-            }
+            label={<FormattedMessage id="account.joined_short" defaultMessage="Joined" />}
             hint={intl.formatDate(account.created_at)}
           >
             {createdThisYear ? (
-              <FormattedDateWrapper
-                value={account.created_at}
-                month='short'
-                day='2-digit'
-              />
+              <FormattedDateWrapper value={account.created_at} month="short" day="2-digit" />
             ) : (
-              <FormattedDateWrapper value={account.created_at} year='numeric' />
+              <FormattedDateWrapper value={account.created_at} year="numeric" />
             )}
           </NumberFieldsItem>
         )}
-        {stats.includes('last-active') && (
+        {stats.includes("last-active") && (
           <NumberFieldsItem
-            label={
-              <FormattedMessage
-                id='account.last_active'
-                defaultMessage='Last active'
-              />
-            }
+            label={<FormattedMessage id="account.last_active" defaultMessage="Last active" />}
           >
             {account.last_status_at ? (
               <RelativeTimestamp long timestamp={account.last_status_at} />
             ) : (
-              '-'
+              "-"
             )}
           </NumberFieldsItem>
         )}
         {firstVerifiedField && (
-          <VerifiedBadge
-            link={firstVerifiedField.value}
-            className={classes.verifiedBadge}
-          />
+          <VerifiedBadge link={firstVerifiedField.value} className={classes.verifiedBadge} />
         )}
       </NumberFields>
       {withBio && account.note.length > 0 && (
         <EmojiHTML
-          className={classNames(classes.bio, 'translate')}
+          className={classNames(classes.bio, "translate")}
           htmlString={account.note_emojified}
           extraEmojis={account.emojis}
         />
@@ -202,6 +164,4 @@ const defaultRenderButton = ({ accountId }: RenderButtonOptions) => (
 
 export const AccountListItemFollowButton: React.FC<{
   accountId: string | undefined;
-}> = ({ accountId }) => (
-  <FollowButton compact labelLength='short' accountId={accountId} />
-);
+}> = ({ accountId }) => <FollowButton compact labelLength="short" accountId={accountId} />;

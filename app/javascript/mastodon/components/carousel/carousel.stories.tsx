@@ -1,10 +1,10 @@
-import type { FC } from 'react';
+import type { FC } from "react";
 
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn, userEvent, expect } from 'storybook/test';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn, userEvent, expect } from "storybook/test";
 
-import type { CarouselProps } from './index';
-import { Carousel } from './index';
+import type { CarouselProps } from "./index";
+import { Carousel } from "./index";
 
 interface TestSlideProps {
   id: number;
@@ -12,13 +12,9 @@ interface TestSlideProps {
   color: string;
 }
 
-const TestSlide: FC<TestSlideProps & { active: boolean }> = ({
-  active,
-  text,
-  color,
-}) => (
+const TestSlide: FC<TestSlideProps & { active: boolean }> = ({ active, text, color }) => (
   <div
-    className='test-slide'
+    className="test-slide"
     style={{
       backgroundColor: active ? color : undefined,
     }}
@@ -30,35 +26,35 @@ const TestSlide: FC<TestSlideProps & { active: boolean }> = ({
 const slides: TestSlideProps[] = [
   {
     id: 1,
-    text: 'first',
-    color: 'red',
+    text: "first",
+    color: "red",
   },
   {
     id: 2,
-    text: 'second',
-    color: 'pink',
+    text: "second",
+    color: "pink",
   },
   {
     id: 3,
-    text: 'third',
-    color: 'orange',
+    text: "third",
+    color: "orange",
   },
 ];
 
 type StoryProps = Pick<
   CarouselProps<TestSlideProps>,
-  'items' | 'renderItem' | 'emptyFallback' | 'onChangeSlide'
+  "items" | "renderItem" | "emptyFallback" | "onChangeSlide"
 >;
 
 const meta = {
-  title: 'Components/Carousel',
+  title: "Components/Carousel",
   args: {
     items: slides,
     renderItem(item, active) {
       return <TestSlide {...item} active={active} key={item.id} />;
     },
     onChangeSlide: fn(),
-    emptyFallback: 'No slides available',
+    emptyFallback: "No slides available",
   },
   render(args) {
     return (
@@ -82,10 +78,10 @@ const meta = {
   },
   argTypes: {
     emptyFallback: {
-      type: 'string',
+      type: "string",
     },
   },
-  tags: ['test'],
+  tags: ["test"],
 } satisfies Meta<StoryProps>;
 
 export default meta;
@@ -94,8 +90,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   async play({ args, canvas }) {
-    const nextButton = await canvas.findByRole('button', { name: /next/i });
-    const slides = await canvas.findAllByRole('group');
+    const nextButton = await canvas.findByRole("button", { name: /next/i });
+    const slides = await canvas.findAllByRole("group");
     await expect(slides).toHaveLength(slides.length);
 
     await userEvent.click(nextButton);

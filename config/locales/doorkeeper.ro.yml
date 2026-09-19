@@ -52,7 +52,7 @@ ro:
         callback_urls: Callback URL-uri
         scopes: Domenii
         secret: Secretul clientului
-        title: 'Aplicație: %{name}'
+        title: "Aplicație: %{name}"
     authorizations:
       buttons:
         authorize: Autorizare
@@ -86,7 +86,7 @@ ro:
         invalid_grant: Acordarea autorizației furnizată este invalidă, expirată, revocată, nu corespunde URI-ului de redirecționare folosit în cererea de autorizare, sau a fost eliberat altui client.
         invalid_redirect_uri: Uri-ul de redirecționare inclus nu este valid.
         invalid_request:
-          missing_param: 'Lipsește parametrul necesar: %{value}.'
+          missing_param: "Lipsește parametrul necesar: %{value}."
           request_not_authorized: Solicitarea trebuie să fie autorizată. Parametrul necesar pentru solicitarea de autorizare lipsește sau este invalid.
           unknown: Solicitarea nu are un parametru necesar, include un parametru nesuportat sau este formatat incorect.
         invalid_resource_owner: Acreditările proprietarului de resurse nu sunt valide sau proprietarul de resurse nu poate fi găsit

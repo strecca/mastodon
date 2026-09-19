@@ -1,7 +1,7 @@
 ---
 is:
   about:
-    about_mastodon_html: 'Samfélagsnet framtíðarinnar: Engar auglýsingar, ekkert eftirlit stórfyrirtækja, siðleg hönnun og engin miðstýring! Þú átt þín eigin gögn í Mastodon!'
+    about_mastodon_html: "Samfélagsnet framtíðarinnar: Engar auglýsingar, ekkert eftirlit stórfyrirtækja, siðleg hönnun og engin miðstýring! Þú átt þín eigin gögn í Mastodon!"
     contact_missing: Ekki skilgreint
     contact_unavailable: Ekki til staðar
     default_thumbnail_description: Tveir brosandi teiknimyndaloðfílar (sem líkjast fílum) henda pappírsskutlu á milli sín. Umhverfis þá er blár himinn og fljótandi plánetur með trjám og fleiri loðfílum á þeim.
@@ -334,7 +334,7 @@ is:
         title: Ný auglýsing
       preview:
         disclaimer: Þar sem notendur geta ekki afþakkað þær ætti aðeins að nota tilkynningar í tölvupósti fyrir mikilvægar upplýsingar á borð við persónuleg gagnabrot eða lokanir á netþjónum.
-        explanation_html: 'Tölvupósturinn verður sendur til <strong>%{display_count} notenda</strong>. Eftirfarandi texti verður í meginmáli póstsins:'
+        explanation_html: "Tölvupósturinn verður sendur til <strong>%{display_count} notenda</strong>. Eftirfarandi texti verður í meginmáli póstsins:"
         title: Forskoða tilkynninguna
       publish: Birta
       published_msg: Það tókst að birta auglýsinguna!
@@ -349,7 +349,7 @@ is:
       back_to_account: Fara aftur á síðu notandaaðgangsins
       back_to_report: Til baka á kærusíðu
       batch:
-        add_to_report: 'Bæta við skýrslu #%{id}'
+        add_to_report: "Bæta við skýrslu #%{id}"
         remove_from_report: Fjarlægja úr kæru
         report: Kæra
       collection_title: Safn frá %{name}
@@ -584,10 +584,10 @@ is:
       import:
         description_html: Þú ert við það að flytja inn lista af lénum til lokunar. Vinsamlegeast farið vandlega yfir þennan lista, sérstaklega ef þú ert ekki höfundur hans.
         existing_relationships_warning: Fyrirliggjandi fylgjendavensl
-        private_comment_description_html: 'Tið að aðstoða þig við að rekja hvaðan lokkanir koma, innfluttar lokanir verða búnar til með eftirfarndi athugasemd: <q>%{comment}</q>'
+        private_comment_description_html: "Tið að aðstoða þig við að rekja hvaðan lokkanir koma, innfluttar lokanir verða búnar til með eftirfarndi athugasemd: <q>%{comment}</q>"
         private_comment_template: Flutt inn frá %{source} þann %{date}
         title: Flytja inn útilokanir léna
-      invalid_domain_block: 'Einni eða fleiri útilokunum léna var sleppt vegna eftirfarandi villu/villna: %{error}'
+      invalid_domain_block: "Einni eða fleiri útilokunum léna var sleppt vegna eftirfarandi villu/villna: %{error}"
       new:
         title: Flytja inn útilokanir léna
       no_file: Engin skrá valin
@@ -721,12 +721,12 @@ is:
       created_msg: Tókst að búa til nýja IP-reglu
       delete: Eyða
       expires_in:
-        '1209600': 2 vikur
-        '15778476': 6 mánuðir
-        '2629746': 1 mánuður
-        '31556952': 1 ár
-        '86400': 1 dagur
-        '94670856': 3 ár
+        "1209600": 2 vikur
+        "15778476": 6 mánuðir
+        "2629746": 1 mánuður
+        "31556952": 1 ár
+        "86400": 1 dagur
+        "94670856": 3 ár
       new:
         title: Búa til nýja IP-reglu
       no_ip_block_selected: Engum IP-reglum var breytt því ekkert var valið
@@ -783,7 +783,7 @@ is:
       collections: Söfn (%{count})
       comment:
         none: Ekkert
-      comment_description_html: 'Til að gefa nánari upplýsingar skrifaði %{name}:'
+      comment_description_html: "Til að gefa nánari upplýsingar skrifaði %{name}:"
       confirm: Staðfesta
       confirm_action: Staðfesta umsjónaraðgerðir gagnvart @%{acct}
       created_at: Tilkynnt
@@ -803,11 +803,11 @@ is:
         placeholder: Lýstu til hvaða aðgerða hefur verið gripið eða uppfærðu inn aðrar tengdar upplýsingar...
         title: Minnispunktar
       notes_description_html: Skoðaðu og skrifaðu minnispunkta til annarra stjórnenda og sjálfs þín
-      processed_msg: 'Tókst að meðhöndla kæruna #%{id}'
-      quick_actions_description_html: 'Beittu flýtiaðgerð eða skrunaðu niður til að skoða kært efni:'
+      processed_msg: "Tókst að meðhöndla kæruna #%{id}"
+      quick_actions_description_html: "Beittu flýtiaðgerð eða skrunaðu niður til að skoða kært efni:"
       remote_user_placeholder: fjartengda notandann frá %{instance}
       reopen: Enduropna kæru
-      report: 'Kæra #%{id}'
+      report: "Kæra #%{id}"
       reported_account: Kærður notandaaðgangur
       reported_by: Kært af
       reported_content: Kært efni
@@ -820,16 +820,16 @@ is:
       statuses_description_html: Óviðeigandi efni verður tiltekið í samskiptum við kærðan notandaaðgang
       summary:
         action_preambles:
-          delete_html: 'Þú er í þann mund að fara að <strong>fjarlægja</strong> sumar af færslunum frá <strong>@%{acct}</strong>. Þetta mun:'
-          mark_as_sensitive_html: 'Þú er í þann mund að fara að <strong>merkja</strong> sumar af færslunum frá <strong>@%{acct}</strong> sem <strong>viðkvæmar</strong>. Þetta mun:'
-          silence_html: 'Þú er í þann mund að fara að <strong>takmarka aðganginn</strong> <strong>@%{acct}</strong>. Þetta mun:'
-          suspend_html: 'Þú er í þann mund að fara að <strong>frysta</strong> aðganginn hjá <strong>@%{acct}</strong>. Þetta mun:'
+          delete_html: "Þú er í þann mund að fara að <strong>fjarlægja</strong> sumar af færslunum frá <strong>@%{acct}</strong>. Þetta mun:"
+          mark_as_sensitive_html: "Þú er í þann mund að fara að <strong>merkja</strong> sumar af færslunum frá <strong>@%{acct}</strong> sem <strong>viðkvæmar</strong>. Þetta mun:"
+          silence_html: "Þú er í þann mund að fara að <strong>takmarka aðganginn</strong> <strong>@%{acct}</strong>. Þetta mun:"
+          suspend_html: "Þú er í þann mund að fara að <strong>frysta</strong> aðganginn hjá <strong>@%{acct}</strong>. Þetta mun:"
         actions:
           delete_html: Fjarlægja viðkomandi færslur
           mark_as_sensitive_html: Merkja myndefni í viðkomandi færslum sem viðkvæmt
           silence_html: Takmarka verulega umfangið hjá <strong>@%{acct}</strong> með því að gera notandasniðið og efni þess einungis sýnilegt fólki sem þegar fylgist með viðkomandi eða þeim sem fletta handvirkt upp upplýsingunum
           suspend_html: Setja <strong>@%{acct}</strong> í frysti, gera notandasniðið og efni þess óaðgengilegt án mögulegrar gagnvirkni
-        close_report: 'Merkja kæruna #%{id} sem leysta'
+        close_report: "Merkja kæruna #%{id} sem leysta"
         close_reports_html: Merkja <strong>allar</strong> kærur gagnavart <strong>@%{acct}</strong> sem leystar
         delete_data_html: Eyða notandasniði <strong>@%{acct}</strong> og efni þess eftir 30 daga nema viðkomandi verði tekinn úr frysti í millitíðinni
         preview_preamble_html: "<strong>@%{acct}</strong> mun fá aðvörun með eftirfarandi texta:"
@@ -839,7 +839,7 @@ is:
       target_origin: Uppruni kærða notandaaðgangsins
       title: Kærur
       unassign: Aftengja úthlutun
-      unknown_action_msg: 'Óþekkt aðgerð: %{action}'
+      unknown_action_msg: "Óþekkt aðgerð: %{action}"
       unresolved: Óleyst
       updated_at: Uppfært
       view_profile: Skoða notandasnið
@@ -1020,7 +1020,7 @@ is:
       back_to_account: Fara aftur á síðu notandaaðgangsins
       back_to_report: Til baka á kærusíðu
       batch:
-        add_to_report: 'Bæta við skýrslu #%{id}'
+        add_to_report: "Bæta við skýrslu #%{id}"
         remove_from_report: Fjarlægja úr kæru
         report: Kæra
       contents: Efni
@@ -1081,7 +1081,7 @@ is:
       elasticsearch_running_check:
         message_html: Gat ekki tengst við Elasticsearch-leitina. Gakktu úr skugga um að hún sé í gangi, eða gerðu leit í öllum texta óvirka
       elasticsearch_version_check:
-        message_html: 'Ósamhæfð útgáfa Elasticsearch-leitar: %{value}'
+        message_html: "Ósamhæfð útgáfa Elasticsearch-leitar: %{value}"
         version_comparison: Elasticsearch %{running_version} er í gangi á meðan útgáfa %{required_version} er nauðsynleg
       rules_check:
         action: Sýsla með reglur netþjónsins
@@ -1143,7 +1143,7 @@ is:
       notified_on_html: Notendur látnir vita þann %{date}
       notify_users: Láta notendur vita
       preview:
-        explanation_html: 'Tölvupósturinn verður sendur til <strong>%{display_count} notenda</strong> sem hafa skráð sig fyrir %{date}. Eftirfarandi texti verður hafður með í póstinum:'
+        explanation_html: "Tölvupósturinn verður sendur til <strong>%{display_count} notenda</strong> sem hafa skráð sig fyrir %{date}. Eftirfarandi texti verður hafður með í póstinum:"
         send_preview: Senda forskoðun til %{email}
         send_to_all:
           one: Senda %{display_count} tölvupóst
@@ -1220,7 +1220,7 @@ is:
         peaked_on_and_decaying: Toppaði þann %{date}, núna dalandi
         title: Vinsæl myllumerki
         trendable: Má vera með í vinsældum
-        trending_rank: 'Vinsæl #%{rank}'
+        trending_rank: "Vinsæl #%{rank}"
         usable: Má nota
         usage_comparison: Notað %{today} sinnum í dag, samanborið við %{yesterday} í gær
         used_by_over_week:
@@ -1303,7 +1303,7 @@ is:
       body: Nýjar uppfærslur fyrir Mastodon hafa verið gefnar út, þú gætir viljað uppfæra!
       subject: Nýjar Mastodon-uppfærslur eru tiltækar fyrir %{instance}!
     new_trends:
-      body: 'Eftirfarandi atriði þarfnast yfirferðar áður en hægt er að birta þau opinberlega:'
+      body: "Eftirfarandi atriði þarfnast yfirferðar áður en hægt er að birta þau opinberlega:"
       new_trending_links:
         title: Vinsælir tenglar
       new_trending_statuses:
@@ -1333,7 +1333,7 @@ is:
     notification_preferences: Breyta kjörstillingum tölvupósts
     salutation: "%{name},"
     unsubscribe: Taka úr áskrift
-    view: 'Skoða:'
+    view: "Skoða:"
     view_profile: Skoða notandasnið
     view_status: Skoða færslu
   applications:
@@ -1396,7 +1396,7 @@ is:
     rules:
       accept: Samþykkja
       back: Til baka
-      invited_by: 'Þú getur tekið þátt í %{domain} þökk sé boði sem þú fékkst frá:'
+      invited_by: "Þú getur tekið þátt í %{domain} þökk sé boði sem þú fékkst frá:"
       preamble: Þær eru settar og þeim framfylgt af umsjónarmönnum %{domain}.
       preamble_invited: Áður en haldið er lengra, vinsamlegast kynntu þér reglurnar sem stjórnendur %{domain} hafa sett.
       read_more: Lesa meira
@@ -1432,7 +1432,7 @@ is:
   author_attribution:
     example_title: Sýnitexti
     hint_html: Ertu að skrifa fréttir eða bloggfærslur utan Mastodon? Stýrðu því hvernig vitnað er í þig þegar þeim er deilt á Mastodon.
-    instructions: 'Gakktu úr skugga um að þessi kóði sé í HTML greinarinnar þinnar:'
+    instructions: "Gakktu úr skugga um að þessi kóði sé í HTML greinarinnar þinnar:"
     more_from_html: Meira frá %{name}
     s_blog: Bloggsvæði hjá %{name}
     then_instructions: Síðan skaltu bæta lénsheiti útgefandans í reitinn hér fyrir neðan.
@@ -1477,7 +1477,7 @@ is:
     proceed: Eyða notandaaðgangi
     success_msg: Það tókst að eyða notandaaðgangnum þínum
     warning:
-      before: 'Áður en haldið er áfram, skaltu lesa þessa minnispunkta gaumgæfilega:'
+      before: "Áður en haldið er áfram, skaltu lesa þessa minnispunkta gaumgæfilega:"
       caches: Efni sem aðrir netþjónar hafa sett í skyndiminni gæti verið til staðar áfram
       data_removal: Færslurnar þínar og önnur gögn verða endanlega fjarlægð
       email_change_html: Þú getur <a href="%{path}">breytt tölvupóstfanginu þínu</a> án þess að eyða aðgangnum þínum
@@ -1503,7 +1503,7 @@ is:
       description_html: Þetta eru aðgerðir sem notaðar hafa verið gagnvart aðgangnum þínum og aðvaranir sem þér hafa verið sendar af umsjónarfólki á %{instance}.
       recipient: Stílað til
       reject_appeal: Hafna áfrýjun
-      status: 'Færsla #%{id}'
+      status: "Færsla #%{id}"
       status_removed: Færsla þegar fjarlægð úr kerfinu
       title: "%{action} frá %{date}"
       title_actions:
@@ -1562,19 +1562,19 @@ is:
     native: Innbyggt
     twemoji: Twemoji
   errors:
-    '400': Beiðnin sem þú sendir er ógild eða rangt uppsett.
-    '403': Þú hefur ekki heimildir til að skoða þessari síðu.
-    '404': Síðan sem þú leitar að er ekki þarna.
-    '406': Þessi síða er ekki tiltæk á umbeðna sniðinu.
-    '410': Síðan sem þú leitar að er ekki lengur til hérna.
-    '422':
+    "400": Beiðnin sem þú sendir er ógild eða rangt uppsett.
+    "403": Þú hefur ekki heimildir til að skoða þessari síðu.
+    "404": Síðan sem þú leitar að er ekki þarna.
+    "406": Þessi síða er ekki tiltæk á umbeðna sniðinu.
+    "410": Síðan sem þú leitar að er ekki lengur til hérna.
+    "422":
       content: Öryggisprófun mistókst. Ertu að loka á vefkökur/fótspor?
       title: Öryggisprófun mistókst
-    '429': Of margar beiðnir
-    '500':
+    "429": Of margar beiðnir
+    "500":
       content: Því miður, en eitthvað fór úrskeiðis á okkar enda.
       title: Þessi síða er ekki rétt
-    '503': Ekki var hægt að afgreiða síðuna vegna tímabundinnar bilunar á vefþjóni.
+    "503": Ekki var hægt að afgreiða síðuna vegna tímabundinnar bilunar á vefþjóni.
     noscript_html: Til að nota vefútgáfu Mastodon þarftu að virkja JavaScript. Þú getur líka prófað eitt af Mastodon <a href="%{apps_path}">forritunum</a> fyrir stýrikerfið þitt.
   existing_username_validator:
     not_found: Fann ekki staðværan notanda með þetta notandanafn
@@ -1669,8 +1669,8 @@ is:
     errors:
       empty: Tóm CSV-skrá
       incompatible_type: Ekki samhæfanlegt valinni tegund innflutnings
-      invalid_csv_file: 'Ógild CSV-skrá. Villa: %{error}'
-      invalid_json_file: 'Ógild JSON-skrá. Villa: %{error}'
+      invalid_csv_file: "Ógild CSV-skrá. Villa: %{error}"
+      invalid_json_file: "Ógild JSON-skrá. Villa: %{error}"
       over_rows_processing_limit: inniheldur meira en %{count} raðir
       status_not_found_warning: Sumar af síunum þínum fela tilteknar færslur sem þessi netþjónn kann ekki skil á. Þessar færslur verða ekki síaðar sjálfkrafa ef netþjónninn uppgötvar þær síðar.
       too_large: Skráin er of stór
@@ -1760,16 +1760,16 @@ is:
     delete: Gera óvirkt
     expired: Útrunnið
     expires_in:
-      '1800': 30 mínútur
-      '21600': 6 klukkustundir
-      '3600': 1 klukkustund
-      '43200': 12 klukkustundir
-      '604800': 1 vika
-      '86400': 1 dagur
+      "1800": 30 mínútur
+      "21600": 6 klukkustundir
+      "3600": 1 klukkustund
+      "43200": 12 klukkustundir
+      "604800": 1 vika
+      "86400": 1 dagur
     expires_in_prompt: Aldrei
     generate: Útbúa boðstengil
     invalid: Þetta boð er ekki gilt
-    invited_by: 'Þér var boðið af:'
+    invited_by: "Þér var boðið af:"
     max_uses:
       one: 1 afnot
       other: "%{count} afnot"
@@ -1830,7 +1830,7 @@ is:
     set_redirect: Stilla endurbeiningu
     warning:
       backreference_required: Það verður fyrst að stilla nýja aðganginn til að bakvísa á þennan aðgang
-      before: 'Áður en haldið er áfram, skaltu lesa þessa minnispunkta gaumgæfilega:'
+      before: "Áður en haldið er áfram, skaltu lesa þessa minnispunkta gaumgæfilega:"
       cooldown: Eftir yfirfærslu/flutning kemur kælingartímabil á meðan þú getur ekki flutt þig aftur
       disabled_account: Núverandi aðgangur þinn verður ekki nothæfur að fullu eftir þetta. Hinsvegar muntu geta flutt út gögn af honum og einnig endurvirkjað hann.
       followers: Þessi aðgerð mun flytja alla fylgjendur af núverandi aðgangi yfir á nýja aðganginn
@@ -1842,7 +1842,7 @@ is:
   move_handler:
     carry_blocks_over_text: Þessi notandi fluttist frá %{acct}, sem þú hafðir útilokað.
     carry_mutes_over_text: Þessi notandi fluttist frá %{acct}, sem þú hafðir þaggað niður í.
-    copy_account_note_text: 'Þessi notandi fluttist frá %{acct}, hér eru fyrri minnispunktar þínir um hann:'
+    copy_account_note_text: "Þessi notandi fluttist frá %{acct}, hér eru fyrri minnispunktar þínir um hann:"
   navigation:
     toggle_menu: Víxla valmynd af/á
   notification_fallbacks:
@@ -1873,7 +1873,7 @@ is:
       sign_up:
         subject: "%{name} nýskráði sig"
     favourite:
-      body: 'Færslan þín var sett í eftirlæti af %{name}:'
+      body: "Færslan þín var sett í eftirlæti af %{name}:"
       subject: "%{name} setti færsluna þína í eftirlæti"
       title: Nýtt eftirlæti
     follow:
@@ -1883,7 +1883,7 @@ is:
     follow_request:
       action: Sýsla með fylgjendabeiðnir
       body: "%{name} hefur beðið um að fylgjast með þér"
-      subject: 'Fylgjandi í bið: %{name}'
+      subject: "Fylgjandi í bið: %{name}"
       title: Ný beiðni um að fylgjast með
     mention:
       action: Svara
@@ -1913,7 +1913,7 @@ is:
   notifications:
     administration_emails: Kerfisstjórnunartilkynningar í tölvupósti
     email_events: Atburðir fyrir tilkynningar í tölvupósti
-    email_events_hint: 'Veldu þá atburði sem þú vilt fá tilkynningar í tölvupósti þegar þeir koma upp:'
+    email_events_hint: "Veldu þá atburði sem þú vilt fá tilkynningar í tölvupósti þegar þeir koma upp:"
   number:
     human:
       decimal_units:
@@ -1929,7 +1929,7 @@ is:
     description_html: Ef þú virkjar <strong>tveggja-þátta auðkenningu</strong> með auðkenningarforriti, mun innskráning krefjast þess að þú hafir símann þinn við hendina, með honum þarf að útbúa öryggisteikn sem þú þarft að setja inn.
     enable: Virkja
     instructions_html: "<strong>Skannaðu þennar QR-kóða inn í Google Authenticator eða álíka TOTP-forrit á símanum þínum</strong>. Héðan í frá mun það forrit útbúa teikn sem þú verður að setja inn til að geta skráð þig inn."
-    manual_instructions: 'Ef þú getur ekki skannað QR-kóðann og verður að setja hann inn handvirkt, þá er hér leyniorðið á textaformi:'
+    manual_instructions: "Ef þú getur ekki skannað QR-kóðann og verður að setja hann inn handvirkt, þá er hér leyniorðið á textaformi:"
     setup: Setja upp
     wrong_code: Kóðinn sem þú settir inn er ógildur! Eru klukkur netþjónsins og tækisins réttar?
   pagination:
@@ -2004,10 +2004,10 @@ is:
     errors:
       invalid_rules: vísar ekki til gildra reglna
   rss:
-    content_warning: 'Aðvörun vegna efnis:'
+    content_warning: "Aðvörun vegna efnis:"
     descriptions:
       account: Opinberar færslur frá @%{acct}
-      tag: 'Opinberar færslur merktar #%{hashtag}'
+      tag: "Opinberar færslur merktar #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Þú hefur farið fram úr hámarkinu með %{limit} áætlaðar færslur fyrir þennan dag
     over_total_limit: Þú hefur farið fram úr hámarkinu með %{limit} áætlaðar færslur
@@ -2101,7 +2101,7 @@ is:
       audio:
         one: "%{count} hljóðskrá"
         other: "%{count} hljóðskrár"
-      description: 'Viðhengt: %{attached}'
+      description: "Viðhengt: %{attached}"
       image:
         one: "%{count} mynd"
         other: "%{count} myndir"
@@ -2109,14 +2109,14 @@ is:
         one: "%{count} myndskeið"
         other: "%{count} myndskeið"
     boosted_from_html: Endurbirt frá %{acct_link}
-    content_warning: 'Aðvörun vegna efnis (CW): %{warning}'
+    content_warning: "Aðvörun vegna efnis (CW): %{warning}"
     content_warnings:
       hide: Fela færslu
       show: Sýna meira
     default_language: Sama og tungumál viðmóts
     disallowed_hashtags:
-      one: 'innihélt óleyfilegt myllumerki: %{tags}'
-      other: 'innihélt óleyfilegu myllumerkin: %{tags}'
+      one: "innihélt óleyfilegt myllumerki: %{tags}"
+      other: "innihélt óleyfilegu myllumerkin: %{tags}"
     edited_at_html: Breytt %{date}
     errors:
       in_reply_not_found: Færslan sem þú ert að reyna að svara að er líklega ekki til.
@@ -2167,14 +2167,14 @@ is:
     keep_self_fav: Halda eftirlætisfærslum
     keep_self_fav_hint: Eyðir ekki þínum eigin færslum ef þú hefur sett þær í eftirlæti
     min_age:
-      '1209600': 2 vikur
-      '15778476': 6 mánuðir
-      '2629746': 1 mánuður
-      '31556952': 1 ár
-      '5259492': 2 mánuðir
-      '604800': 1 vika
-      '63113904': 2 ár
-      '7889238': 3 mánuðir
+      "1209600": 2 vikur
+      "15778476": 6 mánuðir
+      "2629746": 1 mánuður
+      "31556952": 1 ár
+      "5259492": 2 mánuðir
+      "604800": 1 vika
+      "63113904": 2 ár
+      "7889238": 3 mánuðir
     min_age_label: Aldursmörk
     min_favs: Halda færslum sem eru í eftirlætum oftar en
     min_favs_hint: Eyðir ekki þínum eigin færslum sem settar hafa verið í eftirlæti þetta oft. Skildu þetta eftir autt til að eyða færslum burtséð frá fjölda eftirlæta
@@ -2247,7 +2247,7 @@ is:
         title: Afpanta áskrift að %{type}?
   user_mailer:
     announcement_published:
-      description: 'Stjórnendur %{domain} eru að senda frá sér yfirlýsingu:'
+      description: "Stjórnendur %{domain} eru að senda frá sér yfirlýsingu:"
       subject: Auglýsing vegna þjónustu
       title: Auglýsing vegna þjónustu %{domain}
     appeal_approved:
@@ -2267,22 +2267,22 @@ is:
       subject: Safnskráin þín er tilbúin til niðurhals
       title: Taka út í safnskrá
     failed_2fa:
-      details: 'Hér eru nánari upplýsingar um innskráningartilraunina:'
+      details: "Hér eru nánari upplýsingar um innskráningartilraunina:"
       explanation: Einhver reyndi að skrá sig inn á aðganginn þinn en gaf upp ógild gögn seinna þrepi auðkenningar.
       further_actions_html: Ef þetta varst ekki þú, þá mælum við eindregið með því að þú %{action} samstundis, þar sem það gæti verið berskjaldað.
       subject: Bilun í seinna þrepi auðkenningar
       title: Seinna þrep auðkenningar brást
     suspicious_sign_in:
       change_password: breytir lykilorðinu þínu
-      details: 'Hér eru nánari upplýsingar um innskráninguna:'
+      details: "Hér eru nánari upplýsingar um innskráninguna:"
       explanation: Við greindum innskráningu inn á aðganginn þinn frá nýju IP-vistfangi.
       further_actions_html: Ef þetta varst ekki þú, þá mælum við með að þú %{action} strax og virkjir tveggja-þátta auðkenningu til að halda aðgangnum þínum öruggum.
       subject: Skráð hefur verið inn á aðganginn þinn frá nýju IP-vistfangi
       title: Ný innskráning
     terms_of_service_changed:
       agreement: Með því að halda áfram að nota %{domain}, ert þú þar með að samþykkja þessa skilmála. Ef þú ert ósammála þessum uppfærðu skilmálum, geturðu hvenær sem er sagt upp samþykki þínu gagnvart %{domain} með því að eyða notandaaðgangi þínum.
-      changelog: 'Í stuttu máli er það þetta sem þessi uppfærsla þýðir fyrir þig:'
-      description: 'Þú ert að fá þennan tölvupóst vegna þess að við erum að gera breytingar á þjónustuskilmálum á %{domain}. Þessar breytingar taka gildi þann %{date}. Við hvetjum þig til að kynna þér þessar breytingar hér:'
+      changelog: "Í stuttu máli er það þetta sem þessi uppfærsla þýðir fyrir þig:"
+      description: "Þú ert að fá þennan tölvupóst vegna þess að við erum að gera breytingar á þjónustuskilmálum á %{domain}. Þessar breytingar taka gildi þann %{date}. Við hvetjum þig til að kynna þér þessar breytingar hér:"
       description_html: Þú ert að fá þennan tölvupóst vegna þess að við erum að gera breytingar á þjónustuskilmálum á %{domain}. Þessar breytingar taka gildi þann <strong>%{date}</strong>. Við hvetjum þig til að kynna þér <a href="%{path}" target="_blank">þessar breytingar hér</a>.
       sign_off: "%{domain}-teymið"
       subject: Breytingar á þjónustuskilmálum okkar
@@ -2301,8 +2301,8 @@ is:
         sensitive: Héðan í frá verður allt myndefni sem þú sendir inn meðhöndlað sem viðkvæmt efni og falið á bakvið aðvörun sem smella þarf á.
         silence: Þú getur áfram notað aðganginn þinn en aðeins fólk sem þegar fylgist með þér mun sjá færslurnar þínar á þessum vefþjóni, auk þess sem lokað gæti verið á þig á ýmsum opinberum listum. Aftur á móti geta aðrir gerst fylgjendur þínir handvirkt.
         suspend: Þú getur ekki lengur notað aðganginn þinn og notandasniðið þitt og önnur gögn eru ekki lengur aðgengileg. Þú getur enn skráð þig inn til að biðja um afrit af gögnunum þínum þar til þeim verður eytt að fullu eftir 30 daga, við munum hinsvegar halda eftir einstaka grunnupplýsingum til að koma í veg fyrir að þú komist framhjá þessu banni.
-      reason: 'Ástæða:'
-      statuses: 'Færslur sem vísað er í:'
+      reason: "Ástæða:"
+      statuses: "Færslur sem vísað er í:"
       subject:
         delete_statuses: Færslurnar þínar á %{acct} hafa verið fjarlægðar
         disable: Notandaaðgangurinn þinn %{acct} hefur verið frystur
@@ -2324,7 +2324,7 @@ is:
       apps_ios_action: Sækja í App Store
       apps_step: Sæktu opinberu forritin okkar.
       apps_title: Mastodon-forrit
-      checklist_subtitle: 'Komum þér í gang á þessum nýja samfélagsmiðli:'
+      checklist_subtitle: "Komum þér í gang á þessum nýja samfélagsmiðli:"
       checklist_title: Til minnis í upphafi
       edit_profile_action: Sérsníða
       edit_profile_step: Annað fólk er líklegra til að eiga samskipti við þig ef þý setur einhverjar áhugaverðar upplýsingar í notandasniðið þitt.
@@ -2366,7 +2366,7 @@ is:
     otp_lost_help_html: Ef þú hefur misst aðganginn að hvoru tveggja, geturðu sett þig í samband við %{email}
     rate_limited: Of margar tilraunir til auðkenningar, prófaðu aftur síðar.
     seamless_external_login: Innskráning þín er í gegnum utanaðkomandi þjónustu, þannig að stillingar fyrir lykilorð og tölvupóst eru ekki aðgengilegar.
-    signed_in_as: 'Skráð inn sem:'
+    signed_in_as: "Skráð inn sem:"
   verification:
     extra_instructions_html: <strong>Ábending:</strong> Tengillinn á vefsvæðinu þínu má vera ósýnilegur. Mikilvægi hlutinn er <code>rel="me"</code> sem kemur í veg fyrir auðkennastuld á vefsvæðum með notenda-framleiddu efni. Þú getur meira að segja notað <code>link</code> einindi í haus síðunnar í stað <code>a</code>, en HTML-kóðinn verður að vera aðgengilegur án keyrslu JavaScript.
     here_is_how: Svona gerum við það

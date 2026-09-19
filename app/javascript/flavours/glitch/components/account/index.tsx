@@ -1,11 +1,11 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
-import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
+import { EmojiHTML } from "@/flavours/glitch/components/emoji/html";
+import MoreHorizIcon from "@/material-icons/400-24px/more_horiz.svg?react";
 import {
   blockAccount,
   unblockAccount,
@@ -14,55 +14,55 @@ import {
   followAccountSuccess,
   unpinAccount,
   pinAccount,
-} from 'flavours/glitch/actions/accounts';
-import { showAlertForError } from 'flavours/glitch/actions/alerts';
-import { openModal } from 'flavours/glitch/actions/modal';
-import { initMuteModal } from 'flavours/glitch/actions/mutes';
-import { apiFollowAccount } from 'flavours/glitch/api/accounts';
-import { Avatar } from 'flavours/glitch/components/avatar';
-import { VerifiedBadge } from 'flavours/glitch/components/badge';
-import { Button } from 'flavours/glitch/components/button';
-import { FollowersCounter } from 'flavours/glitch/components/counters';
-import { DisplayName } from 'flavours/glitch/components/display_name';
-import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
-import { FollowButton } from 'flavours/glitch/components/follow_button';
-import { RelativeTimestamp } from 'flavours/glitch/components/relative_timestamp';
-import { ShortNumber } from 'flavours/glitch/components/short_number';
-import { Skeleton } from 'flavours/glitch/components/skeleton';
-import { useIdentity } from 'flavours/glitch/identity_context';
-import { me } from 'flavours/glitch/initial_state';
-import type { MenuItem } from 'flavours/glitch/models/dropdown_menu';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
+} from "flavours/glitch/actions/accounts";
+import { showAlertForError } from "flavours/glitch/actions/alerts";
+import { openModal } from "flavours/glitch/actions/modal";
+import { initMuteModal } from "flavours/glitch/actions/mutes";
+import { apiFollowAccount } from "flavours/glitch/api/accounts";
+import { Avatar } from "flavours/glitch/components/avatar";
+import { VerifiedBadge } from "flavours/glitch/components/badge";
+import { Button } from "flavours/glitch/components/button";
+import { FollowersCounter } from "flavours/glitch/components/counters";
+import { DisplayName } from "flavours/glitch/components/display_name";
+import { Dropdown } from "flavours/glitch/components/dropdown_menu";
+import { FollowButton } from "flavours/glitch/components/follow_button";
+import { RelativeTimestamp } from "flavours/glitch/components/relative_timestamp";
+import { ShortNumber } from "flavours/glitch/components/short_number";
+import { Skeleton } from "flavours/glitch/components/skeleton";
+import { useIdentity } from "flavours/glitch/identity_context";
+import { me } from "flavours/glitch/initial_state";
+import type { MenuItem } from "flavours/glitch/models/dropdown_menu";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
-import { Permalink } from '../permalink';
+import { Permalink } from "../permalink";
 
 const messages = defineMessages({
-  follow: { id: 'account.follow', defaultMessage: 'Follow' },
-  unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
+  follow: { id: "account.follow", defaultMessage: "Follow" },
+  unfollow: { id: "account.unfollow", defaultMessage: "Unfollow" },
   cancel_follow_request: {
-    id: 'account.cancel_follow_request',
-    defaultMessage: 'Withdraw follow request',
+    id: "account.cancel_follow_request",
+    defaultMessage: "Withdraw follow request",
   },
-  unblock: { id: 'account.unblock_short', defaultMessage: 'Unblock' },
-  unmute: { id: 'account.unmute_short', defaultMessage: 'Unmute' },
+  unblock: { id: "account.unblock_short", defaultMessage: "Unblock" },
+  unmute: { id: "account.unmute_short", defaultMessage: "Unmute" },
   mute_notifications: {
-    id: 'account.mute_notifications_short',
-    defaultMessage: 'Mute notifications',
+    id: "account.mute_notifications_short",
+    defaultMessage: "Mute notifications",
   },
   unmute_notifications: {
-    id: 'account.unmute_notifications_short',
-    defaultMessage: 'Unmute notifications',
+    id: "account.unmute_notifications_short",
+    defaultMessage: "Unmute notifications",
   },
-  mute: { id: 'account.mute_short', defaultMessage: 'Mute' },
-  block: { id: 'account.block_short', defaultMessage: 'Block' },
-  more: { id: 'status.more', defaultMessage: 'More' },
+  mute: { id: "account.mute_short", defaultMessage: "Mute" },
+  block: { id: "account.block_short", defaultMessage: "Block" },
+  more: { id: "status.more", defaultMessage: "More" },
   addToLists: {
-    id: 'account.add_or_remove_from_list',
-    defaultMessage: 'Add or Remove from lists',
+    id: "account.add_or_remove_from_list",
+    defaultMessage: "Add or Remove from lists",
   },
   openOriginalPage: {
-    id: 'account.open_original_page',
-    defaultMessage: 'Open original page',
+    id: "account.open_original_page",
+    defaultMessage: "Open original page",
   },
 });
 
@@ -71,7 +71,7 @@ interface AccountProps {
   id: string;
   hidden?: boolean;
   minimal?: boolean;
-  defaultAction?: 'block' | 'mute';
+  defaultAction?: "block" | "mute";
   withBio?: boolean;
   withMenu?: boolean;
   withBorder?: boolean;
@@ -120,7 +120,7 @@ export const Account: React.FC<AccountProps> = ({
   const menu = useMemo(() => {
     let arr: MenuItem[] = [];
 
-    if (defaultAction === 'mute') {
+    if (defaultAction === "mute") {
       const handleMuteNotifications = () => {
         dispatch(muteAccount(id, true));
       };
@@ -141,7 +141,7 @@ export const Account: React.FC<AccountProps> = ({
             : handleMuteNotifications,
         },
       ];
-    } else if (defaultAction !== 'block') {
+    } else if (defaultAction !== "block") {
       if (isRemote && accountUrl) {
         arr.push({
           text: intl.formatMessage(messages.openOriginalPage),
@@ -154,7 +154,7 @@ export const Account: React.FC<AccountProps> = ({
           const openAddToListModal = () => {
             dispatch(
               openModal({
-                modalType: 'LIST_ADDER',
+                modalType: "LIST_ADDER",
                 modalProps: {
                   accountId: id,
                 },
@@ -166,7 +166,7 @@ export const Account: React.FC<AccountProps> = ({
           } else {
             dispatch(
               openModal({
-                modalType: 'CONFIRM_FOLLOW_TO_LIST',
+                modalType: "CONFIRM_FOLLOW_TO_LIST",
                 modalProps: {
                   accountId: id,
                   onConfirm: () => {
@@ -206,9 +206,7 @@ export const Account: React.FC<AccountProps> = ({
           arr.push({
             text: intl.formatMessage(
               // Defined in features/account_timeline/components/account_header.tsx
-              relationship.endorsed
-                ? { id: 'account.unendorse' }
-                : { id: 'account.endorse' },
+              relationship.endorsed ? { id: "account.unendorse" } : { id: "account.endorse" },
             ),
             action: handleEndorseToggle,
           });
@@ -217,16 +215,7 @@ export const Account: React.FC<AccountProps> = ({
     }
 
     return arr;
-  }, [
-    dispatch,
-    intl,
-    id,
-    accountUrl,
-    relationship,
-    defaultAction,
-    isRemote,
-    signedIn,
-  ]);
+  }, [dispatch, intl, id, accountUrl, relationship, defaultAction, isRemote, signedIn]);
 
   if (hidden) {
     return (
@@ -244,28 +233,24 @@ export const Account: React.FC<AccountProps> = ({
     dropdown = (
       <Dropdown
         items={menu}
-        icon='ellipsis-h'
+        icon="ellipsis-h"
         iconComponent={MoreHorizIcon}
         title={intl.formatMessage(messages.more)}
       />
     );
   }
 
-  if (defaultAction === 'block') {
+  if (defaultAction === "block") {
     button = (
       <Button
-        text={intl.formatMessage(
-          relationship?.blocking ? messages.unblock : messages.block,
-        )}
+        text={intl.formatMessage(relationship?.blocking ? messages.unblock : messages.block)}
         onClick={handleBlock}
       />
     );
-  } else if (defaultAction === 'mute') {
+  } else if (defaultAction === "mute") {
     button = (
       <Button
-        text={intl.formatMessage(
-          relationship?.muting ? messages.unmute : messages.mute,
-        )}
+        text={intl.formatMessage(relationship?.muting ? messages.unmute : messages.mute)}
         onClick={handleMute}
       />
     );
@@ -293,25 +278,25 @@ export const Account: React.FC<AccountProps> = ({
 
   return (
     <div
-      className={classNames('account', className, {
-        'account--minimal': minimal,
-        'account--without-border': !withBorder,
+      className={classNames("account", className, {
+        "account--minimal": minimal,
+        "account--without-border": !withBorder,
       })}
     >
       <div
-        className={classNames('account__wrapper', {
-          'account__wrapper--with-bio': account && withBio,
+        className={classNames("account__wrapper", {
+          "account__wrapper--with-bio": account && withBio,
         })}
       >
-        <div className='account__info-wrapper'>
+        <div className="account__info-wrapper">
           <Permalink
-            className='account__display-name focusable'
+            className="account__display-name focusable"
             title={account?.acct}
             href={account?.url}
             to={`/@${account?.acct}`}
             data-hover-card-account={id}
           >
-            <div className='account__avatar-wrapper'>
+            <div className="account__avatar-wrapper">
               {account ? (
                 <Avatar account={account} size={size} />
               ) : (
@@ -319,21 +304,18 @@ export const Account: React.FC<AccountProps> = ({
               )}
             </div>
 
-            <div className='account__contents'>
+            <div className="account__contents">
               <DisplayName account={account} />
 
               {!minimal && (
-                <div className='account__details'>
+                <div className="account__details">
                   {account ? (
                     <>
-                      <ShortNumber
-                        value={account.followers_count}
-                        renderer={FollowersCounter}
-                      />{' '}
+                      <ShortNumber value={account.followers_count} renderer={FollowersCounter} />{" "}
                       {verification} {muteTimeRemaining}
                     </>
                   ) : (
-                    <Skeleton width='7ch' />
+                    <Skeleton width="7ch" />
                   )}
                 </div>
               )}
@@ -344,16 +326,13 @@ export const Account: React.FC<AccountProps> = ({
             withBio &&
             (account.note.length > 0 ? (
               <EmojiHTML
-                className='account__note translate'
+                className="account__note translate"
                 htmlString={account.note_emojified}
                 extraEmojis={account.emojis}
               />
             ) : (
-              <div className='account__note account__note--missing'>
-                <FormattedMessage
-                  id='account.no_bio'
-                  defaultMessage='No description provided.'
-                />
+              <div className="account__note account__note--missing">
+                <FormattedMessage id="account.no_bio" defaultMessage="No description provided." />
               </div>
             ))}
 
@@ -361,7 +340,7 @@ export const Account: React.FC<AccountProps> = ({
         </div>
 
         {!minimal && (
-          <div className='account__relationship'>
+          <div className="account__relationship">
             {dropdown}
             {button}
           </div>

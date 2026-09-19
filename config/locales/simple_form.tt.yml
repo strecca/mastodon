@@ -54,8 +54,8 @@ tt:
         color: Бейдж төсе
         name: Исем
         permissions_as_keys: Рөхсәтләр
-    'no': Юк
+    "no": Юк
     recommended: Тәкъдим ителгән
     required:
       mark: "*"
-    'yes': Әйе
+    "yes": Әйе

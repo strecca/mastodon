@@ -1,10 +1,10 @@
-import { isAction } from '@reduxjs/toolkit';
-import type { Middleware, UnknownAction } from '@reduxjs/toolkit';
+import { isAction } from "@reduxjs/toolkit";
+import type { Middleware, UnknownAction } from "@reduxjs/toolkit";
 
-import ready from 'flavours/glitch/ready';
-import { assetHost } from 'flavours/glitch/utils/config';
+import ready from "flavours/glitch/ready";
+import { assetHost } from "flavours/glitch/utils/config";
 
-import type { RootState } from '..';
+import type { RootState } from "..";
 
 interface AudioSource {
   src: string;
@@ -18,18 +18,18 @@ interface ActionWithMetaSound extends UnknownAction {
 function isActionWithMetaSound(action: unknown): action is ActionWithMetaSound {
   return (
     isAction(action) &&
-    'meta' in action &&
-    typeof action.meta === 'object' &&
+    "meta" in action &&
+    typeof action.meta === "object" &&
     !!action.meta &&
-    'sound' in action.meta &&
-    typeof action.meta.sound === 'string'
+    "sound" in action.meta &&
+    typeof action.meta.sound === "string"
   );
 }
 
 const createAudio = (sources: AudioSource[]) => {
   const audio = new Audio();
   sources.forEach(({ type, src }) => {
-    const source = document.createElement('source');
+    const source = document.createElement("source");
     source.type = type;
     source.src = src;
     audio.appendChild(source);
@@ -40,7 +40,7 @@ const createAudio = (sources: AudioSource[]) => {
 const play = (audio: HTMLAudioElement) => {
   if (!audio.paused) {
     audio.pause();
-    if (typeof audio.fastSeek === 'function') {
+    if (typeof audio.fastSeek === "function") {
       audio.fastSeek(0);
     } else {
       audio.currentTime = 0;
@@ -61,11 +61,11 @@ export const soundsMiddleware = (): Middleware<
     soundCache.boop = createAudio([
       {
         src: `${assetHost}/sounds/boop.ogg`,
-        type: 'audio/ogg',
+        type: "audio/ogg",
       },
       {
         src: `${assetHost}/sounds/boop.mp3`,
-        type: 'audio/mpeg',
+        type: "audio/mpeg",
       },
     ]);
   });

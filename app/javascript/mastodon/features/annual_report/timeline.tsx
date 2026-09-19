@@ -1,12 +1,12 @@
-import { useCallback } from 'react';
-import type { FC } from 'react';
+import { useCallback } from "react";
+import type { FC } from "react";
 
-import { openModal } from '@/mastodon/actions/modal';
-import { useDismissible } from '@/mastodon/hooks/useDismissible';
-import { generateReport } from '@/mastodon/reducers/slices/annual_report';
-import { useAppDispatch, useAppSelector } from '@/mastodon/store';
+import { openModal } from "@/mastodon/actions/modal";
+import { useDismissible } from "@/mastodon/hooks/useDismissible";
+import { generateReport } from "@/mastodon/reducers/slices/annual_report";
+import { useAppDispatch, useAppSelector } from "@/mastodon/store";
 
-import { AnnualReportAnnouncement } from './announcement';
+import { AnnualReportAnnouncement } from "./announcement";
 
 export const AnnualReportTimeline: FC = () => {
   const { state, year } = useAppSelector((state) => state.annualReport);
@@ -16,16 +16,14 @@ export const AnnualReportTimeline: FC = () => {
     void dispatch(generateReport());
   }, [dispatch]);
 
-  const { wasDismissed, dismiss } = useDismissible(
-    `annual_report_announcement_${year}`,
-  );
+  const { wasDismissed, dismiss } = useDismissible(`annual_report_announcement_${year}`);
 
   const handleOpen = useCallback(() => {
-    dispatch(openModal({ modalType: 'ANNUAL_REPORT', modalProps: {} }));
+    dispatch(openModal({ modalType: "ANNUAL_REPORT", modalProps: {} }));
     dismiss();
   }, [dismiss, dispatch]);
 
-  if (!year || wasDismissed || !state || state === 'ineligible') {
+  if (!year || wasDismissed || !state || state === "ineligible") {
     return null;
   }
 

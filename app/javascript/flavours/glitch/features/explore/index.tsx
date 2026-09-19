@@ -1,34 +1,34 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import { NavLink, Switch, Route } from 'react-router-dom';
+import { NavLink, Switch, Route } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import TrendingUpIcon from '@/material-icons/400-24px/trending_up.svg?react';
-import { Column } from 'flavours/glitch/components/column';
-import type { ColumnRef } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import { SymbolLogo } from 'flavours/glitch/components/logo';
-import { Search } from 'flavours/glitch/features/compose/components/search';
-import { useBreakpoint } from 'flavours/glitch/features/ui/hooks/useBreakpoint';
-import { useIdentity } from 'flavours/glitch/identity_context';
+import TrendingUpIcon from "@/material-icons/400-24px/trending_up.svg?react";
+import { Column } from "flavours/glitch/components/column";
+import type { ColumnRef } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import { SymbolLogo } from "flavours/glitch/components/logo";
+import { Search } from "flavours/glitch/features/compose/components/search";
+import { useBreakpoint } from "flavours/glitch/features/ui/hooks/useBreakpoint";
+import { useIdentity } from "flavours/glitch/identity_context";
 
-import Links from './links';
-import Statuses from './statuses';
-import Suggestions from './suggestions';
-import Tags from './tags';
+import Links from "./links";
+import Statuses from "./statuses";
+import Suggestions from "./suggestions";
+import Tags from "./tags";
 
 const messages = defineMessages({
-  title: { id: 'explore.title', defaultMessage: 'Trending' },
+  title: { id: "explore.title", defaultMessage: "Trending" },
 });
 
 const Explore: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
   const { signedIn } = useIdentity();
   const intl = useIntl();
   const columnRef = useRef<ColumnRef>(null);
-  const logoRequired = useBreakpoint('full');
+  const logoRequired = useBreakpoint("full");
 
   const handleHeaderClick = useCallback(() => {
     columnRef.current?.scrollTop();
@@ -41,65 +41,53 @@ const Explore: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
       label={intl.formatMessage(messages.title)}
     >
       <ColumnHeader
-        icon={'explore'}
+        icon={"explore"}
         iconComponent={logoRequired ? SymbolLogo : TrendingUpIcon}
         title={intl.formatMessage(messages.title)}
         onClick={handleHeaderClick}
         multiColumn={multiColumn}
       />
 
-      <div className='explore__search-header'>
+      <div className="explore__search-header">
         <Search singleColumn />
       </div>
 
-      <div className='account__section-headline'>
-        <NavLink exact to='/explore'>
-          <FormattedMessage
-            tagName='div'
-            id='explore.trending_statuses'
-            defaultMessage='Posts'
-          />
+      <div className="account__section-headline">
+        <NavLink exact to="/explore">
+          <FormattedMessage tagName="div" id="explore.trending_statuses" defaultMessage="Posts" />
         </NavLink>
 
-        <NavLink exact to='/explore/tags'>
-          <FormattedMessage
-            tagName='div'
-            id='explore.trending_tags'
-            defaultMessage='Hashtags'
-          />
+        <NavLink exact to="/explore/tags">
+          <FormattedMessage tagName="div" id="explore.trending_tags" defaultMessage="Hashtags" />
         </NavLink>
 
         {signedIn && (
-          <NavLink exact to='/explore/suggestions'>
+          <NavLink exact to="/explore/suggestions">
             <FormattedMessage
-              tagName='div'
-              id='explore.suggested_follows'
-              defaultMessage='People'
+              tagName="div"
+              id="explore.suggested_follows"
+              defaultMessage="People"
             />
           </NavLink>
         )}
 
-        <NavLink exact to='/explore/links'>
-          <FormattedMessage
-            tagName='div'
-            id='explore.trending_links'
-            defaultMessage='News'
-          />
+        <NavLink exact to="/explore/links">
+          <FormattedMessage tagName="div" id="explore.trending_links" defaultMessage="News" />
         </NavLink>
       </div>
 
       <Switch>
-        <Route path='/explore/tags' component={Tags} />
-        <Route path='/explore/links' component={Links} />
-        <Route path='/explore/suggestions' component={Suggestions} />
-        <Route exact path={['/explore', '/explore/posts']}>
+        <Route path="/explore/tags" component={Tags} />
+        <Route path="/explore/links" component={Links} />
+        <Route path="/explore/suggestions" component={Suggestions} />
+        <Route exact path={["/explore", "/explore/posts"]}>
           <Statuses multiColumn={multiColumn} />
         </Route>
       </Switch>
 
       <Helmet>
         <title>{intl.formatMessage(messages.title)}</title>
-        <meta name='robots' content='all' />
+        <meta name="robots" content="all" />
       </Helmet>
     </Column>
   );

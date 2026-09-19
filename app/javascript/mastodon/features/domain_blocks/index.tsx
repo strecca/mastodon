@@ -1,19 +1,19 @@
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useCallback, useState } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import BlockIcon from '@/material-icons/400-24px/block-fill.svg?react';
-import { apiGetDomainBlocks } from 'mastodon/api/domain_blocks';
-import { Column } from 'mastodon/components/column';
-import type { ColumnRef } from 'mastodon/components/column';
-import { ColumnHeader } from 'mastodon/components/column_header';
-import { Domain } from 'mastodon/components/domain';
-import ScrollableList from 'mastodon/components/scrollable_list';
+import BlockIcon from "@/material-icons/400-24px/block-fill.svg?react";
+import { apiGetDomainBlocks } from "mastodon/api/domain_blocks";
+import { Column } from "mastodon/components/column";
+import type { ColumnRef } from "mastodon/components/column";
+import { ColumnHeader } from "mastodon/components/column_header";
+import { Domain } from "mastodon/components/domain";
+import ScrollableList from "mastodon/components/scrollable_list";
 
 const messages = defineMessages({
-  heading: { id: 'column.domain_blocks', defaultMessage: 'Blocked domains' },
+  heading: { id: "column.domain_blocks", defaultMessage: "Blocked domains" },
 });
 
 const Blocks: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
@@ -27,13 +27,13 @@ const Blocks: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
   useEffect(() => {
     void apiGetDomainBlocks()
       .then(({ domains, links }) => {
-        const next = links.refs.find((link) => link.rel === 'next');
+        const next = links.refs.find((link) => link.rel === "next");
 
         setLoading(false);
         setDomains(domains);
         setNext(next?.uri);
 
-        return '';
+        return "";
       })
       .catch(() => {
         setLoading(false);
@@ -45,13 +45,13 @@ const Blocks: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
 
     void apiGetDomainBlocks(next)
       .then(({ domains, links }) => {
-        const next = links.refs.find((link) => link.rel === 'next');
+        const next = links.refs.find((link) => link.rel === "next");
 
         setLoading(false);
         setDomains((previousDomains) => [...previousDomains, ...domains]);
         setNext(next?.uri);
 
-        return '';
+        return "";
       })
       .catch(() => {
         setLoading(false);
@@ -68,8 +68,8 @@ const Blocks: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
 
   const emptyMessage = (
     <FormattedMessage
-      id='empty_column.domain_blocks'
-      defaultMessage='There are no blocked domains yet.'
+      id="empty_column.domain_blocks"
+      defaultMessage="There are no blocked domains yet."
     />
   );
 
@@ -80,7 +80,7 @@ const Blocks: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
       label={intl.formatMessage(messages.heading)}
     >
       <ColumnHeader
-        icon='ban'
+        icon="ban"
         iconComponent={BlockIcon}
         title={intl.formatMessage(messages.heading)}
         onClick={handleHeaderClick}
@@ -89,7 +89,7 @@ const Blocks: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
       />
 
       <ScrollableList
-        scrollKey='domain_blocks'
+        scrollKey="domain_blocks"
         onLoadMore={handleLoadMore}
         hasMore={hasMore}
         isLoading={loading}
@@ -105,7 +105,7 @@ const Blocks: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
 
       <Helmet>
         <title>{intl.formatMessage(messages.heading)}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

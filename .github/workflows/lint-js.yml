@@ -3,32 +3,32 @@ on:
   merge_group:
   push:
     branches:
-      - 'main'
-      - 'stable-*'
+      - "main"
+      - "stable-*"
     paths:
-      - 'package.json'
-      - 'yarn.lock'
-      - 'tsconfig.json'
-      - '.nvmrc'
-      - 'eslint.config.mjs'
-      - '**/*.js'
-      - '**/*.jsx'
-      - '**/*.ts'
-      - '**/*.tsx'
-      - '.github/workflows/lint-js.yml'
+      - "package.json"
+      - "yarn.lock"
+      - "tsconfig.json"
+      - ".nvmrc"
+      - "eslint.config.mjs"
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - ".github/workflows/lint-js.yml"
 
   pull_request:
     paths:
-      - 'package.json'
-      - 'yarn.lock'
-      - 'tsconfig.json'
-      - '.nvmrc'
-      - 'eslint.config.mjs'
-      - '**/*.js'
-      - '**/*.jsx'
-      - '**/*.ts'
-      - '**/*.tsx'
-      - '.github/workflows/lint-js.yml'
+      - "package.json"
+      - "yarn.lock"
+      - "tsconfig.json"
+      - ".nvmrc"
+      - "eslint.config.mjs"
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - ".github/workflows/lint-js.yml"
 
 jobs:
   lint:

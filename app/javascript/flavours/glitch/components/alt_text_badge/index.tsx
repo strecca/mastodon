@@ -1,24 +1,21 @@
-import { useState, useCallback, useRef, useId } from 'react';
+import { useState, useCallback, useRef, useId } from "react";
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type {
-  OffsetValue,
-  UsePopperOptions,
-} from 'react-overlays/esm/usePopper';
-import Overlay from 'react-overlays/Overlay';
+import type { OffsetValue, UsePopperOptions } from "react-overlays/esm/usePopper";
+import Overlay from "react-overlays/Overlay";
 
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import { useSelectableClick } from 'flavours/glitch/hooks/useSelectableClick';
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import { useSelectableClick } from "flavours/glitch/hooks/useSelectableClick";
 
-import { IconButton } from '../icon_button';
+import { IconButton } from "../icon_button";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const offset = [0, 4] as OffsetValue;
-const popperConfig = { strategy: 'fixed' } as UsePopperOptions;
+const popperConfig = { strategy: "fixed" } as UsePopperOptions;
 
 export const AltTextBadge: React.FC<{
   description: string;
@@ -49,13 +46,13 @@ export const AltTextBadge: React.FC<{
   return (
     <>
       <button
-        type='button'
+        type="button"
         ref={buttonRef}
-        className={classNames('media-gallery__alt__label', className)}
+        className={classNames("media-gallery__alt__label", className)}
         onClick={handleClick}
         aria-expanded={open}
         aria-controls={popoverId}
-        aria-haspopup='dialog'
+        aria-haspopup="dialog"
       >
         ALT
       </button>
@@ -65,16 +62,16 @@ export const AltTextBadge: React.FC<{
         onHide={handleClose}
         show={open}
         target={buttonRef}
-        placement='top-end'
+        placement="top-end"
         flip
         offset={offset}
         popperConfig={popperConfig}
       >
         {({ props }) => (
-          <div {...props} className='hover-card-controller'>
+          <div {...props} className="hover-card-controller">
             <div // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
-              className='info-tooltip dropdown-animation'
-              role='dialog'
+              className="info-tooltip dropdown-animation"
+              role="dialog"
               aria-labelledby={titleId}
               ref={popoverRef}
               id={popoverId}
@@ -84,18 +81,15 @@ export const AltTextBadge: React.FC<{
               tabIndex={0}
             >
               <h4 id={titleId}>
-                <FormattedMessage
-                  id='alt_text_badge.title'
-                  defaultMessage='Alt text'
-                />
+                <FormattedMessage id="alt_text_badge.title" defaultMessage="Alt text" />
               </h4>
 
               <IconButton
                 title={intl.formatMessage({
-                  id: 'lightbox.close',
-                  defaultMessage: 'Close',
+                  id: "lightbox.close",
+                  defaultMessage: "Close",
                 })}
-                icon='close'
+                icon="close"
                 iconComponent={CloseIcon}
                 onClick={handleClose}
                 className={classes.closeButton}

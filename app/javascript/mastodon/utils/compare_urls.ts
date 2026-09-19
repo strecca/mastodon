@@ -4,9 +4,7 @@ export function compareUrls(href1: string, href2: string) {
     const url2 = new URL(href2);
 
     return (
-      url1.origin === url2.origin &&
-      url1.pathname === url2.pathname &&
-      url1.search === url2.search
+      url1.origin === url2.origin && url1.pathname === url2.pathname && url1.search === url2.search
     );
   } catch {
     return false;

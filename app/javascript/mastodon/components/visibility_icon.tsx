@@ -1,52 +1,50 @@
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import AlternateEmailIcon from '@/material-icons/400-24px/alternate_email.svg?react';
-import LockIcon from '@/material-icons/400-24px/lock.svg?react';
-import PublicIcon from '@/material-icons/400-24px/public.svg?react';
-import QuietTimeIcon from '@/material-icons/400-24px/quiet_time.svg?react';
-import type { StatusVisibility } from 'mastodon/models/status';
+import AlternateEmailIcon from "@/material-icons/400-24px/alternate_email.svg?react";
+import LockIcon from "@/material-icons/400-24px/lock.svg?react";
+import PublicIcon from "@/material-icons/400-24px/public.svg?react";
+import QuietTimeIcon from "@/material-icons/400-24px/quiet_time.svg?react";
+import type { StatusVisibility } from "mastodon/models/status";
 
-import { Icon } from './icon';
+import { Icon } from "./icon";
 
 const messages = defineMessages({
-  public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
+  public_short: { id: "privacy.public.short", defaultMessage: "Public" },
   unlisted_short: {
-    id: 'privacy.unlisted.short',
-    defaultMessage: 'Quiet public',
+    id: "privacy.unlisted.short",
+    defaultMessage: "Quiet public",
   },
   private_short: {
-    id: 'privacy.private.short',
-    defaultMessage: 'Followers',
+    id: "privacy.private.short",
+    defaultMessage: "Followers",
   },
   direct_short: {
-    id: 'privacy.direct.short',
-    defaultMessage: 'Specific people',
+    id: "privacy.direct.short",
+    defaultMessage: "Specific people",
   },
 });
 
-export const VisibilityIcon: React.FC<{ visibility: StatusVisibility }> = ({
-  visibility,
-}) => {
+export const VisibilityIcon: React.FC<{ visibility: StatusVisibility }> = ({ visibility }) => {
   const intl = useIntl();
 
   const visibilityIconInfo = {
     public: {
-      icon: 'globe',
+      icon: "globe",
       iconComponent: PublicIcon,
       text: intl.formatMessage(messages.public_short),
     },
     unlisted: {
-      icon: 'unlock',
+      icon: "unlock",
       iconComponent: QuietTimeIcon,
       text: intl.formatMessage(messages.unlisted_short),
     },
     private: {
-      icon: 'lock',
+      icon: "lock",
       iconComponent: LockIcon,
       text: intl.formatMessage(messages.private_short),
     },
     direct: {
-      icon: 'at',
+      icon: "at",
       iconComponent: AlternateEmailIcon,
       text: intl.formatMessage(messages.direct_short),
     },

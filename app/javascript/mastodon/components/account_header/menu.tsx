@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
-import type { FC } from 'react';
+import { useMemo } from "react";
+import type { FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
 import {
   followAccount,
@@ -9,55 +9,45 @@ import {
   unblockAccount,
   unmuteAccount,
   unpinAccount,
-} from '@/mastodon/actions/accounts';
-import { removeAccountFromFollowers } from '@/mastodon/actions/accounts_typed';
-import { showAlert } from '@/mastodon/actions/alerts';
-import { initBlockModal } from '@/mastodon/actions/blocks';
-import { directCompose, mentionCompose } from '@/mastodon/actions/compose';
-import {
-  initDomainBlockModal,
-  unblockDomain,
-} from '@/mastodon/actions/domain_blocks';
-import { openModal } from '@/mastodon/actions/modal';
-import { initMuteModal } from '@/mastodon/actions/mutes';
-import { initReport } from '@/mastodon/actions/reports';
+} from "@/mastodon/actions/accounts";
+import { removeAccountFromFollowers } from "@/mastodon/actions/accounts_typed";
+import { showAlert } from "@/mastodon/actions/alerts";
+import { initBlockModal } from "@/mastodon/actions/blocks";
+import { directCompose, mentionCompose } from "@/mastodon/actions/compose";
+import { initDomainBlockModal, unblockDomain } from "@/mastodon/actions/domain_blocks";
+import { openModal } from "@/mastodon/actions/modal";
+import { initMuteModal } from "@/mastodon/actions/mutes";
+import { initReport } from "@/mastodon/actions/reports";
 import {
   canAccountBeAdded,
   canAccountBeAddedByFollowers,
-} from '@/mastodon/features/collections/utils';
-import { useAccount } from '@/mastodon/hooks/useAccount';
-import { useIdentity } from '@/mastodon/identity_context';
-import type { Account } from '@/mastodon/models/account';
-import type { MenuItem } from '@/mastodon/models/dropdown_menu';
-import type { Relationship } from '@/mastodon/models/relationship';
-import {
-  PERMISSION_MANAGE_FEDERATION,
-  PERMISSION_MANAGE_USERS,
-} from '@/mastodon/permissions';
-import type { AppDispatch } from '@/mastodon/store';
-import { useAppDispatch, useAppSelector } from '@/mastodon/store';
-import BlockIcon from '@/material-icons/400-24px/block.svg?react';
-import LinkIcon from '@/material-icons/400-24px/link_2.svg?react';
-import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
-import PersonRemoveIcon from '@/material-icons/400-24px/person_remove.svg?react';
-import ReportIcon from '@/material-icons/400-24px/report.svg?react';
-import ShareIcon from '@/material-icons/400-24px/share.svg?react';
+} from "@/mastodon/features/collections/utils";
+import { useAccount } from "@/mastodon/hooks/useAccount";
+import { useIdentity } from "@/mastodon/identity_context";
+import type { Account } from "@/mastodon/models/account";
+import type { MenuItem } from "@/mastodon/models/dropdown_menu";
+import type { Relationship } from "@/mastodon/models/relationship";
+import { PERMISSION_MANAGE_FEDERATION, PERMISSION_MANAGE_USERS } from "@/mastodon/permissions";
+import type { AppDispatch } from "@/mastodon/store";
+import { useAppDispatch, useAppSelector } from "@/mastodon/store";
+import BlockIcon from "@/material-icons/400-24px/block.svg?react";
+import LinkIcon from "@/material-icons/400-24px/link_2.svg?react";
+import MoreHorizIcon from "@/material-icons/400-24px/more_horiz.svg?react";
+import PersonRemoveIcon from "@/material-icons/400-24px/person_remove.svg?react";
+import ReportIcon from "@/material-icons/400-24px/report.svg?react";
+import ShareIcon from "@/material-icons/400-24px/share.svg?react";
 
-import { Dropdown } from '../dropdown_menu';
+import { Dropdown } from "../dropdown_menu";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 export const AccountMenu: FC<{ accountId: string }> = ({ accountId }) => {
   const intl = useIntl();
   const { signedIn, permissions } = useIdentity();
 
   const account = useAccount(accountId);
-  const relationship = useAppSelector((state) =>
-    state.relationships.get(accountId),
-  );
-  const currentAccountId = useAppSelector(
-    (state) => state.meta.get('me') as string,
-  );
+  const relationship = useAppSelector((state) => state.relationships.get(accountId));
+  const currentAccountId = useAppSelector((state) => state.meta.get("me") as string);
   const isMe = currentAccountId === accountId;
 
   const dispatch = useAppDispatch();
@@ -79,7 +69,7 @@ export const AccountMenu: FC<{ accountId: string }> = ({ accountId }) => {
     <Dropdown
       disabled={menuItems.length === 0}
       items={menuItems}
-      icon='ellipsis-v'
+      icon="ellipsis-v"
       iconComponent={MoreHorizIcon}
       className={classes.buttonMenu}
     />
@@ -96,139 +86,138 @@ interface MenuItemsParams {
 }
 
 const messages = defineMessages({
-  unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
-  mention: { id: 'account.mention', defaultMessage: 'Mention @{name}' },
-  direct: { id: 'account.direct', defaultMessage: 'Privately mention @{name}' },
-  unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
-  block: { id: 'account.block', defaultMessage: 'Block @{name}' },
-  mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
-  report: { id: 'account.report', defaultMessage: 'Report @{name}' },
+  unblock: { id: "account.unblock", defaultMessage: "Unblock @{name}" },
+  mention: { id: "account.mention", defaultMessage: "Mention @{name}" },
+  direct: { id: "account.direct", defaultMessage: "Privately mention @{name}" },
+  unmute: { id: "account.unmute", defaultMessage: "Unmute @{name}" },
+  block: { id: "account.block", defaultMessage: "Block @{name}" },
+  mute: { id: "account.mute", defaultMessage: "Mute @{name}" },
+  report: { id: "account.report", defaultMessage: "Report @{name}" },
   blockDomain: {
-    id: 'account.block_domain',
-    defaultMessage: 'Block domain {domain}',
+    id: "account.block_domain",
+    defaultMessage: "Block domain {domain}",
   },
   unblockDomain: {
-    id: 'account.unblock_domain',
-    defaultMessage: 'Unblock domain {domain}',
+    id: "account.unblock_domain",
+    defaultMessage: "Unblock domain {domain}",
   },
   hideReblogs: {
-    id: 'account.hide_reblogs',
-    defaultMessage: 'Hide boosts from @{name}',
+    id: "account.hide_reblogs",
+    defaultMessage: "Hide boosts from @{name}",
   },
   showReblogs: {
-    id: 'account.show_reblogs',
-    defaultMessage: 'Show boosts from @{name}',
+    id: "account.show_reblogs",
+    defaultMessage: "Show boosts from @{name}",
   },
   addNote: {
-    id: 'account.add_note',
-    defaultMessage: 'Add a personal note',
+    id: "account.add_note",
+    defaultMessage: "Add a personal note",
   },
   editNote: {
-    id: 'account.edit_note',
-    defaultMessage: 'Edit personal note',
+    id: "account.edit_note",
+    defaultMessage: "Edit personal note",
   },
-  endorse: { id: 'account.endorse', defaultMessage: 'Feature on profile' },
+  endorse: { id: "account.endorse", defaultMessage: "Feature on profile" },
   unendorse: {
-    id: 'account.unendorse',
+    id: "account.unendorse",
     defaultMessage: "Don't feature on profile",
   },
   add_or_remove_from_list: {
-    id: 'account.add_or_remove_from_list',
-    defaultMessage: 'Add or Remove from lists',
+    id: "account.add_or_remove_from_list",
+    defaultMessage: "Add or Remove from lists",
   },
   admin_account: {
-    id: 'status.admin_account',
-    defaultMessage: 'Open moderation interface for @{name}',
+    id: "status.admin_account",
+    defaultMessage: "Open moderation interface for @{name}",
   },
   admin_domain: {
-    id: 'status.admin_domain',
-    defaultMessage: 'Open moderation interface for {domain}',
+    id: "status.admin_domain",
+    defaultMessage: "Open moderation interface for {domain}",
   },
   languages: {
-    id: 'account.languages',
-    defaultMessage: 'Change subscribed languages',
+    id: "account.languages",
+    defaultMessage: "Change subscribed languages",
   },
   openOriginalPage: {
-    id: 'account.open_original_page',
-    defaultMessage: 'Open original page',
+    id: "account.open_original_page",
+    defaultMessage: "Open original page",
   },
   removeFromFollowers: {
-    id: 'account.remove_from_followers',
-    defaultMessage: 'Remove {name} from followers',
+    id: "account.remove_from_followers",
+    defaultMessage: "Remove {name} from followers",
   },
   confirmRemoveFromFollowersTitle: {
-    id: 'confirmations.remove_from_followers.title',
-    defaultMessage: 'Remove follower?',
+    id: "confirmations.remove_from_followers.title",
+    defaultMessage: "Remove follower?",
   },
   confirmRemoveFromFollowersMessage: {
-    id: 'confirmations.remove_from_followers.message',
-    defaultMessage:
-      '{name} will stop following you. Are you sure you want to proceed?',
+    id: "confirmations.remove_from_followers.message",
+    defaultMessage: "{name} will stop following you. Are you sure you want to proceed?",
   },
   confirmRemoveFromFollowersButton: {
-    id: 'confirmations.remove_from_followers.confirm',
-    defaultMessage: 'Remove follower',
+    id: "confirmations.remove_from_followers.confirm",
+    defaultMessage: "Remove follower",
   },
 });
 
 const redesignMessages = defineMessages({
-  share: { id: 'account.menu.share', defaultMessage: 'Share…' },
-  copy: { id: 'account.menu.copy', defaultMessage: 'Copy link' },
+  share: { id: "account.menu.share", defaultMessage: "Share…" },
+  copy: { id: "account.menu.copy", defaultMessage: "Copy link" },
   copied: {
-    id: 'account.menu.copied',
-    defaultMessage: 'Copied account link to clipboard',
+    id: "account.menu.copied",
+    defaultMessage: "Copied account link to clipboard",
   },
-  mention: { id: 'account.menu.mention', defaultMessage: 'Mention' },
+  mention: { id: "account.menu.mention", defaultMessage: "Mention" },
   noteDescription: {
-    id: 'account.menu.note.description',
-    defaultMessage: 'Visible only to you',
+    id: "account.menu.note.description",
+    defaultMessage: "Visible only to you",
   },
   direct: {
-    id: 'account.menu.direct',
-    defaultMessage: 'Privately mention',
+    id: "account.menu.direct",
+    defaultMessage: "Privately mention",
   },
-  mute: { id: 'account.menu.mute', defaultMessage: 'Mute account' },
+  mute: { id: "account.menu.mute", defaultMessage: "Mute account" },
   unmute: {
-    id: 'account.menu.unmute',
-    defaultMessage: 'Unmute account',
+    id: "account.menu.unmute",
+    defaultMessage: "Unmute account",
   },
-  block: { id: 'account.menu.block', defaultMessage: 'Block account' },
+  block: { id: "account.menu.block", defaultMessage: "Block account" },
   unblock: {
-    id: 'account.menu.unblock',
-    defaultMessage: 'Unblock account',
+    id: "account.menu.unblock",
+    defaultMessage: "Unblock account",
   },
   domainBlock: {
-    id: 'account.menu.block_domain',
-    defaultMessage: 'Block {domain}',
+    id: "account.menu.block_domain",
+    defaultMessage: "Block {domain}",
   },
   domainUnblock: {
-    id: 'account.menu.unblock_domain',
-    defaultMessage: 'Unblock {domain}',
+    id: "account.menu.unblock_domain",
+    defaultMessage: "Unblock {domain}",
   },
-  report: { id: 'account.menu.report', defaultMessage: 'Report account' },
+  report: { id: "account.menu.report", defaultMessage: "Report account" },
   hideReblogs: {
-    id: 'account.menu.hide_reblogs',
-    defaultMessage: 'Hide boosts in timeline',
+    id: "account.menu.hide_reblogs",
+    defaultMessage: "Hide boosts in timeline",
   },
   showReblogs: {
-    id: 'account.menu.show_reblogs',
-    defaultMessage: 'Show boosts in timeline',
+    id: "account.menu.show_reblogs",
+    defaultMessage: "Show boosts in timeline",
   },
   addToList: {
-    id: 'account.menu.add_to_list',
-    defaultMessage: 'Add to list…',
+    id: "account.menu.add_to_list",
+    defaultMessage: "Add to list…",
   },
   addToCollection: {
-    id: 'account.menu.add_to_collection',
-    defaultMessage: 'Add to collection…',
+    id: "account.menu.add_to_collection",
+    defaultMessage: "Add to collection…",
   },
   openOriginalPage: {
-    id: 'account.menu.open_original_page',
-    defaultMessage: 'View on {domain}',
+    id: "account.menu.open_original_page",
+    defaultMessage: "View on {domain}",
   },
   removeFollower: {
-    id: 'account.menu.remove_follower',
-    defaultMessage: 'Remove follower',
+    id: "account.menu.remove_follower",
+    defaultMessage: "Remove follower",
   },
 });
 
@@ -242,11 +231,11 @@ function getMenuItems({
 }: MenuItemsParams): MenuItem[] {
   const items: MenuItem[] = [];
   const isRemote = account.acct !== account.username;
-  const remoteDomain = isRemote ? account.acct.split('@')[1] : null;
+  const remoteDomain = isRemote ? account.acct.split("@")[1] : null;
 
   // Share and copy link options
   if (account.url) {
-    if ('share' in navigator) {
+    if ("share" in navigator) {
       items.push({
         text: intl.formatMessage(redesignMessages.share),
         action: () => {
@@ -309,7 +298,7 @@ function getMenuItems({
       action: () => {
         dispatch(
           openModal({
-            modalType: 'LIST_ADDER',
+            modalType: "LIST_ADDER",
             modalProps: {
               accountId: account.id,
             },
@@ -329,7 +318,7 @@ function getMenuItems({
       action: () => {
         dispatch(
           openModal({
-            modalType: 'COLLECTION_ADDER',
+            modalType: "COLLECTION_ADDER",
             modalProps: {
               accountId: account.id,
             },
@@ -342,9 +331,7 @@ function getMenuItems({
   // Feature on profile
   if (relationship?.following) {
     items.push({
-      text: intl.formatMessage(
-        relationship.endorsed ? messages.unendorse : messages.endorse,
-      ),
+      text: intl.formatMessage(relationship.endorsed ? messages.unendorse : messages.endorse),
       action: () => {
         if (relationship.endorsed) {
           dispatch(unpinAccount(account.id));
@@ -357,14 +344,12 @@ function getMenuItems({
 
   items.push(
     {
-      text: intl.formatMessage(
-        relationship?.note ? messages.editNote : messages.addNote,
-      ),
+      text: intl.formatMessage(relationship?.note ? messages.editNote : messages.addNote),
       description: intl.formatMessage(redesignMessages.noteDescription),
       action: () => {
         dispatch(
           openModal({
-            modalType: 'ACCOUNT_NOTE',
+            modalType: "ACCOUNT_NOTE",
             modalProps: {
               accountId: account.id,
             },
@@ -397,7 +382,7 @@ function getMenuItems({
         action: () => {
           dispatch(
             openModal({
-              modalType: 'SUBSCRIBED_LANGUAGES',
+              modalType: "SUBSCRIBED_LANGUAGES",
               modalProps: {
                 accountId: account.id,
               },
@@ -430,22 +415,15 @@ function getMenuItems({
       action: () => {
         dispatch(
           openModal({
-            modalType: 'CONFIRM',
+            modalType: "CONFIRM",
             modalProps: {
-              title: intl.formatMessage(
-                messages.confirmRemoveFromFollowersTitle,
-              ),
-              message: intl.formatMessage(
-                messages.confirmRemoveFromFollowersMessage,
-                { name: <strong>{account.acct}</strong> },
-              ),
-              confirm: intl.formatMessage(
-                messages.confirmRemoveFromFollowersButton,
-              ),
+              title: intl.formatMessage(messages.confirmRemoveFromFollowersTitle),
+              message: intl.formatMessage(messages.confirmRemoveFromFollowersMessage, {
+                name: <strong>{account.acct}</strong>,
+              }),
+              confirm: intl.formatMessage(messages.confirmRemoveFromFollowersButton),
               onConfirm: () => {
-                void dispatch(
-                  removeAccountFromFollowers({ accountId: account.id }),
-                );
+                void dispatch(removeAccountFromFollowers({ accountId: account.id }));
               },
             },
           }),
@@ -458,9 +436,7 @@ function getMenuItems({
 
   items.push({
     text: intl.formatMessage(
-      relationship?.blocking
-        ? redesignMessages.unblock
-        : redesignMessages.block,
+      relationship?.blocking ? redesignMessages.unblock : redesignMessages.block,
     ),
     action: () => {
       if (relationship?.blocking) {
@@ -503,15 +479,13 @@ function getMenuItems({
       },
       dangerous: true,
       icon: BlockIcon,
-      iconId: 'domain-block',
+      iconId: "domain-block",
     });
   }
 
   if (
     (permissions & PERMISSION_MANAGE_USERS) === PERMISSION_MANAGE_USERS ||
-    (isRemote &&
-      (permissions & PERMISSION_MANAGE_FEDERATION) ===
-        PERMISSION_MANAGE_FEDERATION)
+    (isRemote && (permissions & PERMISSION_MANAGE_FEDERATION) === PERMISSION_MANAGE_FEDERATION)
   ) {
     items.push(null);
     if ((permissions & PERMISSION_MANAGE_USERS) === PERMISSION_MANAGE_USERS) {
@@ -524,8 +498,7 @@ function getMenuItems({
     }
     if (
       remoteDomain &&
-      (permissions & PERMISSION_MANAGE_FEDERATION) ===
-        PERMISSION_MANAGE_FEDERATION
+      (permissions & PERMISSION_MANAGE_FEDERATION) === PERMISSION_MANAGE_FEDERATION
     ) {
       items.push({
         text: intl.formatMessage(messages.admin_domain, {

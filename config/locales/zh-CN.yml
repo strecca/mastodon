@@ -345,7 +345,7 @@ zh-CN:
       back_to_account: 返回账号信息页
       back_to_report: 返回举报页
       batch:
-        add_to_report: '添加到举报 #%{id}'
+        add_to_report: "添加到举报 #%{id}"
         remove_from_report: 从举报中移除
         report: 举报
       collection_title: "%{name} 的收藏列表"
@@ -708,12 +708,12 @@ zh-CN:
       created_msg: 成功添加新 IP 规则
       delete: 删除
       expires_in:
-        '1209600': 两周
-        '15778476': 6个月
-        '2629746': 1个月
-        '31556952': 1年
-        '86400': 1天
-        '94670856': 3年
+        "1209600": 两周
+        "15778476": 6个月
+        "2629746": 1个月
+        "31556952": 1年
+        "86400": 1天
+        "94670856": 3年
       new:
         title: 创建新 IP 规则
       no_ip_block_selected: 未选中任何 IP 规则，所以没有更改
@@ -789,11 +789,11 @@ zh-CN:
         placeholder: 描述已经执行的操作，或其他任何相关的跟进情况…
         title: 备注
       notes_description_html: 查看备注或向其他管理员留言
-      processed_msg: '举报 #%{id} 处理成功'
+      processed_msg: "举报 #%{id} 处理成功"
       quick_actions_description_html: 快捷选择操作或向下滚动以查看举报内容：
       remote_user_placeholder: 来自 %{instance} 的外站用户
       reopen: 重开举报
-      report: '举报 #%{id}'
+      report: "举报 #%{id}"
       reported_account: 举报用户
       reported_by: 举报人
       reported_content: 被举报内容
@@ -815,7 +815,7 @@ zh-CN:
           mark_as_sensitive_html: 将违规嘟文的媒体标记为敏感
           silence_html: 严格限制 <strong>@%{acct}</strong> 的影响力，方法是让他们的个人资料和内容仅对已经关注他们的人可见，或手动查找其个人资料时
           suspend_html: 暂停 <strong>@%{acct}</strong>，使他们的个人资料和内容无法访问，也无法与之互动
-        close_report: '将举报 #%{id} 标记为已解决'
+        close_report: "将举报 #%{id} 标记为已解决"
         close_reports_html: 将针对 <strong>@%{acct}</strong> 的<strong>全部</strong>举报标记为已解决
         delete_data_html: 从现在起 30 天后删除 <strong>@%{acct}</strong> 的个人资料和内容，除非他们同时解除暂停。
         preview_preamble_html: "<strong>@%{acct}</strong> 将收到包含以下内容的警告："
@@ -1002,7 +1002,7 @@ zh-CN:
       back_to_account: 返回账号信息页
       back_to_report: 返回举报页
       batch:
-        add_to_report: '添加到举报 #%{id}'
+        add_to_report: "添加到举报 #%{id}"
         remove_from_report: 从举报中移除
         report: 举报
       contents: 内容
@@ -1063,7 +1063,7 @@ zh-CN:
       elasticsearch_running_check:
         message_html: 无法连接到 Elasticsearch。请检查它是否正在运行，或禁用全文搜索
       elasticsearch_version_check:
-        message_html: '不兼容的 Elasticsearch 版本: %{value}'
+        message_html: "不兼容的 Elasticsearch 版本: %{value}"
         version_comparison: Elasticsearch 最低版本要求 %{required_version}，正在运行的版本是 %{running_version}
       rules_check:
         action: 管理服务器规则
@@ -1199,7 +1199,7 @@ zh-CN:
         peaked_on_and_decaying: 在 %{date} 达到峰值，下降中
         title: 热门标签
         trendable: 可显示在热门列表中
-        trending_rank: '热门 #%{rank}'
+        trending_rank: "热门 #%{rank}"
         usable: 可以使用
         usage_comparison: 今日被使用 %{today} 次，前一日为 %{yesterday} 次
         used_by_over_week:
@@ -1479,7 +1479,7 @@ zh-CN:
       description_html: 以下是针对你的账号采取的行动和警告，已经由 %{instance} 的工作人员发送给你。
       recipient: 发送至
       reject_appeal: 驳回申诉
-      status: '嘟文 #%{id}'
+      status: "嘟文 #%{id}"
       status_removed: 嘟文已从系统中删除
       title: "%{action} 于 %{date}"
       title_actions:
@@ -1537,19 +1537,19 @@ zh-CN:
     native: 原生
     twemoji: Twemoji
   errors:
-    '400': 你提交的请求无效或格式不正确。
-    '403': 你没有访问此页面的权限。
-    '404': 无法找到你访问的页面。
-    '406': 无法以要求的格式显示此页面。
-    '410': 你要查看的页面已不存在。
-    '422':
+    "400": 你提交的请求无效或格式不正确。
+    "403": 你没有访问此页面的权限。
+    "404": 无法找到你访问的页面。
+    "406": 无法以要求的格式显示此页面。
+    "410": 你要查看的页面已不存在。
+    "422":
       content: 安全验证未通过。请检查是否禁用了 Cookie。
       title: 安全验证未通过
-    '429': 请求过于频繁
-    '500':
+    "429": 请求过于频繁
+    "500":
       content: 抱歉，服务器出现了一些故障。
       title: 页面无法正确加载
-    '503': 服务器出现临时故障，无法加载页面。
+    "503": 服务器出现临时故障，无法加载页面。
     noscript_html: 使用 Mastodon 网页版应用需要启用 JavaScript。你也可以选择适用于你的平台的 <a href="%{apps_path}">Mastodon 应用</a>。
   existing_username_validator:
     not_found: 在本站找不到此用户
@@ -1714,12 +1714,12 @@ zh-CN:
     delete: 停用
     expired: 已失效
     expires_in:
-      '1800': 30 分钟后
-      '21600': 6 小时后
-      '3600': 1 小时后
-      '43200': 12 小时后
-      '604800': 1 周后
-      '86400': 1 天后
+      "1800": 30 分钟后
+      "21600": 6 小时后
+      "3600": 1 小时后
+      "43200": 12 小时后
+      "604800": 1 周后
+      "86400": 1 天后
     expires_in_prompt: 永不过期
     generate: 生成邀请链接
     invalid: 此邀请无效
@@ -2115,14 +2115,14 @@ zh-CN:
     keep_self_fav: 保留你喜欢的嘟文
     keep_self_fav_hint: 如果你喜欢了自己的嘟文，则不会删除这些嘟文
     min_age:
-      '1209600': 2周
-      '15778476': 6个月
-      '2629746': 1个月
-      '31556952': 1年
-      '5259492': 2个月
-      '604800': 一周
-      '63113904': 两年
-      '7889238': 3个月
+      "1209600": 2周
+      "15778476": 6个月
+      "2629746": 1个月
+      "31556952": 1年
+      "5259492": 2个月
+      "604800": 一周
+      "63113904": 两年
+      "7889238": 3个月
     min_age_label: 过期阈值
     min_favs: 保留如下嘟文：喜欢数超过
     min_favs_hint: 获得喜欢数超过该阈值的的嘟文都不会被删除。如果留空，则无论嘟文获得多少点赞，都将被删除。

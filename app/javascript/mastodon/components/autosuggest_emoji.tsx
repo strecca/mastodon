@@ -1,6 +1,6 @@
-import type { FC } from 'react';
+import type { FC } from "react";
 
-import { Emoji } from './emoji';
+import { Emoji } from "./emoji";
 
 interface LegacyEmoji {
   id: string;
@@ -12,9 +12,9 @@ interface LegacyEmoji {
 export const AutosuggestEmoji: FC<{ emoji: LegacyEmoji }> = ({ emoji }) => {
   const colons = `:${emoji.id}:`;
   return (
-    <div className='autosuggest-emoji'>
+    <div className="autosuggest-emoji">
       <Emoji code={emoji.native ?? colons} />
-      <div className='autosuggest-emoji__name'>{colons}</div>
+      <div className="autosuggest-emoji__name">{colons}</div>
     </div>
   );
 };

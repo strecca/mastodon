@@ -1,21 +1,21 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from "react-intl";
 
-import axios from 'axios';
-import { throttle } from 'lodash';
+import axios from "axios";
+import { throttle } from "lodash";
 
-import api from 'flavours/glitch/api';
-import { browserHistory } from 'flavours/glitch/components/router';
-import { countableText } from 'flavours/glitch/features/compose/util/counter';
-import { tagHistory } from 'flavours/glitch/settings';
-import { emojiMartSearch } from '@/flavours/glitch/features/emoji/picker';
-import { recoverHashtags } from 'flavours/glitch/utils/hashtag';
-import { compressImage } from 'flavours/glitch/utils/compress_image';
+import api from "flavours/glitch/api";
+import { browserHistory } from "flavours/glitch/components/router";
+import { countableText } from "flavours/glitch/features/compose/util/counter";
+import { tagHistory } from "flavours/glitch/settings";
+import { emojiMartSearch } from "@/flavours/glitch/features/emoji/picker";
+import { recoverHashtags } from "flavours/glitch/utils/hashtag";
+import { compressImage } from "flavours/glitch/utils/compress_image";
 
-import { showAlert, showAlertForError } from './alerts';
-import { useEmoji } from './emojis';
-import { importFetchedAccounts, importFetchedStatus } from './importer';
-import { openModal } from './modal';
-import { updateTimeline } from './timelines';
+import { showAlert, showAlertForError } from "./alerts";
+import { useEmoji } from "./emojis";
+import { importFetchedAccounts, importFetchedStatus } from "./importer";
+import { openModal } from "./modal";
+import { updateTimeline } from "./timelines";
 
 /** @type {AbortController | undefined} */
 let fetchComposeSuggestionsAccountsController;
@@ -28,80 +28,83 @@ let fetchComposeSuggestionsTagsController;
 const COMPOSE_MAX_UPLOAD_DIMENSION = 1920;
 const COMPOSE_JPEG_QUALITY = 0.85;
 
-export const COMPOSE_CHANGE          = 'COMPOSE_CHANGE';
-export const COMPOSE_SUBMIT_REQUEST  = 'COMPOSE_SUBMIT_REQUEST';
-export const COMPOSE_SUBMIT_SUCCESS  = 'COMPOSE_SUBMIT_SUCCESS';
-export const COMPOSE_SUBMIT_FAIL     = 'COMPOSE_SUBMIT_FAIL';
-export const COMPOSE_REPLY           = 'COMPOSE_REPLY';
-export const COMPOSE_REPLY_CANCEL    = 'COMPOSE_REPLY_CANCEL';
-export const COMPOSE_DIRECT          = 'COMPOSE_DIRECT';
-export const COMPOSE_MENTION         = 'COMPOSE_MENTION';
-export const COMPOSE_RESET           = 'COMPOSE_RESET';
+export const COMPOSE_CHANGE = "COMPOSE_CHANGE";
+export const COMPOSE_SUBMIT_REQUEST = "COMPOSE_SUBMIT_REQUEST";
+export const COMPOSE_SUBMIT_SUCCESS = "COMPOSE_SUBMIT_SUCCESS";
+export const COMPOSE_SUBMIT_FAIL = "COMPOSE_SUBMIT_FAIL";
+export const COMPOSE_REPLY = "COMPOSE_REPLY";
+export const COMPOSE_REPLY_CANCEL = "COMPOSE_REPLY_CANCEL";
+export const COMPOSE_DIRECT = "COMPOSE_DIRECT";
+export const COMPOSE_MENTION = "COMPOSE_MENTION";
+export const COMPOSE_RESET = "COMPOSE_RESET";
 
-export const COMPOSE_UPLOAD_REQUEST    = 'COMPOSE_UPLOAD_REQUEST';
-export const COMPOSE_UPLOAD_SUCCESS    = 'COMPOSE_UPLOAD_SUCCESS';
-export const COMPOSE_UPLOAD_FAIL       = 'COMPOSE_UPLOAD_FAIL';
-export const COMPOSE_UPLOAD_PROGRESS   = 'COMPOSE_UPLOAD_PROGRESS';
-export const COMPOSE_UPLOAD_PROCESSING = 'COMPOSE_UPLOAD_PROCESSING';
-export const COMPOSE_UPLOAD_UNDO       = 'COMPOSE_UPLOAD_UNDO';
+export const COMPOSE_UPLOAD_REQUEST = "COMPOSE_UPLOAD_REQUEST";
+export const COMPOSE_UPLOAD_SUCCESS = "COMPOSE_UPLOAD_SUCCESS";
+export const COMPOSE_UPLOAD_FAIL = "COMPOSE_UPLOAD_FAIL";
+export const COMPOSE_UPLOAD_PROGRESS = "COMPOSE_UPLOAD_PROGRESS";
+export const COMPOSE_UPLOAD_PROCESSING = "COMPOSE_UPLOAD_PROCESSING";
+export const COMPOSE_UPLOAD_UNDO = "COMPOSE_UPLOAD_UNDO";
 
-export const THUMBNAIL_UPLOAD_REQUEST  = 'THUMBNAIL_UPLOAD_REQUEST';
-export const THUMBNAIL_UPLOAD_SUCCESS  = 'THUMBNAIL_UPLOAD_SUCCESS';
-export const THUMBNAIL_UPLOAD_FAIL     = 'THUMBNAIL_UPLOAD_FAIL';
-export const THUMBNAIL_UPLOAD_PROGRESS = 'THUMBNAIL_UPLOAD_PROGRESS';
+export const THUMBNAIL_UPLOAD_REQUEST = "THUMBNAIL_UPLOAD_REQUEST";
+export const THUMBNAIL_UPLOAD_SUCCESS = "THUMBNAIL_UPLOAD_SUCCESS";
+export const THUMBNAIL_UPLOAD_FAIL = "THUMBNAIL_UPLOAD_FAIL";
+export const THUMBNAIL_UPLOAD_PROGRESS = "THUMBNAIL_UPLOAD_PROGRESS";
 
-export const COMPOSE_SUGGESTIONS_CLEAR = 'COMPOSE_SUGGESTIONS_CLEAR';
-export const COMPOSE_SUGGESTIONS_READY = 'COMPOSE_SUGGESTIONS_READY';
-export const COMPOSE_SUGGESTION_SELECT = 'COMPOSE_SUGGESTION_SELECT';
-export const COMPOSE_SUGGESTION_IGNORE = 'COMPOSE_SUGGESTION_IGNORE';
-export const COMPOSE_SUGGESTION_TAGS_UPDATE = 'COMPOSE_SUGGESTION_TAGS_UPDATE';
+export const COMPOSE_SUGGESTIONS_CLEAR = "COMPOSE_SUGGESTIONS_CLEAR";
+export const COMPOSE_SUGGESTIONS_READY = "COMPOSE_SUGGESTIONS_READY";
+export const COMPOSE_SUGGESTION_SELECT = "COMPOSE_SUGGESTION_SELECT";
+export const COMPOSE_SUGGESTION_IGNORE = "COMPOSE_SUGGESTION_IGNORE";
+export const COMPOSE_SUGGESTION_TAGS_UPDATE = "COMPOSE_SUGGESTION_TAGS_UPDATE";
 
-export const COMPOSE_TAG_HISTORY_UPDATE = 'COMPOSE_TAG_HISTORY_UPDATE';
+export const COMPOSE_TAG_HISTORY_UPDATE = "COMPOSE_TAG_HISTORY_UPDATE";
 
-export const COMPOSE_MOUNT   = 'COMPOSE_MOUNT';
-export const COMPOSE_UNMOUNT = 'COMPOSE_UNMOUNT';
+export const COMPOSE_MOUNT = "COMPOSE_MOUNT";
+export const COMPOSE_UNMOUNT = "COMPOSE_UNMOUNT";
 
-export const COMPOSE_ADVANCED_OPTIONS_CHANGE = 'COMPOSE_ADVANCED_OPTIONS_CHANGE';
-export const COMPOSE_SENSITIVITY_CHANGE  = 'COMPOSE_SENSITIVITY_CHANGE';
-export const COMPOSE_SPOILERNESS_CHANGE  = 'COMPOSE_SPOILERNESS_CHANGE';
-export const COMPOSE_SPOILER_TEXT_CHANGE = 'COMPOSE_SPOILER_TEXT_CHANGE';
-export const COMPOSE_COMPOSING_CHANGE    = 'COMPOSE_COMPOSING_CHANGE';
-export const COMPOSE_CONTENT_TYPE_CHANGE = 'COMPOSE_CONTENT_TYPE_CHANGE';
-export const COMPOSE_LANGUAGE_CHANGE     = 'COMPOSE_LANGUAGE_CHANGE';
+export const COMPOSE_ADVANCED_OPTIONS_CHANGE = "COMPOSE_ADVANCED_OPTIONS_CHANGE";
+export const COMPOSE_SENSITIVITY_CHANGE = "COMPOSE_SENSITIVITY_CHANGE";
+export const COMPOSE_SPOILERNESS_CHANGE = "COMPOSE_SPOILERNESS_CHANGE";
+export const COMPOSE_SPOILER_TEXT_CHANGE = "COMPOSE_SPOILER_TEXT_CHANGE";
+export const COMPOSE_COMPOSING_CHANGE = "COMPOSE_COMPOSING_CHANGE";
+export const COMPOSE_CONTENT_TYPE_CHANGE = "COMPOSE_CONTENT_TYPE_CHANGE";
+export const COMPOSE_LANGUAGE_CHANGE = "COMPOSE_LANGUAGE_CHANGE";
 
-export const COMPOSE_EMOJI_INSERT = 'COMPOSE_EMOJI_INSERT';
+export const COMPOSE_EMOJI_INSERT = "COMPOSE_EMOJI_INSERT";
 
-export const COMPOSE_DOODLE_SET        = 'COMPOSE_DOODLE_SET';
+export const COMPOSE_DOODLE_SET = "COMPOSE_DOODLE_SET";
 
-export const COMPOSE_POLL_ADD             = 'COMPOSE_POLL_ADD';
-export const COMPOSE_POLL_REMOVE          = 'COMPOSE_POLL_REMOVE';
-export const COMPOSE_POLL_OPTION_ADD      = 'COMPOSE_POLL_OPTION_ADD';
-export const COMPOSE_POLL_OPTION_CHANGE   = 'COMPOSE_POLL_OPTION_CHANGE';
-export const COMPOSE_POLL_OPTION_REMOVE   = 'COMPOSE_POLL_OPTION_REMOVE';
-export const COMPOSE_POLL_SETTINGS_CHANGE = 'COMPOSE_POLL_SETTINGS_CHANGE';
+export const COMPOSE_POLL_ADD = "COMPOSE_POLL_ADD";
+export const COMPOSE_POLL_REMOVE = "COMPOSE_POLL_REMOVE";
+export const COMPOSE_POLL_OPTION_ADD = "COMPOSE_POLL_OPTION_ADD";
+export const COMPOSE_POLL_OPTION_CHANGE = "COMPOSE_POLL_OPTION_CHANGE";
+export const COMPOSE_POLL_OPTION_REMOVE = "COMPOSE_POLL_OPTION_REMOVE";
+export const COMPOSE_POLL_SETTINGS_CHANGE = "COMPOSE_POLL_SETTINGS_CHANGE";
 
-export const INIT_MEDIA_EDIT_MODAL = 'INIT_MEDIA_EDIT_MODAL';
+export const INIT_MEDIA_EDIT_MODAL = "INIT_MEDIA_EDIT_MODAL";
 
-export const COMPOSE_CHANGE_MEDIA_DESCRIPTION = 'COMPOSE_CHANGE_MEDIA_DESCRIPTION';
-export const COMPOSE_CHANGE_MEDIA_FOCUS       = 'COMPOSE_CHANGE_MEDIA_FOCUS';
-export const COMPOSE_CHANGE_MEDIA_ORDER       = 'COMPOSE_CHANGE_MEDIA_ORDER';
+export const COMPOSE_CHANGE_MEDIA_DESCRIPTION = "COMPOSE_CHANGE_MEDIA_DESCRIPTION";
+export const COMPOSE_CHANGE_MEDIA_FOCUS = "COMPOSE_CHANGE_MEDIA_FOCUS";
+export const COMPOSE_CHANGE_MEDIA_ORDER = "COMPOSE_CHANGE_MEDIA_ORDER";
 
-export const COMPOSE_SET_STATUS = 'COMPOSE_SET_STATUS';
-export const COMPOSE_FOCUS = 'COMPOSE_FOCUS';
+export const COMPOSE_SET_STATUS = "COMPOSE_SET_STATUS";
+export const COMPOSE_FOCUS = "COMPOSE_FOCUS";
 
 const messages = defineMessages({
-  uploadErrorLimit: { id: 'upload_error.limit', defaultMessage: 'File upload limit exceeded.' },
-  uploadErrorPoll:  { id: 'upload_error.poll', defaultMessage: 'File upload not allowed with polls.' },
-  uploadQuote: { id: 'upload_error.quote', defaultMessage: 'File upload not allowed with quotes.' },
-  open: { id: 'compose.published.open', defaultMessage: 'Open' },
-  published: { id: 'compose.published.body', defaultMessage: 'Post published.' },
-  saved: { id: 'compose.saved.body', defaultMessage: 'Post saved.' },
-  blankPostError: { id: 'compose.error.blank_post', defaultMessage: 'Post can\'t be blank.' },
+  uploadErrorLimit: { id: "upload_error.limit", defaultMessage: "File upload limit exceeded." },
+  uploadErrorPoll: {
+    id: "upload_error.poll",
+    defaultMessage: "File upload not allowed with polls.",
+  },
+  uploadQuote: { id: "upload_error.quote", defaultMessage: "File upload not allowed with quotes." },
+  open: { id: "compose.published.open", defaultMessage: "Open" },
+  published: { id: "compose.published.body", defaultMessage: "Post published." },
+  saved: { id: "compose.saved.body", defaultMessage: "Post saved." },
+  blankPostError: { id: "compose.error.blank_post", defaultMessage: "Post can't be blank." },
 });
 
 export const ensureComposeIsVisible = (getState) => {
-  if (!getState().getIn(['compose', 'mounted'])) {
-    browserHistory.push('/publish', { focusTarget: false });
+  if (!getState().getIn(["compose", "mounted"])) {
+    browserHistory.push("/publish", { focusTarget: false });
   }
 };
 
@@ -117,7 +120,7 @@ export function setComposeToStatus(status, text, spoiler_text, content_type) {
       content_type,
       maxOptions,
     });
-  }
+  };
 }
 
 export function changeCompose(text) {
@@ -129,7 +132,7 @@ export function changeCompose(text) {
 
 export function replyCompose(status) {
   return (dispatch, getState) => {
-    const prependCWRe = getState().getIn(['local_settings', 'prepend_cw_re']);
+    const prependCWRe = getState().getIn(["local_settings", "prepend_cw_re"]);
     dispatch({
       type: COMPOSE_REPLY,
       status: status,
@@ -146,8 +149,8 @@ export function replyComposeById(statusId) {
     const status = state.statuses.get(statusId);
 
     if (status) {
-      const account = state.accounts.get(status.get('account'));
-      dispatch(replyCompose(status.set('account', account)));
+      const account = state.accounts.get(status.get("account"));
+      dispatch(replyCompose(status.set("account", account)));
     }
   };
 }
@@ -164,15 +167,17 @@ export function resetCompose() {
   };
 }
 
-export const focusCompose = (defaultText = '', caretStart = false) => (dispatch, getState) => {
-  dispatch({
-    type: COMPOSE_FOCUS,
-    defaultText,
-    caretStart,
-  });
+export const focusCompose =
+  (defaultText = "", caretStart = false) =>
+  (dispatch, getState) => {
+    dispatch({
+      type: COMPOSE_FOCUS,
+      defaultText,
+      caretStart,
+    });
 
-  ensureComposeIsVisible(getState);
-};
+    ensureComposeIsVisible(getState);
+  };
 
 export function mentionCompose(account) {
   return (dispatch, getState) => {
@@ -213,20 +218,24 @@ export function directCompose(account) {
  */
 export function submitCompose(overridePrivacy = null, successCallback = undefined) {
   return function (dispatch, getState) {
-    let status     = getState().getIn(['compose', 'text'], '');
-    const media    = getState().getIn(['compose', 'media_attachments']);
-    const statusId = getState().getIn(['compose', 'id'], null);
-    const hasQuote = !!getState().getIn(['compose', 'quoted_status_id']);
-    const spoilers = getState().getIn(['compose', 'spoiler']) || getState().getIn(['local_settings', 'always_show_spoilers_field']);
-    const spoiler_text = spoilers ? getState().getIn(['compose', 'spoiler_text'], '') : '';
+    let status = getState().getIn(["compose", "text"], "");
+    const media = getState().getIn(["compose", "media_attachments"]);
+    const statusId = getState().getIn(["compose", "id"], null);
+    const hasQuote = !!getState().getIn(["compose", "quoted_status_id"]);
+    const spoilers =
+      getState().getIn(["compose", "spoiler"]) ||
+      getState().getIn(["local_settings", "always_show_spoilers_field"]);
+    const spoiler_text = spoilers ? getState().getIn(["compose", "spoiler_text"], "") : "";
 
-    const fulltext = `${spoiler_text ?? ''}${countableText(status ?? '')}`;
+    const fulltext = `${spoiler_text ?? ""}${countableText(status ?? "")}`;
     const hasText = fulltext.trim().length > 0;
 
     if (!(hasText || media.size !== 0 || (hasQuote && spoiler_text?.length))) {
-      dispatch(showAlert({
-        message: messages.blankPostError,
-      }));
+      dispatch(
+        showAlert({
+          message: messages.blankPostError,
+        }),
+      );
       dispatch(focusCompose());
 
       return;
@@ -239,97 +248,119 @@ export function submitCompose(overridePrivacy = null, successCallback = undefine
     // API call.
     let media_attributes;
     if (statusId !== null) {
-      media_attributes = media.map(item => {
+      media_attributes = media.map((item) => {
         let focus;
 
-        if (item.getIn(['meta', 'focus'])) {
-          focus = `${item.getIn(['meta', 'focus', 'x']).toFixed(2)},${item.getIn(['meta', 'focus', 'y']).toFixed(2)}`;
+        if (item.getIn(["meta", "focus"])) {
+          focus = `${item.getIn(["meta", "focus", "x"]).toFixed(2)},${item.getIn(["meta", "focus", "y"]).toFixed(2)}`;
         }
 
         return {
-          id: item.get('id'),
-          description: item.get('description'),
+          id: item.get("id"),
+          description: item.get("description"),
           focus,
         };
       });
     }
 
-    const visibility = overridePrivacy || getState().getIn(['compose', 'privacy']);
-    api().request({
-      url: statusId === null ? '/api/v1/statuses' : `/api/v1/statuses/${statusId}`,
-      method: statusId === null ? 'post' : 'put',
-      data: {
-        status,
-        spoiler_text,
-        content_type: getState().getIn(['compose', 'content_type']),
-        local_only: getState().getIn(['compose', 'advanced_options', 'do_not_federate']),
-        in_reply_to_id: getState().getIn(['compose', 'in_reply_to'], null),
-        media_ids: media.map(item => item.get('id')),
-        media_attributes,
-        sensitive: getState().getIn(['compose', 'sensitive']) || (spoiler_text.length > 0 && media.size !== 0),
-        visibility: visibility,
-        poll: getState().getIn(['compose', 'poll'], null),
-        language: getState().getIn(['compose', 'language']),
-        quoted_status_id: getState().getIn(['compose', 'quoted_status_id']),
-        quote_approval_policy: visibility === 'private' || visibility === 'direct' ? 'nobody' : getState().getIn(['compose', 'quote_policy']),
-      },
-      headers: {
-        'Idempotency-Key': getState().getIn(['compose', 'idempotencyKey']),
-      },
-    }).then(function (response) {
-      if ((browserHistory.location.pathname === '/publish' || browserHistory.location.pathname === '/statuses/new')
-          && window.history.state
-          && !getState().getIn(['compose', 'advanced_options', 'threaded_mode'])) {
-        browserHistory.goBack();
-      }
-
-      dispatch(insertIntoTagHistory(response.data.tags, status));
-      dispatch(submitComposeSuccess({ ...response.data }));
-      if (typeof successCallback === 'function') {
-        successCallback(response.data);
-      }
-
-      // To make the app more responsive, immediately push the status
-      // into the columns
-      const insertIfOnline = timelineId => {
-        const timeline = getState().getIn(['timelines', timelineId]);
-
-        if (timeline && timeline.get('items').size > 0 && timeline.getIn(['items', 0]) !== null && timeline.get('online')) {
-          dispatch(updateTimeline(timelineId, { ...response.data }));
+    const visibility = overridePrivacy || getState().getIn(["compose", "privacy"]);
+    api()
+      .request({
+        url: statusId === null ? "/api/v1/statuses" : `/api/v1/statuses/${statusId}`,
+        method: statusId === null ? "post" : "put",
+        data: {
+          status,
+          spoiler_text,
+          content_type: getState().getIn(["compose", "content_type"]),
+          local_only: getState().getIn(["compose", "advanced_options", "do_not_federate"]),
+          in_reply_to_id: getState().getIn(["compose", "in_reply_to"], null),
+          media_ids: media.map((item) => item.get("id")),
+          media_attributes,
+          sensitive:
+            getState().getIn(["compose", "sensitive"]) ||
+            (spoiler_text.length > 0 && media.size !== 0),
+          visibility: visibility,
+          poll: getState().getIn(["compose", "poll"], null),
+          language: getState().getIn(["compose", "language"]),
+          quoted_status_id: getState().getIn(["compose", "quoted_status_id"]),
+          quote_approval_policy:
+            visibility === "private" || visibility === "direct"
+              ? "nobody"
+              : getState().getIn(["compose", "quote_policy"]),
+        },
+        headers: {
+          "Idempotency-Key": getState().getIn(["compose", "idempotencyKey"]),
+        },
+      })
+      .then(function (response) {
+        if (
+          (browserHistory.location.pathname === "/publish" ||
+            browserHistory.location.pathname === "/statuses/new") &&
+          window.history.state &&
+          !getState().getIn(["compose", "advanced_options", "threaded_mode"])
+        ) {
+          browserHistory.goBack();
         }
-      };
 
-      if (statusId) {
-        dispatch(importFetchedStatus({ ...response.data }));
-      }
-
-      if (statusId === null) {
-        insertIfOnline('home');
-      }
-
-      if (statusId === null && response.data.in_reply_to_id === null && response.data.visibility === 'public') {
-        insertIfOnline('community');
-        if (!response.data.local_only) {
-          insertIfOnline('public');
+        dispatch(insertIntoTagHistory(response.data.tags, status));
+        dispatch(submitComposeSuccess({ ...response.data }));
+        if (typeof successCallback === "function") {
+          successCallback(response.data);
         }
-      } else if (statusId === null && response.data.visibility === 'direct') {
-        insertIfOnline('direct');
-      }
 
-      if (getState().getIn(['local_settings', 'show_published_toast'])) {
-        dispatch(showAlert({
-          message: statusId === null ? messages.published : messages.saved,
-          action: messages.open,
-          dismissAfter: 10000,
-          onClick: () => browserHistory.push(
-            `/@${response.data.account.username}/${response.data.id}`,
-            { focusTarget: 'detailed-status' }
-          ),
-        }));
-      }
-    }).catch(function (error) {
-      dispatch(submitComposeFail(error));
-    });
+        // To make the app more responsive, immediately push the status
+        // into the columns
+        const insertIfOnline = (timelineId) => {
+          const timeline = getState().getIn(["timelines", timelineId]);
+
+          if (
+            timeline &&
+            timeline.get("items").size > 0 &&
+            timeline.getIn(["items", 0]) !== null &&
+            timeline.get("online")
+          ) {
+            dispatch(updateTimeline(timelineId, { ...response.data }));
+          }
+        };
+
+        if (statusId) {
+          dispatch(importFetchedStatus({ ...response.data }));
+        }
+
+        if (statusId === null) {
+          insertIfOnline("home");
+        }
+
+        if (
+          statusId === null &&
+          response.data.in_reply_to_id === null &&
+          response.data.visibility === "public"
+        ) {
+          insertIfOnline("community");
+          if (!response.data.local_only) {
+            insertIfOnline("public");
+          }
+        } else if (statusId === null && response.data.visibility === "direct") {
+          insertIfOnline("direct");
+        }
+
+        if (getState().getIn(["local_settings", "show_published_toast"])) {
+          dispatch(
+            showAlert({
+              message: statusId === null ? messages.published : messages.saved,
+              action: messages.open,
+              dismissAfter: 10000,
+              onClick: () =>
+                browserHistory.push(`/@${response.data.account.username}/${response.data.id}`, {
+                  focusTarget: "detailed-status",
+                }),
+            }),
+          );
+        }
+      })
+      .catch(function (error) {
+        dispatch(submitComposeFail(error));
+      });
   };
 }
 
@@ -363,13 +394,20 @@ export function doodleSet(options) {
 export function uploadCompose(files) {
   return function (dispatch, getState) {
     // Exit if there's a quote.
-    if (getState().compose.get('quoted_status_id')) {
+    if (getState().compose.get("quoted_status_id")) {
       dispatch(showAlert({ message: messages.uploadQuote }));
       return;
     }
-    const uploadLimit = getState().getIn(['server', 'server', 'item', 'configuration', 'statuses', 'max_media_attachments']);
-    const media = getState().getIn(['compose', 'media_attachments']);
-    const pending = getState().getIn(['compose', 'pending_media_attachments']);
+    const uploadLimit = getState().getIn([
+      "server",
+      "server",
+      "item",
+      "configuration",
+      "statuses",
+      "max_media_attachments",
+    ]);
+    const media = getState().getIn(["compose", "media_attachments"]);
+    const pending = getState().getIn(["compose", "pending_media_attachments"]);
 
     if (files.length + media.size + pending > uploadLimit) {
       dispatch(showAlert({ message: messages.uploadErrorLimit }));
@@ -382,49 +420,62 @@ export function uploadCompose(files) {
     // the progress bar reflects what's actually being sent over the wire.
     const compressOptions = { maxPx: COMPOSE_MAX_UPLOAD_DIMENSION, quality: COMPOSE_JPEG_QUALITY };
 
-    Promise.all(Array.from(files).map((file) => compressImage(file, compressOptions))).then((compressedFiles) => {
-      const progress = new Array(compressedFiles.length).fill(0);
-      const total = compressedFiles.reduce((a, v) => a + v.size, 0);
+    Promise.all(Array.from(files).map((file) => compressImage(file, compressOptions)))
+      .then((compressedFiles) => {
+        const progress = new Array(compressedFiles.length).fill(0);
+        const total = compressedFiles.reduce((a, v) => a + v.size, 0);
 
-      compressedFiles.forEach((file, i) => {
-        if (media.size + i > (uploadLimit - 1)) return;
+        compressedFiles.forEach((file, i) => {
+          if (media.size + i > uploadLimit - 1) return;
 
-        const data = new FormData();
-        data.append('file', file);
+          const data = new FormData();
+          data.append("file", file);
 
-        api().post('/api/v2/media', data, {
-          onUploadProgress: function({ loaded }){
-            progress[i] = loaded;
-            dispatch(uploadComposeProgress(progress.reduce((a, v) => a + v, 0), total));
-          },
-        }).then(({ status, data }) => {
-          // If server-side processing of the media attachment has not completed yet,
-          // poll the server until it is, before showing the media attachment as uploaded
+          api()
+            .post("/api/v2/media", data, {
+              onUploadProgress: function ({ loaded }) {
+                progress[i] = loaded;
+                dispatch(
+                  uploadComposeProgress(
+                    progress.reduce((a, v) => a + v, 0),
+                    total,
+                  ),
+                );
+              },
+            })
+            .then(({ status, data }) => {
+              // If server-side processing of the media attachment has not completed yet,
+              // poll the server until it is, before showing the media attachment as uploaded
 
-          if (status === 200) {
-            dispatch(uploadComposeSuccess(data, file));
-          } else if (status === 202) {
-            dispatch(uploadComposeProcessing());
+              if (status === 200) {
+                dispatch(uploadComposeSuccess(data, file));
+              } else if (status === 202) {
+                dispatch(uploadComposeProcessing());
 
-            let tryCount = 1;
+                let tryCount = 1;
 
-            const poll = () => {
-              api().get(`/api/v1/media/${data.id}`).then(response => {
-                if (response.status === 200) {
-                  dispatch(uploadComposeSuccess(response.data, file));
-                } else if (response.status === 206) {
-                  const retryAfter = (Math.log2(tryCount) || 1) * 1000;
-                  tryCount += 1;
-                  setTimeout(() => poll(), retryAfter);
-                }
-              }).catch(error => dispatch(uploadComposeFail(error)));
-            };
+                const poll = () => {
+                  api()
+                    .get(`/api/v1/media/${data.id}`)
+                    .then((response) => {
+                      if (response.status === 200) {
+                        dispatch(uploadComposeSuccess(response.data, file));
+                      } else if (response.status === 206) {
+                        const retryAfter = (Math.log2(tryCount) || 1) * 1000;
+                        tryCount += 1;
+                        setTimeout(() => poll(), retryAfter);
+                      }
+                    })
+                    .catch((error) => dispatch(uploadComposeFail(error)));
+                };
 
-            poll();
-          }
-        }).catch(error => dispatch(uploadComposeFail(error)));
-      });
-    }).catch(error => dispatch(uploadComposeFail(error)));
+                poll();
+              }
+            })
+            .catch((error) => dispatch(uploadComposeFail(error)));
+        });
+      })
+      .catch((error) => dispatch(uploadComposeFail(error)));
   };
 }
 
@@ -438,17 +489,20 @@ export const uploadThumbnail = (id, file) => (dispatch) => {
   const total = file.size;
   const data = new FormData();
 
-  data.append('thumbnail', file);
+  data.append("thumbnail", file);
 
-  api().put(`/api/v1/media/${id}`, data, {
-    onUploadProgress: ({ loaded }) => {
-      dispatch(uploadThumbnailProgress(loaded, total));
-    },
-  }).then(({ data }) => {
-    dispatch(uploadThumbnailSuccess(data));
-  }).catch(error => {
-    dispatch(uploadThumbnailFail(id, error));
-  });
+  api()
+    .put(`/api/v1/media/${id}`, data, {
+      onUploadProgress: ({ loaded }) => {
+        dispatch(uploadThumbnailProgress(loaded, total));
+      },
+    })
+    .then(({ data }) => {
+      dispatch(uploadThumbnailSuccess(data));
+    })
+    .catch((error) => {
+      dispatch(uploadThumbnailFail(id, error));
+    });
 };
 
 export const uploadThumbnailRequest = () => ({
@@ -463,29 +517,31 @@ export const uploadThumbnailProgress = (loaded, total) => ({
   skipLoading: true,
 });
 
-export const uploadThumbnailSuccess = media => ({
+export const uploadThumbnailSuccess = (media) => ({
   type: THUMBNAIL_UPLOAD_SUCCESS,
   media,
   skipLoading: true,
 });
 
-export const uploadThumbnailFail = error => ({
+export const uploadThumbnailFail = (error) => ({
   type: THUMBNAIL_UPLOAD_FAIL,
   error,
   skipLoading: true,
 });
 
 export function initMediaEditModal(id) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: INIT_MEDIA_EDIT_MODAL,
       id,
     });
 
-    dispatch(openModal({
-      modalType: 'FOCAL_POINT',
-      modalProps: { mediaId: id },
-    }));
+    dispatch(
+      openModal({
+        modalType: "FOCAL_POINT",
+        modalProps: { mediaId: id },
+      }),
+    );
   };
 }
 
@@ -552,82 +608,98 @@ export function clearComposeSuggestions() {
   };
 }
 
-const fetchComposeSuggestionsAccounts = throttle((dispatch, token) => {
-  if (fetchComposeSuggestionsAccountsController) {
-    fetchComposeSuggestionsAccountsController.abort();
-  }
-
-  fetchComposeSuggestionsAccountsController = new AbortController();
-
-  api().get('/api/v1/accounts/search', {
-    signal: fetchComposeSuggestionsAccountsController.signal,
-
-    params: {
-      q: token.slice(1),
-      resolve: false,
-      limit: 4,
-    },
-  }).then(response => {
-    dispatch(importFetchedAccounts(response.data));
-    dispatch(readyComposeSuggestionsAccounts(token, response.data));
-  }).catch(error => {
-    if (!axios.isCancel(error)) {
-      dispatch(showAlertForError(error));
+const fetchComposeSuggestionsAccounts = throttle(
+  (dispatch, token) => {
+    if (fetchComposeSuggestionsAccountsController) {
+      fetchComposeSuggestionsAccountsController.abort();
     }
-  }).finally(() => {
-    fetchComposeSuggestionsAccountsController = undefined;
-  });
-}, 200, { leading: true, trailing: true });
+
+    fetchComposeSuggestionsAccountsController = new AbortController();
+
+    api()
+      .get("/api/v1/accounts/search", {
+        signal: fetchComposeSuggestionsAccountsController.signal,
+
+        params: {
+          q: token.slice(1),
+          resolve: false,
+          limit: 4,
+        },
+      })
+      .then((response) => {
+        dispatch(importFetchedAccounts(response.data));
+        dispatch(readyComposeSuggestionsAccounts(token, response.data));
+      })
+      .catch((error) => {
+        if (!axios.isCancel(error)) {
+          dispatch(showAlertForError(error));
+        }
+      })
+      .finally(() => {
+        fetchComposeSuggestionsAccountsController = undefined;
+      });
+  },
+  200,
+  { leading: true, trailing: true },
+);
 
 const fetchComposeSuggestionsEmojis = async (dispatch, token) => {
   // Right now we are hard-coding the locale to English since the picker search only supports English.
   // Once we replace the legacy picker we can remove this and use the actual locale of the user.
-  const results = await emojiMartSearch(token, 'en', 5);
+  const results = await emojiMartSearch(token, "en", 5);
   dispatch(readyComposeSuggestionsEmojis(token, results));
 };
 
-const fetchComposeSuggestionsTags = throttle((dispatch, token) => {
-  if (fetchComposeSuggestionsTagsController) {
-    fetchComposeSuggestionsTagsController.abort();
-  }
-
-  dispatch(updateSuggestionTags(token));
-
-  fetchComposeSuggestionsTagsController = new AbortController();
-
-  api().get('/api/v2/search', {
-    signal: fetchComposeSuggestionsTagsController.signal,
-
-    params: {
-      type: 'hashtags',
-      q: token.slice(1),
-      resolve: false,
-      limit: 4,
-    },
-  }).then(({ data }) => {
-    dispatch(readyComposeSuggestionsTags(token, data.hashtags));
-  }).catch(error => {
-    if (!axios.isCancel(error)) {
-      dispatch(showAlertForError(error));
+const fetchComposeSuggestionsTags = throttle(
+  (dispatch, token) => {
+    if (fetchComposeSuggestionsTagsController) {
+      fetchComposeSuggestionsTagsController.abort();
     }
-  }).finally(() => {
-    fetchComposeSuggestionsTagsController = undefined;
-  });
-}, 200, { leading: true, trailing: true });
+
+    dispatch(updateSuggestionTags(token));
+
+    fetchComposeSuggestionsTagsController = new AbortController();
+
+    api()
+      .get("/api/v2/search", {
+        signal: fetchComposeSuggestionsTagsController.signal,
+
+        params: {
+          type: "hashtags",
+          q: token.slice(1),
+          resolve: false,
+          limit: 4,
+        },
+      })
+      .then(({ data }) => {
+        dispatch(readyComposeSuggestionsTags(token, data.hashtags));
+      })
+      .catch((error) => {
+        if (!axios.isCancel(error)) {
+          dispatch(showAlertForError(error));
+        }
+      })
+      .finally(() => {
+        fetchComposeSuggestionsTagsController = undefined;
+      });
+  },
+  200,
+  { leading: true, trailing: true },
+);
 
 export function fetchComposeSuggestions(token) {
   return (dispatch) => {
     switch (token[0]) {
-    case ':':
-      void fetchComposeSuggestionsEmojis(dispatch, token);
-      break;
-    case '#':
-    case '＃':
-      fetchComposeSuggestionsTags(dispatch, token);
-      break;
-    default:
-      fetchComposeSuggestionsAccounts(dispatch, token);
-      break;
+      case ":":
+        void fetchComposeSuggestionsEmojis(dispatch, token);
+        break;
+      case "#":
+      case "＃":
+        fetchComposeSuggestionsTags(dispatch, token);
+        break;
+      default:
+        fetchComposeSuggestionsAccounts(dispatch, token);
+        break;
     }
   };
 }
@@ -658,16 +730,17 @@ export function selectComposeSuggestion(position, token, suggestion, path) {
   return (dispatch, getState) => {
     let completion, startPosition;
 
-    if (suggestion.type === 'emoji') {
-      completion    = suggestion.native || `:${suggestion.id}:`;
+    if (suggestion.type === "emoji") {
+      completion = suggestion.native || `:${suggestion.id}:`;
       startPosition = position - 1;
 
       dispatch(useEmoji(suggestion));
-    } else if (suggestion.type === 'hashtag') {
+    } else if (suggestion.type === "hashtag") {
       // TODO: it could make sense to keep the “most capitalized” of the two
       const tokenName = token.slice(1); // strip leading '#'
       const suggestionPrefix = suggestion.name.slice(0, tokenName.length);
-      const prefixMatchesSuggestion = suggestionPrefix.localeCompare(tokenName, undefined, { sensitivity: 'accent' }) === 0;
+      const prefixMatchesSuggestion =
+        suggestionPrefix.localeCompare(tokenName, undefined, { sensitivity: "accent" }) === 0;
       if (prefixMatchesSuggestion) {
         completion = token + suggestion.name.slice(tokenName.length);
       } else {
@@ -675,14 +748,17 @@ export function selectComposeSuggestion(position, token, suggestion, path) {
       }
 
       startPosition = position - 1;
-    } else if (suggestion.type === 'account') {
-      completion    = `@${getState().getIn(['accounts', suggestion.id, 'acct'])}`;
+    } else if (suggestion.type === "account") {
+      completion = `@${getState().getIn(["accounts", suggestion.id, "acct"])}`;
       startPosition = position - 1;
     }
 
     // We don't want to replace hashtags that vary only in case due to accessibility, but we need to fire off an event so that
     // the suggestions are dismissed and the cursor moves forward.
-    if (suggestion.type !== 'hashtag' || token.slice(1).localeCompare(suggestion.name, undefined, { sensitivity: 'accent' }) !== 0) {
+    if (
+      suggestion.type !== "hashtag" ||
+      token.slice(1).localeCompare(suggestion.name, undefined, { sensitivity: "accent" }) !== 0
+    ) {
       dispatch({
         type: COMPOSE_SUGGESTION_SELECT,
         position: startPosition,
@@ -718,7 +794,7 @@ export function updateTagHistory(tags) {
 
 export function hydrateCompose() {
   return (dispatch, getState) => {
-    const me = getState().getIn(['meta', 'me']);
+    const me = getState().getIn(["meta", "me"]);
     const history = tagHistory.get(me);
 
     if (history !== null) {
@@ -730,10 +806,12 @@ export function hydrateCompose() {
 function insertIntoTagHistory(recognizedTags, text) {
   return (dispatch, getState) => {
     const state = getState();
-    const oldHistory = state.getIn(['compose', 'tagHistory']);
-    const me = state.getIn(['meta', 'me']);
+    const oldHistory = state.getIn(["compose", "tagHistory"]);
+    const me = state.getIn(["meta", "me"]);
     const names = recoverHashtags(recognizedTags, text);
-    const intersectedOldHistory = oldHistory.filter(name => names.findIndex(newName => newName.toLowerCase() === name.toLowerCase()) === -1);
+    const intersectedOldHistory = oldHistory.filter(
+      (name) => names.findIndex((newName) => newName.toLowerCase() === name.toLowerCase()) === -1,
+    );
 
     names.push(...intersectedOldHistory.toJS());
 
@@ -770,7 +848,7 @@ export function changeComposeSensitivity() {
   };
 }
 
-export const changeComposeLanguage = language => ({
+export const changeComposeLanguage = (language) => ({
   type: COMPOSE_LANGUAGE_CHANGE,
   language,
 });

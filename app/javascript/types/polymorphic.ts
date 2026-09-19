@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef } from "react";
 import type {
   ElementType,
   ComponentPropsWithRef,
@@ -6,7 +6,7 @@ import type {
   ReactElement,
   Ref,
   ForwardRefExoticComponent,
-} from 'react';
+} from "react";
 
 // This complicated type file is based on the following posts:
 // - https://www.tsteele.dev/posts/react-polymorphic-forwardref
@@ -25,14 +25,13 @@ type PropsOf<As extends ElementType> = ComponentPropsWithRef<As>;
  * - For intrinsic elements, look up in JSX.IntrinsicElements
  * - For components, infer from `ComponentPropsWithRef`
  */
-type ElementRef<As extends ElementType> =
-  As extends keyof React.JSX.IntrinsicElements
-    ? React.JSX.IntrinsicElements[As] extends { ref?: Ref<infer Inst> }
-      ? Inst
-      : never
-    : ComponentPropsWithRef<As> extends { ref?: Ref<infer Inst> }
-      ? Inst
-      : never;
+type ElementRef<As extends ElementType> = As extends keyof React.JSX.IntrinsicElements
+  ? React.JSX.IntrinsicElements[As] extends { ref?: Ref<infer Inst> }
+    ? Inst
+    : never
+  : ComponentPropsWithRef<As> extends { ref?: Ref<infer Inst> }
+    ? Inst
+    : never;
 
 /**
  * Merge additional props with intrinsic/element props for `as`.
@@ -41,27 +40,21 @@ type ElementRef<As extends ElementType> =
 type PolymorphicProps<
   As extends ElementType,
   AdditionalProps extends object = object,
-> = AdditionalProps &
-  AsProp<As> &
-  Omit<PropsOf<As>, keyof AdditionalProps | 'ref'>;
+> = AdditionalProps & AsProp<As> & Omit<PropsOf<As>, keyof AdditionalProps | "ref">;
 
 /**
  * Signature of a component created with `polymorphicForwardRef`.
  */
-type PolymorphicWithRef<
-  DefaultAs extends ElementType,
-  AdditionalProps extends object = object,
-> = <As extends ElementType = DefaultAs>(
+type PolymorphicWithRef<DefaultAs extends ElementType, AdditionalProps extends object = object> = <
+  As extends ElementType = DefaultAs,
+>(
   props: PolymorphicProps<As, AdditionalProps> & { ref?: Ref<ElementRef<As>> },
 ) => ReactElement | null;
 
 /**
  * The type of `polymorphicForwardRef`.
  */
-type PolyRefFunction = <
-  DefaultAs extends ElementType,
-  AdditionalProps extends object = object,
->(
+type PolyRefFunction = <DefaultAs extends ElementType, AdditionalProps extends object = object>(
   render: ForwardRefRenderFunction<
     ElementRef<DefaultAs>,
     PolymorphicProps<DefaultAs, AdditionalProps>

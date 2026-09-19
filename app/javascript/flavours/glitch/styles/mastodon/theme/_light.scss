@@ -1,4 +1,4 @@
-@use 'utils';
+@use "utils";
 
 @mixin tokens {
   /* TEXT TOKENS */
@@ -76,23 +76,16 @@
   --color-border-error: var(--color-red-700);
   --color-border-media: rgb(252 248 255 / 15%); // legacy
   --color-border-error-soft: #{utils.css-alpha(var(--color-text-error), 50%)}; // legacy
-  --color-border-warning-soft: #{utils.css-alpha(
-      var(--color-text-warning),
-      50%
-    )}; // legacy
+  --color-border-warning-soft: #{utils.css-alpha(var(--color-text-warning), 50%)}; // legacy
 
   --color-border-success-soft: var(--color-green-200);
 
   /* SHADOW TOKENS (LEGACY) */
 
   --shadow-strength-primary: 30%;
-  --color-shadow-primary: #{utils.css-alpha(
-      var(--color-black),
-      var(--shadow-strength-primary)
-    )};
+  --color-shadow-primary: #{utils.css-alpha(var(--color-black), var(--shadow-strength-primary))};
   --dropdown-shadow:
-    0 20px 25px -5px var(--color-shadow-primary),
-    0 8px 10px -6px var(--color-shadow-primary);
+    0 20px 25px -5px var(--color-shadow-primary), 0 8px 10px -6px var(--color-shadow-primary);
   --overlay-icon-shadow: drop-shadow(0 0 8px var(--color-shadow-primary));
 
   /* GRAPHS/CHARTS TOKENS (LEGACY) */

@@ -1,33 +1,33 @@
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import { NotSignedInIndicator } from '@/mastodon/components/not_signed_in_indicator';
-import { useIdentity } from '@/mastodon/identity_context';
-import AddIcon from '@/material-icons/400-24px/add.svg?react';
-import ListAltIcon from '@/material-icons/400-24px/list_alt.svg?react';
-import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
-import SquigglyArrow from '@/svg-icons/squiggly_arrow.svg?react';
-import { fetchLists } from 'mastodon/actions/lists';
-import { openModal } from 'mastodon/actions/modal';
-import { Column } from 'mastodon/components/column';
-import { ColumnHeader } from 'mastodon/components/column_header';
-import { Dropdown } from 'mastodon/components/dropdown_menu';
-import { Icon } from 'mastodon/components/icon';
-import ScrollableList from 'mastodon/components/scrollable_list';
-import { getOrderedLists } from 'mastodon/selectors/lists';
-import { useAppSelector, useAppDispatch } from 'mastodon/store';
+import { NotSignedInIndicator } from "@/mastodon/components/not_signed_in_indicator";
+import { useIdentity } from "@/mastodon/identity_context";
+import AddIcon from "@/material-icons/400-24px/add.svg?react";
+import ListAltIcon from "@/material-icons/400-24px/list_alt.svg?react";
+import MoreHorizIcon from "@/material-icons/400-24px/more_horiz.svg?react";
+import SquigglyArrow from "@/svg-icons/squiggly_arrow.svg?react";
+import { fetchLists } from "mastodon/actions/lists";
+import { openModal } from "mastodon/actions/modal";
+import { Column } from "mastodon/components/column";
+import { ColumnHeader } from "mastodon/components/column_header";
+import { Dropdown } from "mastodon/components/dropdown_menu";
+import { Icon } from "mastodon/components/icon";
+import ScrollableList from "mastodon/components/scrollable_list";
+import { getOrderedLists } from "mastodon/selectors/lists";
+import { useAppSelector, useAppDispatch } from "mastodon/store";
 
 const messages = defineMessages({
-  heading: { id: 'column.lists', defaultMessage: 'Lists' },
-  create: { id: 'lists.create_list', defaultMessage: 'Create list' },
-  edit: { id: 'lists.edit', defaultMessage: 'Edit list' },
-  delete: { id: 'lists.delete', defaultMessage: 'Delete list' },
-  more: { id: 'status.more', defaultMessage: 'More' },
+  heading: { id: "column.lists", defaultMessage: "Lists" },
+  create: { id: "lists.create_list", defaultMessage: "Create list" },
+  edit: { id: "lists.edit", defaultMessage: "Edit list" },
+  delete: { id: "lists.delete", defaultMessage: "Delete list" },
+  more: { id: "status.more", defaultMessage: "More" },
 });
 
 const ListItem: React.FC<{
@@ -40,7 +40,7 @@ const ListItem: React.FC<{
   const handleDeleteClick = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'CONFIRM_DELETE_LIST',
+        modalType: "CONFIRM_DELETE_LIST",
         modalProps: {
           listId: id,
         },
@@ -57,16 +57,16 @@ const ListItem: React.FC<{
   );
 
   return (
-    <div className='lists__item'>
-      <Link to={`/lists/${id}`} className='lists__item__title'>
-        <Icon id='list-ul' icon={ListAltIcon} />
+    <div className="lists__item">
+      <Link to={`/lists/${id}`} className="lists__item__title">
+        <Icon id="list-ul" icon={ListAltIcon} />
         <span>{title}</span>
       </Link>
 
       <Dropdown
-        scrollKey='lists'
+        scrollKey="lists"
         items={menu}
-        icon='ellipsis-h'
+        icon="ellipsis-h"
         iconComponent={MoreHorizIcon}
         title={intl.formatMessage(messages.more)}
       />
@@ -91,54 +91,42 @@ const Lists: React.FC<{
   const emptyMessage = (
     <>
       <span>
-        <FormattedMessage
-          id='lists.no_lists_yet'
-          defaultMessage='No lists yet.'
-        />
+        <FormattedMessage id="lists.no_lists_yet" defaultMessage="No lists yet." />
         <br />
         <FormattedMessage
-          id='lists.create_a_list_to_organize'
-          defaultMessage='Create a new list to organize your Home feed'
+          id="lists.create_a_list_to_organize"
+          defaultMessage="Create a new list to organize your Home feed"
         />
       </span>
 
-      <SquigglyArrow className='empty-column-indicator__arrow' />
+      <SquigglyArrow className="empty-column-indicator__arrow" />
     </>
   );
 
   return (
-    <Column
-      bindToDocument={!multiColumn}
-      label={intl.formatMessage(messages.heading)}
-    >
+    <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.heading)}>
       <ColumnHeader
         title={intl.formatMessage(messages.heading)}
-        icon='list-ul'
+        icon="list-ul"
         iconComponent={ListAltIcon}
         multiColumn={multiColumn}
         extraButton={
           signedIn && (
             <Link
-              to='/lists/new'
-              className='column-header__button'
+              to="/lists/new"
+              className="column-header__button"
               title={intl.formatMessage(messages.create)}
               aria-label={intl.formatMessage(messages.create)}
             >
-              <Icon id='plus' icon={AddIcon} />
+              <Icon id="plus" icon={AddIcon} />
             </Link>
           )
         }
       />
 
-      <ScrollableList
-        scrollKey='lists'
-        emptyMessage={emptyMessage}
-        bindToDocument={!multiColumn}
-      >
+      <ScrollableList scrollKey="lists" emptyMessage={emptyMessage} bindToDocument={!multiColumn}>
         {signedIn ? (
-          lists.map((list) => (
-            <ListItem key={list.id} id={list.id} title={list.title} />
-          ))
+          lists.map((list) => <ListItem key={list.id} id={list.id} title={list.title} />)
         ) : (
           <NotSignedInIndicator />
         )}
@@ -146,7 +134,7 @@ const Lists: React.FC<{
 
       <Helmet>
         <title>{intl.formatMessage(messages.heading)}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

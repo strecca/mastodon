@@ -1,56 +1,55 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { OverlayProps } from 'react-overlays/Overlay';
-import Overlay from 'react-overlays/Overlay';
+import type { OverlayProps } from "react-overlays/Overlay";
+import Overlay from "react-overlays/Overlay";
 
-import type { StatusVisibility } from '@/flavours/glitch/api_types/statuses';
-import AlternateEmailIcon from '@/material-icons/400-24px/alternate_email.svg?react';
-import LockIcon from '@/material-icons/400-24px/lock.svg?react';
-import PublicIcon from '@/material-icons/400-24px/public.svg?react';
-import QuietTimeIcon from '@/material-icons/400-24px/quiet_time.svg?react';
-import { DropdownSelector } from 'flavours/glitch/components/dropdown_selector';
-import { Icon } from 'flavours/glitch/components/icon';
+import type { StatusVisibility } from "@/flavours/glitch/api_types/statuses";
+import AlternateEmailIcon from "@/material-icons/400-24px/alternate_email.svg?react";
+import LockIcon from "@/material-icons/400-24px/lock.svg?react";
+import PublicIcon from "@/material-icons/400-24px/public.svg?react";
+import QuietTimeIcon from "@/material-icons/400-24px/quiet_time.svg?react";
+import { DropdownSelector } from "flavours/glitch/components/dropdown_selector";
+import { Icon } from "flavours/glitch/components/icon";
 
 export const messages = defineMessages({
-  public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
+  public_short: { id: "privacy.public.short", defaultMessage: "Public" },
   public_long: {
-    id: 'privacy.public.long',
-    defaultMessage: 'Anyone on and off Mastodon',
+    id: "privacy.public.long",
+    defaultMessage: "Anyone on and off Mastodon",
   },
   unlisted_short: {
-    id: 'privacy.unlisted.short',
-    defaultMessage: 'Quiet public',
+    id: "privacy.unlisted.short",
+    defaultMessage: "Quiet public",
   },
   unlisted_long: {
-    id: 'privacy.unlisted.long',
-    defaultMessage:
-      'Hidden from Mastodon search results, trending, and public timelines',
+    id: "privacy.unlisted.long",
+    defaultMessage: "Hidden from Mastodon search results, trending, and public timelines",
   },
-  private_short: { id: 'privacy.private.short', defaultMessage: 'Followers' },
+  private_short: { id: "privacy.private.short", defaultMessage: "Followers" },
   private_long: {
-    id: 'privacy.private.long',
-    defaultMessage: 'Only your followers',
+    id: "privacy.private.long",
+    defaultMessage: "Only your followers",
   },
   direct_short: {
-    id: 'privacy.direct.short',
-    defaultMessage: 'Specific people',
+    id: "privacy.direct.short",
+    defaultMessage: "Specific people",
   },
   direct_long: {
-    id: 'privacy.direct.long',
-    defaultMessage: 'Everyone mentioned in the post',
+    id: "privacy.direct.long",
+    defaultMessage: "Everyone mentioned in the post",
   },
   change_privacy: {
-    id: 'privacy.change',
-    defaultMessage: 'Change post privacy',
+    id: "privacy.change",
+    defaultMessage: "Change post privacy",
   },
   unlisted_extra: {
-    id: 'privacy.unlisted.additional',
+    id: "privacy.unlisted.additional",
     defaultMessage:
-      'This behaves exactly like public, except the post will not appear in live feeds or hashtags, explore, or Mastodon search, even if you are opted-in account-wide.',
+      "This behaves exactly like public, except the post will not appear in live feeds or hashtags, explore, or Mastodon search, even if you are opted-in account-wide.",
   },
 });
 
@@ -58,7 +57,7 @@ interface PrivacyDropdownProps {
   value: StatusVisibility;
   onChange: (value: StatusVisibility) => void;
   noDirect?: boolean;
-  container?: OverlayProps['container'];
+  container?: OverlayProps["container"];
   disabled?: boolean;
 }
 
@@ -96,7 +95,7 @@ const PrivacyDropdown: React.FC<PrivacyDropdownProps> = ({
 
   const handleButtonKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if ([' ', 'Enter'].includes(e.key)) {
+      if ([" ", "Enter"].includes(e.key)) {
         registerPreviousFocusTarget();
       }
     },
@@ -105,24 +104,24 @@ const PrivacyDropdown: React.FC<PrivacyDropdownProps> = ({
 
   const options = [
     {
-      icon: 'globe',
+      icon: "globe",
       iconComponent: PublicIcon,
-      value: 'public',
+      value: "public",
       text: intl.formatMessage(messages.public_short),
       meta: intl.formatMessage(messages.public_long),
     },
     {
-      icon: 'unlock',
+      icon: "unlock",
       iconComponent: QuietTimeIcon,
-      value: 'unlisted',
+      value: "unlisted",
       text: intl.formatMessage(messages.unlisted_short),
       meta: intl.formatMessage(messages.unlisted_long),
       extra: intl.formatMessage(messages.unlisted_extra),
     },
     {
-      icon: 'lock',
+      icon: "lock",
       iconComponent: LockIcon,
-      value: 'private',
+      value: "private",
       text: intl.formatMessage(messages.private_short),
       meta: intl.formatMessage(messages.private_long),
     },
@@ -130,38 +129,32 @@ const PrivacyDropdown: React.FC<PrivacyDropdownProps> = ({
 
   if (!noDirect) {
     options.push({
-      icon: 'at',
+      icon: "at",
       iconComponent: AlternateEmailIcon,
-      value: 'direct',
+      value: "direct",
       text: intl.formatMessage(messages.direct_short),
       meta: intl.formatMessage(messages.direct_long),
     });
   }
 
-  const selectedOption =
-    options.find((item) => item.value === value) ?? options.at(0);
+  const selectedOption = options.find((item) => item.value === value) ?? options.at(0);
 
   return (
     <div ref={overlayTargetRef}>
       <button
-        type='button'
+        type="button"
         title={intl.formatMessage(messages.change_privacy)}
         aria-expanded={isOpen}
         onClick={handleToggle}
         onMouseDown={registerPreviousFocusTarget}
         onKeyDown={handleButtonKeyDown}
         disabled={disabled}
-        className={classNames('dropdown-button', { active: isOpen })}
+        className={classNames("dropdown-button", { active: isOpen })}
       >
         {selectedOption && (
           <>
-            <Icon
-              id={selectedOption.icon}
-              icon={selectedOption.iconComponent}
-            />
-            <span className='dropdown-button__label'>
-              {selectedOption.text}
-            </span>
+            <Icon id={selectedOption.icon} icon={selectedOption.iconComponent} />
+            <span className="dropdown-button__label">{selectedOption.text}</span>
           </>
         )}
       </button>
@@ -169,17 +162,15 @@ const PrivacyDropdown: React.FC<PrivacyDropdownProps> = ({
       <Overlay
         show={isOpen}
         offset={[5, 5]}
-        placement='bottom'
+        placement="bottom"
         flip
         target={overlayTargetRef}
         container={container}
-        popperConfig={{ strategy: 'fixed' }}
+        popperConfig={{ strategy: "fixed" }}
       >
         {({ props, placement }) => (
           <div {...props}>
-            <div
-              className={`dropdown-animation privacy-dropdown__dropdown ${placement}`}
-            >
+            <div className={`dropdown-animation privacy-dropdown__dropdown ${placement}`}>
               <DropdownSelector
                 items={options}
                 value={value}

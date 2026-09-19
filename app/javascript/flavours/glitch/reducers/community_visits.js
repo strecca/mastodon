@@ -1,7 +1,7 @@
 // reducers/community_visits.js
 // State for the "When I'll Be In Town" calendar feature.
 
-import { Map as ImmutableMap, List as ImmutableList, fromJS } from 'immutable';
+import { Map as ImmutableMap, List as ImmutableList, fromJS } from "immutable";
 
 import {
   VISITS_FETCH_REQUEST,
@@ -22,129 +22,130 @@ import {
   MY_PEOPLE_ADD_SUCCESS,
   MY_PEOPLE_REMOVE_SUCCESS,
   MY_FOLLOWERS_SUCCESS,
-} from '../actions/community_visits';
+} from "../actions/community_visits";
 
 const initialState = ImmutableMap({
   // Calendar window visits (reloaded per month)
-  visits:        ImmutableList(),
-  loading:       false,
-  error:         null,
+  visits: ImmutableList(),
+  loading: false,
+  error: null,
 
   // Current user's own visits across 18-month window
-  myVisits:       ImmutableList(),
+  myVisits: ImmutableList(),
   myVisitsLoaded: false,
 
   // Monthly visit counts for the public heatmap teaser
-  heatmap:        ImmutableMap(),
+  heatmap: ImmutableMap(),
 
   // Notification preferences
-  notifPrefs:       ImmutableMap(),
+  notifPrefs: ImmutableMap(),
   notifPrefsLoaded: false,
 
   // Notifications inbox
   notifications: ImmutableList(),
-  notifPage:     1,
-  notifPages:    1,
-  unreadCount:   0,
+  notifPage: 1,
+  notifPages: 1,
+  unreadCount: 0,
 
   // My People group
-  myPeople:       ImmutableList(),
+  myPeople: ImmutableList(),
   myPeopleLoaded: false,
-  myFollowers:    ImmutableList(),
+  myFollowers: ImmutableList(),
 });
 
 export default function communityVisitsReducer(state = initialState, action) {
   switch (action.type) {
+    // ── Calendar fetch ────────────────────────────────────────────────────────
 
-  // ── Calendar fetch ────────────────────────────────────────────────────────
+    case VISITS_FETCH_REQUEST:
+      return state.set("loading", true).set("error", null);
 
-  case VISITS_FETCH_REQUEST:
-    return state.set('loading', true).set('error', null);
+    case VISITS_FETCH_SUCCESS:
+      return state.set("loading", false).set("visits", fromJS(action.visits));
 
-  case VISITS_FETCH_SUCCESS:
-    return state.set('loading', false).set('visits', fromJS(action.visits));
+    case VISITS_FETCH_FAIL:
+      return state
+        .set("loading", false)
+        .set("error", action.error?.message || "Failed to load visits");
 
-  case VISITS_FETCH_FAIL:
-    return state.set('loading', false)
-                .set('error', action.error?.message || 'Failed to load visits');
+    // ── Own visits ────────────────────────────────────────────────────────────
 
-  // ── Own visits ────────────────────────────────────────────────────────────
+    case VISITS_MINE_SUCCESS:
+      return state.set("myVisits", fromJS(action.visits)).set("myVisitsLoaded", true);
 
-  case VISITS_MINE_SUCCESS:
-    return state.set('myVisits', fromJS(action.visits)).set('myVisitsLoaded', true);
+    // ── Heatmap ───────────────────────────────────────────────────────────────
 
-  // ── Heatmap ───────────────────────────────────────────────────────────────
+    case VISITS_HEATMAP_SUCCESS:
+      return state.set("heatmap", fromJS(action.heatmap));
 
-  case VISITS_HEATMAP_SUCCESS:
-    return state.set('heatmap', fromJS(action.heatmap));
+    // ── CRUD ──────────────────────────────────────────────────────────────────
 
-  // ── CRUD ──────────────────────────────────────────────────────────────────
+    case VISIT_CREATE_SUCCESS: {
+      const created = fromJS(action.visit);
+      return state
+        .update("visits", (l) => l.push(created))
+        .update("myVisits", (l) => l.push(created));
+    }
 
-  case VISIT_CREATE_SUCCESS: {
-    const created = fromJS(action.visit);
-    return state
-      .update('visits',   l => l.push(created))
-      .update('myVisits', l => l.push(created));
-  }
+    case VISIT_UPDATE_SUCCESS: {
+      const updated = fromJS(action.visit);
+      const replaceById = (list) =>
+        list.map((v) => (v.get("id") === updated.get("id") ? updated : v));
+      return state.update("visits", replaceById).update("myVisits", replaceById);
+    }
 
-  case VISIT_UPDATE_SUCCESS: {
-    const updated = fromJS(action.visit);
-    const replaceById = list => list.map(v => v.get('id') === updated.get('id') ? updated : v);
-    return state
-      .update('visits',   replaceById)
-      .update('myVisits', replaceById);
-  }
+    case VISIT_DELETE_SUCCESS:
+      return state
+        .update("visits", (l) => l.filter((v) => v.get("id") !== action.id))
+        .update("myVisits", (l) => l.filter((v) => v.get("id") !== action.id));
 
-  case VISIT_DELETE_SUCCESS:
-    return state
-      .update('visits',   l => l.filter(v => v.get('id') !== action.id))
-      .update('myVisits', l => l.filter(v => v.get('id') !== action.id));
+    // ── Notification preferences ──────────────────────────────────────────────
 
-  // ── Notification preferences ──────────────────────────────────────────────
+    case NOTIF_PREFS_SUCCESS:
+    case NOTIF_PREFS_UPDATE_SUCCESS:
+      return state.set("notifPrefs", fromJS(action.prefs)).set("notifPrefsLoaded", true);
 
-  case NOTIF_PREFS_SUCCESS:
-  case NOTIF_PREFS_UPDATE_SUCCESS:
-    return state.set('notifPrefs', fromJS(action.prefs)).set('notifPrefsLoaded', true);
+    // ── Notifications inbox ───────────────────────────────────────────────────
 
-  // ── Notifications inbox ───────────────────────────────────────────────────
+    case VISIT_NOTIFS_SUCCESS:
+      return state
+        .set("notifications", fromJS(action.notifications))
+        .set("notifPage", action.page || 1)
+        .set("notifPages", action.pages || 1)
+        .set("unreadCount", action.unread_count || 0);
 
-  case VISIT_NOTIFS_SUCCESS:
-    return state
-      .set('notifications', fromJS(action.notifications))
-      .set('notifPage',  action.page  || 1)
-      .set('notifPages', action.pages || 1)
-      .set('unreadCount', action.unread_count || 0);
+    case VISIT_NOTIFS_UNREAD:
+      return state.set("unreadCount", action.count);
 
-  case VISIT_NOTIFS_UNREAD:
-    return state.set('unreadCount', action.count);
+    case VISIT_NOTIF_READ: {
+      const updated = fromJS(action.notification);
+      return state
+        .update("notifications", (l) =>
+          l.map((n) => (n.get("id") === updated.get("id") ? updated : n)),
+        )
+        .update("unreadCount", (c) => Math.max(0, c - 1));
+    }
 
-  case VISIT_NOTIF_READ: {
-    const updated = fromJS(action.notification);
-    return state
-      .update('notifications', l => l.map(n => n.get('id') === updated.get('id') ? updated : n))
-      .update('unreadCount', c => Math.max(0, c - 1));
-  }
+    case VISIT_NOTIFS_READ_ALL:
+      return state
+        .update("notifications", (l) => l.map((n) => n.set("read", true)))
+        .set("unreadCount", 0);
 
-  case VISIT_NOTIFS_READ_ALL:
-    return state
-      .update('notifications', l => l.map(n => n.set('read', true)))
-      .set('unreadCount', 0);
+    // ── My People ─────────────────────────────────────────────────────────────
 
-  // ── My People ─────────────────────────────────────────────────────────────
+    case MY_PEOPLE_FETCH_SUCCESS:
+      return state.set("myPeople", fromJS(action.people)).set("myPeopleLoaded", true);
 
-  case MY_PEOPLE_FETCH_SUCCESS:
-    return state.set('myPeople', fromJS(action.people)).set('myPeopleLoaded', true);
+    case MY_PEOPLE_ADD_SUCCESS:
+      return state.update("myPeople", (l) => l.push(fromJS(action.person)));
 
-  case MY_PEOPLE_ADD_SUCCESS:
-    return state.update('myPeople', l => l.push(fromJS(action.person)));
+    case MY_PEOPLE_REMOVE_SUCCESS:
+      return state.update("myPeople", (l) => l.filter((p) => p.get("id") !== action.id));
 
-  case MY_PEOPLE_REMOVE_SUCCESS:
-    return state.update('myPeople', l => l.filter(p => p.get('id') !== action.id));
+    case MY_FOLLOWERS_SUCCESS:
+      return state.set("myFollowers", fromJS(action.followers));
 
-  case MY_FOLLOWERS_SUCCESS:
-    return state.set('myFollowers', fromJS(action.followers));
-
-  default:
-    return state;
+    default:
+      return state;
   }
 }

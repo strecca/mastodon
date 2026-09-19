@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import type { StatusVisibility } from '@/flavours/glitch/api_types/statuses';
-import { statusFactoryState } from '@/testing/factories';
+import type { StatusVisibility } from "@/flavours/glitch/api_types/statuses";
+import { statusFactoryState } from "@/testing/factories";
 
-import { BoostButton } from './boost_button';
+import { BoostButton } from "./boost_button";
 
 interface StoryProps {
   visibility: StatusVisibility;
@@ -13,43 +13,36 @@ interface StoryProps {
 }
 
 const meta = {
-  title: 'Components/Status/BoostButton',
+  title: "Components/Status/BoostButton",
   args: {
-    visibility: 'public',
+    visibility: "public",
     quoteAllowed: true,
     alreadyBoosted: false,
     reblogCount: 0,
   },
   argTypes: {
     visibility: {
-      name: 'Visibility',
-      control: { type: 'select' },
-      options: ['public', 'unlisted', 'private', 'direct'],
+      name: "Visibility",
+      control: { type: "select" },
+      options: ["public", "unlisted", "private", "direct"],
     },
     reblogCount: {
-      name: 'Boost Count',
-      description: 'More than 0 will show the counter',
+      name: "Boost Count",
+      description: "More than 0 will show the counter",
     },
     quoteAllowed: {
-      name: 'Quotes allowed',
+      name: "Quotes allowed",
     },
     alreadyBoosted: {
-      name: 'Already boosted',
+      name: "Already boosted",
     },
   },
-  render: (args) => (
-    <BoostButton status={argsToStatus(args)} counters={args.reblogCount > 0} />
-  ),
+  render: (args) => <BoostButton status={argsToStatus(args)} counters={args.reblogCount > 0} />,
 } satisfies Meta<StoryProps>;
 
 export default meta;
 
-function argsToStatus({
-  reblogCount,
-  visibility,
-  quoteAllowed,
-  alreadyBoosted,
-}: StoryProps) {
+function argsToStatus({ reblogCount, visibility, quoteAllowed, alreadyBoosted }: StoryProps) {
   return statusFactoryState({
     reblogs_count: reblogCount,
     visibility,
@@ -57,7 +50,7 @@ function argsToStatus({
     quote_approval: {
       automatic: [],
       manual: [],
-      current_user: quoteAllowed ? 'automatic' : 'denied',
+      current_user: quoteAllowed ? "automatic" : "denied",
     },
   });
 }
@@ -70,7 +63,7 @@ export const Mine: Story = {
   parameters: {
     state: {
       meta: {
-        me: '1',
+        me: "1",
       },
     },
   },

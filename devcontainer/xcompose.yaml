@@ -13,23 +13,23 @@ services:
       BIND: 0.0.0.0
       BOOTSNAP_CACHE_DIR: /tmp
       REDIS_HOST: redis
-      REDIS_PORT: '6379'
+      REDIS_PORT: "6379"
       DB_HOST: db
       DB_USER: postgres
       DB_PASS: postgres
-      DB_PORT: '5432'
-      ES_ENABLED: 'true'
+      DB_PORT: "5432"
+      ES_ENABLED: "true"
       ES_HOST: es
-      ES_PORT: '9200'
+      ES_PORT: "9200"
       LIBRE_TRANSLATE_ENDPOINT: http://libretranslate:5000
       LOCAL_DOMAIN: ${LOCAL_DOMAIN:-localhost:3000}
       VITE_DEV_SERVER_PUBLIC: ${VITE_DEV_SERVER_PUBLIC:-localhost:3036}
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
     ports:
-      - '3000:3000'
-      - '3036:3036'
-      - '4000:4000'
+      - "3000:3000"
+      - "3036:3036"
+      - "4000:4000"
     networks:
       - external_network
       - internal_network
@@ -62,7 +62,7 @@ services:
       ES_JAVA_OPTS: -Xms512m -Xmx512m
       cluster.name: es-mastodon
       discovery.type: single-node
-      bootstrap.memory_lock: 'true'
+      bootstrap.memory_lock: "true"
     volumes:
       - es-data:/usr/share/elasticsearch/data
     networks:

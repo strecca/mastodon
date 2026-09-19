@@ -1,9 +1,9 @@
-import { isList } from 'immutable';
+import { isList } from "immutable";
 
-import type { CompactEmoji, SkinTone } from 'emojibase';
-import { fromHexcodeToCodepoint } from 'emojibase';
+import type { CompactEmoji, SkinTone } from "emojibase";
+import { fromHexcodeToCodepoint } from "emojibase";
 
-import type { ApiCustomEmojiJSON } from '@/mastodon/api_types/custom_emoji';
+import type { ApiCustomEmojiJSON } from "@/mastodon/api_types/custom_emoji";
 
 import {
   VARIATION_SELECTOR_CODE,
@@ -13,15 +13,15 @@ import {
   EMOJIS_REQUIRING_INVERSION_IN_LIGHT_MODE,
   EMOJIS_REQUIRING_INVERSION_IN_DARK_MODE,
   EMOJI_MIN_TOKEN_LENGTH,
-} from './constants';
-import { localeToSegmenter } from './locale';
+} from "./constants";
+import { localeToSegmenter } from "./locale";
 import type {
   CustomEmojiData,
   CustomEmojiMapArg,
   ExtraCustomEmojiMap,
   UnicodeEmojiData,
-} from './types';
-import { emojiToUnicodeHex } from './utils';
+} from "./types";
+import { emojiToUnicodeHex } from "./utils";
 
 const SKIN_TONE_MAP: Record<number, SkinTone> = {
   0x1f3fb: 1, // Light skin tone
@@ -90,10 +90,8 @@ export function transformEmojiData(
   return res;
 }
 
-export function transformCustomEmojiData(
-  emoji: ApiCustomEmojiJSON,
-): CustomEmojiData {
-  const tokens = extractTokens(emoji.shortcode, localeToSegmenter('en'));
+export function transformCustomEmojiData(emoji: ApiCustomEmojiJSON): CustomEmojiData {
+  const tokens = extractTokens(emoji.shortcode, localeToSegmenter("en"));
   if (!tokens.includes(emoji.shortcode)) {
     tokens.unshift(emoji.shortcode);
   }
@@ -104,10 +102,7 @@ export function transformCustomEmojiData(
   };
 }
 
-export function skinHexcodeToEmoji(
-  skinHexcode: string,
-  emoji: UnicodeEmojiData,
-): UnicodeEmojiData {
+export function skinHexcodeToEmoji(skinHexcode: string, emoji: UnicodeEmojiData): UnicodeEmojiData {
   return {
     ...emoji,
     unicode: String.fromCodePoint(...fromHexcodeToCodepoint(skinHexcode)),
@@ -144,7 +139,7 @@ export function unicodeToTwemojiHex(unicodeHex: string): string {
 
   return normalizedCodes
     .map((code) => code.toString(16))
-    .join('-')
+    .join("-")
     .toLowerCase();
 }
 
@@ -164,21 +159,21 @@ export function unicodeHexToUrl({
   const normalizedHex = unicodeToTwemojiHex(unicodeHex);
   let url = `${assetHost}/emoji/${normalizedHex}`;
   if (darkTheme && CODES_WITH_LIGHT_BORDER.includes(normalizedHex)) {
-    url += '_border';
+    url += "_border";
   }
   if (CODES_WITH_DARK_BORDER.includes(normalizedHex)) {
-    url += '_border';
+    url += "_border";
   }
-  url += '.svg';
+  url += ".svg";
   return url;
 }
 
 export function emojiToInversionClassName(emoji: string): string | null {
   if (EMOJIS_REQUIRING_INVERSION_IN_DARK_MODE.includes(emoji)) {
-    return 'invert-on-dark';
+    return "invert-on-dark";
   }
   if (EMOJIS_REQUIRING_INVERSION_IN_LIGHT_MODE.includes(emoji)) {
-    return 'invert-on-light';
+    return "invert-on-light";
   }
   return null;
 }
@@ -205,17 +200,14 @@ export function cleanExtraEmojis(extraEmojis?: CustomEmojiMapArg | null) {
  * @param segmenter Segmenter, if available.
  * @returns Array of tokens in lowercase.
  */
-export function extractTokens(
-  input: string,
-  segmenter: Intl.Segmenter | null,
-): string[] {
+export function extractTokens(input: string, segmenter: Intl.Segmenter | null): string[] {
   if (!input.trim()) {
     return [];
   }
   const tokens: string[] = [];
 
   // Handle the edge case of thumbs up and down emoticons.
-  if (input === '+1' || input === '-1') {
+  if (input === "+1" || input === "-1") {
     return [input];
   }
 
@@ -223,8 +215,8 @@ export function extractTokens(
   if (segmenter) {
     for (const { isWordLike, segment } of segmenter.segment(
       input
-        .replaceAll(/[_-]+/g, ' ') // Handle underscores from shortcodes.
-        .replaceAll(/([a-z])([A-Z])/g, '$1 $2'), // Handle camelCase.
+        .replaceAll(/[_-]+/g, " ") // Handle underscores from shortcodes.
+        .replaceAll(/([a-z])([A-Z])/g, "$1 $2"), // Handle camelCase.
     )) {
       if (isWordLike && segment.length >= EMOJI_MIN_TOKEN_LENGTH) {
         tokens.push(segment.toLowerCase());

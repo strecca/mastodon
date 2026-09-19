@@ -48,7 +48,7 @@ br:
         application_id: Alc'hwez an arval
         callback_urls: URLoù adc'halv
         scopes: Dougoù
-        title: 'Arload : %{name}'
+        title: "Arload : %{name}"
     authorizations:
       buttons:
         authorize: Aotren
@@ -72,7 +72,7 @@ br:
         invalid_grant: An aotre pourvezhet a zo direizh, aet da dermen, skarzhet, roet d'un arval all pe ne glot ket gant an URI dazkas implijet.
         invalid_redirect_uri: An URI dazkas n'eo ket reizh.
         invalid_request:
-          missing_param: 'Un arventenn a vank: %{value}.'
+          missing_param: "Un arventenn a vank: %{value}."
           request_not_authorized: Ret eo d'ar reket bezañ aotreet. Arventenn rekis evit aotren ar reket a zo direizh pe diank.
           unknown: Ar reket a vank un arventenn rekis, a enlaak un dalvoud arventenn dianavezet, pe a zo faziek en ur mod all.
         invalid_resource_owner: Testenioù perc'henn an danvez pourvezet n'int ket reizh, pe perc'henn an danvez ne c'hell ket bezañ kavet

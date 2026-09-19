@@ -16,11 +16,7 @@ interface HTMLElementWithFullscreen extends HTMLElement {
 export const isFullscreen = () => {
   const d = document as DocumentWithFullscreen;
 
-  return !!(
-    d.fullscreenElement ??
-    d.webkitFullscreenElement ??
-    d.mozFullScreenElement
-  );
+  return !!(d.fullscreenElement ?? d.webkitFullscreenElement ?? d.mozFullScreenElement);
 };
 
 export const exitFullscreen = () => {
@@ -54,27 +50,27 @@ export const requestFullscreen = (el: HTMLElementWithFullscreen | null) => {
 export const attachFullscreenListener = (listener: () => void) => {
   const d = document as DocumentWithFullscreen;
 
-  if ('onfullscreenchange' in d) {
-    d.addEventListener('fullscreenchange', listener);
-  } else if ('onwebkitfullscreenchange' in d) {
+  if ("onfullscreenchange" in d) {
+    d.addEventListener("fullscreenchange", listener);
+  } else if ("onwebkitfullscreenchange" in d) {
     // @ts-expect-error This is valid on some browsers
-    d.addEventListener('webkitfullscreenchange', listener); // eslint-disable-line @typescript-eslint/no-unsafe-call
-  } else if ('onmozfullscreenchange' in d) {
+    d.addEventListener("webkitfullscreenchange", listener); // eslint-disable-line @typescript-eslint/no-unsafe-call
+  } else if ("onmozfullscreenchange" in d) {
     // @ts-expect-error This is valid on some browsers
-    d.addEventListener('mozfullscreenchange', listener); // eslint-disable-line @typescript-eslint/no-unsafe-call
+    d.addEventListener("mozfullscreenchange", listener); // eslint-disable-line @typescript-eslint/no-unsafe-call
   }
 };
 
 export const detachFullscreenListener = (listener: () => void) => {
   const d = document as DocumentWithFullscreen;
 
-  if ('onfullscreenchange' in d) {
-    d.removeEventListener('fullscreenchange', listener);
-  } else if ('onwebkitfullscreenchange' in d) {
+  if ("onfullscreenchange" in d) {
+    d.removeEventListener("fullscreenchange", listener);
+  } else if ("onwebkitfullscreenchange" in d) {
     // @ts-expect-error This is valid on some browsers
-    d.removeEventListener('webkitfullscreenchange', listener); // eslint-disable-line @typescript-eslint/no-unsafe-call
-  } else if ('onmozfullscreenchange' in d) {
+    d.removeEventListener("webkitfullscreenchange", listener); // eslint-disable-line @typescript-eslint/no-unsafe-call
+  } else if ("onmozfullscreenchange" in d) {
     // @ts-expect-error This is valid on some browsers
-    d.removeEventListener('mozfullscreenchange', listener); // eslint-disable-line @typescript-eslint/no-unsafe-call
+    d.removeEventListener("mozfullscreenchange", listener); // eslint-disable-line @typescript-eslint/no-unsafe-call
   }
 };

@@ -1,14 +1,11 @@
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import { polymorphicForwardRef } from '@/types/polymorphic';
+import { polymorphicForwardRef } from "@/types/polymorphic";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
-interface WrapperProps extends Omit<
-  React.ComponentPropsWithoutRef<'div'>,
-  'title'
-> {
+interface WrapperProps extends Omit<React.ComponentPropsWithoutRef<"div">, "title"> {
   icon?: React.ReactNode;
   sideContent?: React.ReactNode;
 }
@@ -31,9 +28,7 @@ export const ListItemWrapper: React.FC<WrapperProps> = ({
     <div {...otherProps} className={classNames(classes.wrapper, className)}>
       {icon}
       <div className={classes.main}>{children}</div>
-      {sideContent && (
-        <span className={classes.sideContent}>{sideContent}</span>
-      )}
+      {sideContent && <span className={classes.sideContent}>{sideContent}</span>}
     </div>
   );
 };
@@ -43,11 +38,8 @@ interface ContentProps {
   subtitleId?: string;
 }
 
-export const ListItemContent = polymorphicForwardRef<'h3', ContentProps>(
-  (
-    { as: Component = 'h3', subtitle, subtitleId, children, ...otherProps },
-    ref,
-  ) => {
+export const ListItemContent = polymorphicForwardRef<"h3", ContentProps>(
+  ({ as: Component = "h3", subtitle, subtitleId, children, ...otherProps }, ref) => {
     return (
       <>
         <Component className={classes.title} ref={ref} {...otherProps}>
@@ -63,19 +55,13 @@ export const ListItemContent = polymorphicForwardRef<'h3', ContentProps>(
   },
 );
 
-interface LinkProps
-  extends React.ComponentPropsWithoutRef<typeof Link>, ContentProps {}
+interface LinkProps extends React.ComponentPropsWithoutRef<typeof Link>, ContentProps {}
 
-export const ListItemLink = polymorphicForwardRef<'h3', LinkProps>(
+export const ListItemLink = polymorphicForwardRef<"h3", LinkProps>(
   ({ as, subtitle, subtitleId, children, className, ...otherProps }, ref) => {
     return (
-      <ListItemContent
-        ref={ref}
-        as={as}
-        subtitle={subtitle}
-        subtitleId={subtitleId}
-      >
-        <Link className={classNames(className, 'focusable')} {...otherProps}>
+      <ListItemContent ref={ref} as={as} subtitle={subtitle} subtitleId={subtitleId}>
+        <Link className={classNames(className, "focusable")} {...otherProps}>
           {children}
         </Link>
       </ListItemContent>
@@ -83,23 +69,13 @@ export const ListItemLink = polymorphicForwardRef<'h3', LinkProps>(
   },
 );
 
-interface ButtonProps
-  extends React.ComponentPropsWithoutRef<'button'>, ContentProps {}
+interface ButtonProps extends React.ComponentPropsWithoutRef<"button">, ContentProps {}
 
-export const ListItemButton = polymorphicForwardRef<'h3', ButtonProps>(
+export const ListItemButton = polymorphicForwardRef<"h3", ButtonProps>(
   ({ as, subtitle, subtitleId, children, className, ...otherProps }, ref) => {
     return (
-      <ListItemContent
-        as={as}
-        ref={ref}
-        subtitle={subtitle}
-        subtitleId={subtitleId}
-      >
-        <button
-          type='button'
-          className={classNames(className, 'focusable')}
-          {...otherProps}
-        >
+      <ListItemContent as={as} ref={ref} subtitle={subtitle} subtitleId={subtitleId}>
+        <button type="button" className={classNames(className, "focusable")} {...otherProps}>
           {children}
         </button>
       </ListItemContent>

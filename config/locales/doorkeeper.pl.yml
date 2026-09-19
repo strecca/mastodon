@@ -52,7 +52,7 @@ pl:
         callback_urls: Adresy wywołań zwrotnych
         scopes: Zakresy (scopes)
         secret: Sekret
-        title: 'Aplikacja: %{name}'
+        title: "Aplikacja: %{name}"
     authorizations:
       buttons:
         authorize: Autoryzuj
@@ -86,7 +86,7 @@ pl:
         invalid_grant: Grant uwierzytelnienia jest niepoprawny, przeterminowany, unieważniony, nie pasuje do URI przekierowwania użytego w żądaniu uwierzytelnienia, lub został wystawiony przez innego klienta.
         invalid_redirect_uri: URI przekierowania jest nieprawidłowy.
         invalid_request:
-          missing_param: 'Brak wymaganego parametru: %{value}.'
+          missing_param: "Brak wymaganego parametru: %{value}."
           request_not_authorized: Żądanie musi być autoryzowane. Wymagany do autoryzacji żądania parametr nie istnieje lub jest nieprawidłowy.
           unknown: Żądanie nie zawiera wymaganego parametru, zawiera nieobsługiwaną wartość parametru, lub jest w inny sposób uszkodzone.
         invalid_resource_owner: Dostarczone dane uwierzytelniające właściciela zasobu są niepoprawne, lub właściciel zasobu nie może zostać znaleziony

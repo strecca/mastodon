@@ -1,40 +1,40 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { ChangeEventHandler, FC } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { ChangeEventHandler, FC } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { submitAccountNote } from '@/flavours/glitch/actions/account_notes';
-import { fetchRelationships } from '@/flavours/glitch/actions/accounts';
-import { Callout } from '@/flavours/glitch/components/callout';
-import { TextAreaField } from '@/flavours/glitch/components/form_fields';
-import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
-import type { Relationship } from '@/flavours/glitch/models/relationship';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import { submitAccountNote } from "@/flavours/glitch/actions/account_notes";
+import { fetchRelationships } from "@/flavours/glitch/actions/accounts";
+import { Callout } from "@/flavours/glitch/components/callout";
+import { TextAreaField } from "@/flavours/glitch/components/form_fields";
+import { LoadingIndicator } from "@/flavours/glitch/components/loading_indicator";
+import type { Relationship } from "@/flavours/glitch/models/relationship";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
 
-import { ConfirmationModal } from '../../ui/components/confirmation_modals';
+import { ConfirmationModal } from "../../ui/components/confirmation_modals";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   newTitle: {
-    id: 'account.node_modal.title',
-    defaultMessage: 'Add a personal note',
+    id: "account.node_modal.title",
+    defaultMessage: "Add a personal note",
   },
   editTitle: {
-    id: 'account.node_modal.edit_title',
-    defaultMessage: 'Edit personal note',
+    id: "account.node_modal.edit_title",
+    defaultMessage: "Edit personal note",
   },
   save: {
-    id: 'account.node_modal.save',
-    defaultMessage: 'Save',
+    id: "account.node_modal.save",
+    defaultMessage: "Save",
   },
   fieldLabel: {
-    id: 'account.node_modal.field_label',
-    defaultMessage: 'Personal Note',
+    id: "account.node_modal.field_label",
+    defaultMessage: "Personal Note",
   },
   errorUnknown: {
-    id: 'account.node_modal.error_unknown',
-    defaultMessage: 'Could not save the note',
+    id: "account.node_modal.error_unknown",
+    defaultMessage: "Could not save the note",
   },
 });
 
@@ -42,9 +42,7 @@ export const AccountNoteModal: FC<{
   accountId: string;
   onClose: () => void;
 }> = ({ accountId, onClose }) => {
-  const relationship = useAppSelector((state) =>
-    state.relationships.get(accountId),
-  );
+  const relationship = useAppSelector((state) => state.relationships.get(accountId));
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!relationship) {
@@ -56,13 +54,7 @@ export const AccountNoteModal: FC<{
     return <LoadingIndicator />;
   }
 
-  return (
-    <InnerNodeModal
-      relationship={relationship}
-      accountId={accountId}
-      onClose={onClose}
-    />
-  );
+  return <InnerNodeModal relationship={relationship} accountId={accountId} onClose={onClose} />;
 };
 
 const InnerNodeModal: FC<{
@@ -73,13 +65,13 @@ const InnerNodeModal: FC<{
   // Set up the state.
   const initialContents = relationship.note;
   const [note, setNote] = useState(initialContents);
-  const [errorText, setErrorText] = useState('');
-  const [state, setState] = useState<'idle' | 'saving' | 'error'>('idle');
+  const [errorText, setErrorText] = useState("");
+  const [state, setState] = useState<"idle" | "saving" | "error">("idle");
   const isDirty = note !== initialContents;
 
   const handleChange: ChangeEventHandler<HTMLTextAreaElement> = useCallback(
     (e) => {
-      if (state !== 'saving') {
+      if (state !== "saving") {
         setNote(e.target.value);
       }
     },
@@ -92,22 +84,17 @@ const InnerNodeModal: FC<{
   const abortController = useRef(new AbortController());
   const dispatch = useAppDispatch();
   const handleSave = useCallback(() => {
-    if (state === 'saving' || !isDirty) {
+    if (state === "saving" || !isDirty) {
       return;
     }
-    setState('saving');
-    dispatch(
-      submitAccountNote(
-        { accountId, note },
-        { signal: abortController.current.signal },
-      ),
-    )
+    setState("saving");
+    dispatch(submitAccountNote({ accountId, note }, { signal: abortController.current.signal }))
       .then(() => {
-        setState('idle');
+        setState("idle");
         onClose();
       })
       .catch((err: unknown) => {
-        setState('error');
+        setState("error");
         if (err instanceof Error) {
           setErrorText(err.message);
         } else {
@@ -132,8 +119,8 @@ const InnerNodeModal: FC<{
         <>
           <Callout className={classes.noteCallout}>
             <FormattedMessage
-              id='account.node_modal.callout'
-              defaultMessage='Personal notes are visible only to you.'
+              id="account.node_modal.callout"
+              defaultMessage="Personal notes are visible only to you."
             />
           </Callout>
           <TextAreaField
@@ -141,11 +128,7 @@ const InnerNodeModal: FC<{
             onChange={handleChange}
             label={intl.formatMessage(messages.fieldLabel)}
             className={classes.noteInput}
-            status={
-              state === 'error'
-                ? { variant: 'error', message: errorText }
-                : undefined
-            }
+            status={state === "error" ? { variant: "error", message: errorText } : undefined}
             // eslint-disable-next-line jsx-a11y/no-autofocus -- We want to focus here as it's a modal.
             autoFocus
           />
@@ -154,7 +137,7 @@ const InnerNodeModal: FC<{
       onClose={handleCancel}
       confirm={intl.formatMessage(messages.save)}
       onConfirm={handleSave}
-      updating={state === 'saving'}
+      updating={state === "saving"}
       disabled={!isDirty}
       noCloseOnConfirm
       noFocusButton

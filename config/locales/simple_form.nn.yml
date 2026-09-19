@@ -8,7 +8,7 @@ nn:
         display_name: Ditt fulle namn eller ditt tøysenamn.
         fields: Heimesida di, pronomen, alder, eller kva du måtte ynskje.
         indexable: Dei offentlege innlegga dine kan dukka opp i søkjeresultat på Mastodon. Folk som har reagert på oinnlegga dine kan uansett søkja gjennom dei.
-        note: 'Du kan @nemne folk eller #emneknaggar.'
+        note: "Du kan @nemne folk eller #emneknaggar."
         show_collections: Andre kan sjå kven du fylgjer og kven som fylgjer deg. Dei du fylgjer kan alltid sjå at du fylgjer dei.
         unlocked: Alle kan fylgja deg utan å måtta be om det. Vel bort dersom du vil gå gjennom førespurnader om å fylgja deg og seia ja eller nei til kvar av dei.
       account_alias:
@@ -76,7 +76,7 @@ nn:
         domain: Dette kan vera domenenamnet som blir vist i e-postadressa eller den MX-oppføringa den brukar. Dei vil bli kontrollert ved registrering.
         with_dns_records: Det vil bli gjort eit forsøk på å avgjera DNS-oppføringa til domenet og resultata vil bli tilsvarande blokkert
       featured_tag:
-        name: 'Her er nokre av emneknaggane du har brukt i det siste:'
+        name: "Her er nokre av emneknaggane du har brukt i det siste:"
       filters:
         action: Velg kva som skal gjerast når eit innlegg samsvarar med filteret
         actions:
@@ -408,7 +408,7 @@ nn:
         events: Aktiverte hendingar
         template: Nyttelastmal
         url: Endepunkts-URL
-    'no': Nei
+    "no": Nei
     not_recommended: Ikkje tilrådd
     overridden: Overstyrt
     recommended: Tilrådt
@@ -418,4 +418,4 @@ nn:
     title:
       sessions:
         webauthn: Bruk en av sikkerhetsnøklene dine til å logge på
-    'yes': Ja
+    "yes": Ja

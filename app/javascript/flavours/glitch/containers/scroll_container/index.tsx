@@ -1,13 +1,8 @@
-import React, {
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import React, { useContext, useEffect, useImperativeHandle, useRef } from "react";
 
-import { defaultShouldUpdateScroll } from './default_should_update_scroll';
-import type { ShouldUpdateScrollFn } from './default_should_update_scroll';
-import { ScrollBehaviorContext } from './scroll_context';
+import { defaultShouldUpdateScroll } from "./default_should_update_scroll";
+import type { ShouldUpdateScrollFn } from "./default_should_update_scroll";
+import { ScrollBehaviorContext } from "./scroll_context";
 
 interface ScrollContainerProps {
   /**
@@ -70,7 +65,5 @@ export const ScrollContainer: React.FC<ScrollContainerProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return React.Children.only(
-    React.cloneElement(children, { ref: containerRef }),
-  );
+  return React.Children.only(React.cloneElement(children, { ref: containerRef }));
 };

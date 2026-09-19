@@ -1,4 +1,4 @@
-import type { ApiCustomEmojiJSON } from './custom_emoji';
+import type { ApiCustomEmojiJSON } from "./custom_emoji";
 
 export interface ApiAccountFieldJSON {
   name: string;
@@ -12,19 +12,9 @@ export interface ApiAccountRoleJSON {
   name: string;
 }
 
-type ApiFeaturePolicy =
-  | 'public'
-  | 'followers'
-  | 'following'
-  | 'disabled'
-  | 'unsupported_policy';
+type ApiFeaturePolicy = "public" | "followers" | "following" | "disabled" | "unsupported_policy";
 
-type ApiUserFeaturePolicy =
-  | 'automatic'
-  | 'manual'
-  | 'denied'
-  | 'missing'
-  | 'unknown';
+type ApiUserFeaturePolicy = "automatic" | "manual" | "denied" | "missing" | "unknown";
 
 interface ApiFeaturePolicyJSON {
   automatic: ApiFeaturePolicy[];

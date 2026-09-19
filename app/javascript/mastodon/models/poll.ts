@@ -1,9 +1,9 @@
-import escapeTextContentForBrowser from 'escape-html';
+import escapeTextContentForBrowser from "escape-html";
 
-import type { ApiPollJSON, ApiPollOptionJSON } from 'mastodon/api_types/polls';
+import type { ApiPollJSON, ApiPollOptionJSON } from "mastodon/api_types/polls";
 
-import { CustomEmojiFactory } from './custom_emoji';
-import type { CustomEmoji } from './custom_emoji';
+import { CustomEmojiFactory } from "./custom_emoji";
+import type { CustomEmoji } from "./custom_emoji";
 
 interface PollOptionTranslation {
   title: string;
@@ -16,19 +16,14 @@ export interface PollOption extends ApiPollOptionJSON {
   translation: PollOptionTranslation | null;
 }
 
-export function createPollOptionTranslationFromServerJSON(translation: {
-  title: string;
-}) {
+export function createPollOptionTranslationFromServerJSON(translation: { title: string }) {
   return {
     ...translation,
     titleHtml: escapeTextContentForBrowser(translation.title),
   } as PollOptionTranslation;
 }
 
-export interface Poll extends Omit<
-  ApiPollJSON,
-  'emojis' | 'options' | 'own_votes'
-> {
+export interface Poll extends Omit<ApiPollJSON, "emojis" | "options" | "own_votes"> {
   emojis: CustomEmoji[];
   options: PollOption[];
   own_votes?: number[];
@@ -43,10 +38,7 @@ const pollDefaultValues = {
   own_votes: [],
 };
 
-export function createPollFromServerJSON(
-  serverJSON: ApiPollJSON,
-  previousPoll?: Poll,
-) {
+export function createPollFromServerJSON(serverJSON: ApiPollJSON, previousPoll?: Poll) {
   return {
     ...pollDefaultValues,
     ...serverJSON,
@@ -62,8 +54,7 @@ export function createPollFromServerJSON(
       if (prevOption?.translation && prevOption.title === option.title) {
         const { translation } = prevOption;
 
-        option.translation =
-          createPollOptionTranslationFromServerJSON(translation);
+        option.translation = createPollOptionTranslationFromServerJSON(translation);
       }
 
       return option;

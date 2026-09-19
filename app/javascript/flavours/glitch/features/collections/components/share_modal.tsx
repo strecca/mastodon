@@ -1,37 +1,37 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { useLocation } from 'react-router';
+import { useLocation } from "react-router";
 
-import { NavigationFocusTarget } from '@/flavours/glitch/components/navigation_focus_target';
-import { me } from '@/flavours/glitch/initial_state';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import { changeCompose, focusCompose } from 'flavours/glitch/actions/compose';
-import type { ApiCollectionJSON } from 'flavours/glitch/api_types/collections';
-import { Button } from 'flavours/glitch/components/button';
-import { CopyLinkField } from 'flavours/glitch/components/form_fields';
-import { IconButton } from 'flavours/glitch/components/icon_button';
+import { NavigationFocusTarget } from "@/flavours/glitch/components/navigation_focus_target";
+import { me } from "@/flavours/glitch/initial_state";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import { changeCompose, focusCompose } from "flavours/glitch/actions/compose";
+import type { ApiCollectionJSON } from "flavours/glitch/api_types/collections";
+import { Button } from "flavours/glitch/components/button";
+import { CopyLinkField } from "flavours/glitch/components/form_fields";
+import { IconButton } from "flavours/glitch/components/icon_button";
 import {
   ModalShell,
   ModalShellActions,
   ModalShellBody,
-} from 'flavours/glitch/components/modal_shell';
-import { useAppDispatch } from 'flavours/glitch/store';
+} from "flavours/glitch/components/modal_shell";
+import { useAppDispatch } from "flavours/glitch/store";
 
-import { CollectionPreviewCard } from './collection_preview_card';
-import classes from './share_modal.module.scss';
+import { CollectionPreviewCard } from "./collection_preview_card";
+import classes from "./share_modal.module.scss";
 
 const messages = defineMessages({
   shareTextOwn: {
-    id: 'collection.share_template_own',
-    defaultMessage: 'Check out my new collection:',
-    description: 'Collection links are appended after a new line',
+    id: "collection.share_template_own",
+    defaultMessage: "Check out my new collection:",
+    description: "Collection links are appended after a new line",
   },
   shareTextOther: {
-    id: 'collection.share_template_other',
-    defaultMessage: 'Check out this cool collection:',
-    description: 'Collection links are appended after a new line',
+    id: "collection.share_template_other",
+    defaultMessage: "Check out this cool collection:",
+    description: "Collection links are appended after a new line",
   },
 });
 
@@ -67,39 +67,36 @@ export const CollectionShareModal: React.FC<{
   return (
     <ModalShell>
       <ModalShellBody>
-        <NavigationFocusTarget as='h1' className={classes.heading}>
+        <NavigationFocusTarget as="h1" className={classes.heading}>
           {isNew ? (
             <FormattedMessage
-              id='collection.share_modal.title_new'
-              defaultMessage='Share your new collection!'
+              id="collection.share_modal.title_new"
+              defaultMessage="Share your new collection!"
             />
           ) : (
-            <FormattedMessage
-              id='collection.share_modal.title'
-              defaultMessage='Share collection'
-            />
+            <FormattedMessage id="collection.share_modal.title" defaultMessage="Share collection" />
           )}
         </NavigationFocusTarget>
 
         <IconButton
           title={intl.formatMessage({
-            id: 'lightbox.close',
-            defaultMessage: 'Close',
+            id: "lightbox.close",
+            defaultMessage: "Close",
           })}
           iconComponent={CloseIcon}
-          icon='close'
+          icon="close"
           className={classes.closeButtonDesktop}
           onClick={onClose}
         />
 
         <div className={classes.preview}>
-          <CollectionPreviewCard collection={collection} headingLevel='h2' />
+          <CollectionPreviewCard collection={collection} headingLevel="h2" />
         </div>
 
         <CopyLinkField
           label={intl.formatMessage({
-            id: 'collection.share_modal.share_link_label',
-            defaultMessage: 'Share link',
+            id: "collection.share_modal.share_link_label",
+            defaultMessage: "Share link",
           })}
           value={collectionLink}
         />
@@ -109,22 +106,22 @@ export const CollectionShareModal: React.FC<{
         <div className={classes.shareButtonWrapper}>
           <Button secondary onClick={handleShareViaPost}>
             <FormattedMessage
-              id='collection.share_modal.share_via_post'
-              defaultMessage='Post on Mastodon'
+              id="collection.share_modal.share_via_post"
+              defaultMessage="Post on Mastodon"
             />
           </Button>
-          {'share' in navigator && (
+          {"share" in navigator && (
             <Button secondary onClick={handleShareOnDevice}>
               <FormattedMessage
-                id='collection.share_modal.share_via_system'
-                defaultMessage='Share to…'
+                id="collection.share_modal.share_via_system"
+                defaultMessage="Share to…"
               />
             </Button>
           )}
         </div>
 
         <Button plain onClick={onClose} className={classes.closeButtonMobile}>
-          <FormattedMessage id='lightbox.close' defaultMessage='Close' />
+          <FormattedMessage id="lightbox.close" defaultMessage="Close" />
         </Button>
       </ModalShellActions>
     </ModalShell>

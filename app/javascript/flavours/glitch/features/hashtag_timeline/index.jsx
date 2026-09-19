@@ -1,37 +1,39 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { isEqual } from 'lodash';
+import { isEqual } from "lodash";
 
-import TagIcon from '@/material-icons/400-24px/tag.svg?react';
-import { addColumn, removeColumn, moveColumn } from 'flavours/glitch/actions/columns';
-import { connectHashtagStream } from 'flavours/glitch/actions/streaming';
-import { expandHashtagTimeline, clearTimeline } from 'flavours/glitch/actions/timelines';
-import Column from 'flavours/glitch/components/column';
-import ColumnHeader from 'flavours/glitch/components/column_header';
-import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity_context';
-import { remoteTopicFeedAccess, me, localTopicFeedAccess } from 'flavours/glitch/initial_state';
+import TagIcon from "@/material-icons/400-24px/tag.svg?react";
+import { addColumn, removeColumn, moveColumn } from "flavours/glitch/actions/columns";
+import { connectHashtagStream } from "flavours/glitch/actions/streaming";
+import { expandHashtagTimeline, clearTimeline } from "flavours/glitch/actions/timelines";
+import Column from "flavours/glitch/components/column";
+import ColumnHeader from "flavours/glitch/components/column_header";
+import { identityContextPropShape, withIdentity } from "flavours/glitch/identity_context";
+import { remoteTopicFeedAccess, me, localTopicFeedAccess } from "flavours/glitch/initial_state";
 
-import StatusListContainer from '../ui/containers/status_list_container';
+import StatusListContainer from "../ui/containers/status_list_container";
 
-import { HashtagHeader } from './components/hashtag_header';
-import ColumnSettingsContainer from './containers/column_settings_container';
+import { HashtagHeader } from "./components/hashtag_header";
+import ColumnSettingsContainer from "./containers/column_settings_container";
 
 const mapStateToProps = (state, props) => {
-  const local = props.params.local || (!me && remoteTopicFeedAccess !== 'public');
-  const hasFeedAccess = !!me || localTopicFeedAccess === 'public';
+  const local = props.params.local || (!me && remoteTopicFeedAccess !== "public");
+  const hasFeedAccess = !!me || localTopicFeedAccess === "public";
 
-  return ({
+  return {
     local,
     hasFeedAccess,
-    hasUnread: state.getIn(['timelines', `hashtag:${props.params.id}${local ? ':local' : ''}`, 'unread']) > 0,
-  });
+    hasUnread:
+      state.getIn(["timelines", `hashtag:${props.params.id}${local ? ":local" : ""}`, "unread"]) >
+      0,
+  };
 };
 
 class HashtagTimeline extends PureComponent {
@@ -52,24 +54,48 @@ class HashtagTimeline extends PureComponent {
     if (columnId) {
       dispatch(removeColumn(columnId));
     } else {
-      dispatch(addColumn('HASHTAG', { id: this.props.params.id }));
+      dispatch(addColumn("HASHTAG", { id: this.props.params.id }));
     }
   };
 
   title = () => {
     const { id } = this.props.params;
-    const title  = [id];
+    const title = [id];
 
-    if (this.additionalFor('any')) {
-      title.push(' ', <FormattedMessage key='any' id='hashtag.column_header.tag_mode.any'  values={{ additional: this.additionalFor('any') }} defaultMessage='or {additional}' />);
+    if (this.additionalFor("any")) {
+      title.push(
+        " ",
+        <FormattedMessage
+          key="any"
+          id="hashtag.column_header.tag_mode.any"
+          values={{ additional: this.additionalFor("any") }}
+          defaultMessage="or {additional}"
+        />,
+      );
     }
 
-    if (this.additionalFor('all')) {
-      title.push(' ', <FormattedMessage key='all' id='hashtag.column_header.tag_mode.all'  values={{ additional: this.additionalFor('all') }} defaultMessage='and {additional}' />);
+    if (this.additionalFor("all")) {
+      title.push(
+        " ",
+        <FormattedMessage
+          key="all"
+          id="hashtag.column_header.tag_mode.all"
+          values={{ additional: this.additionalFor("all") }}
+          defaultMessage="and {additional}"
+        />,
+      );
     }
 
-    if (this.additionalFor('none')) {
-      title.push(' ', <FormattedMessage key='none' id='hashtag.column_header.tag_mode.none' values={{ additional: this.additionalFor('none') }} defaultMessage='without {additional}' />);
+    if (this.additionalFor("none")) {
+      title.push(
+        " ",
+        <FormattedMessage
+          key="none"
+          id="hashtag.column_header.tag_mode.none"
+          values={{ additional: this.additionalFor("none") }}
+          defaultMessage="without {additional}"
+        />,
+      );
     }
 
     return title;
@@ -79,9 +105,9 @@ class HashtagTimeline extends PureComponent {
     const { tags } = this.props.params;
 
     if (tags && (tags[mode] || []).length > 0) {
-      return tags[mode].map(tag => tag.value).join('/');
+      return tags[mode].map((tag) => tag.value).join("/");
     } else {
-      return '';
+      return "";
     }
   };
 
@@ -94,38 +120,44 @@ class HashtagTimeline extends PureComponent {
     this.column.scrollTop();
   };
 
-  _subscribe (dispatch, id, tags = {}, local) {
+  _subscribe(dispatch, id, tags = {}, local) {
     const { signedIn } = this.props.identity;
 
     if (!signedIn) {
       return;
     }
 
-    let any  = (tags.any || []).map(tag => tag.value);
-    let all  = (tags.all || []).map(tag => tag.value);
-    let none = (tags.none || []).map(tag => tag.value);
+    let any = (tags.any || []).map((tag) => tag.value);
+    let all = (tags.all || []).map((tag) => tag.value);
+    let none = (tags.none || []).map((tag) => tag.value);
 
-    [id, ...any].map(tag => {
-      this.disconnects.push(dispatch(connectHashtagStream(id, tag, local, status => {
-        let tags = status.tags.map(tag => tag.name);
+    [id, ...any].map((tag) => {
+      this.disconnects.push(
+        dispatch(
+          connectHashtagStream(id, tag, local, (status) => {
+            let tags = status.tags.map((tag) => tag.name);
 
-        return all.filter(tag => tags.includes(tag)).length === all.length &&
-               none.filter(tag => tags.includes(tag)).length === 0;
-      })));
+            return (
+              all.filter((tag) => tags.includes(tag)).length === all.length &&
+              none.filter((tag) => tags.includes(tag)).length === 0
+            );
+          }),
+        ),
+      );
     });
   }
 
-  _unsubscribe () {
-    this.disconnects.map(disconnect => disconnect());
+  _unsubscribe() {
+    this.disconnects.map((disconnect) => disconnect());
     this.disconnects = [];
   }
 
-  _unload () {
+  _unload() {
     const { dispatch, local } = this.props;
     const { id } = this.props.params;
 
     this._unsubscribe();
-    dispatch(clearTimeline(`hashtag:${id}${local ? ':local' : ''}`));
+    dispatch(clearTimeline(`hashtag:${id}${local ? ":local" : ""}`));
   }
 
   _load() {
@@ -138,11 +170,11 @@ class HashtagTimeline extends PureComponent {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._load();
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     const { params, local } = this.props;
     const { id, tags } = prevProps.params;
 
@@ -152,22 +184,22 @@ class HashtagTimeline extends PureComponent {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._unsubscribe();
   }
 
-  setRef = c => {
+  setRef = (c) => {
     this.column = c;
   };
 
-  handleLoadMore = maxId => {
+  handleLoadMore = (maxId) => {
     const { dispatch, params, local } = this.props;
-    const { id, tags }  = params;
+    const { id, tags } = params;
 
     dispatch(expandHashtagTimeline(id, { maxId, tags, local }));
   };
 
-  render () {
+  render() {
     const { hasUnread, columnId, multiColumn, local, hasFeedAccess } = this.props;
     const { id } = this.props.params;
     const pinned = !!columnId;
@@ -175,7 +207,7 @@ class HashtagTimeline extends PureComponent {
     return (
       <Column bindToDocument={!multiColumn} ref={this.setRef} label={`#${id}`}>
         <ColumnHeader
-          icon='hashtag'
+          icon="hashtag"
           iconComponent={TagIcon}
           active={hasUnread}
           title={this.title()}
@@ -194,19 +226,19 @@ class HashtagTimeline extends PureComponent {
           alwaysPrepend
           trackScroll={!pinned}
           scrollKey={`hashtag_timeline-${columnId}`}
-          timelineId={`hashtag:${id}${local ? ':local' : ''}`}
+          timelineId={`hashtag:${id}${local ? ":local" : ""}`}
           onLoadMore={this.handleLoadMore}
           initialLoadingState={hasFeedAccess}
           emptyMessage={
             hasFeedAccess ? (
               <FormattedMessage
-                id='empty_column.hashtag'
-                defaultMessage='There is nothing in this hashtag yet.'
+                id="empty_column.hashtag"
+                defaultMessage="There is nothing in this hashtag yet."
               />
             ) : (
               <FormattedMessage
-                id='error.no_hashtag_feed_access'
-                defaultMessage='Join or log in to view and follow this hashtag.'
+                id="error.no_hashtag_feed_access"
+                defaultMessage="Join or log in to view and follow this hashtag."
               />
             )
           }
@@ -215,12 +247,11 @@ class HashtagTimeline extends PureComponent {
 
         <Helmet>
           <title>#{id}</title>
-          <meta name='robots' content='noindex' />
+          <meta name="robots" content="noindex" />
         </Helmet>
       </Column>
     );
   }
-
 }
 
 export default connect(mapStateToProps)(withIdentity(HashtagTimeline));

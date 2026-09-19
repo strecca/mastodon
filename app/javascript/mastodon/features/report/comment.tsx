@@ -1,40 +1,30 @@
-import { useCallback, useEffect, useId, useRef } from 'react';
+import { useCallback, useEffect, useId, useRef } from "react";
 
-import { useIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { useIntl, defineMessages, FormattedMessage } from "react-intl";
 
-import type { Map } from 'immutable';
-import { OrderedSet } from 'immutable';
-import { shallowEqual } from 'react-redux';
+import type { Map } from "immutable";
+import { OrderedSet } from "immutable";
+import { shallowEqual } from "react-redux";
 
-import { Toggle } from '@/mastodon/components/form_fields/toggle_field';
-import { NavigationFocusTarget } from '@/mastodon/components/navigation_focus_target';
-import { fetchAccount } from 'mastodon/actions/accounts';
-import { Button } from 'mastodon/components/button';
-import type { Status } from 'mastodon/models/status';
-import type { RootState } from 'mastodon/store';
-import {
-  createAppSelector,
-  useAppDispatch,
-  useAppSelector,
-} from 'mastodon/store';
+import { Toggle } from "@/mastodon/components/form_fields/toggle_field";
+import { NavigationFocusTarget } from "@/mastodon/components/navigation_focus_target";
+import { fetchAccount } from "mastodon/actions/accounts";
+import { Button } from "mastodon/components/button";
+import type { Status } from "mastodon/models/status";
+import type { RootState } from "mastodon/store";
+import { createAppSelector, useAppDispatch, useAppSelector } from "mastodon/store";
 
 const messages = defineMessages({
   placeholder: {
-    id: 'report.placeholder',
-    defaultMessage: 'Type or paste additional comments',
+    id: "report.placeholder",
+    defaultMessage: "Type or paste additional comments",
   },
 });
 
 const selectRepliedToAccountIds = createAppSelector(
-  [
-    (state: RootState) => state.statuses,
-    (_: unknown, statusIds: string[]) => statusIds,
-  ],
+  [(state: RootState) => state.statuses, (_: unknown, statusIds: string[]) => statusIds],
   (statusesMap: Map<string, Status>, statusIds: string[]) =>
-    statusIds.map(
-      (statusId) =>
-        statusesMap.getIn([statusId, 'in_reply_to_account_id']) as string,
-    ),
+    statusIds.map((statusId) => statusesMap.getIn([statusId, "in_reply_to_account_id"]) as string),
   {
     memoizeOptions: {
       resultEqualityCheck: shallowEqual,
@@ -94,7 +84,7 @@ const Comment: React.FC<Props> = ({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
         handleSubmit();
       }
     },
@@ -112,12 +102,7 @@ const Comment: React.FC<Props> = ({
   const availableDomains = domain
     ? OrderedSet([domain]).union(
         accountIds
-          .map(
-            (accountId) =>
-              (accountsMap.getIn([accountId, 'acct'], '') as string).split(
-                '@',
-              )[1],
-          )
+          .map((accountId) => (accountsMap.getIn([accountId, "acct"], "") as string).split("@")[1])
           .filter((domain): domain is string => !!domain),
       )
     : OrderedSet<string>();
@@ -136,9 +121,7 @@ const Comment: React.FC<Props> = ({
 
     // Then, fetch missing replied-to accounts
     const unknownAccounts = OrderedSet(
-      accountIds.filter(
-        (accountId) => accountId && !accountsMap.has(accountId),
-      ),
+      accountIds.filter((accountId) => accountId && !accountsMap.has(accountId)),
     );
     unknownAccounts.forEach((accountId) => {
       dispatch(fetchAccount(accountId));
@@ -149,21 +132,17 @@ const Comment: React.FC<Props> = ({
 
   return (
     <>
-      <NavigationFocusTarget
-        as='h1'
-        id={titleId}
-        className='report-dialog-modal__title'
-      >
+      <NavigationFocusTarget as="h1" id={titleId} className="report-dialog-modal__title">
         {modalTitle ?? (
           <FormattedMessage
-            id='report.comment.title'
-            defaultMessage='Is there anything else you think we should know?'
+            id="report.comment.title"
+            defaultMessage="Is there anything else you think we should know?"
           />
         )}
       </NavigationFocusTarget>
 
       <textarea
-        className='report-dialog-modal__textarea'
+        className="report-dialog-modal__textarea"
         placeholder={intl.formatMessage(messages.placeholder)}
         aria-labelledby={titleId}
         value={comment}
@@ -174,16 +153,16 @@ const Comment: React.FC<Props> = ({
 
       {isRemote && (
         <>
-          <p className='report-dialog-modal__lead'>
+          <p className="report-dialog-modal__lead">
             <FormattedMessage
-              id='report.forward_hint'
-              defaultMessage='The account is from another server. Send an anonymized copy of the report there as well?'
+              id="report.forward_hint"
+              defaultMessage="The account is from another server. Send an anonymized copy of the report there as well?"
             />
           </p>
 
           {availableDomains.map((domain) => (
             <label
-              className='report-dialog-modal__toggle'
+              className="report-dialog-modal__toggle"
               key={`toggle-${domain}`}
               htmlFor={`input-${domain}`}
             >
@@ -195,10 +174,10 @@ const Comment: React.FC<Props> = ({
                 id={`input-${domain}`}
               />
               <FormattedMessage
-                id='report.forward'
-                defaultMessage='Forward to {target}'
+                id="report.forward"
+                defaultMessage="Forward to {target}"
                 values={{ target: domain }}
-                tagName='span'
+                tagName="span"
               />
             </label>
           ))}
@@ -207,11 +186,11 @@ const Comment: React.FC<Props> = ({
 
       {submitError}
 
-      <div className='flex-spacer' />
+      <div className="flex-spacer" />
 
-      <div className='report-dialog-modal__actions'>
+      <div className="report-dialog-modal__actions">
         <Button onClick={handleSubmit} disabled={isSubmitting}>
-          <FormattedMessage id='report.submit' defaultMessage='Submit report' />
+          <FormattedMessage id="report.submit" defaultMessage="Submit report" />
         </Button>
       </div>
     </>

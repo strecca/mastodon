@@ -1,20 +1,20 @@
-import { useEffect, useRef, useState, useId } from 'react';
+import { useEffect, useRef, useState, useId } from "react";
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import Overlay from 'react-overlays/Overlay';
+import Overlay from "react-overlays/Overlay";
 
-import { useDismissible } from '@/flavours/glitch/hooks/useDismissible';
-import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
+import { useDismissible } from "@/flavours/glitch/hooks/useDismissible";
+import MoreHorizIcon from "@/material-icons/400-24px/more_horiz.svg?react";
 
-import { Button } from '../button';
-import { Icon } from '../icon';
+import { Button } from "../button";
+import { Icon } from "../icon";
 
-import classes from './remove_quote_hint.module.css';
+import classes from "./remove_quote_hint.module.css";
 
-const DISMISSIBLE_BANNER_ID = 'notifications/remove_quote_hint';
+const DISMISSIBLE_BANNER_ID = "notifications/remove_quote_hint";
 
 /**
  * We don't want to show this hint in the UI more than once,
@@ -64,7 +64,7 @@ export const RemoveQuoteHint: React.FC<{
           show
           flip
           offset={[12, 10]}
-          placement='bottom-end'
+          placement="bottom-end"
           target={anchorRef}
           container={anchorRef}
         >
@@ -72,27 +72,27 @@ export const RemoveQuoteHint: React.FC<{
             <div
               {...props}
               className={classNames(
-                'info-tooltip info-tooltip--solid dropdown-animation',
+                "info-tooltip info-tooltip--solid dropdown-animation",
                 placement,
               )}
             >
               <h4>
                 <FormattedMessage
-                  id='remove_quote_hint.title'
-                  defaultMessage='Want to remove your quoted post?'
+                  id="remove_quote_hint.title"
+                  defaultMessage="Want to remove your quoted post?"
                 />
               </h4>
               <FormattedMessage
-                id='remove_quote_hint.message'
-                defaultMessage='You can do so from the {icon} options menu.'
+                id="remove_quote_hint.message"
+                defaultMessage="You can do so from the {icon} options menu."
                 values={{
                   icon: (
                     <Icon
-                      id='ellipsis-h'
+                      id="ellipsis-h"
                       icon={MoreHorizIcon}
                       aria-label={intl.formatMessage({
-                        id: 'status.more',
-                        defaultMessage: 'More',
+                        id: "status.more",
+                        defaultMessage: "More",
                       })}
                       className={classes.inlineIcon}
                     />
@@ -101,10 +101,7 @@ export const RemoveQuoteHint: React.FC<{
               >
                 {(text) => <p>{text}</p>}
               </FormattedMessage>
-              <FormattedMessage
-                id='remove_quote_hint.button_label'
-                defaultMessage='Got it'
-              >
+              <FormattedMessage id="remove_quote_hint.button_label" defaultMessage="Got it">
                 {(text) => (
                   <Button plain compact onClick={dismiss}>
                     {text}

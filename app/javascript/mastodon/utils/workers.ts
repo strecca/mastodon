@@ -4,7 +4,7 @@
  * Returns null if the environment doesn't support web workers.
  */
 export function loadWorker(url: string | URL, options: WorkerOptions = {}) {
-  if (!('Worker' in window)) {
+  if (!("Worker" in window)) {
     return null;
   }
 
@@ -17,13 +17,11 @@ export function loadWorker(url: string | URL, options: WorkerOptions = {}) {
     }
   } catch (err) {
     // In case the URL parsing fails.
-    console.warn('Error instantiating Worker:', err);
+    console.warn("Error instantiating Worker:", err);
   }
 
   // Import the worker script from a same-origin Blob.
   const contents = `import ${JSON.stringify(url)};`;
-  const blob = URL.createObjectURL(
-    new Blob([contents], { type: 'text/javascript' }),
-  );
+  const blob = URL.createObjectURL(new Blob([contents], { type: "text/javascript" }));
   return new Worker(blob, options);
 }

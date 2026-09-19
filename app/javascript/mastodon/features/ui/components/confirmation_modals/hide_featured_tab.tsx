@@ -1,42 +1,40 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 
-import { useAccount } from '@/mastodon/hooks/useAccount';
-import { useCurrentAccountId } from '@/mastodon/hooks/useAccountId';
-import { domain } from '@/mastodon/initial_state';
-import { patchProfile } from '@/mastodon/reducers/slices/profile_edit';
-import { useAppDispatch } from 'mastodon/store';
+import { useAccount } from "@/mastodon/hooks/useAccount";
+import { useCurrentAccountId } from "@/mastodon/hooks/useAccountId";
+import { domain } from "@/mastodon/initial_state";
+import { patchProfile } from "@/mastodon/reducers/slices/profile_edit";
+import { useAppDispatch } from "mastodon/store";
 
-import type { BaseConfirmationModalProps } from './confirmation_modal';
-import { ConfirmationModal } from './confirmation_modal';
+import type { BaseConfirmationModalProps } from "./confirmation_modal";
+import { ConfirmationModal } from "./confirmation_modal";
 
 const messages = defineMessages({
   title: {
-    id: 'confirmations.hide_featured_tab.title',
+    id: "confirmations.hide_featured_tab.title",
     defaultMessage: 'Hide "Featured" tab?',
   },
   intro: {
-    id: 'confirmations.hide_featured_tab.intro',
+    id: "confirmations.hide_featured_tab.intro",
     defaultMessage:
-      'You can change this at any time under <i>Edit profile > Profile tab settings</i>.',
+      "You can change this at any time under <i>Edit profile > Profile tab settings</i>.",
   },
   message: {
-    id: 'confirmations.hide_featured_tab.message',
+    id: "confirmations.hide_featured_tab.message",
     defaultMessage:
-      'This will hide the tab for users on {serverName} and other servers running the latest version of Mastodon. Other displays may vary.',
+      "This will hide the tab for users on {serverName} and other servers running the latest version of Mastodon. Other displays may vary.",
   },
   confirm: {
-    id: 'confirmations.hide_featured_tab.confirm',
-    defaultMessage: 'Hide tab',
+    id: "confirmations.hide_featured_tab.confirm",
+    defaultMessage: "Hide tab",
   },
 });
 
-export const ConfirmHideFeaturedTabModal: React.FC<
-  BaseConfirmationModalProps
-> = ({ onClose }) => {
+export const ConfirmHideFeaturedTabModal: React.FC<BaseConfirmationModalProps> = ({ onClose }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -52,7 +50,7 @@ export const ConfirmHideFeaturedTabModal: React.FC<
     <ConfirmationModal
       title={intl.formatMessage(messages.title)}
       extraContent={
-        <div className='prose'>
+        <div className="prose">
           <p>
             {intl.formatMessage(messages.intro, {
               i: (words) => <i>{words}</i>,

@@ -1,34 +1,34 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import type { Map as ImmutableMap, List as ImmutableList } from 'immutable';
+import type { Map as ImmutableMap, List as ImmutableList } from "immutable";
 
-import { submitCompose } from 'flavours/glitch/actions/compose';
-import { openModal } from 'flavours/glitch/actions/modal';
-import type { MediaAttachment } from 'flavours/glitch/models/media_attachment';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import { submitCompose } from "flavours/glitch/actions/compose";
+import { openModal } from "flavours/glitch/actions/modal";
+import type { MediaAttachment } from "flavours/glitch/models/media_attachment";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
-import type { BaseConfirmationModalProps } from './confirmation_modal';
-import { ConfirmationModal } from './confirmation_modal';
+import type { BaseConfirmationModalProps } from "./confirmation_modal";
+import { ConfirmationModal } from "./confirmation_modal";
 
 const messages = defineMessages({
   title: {
-    id: 'confirmations.missing_alt_text.title',
-    defaultMessage: 'Add alt text?',
+    id: "confirmations.missing_alt_text.title",
+    defaultMessage: "Add alt text?",
   },
   confirm: {
-    id: 'confirmations.missing_alt_text.confirm',
-    defaultMessage: 'Add alt text',
+    id: "confirmations.missing_alt_text.confirm",
+    defaultMessage: "Add alt text",
   },
   message: {
-    id: 'confirmations.missing_alt_text.message',
+    id: "confirmations.missing_alt_text.message",
     defaultMessage:
-      'Your post contains media without alt text. Adding descriptions helps make your content accessible to more people.',
+      "Your post contains media without alt text. Adding descriptions helps make your content accessible to more people.",
   },
   secondary: {
-    id: 'confirmations.missing_alt_text.secondary',
-    defaultMessage: 'Post anyway',
+    id: "confirmations.missing_alt_text.secondary",
+    defaultMessage: "Post anyway",
   },
 });
 
@@ -43,21 +43,21 @@ export const ConfirmMissingAltTextModal: React.FC<
     (state) =>
       (
         (state.compose as ImmutableMap<string, unknown>).get(
-          'media_attachments',
+          "media_attachments",
         ) as ImmutableList<MediaAttachment>
       )
         .find(
           (media) =>
-            ['image', 'gifv'].includes(media.get('type') as string) &&
-            ((media.get('description') ?? '') as string).length === 0,
+            ["image", "gifv"].includes(media.get("type") as string) &&
+            ((media.get("description") ?? "") as string).length === 0,
         )
-        ?.get('id') as string,
+        ?.get("id") as string,
   );
 
   const handleConfirm = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'FOCAL_POINT',
+        modalType: "FOCAL_POINT",
         modalProps: {
           mediaId,
         },

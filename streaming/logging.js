@@ -1,6 +1,6 @@
-import { pino } from 'pino';
-import { pinoHttp, stdSerializers as pinoHttpSerializers } from 'pino-http';
-import * as uuid from 'uuid';
+import { pino } from "pino";
+import { pinoHttp, stdSerializers as pinoHttpSerializers } from "pino-http";
+import * as uuid from "uuid";
 
 /**
  * Generates the Request ID for logging and setting on responses
@@ -17,7 +17,7 @@ function generateRequestId(req, res) {
 
   // Allow for usage with WebSockets:
   if (res) {
-    res.setHeader('X-Request-Id', req.id);
+    res.setHeader("X-Request-Id", req.id);
   }
 
   return req.id;
@@ -29,9 +29,9 @@ function generateRequestId(req, res) {
  */
 function sanitizeRequestLog(req) {
   const log = pinoHttpSerializers.req(req);
-  if (typeof log.url === 'string' && log.url.includes('access_token')) {
+  if (typeof log.url === "string" && log.url.includes("access_token")) {
     // Doorkeeper uses SecureRandom.urlsafe_base64 per RFC 6749 / RFC 6750
-    log.url = log.url.replace(/(access_token)=([a-zA-Z0-9\-_]+)/gi, '$1=[Redacted]');
+    log.url = log.url.replace(/(access_token)=([a-zA-Z0-9\-_]+)/gi, "$1=[Redacted]");
   }
   return log;
 }
@@ -42,7 +42,7 @@ export const logger = pino({
   formatters: {
     level: (label) => {
       return {
-        level: label
+        level: label,
       };
     },
   },
@@ -52,19 +52,19 @@ export const logger = pino({
       // Note: we currently pass the AccessToken via the websocket subprotocol
       // field, an anti-pattern, but this ensures it doesn't end up in logs.
       'req.headers["sec-websocket-protocol"]',
-      'req.headers.authorization',
-      'req.headers.cookie',
-      'req.query.access_token'
-    ]
-  }
+      "req.headers.authorization",
+      "req.headers.cookie",
+      "req.query.access_token",
+    ],
+  },
 });
 
 export const httpLogger = pinoHttp({
   logger,
   genReqId: generateRequestId,
   serializers: {
-    req: sanitizeRequestLog
-  }
+    req: sanitizeRequestLog,
+  },
 });
 
 /**
@@ -90,11 +90,11 @@ export function createWebsocketLogger(request, resolvedAccount) {
 
   return logger.child({
     req: {
-      id: request.id
+      id: request.id,
     },
     account: {
-      id: resolvedAccount.accountId ?? null
-    }
+      id: resolvedAccount.accountId ?? null,
+    },
   });
 }
 
@@ -106,9 +106,9 @@ export function createWebsocketLogger(request, resolvedAccount) {
 export function initializeLogLevel(env, environment) {
   if (env.LOG_LEVEL && Object.keys(logger.levels.values).includes(env.LOG_LEVEL)) {
     logger.level = env.LOG_LEVEL;
-  } else if (environment === 'development') {
-    logger.level = 'debug';
+  } else if (environment === "development") {
+    logger.level = "debug";
   } else {
-    logger.level = 'info';
+    logger.level = "info";
   }
 }

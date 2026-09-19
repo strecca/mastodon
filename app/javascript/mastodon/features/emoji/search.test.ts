@@ -1,6 +1,6 @@
-import type { CompactEmoji } from 'emojibase';
+import type { CompactEmoji } from "emojibase";
 
-import { unicodeEmojiFactory, customEmojiFactory } from '@/testing/factories';
+import { unicodeEmojiFactory, customEmojiFactory } from "@/testing/factories";
 
 import {
   putEmojiData,
@@ -8,8 +8,8 @@ import {
   putLegacyShortcodes,
   testGet,
   testClear,
-} from './database';
-import { search } from './search';
+} from "./database";
+import { search } from "./search";
 
 function rawEmojiFactory(data: Partial<CompactEmoji> = {}): CompactEmoji {
   const factory = unicodeEmojiFactory();
@@ -20,10 +20,10 @@ function rawEmojiFactory(data: Partial<CompactEmoji> = {}): CompactEmoji {
   };
 }
 
-describe('search', () => {
+describe("search", () => {
   beforeEach(async () => {
     await testGet(); // Loads the database schema.
-    await putEmojiData([], 'en');
+    await putEmojiData([], "en");
   });
 
   afterEach(() => {
@@ -31,158 +31,150 @@ describe('search', () => {
     indexedDB = new IDBFactory();
   });
 
-  test('test no query tokens', async () => {
-    await putEmojiData([rawEmojiFactory()], 'en');
-    await expect(search({ query: '   ', locale: 'en' })).resolves.toEqual([]);
+  test("test no query tokens", async () => {
+    await putEmojiData([rawEmojiFactory()], "en");
+    await expect(search({ query: "   ", locale: "en" })).resolves.toEqual([]);
   });
 
-  test('unicode results', async () => {
+  test("unicode results", async () => {
     await putEmojiData(
       [
         rawEmojiFactory({
-          hexcode: 'unicode_hex',
-          label: 'Party Popper',
-          shortcodes: ['party_popper'],
-          unicode: '🎉',
+          hexcode: "unicode_hex",
+          label: "Party Popper",
+          shortcodes: ["party_popper"],
+          unicode: "🎉",
         }),
       ],
-      'en',
+      "en",
     );
 
-    await expect(
-      search({ query: 'party', locale: 'en' }),
-    ).resolves.toContainEqual(
+    await expect(search({ query: "party", locale: "en" })).resolves.toContainEqual(
       expect.objectContaining({
-        hexcode: 'unicode_hex',
+        hexcode: "unicode_hex",
       }),
     );
   });
 
-  test('custom results', async () => {
+  test("custom results", async () => {
     await putCustomEmojiData({
-      emojis: [customEmojiFactory({ shortcode: 'party_custom' })],
+      emojis: [customEmojiFactory({ shortcode: "party_custom" })],
     });
 
-    await expect(
-      search({ query: 'party', locale: 'en' }),
-    ).resolves.toContainEqual(
+    await expect(search({ query: "party", locale: "en" })).resolves.toContainEqual(
       expect.objectContaining({
-        shortcode: 'party_custom',
+        shortcode: "party_custom",
       }),
     );
   });
 
-  test('shortcode results', async () => {
-    await putEmojiData([rawEmojiFactory()], 'en');
+  test("shortcode results", async () => {
+    await putEmojiData([rawEmojiFactory()], "en");
     await putLegacyShortcodes({
-      test: ['legacy_smile'],
+      test: ["legacy_smile"],
     });
 
-    await expect(
-      search({ query: 'legacy', locale: 'en' }),
-    ).resolves.toContainEqual(
+    await expect(search({ query: "legacy", locale: "en" })).resolves.toContainEqual(
       expect.objectContaining({
-        hexcode: 'test',
+        hexcode: "test",
       }),
     );
   });
 
-  test('full custom emoji search', async () => {
+  test("full custom emoji search", async () => {
     await putCustomEmojiData({
       emojis: [
-        customEmojiFactory({ shortcode: 'arrow' }),
-        customEmojiFactory({ shortcode: 'party_parrot' }),
+        customEmojiFactory({ shortcode: "arrow" }),
+        customEmojiFactory({ shortcode: "party_parrot" }),
       ],
     });
 
-    const result = await search({ query: 'arro', locale: 'en' });
+    const result = await search({ query: "arro", locale: "en" });
     expect(result).toContainEqual(
       // Test for ordinary IDB search
       expect.objectContaining({
-        shortcode: 'arrow',
+        shortcode: "arrow",
       }),
     );
     expect(result).toContainEqual(
       // Test for manual iteration search
       expect.objectContaining({
-        shortcode: 'party_parrot',
+        shortcode: "party_parrot",
       }),
     );
   });
 
-  test('limit test', async () => {
+  test("limit test", async () => {
     await putCustomEmojiData({
       emojis: [
-        customEmojiFactory({ shortcode: 'limit' }),
-        customEmojiFactory({ shortcode: 'limit_extra' }),
+        customEmojiFactory({ shortcode: "limit" }),
+        customEmojiFactory({ shortcode: "limit_extra" }),
       ],
     });
 
-    await expect(
-      search({ query: 'limit', locale: 'en', limit: 1 }),
-    ).resolves.toEqual([
+    await expect(search({ query: "limit", locale: "en", limit: 1 })).resolves.toEqual([
       expect.objectContaining({
-        shortcode: 'limit',
+        shortcode: "limit",
       }),
     ]);
   });
 
-  test('prefix matches', async () => {
+  test("prefix matches", async () => {
     await putCustomEmojiData({
       emojis: [
-        customEmojiFactory({ shortcode: 'sob_other' }),
-        customEmojiFactory({ shortcode: 'meow_sob' }),
+        customEmojiFactory({ shortcode: "sob_other" }),
+        customEmojiFactory({ shortcode: "meow_sob" }),
       ],
     });
     await putEmojiData(
       [
         rawEmojiFactory({
-          label: 'loudly crying face',
-          hexcode: '1F62D',
-          shortcodes: ['loudly_crying_face'],
-          tags: ['bawling', 'cry', 'sad', 'sob', 'tear', 'tears', 'unhappy'],
+          label: "loudly crying face",
+          hexcode: "1F62D",
+          shortcodes: ["loudly_crying_face"],
+          tags: ["bawling", "cry", "sad", "sob", "tear", "tears", "unhappy"],
           emoticon: ":'o",
-          unicode: '😭',
+          unicode: "😭",
         }),
       ],
-      'en',
+      "en",
     );
 
-    const results = await search({ query: 'sob', locale: 'en' });
+    const results = await search({ query: "sob", locale: "en" });
 
     expect(results).toHaveLength(3);
     expect(results).toEqual([
-      expect.objectContaining({ shortcode: 'sob_other' }),
-      expect.objectContaining({ shortcode: 'meow_sob' }),
-      expect.objectContaining({ hexcode: '1F62D' }),
+      expect.objectContaining({ shortcode: "sob_other" }),
+      expect.objectContaining({ shortcode: "meow_sob" }),
+      expect.objectContaining({ hexcode: "1F62D" }),
     ]);
   });
 
-  test('shortcode matches', async () => {
-    await putLegacyShortcodes({ '1F62D': 'sob' });
+  test("shortcode matches", async () => {
+    await putLegacyShortcodes({ "1F62D": "sob" });
     await putEmojiData(
       [
         rawEmojiFactory({
-          label: 'loudly crying face',
-          hexcode: '1F62D',
-          shortcodes: ['loudly_crying_face'],
-          tags: ['bawling', 'cry', 'sad', 'sob', 'tear', 'tears', 'unhappy'],
+          label: "loudly crying face",
+          hexcode: "1F62D",
+          shortcodes: ["loudly_crying_face"],
+          tags: ["bawling", "cry", "sad", "sob", "tear", "tears", "unhappy"],
           emoticon: ":'o",
-          unicode: '😭',
+          unicode: "😭",
         }),
       ],
-      'en',
+      "en",
     );
     await putCustomEmojiData({
-      emojis: [customEmojiFactory({ shortcode: 'sob_other' })],
+      emojis: [customEmojiFactory({ shortcode: "sob_other" })],
     });
 
-    const results = await search({ query: 'sob', locale: 'en' });
+    const results = await search({ query: "sob", locale: "en" });
 
     expect(results).toHaveLength(2);
     expect(results).toEqual([
-      expect.objectContaining({ hexcode: '1F62D' }),
-      expect.objectContaining({ shortcode: 'sob_other' }),
+      expect.objectContaining({ hexcode: "1F62D" }),
+      expect.objectContaining({ shortcode: "sob_other" }),
     ]);
   });
 });

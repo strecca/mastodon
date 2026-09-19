@@ -30,7 +30,7 @@
 }
 
 .toggle::before {
-  content: '';
+  content: "";
   height: var(--diameter);
   width: var(--diameter);
   border-radius: 9999px;
@@ -71,6 +71,6 @@
   opacity: 0.6;
 }
 
-:global([dir='rtl']) .input:checked + .toggle::before {
+:global([dir="rtl"]) .input:checked + .toggle::before {
   transform: translateX(calc(-1 * (var(--diameter) - (var(--padding) * 2))));
 }

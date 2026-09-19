@@ -1,33 +1,26 @@
-import { useCallback, useMemo } from 'react';
-import type { FC } from 'react';
+import { useCallback, useMemo } from "react";
+import type { FC } from "react";
 
-import { defineMessage, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 
-import { focusCompose, resetCompose } from '@/flavours/glitch/actions/compose';
-import { closeModal } from '@/flavours/glitch/actions/modal';
-import { Button } from '@/flavours/glitch/components/button';
-import { DisplayNameSimple } from '@/flavours/glitch/components/display_name/simple';
-import { FormattedDateWrapper } from '@/flavours/glitch/components/formatted_date';
-import { IconButton } from '@/flavours/glitch/components/icon_button';
-import {
-  ModalShell,
-  ModalShellBody,
-} from '@/flavours/glitch/components/modal_shell';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import { useCurrentAccountId } from '@/flavours/glitch/hooks/useAccountId';
-import {
-  createAppSelector,
-  useAppDispatch,
-  useAppSelector,
-} from '@/flavours/glitch/store';
-import AnniversaryImage from '@/images/anniversary.svg?react';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
+import { focusCompose, resetCompose } from "@/flavours/glitch/actions/compose";
+import { closeModal } from "@/flavours/glitch/actions/modal";
+import { Button } from "@/flavours/glitch/components/button";
+import { DisplayNameSimple } from "@/flavours/glitch/components/display_name/simple";
+import { FormattedDateWrapper } from "@/flavours/glitch/components/formatted_date";
+import { IconButton } from "@/flavours/glitch/components/icon_button";
+import { ModalShell, ModalShellBody } from "@/flavours/glitch/components/modal_shell";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import { useCurrentAccountId } from "@/flavours/glitch/hooks/useAccountId";
+import { createAppSelector, useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
+import AnniversaryImage from "@/images/anniversary.svg?react";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const closeMessage = defineMessage({
-  id: 'lightbox.close',
-  defaultMessage: 'Close',
+  id: "lightbox.close",
+  defaultMessage: "Close",
 });
 
 const selectServerName = createAppSelector(
@@ -37,12 +30,12 @@ const selectServerName = createAppSelector(
     (state) => state.server.server.item?.domain,
   ],
   (accounts, accountId, serverDomain) => {
-    const acct = accounts.getIn([accountId, 'acct']) as string | undefined;
+    const acct = accounts.getIn([accountId, "acct"]) as string | undefined;
     if (!acct) {
       return undefined;
     }
 
-    const domain = acct.split('@').at(1);
+    const domain = acct.split("@").at(1);
     if (domain) {
       return domain;
     }
@@ -67,10 +60,7 @@ export const AccountJoinModal: FC<{
     }
     const now = new Date();
     const createdAt = new Date(createdAtStr);
-    if (
-      now.getMonth() === createdAt.getMonth() &&
-      now.getDate() === createdAt.getDate()
-    ) {
+    if (now.getMonth() === createdAt.getMonth() && now.getDate() === createdAt.getDate()) {
       return now.getFullYear() - createdAt.getFullYear();
     }
     return null;
@@ -85,9 +75,9 @@ export const AccountJoinModal: FC<{
       return;
     }
 
-    let shareText = '#Fediversary';
+    let shareText = "#Fediversary";
     if (anniversary === 0) {
-      shareText = isMe ? '#firstday' : '#welcome';
+      shareText = isMe ? "#firstday" : "#welcome";
     }
 
     if (!isMe && handle) {
@@ -96,11 +86,11 @@ export const AccountJoinModal: FC<{
 
     dispatch(resetCompose());
     dispatch(focusCompose(`\n\n${shareText}`, true));
-    dispatch(closeModal({ modalType: 'ACCOUNT_JOIN_DATE', ignoreFocus: true }));
+    dispatch(closeModal({ modalType: "ACCOUNT_JOIN_DATE", ignoreFocus: true }));
   }, [anniversary, handle, dispatch, isMe]);
 
   return (
-    <ModalShell as='div' className={classes.joinShell}>
+    <ModalShell as="div" className={classes.joinShell}>
       <ModalShellBody className={classes.joinWrapper}>
         <AccountAnniversaryImage anniversary={anniversary} />
 
@@ -114,22 +104,18 @@ export const AccountJoinModal: FC<{
           <h1>
             <FormattedDateWrapper
               value={account?.created_at}
-              month='short'
-              day='numeric'
-              year='numeric'
+              month="short"
+              day="numeric"
+              year="numeric"
             />
           </h1>
         </div>
 
-        <AccountAnniversaryShare
-          anniversary={anniversary}
-          onShare={handleShare}
-          isMe={isMe}
-        />
+        <AccountAnniversaryShare anniversary={anniversary} onShare={handleShare} isMe={isMe} />
 
         <IconButton
           iconComponent={CloseIcon}
-          icon='times'
+          icon="times"
           onClick={onClose}
           title={intl.formatMessage(closeMessage)}
           className={classes.joinClose}
@@ -149,9 +135,9 @@ const AccountJoinMessage: FC<{
     if (isMe) {
       return (
         <FormattedMessage
-          id='account.join_modal.me_today'
-          defaultMessage='It’s your first day on {server}!'
-          tagName='p'
+          id="account.join_modal.me_today"
+          defaultMessage="It’s your first day on {server}!"
+          tagName="p"
           values={{
             server: serverName,
           }}
@@ -160,9 +146,9 @@ const AccountJoinMessage: FC<{
     }
     return (
       <FormattedMessage
-        id='account.join_modal.other_today'
-        defaultMessage='It’s {name}’s first day on {server}!'
-        tagName='p'
+        id="account.join_modal.other_today"
+        defaultMessage="It’s {name}’s first day on {server}!"
+        tagName="p"
         values={{
           name,
           server: serverName,
@@ -175,9 +161,9 @@ const AccountJoinMessage: FC<{
     if (anniversary !== null && anniversary > 0) {
       return (
         <FormattedMessage
-          id='account.join_modal.me_anniversary'
-          defaultMessage='Happy Fediversary! You joined {server} on'
-          tagName='p'
+          id="account.join_modal.me_anniversary"
+          defaultMessage="Happy Fediversary! You joined {server} on"
+          tagName="p"
           values={{
             server: serverName,
           }}
@@ -186,9 +172,9 @@ const AccountJoinMessage: FC<{
     }
     return (
       <FormattedMessage
-        id='account.join_modal.me'
-        defaultMessage='You joined {server} on'
-        tagName='p'
+        id="account.join_modal.me"
+        defaultMessage="You joined {server} on"
+        tagName="p"
         values={{
           server: serverName,
         }}
@@ -198,9 +184,9 @@ const AccountJoinMessage: FC<{
 
   return (
     <FormattedMessage
-      id='account.join_modal.other'
-      defaultMessage='{name} joined {server} on'
-      tagName='p'
+      id="account.join_modal.other"
+      defaultMessage="{name} joined {server} on"
+      tagName="p"
       values={{
         name,
         server: serverName,
@@ -209,30 +195,24 @@ const AccountJoinMessage: FC<{
   );
 };
 
-const AccountAnniversaryImage: FC<{ anniversary: number | null }> = ({
-  anniversary,
-}) => {
+const AccountAnniversaryImage: FC<{ anniversary: number | null }> = ({ anniversary }) => {
   if (anniversary === null) {
     return null;
   }
 
   return (
     <div className={classes.joinBanner}>
-      <AnniversaryImage role='presentation' />
+      <AnniversaryImage role="presentation" />
       <h2>{anniversary || 1}</h2>
       {anniversary === 0 && (
-        <FormattedMessage
-          id='account.join_modal.day'
-          defaultMessage='Day'
-          tagName='h3'
-        />
+        <FormattedMessage id="account.join_modal.day" defaultMessage="Day" tagName="h3" />
       )}
       {anniversary > 0 && (
         <FormattedMessage
-          id='account.join_modal.years'
-          defaultMessage='{number, plural, one {year} other {years}}'
+          id="account.join_modal.years"
+          defaultMessage="{number, plural, one {year} other {years}}"
           values={{ number: anniversary }}
-          tagName='h3'
+          tagName="h3"
         />
       )}
     </div>
@@ -252,20 +232,20 @@ const AccountAnniversaryShare: FC<{
     <Button onClick={onShare}>
       {anniversary === 0 && isMe && (
         <FormattedMessage
-          id='account.join_modal.share.intro'
-          defaultMessage='Share an intro post'
+          id="account.join_modal.share.intro"
+          defaultMessage="Share an intro post"
         />
       )}
       {anniversary === 0 && !isMe && (
         <FormattedMessage
-          id='account.join_modal.share.welcome'
-          defaultMessage='Share a welcome post'
+          id="account.join_modal.share.welcome"
+          defaultMessage="Share a welcome post"
         />
       )}
       {anniversary > 0 && (
         <FormattedMessage
-          id='account.join_modal.share.celebrate'
-          defaultMessage='Share a celebratory post'
+          id="account.join_modal.share.celebrate"
+          defaultMessage="Share a celebratory post"
         />
       )}
     </Button>

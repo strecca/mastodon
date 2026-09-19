@@ -1,7 +1,7 @@
 ---
 fil:
   about:
-    about_mastodon_html: 'Ang social network ng hinaharap: Walang mga ad, walang corporate na pagmamanman, etikal na disenyo, at desentralisasyon! Sa iyo ang data mo sa Mastodon!'
+    about_mastodon_html: "Ang social network ng hinaharap: Walang mga ad, walang corporate na pagmamanman, etikal na disenyo, at desentralisasyon! Sa iyo ang data mo sa Mastodon!"
     contact_missing: Hindi naka-set
     contact_unavailable: N/A
     hosted_on: Mastodon hosted sa %{domain}

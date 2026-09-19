@@ -1,26 +1,24 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { Button } from '@/flavours/glitch/components/button';
-import { LinkedDisplayName } from '@/flavours/glitch/components/display_name';
-import { Icon } from '@/flavours/glitch/components/icon';
-import { CollectionMenu } from '@/flavours/glitch/features/collections/components/collection_menu';
-import { CollectionPreviewCard } from '@/flavours/glitch/features/collections/components/collection_preview_card';
-import { useConfirmRevoke } from '@/flavours/glitch/features/collections/detail/revoke_collection_inclusion_modal';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import CollectionsFilledIcon from '@/material-icons/400-24px/category-fill.svg?react';
+import { Button } from "@/flavours/glitch/components/button";
+import { LinkedDisplayName } from "@/flavours/glitch/components/display_name";
+import { Icon } from "@/flavours/glitch/components/icon";
+import { CollectionMenu } from "@/flavours/glitch/features/collections/components/collection_menu";
+import { CollectionPreviewCard } from "@/flavours/glitch/features/collections/components/collection_preview_card";
+import { useConfirmRevoke } from "@/flavours/glitch/features/collections/detail/revoke_collection_inclusion_modal";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import CollectionsFilledIcon from "@/material-icons/400-24px/category-fill.svg?react";
 import type {
   NotificationGroupAddedToCollection,
   NotificationGroupCollectionUpdate,
-} from 'flavours/glitch/models/notification_group';
+} from "flavours/glitch/models/notification_group";
 
-import classes from './notification_collection.module.scss';
+import classes from "./notification_collection.module.scss";
 
 export const NotificationCollection: React.FC<{
-  notification:
-    | NotificationGroupAddedToCollection
-    | NotificationGroupCollectionUpdate;
+  notification: NotificationGroupAddedToCollection | NotificationGroupCollectionUpdate;
   unread: boolean;
 }> = ({ notification, unread }) => {
   const { collection, type } = notification;
@@ -34,28 +32,26 @@ export const NotificationCollection: React.FC<{
 
   return (
     <div
-      className={classNames(
-        'notification-group',
-        `notification-group--${type}`,
-        { 'notification-group--unread': unread },
-      )}
+      className={classNames("notification-group", `notification-group--${type}`, {
+        "notification-group--unread": unread,
+      })}
     >
-      <div className='notification-group__icon'>
-        <Icon id='collection' icon={CollectionsFilledIcon} />
+      <div className="notification-group__icon">
+        <Icon id="collection" icon={CollectionsFilledIcon} />
       </div>
 
-      <div className='notification-group__main'>
-        <div className='notification-group__main__header'>
-          <h2 className='notification-group__main__header__label'>
-            {type === 'added_to_collection' && (
+      <div className="notification-group__main">
+        <div className="notification-group__main__header">
+          <h2 className="notification-group__main__header__label">
+            {type === "added_to_collection" && (
               <FormattedMessage
-                id='notification.added_to_collection'
-                defaultMessage='{name} added you to a collection'
+                id="notification.added_to_collection"
+                defaultMessage="{name} added you to a collection"
                 values={{
                   name: (
                     <LinkedDisplayName
                       displayProps={{
-                        variant: 'simple',
+                        variant: "simple",
                         account: collectionCreatorAccount,
                       }}
                     />
@@ -63,15 +59,15 @@ export const NotificationCollection: React.FC<{
                 }}
               />
             )}
-            {type === 'collection_update' && (
+            {type === "collection_update" && (
               <FormattedMessage
-                id='notification.collection_update'
-                defaultMessage='{name} edited a collection you’re in'
+                id="notification.collection_update"
+                defaultMessage="{name} edited a collection you’re in"
                 values={{
                   name: (
                     <LinkedDisplayName
                       displayProps={{
-                        variant: 'simple',
+                        variant: "simple",
                         account: collectionCreatorAccount,
                       }}
                     />
@@ -85,20 +81,12 @@ export const NotificationCollection: React.FC<{
         <CollectionPreviewCard collection={collection} />
 
         <div className={classes.actions}>
-          <Button
-            compact
-            secondary
-            className='button--destructive'
-            onClick={confirmRevoke}
-          >
-            <FormattedMessage
-              id='collections.detail.revoke_inclusion'
-              defaultMessage='Remove me'
-            />
+          <Button compact secondary className="button--destructive" onClick={confirmRevoke}>
+            <FormattedMessage id="collections.detail.revoke_inclusion" defaultMessage="Remove me" />
           </Button>
 
           <CollectionMenu
-            context='notifications'
+            context="notifications"
             collection={collection}
             className={classes.menuButton}
           />

@@ -1,50 +1,47 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from "react";
 
-import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { escapeRegExp } from 'lodash';
-import { useDebouncedCallback } from 'use-debounce';
+import { escapeRegExp } from "lodash";
+import { useDebouncedCallback } from "use-debounce";
 
-import { DisplayName } from '@/flavours/glitch/components/display_name';
-import { NavigationFocusTarget } from '@/flavours/glitch/components/navigation_focus_target';
-import { openModal, closeModal } from 'flavours/glitch/actions/modal';
-import { apiRequest } from 'flavours/glitch/api';
-import { Button } from 'flavours/glitch/components/button';
+import { DisplayName } from "@/flavours/glitch/components/display_name";
+import { NavigationFocusTarget } from "@/flavours/glitch/components/navigation_focus_target";
+import { openModal, closeModal } from "flavours/glitch/actions/modal";
+import { apiRequest } from "flavours/glitch/api";
+import { Button } from "flavours/glitch/components/button";
 import {
   domain as localDomain,
   registrationsOpen,
   sso_redirect,
-} from 'flavours/glitch/initial_state';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
+} from "flavours/glitch/initial_state";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
 const messages = defineMessages({
   loginPrompt: {
-    id: 'interaction_modal.username_prompt',
-    defaultMessage: 'E.g. {example}',
+    id: "interaction_modal.username_prompt",
+    defaultMessage: "E.g. {example}",
   },
 });
 
-type InteractionIntent = 'follow' | 'reblog' | 'favourite' | 'reply' | 'vote';
+type InteractionIntent = "follow" | "reblog" | "favourite" | "reply" | "vote";
 
 interface LoginFormMessage {
-  type:
-    | 'fetchInteractionURL'
-    | 'fetchInteractionURL-failure'
-    | 'fetchInteractionURL-success';
+  type: "fetchInteractionURL" | "fetchInteractionURL-failure" | "fetchInteractionURL-success";
   uri_or_domain: string;
   template?: string;
   param?: string;
   intent?: InteractionIntent;
 }
 
-const PERSISTENCE_KEY = 'mastodon_home';
+const PERSISTENCE_KEY = "mastodon_home";
 
-const EXAMPLE_VALUE = 'username@mastodon.social';
+const EXAMPLE_VALUE = "username@mastodon.social";
 
 const isValidDomain = (value: string) => {
-  const url = new URL('https:///path');
+  const url = new URL("https:///path");
   url.hostname = value;
   return url.hostname === value;
 };
@@ -60,8 +57,8 @@ const valueToDomain = (value: string): string | null => {
       return null;
     }
     // If the user writes their full handle including username
-  } else if (value.includes('@')) {
-    const [_, domain, ...other] = value.replace(/^@/, '').split('@');
+  } else if (value.includes("@")) {
+    const [_, domain, ...other] = value.replace(/^@/, "").split("@");
 
     if (!domain || other.length > 0) {
       return null;
@@ -76,7 +73,7 @@ const valueToDomain = (value: string): string | null => {
 const addInputToOptions = (value: string, options: string[]) => {
   value = value.trim();
 
-  if (value.includes('.') && isValidDomain(value)) {
+  if (value.includes(".") && isValidDomain(value)) {
     return [value].concat(options.filter((x) => x !== value));
   }
 
@@ -87,17 +84,17 @@ const isValueValid = (value: string) => {
   let likelyAcct = false;
   let url = null;
 
-  if (value.startsWith('/')) {
+  if (value.startsWith("/")) {
     return false;
   }
 
-  if (value.startsWith('@')) {
+  if (value.startsWith("@")) {
     value = value.slice(1);
     likelyAcct = true;
   }
 
   // The user is in the middle of typing something, do not error out
-  if (value === '') {
+  if (value === "") {
     return true;
   }
 
@@ -115,19 +112,15 @@ const isValueValid = (value: string) => {
   }
 };
 
-const sendToFrame = (
-  frame: HTMLIFrameElement | null,
-  value: string,
-  intent: string,
-): void => {
+const sendToFrame = (frame: HTMLIFrameElement | null, value: string, intent: string): void => {
   if (valueToDomain(value.trim()) === localDomain) {
-    window.location.href = '/auth/sign_in';
+    window.location.href = "/auth/sign_in";
     return;
   }
 
   frame?.contentWindow?.postMessage(
     {
-      type: 'fetchInteractionURL',
+      type: "fetchInteractionURL",
       uri_or_domain: value.trim(),
       intent,
     },
@@ -140,9 +133,7 @@ const LoginForm: React.FC<{
   intent: string;
 }> = ({ resourceUrl, intent }) => {
   const intl = useIntl();
-  const [value, setValue] = useState(
-    localStorage.getItem(PERSISTENCE_KEY) ?? '',
-  );
+  const [value, setValue] = useState(localStorage.getItem(PERSISTENCE_KEY) ?? "");
   const [expanded, setExpanded] = useState(false);
   const [selectedOption, setSelectedOption] = useState(-1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -157,24 +148,18 @@ const LoginForm: React.FC<{
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent<LoginFormMessage>) => {
-      if (
-        event.origin !== window.origin ||
-        event.source !== iframeRef.current?.contentWindow
-      ) {
+      if (event.origin !== window.origin || event.source !== iframeRef.current?.contentWindow) {
         return;
       }
 
-      if (event.data.type === 'fetchInteractionURL-failure') {
+      if (event.data.type === "fetchInteractionURL-failure") {
         setIsSubmitting(false);
         setError(true);
-      } else if (event.data.type === 'fetchInteractionURL-success') {
+      } else if (event.data.type === "fetchInteractionURL-success") {
         if (event.data.template && /^https?:\/\//.test(event.data.template)) {
           try {
             const url = new URL(
-              event.data.template.replace(
-                `{${event.data.param}}`,
-                encodeURIComponent(resourceUrl),
-              ),
+              event.data.template.replace(`{${event.data.param}}`, encodeURIComponent(resourceUrl)),
             );
 
             localStorage.setItem(PERSISTENCE_KEY, event.data.uri_or_domain);
@@ -191,10 +176,10 @@ const LoginForm: React.FC<{
       }
     };
 
-    window.addEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
 
     return () => {
-      window.removeEventListener('message', handleMessage);
+      window.removeEventListener("message", handleMessage);
     };
   }, [resourceUrl, setIsSubmitting, setError]);
 
@@ -214,7 +199,7 @@ const LoginForm: React.FC<{
 
       searchRequestRef.current = new AbortController();
 
-      void apiRequest<string[] | null>('GET', 'v1/peers/search', {
+      void apiRequest<string[] | null>("GET", "v1/peers/search", {
         signal: searchRequestRef.current.signal,
         params: {
           q: domain,
@@ -223,7 +208,7 @@ const LoginForm: React.FC<{
         .then((data) => {
           setNetworkOptions(data ?? []);
           setOptions(addInputToOptions(value, data ?? []));
-          return '';
+          return "";
         })
         .catch(() => {
           // Nothing
@@ -241,14 +226,7 @@ const LoginForm: React.FC<{
       setOptions(addInputToOptions(value, networkOptions));
       handleSearch(value);
     },
-    [
-      setError,
-      setValue,
-      setValueChanged,
-      setOptions,
-      networkOptions,
-      handleSearch,
-    ],
+    [setError, setValue, setValueChanged, setOptions, networkOptions, handleSearch],
   );
 
   const handleSubmit = useCallback(() => {
@@ -269,27 +247,23 @@ const LoginForm: React.FC<{
       const selectedOptionValue = options[selectedOption];
 
       switch (e.key) {
-        case 'ArrowDown':
+        case "ArrowDown":
           e.preventDefault();
 
           if (options.length > 0) {
-            setSelectedOption((selectedOption) =>
-              Math.min(selectedOption + 1, options.length - 1),
-            );
+            setSelectedOption((selectedOption) => Math.min(selectedOption + 1, options.length - 1));
           }
 
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           e.preventDefault();
 
           if (options.length > 0) {
-            setSelectedOption((selectedOption) =>
-              Math.max(selectedOption - 1, -1),
-            );
+            setSelectedOption((selectedOption) => Math.max(selectedOption - 1, -1));
           }
 
           break;
-        case 'Enter':
+        case "Enter":
           e.preventDefault();
 
           if (selectedOption === -1) {
@@ -304,22 +278,14 @@ const LoginForm: React.FC<{
           break;
       }
     },
-    [
-      handleSubmit,
-      setSelectedOption,
-      setError,
-      setValue,
-      selectedOption,
-      options,
-      intent,
-    ],
+    [handleSubmit, setSelectedOption, setError, setValue, selectedOption, options, intent],
   );
 
   const handleOptionClick = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
 
-      const index = Number(e.currentTarget.getAttribute('data-index'));
+      const index = Number(e.currentTarget.getAttribute("data-index"));
       const option = options[index];
 
       if (!option) {
@@ -335,13 +301,13 @@ const LoginForm: React.FC<{
     [options, setSelectedOption, setValue, setError, intent],
   );
 
-  const domain = (valueToDomain(value) ?? '').trim();
-  const domainRegExp = new RegExp(`(${escapeRegExp(domain)})`, 'gi');
+  const domain = (valueToDomain(value) ?? "").trim();
+  const domainRegExp = new RegExp(`(${escapeRegExp(domain)})`, "gi");
   const hasPopOut = valueChanged && domain.length > 0 && options.length > 0;
 
   return (
     <div
-      className={classNames('interaction-modal__login', {
+      className={classNames("interaction-modal__login", {
         focused: expanded,
         expanded: hasPopOut,
         invalid: error,
@@ -349,16 +315,16 @@ const LoginForm: React.FC<{
     >
       <iframe
         ref={iframeRef}
-        style={{ display: 'none' }}
-        src='/remote_interaction_helper'
-        sandbox='allow-scripts allow-same-origin'
-        title='remote interaction helper'
+        style={{ display: "none" }}
+        src="/remote_interaction_helper"
+        sandbox="allow-scripts allow-same-origin"
+        title="remote interaction helper"
       />
 
-      <div className='interaction-modal__login__input'>
+      <div className="interaction-modal__login__input">
         <input
           ref={inputRef}
-          type='text'
+          type="text"
           value={value}
           placeholder={intl.formatMessage(messages.loginPrompt, {
             example: EXAMPLE_VALUE,
@@ -372,28 +338,28 @@ const LoginForm: React.FC<{
           onFocus={handleFocus}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          autoComplete='off'
-          autoCapitalize='off'
-          spellCheck='false'
+          autoComplete="off"
+          autoCapitalize="off"
+          spellCheck="false"
         />
 
         <Button onClick={handleSubmit} disabled={isSubmitting || error}>
-          <FormattedMessage id='interaction_modal.go' defaultMessage='Go' />
+          <FormattedMessage id="interaction_modal.go" defaultMessage="Go" />
         </Button>
       </div>
 
       {hasPopOut && (
-        <div className='search__popout'>
-          <div className='search__popout__menu'>
+        <div className="search__popout">
+          <div className="search__popout__menu">
             {options.map((option, i) => (
               <button
                 key={option}
                 onMouseDown={handleOptionClick}
                 data-index={i}
-                className={classNames('search__popout__menu__item', {
+                className={classNames("search__popout__menu__item", {
                   selected: selectedOption === i,
                 })}
-                type='button'
+                type="button"
               >
                 {option
                   .split(domainRegExp)
@@ -420,10 +386,10 @@ const InteractionModal: React.FC<{
 }> = ({ accountId, url, intent }) => {
   const dispatch = useAppDispatch();
   const signupUrl = useAppSelector(
-    (state) => state.server.server.item?.registrations.url ?? '/auth/sign_up',
+    (state) => state.server.server.item?.registrations.url ?? "/auth/sign_up",
   );
   const account = useAppSelector((state) => state.accounts.get(accountId));
-  const name = <DisplayName account={account} variant='simple' />;
+  const name = <DisplayName account={account} variant="simple" />;
 
   const handleSignupClick = useCallback(() => {
     dispatch(
@@ -435,7 +401,7 @@ const InteractionModal: React.FC<{
 
     dispatch(
       openModal({
-        modalType: 'CLOSED_REGISTRATIONS',
+        modalType: "CLOSED_REGISTRATIONS",
         modalProps: {},
       }),
     );
@@ -445,52 +411,40 @@ const InteractionModal: React.FC<{
 
   if (sso_redirect) {
     signupButton = (
-      <a href={sso_redirect} data-method='post' className='link-button'>
-        <FormattedMessage
-          id='sign_in_banner.create_account'
-          defaultMessage='Create account'
-        />
+      <a href={sso_redirect} data-method="post" className="link-button">
+        <FormattedMessage id="sign_in_banner.create_account" defaultMessage="Create account" />
       </a>
     );
   } else if (registrationsOpen) {
     signupButton = (
-      <a href={signupUrl} className='link-button'>
-        <FormattedMessage
-          id='sign_in_banner.create_account'
-          defaultMessage='Create account'
-        />
+      <a href={signupUrl} className="link-button">
+        <FormattedMessage id="sign_in_banner.create_account" defaultMessage="Create account" />
       </a>
     );
   } else {
     signupButton = (
-      <button className='link-button' onClick={handleSignupClick} type='button'>
-        <FormattedMessage
-          id='sign_in_banner.create_account'
-          defaultMessage='Create account'
-        />
+      <button className="link-button" onClick={handleSignupClick} type="button">
+        <FormattedMessage id="sign_in_banner.create_account" defaultMessage="Create account" />
       </button>
     );
   }
 
   return (
-    <div className='modal-root__modal interaction-modal'>
-      <div className='interaction-modal__lead'>
-        <NavigationFocusTarget as='h1'>
-          <FormattedMessage
-            id='interaction_modal.title'
-            defaultMessage='Sign in to continue'
-          />
+    <div className="modal-root__modal interaction-modal">
+      <div className="interaction-modal__lead">
+        <NavigationFocusTarget as="h1">
+          <FormattedMessage id="interaction_modal.title" defaultMessage="Sign in to continue" />
         </NavigationFocusTarget>
         <p>
-          {intent === 'follow' ? (
+          {intent === "follow" ? (
             <FormattedMessage
-              id='interaction_modal.action_follow'
-              defaultMessage='To follow {name}, you need to sign into your account on whatever Mastodon server you use.'
+              id="interaction_modal.action_follow"
+              defaultMessage="To follow {name}, you need to sign into your account on whatever Mastodon server you use."
               values={{ name }}
             />
           ) : (
             <FormattedMessage
-              id='interaction_modal.action'
+              id="interaction_modal.action"
               defaultMessage="To interact with {name}'s post, you need to sign into your account on whatever Mastodon server you use."
               values={{ name }}
             />
@@ -502,9 +456,9 @@ const InteractionModal: React.FC<{
 
       <p>
         <FormattedMessage
-          id='interaction_modal.no_account_yet'
+          id="interaction_modal.no_account_yet"
           defaultMessage="Don't have an account yet?"
-        />{' '}
+        />{" "}
         {signupButton}
       </p>
     </div>

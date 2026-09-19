@@ -1,50 +1,54 @@
-import PropTypes from 'prop-types';
-import { createRef } from 'react';
+import PropTypes from "prop-types";
+import { createRef } from "react";
 
-import { defineMessages } from 'react-intl';
+import { defineMessages } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import ImmutablePureComponent from 'react-immutable-pure-component';
+import ImmutablePropTypes from "react-immutable-proptypes";
+import ImmutablePureComponent from "react-immutable-pure-component";
 
-import { length } from 'stringz';
+import { length } from "stringz";
 
-import { missingAltTextModal } from 'flavours/glitch/initial_state';
+import { missingAltTextModal } from "flavours/glitch/initial_state";
 
-import AutosuggestInput from 'flavours/glitch/components/autosuggest_input';
-import AutosuggestTextarea from 'flavours/glitch/components/autosuggest_textarea';
-import { Button } from 'flavours/glitch/components/button';
-import { injectIntl } from '@/flavours/glitch/components/intl';
-import EmojiPickerDropdown from '../containers/emoji_picker_dropdown_container';
-import PollButtonContainer from '../containers/poll_button_container';
-import SpoilerButtonContainer from '../containers/spoiler_button_container';
-import UploadButtonContainer from '../containers/upload_button_container';
-import { countableText } from '../util/counter';
+import AutosuggestInput from "flavours/glitch/components/autosuggest_input";
+import AutosuggestTextarea from "flavours/glitch/components/autosuggest_textarea";
+import { Button } from "flavours/glitch/components/button";
+import { injectIntl } from "@/flavours/glitch/components/intl";
+import EmojiPickerDropdown from "../containers/emoji_picker_dropdown_container";
+import PollButtonContainer from "../containers/poll_button_container";
+import SpoilerButtonContainer from "../containers/spoiler_button_container";
+import UploadButtonContainer from "../containers/upload_button_container";
+import { countableText } from "../util/counter";
 
-import { CharacterCounter } from './character_counter';
-import { ContentTypeButton } from './content_type_button';
-import { EditIndicator } from './edit_indicator';
-import { FederationButton } from './federation_button';
-import { LanguageDropdown } from './language_dropdown';
-import { NavigationBar } from './navigation_bar';
+import { CharacterCounter } from "./character_counter";
+import { ContentTypeButton } from "./content_type_button";
+import { EditIndicator } from "./edit_indicator";
+import { FederationButton } from "./federation_button";
+import { LanguageDropdown } from "./language_dropdown";
+import { NavigationBar } from "./navigation_bar";
 import { PollForm } from "./poll_form";
-import { ReplyIndicator } from './reply_indicator';
-import { SecondaryPrivacyButton } from './secondary_privacy_button';
-import { ThreadModeButton } from './thread_mode_button';
-import { UploadForm } from './upload_form';
-import { Warning } from './warning';
-import { ComposeQuotedStatus } from './quoted_post';
-import { VisibilityButton } from './visibility_button';
+import { ReplyIndicator } from "./reply_indicator";
+import { SecondaryPrivacyButton } from "./secondary_privacy_button";
+import { ThreadModeButton } from "./thread_mode_button";
+import { UploadForm } from "./upload_form";
+import { Warning } from "./warning";
+import { ComposeQuotedStatus } from "./quoted_post";
+import { VisibilityButton } from "./visibility_button";
 
-const allowedAroundShortCode = '><\u0085\u0020\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029\u0009\u000a\u000b\u000c\u000d';
+const allowedAroundShortCode =
+  "><\u0085\u0020\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029\u0009\u000a\u000b\u000c\u000d";
 
 const messages = defineMessages({
-  placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
-  spoiler_placeholder: { id: 'compose_form.spoiler_placeholder', defaultMessage: 'Content warning (optional)' },
-  publish: { id: 'compose_form.publish', defaultMessage: 'Post' },
-  saveChanges: { id: 'compose_form.save_changes', defaultMessage: 'Update' },
-  reply: { id: 'compose_form.reply', defaultMessage: 'Reply' },
+  placeholder: { id: "compose_form.placeholder", defaultMessage: "What is on your mind?" },
+  spoiler_placeholder: {
+    id: "compose_form.spoiler_placeholder",
+    defaultMessage: "Content warning (optional)",
+  },
+  publish: { id: "compose_form.publish", defaultMessage: "Post" },
+  saveChanges: { id: "compose_form.save_changes", defaultMessage: "Update" },
+  reply: { id: "compose_form.reply", defaultMessage: "Reply" },
 });
 
 class ComposeForm extends ImmutablePureComponent {
@@ -100,18 +104,18 @@ class ComposeForm extends ImmutablePureComponent {
   };
 
   blurOnEscape = (e) => {
-    if (['esc', 'escape'].includes(e.key.toLowerCase())) {
+    if (["esc", "escape"].includes(e.key.toLowerCase())) {
       e.target.blur();
     }
-  }
+  };
 
   handleKeyDownPost = (e) => {
-    if (e.key.toLowerCase() === 'enter' && (e.ctrlKey || e.metaKey)) {
+    if (e.key.toLowerCase() === "enter" && (e.ctrlKey || e.metaKey)) {
       this.handleSubmit(e);
       e.preventDefault();
     }
 
-    if (e.key.toLowerCase() === 'enter' && e.altKey) {
+    if (e.key.toLowerCase() === "enter" && e.altKey) {
       this.handleSecondarySubmit(e);
       e.preventDefault();
     }
@@ -120,7 +124,7 @@ class ComposeForm extends ImmutablePureComponent {
   };
 
   handleKeyDownSpoiler = (e) => {
-    if (e.key.toLowerCase() === 'enter') {
+    if (e.key.toLowerCase() === "enter") {
       if (e.ctrlKey || e.metaKey) {
         this.handleSubmit();
       } else if (e.altKey) {
@@ -134,7 +138,9 @@ class ComposeForm extends ImmutablePureComponent {
   };
 
   getFulltextForCharacterCounting = () => {
-    return [this.props.spoiler? this.props.spoilerText: '', countableText(this.props.text)].join('');
+    return [this.props.spoiler ? this.props.spoilerText : "", countableText(this.props.text)].join(
+      "",
+    );
   };
 
   canSubmit = () => {
@@ -156,7 +162,8 @@ class ComposeForm extends ImmutablePureComponent {
     }
 
     this.props.onSubmit({
-      missingAltText: missingAltTextModal && this.props.missingAltText && this.props.privacy !== 'direct',
+      missingAltText:
+        missingAltTextModal && this.props.missingAltText && this.props.privacy !== "direct",
       quoteToPrivate: this.props.quoteToPrivate,
       overridePrivacy,
     });
@@ -168,7 +175,7 @@ class ComposeForm extends ImmutablePureComponent {
 
   handleSecondarySubmit = (e) => {
     const { sideArm } = this.props;
-    this.handleSubmit(e, sideArm === 'none' ? null : sideArm);
+    this.handleSubmit(e, sideArm === "none" ? null : sideArm);
   };
 
   onSuggestionsClearRequested = () => {
@@ -180,11 +187,11 @@ class ComposeForm extends ImmutablePureComponent {
   };
 
   onSuggestionSelected = (tokenStart, token, value) => {
-    this.props.onSuggestionSelected(tokenStart, token, value, ['text']);
+    this.props.onSuggestionSelected(tokenStart, token, value, ["text"]);
   };
 
   onSpoilerSuggestionSelected = (tokenStart, token, value) => {
-    this.props.onSuggestionSelected(tokenStart, token, value, ['spoiler_text']);
+    this.props.onSuggestionSelected(tokenStart, token, value, ["spoiler_text"]);
   };
 
   handleChangeSpoilerText = (e) => {
@@ -200,15 +207,15 @@ class ComposeForm extends ImmutablePureComponent {
     }
   };
 
-  componentDidMount () {
-    this._updateFocusAndSelection({ });
+  componentDidMount() {
+    this._updateFocusAndSelection({});
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this.timeout) clearTimeout(this.timeout);
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     this._updateFocusAndSelection(prevProps);
   }
 
@@ -221,25 +228,31 @@ class ComposeForm extends ImmutablePureComponent {
     if (this.props.focusDate && this.props.focusDate !== prevProps.focusDate) {
       let selectionEnd, selectionStart;
 
-      if (this.props.preselectDate !== prevProps.preselectDate && this.props.isInReply && this.props.preselectOnReply) {
-        selectionEnd   = this.props.text.length;
+      if (
+        this.props.preselectDate !== prevProps.preselectDate &&
+        this.props.isInReply &&
+        this.props.preselectOnReply
+      ) {
+        selectionEnd = this.props.text.length;
         selectionStart = this.props.text.search(/\s/) + 1;
-      } else if (typeof this.props.caretPosition === 'number') {
+      } else if (typeof this.props.caretPosition === "number") {
         selectionStart = this.props.caretPosition;
-        selectionEnd   = this.props.caretPosition;
+        selectionEnd = this.props.caretPosition;
       } else {
-        selectionEnd   = this.props.text.length;
+        selectionEnd = this.props.text.length;
         selectionStart = selectionEnd;
       }
 
       // Because of the wicg-inert polyfill, the activeElement may not be
       // immediately selectable, we have to wait for observers to run, as
       // described in https://github.com/WICG/inert#performance-and-gotchas
-      Promise.resolve().then(() => {
-        this.textareaRef.current.setSelectionRange(selectionStart, selectionEnd);
-        this.textareaRef.current.focus();
-      }).catch(console.error);
-    } else if(prevProps.isSubmitting && !this.props.isSubmitting) {
+      Promise.resolve()
+        .then(() => {
+          this.textareaRef.current.setSelectionRange(selectionStart, selectionEnd);
+          this.textareaRef.current.focus();
+        })
+        .catch(console.error);
+    } else if (prevProps.isSubmitting && !this.props.isSubmitting) {
       this.textareaRef.current.focus();
     } else if (this.props.spoiler !== prevProps.spoiler) {
       const mediaJustAdded = this.props.anyMedia && !prevProps.anyMedia;
@@ -256,28 +269,30 @@ class ComposeForm extends ImmutablePureComponent {
     this.spoilerText = c;
   };
 
-  setRef = c => {
+  setRef = (c) => {
     this.composeForm = c;
   };
 
   handleEmojiPick = (data) => {
-    const { text }     = this.props;
-    const position     = this.textareaRef.current.selectionStart;
-    const needsSpace   = data.custom && position > 0 && !allowedAroundShortCode.includes(text[position - 1]);
+    const { text } = this.props;
+    const position = this.textareaRef.current.selectionStart;
+    const needsSpace =
+      data.custom && position > 0 && !allowedAroundShortCode.includes(text[position - 1]);
 
     this.props.onPickEmoji(position, data, needsSpace);
   };
 
-  render () {
-    const { intl, onPaste, onDrop, autoFocus, withoutNavigation, maxChars, isSubmitting } = this.props;
+  render() {
+    const { intl, onPaste, onDrop, autoFocus, withoutNavigation, maxChars, isSubmitting } =
+      this.props;
 
     return (
       <form
-        className='compose-form'
-        role='region'
+        className="compose-form"
+        role="region"
         aria-label={intl.formatMessage({
-          id: 'tabs_bar.publish',
-          defaultMessage: 'New Post'
+          id: "tabs_bar.publish",
+          defaultMessage: "New Post",
         })}
         onSubmit={this.handleSubmit}
       >
@@ -285,17 +300,17 @@ class ComposeForm extends ImmutablePureComponent {
         {!withoutNavigation && <NavigationBar />}
         <Warning />
 
-        <div className='compose-form__highlightable' ref={this.setRef}>
+        <div className="compose-form__highlightable" ref={this.setRef}>
           <EditIndicator />
 
-          <div className='compose-form__dropdowns'>
+          <div className="compose-form__dropdowns">
             <VisibilityButton disabled={this.props.isEditing} />
             <LanguageDropdown />
           </div>
 
           {this.props.spoiler && (
-            <div className='spoiler-input'>
-              <div className='spoiler-input__border' />
+            <div className="spoiler-input">
+              <div className="spoiler-input__border" />
 
               <AutosuggestInput
                 placeholder={intl.formatMessage(messages.spoiler_placeholder)}
@@ -308,14 +323,14 @@ class ComposeForm extends ImmutablePureComponent {
                 onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                 onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                 onSuggestionSelected={this.onSpoilerSuggestionSelected}
-                searchTokens={[':']}
-                id='cw-spoiler-input'
-                className='spoiler-input__input'
+                searchTokens={[":"]}
+                id="cw-spoiler-input"
+                className="spoiler-input__input"
                 lang={this.props.lang}
                 spellCheck
               />
 
-              <div className='spoiler-input__border' />
+              <div className="spoiler-input__border" />
             </div>
           )}
 
@@ -335,16 +350,16 @@ class ComposeForm extends ImmutablePureComponent {
             onDrop={onDrop}
             autoFocus={autoFocus}
             lang={this.props.lang}
-            className='compose-form__input'
+            className="compose-form__input"
           />
 
           <PollForm />
           <UploadForm />
           <ComposeQuotedStatus />
 
-          <div className='compose-form__footer'>
-            <div className='compose-form__actions'>
-              <div className='compose-form__buttons'>
+          <div className="compose-form__footer">
+            <div className="compose-form__actions">
+              <div className="compose-form__buttons">
                 <UploadButtonContainer />
                 <PollButtonContainer />
                 {!this.props.spoilerAlwaysOn && <SpoilerButtonContainer />}
@@ -355,23 +370,20 @@ class ComposeForm extends ImmutablePureComponent {
                 <CharacterCounter max={maxChars} text={this.getFulltextForCharacterCounting()} />
               </div>
 
-              <div className='compose-form__submit'>
+              <div className="compose-form__submit">
                 <SecondaryPrivacyButton
                   disabled={!this.canSubmit()}
                   privacy={this.props.sideArm}
                   isEditing={this.props.isEditing}
                   onClick={this.handleSecondarySubmit}
                 />
-                <Button
-                  type='submit'
-                  compact
-                  disabled={!this.canSubmit()}
-                  loading={isSubmitting}
-                >
+                <Button type="submit" compact disabled={!this.canSubmit()} loading={isSubmitting}>
                   {intl.formatMessage(
-                    this.props.isEditing ?
-                      messages.saveChanges :
-                      (this.props.isInReply ? messages.reply : messages.publish)
+                    this.props.isEditing
+                      ? messages.saveChanges
+                      : this.props.isInReply
+                        ? messages.reply
+                        : messages.publish,
                   )}
                 </Button>
               </div>
@@ -381,7 +393,6 @@ class ComposeForm extends ImmutablePureComponent {
       </form>
     );
   }
-
 }
 
 export default injectIntl(ComposeForm);

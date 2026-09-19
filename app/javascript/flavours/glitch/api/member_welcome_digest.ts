@@ -1,6 +1,6 @@
-import api, { getAsyncRefreshHeader } from 'flavours/glitch/api';
+import api, { getAsyncRefreshHeader } from "flavours/glitch/api";
 
-export type ApiWelcomeDigestState = 'available' | 'generating' | 'none';
+export type ApiWelcomeDigestState = "available" | "generating" | "none";
 
 interface ApiWelcomeDigestResponse {
   state: ApiWelcomeDigestState;
@@ -8,9 +8,7 @@ interface ApiWelcomeDigestResponse {
 }
 
 export const apiGetWelcomeDigest = async () => {
-  const response = await api().get<ApiWelcomeDigestResponse>(
-    '/api/v1/member_welcome_digest',
-  );
+  const response = await api().get<ApiWelcomeDigestResponse>("/api/v1/member_welcome_digest");
 
   return {
     state: response.data.state,
@@ -19,5 +17,4 @@ export const apiGetWelcomeDigest = async () => {
   };
 };
 
-export const apiMarkWelcomeDigestRead = () =>
-  api().post('/api/v1/member_welcome_digest/read');
+export const apiMarkWelcomeDigestRead = () => api().post("/api/v1/member_welcome_digest/read");

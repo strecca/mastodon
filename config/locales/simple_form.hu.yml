@@ -8,7 +8,7 @@ hu:
         display_name: Teljes neved vagy vicces neved.
         fields: Weboldalad, megszólításaid, korod, bármi, amit szeretnél.
         indexable: A nyilvános bejegyzéseid megjelenhetnek a Mastodon keresési eredményei között. Azok, akik kapcsolatba léptek a bejegyzéseiddel, ettől függetlenül kereshetik azokat.
-        note: 'Megemlíthetsz @másokat vagy #hashtag-eket.'
+        note: "Megemlíthetsz @másokat vagy #hashtag-eket."
         show_collections: Mások böngészhetnek a követőid és követetteid között. Ettől függetlenül a követetteid látják majd, hogy követed őket.
         unlocked: Mások jóváhagyás kérése nélkül követhetnek téged. Töröld a jelölést, ha szeretnéd áttekinteni a követési kéréseket és választani az új követők elfogadása vagy elutasítása közül.
       account_alias:
@@ -76,7 +76,7 @@ hu:
         domain: Ez lehet az e-mail címben szereplő domain név vagy az MX rekord, melyet ez használ. Ezeket feliratkozáskor ellenőrizzük.
         with_dns_records: Megpróbáljuk a megadott domain DNS rekordjait lekérni, és az eredményeket hozzáadjuk a tiltólistához
       featured_tag:
-        name: 'Itt vannak azok a hashtagek, melyeket legutóbb használtál:'
+        name: "Itt vannak azok a hashtagek, melyeket legutóbb használtál:"
       filters:
         action: Válassza ki a végrehajtandó műveletet, ha a bejegyzés megfelel a szűrőnek
         actions:
@@ -132,7 +132,7 @@ hu:
         hint: Nem kötelező. Adj meg további részleteket a szabályról.
         text: Írd le, mi a szabály vagy elvárás ezen a kiszolgálón a felhasználók felé. Próbálj röviden, egyszerűen fogalmazni.
       sessions:
-        otp: 'Add meg a telefonodon generált kétlépcsős azonosító kódodat vagy használd az egyik tartalék bejelentkező kódot:'
+        otp: "Add meg a telefonodon generált kétlépcsős azonosító kódodat vagy használd az egyik tartalék bejelentkező kódot:"
         webauthn: Ha ez egy USB kulcs, ellenőrizd, hogy csatlakoztattad és ha szükséges, aktiváltad is.
       settings:
         email_subscriptions: A kikapcsolás megtartja az eddigi feliratkozókat, de leállítja a levelek küldését.
@@ -408,7 +408,7 @@ hu:
         events: Engedélyezett események
         template: Adatcsomag sablon
         url: Végponti URL
-    'no': Nem
+    "no": Nem
     not_recommended: Nem ajánlott
     overridden: Felülbírálva
     recommended: Ajánlott
@@ -418,4 +418,4 @@ hu:
     title:
       sessions:
         webauthn: Használd valamelyik biztonsági kulcsodat a bejelentkezéshez
-    'yes': Igen
+    "yes": Igen

@@ -8,7 +8,7 @@ cs:
         display_name: Vaše celé jméno nebo přezdívka.
         fields: Vaše domovská stránka, zájmena, věk, cokoliv chcete.
         indexable: Vaše veřejné příspěvky se mohou objevit ve výsledcích vyhledávání na Mastodonu. Lidé, kteří s vašimi příspěvky interagovaly, je mohou stále vyhledávat.
-        note: 'Můžete @zmínit jiné osoby nebo #hashtagy.'
+        note: "Můžete @zmínit jiné osoby nebo #hashtagy."
         show_collections: Lidé budou moci procházet skrz sledující. Lidé, které sledujete, uvidí, že je sledujete bezohledně.
         unlocked: Lidé vás budou moci sledovat, aniž by vás žádali o schválení. Zrušte zaškrtnutí, pokud chcete kontrolovat požadavky o sledování a vybírat si, zda přijmete nebo odmítnete nové sledující.
       account_alias:
@@ -76,7 +76,7 @@ cs:
         domain: Toto může být doménové jméno, které je v e-mailové adrese, nebo MX záznam, který používá. Budou zkontrolovány při registraci.
         with_dns_records: Dojde k pokusu o překlad DNS záznamů dané domény a výsledky budou rovněž zablokovány
       featured_tag:
-        name: 'Zde jsou některé z hashtagů, které jste nedávno použili:'
+        name: "Zde jsou některé z hashtagů, které jste nedávno použili:"
       filters:
         action: Vyberte, která akce má být provedena, když příspěvek odpovídá filtru
         actions:
@@ -132,7 +132,7 @@ cs:
         hint: Nepovinné. Uveďte další podrobnosti o pravidle
         text: Popište pravidlo nebo požadavek uživatelům tohoto serveru. Snažte se ho držet krátký a jednoduchý
       sessions:
-        otp: 'Zadejte kód pro dvoufázové ověření vygenerovaný vaší mobilní aplikací, nebo použijte jeden z vašich záložních kódů:'
+        otp: "Zadejte kód pro dvoufázové ověření vygenerovaný vaší mobilní aplikací, nebo použijte jeden z vašich záložních kódů:"
         webauthn: Pokud jde o USB klíč, vložte jej a případně se dotkněte jeho tlačítka.
       settings:
         email_subscriptions: Zakázání zachová stávající odběratele, ale přestane posílat e-maily.
@@ -410,7 +410,7 @@ cs:
         events: Zapnuté události
         template: Šablona payloadu
         url: URL koncového bodu
-    'no': Ne
+    "no": Ne
     not_recommended: Nedoporučuje se
     overridden: Přepsáno
     recommended: Doporučeno
@@ -420,4 +420,4 @@ cs:
     title:
       sessions:
         webauthn: K přihlášení použijte jeden z Vašich bezpečnostních klíčů
-    'yes': Ano
+    "yes": Ano

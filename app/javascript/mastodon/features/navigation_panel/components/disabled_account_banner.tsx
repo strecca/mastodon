@@ -1,16 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { openModal } from 'mastodon/actions/modal';
-import {
-  disabledAccountId,
-  movedToAccountId,
-  domain,
-} from 'mastodon/initial_state';
-import { useAppSelector, useAppDispatch } from 'mastodon/store';
+import { openModal } from "mastodon/actions/modal";
+import { disabledAccountId, movedToAccountId, domain } from "mastodon/initial_state";
+import { useAppSelector, useAppDispatch } from "mastodon/store";
 
 export const DisabledAccountBanner: React.FC = () => {
   const disabledAccount = useAppSelector((state) =>
@@ -26,7 +22,7 @@ export const DisabledAccountBanner: React.FC = () => {
       e.preventDefault();
       e.stopPropagation();
 
-      dispatch(openModal({ modalType: 'CONFIRM_LOG_OUT', modalProps: {} }));
+      dispatch(openModal({ modalType: "CONFIRM_LOG_OUT", modalProps: {} }));
 
       return false;
     },
@@ -40,17 +36,17 @@ export const DisabledAccountBanner: React.FC = () => {
   );
 
   return (
-    <div className='sign-in-banner'>
+    <div className="sign-in-banner">
       <p>
         {movedToAccount ? (
           <FormattedMessage
-            id='moved_to_account_banner.text'
-            defaultMessage='Your account {disabledAccount} is currently disabled because you moved to {movedToAccount}.'
+            id="moved_to_account_banner.text"
+            defaultMessage="Your account {disabledAccount} is currently disabled because you moved to {movedToAccount}."
             values={{
               disabledAccount: disabledAccountLink,
               movedToAccount: (
                 <Link to={`/@${movedToAccount.acct}`}>
-                  {movedToAccount.acct.includes('@')
+                  {movedToAccount.acct.includes("@")
                     ? movedToAccount.acct
                     : `${movedToAccount.acct}@${domain}`}
                 </Link>
@@ -59,29 +55,26 @@ export const DisabledAccountBanner: React.FC = () => {
           />
         ) : (
           <FormattedMessage
-            id='disabled_account_banner.text'
-            defaultMessage='Your account {disabledAccount} is currently disabled.'
+            id="disabled_account_banner.text"
+            defaultMessage="Your account {disabledAccount} is currently disabled."
             values={{
               disabledAccount: disabledAccountLink,
             }}
           />
         )}
       </p>
-      <a href='/auth/edit' className='button button--block'>
+      <a href="/auth/edit" className="button button--block">
         <FormattedMessage
-          id='disabled_account_banner.account_settings'
-          defaultMessage='Account settings'
+          id="disabled_account_banner.account_settings"
+          defaultMessage="Account settings"
         />
       </a>
       <button
-        type='button'
-        className='button button--block button-secondary'
+        type="button"
+        className="button button--block button-secondary"
         onClick={handleLogOutClick}
       >
-        <FormattedMessage
-          id='confirmations.logout.confirm'
-          defaultMessage='Log out'
-        />
+        <FormattedMessage id="confirmations.logout.confirm" defaultMessage="Log out" />
       </button>
     </div>
   );

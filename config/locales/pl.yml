@@ -1,7 +1,7 @@
 ---
 pl:
   about:
-    about_mastodon_html: 'Sieć społecznościowa przyszłości: Bez reklam, bez inwigilacji, zaprojektowana etycznie i zdecentralizowanie! Władaj swoimi danymi z Mastodonem!'
+    about_mastodon_html: "Sieć społecznościowa przyszłości: Bez reklam, bez inwigilacji, zaprojektowana etycznie i zdecentralizowanie! Władaj swoimi danymi z Mastodonem!"
     contact_missing: Nie ustawiono
     contact_unavailable: Nie dotyczy
     default_thumbnail_description: Dwa uśmiechnięte rysunkowe mastodony (przypominające słonie) przerzucają między sobą papierowy samolocik. Otacza je jasnobłękitne niebo oraz unoszące się planety, na których rosną drzewa i znajdują się kolejne mastodony.
@@ -335,7 +335,7 @@ pl:
         title: Nowe ogłoszenie
       preview:
         disclaimer: Ponieważ użytkownicy nie mogą zrezygnować z otrzymywania powiadomień email, powinny one ograniczać się do ważnych ogłoszeń, takich jak powiadomienia o naruszeniu bezpieczeństwa danych osobowych lub zamknięciu serwera.
-        explanation_html: 'Wiadomość e-mail zostanie wysłana do <strong>%{display_count} użytkowników</strong>. Otrzymają oni wiadomość o następującej treści:'
+        explanation_html: "Wiadomość e-mail zostanie wysłana do <strong>%{display_count} użytkowników</strong>. Otrzymają oni wiadomość o następującej treści:"
         title: Podgląd powiadomienia
       publish: Opublikuj
       published_msg: Pomyślnie opublikowano ogłoszenie!
@@ -549,17 +549,17 @@ pl:
       import:
         description_html: Zamierzasz zaimportować listę zablokowanych domen. Przejrzyj uważnie tę listę, zwłaszcza jeśli sam jej nie utworzyłeś.
         existing_relationships_warning: Istniejące połączenia obserwujących
-        private_comment_description_html: 'Żebyś wiedział(a) skąd pochodzą zaimportowane bloki, zostaną one utworzone z następującym prywatnym komentarzem: <q>%{comment}</q>'
+        private_comment_description_html: "Żebyś wiedział(a) skąd pochodzą zaimportowane bloki, zostaną one utworzone z następującym prywatnym komentarzem: <q>%{comment}</q>"
         private_comment_template: Zaimportowano z %{source} dnia %{date}
         title: Importuj zablokowane domeny
-      invalid_domain_block: 'Jeden lub więcej blokujących domen zostało pominiętych z powodu następującego błędu(ów): %{error}'
+      invalid_domain_block: "Jeden lub więcej blokujących domen zostało pominiętych z powodu następującego błędu(ów): %{error}"
       new:
         title: Importuj zablokowane domeny
       no_file: Nie wybrano pliku
     fasp:
       debug:
         callbacks:
-          created_at: 'Utworzono:'
+          created_at: "Utworzono:"
           delete: Usuń
           ip: Adres IP
           request_body: Treść zgłoszenia
@@ -688,12 +688,12 @@ pl:
       created_msg: Pomyślnie dodano nową regułę IP
       delete: Usuń
       expires_in:
-        '1209600': 2 tygodnie
-        '15778476': 6 miesięcy
-        '2629746': 1 miesiąc
-        '31556952': 1 rok
-        '86400': 1 dzień
-        '94670856': 3 lata
+        "1209600": 2 tygodnie
+        "15778476": 6 miesięcy
+        "2629746": 1 miesiąc
+        "31556952": 1 rok
+        "86400": 1 dzień
+        "94670856": 3 lata
       new:
         title: Utwórz nową regułę IP
       no_ip_block_selected: Żadna reguła nie została zmieniona, ponieważ żadna nie została wybrana
@@ -752,7 +752,7 @@ pl:
       collections: Kolekcje (%{count})
       comment:
         none: Brak
-      comment_description_html: 'Aby dostarczyć więcej informacji, %{name} napisał:'
+      comment_description_html: "Aby dostarczyć więcej informacji, %{name} napisał:"
       confirm: Potwierdź
       confirm_action: Potwierdzenie działań moderacyjnych wobec @%{acct}
       created_at: Zgłoszono
@@ -772,11 +772,11 @@ pl:
         placeholder: Opisz wykonane akcje i inne szczegóły dotyczące tego zgłoszenia...
         title: Notatki
       notes_description_html: Przeglądaj i zostaw notatki innym moderatorom i sobie samemu
-      processed_msg: 'Zgłoszenie #%{id} zostało pomyślnie przetworzone'
-      quick_actions_description_html: 'Wykonaj szybkie działanie lub przewiń w dół, aby zobaczyć zgłoszoną zawartość:'
+      processed_msg: "Zgłoszenie #%{id} zostało pomyślnie przetworzone"
+      quick_actions_description_html: "Wykonaj szybkie działanie lub przewiń w dół, aby zobaczyć zgłoszoną zawartość:"
       remote_user_placeholder: zdalny użytkownik z %{instance}
       reopen: Otwórz ponownie
-      report: 'Zgłoszenie #%{id}'
+      report: "Zgłoszenie #%{id}"
       reported_account: Zgłoszone konto
       reported_by: Zgłaszający
       reported_content: Zgłoszona zawartość
@@ -789,16 +789,16 @@ pl:
       statuses_description_html: Obraźliwe treści będą cytowane w komunikacji ze zgłoszonym kontem
       summary:
         action_preambles:
-          delete_html: 'Zamierzasz <strong>usunąć</strong> niektóre posty <strong>@%{acct}</strong>. To spowoduje:'
-          mark_as_sensitive_html: 'Zamierzasz <strong>oznaczyć</strong> niektóre posty <strong>@%{acct}</strong> jako <strong>wrażliwe</strong>. To spowoduje:'
-          silence_html: 'Zamierzasz <strong>ograniczyć</strong> konto <strong>@%{acct}</strong>. To spowoduje:'
-          suspend_html: 'Zamierzasz <strong>zawiesić</strong> konto <strong>@%{acct}</strong>. To spowoduje:'
+          delete_html: "Zamierzasz <strong>usunąć</strong> niektóre posty <strong>@%{acct}</strong>. To spowoduje:"
+          mark_as_sensitive_html: "Zamierzasz <strong>oznaczyć</strong> niektóre posty <strong>@%{acct}</strong> jako <strong>wrażliwe</strong>. To spowoduje:"
+          silence_html: "Zamierzasz <strong>ograniczyć</strong> konto <strong>@%{acct}</strong>. To spowoduje:"
+          suspend_html: "Zamierzasz <strong>zawiesić</strong> konto <strong>@%{acct}</strong>. To spowoduje:"
         actions:
           delete_html: Usuń zgłoszone posty
           mark_as_sensitive_html: Oznacz obraźliwe media postów jako wrażliwe
           silence_html: Znacząco ogranicz zasięg <strong>@%{acct}</strong>, aby ich profil i zawartość były widoczne tylko dla osób, które je już obserwują lub ręcznie wyszukują jego profil
           suspend_html: Zawieś <strong>@%{acct}</strong>, co sprawia, że ich profil i zawartość są niedostępne i niemożliwe do interakcji z
-        close_report: 'Oznacz zgłoszenie #%{id} jako rozwiązane'
+        close_report: "Oznacz zgłoszenie #%{id} jako rozwiązane"
         close_reports_html: Oznacz <strong>wszystkie</strong> zgłoszenia dotyczące <strong>@%{acct}</strong> jako rozwiązane
         delete_data_html: Usuń profil i zawartość <strong>@%{acct}</strong> za 30 dni, chyba że w tym czasie zostanie zawieszony
         preview_preamble_html: "<strong>@%{acct}</strong> otrzyma ostrzeżenie o następującej treści:"
@@ -808,7 +808,7 @@ pl:
       target_origin: Pochodzenie zgłaszanego konta
       title: Zgłoszenia
       unassign: Cofnij przypisanie
-      unknown_action_msg: 'Nieznane działanie: %{action}'
+      unknown_action_msg: "Nieznane działanie: %{action}"
       unresolved: Nierozwiązane
       updated_at: Zaktualizowano
       view_profile: Wyświetl profil
@@ -978,7 +978,7 @@ pl:
       back_to_account: Wróć na konto
       back_to_report: Wróć do strony zgłoszenia
       batch:
-        add_to_report: 'Dodaj do raportu #%{id}'
+        add_to_report: "Dodaj do raportu #%{id}"
         remove_from_report: Usuń ze zgłoszenia
         report: Zgłoszenie
       contents: Zawartość
@@ -1020,9 +1020,9 @@ pl:
       database_schema_check:
         message_html: Istnieją oczekujące migracje bazy danych. Uruchom je, aby upewnić się, że aplikacja działa tak, jak powinna
       elasticsearch_health_red:
-        message_html: 'Klaster Elasticseach jest chory (status: czerwony); szukanie jest niedostępne'
+        message_html: "Klaster Elasticseach jest chory (status: czerwony); szukanie jest niedostępne"
       elasticsearch_health_yellow:
-        message_html: 'Klaster Elasticseach jest chory (status: żółty); możliwe, że chcesz zbadać tego powód'
+        message_html: "Klaster Elasticseach jest chory (status: żółty); możliwe, że chcesz zbadać tego powód"
       elasticsearch_index_mismatch:
         message_html: Mapa indeksu Elasticsearch jest przestarzała. Uruchom <code>tootctl search deploy --only=%{value}</code>
       elasticsearch_preset:
@@ -1036,7 +1036,7 @@ pl:
       elasticsearch_running_check:
         message_html: Nie można połączyć się z Elasticsearch. Sprawdź czy jest uruchomiony lub wyłącz wyszukiwanie pełnotekstowe
       elasticsearch_version_check:
-        message_html: 'Niekompatybilna wersja Elasticsearch: %{value}'
+        message_html: "Niekompatybilna wersja Elasticsearch: %{value}"
         version_comparison: Elasticsearch w wersji %{running_version} jest uruchomiony, ale wymagana wersja to %{required_version}
       rules_check:
         action: Zarządzaj regułami serwera
@@ -1097,7 +1097,7 @@ pl:
       notified_on_html: Użytkownicy powiadomieni o %{date}
       notify_users: Powiadom użytkowników
       preview:
-        explanation_html: 'E-mail zostanie wysłany do <strong>%{display_count} użytkowników</strong>, którzy zarejestrowali się przed %{date}. Otrzymają oni wiadomość o następującej treści:'
+        explanation_html: "E-mail zostanie wysłany do <strong>%{display_count} użytkowników</strong>, którzy zarejestrowali się przed %{date}. Otrzymają oni wiadomość o następującej treści:"
         send_preview: Wyślij podgląd do %{email}
         send_to_all:
           few: Wyślij %{display_count} wiadomości e-mail
@@ -1180,7 +1180,7 @@ pl:
         peaked_on_and_decaying: Najwyżej %{date}, teraz idzie w dół
         title: Popularne hashtagi
         trendable: Może pojawić się pod trendami
-        trending_rank: 'Popularne #%{rank}'
+        trending_rank: "Popularne #%{rank}"
         usable: Może być użyty
         usage_comparison: Używane %{today} razy dzisiaj, w porównaniu z %{yesterday} wczoraj
         used_by_over_week:
@@ -1265,7 +1265,7 @@ pl:
       body: Zostały wydane nowe wersje Mastodona, pewnie chcesz zaktualizować!
       subject: Nowe wersje Mastodona dostępne dla %{instance}!
     new_trends:
-      body: 'Następujące elementy potrzebują recenzji zanim będą mogły być wyświetlane publicznie:'
+      body: "Następujące elementy potrzebują recenzji zanim będą mogły być wyświetlane publicznie:"
       new_trending_links:
         title: Popularne linki
       new_trending_statuses:
@@ -1294,7 +1294,7 @@ pl:
     notification_preferences: Zmień ustawienia e-maili
     salutation: "%{name},"
     unsubscribe: Anuluj subskrypcję
-    view: 'Zobacz:'
+    view: "Zobacz:"
     view_profile: Wyświetl profil
     view_status: Wyświetl wpis
   applications:
@@ -1354,7 +1354,7 @@ pl:
     rules:
       accept: Zaakceptuj
       back: Wróć
-      invited_by: 'Możesz dołączyć do %{domain} dzięki zaproszeniu, które otrzymano od:'
+      invited_by: "Możesz dołączyć do %{domain} dzięki zaproszeniu, które otrzymano od:"
       preamble: Są one ustawione i wymuszone przez moderatorów %{domain}.
       preamble_invited: Zanim przejdziesz dalej, rozważ zasady podstawowe ustalone przez moderatorów %{domain}.
       read_more: Czytaj więcej
@@ -1390,7 +1390,7 @@ pl:
   author_attribution:
     example_title: Przykładowy tekst
     hint_html: Piszesz wiadomości albo bloga poza Mastodonem? Kontroluj jak będą ci przypisywane podczas dizielenia się nimi na Mastodonie.
-    instructions: 'Upewnij się, że ten kod jest w HTMLu twojego artykułu:'
+    instructions: "Upewnij się, że ten kod jest w HTMLu twojego artykułu:"
     more_from_html: Więcej od %{name}
     s_blog: Blog %{name}
     then_instructions: Potem, dodaj domenę publikacji do pola poniżej.
@@ -1435,7 +1435,7 @@ pl:
     proceed: Usuń konto
     success_msg: Twoje konto zostało pomyślnie usunięte
     warning:
-      before: 'Zanim kontynuujesz, przeczytać uważnie te uwagi:'
+      before: "Zanim kontynuujesz, przeczytać uważnie te uwagi:"
       caches: Zawartość obecna w pamięci podręcznej innych serwerów może tam pozostać
       data_removal: Twoje wpisy i inne dane zostaną bezpowrotnie usunięte
       email_change_html: Możesz <a href="%{path}">zmienić swój adres e-mail</a> bez usunięcia konta
@@ -1461,7 +1461,7 @@ pl:
       description_html: Są to działania podjęte przeciwko Twojemu kontu i ostrzeżenia wysłane do ciebie przez administrację %{instance}.
       recipient: Adresowane do
       reject_appeal: Odrzuć odwołanie
-      status: 'Post #%{id}'
+      status: "Post #%{id}"
       status_removed: Post został już usunięty z systemu
       title: "%{action} z %{date}"
       title_actions:
@@ -1494,19 +1494,19 @@ pl:
     native: Natywny
     twemoji: Twemoji
   errors:
-    '400': Wysłane zgłoszenie jest nieprawidłowe lub uszkodzone.
-    '403': Nie masz uprawnień, aby wyświetlić tę stronę.
-    '404': Strona, którą próbujesz odwiedzić, nie istnieje.
-    '406': Ta strona nie jest dostępna w zażądanym formacie.
-    '410': Strona, którą próbujesz odwiedzić, przestała istnieć.
-    '422':
+    "400": Wysłane zgłoszenie jest nieprawidłowe lub uszkodzone.
+    "403": Nie masz uprawnień, aby wyświetlić tę stronę.
+    "404": Strona, którą próbujesz odwiedzić, nie istnieje.
+    "406": Ta strona nie jest dostępna w zażądanym formacie.
+    "410": Strona, którą próbujesz odwiedzić, przestała istnieć.
+    "422":
       content: Sprawdzanie bezpieczeństwa nie powiodło się. Czy blokujesz pliki cookie?
       title: Sprawdzanie bezpieczeństwa nie powiodło się
-    '429': Uduszono
-    '500':
+    "429": Uduszono
+    "500":
       content: Przepraszamy, coś poszło nie tak, po naszej stronie.
       title: Ta strona jest nieprawidłowa
-    '503': Strona nie może zostać wyświetlona z powodu tymczasowego niepowodzenia serwera.
+    "503": Strona nie może zostać wyświetlona z powodu tymczasowego niepowodzenia serwera.
     noscript_html: Aby korzystać z aplikacji Mastodon, włącz JavaScript. Możesz też skorzystać z jednej z <a href="%{apps_path}">natywnych aplikacji</a> obsługującej Twoje urządzenie.
   existing_username_validator:
     not_found: nie znaleziono lokalnego użytkownika o tej nazwie
@@ -1615,7 +1615,7 @@ pl:
     errors:
       empty: Pusty plik CSV
       incompatible_type: Niezgodny z wybranym typem importu
-      invalid_csv_file: 'Nieprawidłowy plik CSV. Błąd: %{error}'
+      invalid_csv_file: "Nieprawidłowy plik CSV. Błąd: %{error}"
       over_rows_processing_limit: zawiera więcej niż %{count} wierszy
       too_large: Plik jest zbyt duży
     failures: Błędy
@@ -1721,16 +1721,16 @@ pl:
     delete: Wygaś
     expired: Wygasły
     expires_in:
-      '1800': 30 minutach
-      '21600': 6 godzinach
-      '3600': godzinie
-      '43200': 12 godzinach
-      '604800': 1 tygodniu
-      '86400': dobie
+      "1800": 30 minutach
+      "21600": 6 godzinach
+      "3600": godzinie
+      "43200": 12 godzinach
+      "604800": 1 tygodniu
+      "86400": dobie
     expires_in_prompt: Nigdy
     generate: Wygeneruj
     invalid: Niepoprawne zaproszenie
-    invited_by: 'Zostałeś(-aś) zaproszony(-a) przez:'
+    invited_by: "Zostałeś(-aś) zaproszony(-a) przez:"
     max_uses:
       few: "%{count} użycia"
       many: "%{count} użyć"
@@ -1791,7 +1791,7 @@ pl:
     set_redirect: Ustaw przekierowanie
     warning:
       backreference_required: Nowe konto musi wcześniej zostać skonfigurowane tak, aby odwoływało się do tego
-      before: 'Zanim kontynuujesz, przeczytaj uważnie te uwagi:'
+      before: "Zanim kontynuujesz, przeczytaj uważnie te uwagi:"
       cooldown: Po przeniesieniu się, istnieje okres przez który nie możesz ponownie się przenieść
       disabled_account: Twoje obecne konto nie będzie później całkowicie użyteczne. Możesz jednak uzyskać dostęp do eksportu danych i ponownie aktywować je.
       followers: To działanie przeniesie wszystkich Twoich obserwujących z obecnego konta na nowe
@@ -1803,7 +1803,7 @@ pl:
   move_handler:
     carry_blocks_over_text: Ten użytkownik przeniósł się z konta %{acct}, które zablokowałeś(-aś).
     carry_mutes_over_text: Ten użytkownik przeniósł się z konta %{acct}, które wyciszyłeś(-aś).
-    copy_account_note_text: 'Ten użytkownik przeniósł się z konta %{acct}, oto Twoje poprzednie notatki o nim:'
+    copy_account_note_text: "Ten użytkownik przeniósł się z konta %{acct}, oto Twoje poprzednie notatki o nim:"
   navigation:
     toggle_menu: Przełącz menu
   notification_mailer:
@@ -1813,7 +1813,7 @@ pl:
       sign_up:
         subject: "%{name} zarejestrował(-a) się"
     favourite:
-      body: 'Twój wpis został polubiony przez %{name}:'
+      body: "Twój wpis został polubiony przez %{name}:"
       subject: "%{name} lubi Twój wpis"
       title: Nowe polubienie
     follow:
@@ -1823,11 +1823,11 @@ pl:
     follow_request:
       action: Zarządzaj prośbami o możliwość obserwacji
       body: "%{name} poprosił(a) o możliwość obserwowania Cię"
-      subject: 'Prośba o możliwość obserwowania: %{name}'
+      subject: "Prośba o możliwość obserwowania: %{name}"
       title: Nowa prośba o możliwość obsewowania
     mention:
       action: Odpowiedz
-      body: 'Wspomniano o tobie przez %{name} w:'
+      body: "Wspomniano o tobie przez %{name} w:"
       subject: Wspomniano o tobie przez %{name}
       title: Nowe wspomnienie o Tobie
     poll:
@@ -1836,7 +1836,7 @@ pl:
       subject: "%{name} cytował twój post"
       title: Nowy cytat
     reblog:
-      body: 'Twój wpis został podbity przez %{name}:'
+      body: "Twój wpis został podbity przez %{name}:"
       subject: Twój wpis został podbity przez %{name}
       title: Nowe podbicie
     status:
@@ -1845,8 +1845,8 @@ pl:
       subject: "%{name} edytował/a wpis"
   notifications:
     administration_emails: Administracyjne powiadomienia e-mail
-    email_events: 'Powiadamiaj e-mailem o:'
-    email_events_hint: 'Wybierz wydarzenia, o których chcesz otrzymywać powiadomienia:'
+    email_events: "Powiadamiaj e-mailem o:"
+    email_events_hint: "Wybierz wydarzenia, o których chcesz otrzymywać powiadomienia:"
   number:
     human:
       decimal_units:
@@ -1862,7 +1862,7 @@ pl:
     description_html: Jeśli włączysz <strong>uwierzytelnianie dwuetapowe</strong> używając aplikacji uwierzytelniającej, logowanie się będzie wymagało podania tokenu wyświetlonego na Twoim telefonie.
     enable: Aktywuj
     instructions_html: "<strong>Zeskanuj ten kod QR na swoim telefonie za pomocą Google Authenticator lub podobnej aplikacji TOTP</strong>. Od teraz będzie ona generowała kody wymagane przy logowaniu."
-    manual_instructions: 'Jeśli nie możesz zeskanować kodu QR i musisz wprowadzić go ręcznie, oto klucz w formie tekstu:'
+    manual_instructions: "Jeśli nie możesz zeskanować kodu QR i musisz wprowadzić go ręcznie, oto klucz w formie tekstu:"
     setup: Skonfiguruj
     wrong_code: Wprowadzony kod jest nieprawidłowy! Czy czas serwera i urządzenia jest poprawny?
   pagination:
@@ -1935,10 +1935,10 @@ pl:
     errors:
       invalid_rules: nie odwołuje się do prawidłowych reguł
   rss:
-    content_warning: 'Ostrzeżenie o zawartości:'
+    content_warning: "Ostrzeżenie o zawartości:"
     descriptions:
       account: Publiczne posty od @%{acct}
-      tag: 'Publiczne wpisy oznaczone #%{hashtag}'
+      tag: "Publiczne wpisy oznaczone #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Przekroczyłeś(-aś) limit %{limit} zaplanowanych wpisów na ten dzień
     over_total_limit: Przekroczyłeś(-aś) limit %{limit} zaplanowanych wpisów
@@ -2034,7 +2034,7 @@ pl:
         many: "%{count} plików dźwiękowych"
         one: "%{count} plik dźwiękowy"
         other: pliki dźwiękowe (%{count})
-      description: 'Załączono: %{attached}'
+      description: "Załączono: %{attached}"
       image:
         few: "%{count} obrazy"
         many: "%{count} obrazów"
@@ -2046,15 +2046,15 @@ pl:
         one: "%{count} film"
         other: "%{count} filmów"
     boosted_from_html: Podbito przez %{acct_link}
-    content_warning: 'Ostrzeżenie o zawartości: %{warning}'
+    content_warning: "Ostrzeżenie o zawartości: %{warning}"
     content_warnings:
       hide: Ukryj wpis
     default_language: Taki sam jak język interfejsu użytkownika
     disallowed_hashtags:
-      few: 'zawiera niedozwolone hashtagi: %{tags}'
-      many: 'zawiera niedozwolone hashtagi: %{tags}'
-      one: 'zawiera niedozwolony hashtag: %{tags}'
-      other: 'zawiera niedozwolone hashtagi: %{tags}'
+      few: "zawiera niedozwolone hashtagi: %{tags}"
+      many: "zawiera niedozwolone hashtagi: %{tags}"
+      one: "zawiera niedozwolony hashtag: %{tags}"
+      other: "zawiera niedozwolone hashtagi: %{tags}"
     edited_at_html: Edytowane %{date}
     errors:
       in_reply_not_found: Post, na który próbujesz odpowiedzieć, nie istnieje.
@@ -2102,14 +2102,14 @@ pl:
     keep_self_fav: Zachowaj ulubione posty
     keep_self_fav_hint: Nie usuwaj własnych postów, jeśli je polubiłeś
     min_age:
-      '1209600': 2 tygodnie
-      '15778476': 6 miesięcy
-      '2629746': 1 miesiąc
-      '31556952': 1 rok
-      '5259492': 2 miesiące
-      '604800': 1 tydzień
-      '63113904': 2 lata
-      '7889238': 3 miesiące
+      "1209600": 2 tygodnie
+      "15778476": 6 miesięcy
+      "2629746": 1 miesiąc
+      "31556952": 1 rok
+      "5259492": 2 miesiące
+      "604800": 1 tydzień
+      "63113904": 2 lata
+      "7889238": 3 miesiące
     min_age_label: Próg wieku
     min_favs: Zachowaj ulubione posty więcej niż
     min_favs_hint: Nie usuwa żadnego z Twoich wpisów, które otrzymały więcej niż tę liczbę ulubionych. Pozostaw puste, aby usunąć posty bez względu na ich liczbę ulubionych
@@ -2162,7 +2162,7 @@ pl:
       title: Subskrypcja została anulowana
   user_mailer:
     announcement_published:
-      description: 'Administratorzy %{domain} publikują ogłoszenie:'
+      description: "Administratorzy %{domain} publikują ogłoszenie:"
       subject: Ogłoszenie serwisu
       title: Ogłoszenie serwisu %{domain}
     appeal_approved:
@@ -2182,22 +2182,22 @@ pl:
       subject: Twoje archiwum jest gotowe do pobrania
       title: Odbiór archiwum
     failed_2fa:
-      details: 'Oto szczegóły próby logowania:'
+      details: "Oto szczegóły próby logowania:"
       explanation: Ktoś próbował zalogować się na twoje konto, ale nie przeszedł drugiego etapu autoryzacji.
       further_actions_html: Jeśli to nie ty, polecamy natychmiastowo %{action}, bo może ono być narażone.
       subject: Błąd drugiego etapu uwierzytelniania
       title: Nieudane uwierzytelnienie w drugim etapie
     suspicious_sign_in:
       change_password: zmień hasło
-      details: 'Oto szczegóły logowania:'
+      details: "Oto szczegóły logowania:"
       explanation: Wykryliśmy logowanie na Twoje konto z nowego adresu IP.
       further_actions_html: Jeśli to nie Ty, zalecamy %{action} natychmiastowo i włącz uwierzytelnianie dwuetapowe, aby Twoje konto było bezpieczne.
       subject: Uzyskano dostęp do twojego konta z nowego adresu IP
       title: Nowe logowanie
     terms_of_service_changed:
       agreement: Kontynuując używanie %{domain}, zgadzasz się na te warunki. Jeśli nie zgadzasz się ze zaktualizowanymi warunkami, możesz wypowiedzieć umowę z %{domain} w dowolnym momencie, usuwając swoje konto.
-      changelog: 'W skrócie oto co oznacza dla Ciebie ta aktualizacja:'
-      description: 'Otrzymujesz tę wiadomość email, ponieważ wprowadzamy pewne zmiany w naszych warunkach świadczenia usług w domenie %{domain}. Aktualizacje te zaczną obowiązywać od dnia %{date}. Zachęcamy do zapoznania się z pełną treścią zaktualizowanych warunków tutaj:'
+      changelog: "W skrócie oto co oznacza dla Ciebie ta aktualizacja:"
+      description: "Otrzymujesz tę wiadomość email, ponieważ wprowadzamy pewne zmiany w naszych warunkach świadczenia usług w domenie %{domain}. Aktualizacje te zaczną obowiązywać od dnia %{date}. Zachęcamy do zapoznania się z pełną treścią zaktualizowanych warunków tutaj:"
       description_html: Otrzymujesz tę wiadomość email, ponieważ wprowadzamy pewne zmiany w naszych warunkach świadczenia usług w domenie %{domain}. Aktualizacje te zaczną obowiązywać od dnia <strong>%{date}</strong>. Zachęcamy do zapoznania się z <a href="%{path}" target="_blank">pełną treścią zaktualizowanych warunków tutaj</a>.
       sign_off: Zespół %{domain}
       subject: Aktualizacja warunków korzystania z usług
@@ -2216,8 +2216,8 @@ pl:
         sensitive: Od teraz wszystkie przesłane pliki multimedialne będą oznaczone jako wrażliwe i ukryte za ostrzeżeniem kliknięcia.
         silence: Kiedy Twoje konto jest ograniczone, tylko osoby, które je obserwują, będą widzieć Twoje wpisy. Może ono też przestać być widoczne w funkcjach odkrywania. Inni wciąż mogą zacząć Cię obserwować.
         suspend: Nie możesz już używać Twojego konta, a Twój profil i inne dane nie są już dostępne. Zanim w pełni usuniemy Twoje dane po około 30 dniach, możesz nadal zalogować się, aby uzyskać ich kopię. Zachowamy pewne podstawowe dane, aby zapobiegać obchodzeniu przez Ciebie zawieszenia.
-      reason: 'Powód:'
-      statuses: 'Cytowane posty:'
+      reason: "Powód:"
+      statuses: "Cytowane posty:"
       subject:
         delete_statuses: Twoje wpisy na %{acct} zostały usunięte
         disable: Twoje konto %{acct} zostało wyłączone
@@ -2239,7 +2239,7 @@ pl:
       apps_ios_action: Pobierz z App Store
       apps_step: Pobierz oficjalne aplikacje.
       apps_title: Aplikacje Mastodon
-      checklist_subtitle: 'Aby porządnie rozpocząć użytkowanie Mastodona:'
+      checklist_subtitle: "Aby porządnie rozpocząć użytkowanie Mastodona:"
       checklist_title: Powitalna lista kontrolna
       edit_profile_action: Personalizuj
       edit_profile_step: Inni użytkownicy są bardziej skłonni do interakcji z Tobą jeśli posiadasz wypełniony profil.
@@ -2283,7 +2283,7 @@ pl:
     otp_lost_help_html: Jeżeli utracisz dostęp do obu, możesz skontaktować się z %{email}
     rate_limited: Zbyt wiele prób uwierzytelnienia. Spróbuj ponownie później.
     seamless_external_login: Zalogowano z użyciem zewnętrznej usługi, więc ustawienia hasła i adresu e-mail nie są dostępne.
-    signed_in_as: 'Zalogowano jako:'
+    signed_in_as: "Zalogowano jako:"
   verification:
     extra_instructions_html: <strong>Wskazówka:</strong> link na twojej stronie może być niewidoczny. Istotną częścią, zapobiegającą podszywaniu na stronach z treściami dodawanymi przez użytkowników, jest <code>rel="me"</code>. Zamiast tagu <code>a</code> możesz w nagłówek osadzić tag <code>link</code>. Oba jednak muszą być dostępne bez JavaScriptu.
     here_is_how: Oto jak

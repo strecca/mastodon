@@ -1,11 +1,11 @@
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import { LoadingIndicator } from 'mastodon/components/loading_indicator';
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import { LoadingIndicator } from "mastodon/components/loading_indicator";
 
-import { IconButton } from '../icon_button';
+import { IconButton } from "../icon_button";
 
 /**
  * Snackbar/Toast-style notification component.
@@ -18,7 +18,7 @@ export const Alert: React.FC<{
   onDismiss?: () => void;
   isActive?: boolean;
   isLoading?: boolean;
-  animateFrom?: 'side' | 'below';
+  animateFrom?: "side" | "below";
 }> = ({
   title,
   message,
@@ -27,7 +27,7 @@ export const Alert: React.FC<{
   onDismiss,
   isActive,
   isLoading,
-  animateFrom = 'side',
+  animateFrom = "side",
 }) => {
   const intl = useIntl();
 
@@ -35,32 +35,30 @@ export const Alert: React.FC<{
 
   return (
     <div
-      className={classNames('notification-bar', {
-        'notification-bar--active': isActive,
-        'from-side': animateFrom === 'side',
-        'from-below': animateFrom === 'below',
+      className={classNames("notification-bar", {
+        "notification-bar--active": isActive,
+        "from-side": animateFrom === "side",
+        "from-below": animateFrom === "below",
       })}
     >
-      <span className='notification-bar__content'>
-        {Boolean(title) && (
-          <span className='notification-bar__title'>{title}</span>
-        )}
+      <span className="notification-bar__content">
+        {Boolean(title) && <span className="notification-bar__title">{title}</span>}
         {message}
       </span>
 
       {hasAction && (
         <button
-          className='notification-bar__action'
+          className="notification-bar__action"
           onClick={onActionClick}
-          type='button'
-          aria-hidden='true'
+          type="button"
+          aria-hidden="true"
         >
           {action}
         </button>
       )}
 
       {isLoading && (
-        <span className='notification-bar__loading-indicator'>
+        <span className="notification-bar__loading-indicator">
           <LoadingIndicator />
         </span>
       )}
@@ -68,12 +66,12 @@ export const Alert: React.FC<{
       {onDismiss && !isLoading && (
         <IconButton
           title={intl.formatMessage({
-            id: 'dismissable_banner.dismiss',
-            defaultMessage: 'Dismiss',
+            id: "dismissable_banner.dismiss",
+            defaultMessage: "Dismiss",
           })}
-          icon='times'
+          icon="times"
           iconComponent={CloseIcon}
-          className='notification-bar__dismiss-button'
+          className="notification-bar__dismiss-button"
           onClick={onDismiss}
         />
       )}

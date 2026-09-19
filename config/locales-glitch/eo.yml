@@ -2,8 +2,8 @@
 eo:
   admin:
     custom_emojis:
-      batch_copy_error: 'Eraro okazis dum kopiado de iom da elektitaj emoĝioj: %{message}'
-      batch_error: 'Eraro okazis: %{message}'
+      batch_copy_error: "Eraro okazis dum kopiado de iom da elektitaj emoĝioj: %{message}"
+      batch_error: "Eraro okazis: %{message}"
     settings:
       captcha_enabled:
         desc_html: Ĉi tio dependas de eksteraj hCaptcha-skriptoj, kiuj povas esti problemo pri sekureco kaj privateco. Ankaŭ, <strong>ĝi povas igi la registran procezon multe malpli alirebla por iuj homoj (precipe homoj kun handikapoj)</strong>. Pro ĉi tiuj kialoj, bonvolu konsideri alternativajn rimedojn kiel registradon per aprobo aŭ per invito.

@@ -1,35 +1,42 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useState, useEffect, useCallback } from "react";
+import { useParams, Link } from "react-router-dom";
 
-import { Column } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import api from 'flavours/glitch/api';
+import { Column } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import api from "flavours/glitch/api";
 
 const formatDate = (iso) => {
-  if (!iso) return '';
-  const d = new Date(iso + 'T00:00:00');
-  return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+  if (!iso) return "";
+  const d = new Date(iso + "T00:00:00");
+  return d.toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" });
 };
 
 // Render text with **heading** markers as styled headings and paragraphs
 const renderBody = (text) => {
   if (!text) return null;
-  return text.split(/\n+/).filter(p => p.trim()).map((para, i) => {
-    const headingMatch = para.match(/^\*\*(.+?)\*\*$/);
-    if (headingMatch) {
-      return <h3 key={i} className='newsletter-show__section-heading'>{headingMatch[1]}</h3>;
-    }
-    // Inline **bold** within a paragraph
-    const parts = para.split(/(\*\*[^*]+\*\*)/);
-    return (
-      <p key={i} className='newsletter-show__para'>
-        {parts.map((part, j) => {
-          const bold = part.match(/^\*\*(.+)\*\*$/);
-          return bold ? <strong key={j}>{bold[1]}</strong> : part;
-        })}
-      </p>
-    );
-  });
+  return text
+    .split(/\n+/)
+    .filter((p) => p.trim())
+    .map((para, i) => {
+      const headingMatch = para.match(/^\*\*(.+?)\*\*$/);
+      if (headingMatch) {
+        return (
+          <h3 key={i} className="newsletter-show__section-heading">
+            {headingMatch[1]}
+          </h3>
+        );
+      }
+      // Inline **bold** within a paragraph
+      const parts = para.split(/(\*\*[^*]+\*\*)/);
+      return (
+        <p key={i} className="newsletter-show__para">
+          {parts.map((part, j) => {
+            const bold = part.match(/^\*\*(.+)\*\*$/);
+            return bold ? <strong key={j}>{bold[1]}</strong> : part;
+          })}
+        </p>
+      );
+    });
 };
 
 const NewsletterShow = ({ multiColumn }) => {
@@ -37,7 +44,7 @@ const NewsletterShow = ({ multiColumn }) => {
   const [newsletter, setNewsletter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-  const [locale, setLocale] = useState('it');
+  const [locale, setLocale] = useState("it");
 
   const fetchNewsletter = useCallback(async () => {
     try {
@@ -52,10 +59,20 @@ const NewsletterShow = ({ multiColumn }) => {
     }
   }, [slug]);
 
-  useEffect(() => { fetchNewsletter(); }, [fetchNewsletter]);
+  useEffect(() => {
+    fetchNewsletter();
+  }, [fetchNewsletter]);
 
-  const leftColumn  = newsletter ? (locale === 'it' ? newsletter.left_column_it  : newsletter.left_column_en)  : '';
-  const rightColumn = newsletter ? (locale === 'it' ? newsletter.right_column_it : newsletter.right_column_en) : '';
+  const leftColumn = newsletter
+    ? locale === "it"
+      ? newsletter.left_column_it
+      : newsletter.left_column_en
+    : "";
+  const rightColumn = newsletter
+    ? locale === "it"
+      ? newsletter.right_column_it
+      : newsletter.right_column_en
+    : "";
   const hasBothLocales = newsletter && newsletter.left_column_en && newsletter.left_column_it;
 
   // Build inline CSS custom properties from design tokens extracted by Claude Vision.
@@ -65,80 +82,75 @@ const NewsletterShow = ({ multiColumn }) => {
     if (!t) return {};
     const ratio = parseInt(t.column_ratio, 10);
     const style = {};
-    if (t.bg_color)          style['--nl-bg']          = t.bg_color;
-    if (t.ink_color)         style['--nl-ink']         = t.ink_color;
-    if (t.accent_color)      style['--nl-accent']      = t.accent_color;
-    if (t.rule_color)        style['--nl-rule']        = t.rule_color;
-    if (t.sidebar_ink)       style['--nl-sidebar-ink'] = t.sidebar_ink;
-    if (t.heading_tracking)  style['--nl-h-tracking']  = t.heading_tracking;
-    if (t.body_font)         style['--nl-body-font']   = t.body_font === 'sans' ? 'system-ui, sans-serif' : "Georgia, 'Palatino Linotype', serif";
-    if (t.lede_size_boost)   style['--nl-lede-boost']  = String(t.lede_size_boost);
+    if (t.bg_color) style["--nl-bg"] = t.bg_color;
+    if (t.ink_color) style["--nl-ink"] = t.ink_color;
+    if (t.accent_color) style["--nl-accent"] = t.accent_color;
+    if (t.rule_color) style["--nl-rule"] = t.rule_color;
+    if (t.sidebar_ink) style["--nl-sidebar-ink"] = t.sidebar_ink;
+    if (t.heading_tracking) style["--nl-h-tracking"] = t.heading_tracking;
+    if (t.body_font)
+      style["--nl-body-font"] =
+        t.body_font === "sans" ? "system-ui, sans-serif" : "Georgia, 'Palatino Linotype', serif";
+    if (t.lede_size_boost) style["--nl-lede-boost"] = String(t.lede_size_boost);
     if (!isNaN(ratio) && ratio > 10 && ratio < 90) {
-      style['--nl-col-left']  = `${ratio}fr`;
-      style['--nl-col-right'] = `${100 - ratio}fr`;
+      style["--nl-col-left"] = `${ratio}fr`;
+      style["--nl-col-right"] = `${100 - ratio}fr`;
     }
     return style;
   })();
 
   return (
     <Column>
-      <ColumnHeader
-        label='Newsletter'
-        multiColumn={multiColumn}
-        showBackButton
-      />
+      <ColumnHeader label="Newsletter" multiColumn={multiColumn} showBackButton />
 
-      <div className='newsletter-show scrollable'>
-        {loading && (
-          <div className='newsletter-show__loading'>Caricamento...</div>
-        )}
+      <div className="newsletter-show scrollable">
+        {loading && <div className="newsletter-show__loading">Caricamento...</div>}
 
         {notFound && (
-          <div className='newsletter-show__not-found'>
+          <div className="newsletter-show__not-found">
             <p>Newsletter non trovata.</p>
-            <Link to='/newsletters'>Tutte le newsletter</Link>
+            <Link to="/newsletters">Tutte le newsletter</Link>
           </div>
         )}
 
         {newsletter && (
           <article
-            className={`newsletter-show__article newsletter-show__article--${newsletter.newsletter_template} newsletter-show__article--${newsletter.layout_variant || 'gazette'}`}
+            className={`newsletter-show__article newsletter-show__article--${newsletter.newsletter_template} newsletter-show__article--${newsletter.layout_variant || "gazette"}`}
             style={tokenStyle}
           >
-
             {/* Masthead */}
-            <div className='newsletter-show__masthead'>
-              <div className='newsletter-show__masthead-rule' />
-              <div className='newsletter-show__masthead-meta'>
-                <span className='newsletter-show__masthead-location'>
-                  {newsletter.masthead_location || 'Civezza'}
+            <div className="newsletter-show__masthead">
+              <div className="newsletter-show__masthead-rule" />
+              <div className="newsletter-show__masthead-meta">
+                <span className="newsletter-show__masthead-location">
+                  {newsletter.masthead_location || "Civezza"}
                 </span>
-                <span className='newsletter-show__masthead-date'>
+                <span className="newsletter-show__masthead-date">
                   {formatDate(newsletter.published_on)}
                 </span>
               </div>
-              <h1 className='newsletter-show__title'>{newsletter.title}</h1>
-              <p className='newsletter-show__byline'>
-                {locale === 'it' ? 'Di' : 'By'} <strong>{newsletter.author_name}</strong>
+              <h1 className="newsletter-show__title">{newsletter.title}</h1>
+              <p className="newsletter-show__byline">
+                {locale === "it" ? "Di" : "By"} <strong>{newsletter.author_name}</strong>
               </p>
-              <div className='newsletter-show__masthead-rule newsletter-show__masthead-rule--thin' />
+              <div className="newsletter-show__masthead-rule newsletter-show__masthead-rule--thin" />
 
               {/* Controls: locale toggle + PDF download */}
-              <div className='newsletter-show__controls'>
+              <div className="newsletter-show__controls">
                 {hasBothLocales && (
-                  <div className='newsletter-show__locale-toggle'>
+                  <div className="newsletter-show__locale-toggle">
                     <button
-                      className={`newsletter-show__locale-btn${locale === 'it' ? ' active' : ''}`}
-                      onClick={() => setLocale('it')}
-                      type='button'
+                      className={`newsletter-show__locale-btn${locale === "it" ? " active" : ""}`}
+                      onClick={() => setLocale("it")}
+                      type="button"
                     >
                       IT
                     </button>
-                    <span className='newsletter-show__locale-sep'>|</span>
+                    <span className="newsletter-show__locale-sep">|</span>
                     <button
-                      className={`newsletter-show__locale-btn${locale === 'en' ? ' active' : ''}`}
-                      onClick={() => setLocale('en')}
-                      type='button'
+                      className={`newsletter-show__locale-btn${locale === "en" ? " active" : ""}`}
+                      onClick={() => setLocale("en")}
+                      type="button"
                     >
                       EN
                     </button>
@@ -147,9 +159,9 @@ const NewsletterShow = ({ multiColumn }) => {
                 {newsletter.original_pdf_url && (
                   <a
                     href={newsletter.original_pdf_url}
-                    className='newsletter-show__pdf-link'
-                    target='_blank'
-                    rel='noopener noreferrer'
+                    className="newsletter-show__pdf-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     download={`${newsletter.slug}.pdf`}
                   >
                     Scarica newsletter originale (PDF)
@@ -159,33 +171,29 @@ const NewsletterShow = ({ multiColumn }) => {
             </div>
 
             {/* Two-column body */}
-            {newsletter.newsletter_template === 'two_column' && leftColumn ? (
-              <div className='newsletter-show__body newsletter-show__body--two-col'>
-                <aside className='newsletter-show__left-col'>
-                  {renderBody(leftColumn)}
-                </aside>
-                <div className='newsletter-show__right-col'>
-                  {renderBody(rightColumn)}
-                </div>
+            {newsletter.newsletter_template === "two_column" && leftColumn ? (
+              <div className="newsletter-show__body newsletter-show__body--two-col">
+                <aside className="newsletter-show__left-col">{renderBody(leftColumn)}</aside>
+                <div className="newsletter-show__right-col">{renderBody(rightColumn)}</div>
               </div>
             ) : (
-              <div className='newsletter-show__body newsletter-show__body--single'>
+              <div className="newsletter-show__body newsletter-show__body--single">
                 {renderBody(rightColumn || leftColumn)}
               </div>
             )}
 
             {/* Footer */}
             {newsletter.footer_attribution && (
-              <footer className='newsletter-show__footer'>
-                <div className='newsletter-show__footer-rule' />
-                <p className='newsletter-show__footer-text'>{newsletter.footer_attribution}</p>
+              <footer className="newsletter-show__footer">
+                <div className="newsletter-show__footer-rule" />
+                <p className="newsletter-show__footer-text">{newsletter.footer_attribution}</p>
               </footer>
             )}
           </article>
         )}
 
-        <div className='newsletter-show__back-link'>
-          <Link to='/newsletters'>Tutte le newsletter</Link>
+        <div className="newsletter-show__back-link">
+          <Link to="/newsletters">Tutte le newsletter</Link>
         </div>
       </div>
     </Column>

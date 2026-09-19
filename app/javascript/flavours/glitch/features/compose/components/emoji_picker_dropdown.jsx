@@ -1,33 +1,33 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { defineMessages, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { supportsPassiveEvents } from 'detect-passive-events';
-import Overlay from 'react-overlays/Overlay';
+import { supportsPassiveEvents } from "detect-passive-events";
+import Overlay from "react-overlays/Overlay";
 
-import MoodIcon from '@/material-icons/400-20px/mood.svg?react';
-import { IconButton } from 'flavours/glitch/components/icon_button';
-import { injectIntl } from '@/flavours/glitch/components/intl';
+import MoodIcon from "@/material-icons/400-20px/mood.svg?react";
+import { IconButton } from "flavours/glitch/components/icon_button";
+import { injectIntl } from "@/flavours/glitch/components/intl";
 
-import { EmojiPicker as EmojiPickerAsync } from '../../ui/util/async-components';
+import { EmojiPicker as EmojiPickerAsync } from "../../ui/util/async-components";
 
 const messages = defineMessages({
-  emoji: { id: 'emoji_button.label', defaultMessage: 'Insert emoji' },
-  emoji_search: { id: 'emoji_button.search', defaultMessage: 'Search...' },
-  custom: { id: 'emoji_button.custom', defaultMessage: 'Custom' },
-  recent: { id: 'emoji_button.recent', defaultMessage: 'Frequently used' },
-  search_results: { id: 'emoji_button.search_results', defaultMessage: 'Search results' },
-  people: { id: 'emoji_button.people', defaultMessage: 'People' },
-  nature: { id: 'emoji_button.nature', defaultMessage: 'Nature' },
-  food: { id: 'emoji_button.food', defaultMessage: 'Food & Drink' },
-  activity: { id: 'emoji_button.activity', defaultMessage: 'Activity' },
-  travel: { id: 'emoji_button.travel', defaultMessage: 'Travel & Places' },
-  objects: { id: 'emoji_button.objects', defaultMessage: 'Objects' },
-  symbols: { id: 'emoji_button.symbols', defaultMessage: 'Symbols' },
-  flags: { id: 'emoji_button.flags', defaultMessage: 'Flags' },
+  emoji: { id: "emoji_button.label", defaultMessage: "Insert emoji" },
+  emoji_search: { id: "emoji_button.search", defaultMessage: "Search..." },
+  custom: { id: "emoji_button.custom", defaultMessage: "Custom" },
+  recent: { id: "emoji_button.recent", defaultMessage: "Frequently used" },
+  search_results: { id: "emoji_button.search_results", defaultMessage: "Search results" },
+  people: { id: "emoji_button.people", defaultMessage: "People" },
+  nature: { id: "emoji_button.nature", defaultMessage: "Nature" },
+  food: { id: "emoji_button.food", defaultMessage: "Food & Drink" },
+  activity: { id: "emoji_button.activity", defaultMessage: "Activity" },
+  travel: { id: "emoji_button.travel", defaultMessage: "Travel & Places" },
+  objects: { id: "emoji_button.objects", defaultMessage: "Objects" },
+  symbols: { id: "emoji_button.symbols", defaultMessage: "Symbols" },
+  flags: { id: "emoji_button.flags", defaultMessage: "Flags" },
 });
 
 let EmojiPicker, Emoji; // load asynchronously
@@ -35,28 +35,24 @@ let EmojiPicker, Emoji; // load asynchronously
 const listenerOptions = supportsPassiveEvents ? { passive: true, capture: true } : true;
 
 const notFoundFn = () => (
-  <div className='emoji-mart-no-results'>
-    <Emoji
-      emoji='sleuth_or_spy'
-      size={32}
-    />
+  <div className="emoji-mart-no-results">
+    <Emoji emoji="sleuth_or_spy" size={32} />
 
-    <div className='emoji-mart-no-results-label'>
-      <FormattedMessage id='emoji_button.not_found' defaultMessage='No matching emojis found' />
+    <div className="emoji-mart-no-results-label">
+      <FormattedMessage id="emoji_button.not_found" defaultMessage="No matching emojis found" />
     </div>
   </div>
 );
 
 class ModifierPickerMenu extends PureComponent {
-
   static propTypes = {
     active: PropTypes.bool,
     onSelect: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   };
 
-  handleClick = e => {
-    this.props.onSelect(e.currentTarget.getAttribute('data-index') * 1);
+  handleClick = (e) => {
+    this.props.onSelect(e.currentTarget.getAttribute("data-index") * 1);
   };
 
   componentDidMount() {
@@ -77,23 +73,23 @@ class ModifierPickerMenu extends PureComponent {
     this.removeListeners();
   }
 
-  handleDocumentClick = e => {
+  handleDocumentClick = (e) => {
     if (this.node && !this.node.contains(e.target)) {
       this.props.onClose();
     }
   };
 
   attachListeners() {
-    document.addEventListener('click', this.handleDocumentClick, { capture: true });
-    document.addEventListener('touchend', this.handleDocumentClick, listenerOptions);
+    document.addEventListener("click", this.handleDocumentClick, { capture: true });
+    document.addEventListener("touchend", this.handleDocumentClick, listenerOptions);
   }
 
   removeListeners() {
-    document.removeEventListener('click', this.handleDocumentClick, { capture: true });
-    document.removeEventListener('touchend', this.handleDocumentClick, listenerOptions);
+    document.removeEventListener("click", this.handleDocumentClick, { capture: true });
+    document.removeEventListener("touchend", this.handleDocumentClick, listenerOptions);
   }
 
-  setRef = c => {
+  setRef = (c) => {
     this.node = c;
   };
 
@@ -101,21 +97,35 @@ class ModifierPickerMenu extends PureComponent {
     const { active } = this.props;
 
     return (
-      <div className='emoji-picker-dropdown__modifiers__menu' style={{ display: active ? 'block' : 'none' }} ref={this.setRef}>
-        <button type='button' onClick={this.handleClick} data-index={1}><Emoji emoji='fist' size={22} skin={1} /></button>
-        <button type='button' onClick={this.handleClick} data-index={2}><Emoji emoji='fist' size={22} skin={2} /></button>
-        <button type='button' onClick={this.handleClick} data-index={3}><Emoji emoji='fist' size={22} skin={3} /></button>
-        <button type='button' onClick={this.handleClick} data-index={4}><Emoji emoji='fist' size={22} skin={4} /></button>
-        <button type='button' onClick={this.handleClick} data-index={5}><Emoji emoji='fist' size={22} skin={5} /></button>
-        <button type='button' onClick={this.handleClick} data-index={6}><Emoji emoji='fist' size={22} skin={6} /></button>
+      <div
+        className="emoji-picker-dropdown__modifiers__menu"
+        style={{ display: active ? "block" : "none" }}
+        ref={this.setRef}
+      >
+        <button type="button" onClick={this.handleClick} data-index={1}>
+          <Emoji emoji="fist" size={22} skin={1} />
+        </button>
+        <button type="button" onClick={this.handleClick} data-index={2}>
+          <Emoji emoji="fist" size={22} skin={2} />
+        </button>
+        <button type="button" onClick={this.handleClick} data-index={3}>
+          <Emoji emoji="fist" size={22} skin={3} />
+        </button>
+        <button type="button" onClick={this.handleClick} data-index={4}>
+          <Emoji emoji="fist" size={22} skin={4} />
+        </button>
+        <button type="button" onClick={this.handleClick} data-index={5}>
+          <Emoji emoji="fist" size={22} skin={5} />
+        </button>
+        <button type="button" onClick={this.handleClick} data-index={6}>
+          <Emoji emoji="fist" size={22} skin={6} />
+        </button>
       </div>
     );
   }
-
 }
 
 class ModifierPicker extends PureComponent {
-
   static propTypes = {
     active: PropTypes.bool,
     modifier: PropTypes.number,
@@ -132,7 +142,7 @@ class ModifierPicker extends PureComponent {
     }
   };
 
-  handleSelect = modifier => {
+  handleSelect = (modifier) => {
     this.props.onChange(modifier);
     this.props.onClose();
   };
@@ -141,17 +151,19 @@ class ModifierPicker extends PureComponent {
     const { active, modifier } = this.props;
 
     return (
-      <div className='emoji-picker-dropdown__modifiers'>
-        <Emoji emoji='fist' size={22} skin={modifier} onClick={this.handleClick} />
-        <ModifierPickerMenu active={active} onSelect={this.handleSelect} onClose={this.props.onClose} />
+      <div className="emoji-picker-dropdown__modifiers">
+        <Emoji emoji="fist" size={22} skin={modifier} onClick={this.handleClick} />
+        <ModifierPickerMenu
+          active={active}
+          onSelect={this.handleSelect}
+          onClose={this.props.onClose}
+        />
       </div>
     );
   }
-
 }
 
 class EmojiPickerMenuImpl extends PureComponent {
-
   static propTypes = {
     frequentlyUsedEmojis: PropTypes.arrayOf(PropTypes.string),
     loading: PropTypes.bool,
@@ -161,7 +173,7 @@ class EmojiPickerMenuImpl extends PureComponent {
     intl: PropTypes.object.isRequired,
     skinTone: PropTypes.number.isRequired,
     onSkinTone: PropTypes.func.isRequired,
-    pickerButtonRef: PropTypes.func.isRequired
+    pickerButtonRef: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -175,15 +187,19 @@ class EmojiPickerMenuImpl extends PureComponent {
     readyToFocus: false,
   };
 
-  handleDocumentClick = e => {
-    if (this.node && !this.node.contains(e.target) && !this.props.pickerButtonRef.contains(e.target)) {
+  handleDocumentClick = (e) => {
+    if (
+      this.node &&
+      !this.node.contains(e.target) &&
+      !this.props.pickerButtonRef.contains(e.target)
+    ) {
       this.props.onClose();
     }
   };
 
   componentDidMount() {
-    document.addEventListener('click', this.handleDocumentClick, { capture: true });
-    document.addEventListener('touchend', this.handleDocumentClick, listenerOptions);
+    document.addEventListener("click", this.handleDocumentClick, { capture: true });
+    document.addEventListener("touchend", this.handleDocumentClick, listenerOptions);
 
     // Because of https://github.com/react-bootstrap/react-bootstrap/issues/2614 we need
     // to wait for a frame before focusing
@@ -197,11 +213,11 @@ class EmojiPickerMenuImpl extends PureComponent {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.handleDocumentClick, { capture: true });
-    document.removeEventListener('touchend', this.handleDocumentClick, listenerOptions);
+    document.removeEventListener("click", this.handleDocumentClick, { capture: true });
+    document.removeEventListener("touchend", this.handleDocumentClick, listenerOptions);
   }
 
-  setRef = c => {
+  setRef = (c) => {
     this.node = c;
   };
 
@@ -231,7 +247,6 @@ class EmojiPickerMenuImpl extends PureComponent {
       emoji.native = `:${emoji.id}:`;
     }
     if (!(event.ctrlKey || event.metaKey)) {
-
       this.props.onClose();
     }
     this.props.onPick(emoji);
@@ -245,7 +260,7 @@ class EmojiPickerMenuImpl extends PureComponent {
     this.setState({ modifierOpen: false });
   };
 
-  handleModifierChange = modifier => {
+  handleModifierChange = (modifier) => {
     this.props.onSkinTone(modifier);
   };
 
@@ -261,12 +276,16 @@ class EmojiPickerMenuImpl extends PureComponent {
     const { modifierOpen } = this.state;
 
     return (
-      <div className={classNames('emoji-picker-dropdown__menu', { selecting: modifierOpen })} style={style} ref={this.setRef}>
+      <div
+        className={classNames("emoji-picker-dropdown__menu", { selecting: modifierOpen })}
+        style={style}
+        ref={this.setRef}
+      >
         <EmojiPicker
           perLine={8}
           emojiSize={22}
-          color=''
-          emoji=''
+          color=""
+          emoji=""
           title={title}
           i18n={this.getI18n()}
           onClick={this.handleClick}
@@ -289,7 +308,6 @@ class EmojiPickerMenuImpl extends PureComponent {
       </div>
     );
   }
-
 }
 
 const EmojiPickerMenu = injectIntl(EmojiPickerMenuImpl);
@@ -307,7 +325,7 @@ class EmojiPickerDropdown extends PureComponent {
   state = {
     active: false,
     loading: false,
-    placement: 'bottom',
+    placement: "bottom",
   };
 
   setRef = (c) => {
@@ -320,13 +338,15 @@ class EmojiPickerDropdown extends PureComponent {
     if (!EmojiPicker) {
       this.setState({ loading: true });
 
-      EmojiPickerAsync().then(EmojiMart => {
-        EmojiPicker = EmojiMart.Picker;
-        Emoji = EmojiMart.Emoji;
-        this.setState({ loading: false });
-      }).catch(() => {
-        this.setState({ loading: false, active: false });
-      });
+      EmojiPickerAsync()
+        .then((EmojiMart) => {
+          EmojiPicker = EmojiMart.Picker;
+          Emoji = EmojiMart.Emoji;
+          this.setState({ loading: false });
+        })
+        .catch(() => {
+          this.setState({ loading: false, active: false });
+        });
     }
   };
 
@@ -335,7 +355,7 @@ class EmojiPickerDropdown extends PureComponent {
   };
 
   onToggle = (e) => {
-    if (!this.state.loading && (!e.key || e.key === 'Enter')) {
+    if (!this.state.loading && (!e.key || e.key === "Enter")) {
       if (this.state.active) {
         this.onHideDropdown();
       } else {
@@ -344,13 +364,13 @@ class EmojiPickerDropdown extends PureComponent {
     }
   };
 
-  handleKeyDown = e => {
-    if (e.key === 'Escape') {
+  handleKeyDown = (e) => {
+    if (e.key === "Escape") {
       this.onHideDropdown();
     }
   };
 
-  setTargetRef = c => {
+  setTargetRef = (c) => {
     this.target = c;
   };
 
@@ -368,7 +388,7 @@ class EmojiPickerDropdown extends PureComponent {
     const { active, loading, placement } = this.state;
 
     return (
-      <div className='emoji-picker-dropdown' onKeyDown={this.handleKeyDown} ref={this.setTargetRef}>
+      <div className="emoji-picker-dropdown" onKeyDown={this.handleKeyDown} ref={this.setTargetRef}>
         <IconButton
           title={title}
           aria-expanded={active}
@@ -380,7 +400,13 @@ class EmojiPickerDropdown extends PureComponent {
           inverted
         />
 
-        <Overlay show={active} placement={placement} flip target={this.findTarget} popperConfig={{ strategy: 'fixed', onFirstUpdate: this.handleOverlayEnter }}>
+        <Overlay
+          show={active}
+          placement={placement}
+          flip
+          target={this.findTarget}
+          popperConfig={{ strategy: "fixed", onFirstUpdate: this.handleOverlayEnter }}
+        >
           {({ props, placement }) => (
             <div {...props} style={{ ...props.style }}>
               <div className={`dropdown-animation ${placement}`}>
@@ -400,7 +426,6 @@ class EmojiPickerDropdown extends PureComponent {
       </div>
     );
   }
-
 }
 
 export default injectIntl(EmojiPickerDropdown);

@@ -1,16 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import api from 'flavours/glitch/api';
+import api from "flavours/glitch/api";
 
-import { useViewingLocale } from './useViewingLocale';
+import { useViewingLocale } from "./useViewingLocale";
 
 // Per-locale module-level cache so all components share fetched data
-const _cache     = {};  // locale → { key: value }
-const _fetchedAt = {};  // locale → ms timestamp
-const _loading   = {};  // locale → bool
-const _listeners = {};  // locale → Set<setState fn>
+const _cache = {}; // locale → { key: value }
+const _fetchedAt = {}; // locale → ms timestamp
+const _loading = {}; // locale → bool
+const _listeners = {}; // locale → Set<setState fn>
 
 const TTL_MS = 30_000;
 
@@ -20,24 +20,24 @@ function getListeners(locale) {
 }
 
 function notifyListeners(locale) {
-  (_listeners[locale] || new Set()).forEach(fn => fn(_cache[locale] || {}));
+  (_listeners[locale] || new Set()).forEach((fn) => fn(_cache[locale] || {}));
 }
 
 function fetchLocale(locale) {
   if (_loading[locale]) return;
   _loading[locale] = true;
   api()
-    .get('/api/v1/site_content', { params: { locale } })
-    .then(res => {
-      _cache[locale]     = res.data || {};
+    .get("/api/v1/site_content", { params: { locale } })
+    .then((res) => {
+      _cache[locale] = res.data || {};
       _fetchedAt[locale] = Date.now();
-      _loading[locale]   = false;
+      _loading[locale] = false;
       notifyListeners(locale);
     })
     .catch(() => {
-      _cache[locale]     = {};
+      _cache[locale] = {};
       _fetchedAt[locale] = Date.now();
-      _loading[locale]   = false;
+      _loading[locale] = false;
       notifyListeners(locale);
     });
 }
@@ -55,8 +55,7 @@ export function useSiteContent() {
   const { viewingLocale } = useViewingLocale();
 
   const locale =
-    viewingLocale ||
-    (document.documentElement.lang || intl.locale || 'en').split('-')[0];
+    viewingLocale || (document.documentElement.lang || intl.locale || "en").split("-")[0];
 
   const [content, setContent] = useState(_cache[locale] ?? null);
   const [renderedLocale, setRenderedLocale] = useState(locale);
@@ -72,21 +71,21 @@ export function useSiteContent() {
   }
 
   useEffect(() => {
-    const stale =
-      !_cache[locale] ||
-      Date.now() - (_fetchedAt[locale] || 0) > TTL_MS;
+    const stale = !_cache[locale] || Date.now() - (_fetchedAt[locale] || 0) > TTL_MS;
 
     if (stale) {
       getListeners(locale).add(setContent);
       fetchLocale(locale);
-      return () => { getListeners(locale).delete(setContent); };
+      return () => {
+        getListeners(locale).delete(setContent);
+      };
     }
 
     return undefined;
   }, [locale]);
 
   return useCallback(
-    (key, fallback = '') => content?.[key] ?? _cache[locale]?.[key] ?? fallback,
+    (key, fallback = "") => content?.[key] ?? _cache[locale]?.[key] ?? fallback,
     [content, locale],
   );
 }

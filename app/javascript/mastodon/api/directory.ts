@@ -1,5 +1,5 @@
-import { apiRequestGet } from 'mastodon/api';
-import type { ApiAccountJSON } from 'mastodon/api_types/accounts';
+import { apiRequestGet } from "mastodon/api";
+import type { ApiAccountJSON } from "mastodon/api_types/accounts";
 
 export const apiGetDirectory = (
   params: {
@@ -9,7 +9,7 @@ export const apiGetDirectory = (
   },
   limit = 20,
 ) =>
-  apiRequestGet<ApiAccountJSON[]>('v1/directory', {
+  apiRequestGet<ApiAccountJSON[]>("v1/directory", {
     ...params,
     limit,
   });

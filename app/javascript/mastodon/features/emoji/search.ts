@@ -1,15 +1,15 @@
-import { log } from 'debug';
-import type { ArrayValues, KeysOfUnion } from 'type-fest';
+import { log } from "debug";
+import type { ArrayValues, KeysOfUnion } from "type-fest";
 
 import {
   loadCustomEmojiKeys,
   loadEmojiByHexcode,
   rawSearch,
   searchCustomEmojisByShortcodes,
-} from './database';
-import { localeToSegmenter, toSupportedLocale } from './locale';
-import { extractTokens } from './normalize';
-import type { AnyEmojiData, CustomEmojiData } from './types';
+} from "./database";
+import { localeToSegmenter, toSupportedLocale } from "./locale";
+import { extractTokens } from "./normalize";
+import type { AnyEmojiData, CustomEmojiData } from "./types";
 
 /*
 Emoji search logic:
@@ -27,20 +27,20 @@ Scoring functions as follows:
 */
 
 const scoreRanking = [
-  'label',
-  'shortcode',
-  'emoticons',
-  'shortcodes',
-  'tokens',
+  "label",
+  "shortcode",
+  "emoticons",
+  "shortcodes",
+  "tokens",
 ] as const satisfies KeysOfUnion<AnyEmojiData>[];
 type ScoreRankingKeys = ArrayValues<typeof scoreRanking>;
 type ScoreRanking = Record<ScoreRankingKeys, number>;
 
 const identifierFields = new Set<ScoreRankingKeys>([
-  'label',
-  'shortcode',
-  'emoticons',
-  'shortcodes',
+  "label",
+  "shortcode",
+  "emoticons",
+  "shortcodes",
 ]);
 
 interface BestRank {
@@ -61,7 +61,7 @@ export async function search({
   locale: string;
   limit?: number;
 }) {
-  performance.mark('emoji-search-start');
+  performance.mark("emoji-search-start");
 
   // Get the locale, and extract tokens from the query.
   const locale = toSupportedLocale(localeString);
@@ -75,10 +75,10 @@ export async function search({
   }
   const lastToken = queryTokens.at(-1);
   if (!lastToken) {
-    throw new Error('Missing tokens from query');
+    throw new Error("Missing tokens from query");
   }
 
-  log('searching for tokens %o in locale %s', queryTokens, locale);
+  log("searching for tokens %o in locale %s", queryTokens, locale);
 
   // Create an array of emoji results
   const resultArrays: ScoreMap[] = [];
@@ -125,7 +125,7 @@ export async function search({
       const emoji =
         resultMap.get(shortcodeResult.hexcode) ??
         (await loadEmojiByHexcode(shortcodeResult.hexcode, locale));
-      if (!emoji || !('hexcode' in emoji)) {
+      if (!emoji || !("hexcode" in emoji)) {
         continue;
       }
 
@@ -140,9 +140,7 @@ export async function search({
         continue;
       }
       const oldScores = resultMap.get(emoji.hexcode)?.scores;
-      const scores = oldScores
-        ? combineEmojiScores(oldScores, newScores)
-        : newScores;
+      const scores = oldScores ? combineEmojiScores(oldScores, newScores) : newScores;
       resultMap.set(emoji.hexcode, {
         ...emoji,
         shortcodes: [...shortcodeResult.shortcodes, ...emoji.shortcodes],
@@ -185,11 +183,7 @@ export async function search({
   if (mixedResults.length === 0 || mixedResults.length < limit) {
     const customEmojisFound = await fullCustomSearch(query, allEmojiIds);
     if (customEmojisFound.length > 0) {
-      log(
-        'cursor search found %d results for "%s"',
-        customEmojisFound.length,
-        query,
-      );
+      log('cursor search found %d results for "%s"', customEmojisFound.length, query);
       mixedResults.push(...customEmojisFound);
     }
   }
@@ -213,7 +207,7 @@ export async function search({
     }
   }
 
-  const time = performance.measure('emoji-search-end', 'emoji-search-start');
+  const time = performance.measure("emoji-search-end", "emoji-search-start");
   log(
     'search for "%s" in locale %s returned %d results and took %dms',
     query,
@@ -224,22 +218,17 @@ export async function search({
   return results;
 }
 
-function hasField(
-  emoji: AnyEmojiData,
-  field: string,
-): field is keyof typeof emoji {
+function hasField(emoji: AnyEmojiData, field: string): field is keyof typeof emoji {
   return Object.hasOwn(emoji, field);
 }
 
 function getIdentifier(emoji: AnyEmojiData) {
-  return 'shortcode' in emoji ? emoji.shortcode : emoji.hexcode;
+  return "shortcode" in emoji ? emoji.shortcode : emoji.hexcode;
 }
 
 // Creates ranked scores for a given emoji.
 function getScoreForEmoji(emoji: AnyEmojiData, query: string) {
-  const scores = Object.fromEntries(
-    scoreRanking.map((field) => [field, -1]),
-  ) as ScoreRanking;
+  const scores = Object.fromEntries(scoreRanking.map((field) => [field, -1])) as ScoreRanking;
   let hasScore = false;
 
   for (const field of scoreRanking) {
@@ -269,9 +258,7 @@ function getScoreForEmoji(emoji: AnyEmojiData, query: string) {
 }
 
 function combineEmojiScores(a: ScoreRanking, b: ScoreRanking): ScoreRanking {
-  const scores = Object.fromEntries(
-    scoreRanking.map((field) => [field, -1]),
-  ) as ScoreRanking;
+  const scores = Object.fromEntries(scoreRanking.map((field) => [field, -1])) as ScoreRanking;
 
   for (const rank of scoreRanking) {
     if (a[rank] === -1) {
@@ -305,8 +292,8 @@ function compareRankedEmoji(a: RankedEmoji, b: RankedEmoji): number {
   }
 
   // Lastly prioritize Unicode emojis.
-  const aIsCustom = hasField(a, 'shortcode');
-  const bIsCustom = hasField(b, 'shortcode');
+  const aIsCustom = hasField(a, "shortcode");
+  const bIsCustom = hasField(b, "shortcode");
   if (aIsCustom !== bIsCustom) {
     return aIsCustom ? -1 : 1;
   }
@@ -330,8 +317,7 @@ function getBestRank(scores: ScoreRanking): BestRank {
       !best ||
       categoryWeight < best.categoryWeight ||
       (categoryWeight === best.categoryWeight &&
-        (score < best.score ||
-          (score === best.score && fieldWeight < best.fieldWeight)))
+        (score < best.score || (score === best.score && fieldWeight < best.fieldWeight)))
     ) {
       best = { categoryWeight, score, fieldWeight };
     }
@@ -381,7 +367,7 @@ async function fullCustomSearch(query: string, existing = new Set<string>()) {
     if (keys.length === 0) {
       break;
     }
-    log('cursor search got batch of %d emojis', keys.length);
+    log("cursor search got batch of %d emojis", keys.length);
     lastKey = keys.at(-1) ?? null;
 
     for (const key of keys) {

@@ -287,12 +287,12 @@ br:
       add_new: Krouiñ ur reolenn
       delete: Dilemel
       expires_in:
-        '1209600': 2 sizhunvezh
-        '15778476': 6 mizvezh
-        '2629746': 1 mizvezh
-        '31556952': 1 bloavezh
-        '86400': 1 devezh
-        '94670856': 3 bloavezh
+        "1209600": 2 sizhunvezh
+        "15778476": 6 mizvezh
+        "2629746": 1 mizvezh
+        "31556952": 1 bloavezh
+        "86400": 1 devezh
+        "94670856": 3 bloavezh
       new:
         title: Krouiñ ur reolenn IP nevez
       title: Reolennoù IP
@@ -510,7 +510,7 @@ br:
       guide_link: https://crowdin.com/project/mastodon
   application_mailer:
     salutation: "%{name},"
-    view: 'Sellet:'
+    view: "Sellet:"
     view_profile: Gwelet ar profil
     view_status: Gwelet ar c'hannad
   applications:
@@ -574,7 +574,7 @@ br:
     strikes:
       appeal: Ober engalv
       created_at: Deiziad
-      status: 'Embannadur #%{id}'
+      status: "Embannadur #%{id}"
       title_actions:
         disable: Skornañ ar gont
         none: Diwall
@@ -628,7 +628,7 @@ br:
   imports:
     errors:
       empty: Restr CSV goullo
-      invalid_csv_file: 'Restr CSV didalvoudek. Fazi: %{error}'
+      invalid_csv_file: "Restr CSV didalvoudek. Fazi: %{error}"
       too_large: Re vras eo ar restr
     modes:
       merge: Teuziñ
@@ -651,14 +651,14 @@ br:
     delete: Diweredekaat
     expired: Deuet d'an termen
     expires_in:
-      '1800': 30 munutenn
-      '21600': 6 eur
-      '3600': 1 eur
-      '43200': 12 eur
-      '604800': 1 sizhun
-      '86400': 1 deiz
+      "1800": 30 munutenn
+      "21600": 6 eur
+      "3600": 1 eur
+      "43200": 12 eur
+      "604800": 1 sizhun
+      "86400": 1 deiz
     expires_in_prompt: Birviken
-    invited_by: 'Pedet oc''h bet gant:'
+    invited_by: "Pedet oc'h bet gant:"
     max_uses:
       few: "%{count} implij"
       many: "%{count} implij"
@@ -686,7 +686,7 @@ br:
     title: Habaskadur
   notification_mailer:
     favourite:
-      body: 'Ouzhpennet eo bet hoc''h embannadur gant %{name} d''h·e re vuiañ-karet:'
+      body: "Ouzhpennet eo bet hoc'h embannadur gant %{name} d'h·e re vuiañ-karet:"
       subject: Gant %{name} eo bet ouzhpennet hoc'h embannadur d'h·e re vuiañ-karet
       title: Embannadur muiañ-karet nevez
     follow:
@@ -694,12 +694,12 @@ br:
     mention:
       action: Respont
     quote:
-      body: 'Meneget eo bet hoc''h embannadur gant %{name}:'
+      body: "Meneget eo bet hoc'h embannadur gant %{name}:"
       subject: Gant %{name} eo bet meneget hoc'h embannadur
       title: Meneg nevez
     reblog:
-      body: 'Skignet eo bet hoc''h embannadur gant %{name}:'
-      subject: 'Gant %{name} eo bet skignet hoc''h embannadur '
+      body: "Skignet eo bet hoc'h embannadur gant %{name}:"
+      subject: "Gant %{name} eo bet skignet hoc'h embannadur "
       title: Skignadenn nevez
     status:
       subject: Embannet ez eus bet traoù gant %{name}
@@ -847,14 +847,14 @@ br:
     keep_self_fav: Mirout an embannadurioù muiañ-karet
     keep_self_fav_hint: Chom hep dilemel hoc'h embannadurioù m'ho peus lakaet anezho en ho re vuiañ-karet
     min_age:
-      '1209600': 2 sizhunvezh
-      '15778476': 6 mizvezh
-      '2629746': 1 mizvezh
-      '31556952': 1 bloavezh
-      '5259492': 2 mizvezh
-      '604800': 1 sizhunvezh
-      '63113904': 2 vloavezh
-      '7889238': 3 mizvezh
+      "1209600": 2 sizhunvezh
+      "15778476": 6 mizvezh
+      "2629746": 1 mizvezh
+      "31556952": 1 bloavezh
+      "5259492": 2 mizvezh
+      "604800": 1 sizhunvezh
+      "63113904": 2 vloavezh
+      "7889238": 3 mizvezh
   terms_of_service:
     title: Divizoù implijout
   time:
@@ -883,8 +883,8 @@ br:
     warning:
       categories:
         spam: Spam
-      reason: 'Abeg:'
-      statuses: 'Embannadurioù meneget:'
+      reason: "Abeg:"
+      statuses: "Embannadurioù meneget:"
       subject:
         disable: Skornet eo bet ho kont %{acct}
         suspend: Astalet eo bet ho kont %{acct}
@@ -915,7 +915,7 @@ br:
       title: Degemer mat e bourzh, %{name}!
   users:
     follow_limit_reached: N'hallit ket heulian muioc'h eget %{limit} a zen
-    signed_in_as: 'Aet-tre evel:'
+    signed_in_as: "Aet-tre evel:"
   verification:
     here_is_how: Setu penaos
     verification: Amprouadur

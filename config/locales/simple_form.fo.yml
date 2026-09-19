@@ -7,7 +7,7 @@ fo:
         display_name: Títt fulla navn og títt stuttliga navn.
         fields: Heimasíðan hjá tær, fornøvn, aldur ella hvat tú vil.
         indexable: Almennu postar tínir kunnu vera sjónligir í leitiúrslitum á Mastodon. Óansæð, so kunnu fólk, sum hava samvirkað við tínar postar, finna teir.
-        note: 'Tú kanst @umrøða onnur fólk ella #frámerki.'
+        note: "Tú kanst @umrøða onnur fólk ella #frámerki."
         show_collections: Tað verður gjørligt hjá fólki at kaga í listan yvir tey, sum fylgja tær, og tey, sum tú fylgir. Tó so, fólk, sum tú fylgir, síggja at tú fylgir teimum.
         unlocked: Fólk kunnu fylgja tær uttan at biðja um loyvi. Frável hetta, um tú vilt eftirkanna umbønir og góðkenna ella avvísa nýggjar fylgjarar.
       account_alias:
@@ -72,7 +72,7 @@ fo:
         domain: Hetta kann vera navnaøkið, sum sæst í teldupostinum ella í MX teigaraðnum, sum hann brúkar. Tey verða eftirkannaði í sambandi við tilmelding.
         with_dns_records: Ein roynd at finna DNS teigarøðirnar hjá givna navnaøkinum verður gjørd, og úrslitini verða eisini blokeraði
       featured_tag:
-        name: 'Her eru nakrir tvíkrossar, ið tú hevur brúkt í seinastuni:'
+        name: "Her eru nakrir tvíkrossar, ið tú hevur brúkt í seinastuni:"
       filters:
         action: Vel, hvat skal henda, tá eitt uppslag svarar til filtrið
         actions:
@@ -126,7 +126,7 @@ fo:
         hint: Valfrítt. Gev fleiri smálutir um regluna
         text: Lýs eina reglu ella eitt krav fyri brúkarar á hesum ambætaranum. Ger tað stutt og einfalt
       sessions:
-        otp: 'Skriva tvey-faktor koduna frá telefon-appini ella brúka eina av tínum endurgerðskodum:'
+        otp: "Skriva tvey-faktor koduna frá telefon-appini ella brúka eina av tínum endurgerðskodum:"
         webauthn: Er tað ein geymi, minst so til at seta hann í og, um neyðugt, pikka hann.
       settings:
         indexable: Vangasíðan hjá tær kann síggjast í leitiúrslitum á Google, Bing og aðrastaðni.
@@ -391,7 +391,7 @@ fo:
         events: Virknar hendingar
         template: Farmaformur
         url: Endapunkts-URLur
-    'no': Nei
+    "no": Nei
     not_recommended: Ikki viðmælt
     overridden: Ógildað
     recommended: Viðmælt
@@ -401,4 +401,4 @@ fo:
     title:
       sessions:
         webauthn: Brúka ein av tínum trygdarlyklum at rita inn
-    'yes': Ja
+    "yes": Ja

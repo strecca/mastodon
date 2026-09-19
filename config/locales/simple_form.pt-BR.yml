@@ -8,7 +8,7 @@ pt-BR:
         display_name: Seu nome completo ou apelido.
         fields: Sua página inicial, pronomes, idade ou qualquer coisa que quiser.
         indexable: Suas publicações abertas podem aparecer nos resultados da busca em Mastodon. As pessoas que interagiram com suas publicações podem conseguir pesquisá-las independentemente disso.
-        note: 'Você pode @mencionar outras pessoas ou usar #hashtags.'
+        note: "Você pode @mencionar outras pessoas ou usar #hashtags."
         show_collections: As pessoas podem ver seus seguidores e quem você está seguindo. Os perfis que você seguir saberão que você os segue independentemente do que selecionar.
         unlocked: As pessoas poderão te seguir sem solicitar aprovação. Desmarque caso você queira revisar as solicitações.
       account_alias:
@@ -76,7 +76,7 @@ pt-BR:
         domain: Este pode ser o nome de domínio que aparece no endereço de e-mail ou no registro MX que ele utiliza. Eles serão verificados após a inscrição.
         with_dns_records: Será feita uma tentativa de resolver os registros DNS do domínio em questão e os resultados também serão colocados na lista negra
       featured_tag:
-        name: 'Aqui estão algumas hashtags usadas recentemente:'
+        name: "Aqui estão algumas hashtags usadas recentemente:"
       filters:
         action: Escolha qual ação performar quando uma postagem coincidir com o filtro
         actions:
@@ -132,7 +132,7 @@ pt-BR:
         hint: Opcional. Forneça mais detalhes sobre a regra
         text: Descreva uma regra ou requisito para os usuários neste servidor. Tente mantê-la curta e simples.
       sessions:
-        otp: 'Digite o código de dois fatores gerado pelo aplicativo no seu celular ou use um dos códigos de recuperação:'
+        otp: "Digite o código de dois fatores gerado pelo aplicativo no seu celular ou use um dos códigos de recuperação:"
         webauthn: Se for uma chave USB tenha certeza de inseri-la e, se necessário, tocar nela.
       settings:
         email_subscriptions: A desativação mantém assinantes existentes, mas para de enviar e-mails.
@@ -408,7 +408,7 @@ pt-BR:
         events: Eventos habilitados
         template: Conteúdo JSON
         url: URL do Endpoint
-    'no': Não
+    "no": Não
     not_recommended: Não recomendado
     overridden: Sobreposto
     recommended: Recomendado
@@ -418,4 +418,4 @@ pt-BR:
     title:
       sessions:
         webauthn: Utilize uma das suas chaves de segurança para entrar
-    'yes': Sim
+    "yes": Sim

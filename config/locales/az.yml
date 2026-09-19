@@ -1,7 +1,7 @@
 ---
 az:
   about:
-    about_mastodon_html: 'Gələcəyin sosial şəbəkəsi: Reklam yoxdur, korporativ müşahidə yoxdur, etik dizayn və mərkəziyyətsizlik! Mastodon ilə öz verilərinizə sahib çıxın!'
+    about_mastodon_html: "Gələcəyin sosial şəbəkəsi: Reklam yoxdur, korporativ müşahidə yoxdur, etik dizayn və mərkəziyyətsizlik! Mastodon ilə öz verilərinizə sahib çıxın!"
     contact_missing: Ayarlanmayıb
     contact_unavailable: Mövcud deyil
     title: Haqqında
@@ -80,7 +80,7 @@ az:
       assigned: Təyin edilmiş moderator
       confirm_action: "@%{acct} üzərindəki moderasiya əməliyyatını təsdiqlə"
       notes_description_html: Notlara baxın, gələcəkdə özünüz və digər moderatorlar üçün notlar buraxın
-      quick_actions_description_html: 'Cəld bir əməliyyat edin və ya bildirilən məzmuna baxmaq üçün aşağı diyirlərin:'
+      quick_actions_description_html: "Cəld bir əməliyyat edin və ya bildirilən məzmuna baxmaq üçün aşağı diyirlərin:"
     roles:
       categories:
         moderation: Moderasiya
@@ -113,7 +113,7 @@ az:
       metadata: Meta veri
     system_checks:
       elasticsearch_version_check:
-        message_html: 'Uyumlu olmayan Elasticsearch versiyası: %{value}'
+        message_html: "Uyumlu olmayan Elasticsearch versiyası: %{value}"
     tags:
       updated_msg: Mövzu etiketi ayarları uğurla güncəlləndi
     trends:
@@ -245,7 +245,7 @@ az:
   notifications:
     administration_emails: Admin e-poçt bildirişləri
     email_events: Fəaliyyətlər üçün e-poçt bildirişləri
-    email_events_hint: 'Bildiriş almaq istədiyiniz fəaliyyətləri seçin:'
+    email_events_hint: "Bildiriş almaq istədiyiniz fəaliyyətləri seçin:"
   otp_authentication:
     description_html: Bir kimlik doğrulayıcı tətbiq istifadə edərək <strong>iki addımlı kimlik doğrulamanı</strong> fəallaşdırsanız, giriş etmək üçün telefonunuzun yanınızda olması tələb olunacaq, çünki daxil olmağınız üçün kodlar yaradılacaq.
   preferences:

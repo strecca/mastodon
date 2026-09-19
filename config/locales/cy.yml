@@ -1,7 +1,7 @@
 ---
 cy:
   about:
-    about_mastodon_html: 'Rhwydwaith cymdeithasol y dyfodol: Dim hysbysebion, dim gwyliadwriaeth gorfforaethol, dylunio moesegol a datganoli! Chi sy berchen eich data gyda Mastodon!'
+    about_mastodon_html: "Rhwydwaith cymdeithasol y dyfodol: Dim hysbysebion, dim gwyliadwriaeth gorfforaethol, dylunio moesegol a datganoli! Chi sy berchen eich data gyda Mastodon!"
     contact_missing: Heb ei osodF
     contact_unavailable: Ddim yn berthnasol
     default_thumbnail_description: Mae dau mastodon cartŵn yn gwenu (sy'n edrych fel eliffantod) yn taflu awyren bapur rhyngddyn nhw. Maen nhw wedi'u hamgylchynu gan awyr las llachar a phlanedau arnofiol gyda choed a rhagor o mastodonau arnyn nhw.
@@ -350,7 +350,7 @@ cy:
         title: Cyhoeddiad newydd
       preview:
         disclaimer: Gan nad oes modd i ddefnyddwyr eu hosgoi, dylai hysbysiadau e-bost gael eu cyfyngu i gyhoeddiadau pwysig fel tor-data personol neu hysbysiadau cau gweinydd.
-        explanation_html: 'Bydd yr e-bost yn cael ei anfon at <strong>%{display_count} defnyddiwr</strong>. Bydd y testun canlynol yn cael ei gynnwys yn yr e-bost:'
+        explanation_html: "Bydd yr e-bost yn cael ei anfon at <strong>%{display_count} defnyddiwr</strong>. Bydd y testun canlynol yn cael ei gynnwys yn yr e-bost:"
         title: Hysbysiad rhagolwg cyhoeddiad
       publish: Cyhoeddi
       published_msg: Cyhoeddiad wedi'i gyhoeddi'n llwyddiannus!
@@ -365,7 +365,7 @@ cy:
       back_to_account: Nôl i dudalen y cyfrif
       back_to_report: Nôl i dudalen yr adroddiad
       batch:
-        add_to_report: 'Ychwanegu at adroddiad #%{id}'
+        add_to_report: "Ychwanegu at adroddiad #%{id}"
         remove_from_report: Dileu o'r adroddiad
         report: Adroddiadau
       collection_title: Casgliad gan %{name}
@@ -624,10 +624,10 @@ cy:
       import:
         description_html: Rydych ar fin mewnforio rhestr o flociau parth. Edrychwch dros y rhestr hon yn ofalus iawn, yn enwedig os nad ydych chi wedi ei hysgrifennu.
         existing_relationships_warning: Perthynas ddilyn gyfredol
-        private_comment_description_html: 'Er mwyn eich helpu i olrhain o ble mae blociau a fewnforwyd yn dod, bydd blociau a fewnforwyd yn cael eu creu gyda''r sylw preifat canlynol: <q>%{comment}</q>'
+        private_comment_description_html: "Er mwyn eich helpu i olrhain o ble mae blociau a fewnforwyd yn dod, bydd blociau a fewnforwyd yn cael eu creu gyda'r sylw preifat canlynol: <q>%{comment}</q>"
         private_comment_template: Mewnforiwyd o %{source} ar %{date}
         title: Mewnforio blociau parth
-      invalid_domain_block: 'Cafodd un neu fwy o flociau parth eu hepgor oherwydd y gwall(au) canlynol: %{error}'
+      invalid_domain_block: "Cafodd un neu fwy o flociau parth eu hepgor oherwydd y gwall(au) canlynol: %{error}"
       new:
         title: Mewnforio blociau parth
       no_file: Heb ddewis ffeil
@@ -773,12 +773,12 @@ cy:
       created_msg: Wedi ychwanegu rheol IP newydd yn llwyddiannus
       delete: Dileu
       expires_in:
-        '1209600': 2 wythnos
-        '15778476': 6 mis
-        '2629746': 1 mis
-        '31556952': 1 flwyddyn
-        '86400': 1 diwrnod
-        '94670856': 3 blynedd
+        "1209600": 2 wythnos
+        "15778476": 6 mis
+        "2629746": 1 mis
+        "31556952": 1 flwyddyn
+        "86400": 1 diwrnod
+        "94670856": 3 blynedd
       new:
         title: Creu rheol IP newydd
       no_ip_block_selected: Heb newid unrhyw reolau IP gan na ddewiswyd yr un ohonyn nhw
@@ -839,7 +839,7 @@ cy:
       collections: "(%{count}) casgliad"
       comment:
         none: Dim
-      comment_description_html: 'I ddarparu rhagor o wybodaeth, ysgrifennodd %{name}:'
+      comment_description_html: "I ddarparu rhagor o wybodaeth, ysgrifennodd %{name}:"
       confirm: Cadarnhau
       confirm_action: Cadarnhau gweithred cymedroli yn erbyn @%{acct}
       created_at: Adroddwyd
@@ -859,11 +859,11 @@ cy:
         placeholder: Disgrifiwch pa weithredoedd sydd wedi eu cymryd, neu unrhyw ddiweddariadau perthnasol eraill...
         title: Nodiadau
       notes_description_html: Gweld a gadael nodiadau i gymedrolwyr eraill a chi eich hun yn y dyfodol
-      processed_msg: 'Adroddiad ar #%{id} wedi''i brosesu''n llwyddiannus'
-      quick_actions_description_html: 'Cymerwch gamau cyflym neu sgroliwch i lawr i weld cynnwys yr adroddwyd amdano:'
+      processed_msg: "Adroddiad ar #%{id} wedi'i brosesu'n llwyddiannus"
+      quick_actions_description_html: "Cymerwch gamau cyflym neu sgroliwch i lawr i weld cynnwys yr adroddwyd amdano:"
       remote_user_placeholder: y defnyddiwr pell o %{instance}
       reopen: Ailagor adroddiad
-      report: 'Adroddiad #%{id}'
+      report: "Adroddiad #%{id}"
       reported_account: Cyfrif wedi ei adrodd
       reported_by: Adroddwyd gan
       reported_content: Cynnwys wedi'u hadrodd
@@ -876,26 +876,26 @@ cy:
       statuses_description_html: Bydd cynnwys tramgwyddus yn cael ei ddyfynnu wrth gyfathrebu â'r cyfrif a adroddwyd
       summary:
         action_preambles:
-          delete_html: 'Rydych ar fin <strong>dileu</strong> rhai o <strong>bostiadau @%{acct}</strong>. Bydd hyn yn:'
-          mark_as_sensitive_html: 'Rydych ar fin <strong>marcio</strong> rhai o <strong>bostiadau @%{acct}</strong> fel rhai <strong>sensitif</strong>. Bydd hyn yn:'
-          silence_html: 'Rydych ar fin <strong>cyfyngu ar</strong> gyfrif <strong>@%{acct}</strong>. Bydd hyn yn:'
-          suspend_html: 'Rydych ar fin <strong>atal</strong> cyfrif <strong>@%{acct}</strong>. Bydd hyn yn:'
+          delete_html: "Rydych ar fin <strong>dileu</strong> rhai o <strong>bostiadau @%{acct}</strong>. Bydd hyn yn:"
+          mark_as_sensitive_html: "Rydych ar fin <strong>marcio</strong> rhai o <strong>bostiadau @%{acct}</strong> fel rhai <strong>sensitif</strong>. Bydd hyn yn:"
+          silence_html: "Rydych ar fin <strong>cyfyngu ar</strong> gyfrif <strong>@%{acct}</strong>. Bydd hyn yn:"
+          suspend_html: "Rydych ar fin <strong>atal</strong> cyfrif <strong>@%{acct}</strong>. Bydd hyn yn:"
         actions:
           delete_html: Tynnu'r postiadau tramgwyddus
           mark_as_sensitive_html: Nodi fod cyfryngau'r postiadau tramgwyddus yn sensitif
           silence_html: Cyfyngu'n sylweddol ar gyrhaeddiad <strong>@%{acct}</strong> trwy wneud ei ph/broffil a'i gynnwys ond yn weladwy i bobl sydd eisoes yn ei d/ddilyn neu edrych ar ei ph/broffil â llaw
           suspend_html: Atal <strong>@%{acct}</strong>, gan wneud ei ph/broffil a'i gynnwys yn anhygyrch ac yn amhosibl rhyngweithio ag ef
-        close_report: 'Nodi adroddiad #%{id} fel wedi''i ddatrys'
+        close_report: "Nodi adroddiad #%{id} fel wedi'i ddatrys"
         close_reports_html: Nodi bod <strong>pob</strong> adroddiad yn erbyn <strong>@%{acct}</strong> wedi'i ddatrys
         delete_data_html: Dileu proffil a chynnwys <strong>@%{acct}</strong> 30 diwrnod o nawr oni bai ei b/fod heb ei h/atal yn y cyfamser
-        preview_preamble_html: 'Bydd <strong>@%{acct}</strong> yn derbyn rhybudd gyda''r cynnwys canlynol:'
+        preview_preamble_html: "Bydd <strong>@%{acct}</strong> yn derbyn rhybudd gyda'r cynnwys canlynol:"
         record_strike_html: Recordio rhybudd yn erbyn <strong>@%{acct}</strong> i'ch helpu i ddwysáu ar achosion o dorri rheolau yn y dyfodol o'r cyfrif hwn
         send_email_html: Anfon e-bost rhybuddio <strong>at @%{acct}</strong>
         warning_placeholder: Rhesymeg ychwanegol dewisol ar gyfer y cam cymedroli.
       target_origin: Tarddiad y cyfrif a adroddwyd
       title: Adroddiadau
       unassign: Dadneilltuo
-      unknown_action_msg: 'Gweithred anhysbys: %{action}'
+      unknown_action_msg: "Gweithred anhysbys: %{action}"
       unresolved: Heb ei ddatrys
       updated_at: Diweddarwyd
       view_profile: Gweld proffil
@@ -1082,7 +1082,7 @@ cy:
       back_to_account: Nôl i dudalen y cyfrif
       back_to_report: Nôl i dudalen yr adroddiad
       batch:
-        add_to_report: 'Ychwanegu at yr adroddiad #%{id}'
+        add_to_report: "Ychwanegu at yr adroddiad #%{id}"
         remove_from_report: Dileu o'r adroddiad
         report: Adroddiad
       contents: Cynnwys
@@ -1143,7 +1143,7 @@ cy:
       elasticsearch_running_check:
         message_html: Methu cysylltu ag Elasticsearch. Gwiriwch ei fod yn rhedeg, neu analluogwch chwiliad testun llawn
       elasticsearch_version_check:
-        message_html: 'Fersiwn Elasticsearch anghydnaws: %{value}'
+        message_html: "Fersiwn Elasticsearch anghydnaws: %{value}"
         version_comparison: Mae Elasticsearch %{running_version} yn rhedeg tra bod angen %{required_version}
       rules_check:
         action: Rheoli rheolau gweinydd
@@ -1205,7 +1205,7 @@ cy:
       notified_on_html: Hysbyswyd defnyddwyr ar %{date}
       notify_users: Hysbysu defnyddwyr
       preview:
-        explanation_html: 'Bydd yr e-bost yn cael ei anfon at <strong>%{display_count} o ddefnyddwyr</strong> sydd wedi cofrestru cyn %{date}. Bydd y testun canlynol yn cael ei gynnwys yn yr e-bost:'
+        explanation_html: "Bydd yr e-bost yn cael ei anfon at <strong>%{display_count} o ddefnyddwyr</strong> sydd wedi cofrestru cyn %{date}. Bydd y testun canlynol yn cael ei gynnwys yn yr e-bost:"
         send_preview: Anfon rhagolwg at %{email}
         send_to_all:
           few: Anfon %{display_count} e-bost
@@ -1294,7 +1294,7 @@ cy:
         peaked_on_and_decaying: Ar ei anterth ar %{date}, bellach yn lleihau
         title: Hashnodau trendiau
         trendable: Gall ymddangos o dan trendiau
-        trending_rank: 'Yn trendio #%{rank}'
+        trending_rank: "Yn trendio #%{rank}"
         usable: Mae modd ei ddefnyddio
         usage_comparison: Wedi'i ddefnyddio %{today} gwaith heddiw, o'i gymharu â %{yesterday} ddoe
         used_by_over_week:
@@ -1368,7 +1368,7 @@ cy:
         sensitive: i nodi bod eu cyfrif yn sensitif
         silence: i gyfyngu ar eu cyfrif
         suspend: i atal eu cyfrif
-      body: 'Mae %{target} yn apelio yn erbyn penderfyniad cymedroli gan %{action_taken_by} ar %{date}, sef %{type}. Mae nhw''n dweud:'
+      body: "Mae %{target} yn apelio yn erbyn penderfyniad cymedroli gan %{action_taken_by} ar %{date}, sef %{type}. Mae nhw'n dweud:"
       next_steps: Gallwch gymeradwyo'r apêl i ddadwneud y penderfyniad cymedroli, neu ei anwybyddu.
       subject: Mae %{username} yn apelio yn erbyn penderfyniad cymedroli ar %{instance}
     new_critical_software_updates:
@@ -1385,7 +1385,7 @@ cy:
       body: Mae fersiynau Mastodon newydd wedi'u rhyddhau, efallai y byddwch am eu diweddaru!
       subject: Mae fersiynau Mastodon newydd ar gael ar gyfer %{instance}!
     new_trends:
-      body: 'Mae angen adolygu''r eitemau canlynol cyn y mae modd eu dangos yn gyhoeddus:'
+      body: "Mae angen adolygu'r eitemau canlynol cyn y mae modd eu dangos yn gyhoeddus:"
       new_trending_links:
         title: Dolenni sy'n trendio
       new_trending_statuses:
@@ -1415,7 +1415,7 @@ cy:
     notification_preferences: Newid dewisiadau e-bost
     salutation: "%{name},"
     unsubscribe: Dad-danysgrifio
-    view: 'Gweld:'
+    view: "Gweld:"
     view_profile: Gweld proffil
     view_status: Gweld postiad
   applications:
@@ -1476,7 +1476,7 @@ cy:
     rules:
       accept: Derbyn
       back: Nôl
-      invited_by: 'Gallwch ymuno â %{domain} diolch i''r gwahoddiad a gawsoch gan:'
+      invited_by: "Gallwch ymuno â %{domain} diolch i'r gwahoddiad a gawsoch gan:"
       preamble: Mae'r rhain yn cael eu gosod a'u gorfodi gan y %{domain} cymedrolwyr.
       preamble_invited: Cyn i chi barhau, ystyriwch y rheolau sylfaenol a osodwyd gan gymedrolwyr %{domain}.
       read_more: Darllen rhagor
@@ -1512,7 +1512,7 @@ cy:
   author_attribution:
     example_title: Testun enghreifftiol
     hint_html: Ydych chi'n ysgrifennu erthyglau newyddion neu flog y tu allan i Mastodon? Rheolwch sut y byddwch yn cael eich cydnabod pan fyddan nhw'n cael eu rhannu ar Mastodon.
-    instructions: 'Gwnewch yn siŵr fod y cod hwn yn HTML eich erthygl:'
+    instructions: "Gwnewch yn siŵr fod y cod hwn yn HTML eich erthygl:"
     more_from_html: Mwy gan %{name}
     s_blog: Blog %{name}
     then_instructions: Yna, ychwanegwch enw parth y cyhoeddiad yn y maes isod.
@@ -1557,7 +1557,7 @@ cy:
     proceed: Dileu cyfrif
     success_msg: Llwyddwyd i ddileu eich cyfrif
     warning:
-      before: 'Cyn bwrw ymlaen, darllenwch y nodiadau hyn yn ofalus:'
+      before: "Cyn bwrw ymlaen, darllenwch y nodiadau hyn yn ofalus:"
       caches: Efallai bydd cynnwys sydd wedi'i storio dros dro gan weinyddion eraill yn parhau
       data_removal: Bydd eich postiadau a data arall yn cael eu dileu'n barhaol
       email_change_html: Gallwch <a href="%{path}">newid eich cyfeiriad e-bost</a> heb ddileu eich cyfrif
@@ -1583,7 +1583,7 @@ cy:
       description_html: Mae'r rhain yn gamau a gymerwyd yn erbyn eich cyfrif a rhybuddion sydd wedi'u hanfon atoch gan staff %{instance}.
       recipient: Wedi'i gyfeirio at
       reject_appeal: Gwrthod yr apêl
-      status: 'Postio #%{id}'
+      status: "Postio #%{id}"
       status_removed: Postiad sydd eisoes wedi'i dynnu o'r system
       title: "%{action} gan %{date}"
       title_actions:
@@ -1646,19 +1646,19 @@ cy:
     native: Cynhenid
     twemoji: Twemoji
   errors:
-    '400': Roedd y cais a gyflwynwyd gennych yn annilys neu wedi'i gamffurfio.
-    '403': Nid oes gennych ganiatâd i weld y dudalen hon.
-    '404': Nid yw'r dudalen rydych yn chwilio amdani yma.
-    '406': Nid yw'r dudalen ar gael yn y fformat yna.
-    '410': Nid yw'r dudalen roeddech yn chwilio amdani yn bodoli yma bellach.
-    '422':
+    "400": Roedd y cais a gyflwynwyd gennych yn annilys neu wedi'i gamffurfio.
+    "403": Nid oes gennych ganiatâd i weld y dudalen hon.
+    "404": Nid yw'r dudalen rydych yn chwilio amdani yma.
+    "406": Nid yw'r dudalen ar gael yn y fformat yna.
+    "410": Nid yw'r dudalen roeddech yn chwilio amdani yn bodoli yma bellach.
+    "422":
       content: Methodd y dilysiad diogelwch. Ydych chi'n rhwystro cwcis?
       title: Methodd y dilysiad diogelwch
-    '429': Gormod o geisiadau
-    '500':
+    "429": Gormod o geisiadau
+    "500":
       content: Ymddiheuriadau, ond fe aeth rhywbeth o'i le ar ein pen ni.
       title: Nid yw'r dudalen hon yn gywir
-    '503': Ni fu modd gwasanaethu'r dudalen oherwydd methiant gweinydd dros dro.
+    "503": Ni fu modd gwasanaethu'r dudalen oherwydd methiant gweinydd dros dro.
     noscript_html: I ddefnyddio ap gwe Mastodon, galluogwch JavaScript os gwelwch yn dda. Fel arall, gallwch drio un o'r <a href="%{apps_path}">apiau cynhenid</a> ar gyfer Mastodon ar eich platfform.
   existing_username_validator:
     not_found: methu dod o hyd i ddefnyddiwr lleol gyda'r enw defnyddiwr hwnnw
@@ -1781,8 +1781,8 @@ cy:
     errors:
       empty: Ffeil CSV wag
       incompatible_type: Nid yw'n gydnaws â'r math mewnforio a ddewiswyd
-      invalid_csv_file: 'Ffeil CSV annilys. Gwall: %{error}'
-      invalid_json_file: 'Ffeil JSON annilys. Gwall: %{error}'
+      invalid_csv_file: "Ffeil CSV annilys. Gwall: %{error}"
+      invalid_json_file: "Ffeil JSON annilys. Gwall: %{error}"
       over_rows_processing_limit: yn cynnwys mwy na %{count} o resi
       status_not_found_warning: Mae rhai o'ch hidlau yn cuddio postiadau penodol nad yw'r gweinydd hwn yn eu hadnabod. Fydd y cofnodion hyn ddim yn cael eu hidlo'n awtomatig os fyddan nhw'n cael eu darganfod yn ddiweddarach gan y gweinydd.
       too_large: Mae'r ffeil yn rhy fawr
@@ -1928,16 +1928,16 @@ cy:
     delete: Dadweithredu
     expired: Wedi dod i ben
     expires_in:
-      '1800': 30 munud
-      '21600': 6 awr
-      '3600': 1 awr
-      '43200': 12 awr
-      '604800': 1 wythnos
-      '86400': 1 diwrnod
+      "1800": 30 munud
+      "21600": 6 awr
+      "3600": 1 awr
+      "43200": 12 awr
+      "604800": 1 wythnos
+      "86400": 1 diwrnod
     expires_in_prompt: Byth
     generate: Cynhyrchu dolen wahoddiad
     invalid: Nid yw'r gwahoddiad hwn yn ddilys
-    invited_by: 'Cawsoch eich gwahodd gan:'
+    invited_by: "Cawsoch eich gwahodd gan:"
     max_uses:
       few: "%{count} defnydd"
       many: "%{count} defnydd"
@@ -2002,7 +2002,7 @@ cy:
     set_redirect: Gosod ailgyfeiriad
     warning:
       backreference_required: Bydd rhaid i'r cyfrif newydd olgyfeirio at y cyfrif hon yn gyntaf
-      before: 'Cyn bwrw ymlaen, darllenwch y nodiadau hyn yn ofalus:'
+      before: "Cyn bwrw ymlaen, darllenwch y nodiadau hyn yn ofalus:"
       cooldown: Ar ôl symud, bydd yna cyfnod aros na fydd modd i chi symud eto
       disabled_account: Ni fydd modd defnyddio'ch cyfrif cyfredol yn llawn wedyn. Fodd bynnag, bydd gennych fynediad i allforio data yn ogystal ag ail agor.
       followers: Bydd y weithred hon yn symud yr holl ddilynwyr o'r cyfrif cyfredol i'r cyfrif newydd
@@ -2014,7 +2014,7 @@ cy:
   move_handler:
     carry_blocks_over_text: Symudodd y defnyddiwr hwn o %{acct}, yr oeddech wedi'i rwystro.
     carry_mutes_over_text: Wnaeth y defnyddiwr symud o %{acct}, a oeddech chi wedi'i anwybyddu.
-    copy_account_note_text: 'Symudodd y defnyddiwr hwn o %{acct}, dyma oedd eich nodiadau blaenorol amdanynt:'
+    copy_account_note_text: "Symudodd y defnyddiwr hwn o %{acct}, dyma oedd eich nodiadau blaenorol amdanynt:"
   navigation:
     toggle_menu: Toglo'r ddewislen
   notification_fallbacks:
@@ -2049,7 +2049,7 @@ cy:
       sign_up:
         subject: Mae %{name} wedi cofrestru
     favourite:
-      body: 'Cafodd eich postiad ei hoffi gan %{name}:'
+      body: "Cafodd eich postiad ei hoffi gan %{name}:"
       subject: Hoffodd %{name} eich postiad
       title: Ffefryn newydd
     follow:
@@ -2059,11 +2059,11 @@ cy:
     follow_request:
       action: Rheoli ceisiadau dilyn
       body: Mae %{name} wedi gwneud cais i'ch dilyn
-      subject: 'Dilynwr yn aros: %{name}'
+      subject: "Dilynwr yn aros: %{name}"
       title: Cais dilynwr newydd
     mention:
       action: Ymateb
-      body: 'Caswoch eich crybwyll gan %{name} yn:'
+      body: "Caswoch eich crybwyll gan %{name} yn:"
       subject: Cawsoch eich crybwyll gan %{name}
       title: Crywbylliad newydd
     moderation_warning:
@@ -2071,13 +2071,13 @@ cy:
     poll:
       subject: Mae arolwg gan %{name} wedi dod i ben
     quote:
-      body: 'Mae %{name} wedi dyfynnu eich postiad :'
+      body: "Mae %{name} wedi dyfynnu eich postiad :"
       subject: Mae %{name} wedi dyfynnu eich postiad
       title: Dyfyniad newydd
     quoted_update:
       subject: Golygodd %{name} bostiad rydych chi wedi'i ddyfynnu
     reblog:
-      body: 'Cafodd eich postiad ei hybu gan %{name}:'
+      body: "Cafodd eich postiad ei hybu gan %{name}:"
       subject: Rhoddodd %{name} hwb i'ch postiad
       title: Hwb newydd
     severed_relationships:
@@ -2089,7 +2089,7 @@ cy:
   notifications:
     administration_emails: E-byst hysbysiadau gweinyddol
     email_events: Digwyddiadau ar gyfer hysbysiadau e-bost
-    email_events_hint: 'Dewiswch ddigwyddiadau yr ydych am dderbyn hysbysiadau ar eu cyfer:'
+    email_events_hint: "Dewiswch ddigwyddiadau yr ydych am dderbyn hysbysiadau ar eu cyfer:"
   number:
     human:
       decimal_units:
@@ -2105,7 +2105,7 @@ cy:
     description_html: Os ydych chi'n galluogi <strong>dilysu dau-ffactor</strong> gan ddefnyddio ap dilysu, bydd mewngofnodi yn ei gwneud yn ofynnol i chi fod â'ch ffôn yn eich meddiant, a fydd yn cynhyrchu tocynnau i chi fynd i mewn iddo.
     enable: Galluogi
     instructions_html: "<strong>Sganiwch y cod QR hwn i mewn i Google Authenticator neu ap TOTP tebyg ar eich ffôn</strong>. O hyn ymlaen, bydd yr ap hwnnw'n cynhyrchu tocynnau y bydd yn rhaid i chi eu rhoi wrth fewngofnodi."
-    manual_instructions: 'Os nad ydych yn gallu sganio''r cod QR a bod angen i chi ei roi â llaw, dyma''r gyfrinach testun plaen:'
+    manual_instructions: "Os nad ydych yn gallu sganio'r cod QR a bod angen i chi ei roi â llaw, dyma'r gyfrinach testun plaen:"
     setup: Gosod
     wrong_code: Roedd y cod a roddwyd yn annilys! A yw amser gweinydd ac amser dyfais yn gywir?
   pagination:
@@ -2180,10 +2180,10 @@ cy:
     errors:
       invalid_rules: ddim yn cyfeirio at reolau dilys
   rss:
-    content_warning: 'Rhybudd cynnwys:'
+    content_warning: "Rhybudd cynnwys:"
     descriptions:
       account: Postiadau cyhoeddus gan @%{acct}
-      tag: 'Postiadau cyhoeddus wedi''u tagio #%{hashtag}'
+      tag: "Postiadau cyhoeddus wedi'u tagio #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Rydych wedi mynd dros y terfyn o %{limit} postiad a drefnwyd ar gyfer heddiw
     over_total_limit: Rydych wedi mynd dros y terfyn o %{limit} postiad a drefnwyd
@@ -2281,7 +2281,7 @@ cy:
         other: "%{count} sain"
         two: "%{count} sain"
         zero: "%{count} sain"
-      description: 'Ynghlwm: %{attached}'
+      description: "Ynghlwm: %{attached}"
       image:
         few: "%{count} llun"
         many: "%{count} llun"
@@ -2297,18 +2297,18 @@ cy:
         two: "%{count} fideo"
         zero: "%{count} fideo"
     boosted_from_html: Wedi'i hybu o %{acct_link}
-    content_warning: 'Rhybudd cynnwys: %{warning}'
+    content_warning: "Rhybudd cynnwys: %{warning}"
     content_warnings:
       hide: Cuddio'r postiad
       show: Dangos rhagor
     default_language: Yr un fath a'r iaith rhyngwyneb
     disallowed_hashtags:
-      few: 'yn cynnwys yr hashnod gwaharddedig: %{tags}'
-      many: 'yn cynnwys yr hashnod gwaharddedig: %{tags}'
-      one: 'yn cynnwys hashnod gwaharddedig: %{tags}'
-      other: 'yn cynnwys yr hashnod gwaharddedig: %{tags}'
-      two: 'yn cynnwys yr hashnod gwaharddedig: %{tags}'
-      zero: 'yn cynnwys yr hashnod gwaharddedig: %{tags}'
+      few: "yn cynnwys yr hashnod gwaharddedig: %{tags}"
+      many: "yn cynnwys yr hashnod gwaharddedig: %{tags}"
+      one: "yn cynnwys hashnod gwaharddedig: %{tags}"
+      other: "yn cynnwys yr hashnod gwaharddedig: %{tags}"
+      two: "yn cynnwys yr hashnod gwaharddedig: %{tags}"
+      zero: "yn cynnwys yr hashnod gwaharddedig: %{tags}"
     edited_at_html: Wedi'i olygu %{date}
     errors:
       in_reply_not_found: Nid yw'n ymddangos bod y postiad rydych chi'n ceisio ei ateb yn bodoli.
@@ -2359,14 +2359,14 @@ cy:
     keep_self_fav: Cadw'r postiadau yr oeddech yn eu ffefrynnu
     keep_self_fav_hint: Nid yw'n dileu eich postiadau eich hun os ydych wedi eu ffefrynnu
     min_age:
-      '1209600': 2 wythnos
-      '15778476': 6 mis
-      '2629746': 1 mis
-      '31556952': 1 flwyddyn
-      '5259492': 2 fis
-      '604800': 1 wythnos
-      '63113904': 2 flynedd
-      '7889238': 3 mis
+      "1209600": 2 wythnos
+      "15778476": 6 mis
+      "2629746": 1 mis
+      "31556952": 1 flwyddyn
+      "5259492": 2 fis
+      "604800": 1 wythnos
+      "63113904": 2 flynedd
+      "7889238": 3 mis
     min_age_label: Trothwy oedran
     min_favs: Cadw postiadau ffafriwyd am o leiaf
     min_favs_hint: Nid yw'n dileu unrhyw un o'ch postiadau sydd wedi derbyn o leiaf y nifer hwn o ffefrynnau. Gadewch yn wag i ddileu postiadau, beth bynnag yw eu ffefrynnau
@@ -2439,7 +2439,7 @@ cy:
         title: Dad-danysgrifio o %{type}?
   user_mailer:
     announcement_published:
-      description: 'Mae gweinyddwyr %{domain} yn gwneud cyhoeddiad:'
+      description: "Mae gweinyddwyr %{domain} yn gwneud cyhoeddiad:"
       subject: Cyhoeddiad gwasanaeth
       title: Cyhoeddiad gwasanaeth %{domain}
     appeal_approved:
@@ -2459,22 +2459,22 @@ cy:
       subject: Mae eich archif yn barod i'w lawrlwytho
       title: Allfudo archif
     failed_2fa:
-      details: 'Dyma fanylion yr ymgais i fewngofnodi:'
+      details: "Dyma fanylion yr ymgais i fewngofnodi:"
       explanation: Mae rhywun wedi ceisio mewngofnodi i'ch cyfrif ond wedi darparu ail ffactor dilysu annilys.
       further_actions_html: Os nad chi oedd hwn, rydym yn argymell eich bod yn %{action} ar unwaith oherwydd gall fod o dan fygythiad.
       subject: Methiant dilysu ail ffactor
       title: Wedi methu dilysu ail ffactor
     suspicious_sign_in:
       change_password: newidiwch eich cyfrinair
-      details: 'Dyma fanylion y mewngofnodi:'
+      details: "Dyma fanylion y mewngofnodi:"
       explanation: Rydym wedi canfod mewngofnodi i'ch cyfrif o gyfeiriad IP newydd.
       further_actions_html: Os nad chi oedd hwn, rydym yn argymell eich bod yn %{action} ar unwaith ac yn galluogi dilysu dau ffactor i gadw'ch cyfrif yn ddiogel.
       subject: Mae eich cyfrif wedi'i gyrchu o gyfeiriad IP newydd
       title: Mewngofnodiad newydd
     terms_of_service_changed:
       agreement: Drwy barhau i ddefnyddio %{domain}, rydych yn cytuno i'r telerau hyn. Os ydych yn anghytuno â'r telerau a ddiweddarwyd, gallwch derfynu eich cytundeb â %{domain} ar unrhyw adeg drwy ddileu eich cyfrif.
-      changelog: 'Yn fyr, dyma beth mae''r diweddariad hwn yn ei olygu i chi:'
-      description: 'Rydych yn derbyn yr e-bost hwn oherwydd ein bod yn gwneud rhai newidiadau i''n telerau gwasanaeth yn %{domain}. Bydd y diweddariadau hyn yn dod i rym ar %{date}. Rydym yn eich annog i adolygu''r telerau diweddaraf yn llawn yma:'
+      changelog: "Yn fyr, dyma beth mae'r diweddariad hwn yn ei olygu i chi:"
+      description: "Rydych yn derbyn yr e-bost hwn oherwydd ein bod yn gwneud rhai newidiadau i'n telerau gwasanaeth yn %{domain}. Bydd y diweddariadau hyn yn dod i rym ar %{date}. Rydym yn eich annog i adolygu'r telerau diweddaraf yn llawn yma:"
       description_html: Rydych yn derbyn yr e-bost hwn oherwydd ein bod yn gwneud rhai newidiadau i'n telerau gwasanaeth yn %{domain}. Bydd y diweddariadau hyn yn dod i rym ar <strong>%{date}</strong>. Rydym yn eich annog i adolygu'r <a href="%{path}" target="_blank">telerau diweddaraf yn llawn yma</a>.
       sign_off: Tîm %{domain}
       subject: Diweddariadau i'n telerau gwasanaeth
@@ -2493,8 +2493,8 @@ cy:
         sensitive: O hyn ymlaen, bydd eich holl ffeiliau cyfryngau wedi'u llwytho i fyny yn cael eu marcio fel sensitif ac wedi'u cuddio y tu ôl i rybudd clicio drwodd.
         silence: Gallwch barhau i ddefnyddio'ch cyfrif ond dim ond pobl sydd eisoes yn eich dilyn fydd yn gweld eich postiadau ar y gweinydd hwn, ac mae'n bosibl y cewch eich eithrio o wahanol nodweddion darganfod. Fodd bynnag, efallai y bydd eraill yn dal i'ch dilyn â llaw.
         suspend: Nid oes modd i chi ddefnyddio'ch cyfrif mwyach, ac nid yw'ch proffil a data arall bellach yn hygyrch. Gallwch chi fewngofnodi o hyd i ofyn am gopi wrth gefn o'ch data nes bod y data wedi'i ddileu'n llawn mewn tua 30 diwrnod, ond byddwn yn cadw rhywfaint o ddata sylfaenol i'ch atal rhag osgoi'r ataliad.
-      reason: 'Rheswm:'
-      statuses: 'Postiadau a ddyfynnwyd:'
+      reason: "Rheswm:"
+      statuses: "Postiadau a ddyfynnwyd:"
       subject:
         delete_statuses: Mae eich postiadau ar %{acct} wedi'u dileu
         disable: Mae'ch cyfrif %{acct} wedi'i rewi
@@ -2516,7 +2516,7 @@ cy:
       apps_ios_action: Ei lwytho i lawr o'r App Store
       apps_step: Llwythwch i awr ein apiau swyddogol.
       apps_title: Apiau Mastodon
-      checklist_subtitle: 'Gadewch i ni eich rhoi ar ben ffordd ar y datblygiad cymdeithasol newydd hon:'
+      checklist_subtitle: "Gadewch i ni eich rhoi ar ben ffordd ar y datblygiad cymdeithasol newydd hon:"
       checklist_title: Rhestr Wirio Croeso
       edit_profile_action: Personoli
       edit_profile_step: Rhowch hwb i'ch rhyngweithiadau trwy gael proffil cynhwysfawr.
@@ -2562,7 +2562,7 @@ cy:
     otp_lost_help_html: Os colloch chi fynediad i'r ddau, mae modd i chi gysylltu a %{email}
     rate_limited: Gormod o geisiadau dilysu, ceisiwch eto yn nes ymlaen.
     seamless_external_login: Rydych chi wedi mewngofnodi trwy wasanaeth allanol, felly nid yw gosodiadau cyfrinair ac e-bost ar gael.
-    signed_in_as: 'Wedi mewngofnodi fel:'
+    signed_in_as: "Wedi mewngofnodi fel:"
   verification:
     extra_instructions_html: <strong>Awgrym:</strong> Gall y ddolen ar eich gwefan fod yn anweledig. Y rhan bwysig yw <code>rel="me"</code> sy'n atal dynwarediad ar wefannau gyda chynnwys sy'n cael ei gynyrchu gan ddefnyddwyr. Gallwch hyd yn oed ddefnyddio tag <code>link</code> ym mhennyn y dudalen yn lle <code>a</code>, ond rhaid i'r HTML fod yn hygyrch heb weithredu JavaScript.
     here_is_how: Dyma sut

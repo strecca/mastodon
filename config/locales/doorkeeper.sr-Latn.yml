@@ -52,7 +52,7 @@ sr-Latn:
         callback_urls: Adrese za povratne pozive
         scopes: Opseg važenja
         secret: Klijentska tajna
-        title: 'Aplikacija: %{name}'
+        title: "Aplikacija: %{name}"
     authorizations:
       buttons:
         authorize: Autorizuj se
@@ -85,7 +85,7 @@ sr-Latn:
         invalid_grant: Zadata identifikaciona dozvola je neispravna, istekla, opozvana, ne poklapa se sa adresom preusmeravanja ili je izdata nekog drugom klijentu.
         invalid_redirect_uri: Uključena adresa preusmeravanja nije ispravna.
         invalid_request:
-          missing_param: 'Nedostaje obavezni parametar: %{value}.'
+          missing_param: "Nedostaje obavezni parametar: %{value}."
           request_not_authorized: Zahtev mora biti autorizovan. Obavezni parametar za autorizaciju zahteva nedostaje ili je nevažeći.
           unknown: Obavezni parametar u zahtevu nedostaje, u zahtevu se nalazi nepodržana vrednost parametra ili je parametar na neki drugi način pogrešno formiran.
         invalid_resource_owner: Zadati kredencijali vlasnika resursa nisu ispravni ili vlasnik resursa ne može biti nađen

@@ -1,14 +1,14 @@
-import type { FC, MouseEventHandler } from 'react';
+import type { FC, MouseEventHandler } from "react";
 
-import type { MessageDescriptor } from 'react-intl';
-import { useIntl } from 'react-intl';
+import type { MessageDescriptor } from "react-intl";
+import { useIntl } from "react-intl";
 
-import ChevronLeftIcon from '@/material-icons/400-24px/chevron_left.svg?react';
-import ChevronRightIcon from '@/material-icons/400-24px/chevron_right.svg?react';
+import ChevronLeftIcon from "@/material-icons/400-24px/chevron_left.svg?react";
+import ChevronRightIcon from "@/material-icons/400-24px/chevron_right.svg?react";
 
-import { IconButton } from '../icon_button';
+import { IconButton } from "../icon_button";
 
-import type { MessageKeys } from './index';
+import type { MessageKeys } from "./index";
 
 export interface CarouselPaginationProps {
   onNext: MouseEventHandler;
@@ -24,7 +24,7 @@ export const CarouselPagination: FC<CarouselPaginationProps> = ({
   onPrev,
   current,
   max,
-  className = '',
+  className = "",
   messages,
 }) => {
   const intl = useIntl();
@@ -32,20 +32,20 @@ export const CarouselPagination: FC<CarouselPaginationProps> = ({
     <div className={className}>
       <IconButton
         title={intl.formatMessage(messages.previous)}
-        icon='chevron-left'
+        icon="chevron-left"
         iconComponent={ChevronLeftIcon}
         onClick={onPrev}
       />
-      <span aria-live='polite'>
+      <span aria-live="polite">
         {intl.formatMessage(messages.current, {
           current: current + 1,
           max,
-          sr: (chunk) => <span className='sr-only'>{chunk}</span>,
+          sr: (chunk) => <span className="sr-only">{chunk}</span>,
         })}
       </span>
       <IconButton
         title={intl.formatMessage(messages.next)}
-        icon='chevron-right'
+        icon="chevron-right"
         iconComponent={ChevronRightIcon}
         onClick={onNext}
       />

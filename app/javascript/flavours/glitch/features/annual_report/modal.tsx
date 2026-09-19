@@ -1,26 +1,26 @@
-import type { MouseEventHandler } from 'react';
-import { useCallback, useEffect } from 'react';
+import type { MouseEventHandler } from "react";
+import { useCallback, useEffect } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { closeModal } from '@/flavours/glitch/actions/modal';
-import { generateReport } from '@/flavours/glitch/reducers/slices/annual_report';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import { closeModal } from "@/flavours/glitch/actions/modal";
+import { generateReport } from "@/flavours/glitch/reducers/slices/annual_report";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
 
-import { AnnualReport } from '.';
-import { AnnualReportAnnouncement } from './announcement';
-import styles from './index.module.scss';
+import { AnnualReport } from ".";
+import { AnnualReportAnnouncement } from "./announcement";
+import styles from "./index.module.scss";
 
 const AnnualReportModal: React.FC<{
   onChangeBackgroundColor: (color: string) => void;
 }> = ({ onChangeBackgroundColor }) => {
   useEffect(() => {
-    onChangeBackgroundColor('var(--color-bg-media-base)');
+    onChangeBackgroundColor("var(--color-bg-media-base)");
   }, [onChangeBackgroundColor]);
 
   const { state, year } = useAppSelector((state) => state.annualReport);
 
-  const showAnnouncement = year && state && state !== 'available';
+  const showAnnouncement = year && state && state !== "available";
 
   const dispatch = useAppDispatch();
 
@@ -29,7 +29,7 @@ const AnnualReportModal: React.FC<{
   }, [dispatch]);
 
   const handleClose = useCallback(() => {
-    dispatch(closeModal({ modalType: 'ANNUAL_REPORT', ignoreFocus: false }));
+    dispatch(closeModal({ modalType: "ANNUAL_REPORT", ignoreFocus: false }));
   }, [dispatch]);
 
   const handleCloseModal: MouseEventHandler = useCallback(
@@ -43,12 +43,12 @@ const AnnualReportModal: React.FC<{
 
   // Auto-close if ineligible
   useEffect(() => {
-    if (state === 'ineligible') {
+    if (state === "ineligible") {
       handleClose();
     }
   }, [handleClose, state]);
 
-  if (state === 'ineligible') {
+  if (state === "ineligible") {
     // Not sure how you got here, but don't show anything.
     return null;
   }
@@ -60,12 +60,12 @@ const AnnualReportModal: React.FC<{
     // default modal backdrop, preventing clicks to pass through.
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
-      className={classNames('modal-root__modal', styles.modalWrapper)}
-      data-color-scheme='dark'
+      className={classNames("modal-root__modal", styles.modalWrapper)}
+      data-color-scheme="dark"
       onClick={handleCloseModal}
     >
       {!showAnnouncement ? (
-        <AnnualReport context='modal' />
+        <AnnualReport context="modal" />
       ) : (
         <AnnualReportAnnouncement
           year={year.toString()}

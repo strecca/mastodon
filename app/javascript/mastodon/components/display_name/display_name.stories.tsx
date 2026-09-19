@@ -1,24 +1,24 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps } from "react";
 
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { accountFactoryState } from '@/testing/factories';
+import { accountFactoryState } from "@/testing/factories";
 
-import { DisplayName, LinkedDisplayName } from './index';
+import { DisplayName, LinkedDisplayName } from "./index";
 
-type PageProps = Omit<ComponentProps<typeof DisplayName>, 'account'> & {
+type PageProps = Omit<ComponentProps<typeof DisplayName>, "account"> & {
   name: string;
   username: string;
   loading: boolean;
 };
 
 const meta = {
-  title: 'Components/DisplayName',
+  title: "Components/DisplayName",
   args: {
-    username: 'mastodon@mastodon.social',
-    name: 'Test User 🧪',
+    username: "mastodon@mastodon.social",
+    name: "Test User 🧪",
     loading: false,
-    localDomain: 'mastodon.social',
+    localDomain: "mastodon.social",
   },
   tags: [],
   render({ name, username, loading, ...args }) {
@@ -48,21 +48,21 @@ export const Loading: Story = {
 
 export const NoDomain: Story = {
   args: {
-    variant: 'noDomain',
+    variant: "noDomain",
   },
 };
 
 export const Simple: Story = {
   args: {
-    variant: 'simple',
+    variant: "simple",
   },
 };
 
 export const LocalUser: Story = {
   args: {
-    username: 'localuser',
-    name: 'Local User',
-    localDomain: '',
+    username: "localuser",
+    name: "Local User",
+    localDomain: "",
   },
 };
 

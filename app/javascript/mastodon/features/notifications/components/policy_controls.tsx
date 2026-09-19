@@ -1,42 +1,38 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { useIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { useIntl, defineMessages, FormattedMessage } from "react-intl";
 
-import { openModal } from 'mastodon/actions/modal';
-import { updateNotificationsPolicy } from 'mastodon/actions/notification_policies';
-import type { AppDispatch } from 'mastodon/store';
-import { useAppSelector, useAppDispatch } from 'mastodon/store';
+import { openModal } from "mastodon/actions/modal";
+import { updateNotificationsPolicy } from "mastodon/actions/notification_policies";
+import type { AppDispatch } from "mastodon/store";
+import { useAppSelector, useAppDispatch } from "mastodon/store";
 
-import { SelectWithLabel } from './select_with_label';
+import { SelectWithLabel } from "./select_with_label";
 
 const messages = defineMessages({
-  accept: { id: 'notifications.policy.accept', defaultMessage: 'Accept' },
+  accept: { id: "notifications.policy.accept", defaultMessage: "Accept" },
   accept_hint: {
-    id: 'notifications.policy.accept_hint',
-    defaultMessage: 'Show in notifications',
+    id: "notifications.policy.accept_hint",
+    defaultMessage: "Show in notifications",
   },
-  filter: { id: 'notifications.policy.filter', defaultMessage: 'Filter' },
+  filter: { id: "notifications.policy.filter", defaultMessage: "Filter" },
   filter_hint: {
-    id: 'notifications.policy.filter_hint',
-    defaultMessage: 'Send to filtered notifications inbox',
+    id: "notifications.policy.filter_hint",
+    defaultMessage: "Send to filtered notifications inbox",
   },
-  drop: { id: 'notifications.policy.drop', defaultMessage: 'Ignore' },
+  drop: { id: "notifications.policy.drop", defaultMessage: "Ignore" },
   drop_hint: {
-    id: 'notifications.policy.drop_hint',
-    defaultMessage: 'Send to the void, never to be seen again',
+    id: "notifications.policy.drop_hint",
+    defaultMessage: "Send to the void, never to be seen again",
   },
 });
 
 // TODO: change the following when we change the API
-const changeFilter = (
-  dispatch: AppDispatch,
-  filterType: string,
-  value: string,
-) => {
-  if (value === 'drop') {
+const changeFilter = (dispatch: AppDispatch, filterType: string, value: string) => {
+  if (value === "drop") {
     dispatch(
       openModal({
-        modalType: 'IGNORE_NOTIFICATIONS',
+        modalType: "IGNORE_NOTIFICATIONS",
         modalProps: { filterType },
       }),
     );
@@ -49,48 +45,46 @@ export const PolicyControls: React.FC = () => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
 
-  const notificationPolicy = useAppSelector(
-    (state) => state.notificationPolicy,
-  );
+  const notificationPolicy = useAppSelector((state) => state.notificationPolicy);
 
   const handleFilterNotFollowing = useCallback(
     (value: string) => {
-      changeFilter(dispatch, 'for_not_following', value);
+      changeFilter(dispatch, "for_not_following", value);
     },
     [dispatch],
   );
 
   const handleFilterNotFollowers = useCallback(
     (value: string) => {
-      changeFilter(dispatch, 'for_not_followers', value);
+      changeFilter(dispatch, "for_not_followers", value);
     },
     [dispatch],
   );
 
   const handleFilterNewAccounts = useCallback(
     (value: string) => {
-      changeFilter(dispatch, 'for_new_accounts', value);
+      changeFilter(dispatch, "for_new_accounts", value);
     },
     [dispatch],
   );
 
   const handleFilterPrivateMentions = useCallback(
     (value: string) => {
-      changeFilter(dispatch, 'for_private_mentions', value);
+      changeFilter(dispatch, "for_private_mentions", value);
     },
     [dispatch],
   );
 
   const handleFilterLimitedAccounts = useCallback(
     (value: string) => {
-      changeFilter(dispatch, 'for_limited_accounts', value);
+      changeFilter(dispatch, "for_limited_accounts", value);
     },
     [dispatch],
   );
 
   const handleFilterBots = useCallback(
     (value: string) => {
-      changeFilter(dispatch, 'for_bots', value);
+      changeFilter(dispatch, "for_bots", value);
     },
     [dispatch],
   );
@@ -99,17 +93,17 @@ export const PolicyControls: React.FC = () => {
 
   const options = [
     {
-      value: 'accept',
+      value: "accept",
       text: intl.formatMessage(messages.accept),
       meta: intl.formatMessage(messages.accept_hint),
     },
     {
-      value: 'filter',
+      value: "filter",
       text: intl.formatMessage(messages.filter),
       meta: intl.formatMessage(messages.filter_hint),
     },
     {
-      value: 'drop',
+      value: "drop",
       text: intl.formatMessage(messages.drop),
       meta: intl.formatMessage(messages.drop_hint),
     },
@@ -119,26 +113,26 @@ export const PolicyControls: React.FC = () => {
     <section>
       <h3>
         <FormattedMessage
-          id='notifications.policy.title'
-          defaultMessage='Manage notifications from…'
+          id="notifications.policy.title"
+          defaultMessage="Manage notifications from…"
         />
       </h3>
 
-      <div className='column-settings__row'>
+      <div className="column-settings__row">
         <SelectWithLabel
           value={notificationPolicy.for_not_following}
           onChange={handleFilterNotFollowing}
           options={options}
           label={
             <FormattedMessage
-              id='notifications.policy.filter_not_following_title'
+              id="notifications.policy.filter_not_following_title"
               defaultMessage="People you don't follow"
             />
           }
           hint={
             <FormattedMessage
-              id='notifications.policy.filter_not_following_hint'
-              defaultMessage='Until you manually approve them'
+              id="notifications.policy.filter_not_following_hint"
+              defaultMessage="Until you manually approve them"
             />
           }
         />
@@ -149,14 +143,14 @@ export const PolicyControls: React.FC = () => {
           options={options}
           label={
             <FormattedMessage
-              id='notifications.policy.filter_not_followers_title'
-              defaultMessage='People not following you'
+              id="notifications.policy.filter_not_followers_title"
+              defaultMessage="People not following you"
             />
           }
           hint={
             <FormattedMessage
-              id='notifications.policy.filter_not_followers_hint'
-              defaultMessage='Including people who have been following you fewer than {days, plural, one {one day} other {# days}}'
+              id="notifications.policy.filter_not_followers_hint"
+              defaultMessage="Including people who have been following you fewer than {days, plural, one {one day} other {# days}}"
               values={{ days: 3 }}
             />
           }
@@ -168,14 +162,14 @@ export const PolicyControls: React.FC = () => {
           options={options}
           label={
             <FormattedMessage
-              id='notifications.policy.filter_new_accounts_title'
-              defaultMessage='New accounts'
+              id="notifications.policy.filter_new_accounts_title"
+              defaultMessage="New accounts"
             />
           }
           hint={
             <FormattedMessage
-              id='notifications.policy.filter_new_accounts.hint'
-              defaultMessage='Created within the past {days, plural, one {one day} other {# days}}'
+              id="notifications.policy.filter_new_accounts.hint"
+              defaultMessage="Created within the past {days, plural, one {one day} other {# days}}"
               values={{ days: 30 }}
             />
           }
@@ -187,13 +181,13 @@ export const PolicyControls: React.FC = () => {
           options={options}
           label={
             <FormattedMessage
-              id='notifications.policy.filter_private_mentions_title'
-              defaultMessage='Unsolicited private mentions'
+              id="notifications.policy.filter_private_mentions_title"
+              defaultMessage="Unsolicited private mentions"
             />
           }
           hint={
             <FormattedMessage
-              id='notifications.policy.filter_private_mentions_hint'
+              id="notifications.policy.filter_private_mentions_hint"
               defaultMessage="Filtered unless it's in reply to your own mention or if you follow the sender"
             />
           }
@@ -205,14 +199,14 @@ export const PolicyControls: React.FC = () => {
           options={options}
           label={
             <FormattedMessage
-              id='notifications.policy.filter_limited_accounts_title'
-              defaultMessage='Moderated accounts'
+              id="notifications.policy.filter_limited_accounts_title"
+              defaultMessage="Moderated accounts"
             />
           }
           hint={
             <FormattedMessage
-              id='notifications.policy.filter_limited_accounts_hint'
-              defaultMessage='Limited by server moderators'
+              id="notifications.policy.filter_limited_accounts_hint"
+              defaultMessage="Limited by server moderators"
             />
           }
         />
@@ -222,15 +216,12 @@ export const PolicyControls: React.FC = () => {
           onChange={handleFilterBots}
           options={options}
           label={
-            <FormattedMessage
-              id='notifications.policy.filter_bots_title'
-              defaultMessage='Bots'
-            />
+            <FormattedMessage id="notifications.policy.filter_bots_title" defaultMessage="Bots" />
           }
           hint={
             <FormattedMessage
-              id='notifications.policy.filter_bots_hint'
-              defaultMessage='Accounts marked as automated'
+              id="notifications.policy.filter_bots_hint"
+              defaultMessage="Accounts marked as automated"
             />
           }
         />

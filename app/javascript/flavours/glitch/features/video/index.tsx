@@ -1,55 +1,55 @@
-import { useEffect, useCallback, useRef, useState } from 'react';
+import { useEffect, useCallback, useRef, useState } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { useSpring, animated, config } from '@react-spring/web';
-import { throttle } from 'lodash';
+import { useSpring, animated, config } from "@react-spring/web";
+import { throttle } from "lodash";
 
-import Forward5Icon from '@/material-icons/400-24px/forward_5-fill.svg?react';
-import FullscreenIcon from '@/material-icons/400-24px/fullscreen.svg?react';
-import FullscreenExitIcon from '@/material-icons/400-24px/fullscreen_exit.svg?react';
-import PauseIcon from '@/material-icons/400-24px/pause-fill.svg?react';
-import PlayArrowIcon from '@/material-icons/400-24px/play_arrow-fill.svg?react';
-import RectangleIcon from '@/material-icons/400-24px/rectangle.svg?react';
-import Replay5Icon from '@/material-icons/400-24px/replay_5-fill.svg?react';
-import VolumeDownIcon from '@/material-icons/400-24px/volume_down-fill.svg?react';
-import VolumeOffIcon from '@/material-icons/400-24px/volume_off-fill.svg?react';
-import VolumeUpIcon from '@/material-icons/400-24px/volume_up-fill.svg?react';
-import { Blurhash } from 'flavours/glitch/components/blurhash';
-import { Icon } from 'flavours/glitch/components/icon';
-import { SpoilerButton } from 'flavours/glitch/components/spoiler_button';
+import Forward5Icon from "@/material-icons/400-24px/forward_5-fill.svg?react";
+import FullscreenIcon from "@/material-icons/400-24px/fullscreen.svg?react";
+import FullscreenExitIcon from "@/material-icons/400-24px/fullscreen_exit.svg?react";
+import PauseIcon from "@/material-icons/400-24px/pause-fill.svg?react";
+import PlayArrowIcon from "@/material-icons/400-24px/play_arrow-fill.svg?react";
+import RectangleIcon from "@/material-icons/400-24px/rectangle.svg?react";
+import Replay5Icon from "@/material-icons/400-24px/replay_5-fill.svg?react";
+import VolumeDownIcon from "@/material-icons/400-24px/volume_down-fill.svg?react";
+import VolumeOffIcon from "@/material-icons/400-24px/volume_off-fill.svg?react";
+import VolumeUpIcon from "@/material-icons/400-24px/volume_up-fill.svg?react";
+import { Blurhash } from "flavours/glitch/components/blurhash";
+import { Icon } from "flavours/glitch/components/icon";
+import { SpoilerButton } from "flavours/glitch/components/spoiler_button";
 import {
   isFullscreen,
   requestFullscreen,
   exitFullscreen,
   attachFullscreenListener,
   detachFullscreenListener,
-} from 'flavours/glitch/features/ui/util/fullscreen';
-import { displayMedia, useBlurhash } from 'flavours/glitch/initial_state';
-import { playerSettings } from 'flavours/glitch/settings';
+} from "flavours/glitch/features/ui/util/fullscreen";
+import { displayMedia, useBlurhash } from "flavours/glitch/initial_state";
+import { playerSettings } from "flavours/glitch/settings";
 
-import { HotkeyIndicator } from './components/hotkey_indicator';
-import type { HotkeyEvent } from './components/hotkey_indicator';
+import { HotkeyIndicator } from "./components/hotkey_indicator";
+import type { HotkeyEvent } from "./components/hotkey_indicator";
 
 const messages = defineMessages({
-  play: { id: 'video.play', defaultMessage: 'Play' },
-  pause: { id: 'video.pause', defaultMessage: 'Pause' },
-  mute: { id: 'video.mute', defaultMessage: 'Mute' },
-  unmute: { id: 'video.unmute', defaultMessage: 'Unmute' },
-  hide: { id: 'video.hide', defaultMessage: 'Hide video' },
-  expand: { id: 'video.expand', defaultMessage: 'Expand video' },
-  close: { id: 'video.close', defaultMessage: 'Close video' },
-  fullscreen: { id: 'video.fullscreen', defaultMessage: 'Full screen' },
+  play: { id: "video.play", defaultMessage: "Play" },
+  pause: { id: "video.pause", defaultMessage: "Pause" },
+  mute: { id: "video.mute", defaultMessage: "Mute" },
+  unmute: { id: "video.unmute", defaultMessage: "Unmute" },
+  hide: { id: "video.hide", defaultMessage: "Hide video" },
+  expand: { id: "video.expand", defaultMessage: "Expand video" },
+  close: { id: "video.close", defaultMessage: "Close video" },
+  fullscreen: { id: "video.fullscreen", defaultMessage: "Full screen" },
   exit_fullscreen: {
-    id: 'video.exit_fullscreen',
-    defaultMessage: 'Exit full screen',
+    id: "video.exit_fullscreen",
+    defaultMessage: "Exit full screen",
   },
-  volumeUp: { id: 'video.volume_up', defaultMessage: 'Volume up' },
-  volumeDown: { id: 'video.volume_down', defaultMessage: 'Volume down' },
-  skipForward: { id: 'video.skip_forward', defaultMessage: 'Skip forward' },
-  skipBackward: { id: 'video.skip_backward', defaultMessage: 'Skip backward' },
+  volumeUp: { id: "video.volume_up", defaultMessage: "Volume up" },
+  volumeDown: { id: "video.volume_down", defaultMessage: "Volume down" },
+  skipForward: { id: "video.skip_forward", defaultMessage: "Skip forward" },
+  skipBackward: { id: "video.skip_backward", defaultMessage: "Skip backward" },
 });
 
 const DOUBLE_CLICK_THRESHOLD = 250;
@@ -60,12 +60,12 @@ export const formatTime = (secondsNum: number) => {
   const minutes = Math.floor((secondsNum - hours * 3600) / 60);
   const seconds = secondsNum - hours * 3600 - minutes * 60;
 
-  const formattedHours = `${hours < 10 ? '0' : ''}${hours}`;
-  const formattedMinutes = `${minutes < 10 ? '0' : ''}${minutes}`;
-  const formattedSeconds = `${seconds < 10 ? '0' : ''}${seconds}`;
+  const formattedHours = `${hours < 10 ? "0" : ""}${hours}`;
+  const formattedMinutes = `${minutes < 10 ? "0" : ""}${minutes}`;
+  const formattedSeconds = `${seconds < 10 ? "0" : ""}${seconds}`;
 
   return (
-    (formattedHours === '00' ? '' : `${formattedHours}:`) +
+    (formattedHours === "00" ? "" : `${formattedHours}:`) +
     `${formattedMinutes}:${formattedSeconds}`
   );
 };
@@ -89,10 +89,7 @@ export const findElementPosition = (el: HTMLElement) => {
   };
 };
 
-export const getPointerPosition = (
-  el: HTMLElement | null,
-  event: MouseEvent,
-) => {
+export const getPointerPosition = (el: HTMLElement | null, event: MouseEvent) => {
   if (!el) {
     return {
       y: 0,
@@ -117,15 +114,15 @@ export const getPointerPosition = (
 export const fileNameFromURL = (str: string) => {
   const url = new URL(str);
   const pathname = url.pathname;
-  const index = pathname.lastIndexOf('/');
+  const index = pathname.lastIndexOf("/");
 
   return pathname.slice(index + 1);
 };
 
 const frameRateAsNumber = (frameRate: string): number => {
-  if (frameRate.includes('/')) {
+  if (frameRate.includes("/")) {
     return frameRate
-      .split('/')
+      .split("/")
       .map((c) => parseInt(c))
       .reduce((p, c) => p / c);
   }
@@ -134,13 +131,13 @@ const frameRateAsNumber = (frameRate: string): number => {
 };
 
 const persistVolume = (volume: number, muted: boolean) => {
-  playerSettings.set('volume', volume);
-  playerSettings.set('muted', muted);
+  playerSettings.set("volume", volume);
+  playerSettings.set("muted", muted);
 };
 
 const restoreVolume = (video: HTMLVideoElement) => {
-  const volume = playerSettings.get('volume') ?? 0.5;
-  const muted = playerSettings.get('muted') ?? false;
+  const volume = playerSettings.get("volume") ?? 0.5;
+  const muted = playerSettings.get("muted") ?? false;
 
   video.volume = volume;
   video.muted = muted;
@@ -150,7 +147,7 @@ let hotkeyEventId = 0;
 
 const registerHotkeyEvent = (
   setHotkeyEvents: React.Dispatch<React.SetStateAction<HotkeyEvent[]>>,
-  event: Omit<HotkeyEvent, 'key'>,
+  event: Omit<HotkeyEvent, "key">,
 ) => {
   setHotkeyEvents(() => [{ key: hotkeyEventId++, ...event }]);
 };
@@ -163,11 +160,7 @@ export const Video: React.FC<{
   alt?: string;
   lang?: string;
   sensitive?: boolean;
-  onOpenVideo?: (options: {
-    startTime: number;
-    autoPlay: boolean;
-    defaultVolume: number;
-  }) => void;
+  onOpenVideo?: (options: { startTime: number; autoPlay: boolean; defaultVolume: number }) => void;
   onCloseVideo?: () => void;
   detailed?: boolean;
   editable?: boolean;
@@ -193,10 +186,10 @@ export const Video: React.FC<{
   fullwidth?: boolean;
 }> = ({
   preview,
-  frameRate = '25',
+  frameRate = "25",
   aspectRatio,
   src,
-  alt = '',
+  alt = "",
   lang,
   sensitive,
   onOpenVideo,
@@ -236,15 +229,15 @@ export const Video: React.FC<{
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>();
 
   const [style, api] = useSpring(() => ({
-    progress: '0%',
-    buffer: '0%',
-    volume: '0%',
+    progress: "0%",
+    buffer: "0%",
+    volume: "0%",
   }));
 
   const handleVideoRef = useCallback(
     (c: HTMLVideoElement | null) => {
       if (videoRef.current && !videoRef.current.paused && c === null) {
-        deployPictureInPicture?.('video', {
+        deployPictureInPicture?.("video", {
           src: src,
           currentTime: videoRef.current.currentTime,
           muted: videoRef.current.muted,
@@ -291,8 +284,7 @@ export const Video: React.FC<{
       return;
     }
 
-    const effectivelyMuted =
-      videoRef.current.muted || videoRef.current.volume === 0;
+    const effectivelyMuted = videoRef.current.muted || videoRef.current.volume === 0;
 
     if (effectivelyMuted) {
       videoRef.current.muted = false;
@@ -345,10 +337,9 @@ export const Video: React.FC<{
     const updateProgress = () => {
       nextFrame = requestAnimationFrame(() => {
         if (videoRef.current) {
-          const progress =
-            videoRef.current.currentTime / videoRef.current.duration;
+          const progress = videoRef.current.currentTime / videoRef.current.duration;
           void api.start({
-            progress: isNaN(progress) ? '0%' : `${progress * 100}%`,
+            progress: isNaN(progress) ? "0%" : `${progress * 100}%`,
             config: config.stiff,
           });
         }
@@ -374,13 +365,10 @@ export const Video: React.FC<{
   }, [volume, muted]);
 
   useEffect(() => {
-    if (typeof visible !== 'undefined') {
+    if (typeof visible !== "undefined") {
       setRevealed(visible);
     } else {
-      setRevealed(
-        displayMedia === 'show_all' ||
-          (displayMedia !== 'hide_all' && !sensitive),
-      );
+      setRevealed(displayMedia === "show_all" || (displayMedia !== "hide_all" && !sensitive));
     }
   }, [visible, sensitive]);
 
@@ -403,14 +391,12 @@ export const Video: React.FC<{
 
         const { top, height } = videoRef.current.getBoundingClientRect();
         const inView =
-          top <=
-            (window.innerHeight || document.documentElement.clientHeight) &&
-          top + height >= 0;
+          top <= (window.innerHeight || document.documentElement.clientHeight) && top + height >= 0;
 
         if (!videoRef.current.paused && !inView) {
           videoRef.current.pause();
 
-          deployPictureInPicture?.('video', {
+          deployPictureInPicture?.("video", {
             src: src,
             currentTime: videoRef.current.currentTime,
             muted: videoRef.current.muted,
@@ -423,10 +409,10 @@ export const Video: React.FC<{
     );
 
     attachFullscreenListener(handleFullscreenChange);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       detachFullscreenListener(handleFullscreenChange);
     };
   }, [setPaused, setFullscreen, src, deployPictureInPicture]);
@@ -442,8 +428,8 @@ export const Video: React.FC<{
   const handleVolumeMouseDown = useCallback(
     (e: React.MouseEvent) => {
       const handleVolumeMouseUp = () => {
-        document.removeEventListener('mousemove', handleVolumeMouseMove, true);
-        document.removeEventListener('mouseup', handleVolumeMouseUp, true);
+        document.removeEventListener("mousemove", handleVolumeMouseMove, true);
+        document.removeEventListener("mouseup", handleVolumeMouseUp, true);
       };
 
       const handleVolumeMouseMove = (e: MouseEvent) => {
@@ -460,8 +446,8 @@ export const Video: React.FC<{
         }
       };
 
-      document.addEventListener('mousemove', handleVolumeMouseMove, true);
-      document.addEventListener('mouseup', handleVolumeMouseUp, true);
+      document.addEventListener("mousemove", handleVolumeMouseMove, true);
+      document.addEventListener("mouseup", handleVolumeMouseUp, true);
 
       handleVolumeMouseMove(e.nativeEvent);
 
@@ -474,8 +460,8 @@ export const Video: React.FC<{
   const handleSeekMouseDown = useCallback(
     (e: React.MouseEvent) => {
       const handleSeekMouseUp = () => {
-        document.removeEventListener('mousemove', handleSeekMouseMove, true);
-        document.removeEventListener('mouseup', handleSeekMouseUp, true);
+        document.removeEventListener("mousemove", handleSeekMouseMove, true);
+        document.removeEventListener("mouseup", handleSeekMouseUp, true);
 
         setDragging(false);
         void videoRef.current?.play();
@@ -495,8 +481,8 @@ export const Video: React.FC<{
         }
       };
 
-      document.addEventListener('mousemove', handleSeekMouseMove, true);
-      document.addEventListener('mouseup', handleSeekMouseUp, true);
+      document.addEventListener("mousemove", handleSeekMouseMove, true);
+      document.addEventListener("mouseup", handleSeekMouseUp, true);
 
       setDragging(true);
       videoRef.current?.pause();
@@ -538,7 +524,7 @@ export const Video: React.FC<{
       // On the video element or the seek bar, we can safely use the space bar
       // for playback control because there are no buttons to press
 
-      if (e.key === ' ') {
+      if (e.key === " ") {
         e.preventDefault();
         e.stopPropagation();
         registerHotkeyEvent(setHotkeyEvents, {
@@ -556,8 +542,8 @@ export const Video: React.FC<{
       const frameTime = 1 / frameRateAsNumber(frameRate);
 
       switch (e.key) {
-        case 'k':
-        case ' ':
+        case "k":
+        case " ":
           e.preventDefault();
           e.stopPropagation();
           registerHotkeyEvent(setHotkeyEvents, {
@@ -566,7 +552,7 @@ export const Video: React.FC<{
           });
           togglePlay();
           break;
-        case 'm':
+        case "m":
           e.preventDefault();
           e.stopPropagation();
           registerHotkeyEvent(setHotkeyEvents, {
@@ -575,19 +561,17 @@ export const Video: React.FC<{
           });
           toggleMute();
           break;
-        case 'f':
+        case "f":
           e.preventDefault();
           e.stopPropagation();
           registerHotkeyEvent(setHotkeyEvents, {
             icon: isFullscreen() ? FullscreenExitIcon : FullscreenIcon,
-            label: isFullscreen()
-              ? messages.exit_fullscreen
-              : messages.fullscreen,
+            label: isFullscreen() ? messages.exit_fullscreen : messages.fullscreen,
           });
           toggleFullscreen();
           break;
-        case 'j':
-        case 'ArrowLeft':
+        case "j":
+        case "ArrowLeft":
           e.preventDefault();
           e.stopPropagation();
           registerHotkeyEvent(setHotkeyEvents, {
@@ -596,8 +580,8 @@ export const Video: React.FC<{
           });
           seekBy(-5);
           break;
-        case 'l':
-        case 'ArrowRight':
+        case "l":
+        case "ArrowRight":
           e.preventDefault();
           e.stopPropagation();
           registerHotkeyEvent(setHotkeyEvents, {
@@ -606,17 +590,17 @@ export const Video: React.FC<{
           });
           seekBy(5);
           break;
-        case ',':
+        case ",":
           e.preventDefault();
           e.stopPropagation();
           seekBy(-frameTime);
           break;
-        case '.':
+        case ".":
           e.preventDefault();
           e.stopPropagation();
           seekBy(frameTime);
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           e.preventDefault();
           e.stopPropagation();
           registerHotkeyEvent(setHotkeyEvents, {
@@ -625,7 +609,7 @@ export const Video: React.FC<{
           });
           updateVolumeBy(0.15);
           break;
-        case 'ArrowDown':
+        case "ArrowDown":
           e.preventDefault();
           e.stopPropagation();
           registerHotkeyEvent(setHotkeyEvents, {
@@ -643,7 +627,7 @@ export const Video: React.FC<{
         e.preventDefault();
         e.stopPropagation();
 
-        if (e.key === 'Escape') {
+        if (e.key === "Escape") {
           setHotkeyEvents((events) => [
             ...events,
             {
@@ -656,14 +640,7 @@ export const Video: React.FC<{
         }
       }
     },
-    [
-      setHotkeyEvents,
-      togglePlay,
-      toggleFullscreen,
-      toggleMute,
-      fullscreen,
-      frameRate,
-    ],
+    [setHotkeyEvents, togglePlay, toggleFullscreen, toggleMute, fullscreen, frameRate],
   );
 
   const handleMouseEnter = useCallback(() => {
@@ -709,15 +686,15 @@ export const Video: React.FC<{
 
     setDuration(videoRef.current.duration);
 
-    if (typeof startTime !== 'undefined') {
+    if (typeof startTime !== "undefined") {
       videoRef.current.currentTime = startTime;
     }
 
-    if (typeof startVolume !== 'undefined') {
+    if (typeof startVolume !== "undefined") {
       videoRef.current.volume = startVolume;
     }
 
-    if (typeof startMuted !== 'undefined') {
+    if (typeof startMuted !== "undefined") {
       videoRef.current.muted = startMuted;
     }
 
@@ -794,25 +771,25 @@ export const Video: React.FC<{
   let preload;
 
   if (startTime || fullscreen || dragging) {
-    preload = 'auto';
+    preload = "auto";
   } else if (detailed) {
-    preload = 'metadata';
+    preload = "metadata";
   } else {
-    preload = 'none';
+    preload = "none";
   }
 
   // The outer wrapper is necessary to avoid reflowing the layout when going into full screen
   return (
     <div>
       <div /* eslint-disable-line jsx-a11y/click-events-have-key-events */
-        role='menuitem'
-        className={classNames('video-player', {
+        role="menuitem"
+        className={classNames("video-player", {
           inactive: !revealed,
           detailed,
           fullscreen,
           editable,
           letterbox,
-          'full-width': fullwidth,
+          "full-width": fullwidth,
         })}
         style={{ aspectRatio }}
         ref={playerRef}
@@ -826,8 +803,8 @@ export const Video: React.FC<{
         {blurhash && (
           <Blurhash
             hash={blurhash}
-            className={classNames('media-gallery__preview', {
-              'media-gallery__preview--hidden': revealed,
+            className={classNames("media-gallery__preview", {
+              "media-gallery__preview--hidden": revealed,
             })}
             dummy={!useBlurhash}
           />
@@ -839,7 +816,7 @@ export const Video: React.FC<{
             src={src}
             poster={preview}
             preload={preload}
-            role='button'
+            role="button"
             tabIndex={0}
             aria-label={alt}
             title={alt}
@@ -852,14 +829,11 @@ export const Video: React.FC<{
             onProgress={handleProgress}
             onTimeUpdate={handleTimeUpdate}
             onVolumeChange={handleVolumeChange}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
           />
         )}
 
-        <HotkeyIndicator
-          events={hotkeyEvents}
-          onDismiss={handleHotkeyEventDismiss}
-        />
+        <HotkeyIndicator events={hotkeyEvents} onDismiss={handleHotkeyEventDismiss} />
 
         <SpoilerButton
           hidden={revealed || editable}
@@ -868,37 +842,26 @@ export const Video: React.FC<{
           matchedFilters={matchedFilters}
         />
 
-        {!onCloseVideo &&
-          !editable &&
-          !fullscreen &&
-          !alwaysVisible &&
-          revealed && (
-            <div
-              className={classNames('media-gallery__actions', {
-                active: paused || hovered,
-              })}
-            >
-              <button
-                className='media-gallery__actions__pill'
-                onClick={toggleReveal}
-                type='button'
-              >
-                <FormattedMessage
-                  id='media_gallery.hide'
-                  defaultMessage='Hide'
-                />
-              </button>
-            </div>
-          )}
+        {!onCloseVideo && !editable && !fullscreen && !alwaysVisible && revealed && (
+          <div
+            className={classNames("media-gallery__actions", {
+              active: paused || hovered,
+            })}
+          >
+            <button className="media-gallery__actions__pill" onClick={toggleReveal} type="button">
+              <FormattedMessage id="media_gallery.hide" defaultMessage="Hide" />
+            </button>
+          </div>
+        )}
 
         <div
-          className={classNames('video-player__controls', {
+          className={classNames("video-player__controls", {
             active: paused || hovered,
           })}
         >
           <div
-            className='video-player__seek'
-            role='slider'
+            className="video-player__seek"
+            role="slider"
             aria-valuemin={0}
             aria-valuenow={progress}
             aria-valuemax={100}
@@ -907,63 +870,49 @@ export const Video: React.FC<{
             tabIndex={0}
             ref={seekRef}
           >
+            <animated.div className="video-player__seek__buffer" style={{ width: style.buffer }} />
             <animated.div
-              className='video-player__seek__buffer'
-              style={{ width: style.buffer }}
-            />
-            <animated.div
-              className='video-player__seek__progress'
+              className="video-player__seek__progress"
               style={{ width: style.progress }}
             />
 
             <animated.span
-              className={classNames('video-player__seek__handle', {
+              className={classNames("video-player__seek__handle", {
                 active: dragging,
               })}
               style={{ left: style.progress }}
             />
           </div>
 
-          <div className='video-player__buttons-bar'>
-            <div className='video-player__buttons left'>
+          <div className="video-player__buttons-bar">
+            <div className="video-player__buttons left">
               <button
-                type='button'
-                title={intl.formatMessage(
-                  paused ? messages.play : messages.pause,
-                )}
-                aria-label={intl.formatMessage(
-                  paused ? messages.play : messages.pause,
-                )}
-                className='player-button'
+                type="button"
+                title={intl.formatMessage(paused ? messages.play : messages.pause)}
+                aria-label={intl.formatMessage(paused ? messages.play : messages.pause)}
+                className="player-button"
                 onClick={togglePlay}
               >
-                <Icon
-                  id={paused ? 'play' : 'pause'}
-                  icon={paused ? PlayArrowIcon : PauseIcon}
-                />
+                <Icon id={paused ? "play" : "pause"} icon={paused ? PlayArrowIcon : PauseIcon} />
               </button>
               <button
-                type='button'
-                title={intl.formatMessage(
-                  effectivelyMuted ? messages.unmute : messages.mute,
-                )}
-                aria-label={intl.formatMessage(
-                  muted ? messages.unmute : messages.mute,
-                )}
-                className='player-button'
+                type="button"
+                title={intl.formatMessage(effectivelyMuted ? messages.unmute : messages.mute)}
+                aria-label={intl.formatMessage(muted ? messages.unmute : messages.mute)}
+                className="player-button"
                 onClick={toggleMute}
               >
                 <Icon
-                  id={effectivelyMuted ? 'volume-off' : 'volume-up'}
+                  id={effectivelyMuted ? "volume-off" : "volume-up"}
                   icon={effectivelyMuted ? VolumeOffIcon : VolumeUpIcon}
                 />
               </button>
 
               <div
-                className={classNames('video-player__volume', {
+                className={classNames("video-player__volume", {
                   active: hovered,
                 })}
-                role='slider'
+                role="slider"
                 aria-valuemin={0}
                 aria-valuenow={effectivelyMuted ? 0 : volume * 100}
                 aria-valuemax={100}
@@ -972,65 +921,65 @@ export const Video: React.FC<{
                 tabIndex={0}
               >
                 <animated.div
-                  className='video-player__volume__current'
+                  className="video-player__volume__current"
                   style={{ width: style.volume }}
                 />
 
                 <animated.span
-                  className={classNames('video-player__volume__handle')}
+                  className={classNames("video-player__volume__handle")}
                   style={{ left: style.volume }}
                 />
               </div>
 
               {(detailed || fullscreen) && (
-                <span className='video-player__time'>
-                  <span className='video-player__time-current'>
+                <span className="video-player__time">
+                  <span className="video-player__time-current">
                     {formatTime(Math.floor(currentTime))}
                   </span>
-                  <span className='video-player__time-sep'>/</span>
-                  <span className='video-player__time-total'>
+                  <span className="video-player__time-sep">/</span>
+                  <span className="video-player__time-total">
                     {formatTime(Math.floor(duration))}
                   </span>
                 </span>
               )}
             </div>
 
-            <div className='video-player__buttons right'>
+            <div className="video-player__buttons right">
               {!fullscreen && onOpenVideo && (
                 <button
-                  type='button'
+                  type="button"
                   title={intl.formatMessage(messages.expand)}
                   aria-label={intl.formatMessage(messages.expand)}
-                  className='player-button'
+                  className="player-button"
                   onClick={handleOpenVideo}
                 >
-                  <Icon id='expand' icon={RectangleIcon} />
+                  <Icon id="expand" icon={RectangleIcon} />
                 </button>
               )}
               {onCloseVideo && (
                 <button
-                  type='button'
+                  type="button"
                   title={intl.formatMessage(messages.close)}
                   aria-label={intl.formatMessage(messages.close)}
-                  className='player-button'
+                  className="player-button"
                   onClick={handleCloseVideo}
                 >
-                  <Icon id='compress' icon={FullscreenExitIcon} />
+                  <Icon id="compress" icon={FullscreenExitIcon} />
                 </button>
               )}
               <button
-                type='button'
+                type="button"
                 title={intl.formatMessage(
                   fullscreen ? messages.exit_fullscreen : messages.fullscreen,
                 )}
                 aria-label={intl.formatMessage(
                   fullscreen ? messages.exit_fullscreen : messages.fullscreen,
                 )}
-                className='player-button'
+                className="player-button"
                 onClick={toggleFullscreen}
               >
                 <Icon
-                  id={fullscreen ? 'compress' : 'arrows-alt'}
+                  id={fullscreen ? "compress" : "arrows-alt"}
                   icon={fullscreen ? FullscreenExitIcon : FullscreenIcon}
                 />
               </button>

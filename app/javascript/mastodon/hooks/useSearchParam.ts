@@ -1,6 +1,6 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from "react";
 
-import { useLocation, useHistory } from 'react-router';
+import { useLocation, useHistory } from "react-router";
 
 export function useSearchParams() {
   const { search } = useLocation();

@@ -1,9 +1,9 @@
 ---
-'no':
+"no":
   admin:
     custom_emojis:
-      batch_copy_error: 'En feil oppsto ved kopiering av noen av de valgte emojiene: %{message}'
-      batch_error: 'En feil oppsto: %{message}'
+      batch_copy_error: "En feil oppsto ved kopiering av noen av de valgte emojiene: %{message}"
+      batch_error: "En feil oppsto: %{message}"
     settings:
       flavour_and_skin:
         title: Variant og tema

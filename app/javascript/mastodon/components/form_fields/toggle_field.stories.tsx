@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Toggle, ToggleField } from './toggle_field';
+import { Toggle, ToggleField } from "./toggle_field";
 
 const meta = {
-  title: 'Components/Form Fields/ToggleField',
+  title: "Components/Form Fields/ToggleField",
   component: ToggleField,
   args: {
-    label: 'Label',
-    hint: 'This is a description of this form field',
+    label: "Label",
+    hint: "This is a description of this form field",
     disabled: false,
     size: 20,
   },
   argTypes: {
     size: {
-      control: { type: 'range', min: 10, max: 40, step: 1 },
+      control: { type: "range", min: 10, max: 40, step: 1 },
     },
   },
 } satisfies Meta<typeof ToggleField>;
@@ -45,7 +45,7 @@ export const Optional: Story = {
 export const WithError: Story = {
   args: {
     required: false,
-    status: 'error',
+    status: "error",
   },
 };
 

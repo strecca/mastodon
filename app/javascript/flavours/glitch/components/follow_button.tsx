@@ -1,73 +1,63 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages } from "react-intl";
 
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import { useIdentity } from '@/flavours/glitch/identity_context';
-import {
-  fetchRelationships,
-  followAccount,
-  unmuteAccount,
-} from 'flavours/glitch/actions/accounts';
-import { openModal } from 'flavours/glitch/actions/modal';
-import { Button } from 'flavours/glitch/components/button';
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { me } from 'flavours/glitch/initial_state';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import { useIdentity } from "@/flavours/glitch/identity_context";
+import { fetchRelationships, followAccount, unmuteAccount } from "flavours/glitch/actions/accounts";
+import { openModal } from "flavours/glitch/actions/modal";
+import { Button } from "flavours/glitch/components/button";
+import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
+import { me } from "flavours/glitch/initial_state";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
-import { useBreakpoint } from '../features/ui/hooks/useBreakpoint';
+import { useBreakpoint } from "../features/ui/hooks/useBreakpoint";
 
 const longMessages = defineMessages({
-  unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
-  unblock: { id: 'account.unblock_short', defaultMessage: 'Unblock' },
-  unmute: { id: 'account.unmute_short', defaultMessage: 'Unmute' },
-  follow: { id: 'account.follow', defaultMessage: 'Follow' },
-  followBack: { id: 'account.follow_back', defaultMessage: 'Follow back' },
+  unfollow: { id: "account.unfollow", defaultMessage: "Unfollow" },
+  unblock: { id: "account.unblock_short", defaultMessage: "Unblock" },
+  unmute: { id: "account.unmute_short", defaultMessage: "Unmute" },
+  follow: { id: "account.follow", defaultMessage: "Follow" },
+  followBack: { id: "account.follow_back", defaultMessage: "Follow back" },
   followRequest: {
-    id: 'account.follow_request',
-    defaultMessage: 'Request to follow',
+    id: "account.follow_request",
+    defaultMessage: "Request to follow",
   },
   followRequestCancel: {
-    id: 'account.follow_request_cancel',
-    defaultMessage: 'Cancel request',
+    id: "account.follow_request_cancel",
+    defaultMessage: "Cancel request",
   },
-  edit_profile: { id: 'account.edit_profile', defaultMessage: 'Edit profile' },
+  edit_profile: { id: "account.edit_profile", defaultMessage: "Edit profile" },
 });
 
 const shortMessages = {
   ...longMessages, // Align type signature of shortMessages and longMessages
   ...defineMessages({
     followBack: {
-      id: 'account.follow_back_short',
-      defaultMessage: 'Follow back',
+      id: "account.follow_back_short",
+      defaultMessage: "Follow back",
     },
     followRequest: {
-      id: 'account.follow_request_short',
-      defaultMessage: 'Request',
+      id: "account.follow_request_short",
+      defaultMessage: "Request",
     },
     followRequestCancel: {
-      id: 'account.follow_request_cancel_short',
-      defaultMessage: 'Cancel',
+      id: "account.follow_request_cancel_short",
+      defaultMessage: "Cancel",
     },
-    editProfile: { id: 'account.edit_profile_short', defaultMessage: 'Edit' },
+    editProfile: { id: "account.edit_profile_short", defaultMessage: "Edit" },
   }),
 };
 
 export const FollowButton: React.FC<{
   accountId?: string;
   compact?: boolean;
-  labelLength?: 'auto' | 'short' | 'long';
+  labelLength?: "auto" | "short" | "long";
   className?: string;
   withUnmute?: boolean;
-}> = ({
-  accountId,
-  compact,
-  labelLength = 'auto',
-  className,
-  withUnmute = true,
-}) => {
+}> = ({ accountId, compact, labelLength = "auto", className, withUnmute = true }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const { signedIn } = useIdentity();
@@ -89,9 +79,9 @@ export const FollowButton: React.FC<{
     if (!signedIn) {
       dispatch(
         openModal({
-          modalType: 'INTERACTION',
+          modalType: "INTERACTION",
           modalProps: {
-            intent: 'follow',
+            intent: "follow",
             accountId: accountId,
             url: account?.url,
           },
@@ -106,20 +96,18 @@ export const FollowButton: React.FC<{
     } else if (relationship.blocking) {
       dispatch(
         openModal({
-          modalType: 'CONFIRM_UNBLOCK',
+          modalType: "CONFIRM_UNBLOCK",
           modalProps: { account },
         }),
       );
     } else if (relationship.muting && withUnmute) {
       dispatch(unmuteAccount(accountId));
     } else if (account && relationship.following) {
-      dispatch(
-        openModal({ modalType: 'CONFIRM_UNFOLLOW', modalProps: { account } }),
-      );
+      dispatch(openModal({ modalType: "CONFIRM_UNFOLLOW", modalProps: { account } }));
     } else if (account && relationship.requested) {
       dispatch(
         openModal({
-          modalType: 'CONFIRM_WITHDRAW_REQUEST',
+          modalType: "CONFIRM_WITHDRAW_REQUEST",
           modalProps: { account },
         }),
       );
@@ -128,18 +116,14 @@ export const FollowButton: React.FC<{
     }
   }, [signedIn, relationship, accountId, withUnmute, account, dispatch]);
 
-  const isNarrow = useBreakpoint('narrow');
-  const useShortLabel =
-    labelLength === 'short' || (labelLength === 'auto' && isNarrow);
+  const isNarrow = useBreakpoint("narrow");
+  const useShortLabel = labelLength === "short" || (labelLength === "auto" && isNarrow);
   const messages = useShortLabel ? shortMessages : longMessages;
 
-  const followMessage = account?.locked
-    ? messages.followRequest
-    : messages.follow;
+  const followMessage = account?.locked ? messages.followRequest : messages.follow;
 
   let label;
-  let disabled =
-    relationship?.blocked_by || account?.suspended || !!account?.moved;
+  let disabled = relationship?.blocked_by || account?.suspended || !!account?.moved;
 
   if (!signedIn) {
     label = intl.formatMessage(followMessage);
@@ -166,12 +150,12 @@ export const FollowButton: React.FC<{
   }
 
   if (accountId === me) {
-    const buttonClasses = classNames(className, 'button button-secondary', {
-      'button--compact': compact,
+    const buttonClasses = classNames(className, "button button-secondary", {
+      "button--compact": compact,
     });
 
     return (
-      <Link to='/profile/edit' className={buttonClasses}>
+      <Link to="/profile/edit" className={buttonClasses}>
         {label}
       </Link>
     );
@@ -183,7 +167,7 @@ export const FollowButton: React.FC<{
       disabled={disabled}
       secondary={following || relationship?.blocking}
       compact={compact}
-      className={classNames(className, { 'button--destructive': following })}
+      className={classNames(className, { "button--destructive": following })}
     >
       {label}
     </Button>

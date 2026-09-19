@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo } from "react";
 
 export const SensitiveMediaContext = createContext<{
   hideMediaByDefault: boolean;
@@ -15,14 +15,9 @@ type ContextValue = React.ContextType<typeof SensitiveMediaContext>;
 export const SensitiveMediaContextProvider: React.FC<
   React.PropsWithChildren<{ hideMediaByDefault: boolean }>
 > = ({ hideMediaByDefault, children }) => {
-  const contextValue = useMemo<ContextValue>(
-    () => ({ hideMediaByDefault }),
-    [hideMediaByDefault],
-  );
+  const contextValue = useMemo<ContextValue>(() => ({ hideMediaByDefault }), [hideMediaByDefault]);
 
   return (
-    <SensitiveMediaContext.Provider value={contextValue}>
-      {children}
-    </SensitiveMediaContext.Provider>
+    <SensitiveMediaContext.Provider value={contextValue}>{children}</SensitiveMediaContext.Provider>
   );
 };

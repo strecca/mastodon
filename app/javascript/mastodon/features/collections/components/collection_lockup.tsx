@@ -1,19 +1,19 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { ListItemLink, ListItemWrapper } from '@/mastodon/components/list_item';
-import WarningIcon from '@/material-icons/400-24px/warning.svg?react';
-import type { ApiCollectionJSON } from 'mastodon/api_types/collections';
-import { AvatarById } from 'mastodon/components/avatar';
-import { useAccountHandle } from 'mastodon/components/display_name/default';
-import { RelativeTimestamp } from 'mastodon/components/relative_timestamp';
-import { useAccount } from 'mastodon/hooks/useAccount';
-import { domain } from 'mastodon/initial_state';
+import { ListItemLink, ListItemWrapper } from "@/mastodon/components/list_item";
+import WarningIcon from "@/material-icons/400-24px/warning.svg?react";
+import type { ApiCollectionJSON } from "mastodon/api_types/collections";
+import { AvatarById } from "mastodon/components/avatar";
+import { useAccountHandle } from "mastodon/components/display_name/default";
+import { RelativeTimestamp } from "mastodon/components/relative_timestamp";
+import { useAccount } from "mastodon/hooks/useAccount";
+import { domain } from "mastodon/initial_state";
 
-import { getCollectionPath } from '../utils';
+import { getCollectionPath } from "../utils";
 
-import classes from './collection_lockup.module.scss';
+import classes from "./collection_lockup.module.scss";
 
 export const AvatarGrid: React.FC<{
   accountIds: (string | undefined)[];
@@ -21,12 +21,7 @@ export const AvatarGrid: React.FC<{
 }> = ({ accountIds: ids, sensitive }) => {
   const avatarIds = [ids[0], ids[1], ids[2], ids[3]];
   return (
-    <div
-      className={classNames(
-        classes.avatarGrid,
-        sensitive ? classes.avatarGridSensitive : null,
-      )}
-    >
+    <div className={classNames(classes.avatarGrid, sensitive ? classes.avatarGridSensitive : null)}>
       {avatarIds.map((id, index) => (
         <AvatarById
           animate={false}
@@ -47,7 +42,7 @@ export interface CollectionLockupProps {
   withTimestamp?: boolean;
   sideContent?: React.ReactNode;
   className?: string;
-  headingLevel?: 'h2' | 'h3' | 'h4';
+  headingLevel?: "h2" | "h3" | "h4";
   titleId?: string;
   subtitleId?: string;
 }
@@ -57,7 +52,7 @@ export const CollectionLockup: React.FC<CollectionLockupProps> = ({
   withAuthorHandle = true,
   withTimestamp,
   sideContent,
-  headingLevel = 'h3',
+  headingLevel = "h3",
   titleId,
   subtitleId,
   className,
@@ -95,10 +90,7 @@ export const CollectionLockup: React.FC<CollectionLockupProps> = ({
 };
 
 export const CollectionInfo: React.FC<
-  Pick<
-    CollectionLockupProps,
-    'collection' | 'withAuthorHandle' | 'withTimestamp'
-  >
+  Pick<CollectionLockupProps, "collection" | "withAuthorHandle" | "withTimestamp">
 > = ({ collection, withAuthorHandle, withTimestamp }) => {
   const authorAccount = useAccount(collection.account_id);
   const authorHandle = useAccountHandle(authorAccount, domain);
@@ -106,37 +98,34 @@ export const CollectionInfo: React.FC<
   return (
     <ul>
       {collection.sensitive && (
-        <li className='sr-only'>
-          <FormattedMessage
-            id='collections.sensitive'
-            defaultMessage='Sensitive'
-          />
+        <li className="sr-only">
+          <FormattedMessage id="collections.sensitive" defaultMessage="Sensitive" />
         </li>
       )}
       {withAuthorHandle && authorAccount && (
         <FormattedMessage
-          id='collections.by_account'
-          defaultMessage='by {account_handle}'
+          id="collections.by_account"
+          defaultMessage="by {account_handle}"
           values={{
             account_handle: authorHandle,
           }}
-          tagName='li'
+          tagName="li"
         />
       )}
       <FormattedMessage
-        id='collections.account_count'
-        defaultMessage='{count, plural, one {# account} other {# accounts}}'
+        id="collections.account_count"
+        defaultMessage="{count, plural, one {# account} other {# accounts}}"
         values={{ count: collection.item_count }}
-        tagName='li'
+        tagName="li"
       />
       {withTimestamp && (
         <FormattedMessage
-          id='collections.last_updated_at'
-          defaultMessage='Last updated: {date}'
+          id="collections.last_updated_at"
+          defaultMessage="Last updated: {date}"
           values={{
             date: <RelativeTimestamp timestamp={collection.updated_at} long />,
           }}
-          tagName='li'
+          tagName="li"
         />
       )}
     </ul>

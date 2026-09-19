@@ -52,7 +52,7 @@ es-MX:
         callback_urls: URLs de callback
         scopes: Ámbitos
         secret: Secreto
-        title: 'Aplicación: %{name}'
+        title: "Aplicación: %{name}"
     authorizations:
       buttons:
         authorize: Autorizar
@@ -89,7 +89,7 @@ es-MX:
         invalid_grant: La concesión de autorización ofrecida es inválida, venció, se revocó, no coincide con la URI de redirección utilizada en la petición de autorización, o fue emitida para otro cliente.
         invalid_redirect_uri: La URI de redirección incluida no es válida.
         invalid_request:
-          missing_param: 'Falta el parámetro requerido: %{value}.'
+          missing_param: "Falta el parámetro requerido: %{value}."
           request_not_authorized: La solicitud necesita ser autorizada. El parámetro requerido para la autorización de la solicitud está ausente o es inválido.
           unknown: En la solicitud falta un parámetro necesario, incluye un valor de parámetro no soportado o tiene otro tipo de formato incorrecto.
         invalid_resource_owner: Las credenciales proporcionadas del propietario del recurso no son válidas, o el propietario del recurso no puede ser encontrado

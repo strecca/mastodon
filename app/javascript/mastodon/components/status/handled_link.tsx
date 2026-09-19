@@ -1,23 +1,23 @@
-import { useCallback } from 'react';
-import type { ComponentProps, FC } from 'react';
+import { useCallback } from "react";
+import type { ComponentProps, FC } from "react";
 
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import type { ApiMentionJSON } from '@/mastodon/api_types/statuses';
-import { getCollectionPath } from '@/mastodon/features/collections/utils';
-import type { OnElementHandler } from '@/mastodon/utils/html';
+import type { ApiMentionJSON } from "@/mastodon/api_types/statuses";
+import { getCollectionPath } from "@/mastodon/features/collections/utils";
+import type { OnElementHandler } from "@/mastodon/utils/html";
 
 export interface HandledLinkProps {
   href: string;
   text: string;
   prevText?: string;
   hashtagAccountId?: string;
-  mention?: Pick<ApiMentionJSON, 'id' | 'acct'>;
+  mention?: Pick<ApiMentionJSON, "id" | "acct">;
   collectionId?: string;
 }
 
-export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
+export const HandledLink: FC<HandledLinkProps & ComponentProps<"a">> = ({
   href,
   text,
   prevText,
@@ -30,19 +30,19 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
 }) => {
   // Handle hashtags
   if (
-    (text.startsWith('#') ||
-      prevText?.endsWith('#') ||
-      text.startsWith('＃') ||
-      prevText?.endsWith('＃')) &&
-    !text.includes('%')
+    (text.startsWith("#") ||
+      prevText?.endsWith("#") ||
+      text.startsWith("＃") ||
+      prevText?.endsWith("＃")) &&
+    !text.includes("%")
   ) {
     const hashtag = text.slice(1).trim();
 
     return (
       <Link
-        className={classNames('mention hashtag', className)}
+        className={classNames("mention hashtag", className)}
         to={`/tags/${encodeURIComponent(hashtag)}`}
-        rel='tag'
+        rel="tag"
         data-menu-hashtag={hashtagAccountId}
       >
         {children}
@@ -52,7 +52,7 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
     // Handle mentions
     return (
       <Link
-        className={classNames('mention', className)}
+        className={classNames("mention", className)}
         to={`/@${mention.acct}`}
         title={`@${mention.acct}`}
         data-hover-card-account={mention.id}
@@ -62,19 +62,16 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
     );
   } else if (collectionId) {
     return (
-      <Link
-        className={classNames(className)}
-        to={getCollectionPath(collectionId)}
-      >
+      <Link className={classNames(className)} to={getCollectionPath(collectionId)}>
         {children}
       </Link>
     );
   }
 
   // Non-absolute paths treated as internal links. This shouldn't happen, but just in case.
-  if (href.startsWith('/')) {
+  if (href.startsWith("/")) {
     return (
-      <Link className={classNames('unhandled-link', className)} to={href}>
+      <Link className={classNames("unhandled-link", className)} to={href}>
         {children}
       </Link>
     );
@@ -85,10 +82,10 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
       {...props}
       href={href}
       title={href}
-      className={classNames('unhandled-link', className)}
-      target='_blank'
-      rel='noopener'
-      translate='no'
+      className={classNames("unhandled-link", className)}
+      target="_blank"
+      rel="noopener"
+      translate="no"
     >
       {children}
     </a>

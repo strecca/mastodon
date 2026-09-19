@@ -1,27 +1,27 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { defineMessages, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from "react-intl";
 
-import { OrderedSet } from 'immutable';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import ImmutablePureComponent from 'react-immutable-pure-component';
-import { connect } from 'react-redux';
+import { OrderedSet } from "immutable";
+import ImmutablePropTypes from "react-immutable-proptypes";
+import ImmutablePureComponent from "react-immutable-pure-component";
+import { connect } from "react-redux";
 
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import { submitReport } from 'mastodon/actions/reports';
-import { fetchServer } from 'mastodon/actions/server';
-import { expandAccountTimeline } from 'mastodon/actions/timelines';
-import { IconButton } from 'mastodon/components/icon_button';
-import { injectIntl } from '@/mastodon/components/intl';
-import Category from 'mastodon/features/report/category';
-import Comment from 'mastodon/features/report/comment';
-import Rules from 'mastodon/features/report/rules';
-import Statuses from 'mastodon/features/report/statuses';
-import Thanks from 'mastodon/features/report/thanks';
-import { makeGetAccount } from 'mastodon/selectors';
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import { submitReport } from "mastodon/actions/reports";
+import { fetchServer } from "mastodon/actions/server";
+import { expandAccountTimeline } from "mastodon/actions/timelines";
+import { IconButton } from "mastodon/components/icon_button";
+import { injectIntl } from "@/mastodon/components/intl";
+import Category from "mastodon/features/report/category";
+import Comment from "mastodon/features/report/comment";
+import Rules from "mastodon/features/report/rules";
+import Statuses from "mastodon/features/report/statuses";
+import Thanks from "mastodon/features/report/thanks";
+import { makeGetAccount } from "mastodon/selectors";
 
 const messages = defineMessages({
-  close: { id: 'lightbox.close', defaultMessage: 'Close' },
+  close: { id: "lightbox.close", defaultMessage: "Close" },
 });
 
 const makeMapStateToProps = () => {
@@ -35,7 +35,6 @@ const makeMapStateToProps = () => {
 };
 
 class ReportModal extends ImmutablePureComponent {
-
   static propTypes = {
     accountId: PropTypes.string.isRequired,
     statusId: PropTypes.string,
@@ -45,10 +44,10 @@ class ReportModal extends ImmutablePureComponent {
   };
 
   state = {
-    step: 'category',
+    step: "category",
     selectedStatusIds: OrderedSet(this.props.statusId ? [this.props.statusId] : []),
     selectedDomains: OrderedSet(),
-    comment: '',
+    comment: "",
     category: null,
     selectedRuleIds: OrderedSet(),
     isSubmitting: false,
@@ -61,19 +60,25 @@ class ReportModal extends ImmutablePureComponent {
 
     this.setState({ isSubmitting: true });
 
-    dispatch(submitReport({
-      account_id: accountId,
-      status_ids: selectedStatusIds.toArray(),
-      forward_to_domains: selectedDomains.toArray(),
-      comment,
-      forward: selectedDomains.size > 0,
-      category,
-      rule_ids: selectedRuleIds.toArray(),
-    }, this.handleSuccess, this.handleFail));
+    dispatch(
+      submitReport(
+        {
+          account_id: accountId,
+          status_ids: selectedStatusIds.toArray(),
+          forward_to_domains: selectedDomains.toArray(),
+          comment,
+          forward: selectedDomains.size > 0,
+          category,
+          rule_ids: selectedRuleIds.toArray(),
+        },
+        this.handleSuccess,
+        this.handleFail,
+      ),
+    );
   };
 
   handleSuccess = () => {
-    this.setState({ isSubmitting: false, isSubmitted: true, step: 'thanks' });
+    this.setState({ isSubmitting: false, isSubmitted: true, step: "thanks" });
   };
 
   handleFail = () => {
@@ -106,32 +111,27 @@ class ReportModal extends ImmutablePureComponent {
     }
   };
 
-  handleChangeCategory = category => {
+  handleChangeCategory = (category) => {
     this.setState({ category });
   };
 
-  handleChangeComment = comment => {
+  handleChangeComment = (comment) => {
     this.setState({ comment });
   };
 
-  handleNextStep = step => {
+  handleNextStep = (step) => {
     this.setState({ step });
   };
 
-  componentDidMount () {
+  componentDidMount() {
     const { dispatch, accountId } = this.props;
 
     dispatch(expandAccountTimeline(accountId, { withReplies: true }));
     dispatch(fetchServer());
   }
 
-  render () {
-    const {
-      accountId,
-      account,
-      intl,
-      onClose,
-    } = this.props;
+  render() {
+    const { accountId, account, intl, onClose } = this.props;
 
     if (!account) {
       return null;
@@ -148,80 +148,82 @@ class ReportModal extends ImmutablePureComponent {
       isSubmitted,
     } = this.state;
 
-    const domain   = account.get('acct').split('@')[1];
+    const domain = account.get("acct").split("@")[1];
     const isRemote = !!domain;
 
     let stepComponent;
 
-    switch(step) {
-    case 'category':
-      stepComponent = (
-        <Category
-          onNextStep={this.handleNextStep}
-          startedFrom={this.props.statusId ? 'status' : 'account'}
-          category={category}
-          onChangeCategory={this.handleChangeCategory}
-        />
-      );
-      break;
-    case 'rules':
-      stepComponent = (
-        <Rules
-          onNextStep={this.handleNextStep}
-          selectedRuleIds={selectedRuleIds}
-          onToggle={this.handleRuleToggle}
-        />
-      );
-      break;
-    case 'statuses':
-      stepComponent = (
-        <Statuses
-          onNextStep={this.handleNextStep}
-          accountId={accountId}
-          selectedStatusIds={selectedStatusIds}
-          onToggle={this.handleStatusToggle}
-        />
-      );
-      break;
-    case 'comment':
-      stepComponent = (
-        <Comment
-          onSubmit={this.handleSubmit}
-          isSubmitting={isSubmitting}
-          isRemote={isRemote}
-          comment={comment}
-          domain={domain}
-          onChangeComment={this.handleChangeComment}
-          statusIds={selectedStatusIds}
-          selectedDomains={selectedDomains}
-          onToggleDomain={this.handleDomainToggle}
-        />
-      );
-      break;
-    case 'thanks':
-      stepComponent = (
-        <Thanks
-          submitted={isSubmitted}
-          account={account}
-          onClose={onClose}
-        />
-      );
+    switch (step) {
+      case "category":
+        stepComponent = (
+          <Category
+            onNextStep={this.handleNextStep}
+            startedFrom={this.props.statusId ? "status" : "account"}
+            category={category}
+            onChangeCategory={this.handleChangeCategory}
+          />
+        );
+        break;
+      case "rules":
+        stepComponent = (
+          <Rules
+            onNextStep={this.handleNextStep}
+            selectedRuleIds={selectedRuleIds}
+            onToggle={this.handleRuleToggle}
+          />
+        );
+        break;
+      case "statuses":
+        stepComponent = (
+          <Statuses
+            onNextStep={this.handleNextStep}
+            accountId={accountId}
+            selectedStatusIds={selectedStatusIds}
+            onToggle={this.handleStatusToggle}
+          />
+        );
+        break;
+      case "comment":
+        stepComponent = (
+          <Comment
+            onSubmit={this.handleSubmit}
+            isSubmitting={isSubmitting}
+            isRemote={isRemote}
+            comment={comment}
+            domain={domain}
+            onChangeComment={this.handleChangeComment}
+            statusIds={selectedStatusIds}
+            selectedDomains={selectedDomains}
+            onToggleDomain={this.handleDomainToggle}
+          />
+        );
+        break;
+      case "thanks":
+        stepComponent = <Thanks submitted={isSubmitted} account={account} onClose={onClose} />;
     }
 
     return (
-      <div className='modal-root__modal report-dialog-modal'>
-        <div className='report-modal__target'>
-          <IconButton className='report-modal__close' title={intl.formatMessage(messages.close)} icon='times' iconComponent={CloseIcon} onClick={onClose} size={20} />
-          <FormattedMessage id='report.target' defaultMessage='Report {target}' values={{ target: <strong>{account.get('acct')}</strong> }} />
+      <div className="modal-root__modal report-dialog-modal">
+        <div className="report-modal__target">
+          <IconButton
+            className="report-modal__close"
+            title={intl.formatMessage(messages.close)}
+            icon="times"
+            iconComponent={CloseIcon}
+            onClick={onClose}
+            size={20}
+          />
+          <FormattedMessage
+            id="report.target"
+            defaultMessage="Report {target}"
+            values={{ target: <strong>{account.get("acct")}</strong> }}
+          />
         </div>
 
-        <div className='report-dialog-modal__container'>
-          {stepComponent}
-        </div>
+        <div className="report-dialog-modal__container">{stepComponent}</div>
       </div>
     );
   }
-
 }
 
 export default connect(makeMapStateToProps)(injectIntl(ReportModal));

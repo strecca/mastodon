@@ -3,24 +3,24 @@ on:
   merge_group:
   push:
     branches:
-      - 'main'
-      - 'stable-*'
+      - "main"
+      - "stable-*"
     paths:
-      - '.github/workflows/lint-haml.yml'
-      - '.haml-lint*.yml'
-      - '.rubocop*.yml'
-      - '.ruby-version'
-      - '**/*.haml'
-      - 'Gemfile*'
+      - ".github/workflows/lint-haml.yml"
+      - ".haml-lint*.yml"
+      - ".rubocop*.yml"
+      - ".ruby-version"
+      - "**/*.haml"
+      - "Gemfile*"
 
   pull_request:
     paths:
-      - '.github/workflows/lint-haml.yml'
-      - '.haml-lint*.yml'
-      - '.rubocop*.yml'
-      - '.ruby-version'
-      - '**/*.haml'
-      - 'Gemfile*'
+      - ".github/workflows/lint-haml.yml"
+      - ".haml-lint*.yml"
+      - ".rubocop*.yml"
+      - ".ruby-version"
+      - "**/*.haml"
+      - "Gemfile*"
 
 jobs:
   lint:

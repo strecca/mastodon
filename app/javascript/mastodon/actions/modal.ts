@@ -1,8 +1,8 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 
-import type { ModalProps } from 'mastodon/reducers/modal';
+import type { ModalProps } from "mastodon/reducers/modal";
 
-import type { MODAL_COMPONENTS } from '../features/ui/components/modal_root';
+import type { MODAL_COMPONENTS } from "../features/ui/components/modal_root";
 
 export type ModalType = keyof typeof MODAL_COMPONENTS;
 
@@ -12,10 +12,10 @@ interface OpenModalPayload {
   previousModalProps?: ModalProps;
   ignoreFocus?: boolean;
 }
-export const openModal = createAction<OpenModalPayload>('MODAL_OPEN');
+export const openModal = createAction<OpenModalPayload>("MODAL_OPEN");
 
 interface CloseModalPayload {
   modalType: ModalType | undefined;
   ignoreFocus: boolean;
 }
-export const closeModal = createAction<CloseModalPayload>('MODAL_CLOSE');
+export const closeModal = createAction<CloseModalPayload>("MODAL_CLOSE");

@@ -1,29 +1,29 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 
-import { useAccount } from '@/mastodon/hooks/useAccount';
-import { me } from '@/mastodon/initial_state';
-import { deleteCollection } from 'mastodon/reducers/slices/collections';
-import { useAppDispatch } from 'mastodon/store';
+import { useAccount } from "@/mastodon/hooks/useAccount";
+import { me } from "@/mastodon/initial_state";
+import { deleteCollection } from "mastodon/reducers/slices/collections";
+import { useAppDispatch } from "mastodon/store";
 
-import type { BaseConfirmationModalProps } from './confirmation_modal';
-import { ConfirmationModal } from './confirmation_modal';
+import type { BaseConfirmationModalProps } from "./confirmation_modal";
+import { ConfirmationModal } from "./confirmation_modal";
 
 const messages = defineMessages({
   deleteListTitle: {
-    id: 'confirmations.delete_collection.title',
+    id: "confirmations.delete_collection.title",
     defaultMessage: 'Delete "{name}"?',
   },
   deleteListMessage: {
-    id: 'confirmations.delete_collection.message',
-    defaultMessage: 'This action cannot be undone.',
+    id: "confirmations.delete_collection.message",
+    defaultMessage: "This action cannot be undone.",
   },
   deleteListConfirm: {
-    id: 'confirmations.delete_collection.confirm',
-    defaultMessage: 'Delete',
+    id: "confirmations.delete_collection.confirm",
+    defaultMessage: "Delete",
   },
 });
 

@@ -1,39 +1,39 @@
-import { useEffect, useState, useCallback, useId } from 'react';
+import { useEffect, useState, useCallback, useId } from "react";
 
-import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, useIntl, defineMessages } from "react-intl";
 
-import { isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled } from "@reduxjs/toolkit";
 
-import { Toggle } from '@/flavours/glitch/components/form_fields';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import ListAltIcon from '@/material-icons/400-24px/list_alt.svg?react';
-import { fetchLists } from 'flavours/glitch/actions/lists';
-import { createList } from 'flavours/glitch/actions/lists_typed';
+import { Toggle } from "@/flavours/glitch/components/form_fields";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import ListAltIcon from "@/material-icons/400-24px/list_alt.svg?react";
+import { fetchLists } from "flavours/glitch/actions/lists";
+import { createList } from "flavours/glitch/actions/lists_typed";
 import {
   apiGetAccountLists,
   apiAddAccountToList,
   apiRemoveAccountFromList,
-} from 'flavours/glitch/api/lists';
-import type { ApiListJSON } from 'flavours/glitch/api_types/lists';
-import { Button } from 'flavours/glitch/components/button';
-import { Icon } from 'flavours/glitch/components/icon';
-import { IconButton } from 'flavours/glitch/components/icon_button';
-import { NavigationFocusTarget } from 'flavours/glitch/components/navigation_focus_target';
-import { getOrderedLists } from 'flavours/glitch/selectors/lists';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+} from "flavours/glitch/api/lists";
+import type { ApiListJSON } from "flavours/glitch/api_types/lists";
+import { Button } from "flavours/glitch/components/button";
+import { Icon } from "flavours/glitch/components/icon";
+import { IconButton } from "flavours/glitch/components/icon_button";
+import { NavigationFocusTarget } from "flavours/glitch/components/navigation_focus_target";
+import { getOrderedLists } from "flavours/glitch/selectors/lists";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
 const messages = defineMessages({
   newList: {
-    id: 'lists.new_list_name',
-    defaultMessage: 'New list name',
+    id: "lists.new_list_name",
+    defaultMessage: "New list name",
   },
   createList: {
-    id: 'lists.create',
-    defaultMessage: 'Create',
+    id: "lists.create",
+    defaultMessage: "Create",
   },
   close: {
-    id: 'lightbox.close',
-    defaultMessage: 'Close',
+    id: "lightbox.close",
+    defaultMessage: "Close",
   },
 });
 
@@ -53,9 +53,9 @@ const ListItem: React.FC<{
   );
 
   return (
-    <label className='lists__item' htmlFor={uniqueId}>
-      <div className='lists__item__title'>
-        <Icon id='list-ul' icon={ListAltIcon} />
+    <label className="lists__item" htmlFor={uniqueId}>
+      <div className="lists__item__title">
+        <Icon id="list-ul" icon={ListAltIcon} />
         <span>{title}</span>
       </div>
 
@@ -69,7 +69,7 @@ const NewListItem: React.FC<{
 }> = ({ onCreate }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
   const handleChange = useCallback(
     ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,20 +86,20 @@ const NewListItem: React.FC<{
     void dispatch(createList({ title })).then((result) => {
       if (isFulfilled(result)) {
         onCreate(result.payload);
-        setTitle('');
+        setTitle("");
       }
 
-      return '';
+      return "";
     });
   }, [setTitle, dispatch, onCreate, title]);
 
   return (
-    <form className='lists__item' onSubmit={handleSubmit}>
-      <label className='lists__item__title'>
-        <Icon id='list-ul' icon={ListAltIcon} />
+    <form className="lists__item" onSubmit={handleSubmit}>
+      <label className="lists__item__title">
+        <Icon id="list-ul" icon={ListAltIcon} />
 
         <input
-          type='text'
+          type="text"
           value={title}
           onChange={handleChange}
           maxLength={30}
@@ -108,7 +108,7 @@ const NewListItem: React.FC<{
         />
       </label>
 
-      <Button text={intl.formatMessage(messages.createList)} type='submit' />
+      <Button text={intl.formatMessage(messages.createList)} type="submit" />
     </form>
   );
 };
@@ -129,7 +129,7 @@ const ListAdder: React.FC<{
     apiGetAccountLists(accountId)
       .then((data) => {
         setListIds(data.map((l) => l.id));
-        return '';
+        return "";
       })
       .catch(() => {
         // Nothing
@@ -142,14 +142,10 @@ const ListAdder: React.FC<{
         setListIds((currentListIds) => [listId, ...currentListIds]);
 
         apiAddAccountToList(listId, accountId).catch(() => {
-          setListIds((currentListIds) =>
-            currentListIds.filter((id) => id !== listId),
-          );
+          setListIds((currentListIds) => currentListIds.filter((id) => id !== listId));
         });
       } else {
-        setListIds((currentListIds) =>
-          currentListIds.filter((id) => id !== listId),
-        );
+        setListIds((currentListIds) => currentListIds.filter((id) => id !== listId));
 
         apiRemoveAccountFromList(listId, accountId).catch(() => {
           setListIds((currentListIds) => [listId, ...currentListIds]);
@@ -164,36 +160,34 @@ const ListAdder: React.FC<{
       setListIds((currentListIds) => [list.id, ...currentListIds]);
 
       apiAddAccountToList(list.id, accountId).catch(() => {
-        setListIds((currentListIds) =>
-          currentListIds.filter((id) => id !== list.id),
-        );
+        setListIds((currentListIds) => currentListIds.filter((id) => id !== list.id));
       });
     },
     [setListIds, accountId],
   );
 
   return (
-    <div className='modal-root__modal dialog-modal'>
-      <div className='dialog-modal__header'>
+    <div className="modal-root__modal dialog-modal">
+      <div className="dialog-modal__header">
         <IconButton
-          className='dialog-modal__header__close'
+          className="dialog-modal__header__close"
           title={intl.formatMessage(messages.close)}
-          icon='times'
+          icon="times"
           iconComponent={CloseIcon}
           onClick={onClose}
         />
 
-        <NavigationFocusTarget as='h1' className='dialog-modal__header__title'>
+        <NavigationFocusTarget as="h1" className="dialog-modal__header__title">
           <FormattedMessage
-            id='lists.add_to_lists'
-            defaultMessage='Add {name} to lists'
+            id="lists.add_to_lists"
+            defaultMessage="Add {name} to lists"
             values={{ name: <strong>@{account?.acct}</strong> }}
           />
         </NavigationFocusTarget>
       </div>
 
-      <div className='dialog-modal__content'>
-        <div className='lists-scrollable'>
+      <div className="dialog-modal__content">
+        <div className="lists-scrollable">
           <NewListItem onCreate={handleCreate} />
 
           {lists.map((list) => (

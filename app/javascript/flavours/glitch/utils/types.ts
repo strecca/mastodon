@@ -12,8 +12,7 @@
  */
 
 export type SomeRequired<T, K extends keyof T> = T & Required<Pick<T, K>>;
-export type SomeOptional<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>> &
-  Partial<Pick<T, K>>;
+export type SomeOptional<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>> & Partial<Pick<T, K>>;
 
 export type RequiredExcept<T, K extends keyof T> = SomeOptional<Required<T>, K>;
 
@@ -25,7 +24,6 @@ export type AnyFunction = (...args: never) => unknown;
 
 export type OmitUnion<TUnion, TBase> = TBase & Omit<TUnion, keyof TBase>;
 
-export type SnakeToCamelCase<S extends string> =
-  S extends `${infer T}_${infer U}`
-    ? `${T}${Capitalize<SnakeToCamelCase<U>>}`
-    : S;
+export type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
+  ? `${T}${Capitalize<SnakeToCamelCase<U>>}`
+  : S;

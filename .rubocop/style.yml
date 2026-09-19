@@ -24,7 +24,7 @@ Style/HashSyntax:
 
 Style/IfUnlessModifier:
   Exclude:
-    - '**/*.haml'
+    - "**/*.haml"
 
 Style/KeywordArgumentsMerging:
   Enabled: false
@@ -38,8 +38,8 @@ Style/OneClassPerFile:
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    '%i': ()
-    '%w': ()
+    "%i": ()
+    "%w": ()
 
 Style/RedundantBegin:
   Enabled: false

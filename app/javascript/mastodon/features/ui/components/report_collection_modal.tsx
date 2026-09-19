@@ -1,24 +1,24 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { Callout } from '@/mastodon/components/callout';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import { submitReport } from 'mastodon/actions/reports';
-import { fetchServer } from 'mastodon/actions/server';
-import type { ApiCollectionJSON } from 'mastodon/api_types/collections';
-import { Button } from 'mastodon/components/button';
-import { IconButton } from 'mastodon/components/icon_button';
-import { NavigationFocusTarget } from 'mastodon/components/navigation_focus_target';
-import { useAccount } from 'mastodon/hooks/useAccount';
-import { useAppDispatch } from 'mastodon/store';
+import { Callout } from "@/mastodon/components/callout";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import { submitReport } from "mastodon/actions/reports";
+import { fetchServer } from "mastodon/actions/server";
+import type { ApiCollectionJSON } from "mastodon/api_types/collections";
+import { Button } from "mastodon/components/button";
+import { IconButton } from "mastodon/components/icon_button";
+import { NavigationFocusTarget } from "mastodon/components/navigation_focus_target";
+import { useAccount } from "mastodon/hooks/useAccount";
+import { useAppDispatch } from "mastodon/store";
 
-import Category from '../../report/category';
-import Comment from '../../report/comment';
-import Rules from '../../report/rules';
+import Category from "../../report/category";
+import Comment from "../../report/comment";
+import Rules from "../../report/rules";
 
 const messages = defineMessages({
-  close: { id: 'lightbox.close', defaultMessage: 'Close' },
+  close: { id: "lightbox.close", defaultMessage: "Close" },
 });
 
 const CollectionThanks: React.FC<{
@@ -26,18 +26,18 @@ const CollectionThanks: React.FC<{
 }> = ({ onClose }) => {
   return (
     <>
-      <NavigationFocusTarget as='h1' className='report-dialog-modal__title'>
+      <NavigationFocusTarget as="h1" className="report-dialog-modal__title">
         <FormattedMessage
-          id='report.thanks.title_actionable'
+          id="report.thanks.title_actionable"
           defaultMessage="Thanks for reporting, we'll look into this."
         />
       </NavigationFocusTarget>
 
-      <div className='flex-spacer' />
+      <div className="flex-spacer" />
 
-      <div className='report-dialog-modal__actions'>
+      <div className="report-dialog-modal__actions">
         <Button onClick={onClose}>
-          <FormattedMessage id='report.close' defaultMessage='Done' />
+          <FormattedMessage id="report.close" defaultMessage="Done" />
         </Button>
       </div>
     </>
@@ -58,19 +58,15 @@ export const ReportCollectionModal: React.FC<{
     void dispatch(fetchServer());
   }, [dispatch]);
 
-  const [submitState, setSubmitState] = useState<
-    'idle' | 'submitting' | 'submitted' | 'error'
-  >('idle');
-
-  const [step, setStep] = useState<'category' | 'rules' | 'comment' | 'thanks'>(
-    'category',
+  const [submitState, setSubmitState] = useState<"idle" | "submitting" | "submitted" | "error">(
+    "idle",
   );
 
-  const [category, setCategory] = useState<
-    'spam' | 'legal' | 'violation' | 'other' | null
-  >(null);
+  const [step, setStep] = useState<"category" | "rules" | "comment" | "thanks">("category");
+
+  const [category, setCategory] = useState<"spam" | "legal" | "violation" | "other" | null>(null);
   const [selectedRuleIds, setSelectedRuleIds] = useState<string[]>([]);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
 
   const handleDomainToggle = useCallback((domain: string, checked: boolean) => {
@@ -83,22 +79,20 @@ export const ReportCollectionModal: React.FC<{
 
   const handleRuleToggle = useCallback((ruleId: string) => {
     setSelectedRuleIds((ruleIds) =>
-      ruleIds.includes(ruleId)
-        ? ruleIds.filter((id) => ruleId !== id)
-        : [...ruleIds, ruleId],
+      ruleIds.includes(ruleId) ? ruleIds.filter((id) => ruleId !== id) : [...ruleIds, ruleId],
     );
   }, []);
 
   const handleNextStep = useCallback(() => {
-    if (step === 'category' && category === 'violation') {
-      setStep('rules');
+    if (step === "category" && category === "violation") {
+      setStep("rules");
     } else {
-      setStep('comment');
+      setStep("comment");
     }
   }, [category, step]);
 
   const handleSubmit = useCallback(() => {
-    setSubmitState('submitting');
+    setSubmitState("submitting");
 
     dispatch(
       submitReport(
@@ -109,49 +103,41 @@ export const ReportCollectionModal: React.FC<{
           forward_to_domains: selectedDomains,
           comment,
           forward: selectedDomains.length > 0,
-          category: category ?? 'other',
+          category: category ?? "other",
           rule_ids: selectedRuleIds,
         },
         () => {
-          setSubmitState('submitted');
-          setStep('thanks');
+          setSubmitState("submitted");
+          setStep("thanks");
         },
         () => {
-          setSubmitState('error');
+          setSubmitState("error");
         },
       ),
     );
-  }, [
-    account_id,
-    category,
-    selectedRuleIds,
-    comment,
-    dispatch,
-    collectionId,
-    selectedDomains,
-  ]);
+  }, [account_id, category, selectedRuleIds, comment, dispatch, collectionId, selectedDomains]);
 
   if (!account) {
     return null;
   }
 
-  const domain = account.get('acct').split('@')[1];
+  const domain = account.get("acct").split("@")[1];
   const isRemote = !!domain;
 
   let stepComponent;
 
   switch (step) {
-    case 'category':
+    case "category":
       stepComponent = (
         <Category
           onNextStep={handleNextStep}
-          startedFrom='collection'
+          startedFrom="collection"
           category={category}
           onChangeCategory={setCategory}
         />
       );
       break;
-    case 'rules':
+    case "rules":
       stepComponent = (
         <Rules
           onNextStep={handleNextStep}
@@ -160,29 +146,29 @@ export const ReportCollectionModal: React.FC<{
         />
       );
       break;
-    case 'comment':
+    case "comment":
       stepComponent = (
         <Comment
           submitError={
-            submitState === 'error' && (
+            submitState === "error" && (
               <Callout
-                variant='error'
+                variant="error"
                 title={
                   <FormattedMessage
-                    id='report.submission_error'
-                    defaultMessage='Report could not be submitted'
+                    id="report.submission_error"
+                    defaultMessage="Report could not be submitted"
                   />
                 }
               >
                 <FormattedMessage
-                  id='report.submission_error_details'
-                  defaultMessage='Please check your network connection and try again later.'
+                  id="report.submission_error_details"
+                  defaultMessage="Please check your network connection and try again later."
                 />
               </Callout>
             )
           }
           onSubmit={handleSubmit}
-          isSubmitting={submitState === 'submitting'}
+          isSubmitting={submitState === "submitting"}
           isRemote={isRemote}
           comment={comment}
           domain={domain}
@@ -193,28 +179,28 @@ export const ReportCollectionModal: React.FC<{
         />
       );
       break;
-    case 'thanks':
+    case "thanks":
       stepComponent = <CollectionThanks onClose={onClose} />;
   }
 
   return (
-    <div className='modal-root__modal report-dialog-modal'>
-      <div className='report-modal__target'>
+    <div className="modal-root__modal report-dialog-modal">
+      <div className="report-modal__target">
         <IconButton
-          className='report-modal__close'
+          className="report-modal__close"
           title={intl.formatMessage(messages.close)}
-          icon='times'
+          icon="times"
           iconComponent={CloseIcon}
           onClick={onClose}
         />
         <FormattedMessage
-          id='report.target'
-          defaultMessage='Report {target}'
+          id="report.target"
+          defaultMessage="Report {target}"
           values={{ target: <strong>{name}</strong> }}
         />
       </div>
 
-      <div className='report-dialog-modal__container'>{stepComponent}</div>
+      <div className="report-dialog-modal__container">{stepComponent}</div>
     </div>
   );
 };

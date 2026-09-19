@@ -224,17 +224,17 @@ git pull --rebase
 
 ## 11. Key Server Facts
 
-| Thing | Value |
-|---|---|
-| Server IP | 178.104.56.201 |
-| App directory | `/home/mastodon/live` |
-| Caddyfile | `/etc/caddy/Caddyfile` |
-| Assets output | `/home/mastodon/live/public/packs` |
-| Redis/Valkey | `localhost:6379` |
-| Rails port | `3000` |
-| Streaming port | `4000` |
-| Admin login | `admin@localhost` / see password doc |
-| Sidekiq dashboard | `https://miacivezza.com/sidekiq` |
+| Thing              | Value                                             |
+| ------------------ | ------------------------------------------------- |
+| Server IP          | 178.104.56.201                                    |
+| App directory      | `/home/mastodon/live`                             |
+| Caddyfile          | `/etc/caddy/Caddyfile`                            |
+| Assets output      | `/home/mastodon/live/public/packs`                |
+| Redis/Valkey       | `localhost:6379`                                  |
+| Rails port         | `3000`                                            |
+| Streaming port     | `4000`                                            |
+| Admin login        | `admin@localhost` / see password doc              |
+| Sidekiq dashboard  | `https://miacivezza.com/sidekiq`                  |
 | Translation status | `https://miacivezza.com/admin/translation_status` |
 
 ---

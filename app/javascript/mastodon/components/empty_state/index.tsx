@@ -1,18 +1,16 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import ElephantImage from '@/images/elephant_ui.svg?react';
+import ElephantImage from "@/images/elephant_ui.svg?react";
 
-import { GIF } from '../gif';
+import { GIF } from "../gif";
 
-import classes from './empty_state.module.scss';
+import classes from "./empty_state.module.scss";
 
 const images = {
   default: <ElephantImage className={classes.defaultImage} />,
-  error: (
-    <GIF src='/oops.gif' staticSrc='/oops.png' className={classes.errorImage} />
-  ),
+  error: <GIF src="/oops.gif" staticSrc="/oops.png" className={classes.errorImage} />,
 };
 
 /**
@@ -26,19 +24,17 @@ export const EmptyState: React.FC<{
   title?: React.ReactNode;
   message?: React.ReactNode;
   children?: React.ReactNode;
-  headingLevel?: 'h2' | 'h3' | 'h4';
+  headingLevel?: "h2" | "h3" | "h4";
   className?: string;
 }> = ({
-  image = 'default',
-  title = (
-    <FormattedMessage id='empty_state.no_results' defaultMessage='No results' />
-  ),
+  image = "default",
+  title = <FormattedMessage id="empty_state.no_results" defaultMessage="No results" />,
   message,
   children,
-  headingLevel: Heading = 'h2',
+  headingLevel: Heading = "h2",
   className,
 }) => {
-  const imageToRender = typeof image === 'string' ? images[image] : image;
+  const imageToRender = typeof image === "string" ? images[image] : image;
 
   return (
     <div className={classNames(classes.wrapper, className)}>

@@ -1,8 +1,8 @@
 export const modes = {
   darkTheme: {
-    theme: 'dark',
+    theme: "dark",
   },
   lightTheme: {
-    theme: 'light',
+    theme: "light",
   },
 } as const;

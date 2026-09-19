@@ -1,7 +1,7 @@
 ---
 sr-Latn:
   about:
-    about_mastodon_html: 'Društvena mreža budućnosti: bez reklama, bez korporativnog praćenja, etički dizajn, i decentralizacija! Posedujte svoje podatke sa Mastodon-om!'
+    about_mastodon_html: "Društvena mreža budućnosti: bez reklama, bez korporativnog praćenja, etički dizajn, i decentralizacija! Posedujte svoje podatke sa Mastodon-om!"
     contact_missing: Nije postavljeno
     contact_unavailable: Nije dostupno
     hosted_on: Mastodon hostovan na %{domain}
@@ -435,10 +435,10 @@ sr-Latn:
       import:
         description_html: Upravo ćete uvesti listu blokiranih domena. Molimo Vas, vrlo pažljivo pregledajte ovu listu, posebno ukoliko je niste sami napravili.
         existing_relationships_warning: Postojeći odnosi u obliku praćenja
-        private_comment_description_html: 'Da bi Vam pomogli da pratite odakle su blokovi uvezeni, uvezeni blokovi će biti napravljeni sa sledećim privatnim komentarom: <q>%{comment}</q>'
+        private_comment_description_html: "Da bi Vam pomogli da pratite odakle su blokovi uvezeni, uvezeni blokovi će biti napravljeni sa sledećim privatnim komentarom: <q>%{comment}</q>"
         private_comment_template: Uvezeno sa izvora %{source} na datum %{date}
         title: Uvezi blokirane domene
-      invalid_domain_block: 'Jedan ili više blokova domena je preskočen zbog sledeće greške tj. grešaka: %{error}'
+      invalid_domain_block: "Jedan ili više blokova domena je preskočen zbog sledeće greške tj. grešaka: %{error}"
       new:
         title: Uvezi blokirane domene
       no_file: Nijedan fajl nije odabran
@@ -535,12 +535,12 @@ sr-Latn:
       created_msg: Uspešno je dodato novo IP pravilo
       delete: Izbriši
       expires_in:
-        '1209600': 2 nedelje
-        '15778476': 6 meseci
-        '2629746': 1 mesec
-        '31556952': 1 godina
-        '86400': 1 dan
-        '94670856': 3 godine
+        "1209600": 2 nedelje
+        "15778476": 6 meseci
+        "2629746": 1 mesec
+        "31556952": 1 godina
+        "86400": 1 dan
+        "94670856": 3 godine
       new:
         title: Kreiraj novo IP pravilo
       no_ip_block_selected: Nijedno IP pravilo nije promenjeno jer nijedno nije izabrano
@@ -594,7 +594,7 @@ sr-Latn:
       category_description_html: Razlog zbog kog je ovaj nalog i/ili sadržaj prijavljen će biti obrazložen u komunikaciji sa prijavljenim nalogom
       comment:
         none: Ništa
-      comment_description_html: 'Radi pružanja više informacija, %{name} je napisao/-la:'
+      comment_description_html: "Radi pružanja više informacija, %{name} je napisao/-la:"
       confirm: Potvrdi
       confirm_action: Potvrdi moderacijsku radnju prema @%{acct}
       created_at: Prijavljena
@@ -613,11 +613,11 @@ sr-Latn:
         placeholder: Opišite kakve su radnje preduzete, ili bilo kakve povezane novosti...
         title: Beleške
       notes_description_html: Pročitajte i ostavite napomene drugim moderatorima i sebi u budućnosti
-      processed_msg: 'Prijava #%{id} uspešno obrađena'
-      quick_actions_description_html: 'Preduzmite brzu radnju ili se spustite niže da biste videli prijavljeni sadržaj:'
+      processed_msg: "Prijava #%{id} uspešno obrađena"
+      quick_actions_description_html: "Preduzmite brzu radnju ili se spustite niže da biste videli prijavljeni sadržaj:"
       remote_user_placeholder: udaljeni korisnik sa %{instance}
       reopen: Otvori prijavu ponovo
-      report: 'Prijava #%{id}'
+      report: "Prijava #%{id}"
       reported_account: Prijavljeni nalog
       reported_by: Prijavio
       resolved: Rešena
@@ -627,16 +627,16 @@ sr-Latn:
       statuses_description_html: Sporni sadržaj će biti naveden u komunikaciji sa prijavljenim nalogom
       summary:
         action_preambles:
-          delete_html: 'Upravo ćete <strong>obrisati</strong> neke od objava korisnika <strong>@%{acct}</strong>. Ovo će:'
-          mark_as_sensitive_html: 'Upravo ćete <strong>označiti</strong> neke objave korisnika <strong>@%{acct}</strong> kao <strong>osetljive</strong>. Ovo će:'
-          silence_html: 'Upravo ćete <strong>ograničiti</strong> nalog korisnika <strong>@%{acct}</strong>. Ovo će:'
-          suspend_html: 'Upravo ćete <strong>suspendovati</strong> nalog korisnika <strong>@%{acct}</strong>. Ovo će:'
+          delete_html: "Upravo ćete <strong>obrisati</strong> neke od objava korisnika <strong>@%{acct}</strong>. Ovo će:"
+          mark_as_sensitive_html: "Upravo ćete <strong>označiti</strong> neke objave korisnika <strong>@%{acct}</strong> kao <strong>osetljive</strong>. Ovo će:"
+          silence_html: "Upravo ćete <strong>ograničiti</strong> nalog korisnika <strong>@%{acct}</strong>. Ovo će:"
+          suspend_html: "Upravo ćete <strong>suspendovati</strong> nalog korisnika <strong>@%{acct}</strong>. Ovo će:"
         actions:
           delete_html: Obrišite sporne objave
           mark_as_sensitive_html: Obeležite medije spornih objava kao osetljive
           silence_html: Žestoko ograničite domet korisnika <strong>@%{acct}</strong> tako što ćete učiniti njegov profil i sadržaje vidljive samo ljudima koji ih već prate i ljudima koji ručno potraže profil
           suspend_html: Suspendujte korisnika <strong>@%{acct}</strong>, što će učiniti njegov profil i sadržaje nedostupnim za pristup i interakciju
-        close_report: 'Označite prijavu #%{id} kao rešenu'
+        close_report: "Označite prijavu #%{id} kao rešenu"
         close_reports_html: Označi <strong>sve</strong> prijave protiv <strong>@%{acct}</strong> kao rešene
         delete_data_html: Obriši profil i sadržaje korisnika <strong>@%{acct}</strong> za 30 dana osim ukoliko suspenzija bude povučena u međuvremenu
         preview_preamble_html: "<strong>@%{acct}</strong> će primiti upozorenje sledeće sadržine:"
@@ -645,7 +645,7 @@ sr-Latn:
       target_origin: Poreklo prijavljenog naloga
       title: Prijave
       unassign: Ukloni dodelu
-      unknown_action_msg: 'Nepoznata radnja: %{action}'
+      unknown_action_msg: "Nepoznata radnja: %{action}"
       unresolved: Nerešene
       updated_at: Ažurirana
       view_profile: Pogledaj profil
@@ -836,7 +836,7 @@ sr-Latn:
       elasticsearch_running_check:
         message_html: Povezivanje na Elasticsearch nije bilo moguće. Molimo Vas proverite da li je pokrenut, ili onemogućite pretragu celog teksta
       elasticsearch_version_check:
-        message_html: 'Neusklađena Elasticsearch verzija: %{value}'
+        message_html: "Neusklađena Elasticsearch verzija: %{value}"
         version_comparison: Elasticsearch %{running_version} je instaliran a %{required_version} je neophodan
       rules_check:
         action: Upravljanje pravilima servera
@@ -917,7 +917,7 @@ sr-Latn:
         peaked_on_and_decaying: Vrhunac dostignut datuma %{date}, od tada u opadanju
         title: Heš oznake u trendu
         trendable: Može da se pojavi pod trendovima
-        trending_rank: 'U trendu #%{rank}'
+        trending_rank: "U trendu #%{rank}"
         usable: Može se koristiti
         usage_comparison: Upotrebljeno %{today} puta danas, u poređenju sa %{yesterday} puta juče
         used_by_over_week:
@@ -982,7 +982,7 @@ sr-Latn:
       body: Objavljene su nove verzije Mastodon-a, možda ćete želeti da ažurirate!
       subject: Nove Mastodon verzije su dostupne za %{instance}}!
     new_trends:
-      body: 'Sledeće stavke je potrebno pregledati pre nego što mogu javno da se prikažu:'
+      body: "Sledeće stavke je potrebno pregledati pre nego što mogu javno da se prikažu:"
       new_trending_links:
         title: Linkovi u trendu
       new_trending_statuses:
@@ -1008,7 +1008,7 @@ sr-Latn:
   application_mailer:
     salutation: Poštovani %{name},
     unsubscribe: Odjavi se
-    view: 'Pogledaj:'
+    view: "Pogledaj:"
     view_profile: Pogledaj nalog
     view_status: Pogledaj status
   applications:
@@ -1065,7 +1065,7 @@ sr-Latn:
     rules:
       accept: Prihvati
       back: Nazad
-      invited_by: 'Možete se pridružiti %{domain} zahvaljujući pozivnici koju ste dobili od:'
+      invited_by: "Možete se pridružiti %{domain} zahvaljujući pozivnici koju ste dobili od:"
       preamble: Ovo su pravila koja su uspostavili i koja sprovode moderatori servera %{domain}.
       preamble_invited: Pre nego što nastavite, razmotrite osnovna pravila koja su postavili moderatori %{domain}.
       title: Neka osnovna pravila.
@@ -1122,7 +1122,7 @@ sr-Latn:
     proceed: Obriši nalog
     success_msg: Vaš nalog je uspešno obrisan
     warning:
-      before: 'Pre nego što nastavite, molimo Vas pažljivo pročitajte sledeće napomene:'
+      before: "Pre nego što nastavite, molimo Vas pažljivo pročitajte sledeće napomene:"
       caches: Sadržaj koji je keširan na drugim serverima može da ostane netaknut
       data_removal: Vaše objave i drugi podaci će biti trajno izbrisani
       irreversible: Nećete biti u mogućnosti da vratite ili reaktivirate svoj nalog
@@ -1145,7 +1145,7 @@ sr-Latn:
       description_html: Ovo su radnje preduzete protiv Vašeg naloga i upozorenja koja su Vam poslali članovi osoblja %{instance}.
       recipient: Usmereno prema
       reject_appeal: Odbij žalbu
-      status: 'Objava #%{id}'
+      status: "Objava #%{id}"
       status_removed: Objava je već uklonjena iz sistema
       title: "%{action} od %{date}"
       title_actions:
@@ -1162,19 +1162,19 @@ sr-Latn:
   edit_profile:
     other: Ostalo
   errors:
-    '400': Zahtev koji ste podneli je bio nelegitiman ili u pogrešnom formatu.
-    '403': Nemate dozvola da vidite ovu stranu.
-    '404': Strana koju ste tražili ne postoji.
-    '406': Ova stranica nije dostupna u izabranom formatu.
-    '410': Strana koju ste tražili više ne postoji.
-    '422':
+    "400": Zahtev koji ste podneli je bio nelegitiman ili u pogrešnom formatu.
+    "403": Nemate dozvola da vidite ovu stranu.
+    "404": Strana koju ste tražili ne postoji.
+    "406": Ova stranica nije dostupna u izabranom formatu.
+    "410": Strana koju ste tražili više ne postoji.
+    "422":
       content: Bezbedonosna verifikacija nije uspela. Da li blokirate kolačiće?
       title: Bezbedonosna verifikacija nije uspela
-    '429': Uspored
-    '500':
+    "429": Uspored
+    "500":
       content: Izvinjavamo se, nešto je pošlo po zlu sa ove strane.
       title: Strana nije ispravna
-    '503': Stranicu nije bilo moguće dostaviti usled privremenog pada servera.
+    "503": Stranicu nije bilo moguće dostaviti usled privremenog pada servera.
     noscript_html: Da biste koristili Mastodon veb aplikaciju, omogućite JavaScript. U suprotnom, probajte neku od <a href="%{apps_path}">originalnih aplikacija</a> za Mastodon za vašu platformu.
   existing_username_validator:
     not_found: nije bilo moguće pronaći lokalnog korisnika sa tim korisničkim imenom
@@ -1274,7 +1274,7 @@ sr-Latn:
     errors:
       empty: Prazna CSV datoteka
       incompatible_type: Nekompatibilno sa izabranim tipom uvoza
-      invalid_csv_file: 'Neispravan CSV fajl. Greška: %{error}'
+      invalid_csv_file: "Neispravan CSV fajl. Greška: %{error}"
       over_rows_processing_limit: sadrži više od %{count} redova
       too_large: Datoteka je prevelika
     failures: Neuspesi
@@ -1318,16 +1318,16 @@ sr-Latn:
     delete: Deaktiviraj
     expired: Isteklo
     expires_in:
-      '1800': 30 minuta
-      '21600': 6 sati
-      '3600': 1 sad
-      '43200': 12 sati
-      '604800': 1 nedelja
-      '86400': 1 dan
+      "1800": 30 minuta
+      "21600": 6 sati
+      "3600": 1 sad
+      "43200": 12 sati
+      "604800": 1 nedelja
+      "86400": 1 dan
     expires_in_prompt: Nikada
     generate: Generiši
     invalid: Ova pozivnica nije važeća
-    invited_by: 'Pozvao Vas je:'
+    invited_by: "Pozvao Vas je:"
     max_uses:
       few: "%{count} korišćenja"
       one: 1 korišćenje
@@ -1380,7 +1380,7 @@ sr-Latn:
     set_redirect: Postavi preusmerenje
     warning:
       backreference_required: Novi nalog prvo mora biti konfigurisan tako da referiše na ovaj nalog
-      before: 'Pre nego što nastavite, molimo Vas pažljivo pročitajte sledeće napomene:'
+      before: "Pre nego što nastavite, molimo Vas pažljivo pročitajte sledeće napomene:"
       cooldown: Nakon preseljenja potrebno je da prođe određeno vreme pre nego što ćete ponovo moći da se preselite
       disabled_account: Vaš trenutni nalog više neće biti upotrebljiv. Međutim, imaćete pristup izvozu podataka kao i reaktivaciji.
       followers: Ova radnja će premestiti sve pratioce sa trenutnog naloga na novi nalog
@@ -1391,7 +1391,7 @@ sr-Latn:
   move_handler:
     carry_blocks_over_text: Ovaj korisnik se preselio sa naloga %{acct}, koji ste blokirali.
     carry_mutes_over_text: Ovaj korisnik se preselio sa naloga %{acct}, koji ste utišali.
-    copy_account_note_text: 'Ovaj korisnik se preselio sa naloga %{acct}, o kome ste zapisali sledeće beleške:'
+    copy_account_note_text: "Ovaj korisnik se preselio sa naloga %{acct}, o kome ste zapisali sledeće beleške:"
   navigation:
     toggle_menu: Prikaži/sakrij meni
   notification_mailer:
@@ -1411,7 +1411,7 @@ sr-Latn:
     follow_request:
       action: Upravljajte zahtevima za praćenje
       body: "%{name} je zatražio da Vas zaprati"
-      subject: 'Pratioci na čekanju: %{name}'
+      subject: "Pratioci na čekanju: %{name}"
       title: Novi zahtev za praćenje
     mention:
       action: Odgovori
@@ -1429,7 +1429,7 @@ sr-Latn:
     update:
       subject: "%{name} je izmenio/-la objavu"
   notifications:
-    email_events_hint: 'Izaberite dešavanja za koja želite da primate obaveštenja:'
+    email_events_hint: "Izaberite dešavanja za koja želite da primate obaveštenja:"
   number:
     human:
       decimal_units:
@@ -1445,7 +1445,7 @@ sr-Latn:
     description_html: Ako uključite <strong>dvofaktorsku autentifikaciju</strong> putem aplikacije za autentifikaciju, moraćete da budete pri telefonu prilikom prijavljivanja da biste imali pristup generisanim kodovima za prijavu.
     enable: Omogući
     instructions_html: "<strong>Skenirajte ovaj QR kod pomoću Google autentifikatora ili slične aplikacije na svom telefonu</strong>. Od sada pa ubuduće, ta aplikacija će generisati pristupne kodove koje ćete morati da unesete prilikom prijavljivanja."
-    manual_instructions: 'Ako ne možete da skenirate QR kod i morate da ga unesete ručno, evo njegove tekstualne šifre:'
+    manual_instructions: "Ako ne možete da skenirate QR kod i morate da ga unesete ručno, evo njegove tekstualne šifre:"
     setup: Instalacija
     wrong_code: Uneseni kod je bio neispravan! Da li su vreme servera i vreme uređaja ispravni?
   pagination:
@@ -1515,10 +1515,10 @@ sr-Latn:
     errors:
       invalid_rules: ne referiše na legitimna pravila
   rss:
-    content_warning: 'Upozorenje o sadržaju:'
+    content_warning: "Upozorenje o sadržaju:"
     descriptions:
       account: Javne objave sa @%{acct}
-      tag: 'Javne objave označene sa #%{hashtag}'
+      tag: "Javne objave označene sa #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Prekoračili ste granicu od %{limit} planiranih objava za danas
     over_total_limit: Prekoračili ste granicu od %{limit} planiranih objava
@@ -1610,7 +1610,7 @@ sr-Latn:
         few: "%{count} audio zapisa"
         one: "%{count} audio zapis"
         other: "%{count} audio zapisa"
-      description: 'U prilogu: %{attached}'
+      description: "U prilogu: %{attached}"
       image:
         few: "%{count} slika"
         one: "%{count} sliku"
@@ -1620,12 +1620,12 @@ sr-Latn:
         one: "%{count} video zapis"
         other: "%{count} video zapisa"
     boosted_from_html: Podržano od %{acct_link}
-    content_warning: 'Upozorenje na sadržaj: %{warning}'
+    content_warning: "Upozorenje na sadržaj: %{warning}"
     default_language: Isto kao jezik okruženja
     disallowed_hashtags:
-      few: 'sadrži zabranjene heš oznake: %{tags}'
-      one: 'sadrži zabranjenu heš oznaku: %{tags}'
-      other: 'sadrži zabranjene heš oznake: %{tags}'
+      few: "sadrži zabranjene heš oznake: %{tags}"
+      one: "sadrži zabranjenu heš oznaku: %{tags}"
+      other: "sadrži zabranjene heš oznake: %{tags}"
     edited_at_html: Izmenjeno %{date}
     errors:
       in_reply_not_found: Objava na koju pokušavate da odgovorite naizgled ne postoji.
@@ -1658,14 +1658,14 @@ sr-Latn:
     keep_self_fav: Zadrži omiljene objave
     keep_self_fav_hint: Ne briše vaše sopstvene objave ako ste ih označili kao omiljene
     min_age:
-      '1209600': 2 sedmice
-      '15778476': 6 meseci
-      '2629746': 1 mesec
-      '31556952': 1 godina
-      '5259492': 2 meseca
-      '604800': 1 sedmica
-      '63113904': 2 godine
-      '7889238': 3 meseca
+      "1209600": 2 sedmice
+      "15778476": 6 meseci
+      "2629746": 1 mesec
+      "31556952": 1 godina
+      "5259492": 2 meseca
+      "604800": 1 sedmica
+      "63113904": 2 godine
+      "7889238": 3 meseca
     min_age_label: Starosni prag
     min_favs: Zadrži objave označene kao omiljene najmanje
     min_favs_hint: Ne briše nijednu vašu objavu koja je dobila najmanje ovaj broj omiljenih. Ostavite prazno za brisanje objava bez obzira na njihov broj omiljenih
@@ -1721,14 +1721,14 @@ sr-Latn:
       subject: Vaša arhiva je spremna za preuzimanje
       title: Izvoz arhive
     failed_2fa:
-      details: 'Evo detalja o pokušaju prijavljivanja:'
+      details: "Evo detalja o pokušaju prijavljivanja:"
       explanation: Neko je pokušao da se prijavi na vaš nalog ali je dao nevažeći drugi faktor autentifikacije.
       further_actions_html: Ako to niste bili vi, preporučujemo vam da odmah %{action} jer može biti ugrožena.
       subject: Neuspeh drugog faktora autentifikacije
       title: Nije uspeo drugi faktor autentifikacije
     suspicious_sign_in:
       change_password: promenite svoju lozinku
-      details: 'Evo detalja o prijavi:'
+      details: "Evo detalja o prijavi:"
       explanation: Primetili smo prijavu na Vaš nalog sa nepoznate IP adrese.
       further_actions_html: Ukoliko to niste bili Vi, preporučujemo da odmah %{action} i uključite dvofaktorsku autentifikaciju da biste održali bezbednost svog naloga.
       subject: Vašem nalogu je pristupljeno sa nepozate IP adrese
@@ -1746,8 +1746,8 @@ sr-Latn:
         sensitive: Od sada će svi Vaši otpremljeni multimedijalni fajlovi biti označeni kao osetljivi i sakriveni iza tastera upozorenja.
         silence: I dalje možete koristiti svoj nalog ali samo ljudi koji Vas već prate će videti Vaše objave na ovom serveru, i možda ćete biti isključeni iz raznih mehanizama otkrivanja. Međutim, drugi ljudi i dalje mogu ručno da Vas zaprate.
         suspend: Više ne možete da koristite svoj nalog, i Vaš profil i ostali podaci Vam više nisu dostupni. I dalje možete da se prijavite da biste zatražili rezervnu kopiju svojih podataka sve dok se Vaši podaci trajno ne izbrišu za oko 30 dana, s tim što ćemo zadržati neke osnovne podatke da bismo Vas sprečili u eventualnom zaobilaženju suspenzije.
-      reason: 'Obrazloženje:'
-      statuses: 'Citirane objave:'
+      reason: "Obrazloženje:"
+      statuses: "Citirane objave:"
       subject:
         delete_statuses: Vaše objave sa %{acct} su izbrisane
         disable: Vaš nalog %{acct} je zamrznut
@@ -1769,7 +1769,7 @@ sr-Latn:
       apps_ios_action: Preuzmite sa App Store
       apps_step: Preuzmite naše zvanične aplikacije.
       apps_title: Mastodon aplikacije
-      checklist_subtitle: 'Započnimo na ovoj novoj društvenoj granici:'
+      checklist_subtitle: "Započnimo na ovoj novoj društvenoj granici:"
       checklist_title: Koraci dobrodošlice
       edit_profile_action: Personalizujte
       edit_profile_step: Povećajte svoje interakcije tako što ćete imati sveobuhvatan profil.
@@ -1811,7 +1811,7 @@ sr-Latn:
     invalid_otp_token: Neispravni dvofaktorski kod
     otp_lost_help_html: Ako izgubite pristup za oba, možete stupiti u kontakt sa %{email}
     rate_limited: Previše pokušaja autentifikacije, pokušajte ponovo kasnije.
-    signed_in_as: 'Prijavljen/a kao:'
+    signed_in_as: "Prijavljen/a kao:"
   verification:
     extra_instructions_html: <strong>Savet:</strong>Veza na vašem veb sajtu može da bude nevidljiva. Važan deo je <code>rel="me"</code> koji sprečava lažno predstavljanje na veb sajtovima sa sadržajem koji generiše korisnik. Možete čak da koristite oznaku <code>veze</code> u zaglavlju stranice umesto <code>a</code>, ali HTML mora biti dostupan bez izvršavanja JavaScript-a.
     here_is_how: Evo kako

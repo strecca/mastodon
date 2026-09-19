@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from "react";
 
 interface AudioContextOptions {
   audioElementRef: React.MutableRefObject<HTMLAudioElement | null>;
@@ -18,14 +18,12 @@ export const useAudioContext = ({ audioElementRef }: AudioContextOptions) => {
   const gainNodeRef = useRef<GainNode>();
 
   useEffect(() => {
-    if (!audioElementRef.current || typeof AudioContext === 'undefined') {
+    if (!audioElementRef.current || typeof AudioContext === "undefined") {
       return;
     }
 
     const context = audioContextRef.current ?? new AudioContext();
-    const source =
-      sourceRef.current ??
-      context.createMediaElementSource(audioElementRef.current);
+    const source = sourceRef.current ?? context.createMediaElementSource(audioElementRef.current);
 
     const gainNode = context.createGain();
     gainNode.connect(context.destination);
@@ -36,7 +34,7 @@ export const useAudioContext = ({ audioElementRef }: AudioContextOptions) => {
     sourceRef.current = source;
 
     return () => {
-      if (context.state !== 'closed') {
+      if (context.state !== "closed") {
         void context.close();
       }
     };

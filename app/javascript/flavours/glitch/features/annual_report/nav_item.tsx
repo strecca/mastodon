@@ -1,24 +1,20 @@
-import { useCallback } from 'react';
-import type { FC } from 'react';
+import { useCallback } from "react";
+import type { FC } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { openModal } from '@/flavours/glitch/actions/modal';
-import { Icon } from '@/flavours/glitch/components/icon';
-import {
-  createAppSelector,
-  useAppDispatch,
-  useAppSelector,
-} from '@/flavours/glitch/store';
-import IconPlanet from '@/images/icons/icon_planet.svg?react';
+import { openModal } from "@/flavours/glitch/actions/modal";
+import { Icon } from "@/flavours/glitch/components/icon";
+import { createAppSelector, useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
+import IconPlanet from "@/images/icons/icon_planet.svg?react";
 
-import classes from './index.module.scss';
+import classes from "./index.module.scss";
 
 const selectReportModalOpen = createAppSelector(
-  [(state) => state.modal.getIn(['stack', 0, 'modalType'])],
-  (modalType) => modalType === 'ANNUAL_REPORT',
+  [(state) => state.modal.getIn(["stack", 0, "modalType"])],
+  (modalType) => modalType === "ANNUAL_REPORT",
 );
 
 export const AnnualReportNavItem: FC = () => {
@@ -27,26 +23,23 @@ export const AnnualReportNavItem: FC = () => {
 
   const dispatch = useAppDispatch();
   const handleClick = useCallback(() => {
-    dispatch(openModal({ modalType: 'ANNUAL_REPORT', modalProps: {} }));
+    dispatch(openModal({ modalType: "ANNUAL_REPORT", modalProps: {} }));
   }, [dispatch]);
 
-  if (!year || !state || state === 'ineligible') {
+  if (!year || !state || state === "ineligible") {
     return null;
   }
 
   return (
     <button
-      type='button'
-      className={classNames('column-link column-link--transparent', { active })}
+      type="button"
+      className={classNames("column-link column-link--transparent", { active })}
       onClick={handleClick}
     >
-      <Icon icon={IconPlanet} id='wrapstodon-planet' width='24' height='24' />
+      <Icon icon={IconPlanet} id="wrapstodon-planet" width="24" height="24" />
       <span>Wrapstodon {year}</span>
-      <span className={classNames('column-link__badge', classes.navItemBadge)}>
-        <FormattedMessage
-          id='annual_report.nav_item.badge'
-          defaultMessage='New'
-        />
+      <span className={classNames("column-link__badge", classes.navItemBadge)}>
+        <FormattedMessage id="annual_report.nav_item.badge" defaultMessage="New" />
       </span>
     </button>
   );

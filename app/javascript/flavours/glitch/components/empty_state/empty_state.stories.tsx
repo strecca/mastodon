@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { action } from "storybook/actions";
 
-import { Button } from '../button';
+import { Button } from "../button";
 
-import { EmptyState } from '.';
+import { EmptyState } from ".";
 
 const meta = {
-  title: 'Components/EmptyState',
+  title: "Components/EmptyState",
   component: EmptyState,
   argTypes: {
     title: {
-      control: 'text',
-      type: 'string',
+      control: "text",
+      type: "string",
       table: {
-        type: { summary: 'string' },
+        type: { summary: "string" },
       },
     },
   },
@@ -25,15 +25,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    message: 'Try clearing filters or refreshing the page.',
+    message: "Try clearing filters or refreshing the page.",
   },
 };
 
 export const Error: Story = {
   args: {
-    image: 'error',
-    title: 'Error',
-    message: 'Something went wrong loading the page.',
+    image: "error",
+    title: "Error",
+    message: "Something went wrong loading the page.",
   },
 };
 
@@ -41,7 +41,7 @@ export const WithAction: Story = {
   args: {
     ...Default.args,
     // eslint-disable-next-line react/jsx-no-bind
-    children: <Button onClick={() => action('Refresh')}>Refresh</Button>,
+    children: <Button onClick={() => action("Refresh")}>Refresh</Button>,
   },
 };
 

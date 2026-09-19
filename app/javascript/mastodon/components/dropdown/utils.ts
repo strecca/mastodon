@@ -1,10 +1,10 @@
-import type { Modifier, UsePopperState } from 'react-overlays/esm/usePopper';
+import type { Modifier, UsePopperState } from "react-overlays/esm/usePopper";
 
-export const matchWidth: Modifier<'sameWidth', UsePopperState> = {
-  name: 'sameWidth',
+export const matchWidth: Modifier<"sameWidth", UsePopperState> = {
+  name: "sameWidth",
   enabled: true,
-  phase: 'beforeWrite',
-  requires: ['computeStyles'],
+  phase: "beforeWrite",
+  requires: ["computeStyles"],
   fn: ({ state }) => {
     if (state.styles.popper) {
       state.styles.popper.width = `${state.rects.reference.width}px`;

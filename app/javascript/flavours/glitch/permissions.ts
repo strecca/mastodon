@@ -13,28 +13,24 @@ export const PERMISSION_VIEW_DASHBOARD = 0x0000000000000008;
 // See: https://docs.joinmastodon.org/entities/Role/#permission-flags
 
 export function canViewAdminDashboard(permissions: number) {
-  return (
-    (permissions & PERMISSION_VIEW_DASHBOARD) === PERMISSION_VIEW_DASHBOARD
-  );
+  return (permissions & PERMISSION_VIEW_DASHBOARD) === PERMISSION_VIEW_DASHBOARD;
 }
 
 export function canManageReports(permissions: number) {
-  return (
-    (permissions & PERMISSION_MANAGE_REPORTS) === PERMISSION_MANAGE_REPORTS
-  );
+  return (permissions & PERMISSION_MANAGE_REPORTS) === PERMISSION_MANAGE_REPORTS;
 }
 
 export const canViewFeed = (
   signedIn: boolean,
   permissions: number,
-  setting: 'public' | 'authenticated' | 'disabled' | undefined,
+  setting: "public" | "authenticated" | "disabled" | undefined,
 ) => {
   switch (setting) {
-    case 'public':
+    case "public":
       return true;
-    case 'authenticated':
+    case "authenticated":
       return signedIn;
-    case 'disabled':
+    case "disabled":
     default:
       return (permissions & PEMRISSION_VIEW_FEEDS) === PEMRISSION_VIEW_FEEDS;
   }

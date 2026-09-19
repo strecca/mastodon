@@ -467,10 +467,10 @@ io:
       import:
         description_html: Vu importacos listo de domenoblokusi. Voluntez kontrolar la listo sorgoze, partikulare se vu ne kreis la listo personale.
         existing_relationships_warning: Existanta sequo-relati
-        private_comment_description_html: 'Por helpar vu savar de ube importacita blokusi venis, importacita blokusi kreesos kun la sequanta komento privata: <q>%{comment}</q>'
+        private_comment_description_html: "Por helpar vu savar de ube importacita blokusi venis, importacita blokusi kreesos kun la sequanta komento privata: <q>%{comment}</q>"
         private_comment_template: Importacita de %{source} ye %{date}
         title: Importacar domenoblokusi
-      invalid_domain_block: 'Un o plu kam un domenoblokuso omisesis pro la sequanta eroro(-i): %{error}'
+      invalid_domain_block: "Un o plu kam un domenoblokuso omisesis pro la sequanta eroro(-i): %{error}"
       new:
         title: Importacar domenoblokusi
       no_file: Nula dosiero selektesas
@@ -567,12 +567,12 @@ io:
       created_msg: Sucese adjuntis nova IP-regulo
       delete: Efacez
       expires_in:
-        '1209600': 2 semani
-        '15778476': 6 monati
-        '2629746': 1 monato
-        '31556952': 1 yaro
-        '86400': 1 dio
-        '94670856': 3 yari
+        "1209600": 2 semani
+        "15778476": 6 monati
+        "2629746": 1 monato
+        "31556952": 1 yaro
+        "86400": 1 dio
+        "94670856": 3 yari
       new:
         title: Kreez nova regulo di IP
       no_ip_block_selected: Reguli di IP nechanjesis por ke nulo selektesis
@@ -627,7 +627,7 @@ io:
       category_description_html: La motivo ke ca konto e kontenajo raportizesis citesos por komuniko kun raportizita konto
       comment:
         none: Nulo
-      comment_description_html: 'Por donar plu multa informo, %{name} skribis:'
+      comment_description_html: "Por donar plu multa informo, %{name} skribis:"
       confirm: Konfirmez
       confirm_action: Konfirmez jero-ago kontra @%{acct}
       created_at: Raportizesis
@@ -646,11 +646,11 @@ io:
         placeholder: Deskriptez quo agesis o irga relatita novaji...
         title: Noti
       notes_description_html: Videz e pozez noti a altra jereri e vua su en futuro
-      processed_msg: 'Raporto #%{id} sucesoze traktita'
-      quick_actions_description_html: 'Agetez o volvez base por vidar raportizita kontenajo:'
+      processed_msg: "Raporto #%{id} sucesoze traktita"
+      quick_actions_description_html: "Agetez o volvez base por vidar raportizita kontenajo:"
       remote_user_placeholder: nelokala uzanti de %{instance}
       reopen: Riapertez raporto
-      report: 'Raporto #%{id}'
+      report: "Raporto #%{id}"
       reported_account: Raportizita konto
       reported_by: Raportizesis da
       reported_with_application: Raportesis per apliko
@@ -661,16 +661,16 @@ io:
       statuses_description_html: Ofensanta kontenajo citesos en komuniko kun raportizita konto
       summary:
         action_preambles:
-          delete_html: 'Vu <strong>efacos</strong> kelka posti di <strong>@%{acct}</strong>. Co facos lo sequanta:'
-          mark_as_sensitive_html: 'Vu <strong>markizos</strong> kelka posti di <strong>@%{acct}</strong> quale <strong>provokema</strong>. Co facos lo sequanta:'
-          silence_html: 'Vu <strong>limitizos</strong> la konto di <strong>@%{acct}</strong>. Co facos lo sequanta:'
-          suspend_html: 'Vu <strong>restriktos</strong> la konto di <strong>@%{acct}</strong>. Co facos lo sequanta:'
+          delete_html: "Vu <strong>efacos</strong> kelka posti di <strong>@%{acct}</strong>. Co facos lo sequanta:"
+          mark_as_sensitive_html: "Vu <strong>markizos</strong> kelka posti di <strong>@%{acct}</strong> quale <strong>provokema</strong>. Co facos lo sequanta:"
+          silence_html: "Vu <strong>limitizos</strong> la konto di <strong>@%{acct}</strong>. Co facos lo sequanta:"
+          suspend_html: "Vu <strong>restriktos</strong> la konto di <strong>@%{acct}</strong>. Co facos lo sequanta:"
         actions:
           delete_html: Efacar la ofensiva posti
           mark_as_sensitive_html: Markizar la atachuri dil posti quale provokema
           silence_html: Severe limitizar la atingo dil konto di <strong>@%{acct}</strong> per facar ke lua profilo e posti es videbla nur a personi qui ja sequas lu o qui manuale serchas lua profilo
           suspend_html: Restriktar <strong>@%{acct}</strong>, facante ke lua profilo e kontenaji neacesibla e neposibla por interagado
-        close_report: 'Markizar raporto #%{id} quale solvita'
+        close_report: "Markizar raporto #%{id} quale solvita"
         close_reports_html: Markizar <strong>omna</strong> raporti contra <strong>@%{acct}</strong> quale solvita
         delete_data_html: Efacor la profilo e kontenaji di <strong>@%{acct}</strong> ye 30 dii de nun ecepte ke lu esus desrestrikita ante ta tempe
         preview_preamble_html: "<strong>@%{acct}</strong> recevos averto kun la sequanta kontenajo:"
@@ -680,7 +680,7 @@ io:
       target_origin: Fonto di raportizita konto
       title: Raporti
       unassign: Detaskigez
-      unknown_action_msg: 'Nekonocata ago: %{action}'
+      unknown_action_msg: "Nekonocata ago: %{action}"
       unresolved: Nerezolvita
       updated_at: Novigesis
       view_profile: Videz profilo
@@ -822,7 +822,7 @@ io:
       back_to_account: Retrovenez a kontopagino
       back_to_report: Retrovenez a raportpagino
       batch:
-        add_to_report: 'Adjuntar ad raporto #%{id}'
+        add_to_report: "Adjuntar ad raporto #%{id}"
         remove_from_report: Efacez de raporto
         report: Raportizez
       contents: Enhavaji
@@ -877,7 +877,7 @@ io:
       elasticsearch_running_check:
         message_html: Ne povas konektas ad Elasticsearch.
       elasticsearch_version_check:
-        message_html: 'Nekonciliebla versiono di Elasticsearch: %{value}'
+        message_html: "Nekonciliebla versiono di Elasticsearch: %{value}"
         version_comparison: Elasticsearch %{running_version} funcionas ma %{required_version} bezonesas
       rules_check:
         action: Jerez servilreguli
@@ -1013,7 +1013,7 @@ io:
         peaked_on_and_decaying: Maxim uzita ye %{date}, nun diminutesas
         title: Populara gretvorti
         trendable: Povas aparar en populari
-        trending_rank: 'Popularo #%{rank}'
+        trending_rank: "Popularo #%{rank}"
         usable: Povas uzesar
         usage_comparison: Uzesis %{today} foyi hodie, la nombro esas %{yesterday} hiere
         used_by_over_week:
@@ -1076,7 +1076,7 @@ io:
       body: Nova Mastodon-versioni emisesis, vu forsan volas aktualigar!
       subject: Nova Mastodon-versioni es disponebla por %{instance}!
     new_trends:
-      body: 'Ca kozi bezonas kontrol ante ol povas montresar publike:'
+      body: "Ca kozi bezonas kontrol ante ol povas montresar publike:"
       new_trending_links:
         title: Populara ligili
       new_trending_statuses:
@@ -1103,7 +1103,7 @@ io:
     notification_preferences: Chanjar retpostopreferaji
     salutation: "%{name},"
     unsubscribe: Desabonez
-    view: 'Vidar:'
+    view: "Vidar:"
     view_profile: Videz profilo
     view_status: Videz posto
   applications:
@@ -1162,7 +1162,7 @@ io:
     rules:
       accept: Aceptar
       back: Retro
-      invited_by: 'Vu darfas krear konto che %{domain} pro ke vu recevis invito de:'
+      invited_by: "Vu darfas krear konto che %{domain} pro ke vu recevis invito de:"
       preamble: Co igesas e exekutesas da jereri di %{domain}.
       preamble_invited: Ante ke vu avancos, voluntez konsiderar la reguli kreita dal jeraro di %{domain}.
       title: Kelka bazala reguli.
@@ -1197,7 +1197,7 @@ io:
   author_attribution:
     example_title: Exemplotexto
     hint_html: Ka vu skribas novaji o blogartikli ne en Mastodon?
-    instructions: 'Certigez ke ca kodexo es en HTML di vua artiklo:'
+    instructions: "Certigez ke ca kodexo es en HTML di vua artiklo:"
     more_from_html: Plu de %{name}
     s_blog: Blogo di %{name}
     then_instructions: Pose, adjuntez la domennomo di publikigo en la dessupra spaco.
@@ -1235,7 +1235,7 @@ io:
     proceed: Efacez konto
     success_msg: Vua konto sucesoze efacesis
     warning:
-      before: 'Ante durar, lektez ca noti sorgeme:'
+      before: "Ante durar, lektez ca noti sorgeme:"
       caches: Kontenajo quo memoresis da altra servilo forsan restas
       data_removal: Vua posti e altra informi netempale efacesis
       irreversible: Vu ne povos riganar o riaktivigar vua konto
@@ -1258,7 +1258,7 @@ io:
       description_html: Co esas agi kontre vua konto e averti quo sendesis a vu da laborero di %{instance}.
       recipient: Sendesas a
       reject_appeal: Refusez rikonsidero
-      status: 'Posto #%{id}'
+      status: "Posto #%{id}"
       status_removed: Posto ja efacis de sistemo
       title: "%{action} de %{date}"
       title_actions:
@@ -1275,19 +1275,19 @@ io:
   edit_profile:
     other: Altra
   errors:
-    '400': Demando quon vu sendis esas nevalida o malstrukturala.
-    '403': Vu ne havas permiso por vidar ca pagino.
-    '404': La pagino quan tu serchas ne existas.
-    '406': Ca pagino ne esas displonebla kun demandita formato.
-    '410': La pagino quan tu serchas ne plus existas.
-    '422':
+    "400": Demando quon vu sendis esas nevalida o malstrukturala.
+    "403": Vu ne havas permiso por vidar ca pagino.
+    "404": La pagino quan tu serchas ne existas.
+    "406": Ca pagino ne esas displonebla kun demandita formato.
+    "410": La pagino quan tu serchas ne plus existas.
+    "422":
       content: Sekuresverifiko faliis. Ka vu obstruktas kukii?
       title: Sekuresverifiko faliis
-    '429': Tro multa agi
-    '500':
+    "429": Tro multa agi
+    "500":
       content: Regreto, ma evas nefuncionas che nia latero.
       title: Ca pagino ne esas korekta
-    '503': La pagino ne povas montresas pro tempala servilfalio.
+    "503": La pagino ne povas montresas pro tempala servilfalio.
   existing_username_validator:
     not_found: ne povas trovar lokala uzanti kun ta uzantonomo
     not_found_multiple: ne povas trovar %{usernames}
@@ -1378,7 +1378,7 @@ io:
   imports:
     errors:
       empty: CSV-dosiero vakua
-      invalid_csv_file: 'Nevalida CSV-dosiero. Eroro: %{error}'
+      invalid_csv_file: "Nevalida CSV-dosiero. Eroro: %{error}"
       over_rows_processing_limit: kontenas plu kam %{count} horizontala lineo
       too_large: Dosiero es tro granda
     failures: Falii
@@ -1422,16 +1422,16 @@ io:
     delete: Desebligar
     expired: Expiris
     expires_in:
-      '1800': 30 minuti
-      '21600': 6 hori
-      '3600': 1 horo
-      '43200': 12 hori
-      '604800': 1 semano
-      '86400': 1 dio
+      "1800": 30 minuti
+      "21600": 6 hori
+      "3600": 1 horo
+      "43200": 12 hori
+      "604800": 1 semano
+      "86400": 1 dio
     expires_in_prompt: Nulatempe
     generate: Facez invitligilo
     invalid: Ca invito ne es valida
-    invited_by: 'Vu invitesis da:'
+    invited_by: "Vu invitesis da:"
     max_uses:
       one: 1 uzo
       other: "%{count} uzi"
@@ -1484,7 +1484,7 @@ io:
     set_redirect: Fixez ridirekto
     warning:
       backreference_required: Nova konto mustas unesme ajustesar por dopreferar co
-      before: 'Ante durar, lektez ca noti sorgeme:'
+      before: "Ante durar, lektez ca noti sorgeme:"
       cooldown: Pos transferesar, existas varttempo kande vu ne povas transferesar itere
       disabled_account: Vua nuna konto ne esos tote uzebla pose.
       followers: Ca ago transferos omna sequanti de nuna konto a nova konto
@@ -1495,7 +1495,7 @@ io:
   move_handler:
     carry_blocks_over_text: Ca uzanti transferesis de %{acct} quon vu restriktis.
     carry_mutes_over_text: Ca uzanti transferesis de %{acct} quon vu silencigis.
-    copy_account_note_text: 'Ca uzanti transferesis de %{acct}, co esas vua antea noti pri ol:'
+    copy_account_note_text: "Ca uzanti transferesis de %{acct}, co esas vua antea noti pri ol:"
   navigation:
     toggle_menu: Baskulez menuo
   notification_mailer:
@@ -1533,7 +1533,7 @@ io:
     update:
       subject: "%{name} redaktis afisho"
   notifications:
-    email_events_hint: 'Selektez eventi quon vu volas ganar avizi:'
+    email_events_hint: "Selektez eventi quon vu volas ganar avizi:"
   number:
     human:
       decimal_units:
@@ -1549,7 +1549,7 @@ io:
     description_html: Se vu ebligas <strong>dufaktora yurizo</strong> per yurizaplikajo, eniro bezonos vu havar vua telefonilo, quo igos fichi por vu enirar.
     enable: Ebligar
     instructions_html: "<strong>Skanez ca QR-kodexo ad Google Authenticator o simila TOTP-aplikajo per vua telefonilo</strong>."
-    manual_instructions: 'Se vu ne povas skanar QR-kodexo e bezonas insertar manuala, subo esas textosekreto:'
+    manual_instructions: "Se vu ne povas skanar QR-kodexo e bezonas insertar manuala, subo esas textosekreto:"
     setup: Facez
     wrong_code: Insertita kodexo es nevalida!
   pagination:
@@ -1616,10 +1616,10 @@ io:
     errors:
       invalid_rules: ne refera valida reguli
   rss:
-    content_warning: 'Kontenajaverto:'
+    content_warning: "Kontenajaverto:"
     descriptions:
       account: Publika posti de @%{acct}
-      tag: 'Publika posti kun tago #%{hashtag}'
+      tag: "Publika posti kun tago #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Vu ecesas limito quale esas %{limit} projetita posti por hodio
     over_total_limit: Vu ecesas limito quale esas %{limit} projetita posti
@@ -1700,7 +1700,7 @@ io:
       audio:
         one: "%{count} sono"
         other: "%{count} soni"
-      description: 'Addonajita: %{attached}'
+      description: "Addonajita: %{attached}"
       image:
         one: "%{count} imajo"
         other: "%{count} imaji"
@@ -1708,11 +1708,11 @@ io:
         one: "%{count} video"
         other: "%{count} videi"
     boosted_from_html: Repetis de %{acct_link}
-    content_warning: 'Kontenajaverto: %{warning}'
+    content_warning: "Kontenajaverto: %{warning}"
     default_language: Sama quale intervizajlinguo
     disallowed_hashtags:
-      one: 'kontenas nepermisita hashtago: %{tags}'
-      other: 'kontenas nepermisita hashtagi: %{tags}'
+      one: "kontenas nepermisita hashtago: %{tags}"
+      other: "kontenas nepermisita hashtagi: %{tags}"
     edited_at_html: Redaktesis ye %{date}
     errors:
       in_reply_not_found: Posto quon vu probas respondar semblas ne existas.
@@ -1745,14 +1745,14 @@ io:
     keep_self_fav: Konservar afishi quan vu stelumis
     keep_self_fav_hint: Ne forigas vua sua afishi se vu stelumis ili
     min_age:
-      '1209600': 2 semani
-      '15778476': 6 monati
-      '2629746': 1 monato
-      '31556952': 1 yaro
-      '5259492': 2 monati
-      '604800': 1 semano
-      '63113904': 2 yari
-      '7889238': 3 monati
+      "1209600": 2 semani
+      "15778476": 6 monati
+      "2629746": 1 monato
+      "31556952": 1 yaro
+      "5259492": 2 monati
+      "604800": 1 semano
+      "63113904": 2 yari
+      "7889238": 3 monati
     min_age_label: Oldeslimito
     min_favs: Konservar stelumita afishi mine
     min_favs_hint: Ne efacas irgo ek vua posti qua havas adminime ca quanto de favoriziti. Restez vakua por efacar posti senegarde la nombro de favoriziti
@@ -1802,7 +1802,7 @@ io:
       further_actions_html: Se ol ne es vu, ni rekomendas ke vu %{action} quik pro ke ol eble maligita.
     suspicious_sign_in:
       change_password: chanjez vua pasvorto
-      details: 'Co esas detali di eniro:'
+      details: "Co esas detali di eniro:"
       explanation: Ni deskovris eniro a vua konto de nova adreso IP.
       further_actions_html: Se ol ne es vu, ni rekomendas ke vu %{action} quik e ebligas dufaktoryurizo por sekurigar vua konto.
       subject: Vua konto acesesis de nova adreso IP
@@ -1820,8 +1820,8 @@ io:
         sensitive: Pos co, omna vua adkargita audvidajdosieri markesos quale trublema e celesos dop klikaverto.
         silence: Vu povas ankore uzar vua konto ma nur personi quo ja sequis vu vidos vua posti en ca servilo, e vu forsan neinkluzesas de diversa deskovrotraiti. Tamen, altra personi povas ankore manuala sequar vu.
         suspend: Vu ne povas uzar vua konto plue, e vua profilo e altra informi ne es adirebla plue.
-      reason: 'Motivo:'
-      statuses: 'Citita posti:'
+      reason: "Motivo:"
+      statuses: "Citita posti:"
       subject:
         delete_statuses: Vua posti che %{acct} efacis
         disable: Vua konto %{acct} frostigesis
@@ -1851,7 +1851,7 @@ io:
     follow_limit_reached: Vu ne povas sequar plu kam %{limit} personi
     invalid_otp_token: La dufaktora autentikigila kodexo ne esas valida
     otp_lost_help_html: Se vu perdas aceso de 2 konto, vu povas kontaktar kun %{email}
-    signed_in_as: 'Eniris quale:'
+    signed_in_as: "Eniris quale:"
   verification:
     here_is_how: Yen quale
     instructions_html: Kopiez e glutinez la kodexo suba en la HTML di vua retsituo. Pose adjuntez la adreso di vua retsituo en un ek la textobuxi di vua profilo per la "Modifikar profilo" pagino e konservez chanji.

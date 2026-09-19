@@ -1,6 +1,6 @@
-import type { ApiAccountJSON } from './accounts';
+import type { ApiAccountJSON } from "./accounts";
 
-export type ReportCategory = 'other' | 'spam' | 'legal' | 'violation';
+export type ReportCategory = "other" | "spam" | "legal" | "violation";
 
 export interface ApiReportJSON {
   id: string;

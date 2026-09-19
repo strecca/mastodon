@@ -1,42 +1,40 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 
-import { List as ImmutableList } from 'immutable';
+import { List as ImmutableList } from "immutable";
 
-import { fetchEndorsedAccounts } from '@/flavours/glitch/actions/accounts';
-import { AccountHeader } from '@/flavours/glitch/components/account_header';
-import { AccountListItem } from '@/flavours/glitch/components/account_list_item';
-import { ColumnBackButton } from '@/flavours/glitch/components/column_back_button';
-import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
-import { RemoteHint } from '@/flavours/glitch/components/remote_hint';
+import { fetchEndorsedAccounts } from "@/flavours/glitch/actions/accounts";
+import { AccountHeader } from "@/flavours/glitch/components/account_header";
+import { AccountListItem } from "@/flavours/glitch/components/account_list_item";
+import { ColumnBackButton } from "@/flavours/glitch/components/column_back_button";
+import { LoadingIndicator } from "@/flavours/glitch/components/loading_indicator";
+import { RemoteHint } from "@/flavours/glitch/components/remote_hint";
 import {
   Article,
   ItemList,
   Scrollable,
-} from '@/flavours/glitch/components/scrollable_list/components';
-import type { TruncatedListItemInfo } from '@/flavours/glitch/components/truncated_list';
-import { TruncatedListItems } from '@/flavours/glitch/components/truncated_list';
-import { BundleColumnError } from '@/flavours/glitch/features/ui/components/bundle_column_error';
-import Column from '@/flavours/glitch/features/ui/components/column';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import { useAccountId } from '@/flavours/glitch/hooks/useAccountId';
-import { useAccountVisibility } from '@/flavours/glitch/hooks/useAccountVisibility';
-import { me } from '@/flavours/glitch/initial_state';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
-import AddIcon from '@/material-icons/400-24px/add.svg?react';
+} from "@/flavours/glitch/components/scrollable_list/components";
+import type { TruncatedListItemInfo } from "@/flavours/glitch/components/truncated_list";
+import { TruncatedListItems } from "@/flavours/glitch/components/truncated_list";
+import { BundleColumnError } from "@/flavours/glitch/features/ui/components/bundle_column_error";
+import Column from "@/flavours/glitch/features/ui/components/column";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import { useAccountId } from "@/flavours/glitch/hooks/useAccountId";
+import { useAccountVisibility } from "@/flavours/glitch/hooks/useAccountVisibility";
+import { me } from "@/flavours/glitch/initial_state";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
+import AddIcon from "@/material-icons/400-24px/add.svg?react";
 
-import { CollectionListItem } from '../collections/components/collection_list_item';
-import { useCollectionsCreatedBy } from '../collections/overview/created_by_account';
+import { CollectionListItem } from "../collections/components/collection_list_item";
+import { useCollectionsCreatedBy } from "../collections/overview/created_by_account";
 
-import { EmptyMessage } from './components/empty_message';
-import { Subheading, SubheadingLink } from './components/subheading';
+import { EmptyMessage } from "./components/empty_message";
+import { Subheading, SubheadingLink } from "./components/subheading";
 
-const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
-  multiColumn,
-}) => {
+const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
   const accountId = useAccountId();
   const account = useAccount(accountId);
   const { suspended, blockedBy, hidden } = useAccountVisibility(accountId);
@@ -61,16 +59,14 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
   const featuredAccountIds = useAppSelector(
     (state) =>
       state.user_lists.getIn(
-        ['featured_accounts', accountId, 'items'],
+        ["featured_accounts", accountId, "items"],
         ImmutableList(),
       ) as ImmutableList<string>,
   );
-  const { collections, status: collectionsLoadStatus } =
-    useCollectionsCreatedBy(accountId);
+  const { collections, status: collectionsLoadStatus } = useCollectionsCreatedBy(accountId);
 
-  const { listedCollections = [], unlistedCollections = [] } = Object.groupBy(
-    collections,
-    (item) => (item.discoverable ? 'listedCollections' : 'unlistedCollections'),
+  const { listedCollections = [], unlistedCollections = [] } = Object.groupBy(collections, (item) =>
+    item.discoverable ? "listedCollections" : "unlistedCollections",
   );
 
   const renderListItem = useCallback(
@@ -92,21 +88,20 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
     [],
   );
 
-  const hasCollections =
-    collectionsLoadStatus === 'idle' && listedCollections.length > 0;
+  const hasCollections = collectionsLoadStatus === "idle" && listedCollections.length > 0;
 
   const hasFeaturedAccounts = !featuredAccountIds.isEmpty();
 
-  const isLoading = !accountId || collectionsLoadStatus !== 'idle';
+  const isLoading = !accountId || collectionsLoadStatus !== "idle";
 
   if (accountId === null) {
-    return <BundleColumnError multiColumn={multiColumn} errorType='routing' />;
+    return <BundleColumnError multiColumn={multiColumn} errorType="routing" />;
   }
 
   if (isLoading) {
     return (
       <AccountFeaturedWrapper accountId={accountId}>
-        <div className='scrollable__append'>
+        <div className="scrollable__append">
           <LoadingIndicator />
         </div>
       </AccountFeaturedWrapper>
@@ -132,16 +127,11 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
       <ColumnBackButton />
 
       <Scrollable>
-        {accountId && (
-          <AccountHeader accountId={accountId} hideTabs={forceEmptyState} />
-        )}
+        {accountId && <AccountHeader accountId={accountId} hideTabs={forceEmptyState} />}
         {!featuredAccountIds.isEmpty() && (
           <>
-            <Subheading as='h2'>
-              <FormattedMessage
-                id='account.featured.accounts'
-                defaultMessage='Profiles'
-              />
+            <Subheading as="h2">
+              <FormattedMessage id="account.featured.accounts" defaultMessage="Profiles" />
             </Subheading>
             <ItemList>
               {featuredAccountIds.map((featuredAccountId, index) => (
@@ -157,18 +147,15 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
             </ItemList>
           </>
         )}
-        <Subheading as='header'>
+        <Subheading as="header">
           <h2>
-            <FormattedMessage
-              id='account.featured.collections'
-              defaultMessage='Collections'
-            />
+            <FormattedMessage id="account.featured.collections" defaultMessage="Collections" />
           </h2>
           {isOwnProfile && (
-            <SubheadingLink to='/collections/new' icon={AddIcon}>
+            <SubheadingLink to="/collections/new" icon={AddIcon}>
               <FormattedMessage
-                id='account.featured.new_collection'
-                defaultMessage='New collection'
+                id="account.featured.new_collection"
+                defaultMessage="New collection"
               />
             </SubheadingLink>
           )}
@@ -181,15 +168,15 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
               toggleButton={{
                 title: (
                   <FormattedMessage
-                    id='collections.unlisted_collections_with_count'
-                    defaultMessage='Unlisted collections ({count})'
+                    id="collections.unlisted_collections_with_count"
+                    defaultMessage="Unlisted collections ({count})"
                     values={{ count: unlistedCollections.length }}
                   />
                 ),
                 subtitle: (
                   <FormattedMessage
-                    id='collections.unlisted_collections_description'
-                    defaultMessage='These don’t appear on your profile to others. Anyone with the link can discover them.'
+                    id="collections.unlisted_collections_description"
+                    defaultMessage="These don’t appear on your profile to others. Anyone with the link can discover them."
                   />
                 ),
               }}
@@ -218,7 +205,7 @@ const AccountFeaturedWrapper = ({
   return (
     <Column>
       <ColumnBackButton />
-      <div className='scrollable scrollable--flex'>
+      <div className="scrollable scrollable--flex">
         {accountId && <AccountHeader accountId={accountId} />}
         {children}
       </div>

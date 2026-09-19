@@ -1,6 +1,6 @@
-import { Redis } from 'ioredis';
+import { Redis } from "ioredis";
 
-import { parseIntFromEnvValue } from './utils.js';
+import { parseIntFromEnvValue } from "./utils.js";
 
 /**
  * @typedef RedisConfiguration
@@ -16,9 +16,9 @@ import { parseIntFromEnvValue } from './utils.js';
  */
 function hasSentinelConfiguration(env) {
   return (
-    typeof env.REDIS_SENTINELS === 'string' &&
+    typeof env.REDIS_SENTINELS === "string" &&
     env.REDIS_SENTINELS.length > 0 &&
-    typeof env.REDIS_SENTINEL_MASTER === 'string' &&
+    typeof env.REDIS_SENTINEL_MASTER === "string" &&
     env.REDIS_SENTINEL_MASTER.length > 0
   );
 }
@@ -30,11 +30,11 @@ function hasSentinelConfiguration(env) {
  * @returns {import('ioredis').SentinelConnectionOptions}
  */
 function getSentinelConfiguration(env, commonOptions) {
-  const redisDatabase = parseIntFromEnvValue(env.REDIS_DB, 0, 'REDIS_DB');
-  const sentinelPort = parseIntFromEnvValue(env.REDIS_SENTINEL_PORT, 26379, 'REDIS_SENTINEL_PORT');
+  const redisDatabase = parseIntFromEnvValue(env.REDIS_DB, 0, "REDIS_DB");
+  const sentinelPort = parseIntFromEnvValue(env.REDIS_SENTINEL_PORT, 26379, "REDIS_SENTINEL_PORT");
 
-  const sentinels = env.REDIS_SENTINELS.split(',').map((sentinel) => {
-    const [host, port] = sentinel.split(':', 2);
+  const sentinels = env.REDIS_SENTINELS.split(",").map((sentinel) => {
+    const [host, port] = sentinel.split(":", 2);
 
     /** @type {import('ioredis').SentinelAddress} */
     return {
@@ -43,7 +43,7 @@ function getSentinelConfiguration(env, commonOptions) {
       // Force support for both IPv6 and IPv4, by default ioredis sets this to 4,
       // only allowing IPv4 connections:
       // https://github.com/redis/ioredis/issues/1576
-      family: 0
+      family: 0,
     };
   });
 
@@ -70,34 +70,34 @@ export function configFromEnv(env) {
     // Force support for both IPv6 and IPv4, by default ioredis sets this to 4,
     // only allowing IPv4 connections:
     // https://github.com/redis/ioredis/issues/1576
-    family: 0
+    family: 0,
     // Note: we don't use auto-prefixing of keys since this doesn't apply to
     // subscribe/unsubscribe which have "channel" instead of "key" arguments
   };
 
   // If we receive REDIS_URL, don't continue parsing any other REDIS_*
   // environment variables:
-  if (typeof env.REDIS_URL === 'string' && env.REDIS_URL.length > 0) {
+  if (typeof env.REDIS_URL === "string" && env.REDIS_URL.length > 0) {
     return {
       url: env.REDIS_URL,
-      options: commonOptions
+      options: commonOptions,
     };
   }
 
   // If we have configuration for Redis Sentinel mode, prefer that:
   if (hasSentinelConfiguration(env)) {
     return {
-      options: getSentinelConfiguration(env, commonOptions)
+      options: getSentinelConfiguration(env, commonOptions),
     };
   }
 
   // Finally, handle all the other REDIS_* environment variables:
-  let redisPort = parseIntFromEnvValue(env.REDIS_PORT, 6379, 'REDIS_PORT');
-  let redisDatabase = parseIntFromEnvValue(env.REDIS_DB, 0, 'REDIS_DB');
+  let redisPort = parseIntFromEnvValue(env.REDIS_PORT, 6379, "REDIS_PORT");
+  let redisDatabase = parseIntFromEnvValue(env.REDIS_DB, 0, "REDIS_DB");
 
   /** @type {import('ioredis').RedisOptions} */
   const options = {
-    host: env.REDIS_HOST ?? '127.0.0.1',
+    host: env.REDIS_HOST ?? "127.0.0.1",
     port: redisPort,
     db: redisDatabase,
     username: env.REDIS_USER,
@@ -106,7 +106,7 @@ export function configFromEnv(env) {
   };
 
   return {
-    options
+    options,
   };
 }
 
@@ -118,13 +118,13 @@ export function configFromEnv(env) {
 export function createClient({ url, options }, logger) {
   let client;
 
-  if (typeof url === 'string') {
+  if (typeof url === "string") {
     client = new Redis(url, options);
   } else {
     client = new Redis(options);
   }
 
-  client.on('error', (err) => logger.error({ err }, 'Redis Client Error!'));
+  client.on("error", (err) => logger.error({ err }, "Redis Client Error!"));
 
   return client;
 }

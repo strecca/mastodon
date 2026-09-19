@@ -1,22 +1,22 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { defineMessages } from 'react-intl';
+import { defineMessages } from "react-intl";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import ImmutablePureComponent from 'react-immutable-pure-component';
-import { connect } from 'react-redux';
+import ImmutablePropTypes from "react-immutable-proptypes";
+import ImmutablePureComponent from "react-immutable-pure-component";
+import { connect } from "react-redux";
 
-import PhotoLibraryIcon from '@/material-icons/400-20px/photo_library.svg?react';
-import { injectIntl } from '@/mastodon/components/intl';
-import { IconButton } from 'mastodon/components/icon_button';
+import PhotoLibraryIcon from "@/material-icons/400-20px/photo_library.svg?react";
+import { injectIntl } from "@/mastodon/components/intl";
+import { IconButton } from "mastodon/components/icon_button";
 
 const messages = defineMessages({
-  upload: { id: 'upload_button.label', defaultMessage: 'Add images, a video or an audio file' },
+  upload: { id: "upload_button.label", defaultMessage: "Add images, a video or an audio file" },
 });
 
 const makeMapStateToProps = () => {
-  const mapStateToProps = state => ({
-    acceptContentTypes: state.getIn(['media_attachments', 'accept_content_types']),
+  const mapStateToProps = (state) => ({
+    acceptContentTypes: state.getIn(["media_attachments", "accept_content_types"]),
   });
 
   return mapStateToProps;
@@ -24,11 +24,10 @@ const makeMapStateToProps = () => {
 
 const iconStyle = {
   height: null,
-  lineHeight: '27px',
+  lineHeight: "27px",
 };
 
 class UploadButton extends ImmutablePureComponent {
-
   static propTypes = {
     disabled: PropTypes.bool,
     onSelectFile: PropTypes.func.isRequired,
@@ -52,32 +51,41 @@ class UploadButton extends ImmutablePureComponent {
     this.fileElement = c;
   };
 
-  render () {
+  render() {
     const { intl, resetFileKey, disabled, acceptContentTypes } = this.props;
 
     const message = intl.formatMessage(messages.upload);
 
     return (
-      <div className='compose-form__upload-button'>
-        <IconButton icon='paperclip' iconComponent={PhotoLibraryIcon} title={message} disabled={disabled} onClick={this.handleClick} className='compose-form__upload-button-icon' size={18} inverted style={iconStyle} />
+      <div className="compose-form__upload-button">
+        <IconButton
+          icon="paperclip"
+          iconComponent={PhotoLibraryIcon}
+          title={message}
+          disabled={disabled}
+          onClick={this.handleClick}
+          className="compose-form__upload-button-icon"
+          size={18}
+          inverted
+          style={iconStyle}
+        />
         <label>
-          <span style={{ display: 'none' }}>{message}</span>
+          <span style={{ display: "none" }}>{message}</span>
           <input
             key={resetFileKey}
             ref={this.setRef}
-            type='file'
-            name='file-upload-input'
+            type="file"
+            name="file-upload-input"
             multiple
-            accept={acceptContentTypes.toArray().join(',')}
+            accept={acceptContentTypes.toArray().join(",")}
             onChange={this.handleChange}
             disabled={disabled}
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
           />
         </label>
       </div>
     );
   }
-
 }
 
 export default connect(makeMapStateToProps)(injectIntl(UploadButton));

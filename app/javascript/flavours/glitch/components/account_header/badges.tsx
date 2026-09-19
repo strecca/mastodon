@@ -1,32 +1,21 @@
-import { useEffect } from 'react';
-import type { FC } from 'react';
+import { useEffect } from "react";
+import type { FC } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { fetchRelationships } from '@/flavours/glitch/actions/accounts';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import type { AccountRole } from '@/flavours/glitch/models/account';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import { fetchRelationships } from "@/flavours/glitch/actions/accounts";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import type { AccountRole } from "@/flavours/glitch/models/account";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
 
-import {
-  AdminBadge,
-  AutomatedBadge,
-  Badge,
-  BlockedBadge,
-  GroupBadge,
-  MutedBadge,
-} from '../badge';
+import { AdminBadge, AutomatedBadge, Badge, BlockedBadge, GroupBadge, MutedBadge } from "../badge";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 export const AccountBadges: FC<{ accountId: string }> = ({ accountId }) => {
   const account = useAccount(accountId);
-  const localDomain = useAppSelector(
-    (state) => state.meta.get('domain') as string,
-  );
-  const relationship = useAppSelector((state) =>
-    state.relationships.get(accountId),
-  );
+  const localDomain = useAppSelector((state) => state.meta.get("domain") as string);
+  const relationship = useAppSelector((state) => state.relationships.get(accountId));
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -41,62 +30,42 @@ export const AccountBadges: FC<{ accountId: string }> = ({ accountId }) => {
     return null;
   }
 
-  const domain = account.acct.includes('@')
-    ? account.acct.split('@')[1]
-    : localDomain;
+  const domain = account.acct.includes("@") ? account.acct.split("@")[1] : localDomain;
   account.roles.forEach((role) => {
     if (isAdminBadge(role)) {
       badges.push(
-        <AdminBadge
-          key={role.id}
-          label={role.name}
-          domain={`(${domain})`}
-          roleId={role.id}
-        />,
+        <AdminBadge key={role.id} label={role.name} domain={`(${domain})`} roleId={role.id} />,
       );
     } else {
       badges.push(
-        <Badge
-          key={role.id}
-          label={role.name}
-          domain={`(${domain})`}
-          roleId={role.id}
-        />,
+        <Badge key={role.id} label={role.name} domain={`(${domain})`} roleId={role.id} />,
       );
     }
   });
 
   if (account.bot) {
-    badges.push(<AutomatedBadge key='bot-badge' />);
+    badges.push(<AutomatedBadge key="bot-badge" />);
   }
   if (account.group) {
-    badges.push(<GroupBadge key='group-badge' />);
+    badges.push(<GroupBadge key="group-badge" />);
   }
   if (relationship) {
     if (relationship.blocking) {
-      badges.push(<BlockedBadge key='blocking' />);
+      badges.push(<BlockedBadge key="blocking" />);
     }
     if (relationship.domain_blocking) {
       badges.push(
         <BlockedBadge
-          key='domain-blocking'
+          key="domain-blocking"
           domain={domain}
           label={
-            <FormattedMessage
-              id='account.badges.domain_blocked'
-              defaultMessage='Blocked domain'
-            />
+            <FormattedMessage id="account.badges.domain_blocked" defaultMessage="Blocked domain" />
           }
         />,
       );
     }
     if (relationship.muting) {
-      badges.push(
-        <MutedBadge
-          key='muted-badge'
-          expiresAt={relationship.muting_expires_at}
-        />,
-      );
+      badges.push(<MutedBadge key="muted-badge" expiresAt={relationship.muting_expires_at} />);
     }
   }
 
@@ -109,5 +78,5 @@ export const AccountBadges: FC<{ accountId: string }> = ({ accountId }) => {
 
 function isAdminBadge(role: AccountRole) {
   const name = role.name.toLowerCase();
-  return name === 'admin' || name === 'owner';
+  return name === "admin" || name === "owner";
 }

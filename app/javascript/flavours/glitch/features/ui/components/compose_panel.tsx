@@ -1,18 +1,14 @@
-import { useCallback, useEffect, useLayoutEffect } from 'react';
+import { useCallback, useEffect, useLayoutEffect } from "react";
 
-import { useLayout } from '@/flavours/glitch/hooks/useLayout';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
-import {
-  changeComposing,
-  mountCompose,
-  unmountCompose,
-} from 'flavours/glitch/actions/compose';
-import { useAppHistory } from 'flavours/glitch/components/router';
-import ServerBanner from 'flavours/glitch/components/server_banner';
-import { Search } from 'flavours/glitch/features/compose/components/search';
-import ComposeFormContainer from 'flavours/glitch/features/compose/containers/compose_form_container';
-import { LinkFooter } from 'flavours/glitch/features/ui/components/link_footer';
-import { useIdentity } from 'flavours/glitch/identity_context';
+import { useLayout } from "@/flavours/glitch/hooks/useLayout";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
+import { changeComposing, mountCompose, unmountCompose } from "flavours/glitch/actions/compose";
+import { useAppHistory } from "flavours/glitch/components/router";
+import ServerBanner from "flavours/glitch/components/server_banner";
+import { Search } from "flavours/glitch/features/compose/components/search";
+import ComposeFormContainer from "flavours/glitch/features/compose/containers/compose_form_container";
+import { LinkFooter } from "flavours/glitch/features/ui/components/link_footer";
+import { useIdentity } from "flavours/glitch/identity_context";
 
 export const ComposePanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,8 +17,8 @@ export const ComposePanel: React.FC = () => {
   }, [dispatch]);
   const { signedIn } = useIdentity();
   const hideComposer = useAppSelector((state) => {
-    const mounted = state.compose.get('mounted');
-    if (typeof mounted === 'number') {
+    const mounted = state.compose.get("mounted");
+    if (typeof mounted === "number") {
       return mounted > 1;
     }
     return false;
@@ -38,20 +34,20 @@ export const ComposePanel: React.FC = () => {
   const { singleColumn } = useLayout();
 
   return (
-    <div className='compose-panel' onFocus={handleFocus}>
+    <div className="compose-panel" onFocus={handleFocus}>
       <Search singleColumn={singleColumn} />
 
       {!signedIn && (
         <>
           <ServerBanner />
-          <div className='flex-spacer' />
+          <div className="flex-spacer" />
         </>
       )}
 
       {signedIn && !hideComposer && <ComposeFormContainer singleColumn />}
-      {signedIn && hideComposer && <div className='compose-form' />}
+      {signedIn && hideComposer && <div className="compose-form" />}
 
-      <LinkFooter context={singleColumn ? 'default' : 'multi-column'} />
+      <LinkFooter context={singleColumn ? "default" : "multi-column"} />
     </div>
   );
 };
@@ -66,12 +62,12 @@ export const RedirectToMobileComposeIfNeeded: React.FC = () => {
   const history = useAppHistory();
 
   const shouldRedirect = useAppSelector((state) =>
-    state.compose.get('should_redirect_to_compose_page'),
+    state.compose.get("should_redirect_to_compose_page"),
   );
 
   useLayoutEffect(() => {
     if (shouldRedirect) {
-      history.push('/publish');
+      history.push("/publish");
     }
   }, [history, shouldRedirect]);
 

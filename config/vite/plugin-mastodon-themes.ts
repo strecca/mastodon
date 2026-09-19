@@ -1,23 +1,23 @@
 /* This plugins handles Mastodon's theme system
  */
 
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import fs from "node:fs/promises";
+import path from "node:path";
 
-import yaml from 'js-yaml';
-import type { Plugin } from 'vite';
+import yaml from "js-yaml";
+import type { Plugin } from "vite";
 
 type Themes = Record<string, string>;
 
 export function MastodonThemes(): Plugin {
-  let projectRoot = '';
-  let jsRoot = '';
+  let projectRoot = "";
+  let jsRoot = "";
 
   return {
-    name: 'mastodon-themes',
+    name: "mastodon-themes",
     async config(userConfig) {
       if (!userConfig.root || !userConfig.envDir) {
-        throw new Error('Unknown project directory');
+        throw new Error("Unknown project directory");
       }
       projectRoot = userConfig.envDir;
       jsRoot = userConfig.root;
@@ -26,15 +26,15 @@ export function MastodonThemes(): Plugin {
 
       const existingInputs = userConfig.build?.rolldownOptions?.input;
 
-      if (typeof existingInputs === 'string') {
+      if (typeof existingInputs === "string") {
         entrypoints[path.basename(existingInputs)] = existingInputs;
       } else if (Array.isArray(existingInputs)) {
         for (const input of existingInputs) {
-          if (typeof input === 'string') {
+          if (typeof input === "string") {
             entrypoints[path.basename(input)] = input;
           }
         }
-      } else if (typeof existingInputs === 'object') {
+      } else if (typeof existingInputs === "object") {
         entrypoints = existingInputs;
       }
 
@@ -55,14 +55,14 @@ export function MastodonThemes(): Plugin {
     async configureServer(server) {
       const themes = await loadThemesFromConfig(projectRoot);
       server.middlewares.use((req, res, next) => {
-        if (!req.url?.startsWith('/packs-dev/themes/')) {
+        if (!req.url?.startsWith("/packs-dev/themes/")) {
           next();
           return;
         }
 
         // Rewrite the URL to the entrypoint if it matches a theme.
-        if (isThemeFile(req.url ?? '', themes)) {
-          const themeName = pathToThemeName(req.url ?? '');
+        if (isThemeFile(req.url ?? "", themes)) {
+          const themeName = pathToThemeName(req.url ?? "");
           req.url = `/packs-dev/${themes[themeName]}`;
         }
         next();
@@ -103,9 +103,9 @@ export function MastodonThemes(): Plugin {
 
       if (themeNames.size > 0) {
         server.ws.send({
-          type: 'update',
+          type: "update",
           updates: Array.from(themeNames).map((themeName) => ({
-            type: 'css-update',
+            type: "css-update",
             path: themeName,
             acceptedPath: themeName,
             timestamp: Date.now(),
@@ -117,24 +117,24 @@ export function MastodonThemes(): Plugin {
 }
 
 async function loadThemesFromConfig(root: string) {
-  const themesFile = path.resolve(root, 'config/themes.yml');
+  const themesFile = path.resolve(root, "config/themes.yml");
   const themes: Themes = {};
 
-  const themesString = await fs.readFile(themesFile, 'utf8');
+  const themesString = await fs.readFile(themesFile, "utf8");
   const themesObject = yaml.load(themesString, {
-    filename: 'themes.yml',
+    filename: "themes.yml",
     schema: yaml.FAILSAFE_SCHEMA,
   });
 
-  if (!themesObject || typeof themes !== 'object') {
-    throw new Error('Invalid themes.yml file');
+  if (!themesObject || typeof themes !== "object") {
+    throw new Error("Invalid themes.yml file");
   }
 
   for (const [themeName, themePath] of Object.entries(themesObject)) {
     if (
-      typeof themePath !== 'string' ||
-      themePath.split('.').length !== 2 || // Ensure it has exactly one period
-      !themePath.endsWith('css')
+      typeof themePath !== "string" ||
+      themePath.split(".").length !== 2 || // Ensure it has exactly one period
+      !themePath.endsWith("css")
     ) {
       console.warn(`Invalid theme path "${themePath}" in themes.yml, skipping`);
       continue;
@@ -143,7 +143,7 @@ async function loadThemesFromConfig(root: string) {
   }
 
   if (Object.keys(themes).length === 0) {
-    throw new Error('No valid themes found in themes.yml');
+    throw new Error("No valid themes found in themes.yml");
   }
 
   return themes;
@@ -151,11 +151,11 @@ async function loadThemesFromConfig(root: string) {
 
 function pathToThemeName(file: string) {
   const basename = path.basename(file);
-  return basename.split(/[.?]/)[0] ?? '';
+  return basename.split(/[.?]/)[0] ?? "";
 }
 
 function isThemeFile(file: string, themes: Themes) {
-  if (!file.includes('/themes/')) {
+  if (!file.includes("/themes/")) {
     return false;
   }
 

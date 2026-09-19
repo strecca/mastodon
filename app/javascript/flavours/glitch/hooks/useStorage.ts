@@ -1,19 +1,13 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from "react";
 
 interface StorageOptions {
-  type?: 'local' | 'session';
+  type?: "local" | "session";
   prefix?: string;
 }
 
-export function useStorage({
-  type = 'local',
-  prefix = '',
-}: StorageOptions = {}) {
-  const storageType = type === 'local' ? 'localStorage' : 'sessionStorage';
-  const isAvailable = useMemo(
-    () => storageAvailable(storageType),
-    [storageType],
-  );
+export function useStorage({ type = "local", prefix = "" }: StorageOptions = {}) {
+  const storageType = type === "local" ? "localStorage" : "sessionStorage";
+  const isAvailable = useMemo(() => storageAvailable(storageType), [storageType]);
 
   const getItem = useCallback(
     (key: string) => {
@@ -89,18 +83,18 @@ export function useStorageState<T extends string | boolean>(
 
 // Tests the storage availability for the given type. Taken from MDN:
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-export function storageAvailable(type: 'localStorage' | 'sessionStorage') {
+export function storageAvailable(type: "localStorage" | "sessionStorage") {
   let storage;
   try {
     storage = window[type];
-    const x = '__storage_test__';
+    const x = "__storage_test__";
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
   } catch (e) {
     return (
       e instanceof DOMException &&
-      e.name === 'QuotaExceededError' &&
+      e.name === "QuotaExceededError" &&
       // acknowledge QuotaExceededError only if there's something already stored
       storage &&
       storage.length !== 0
@@ -109,17 +103,17 @@ export function storageAvailable(type: 'localStorage' | 'sessionStorage') {
 }
 
 function castToString(value: string | boolean) {
-  if (typeof value === 'boolean') {
-    return value ? '1' : '0';
+  if (typeof value === "boolean") {
+    return value ? "1" : "0";
   } else {
     return value;
   }
 }
 
 function retrieveBooleanOrString(value: string | null) {
-  if (value === '1') {
+  if (value === "1") {
     return true;
-  } else if (value === '0') {
+  } else if (value === "0") {
     return false;
   } else {
     return value;

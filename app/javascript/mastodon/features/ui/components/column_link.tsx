@@ -1,9 +1,9 @@
-import classNames from 'classnames';
-import { useRouteMatch, NavLink } from 'react-router-dom';
+import classNames from "classnames";
+import { useRouteMatch, NavLink } from "react-router-dom";
 
-import { Icon } from 'mastodon/components/icon';
-import type { IconProp } from 'mastodon/components/icon';
-import type { MastodonLocationDescriptor } from 'mastodon/components/router';
+import { Icon } from "mastodon/components/icon";
+import type { IconProp } from "mastodon/components/icon";
+import type { MastodonLocationDescriptor } from "mastodon/components/router";
 
 export const ColumnLink: React.FC<{
   icon: React.ReactNode;
@@ -37,21 +37,21 @@ export const ColumnLink: React.FC<{
   className: customClassName,
   ...other
 }) => {
-  const match = useRouteMatch(
-    (typeof to === 'string' ? to : to?.pathname) ?? '',
+  const match = useRouteMatch((typeof to === "string" ? to : to?.pathname) ?? "");
+  const className = classNames(
+    "column-link",
+    {
+      "column-link--transparent": transparent,
+    },
+    customClassName,
   );
-  const className = classNames('column-link', {
-    'column-link--transparent': transparent,
-  }, customClassName);
   const badgeElement =
-    typeof badge !== 'undefined' ? (
-      <span className='column-link__badge'>{badge}</span>
-    ) : null;
+    typeof badge !== "undefined" ? <span className="column-link__badge">{badge}</span> : null;
   const iconElement = iconComponent ? (
     <Icon
-      id={typeof icon === 'string' ? icon : ''}
+      id={typeof icon === "string" ? icon : ""}
       icon={iconComponent}
-      className='column-link__icon'
+      className="column-link__icon"
     />
   ) : (
     icon
@@ -60,9 +60,9 @@ export const ColumnLink: React.FC<{
     activeIcon ??
     (activeIconComponent ? (
       <Icon
-        id={typeof icon === 'string' ? icon : ''}
+        id={typeof icon === "string" ? icon : ""}
         icon={activeIconComponent}
-        className='column-link__icon'
+        className="column-link__icon"
       />
     ) : (
       iconElement

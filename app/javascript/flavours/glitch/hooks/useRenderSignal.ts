@@ -23,7 +23,7 @@ export const useRenderSignal = () => {
 
     renderSignalReceived = true;
 
-    if (typeof onInitialRender !== 'undefined') {
+    if (typeof onInitialRender !== "undefined") {
       window.requestAnimationFrame(() => {
         onInitialRender();
       });

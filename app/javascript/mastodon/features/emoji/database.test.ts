@@ -1,7 +1,7 @@
-import type { CompactEmoji } from 'emojibase';
-import { IDBFactory } from 'fake-indexeddb';
+import type { CompactEmoji } from "emojibase";
+import { IDBFactory } from "fake-indexeddb";
 
-import { customEmojiFactory, unicodeEmojiFactory } from '@/testing/factories';
+import { customEmojiFactory, unicodeEmojiFactory } from "@/testing/factories";
 
 import {
   putEmojiData,
@@ -11,7 +11,7 @@ import {
   putCustomEmojiData,
   putLegacyShortcodes,
   loadLegacyShortcodesByShortcode,
-} from './database';
+} from "./database";
 
 function rawEmojiFactory(data: Partial<CompactEmoji> = {}): CompactEmoji {
   const factory = unicodeEmojiFactory();
@@ -22,7 +22,7 @@ function rawEmojiFactory(data: Partial<CompactEmoji> = {}): CompactEmoji {
   };
 }
 
-describe('emoji database', () => {
+describe("emoji database", () => {
   beforeEach(async () => {
     await testGet(); // Loads the database schema.
   });
@@ -32,79 +32,73 @@ describe('emoji database', () => {
     indexedDB = new IDBFactory();
   });
 
-  describe('putEmojiData', () => {
-    test('adds to loaded locales', async () => {
+  describe("putEmojiData", () => {
+    test("adds to loaded locales", async () => {
       const { loadedLocales } = await testGet();
       expect(loadedLocales).toHaveLength(0);
-      await putEmojiData([], 'en');
-      expect(loadedLocales).toContain('en');
+      await putEmojiData([], "en");
+      expect(loadedLocales).toContain("en");
     });
 
-    test('loads emoji into indexedDB', async () => {
-      await putEmojiData([rawEmojiFactory()], 'en');
+    test("loads emoji into indexedDB", async () => {
+      await putEmojiData([rawEmojiFactory()], "en");
       const { db } = await testGet();
-      await expect(db.get('en', 'test')).resolves.toEqual(
-        unicodeEmojiFactory(),
-      );
+      await expect(db.get("en", "test")).resolves.toEqual(unicodeEmojiFactory());
     });
   });
 
-  describe('putCustomEmojiData', () => {
-    test('loads custom emoji into indexedDB', async () => {
+  describe("putCustomEmojiData", () => {
+    test("loads custom emoji into indexedDB", async () => {
       const { db } = await testGet();
       await putCustomEmojiData({ emojis: [customEmojiFactory()] });
-      await expect(db.get('custom', 'custom')).resolves.toEqual(
-        customEmojiFactory(),
-      );
+      await expect(db.get("custom", "custom")).resolves.toEqual(customEmojiFactory());
     });
 
-    test('clears existing custom emoji if specified', async () => {
+    test("clears existing custom emoji if specified", async () => {
       const { db } = await testGet();
       await putCustomEmojiData({
-        emojis: [customEmojiFactory({ shortcode: 'emoji1' })],
+        emojis: [customEmojiFactory({ shortcode: "emoji1" })],
       });
       await putCustomEmojiData({
-        emojis: [customEmojiFactory({ shortcode: 'emoji2' })],
+        emojis: [customEmojiFactory({ shortcode: "emoji2" })],
         clear: true,
       });
-      await expect(db.get('custom', 'emoji1')).resolves.toBeUndefined();
-      await expect(db.get('custom', 'emoji2')).resolves.toEqual(
-        customEmojiFactory({ shortcode: 'emoji2', tokens: ['emoji2'] }),
+      await expect(db.get("custom", "emoji1")).resolves.toBeUndefined();
+      await expect(db.get("custom", "emoji2")).resolves.toEqual(
+        customEmojiFactory({ shortcode: "emoji2", tokens: ["emoji2"] }),
       );
     });
   });
 
-  describe('putLegacyShortcodes', () => {
-    test('loads shortcodes into indexedDB', async () => {
+  describe("putLegacyShortcodes", () => {
+    test("loads shortcodes into indexedDB", async () => {
       const { db } = await testGet();
       await putLegacyShortcodes({
-        test_hexcode: ['shortcode1', 'shortcode2'],
+        test_hexcode: ["shortcode1", "shortcode2"],
       });
-      await expect(db.get('shortcodes', 'test_hexcode')).resolves.toEqual({
-        hexcode: 'test_hexcode',
-        shortcodes: ['shortcode1', 'shortcode2'],
+      await expect(db.get("shortcodes", "test_hexcode")).resolves.toEqual({
+        hexcode: "test_hexcode",
+        shortcodes: ["shortcode1", "shortcode2"],
       });
     });
   });
 
-  describe('loadEmojiByHexcode', () => {
-    test('retrieves the emoji', async () => {
-      await putEmojiData([unicodeEmojiFactory()], 'en');
-      await expect(loadEmojiByHexcode('test', 'en')).resolves.toEqual(
-        unicodeEmojiFactory(),
-      );
+  describe("loadEmojiByHexcode", () => {
+    test("retrieves the emoji", async () => {
+      await putEmojiData([unicodeEmojiFactory()], "en");
+      await expect(loadEmojiByHexcode("test", "en")).resolves.toEqual(unicodeEmojiFactory());
     });
 
-    test('returns undefined if not found', async () => {
-      await putEmojiData([], 'en');
-      await expect(loadEmojiByHexcode('test', 'en')).resolves.toBeUndefined();
+    test("returns undefined if not found", async () => {
+      await putEmojiData([], "en");
+      await expect(loadEmojiByHexcode("test", "en")).resolves.toBeUndefined();
     });
   });
 
-  describe('loadLegacyShortcodesByShortcode', () => {
+  describe("loadLegacyShortcodesByShortcode", () => {
     const data = {
-      hexcode: 'test_hexcode',
-      shortcodes: ['shortcode1', 'shortcode2'],
+      hexcode: "test_hexcode",
+      shortcodes: ["shortcode1", "shortcode2"],
     };
 
     beforeEach(async () => {
@@ -113,13 +107,9 @@ describe('emoji database', () => {
       });
     });
 
-    test('retrieves the shortcodes', async () => {
-      await expect(
-        loadLegacyShortcodesByShortcode('shortcode1'),
-      ).resolves.toEqual(data);
-      await expect(
-        loadLegacyShortcodesByShortcode('shortcode2'),
-      ).resolves.toEqual(data);
+    test("retrieves the shortcodes", async () => {
+      await expect(loadLegacyShortcodesByShortcode("shortcode1")).resolves.toEqual(data);
+      await expect(loadLegacyShortcodesByShortcode("shortcode2")).resolves.toEqual(data);
     });
   });
 });

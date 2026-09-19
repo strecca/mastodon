@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { CalloutInline } from '.';
+import { CalloutInline } from ".";
 
 const meta = {
-  title: 'Components/CalloutInline',
+  title: "Components/CalloutInline",
   args: {
-    children: 'Contents here',
+    children: "Contents here",
   },
   component: CalloutInline,
 } satisfies Meta<typeof CalloutInline>;
@@ -16,24 +16,24 @@ type Story = StoryObj<typeof meta>;
 
 export const Error: Story = {
   args: {
-    variant: 'error',
+    variant: "error",
   },
 };
 
 export const Warning: Story = {
   args: {
-    variant: 'warning',
+    variant: "warning",
   },
 };
 
 export const Success: Story = {
   args: {
-    variant: 'success',
+    variant: "success",
   },
 };
 
 export const Info: Story = {
   args: {
-    variant: 'info',
+    variant: "info",
   },
 };

@@ -2,8 +2,8 @@
 pt-BR:
   admin:
     custom_emojis:
-      batch_copy_error: 'Ocorreu um erro ao copiar alguns dos emojis selecionados: %{message}'
-      batch_error: 'Ocorreu um erro: %{message}'
+      batch_copy_error: "Ocorreu um erro ao copiar alguns dos emojis selecionados: %{message}"
+      batch_error: "Ocorreu um erro: %{message}"
     settings:
       captcha_enabled:
         desc_html: Isto se baseia em scripts externos de hCaptcha, o que pode ser uma preocupação de segurança e privacidade. Além disso, <strong>isto pode tornar o processo de registro significativamente menos acessível para algumas pessoas (especialmente deficientes)</strong>. Por estas razões, favor considerar medidas alternativas como o registro baseado em aprovação ou em convite.<br>Os usuários que tiverem sido convidados através de um convite de uso limitado não precisarão resolver um CAPTCHA

@@ -8,7 +8,7 @@ vi:
         display_name: Tên đầy đủ hoặc biệt danh đều được.
         fields: Blog của bạn, nghề nghiệp, tuổi hoặc bất kỳ.
         indexable: Mọi người có thể tìm kiếm và tương tác với những tút công khai của bạn trên Mastodon.
-        note: 'Bạn có thể @aiđó hoặc #hashtags.'
+        note: "Bạn có thể @aiđó hoặc #hashtags."
         show_collections: Mọi người sẽ biết bạn theo dõi ai và ai theo dõi bạn.
         unlocked: Mọi người sẽ theo dõi bạn mà không cần bạn cho phép.
       account_alias:
@@ -76,7 +76,7 @@ vi:
         domain: Phân tích tên miền thành các tên miền MX sau, các tên miền này chịu trách nhiệm cuối cùng trong chấp nhận email. Giá trị MX sẽ chặn đăng ký từ bất kỳ địa chỉ email nào sử dụng cùng một giá trị MX, ngay cả khi tên miền hiển thị là khác.
         with_dns_records: Nếu DNS có vấn đề, nó sẽ bị đưa vào danh sách cấm
       featured_tag:
-        name: 'Các hashtag mà bạn đã sử dụng gần đây:'
+        name: "Các hashtag mà bạn đã sử dụng gần đây:"
       filters:
         action: Chọn hành động áp dụng khi một tút khớp với bộ lọc
         actions:
@@ -108,7 +108,7 @@ vi:
         site_title: Cách mọi người có thể tham chiếu đến máy chủ của bạn ngoài tên miền của nó.
         status_page_url: URL của trang nơi mọi người có thể xem trạng thái của máy chủ này khi ngừng hoạt động
         theme: Chủ đề mà khách truy cập đăng xuất và người mới nhìn thấy.
-        thumbnail: 'Một hình ảnh tỉ lệ 2: 1 được hiển thị cùng với thông tin máy chủ của bạn.'
+        thumbnail: "Một hình ảnh tỉ lệ 2: 1 được hiển thị cùng với thông tin máy chủ của bạn."
         thumbnail_description: Mô tả hình ảnh để giúp người khiếm thị hiểu nội dung của hình ảnh.
         trendable_by_default: Bỏ qua việc duyệt thủ công nội dung xu hướng. Các mục riêng lẻ vẫn có thể bị xóa khỏi xu hướng sau này.
         trends: Hiển thị những tút, hashtag và tin tức đang được thảo luận nhiều trên máy chủ của bạn.
@@ -132,7 +132,7 @@ vi:
         hint: Tùy chọn. Cung cấp chi tiết hơn về nội quy
         text: Mô tả một nội quy bắt buộc trên máy chủ này. Nên để ngắn và đơn giản
       sessions:
-        otp: 'Nhập mã xác thực 2 bước được tạo bởi ứng dụng điện thoại của bạn hoặc dùng một trong các mã khôi phục của bạn:'
+        otp: "Nhập mã xác thực 2 bước được tạo bởi ứng dụng điện thoại của bạn hoặc dùng một trong các mã khôi phục của bạn:"
         webauthn: Nếu đây là USB key, hãy cắm vào và thử xoay chiều.
       settings:
         email_subscriptions: Việc vô hiệu hóa sẽ giữ lại những người đăng ký hiện có nhưng ngừng gửi email.
@@ -407,7 +407,7 @@ vi:
         events: Những sự kiện đã bật
         template: Mẫu payload
         url: URL endpoint
-    'no': Tắt
+    "no": Tắt
     not_recommended: Không đề xuất
     overridden: Đã ghi đè
     recommended: Đề xuất
@@ -417,4 +417,4 @@ vi:
     title:
       sessions:
         webauthn: Dùng một trong những khóa bảo mật của bạn để đăng nhập
-    'yes': Bật
+    "yes": Bật

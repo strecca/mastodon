@@ -1,17 +1,17 @@
 // app/javascript/flavours/glitch/features/community_directory/show/index.jsx
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchResource } from '../../../actions/community_directory';
-import ResourceCard from '../components/resource_card';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchResource } from "../../../actions/community_directory";
+import ResourceCard from "../components/resource_card";
+import { Link } from "react-router-dom";
 
 const CommunityDirectoryShow = ({ match }) => {
   const { category, id } = match.params || {};
   const dispatch = useDispatch();
 
-  const resource = useSelector(state => state.getIn(['community_directory', 'currentResource']));
-  const loading = useSelector(state => state.getIn(['community_directory', 'loading'], false));
-  const error = useSelector(state => state.getIn(['community_directory', 'error']));
+  const resource = useSelector((state) => state.getIn(["community_directory", "currentResource"]));
+  const loading = useSelector((state) => state.getIn(["community_directory", "loading"], false));
+  const error = useSelector((state) => state.getIn(["community_directory", "error"]));
 
   useEffect(() => {
     if (category && id) {
@@ -35,7 +35,7 @@ const CommunityDirectoryShow = ({ match }) => {
     return <div className="loading-bar">Loading full details...</div>;
   }
 
-  const metadata = resource.get('metadata') || [];
+  const metadata = resource.get("metadata") || [];
 
   return (
     <div className="community-show">
@@ -45,7 +45,7 @@ const CommunityDirectoryShow = ({ match }) => {
         </Link>
       </div>
 
-      <h1>{resource.get('display_name') || 'Entry Details'}</h1>
+      <h1>{resource.get("display_name") || "Entry Details"}</h1>
 
       {/* Summary Card */}
       <ResourceCard resource={resource} category={category} />
@@ -57,15 +57,13 @@ const CommunityDirectoryShow = ({ match }) => {
           {metadata.length > 0 ? (
             metadata.map((field, index) => {
               try {
-                const fieldName = field.get('db_name');
-                const label = field.get('label') || fieldName;
+                const fieldName = field.get("db_name");
+                const label = field.get("label") || fieldName;
                 const value = resource.get(fieldName);
 
-                if (value == null || value === '') return null;
+                if (value == null || value === "") return null;
 
-                const displayValue = Array.isArray(value) 
-                  ? value.join(', ') 
-                  : String(value);
+                const displayValue = Array.isArray(value) ? value.join(", ") : String(value);
 
                 return (
                   <div key={index} className="field mb-4">
@@ -85,10 +83,7 @@ const CommunityDirectoryShow = ({ match }) => {
       </div>
 
       <div className="mt-5">
-        <Link 
-          to={`/directories/${category}/${id}/edit`} 
-          className="btn btn-primary"
-        >
+        <Link to={`/directories/${category}/${id}/edit`} className="btn btn-primary">
           ✏️ Edit This Entry
         </Link>
       </div>

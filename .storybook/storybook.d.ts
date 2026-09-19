@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // The addon package.json incorrectly exports types, so we need to override them here.
 
-import type { PartialDeep } from 'type-fest';
+import type { PartialDeep } from "type-fest";
 
-import type { RootState } from '@/mastodon/store';
+import type { RootState } from "@/mastodon/store";
 
 // See: https://github.com/storybookjs/storybook/blob/v9.0.4/code/addons/vitest/package.json#L70-L76
-declare module '@storybook/addon-vitest/vitest-plugin' {
-  export * from '@storybook/addon-vitest/dist/vitest-plugin/index';
+declare module "@storybook/addon-vitest/vitest-plugin" {
+  export * from "@storybook/addon-vitest/dist/vitest-plugin/index";
 }
 
 type TypedRootState = {
@@ -16,7 +16,7 @@ type TypedRootState = {
     : PartialDeep<RootState[Key]>;
 };
 
-declare module 'storybook/internal/csf' {
+declare module "storybook/internal/csf" {
   export interface InputType {
     /**
      * Connects an argument value deeply in the Redux state.
@@ -30,8 +30,8 @@ declare module 'storybook/internal/csf' {
 
   export interface Globals {
     locale: string;
-    theme: 'light' | 'dark';
-    loggedIn: 'true' | 'false';
+    theme: "light" | "dark";
+    loggedIn: "true" | "false";
   }
 
   export interface Parameters {

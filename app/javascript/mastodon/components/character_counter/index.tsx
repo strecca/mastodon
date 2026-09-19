@@ -1,12 +1,12 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { length } from 'stringz';
+import { length } from "stringz";
 
-import { polymorphicForwardRef } from '@/types/polymorphic';
+import { polymorphicForwardRef } from "@/types/polymorphic";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 interface CharacterCounterProps {
   currentString: string;
@@ -14,19 +14,9 @@ interface CharacterCounterProps {
   recommended?: boolean;
 }
 
-export const CharacterCounter = polymorphicForwardRef<
-  'span',
-  CharacterCounterProps
->(
+export const CharacterCounter = polymorphicForwardRef<"span", CharacterCounterProps>(
   (
-    {
-      currentString,
-      maxLength,
-      as: Component = 'span',
-      recommended = false,
-      className,
-      ...props
-    },
+    { currentString, maxLength, as: Component = "span", recommended = false, className, ...props },
     ref,
   ) => {
     const currentLength = length(currentString);
@@ -42,14 +32,14 @@ export const CharacterCounter = polymorphicForwardRef<
       >
         {recommended ? (
           <FormattedMessage
-            id='character_counter.recommended'
-            defaultMessage='{currentLength}/{maxLength} recommended characters'
+            id="character_counter.recommended"
+            defaultMessage="{currentLength}/{maxLength} recommended characters"
             values={{ currentLength, maxLength }}
           />
         ) : (
           <FormattedMessage
-            id='character_counter.required'
-            defaultMessage='{currentLength}/{maxLength} characters'
+            id="character_counter.required"
+            defaultMessage="{currentLength}/{maxLength} characters"
             values={{ currentLength, maxLength }}
           />
         )}
@@ -57,4 +47,4 @@ export const CharacterCounter = polymorphicForwardRef<
     );
   },
 );
-CharacterCounter.displayName = 'CharCounter';
+CharacterCounter.displayName = "CharCounter";

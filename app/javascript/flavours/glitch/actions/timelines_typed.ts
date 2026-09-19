@@ -1,16 +1,12 @@
-import { createAction } from '@reduxjs/toolkit';
-import type { List as ImmutableList, Map as ImmutableMap } from 'immutable';
+import { createAction } from "@reduxjs/toolkit";
+import type { List as ImmutableList, Map as ImmutableMap } from "immutable";
 
-import { usePendingItems as preferPendingItems } from 'flavours/glitch/initial_state';
+import { usePendingItems as preferPendingItems } from "flavours/glitch/initial_state";
 
-import type { Status } from '../models/status';
-import { createAppThunk } from '../store/typed_functions';
+import type { Status } from "../models/status";
+import { createAppThunk } from "../store/typed_functions";
 
-import {
-  expandTimeline,
-  insertIntoTimeline,
-  TIMELINE_NON_STATUS_MARKERS,
-} from './timelines';
+import { expandTimeline, insertIntoTimeline, TIMELINE_NON_STATUS_MARKERS } from "./timelines";
 
 export const expandTimelineByKey = createAppThunk(
   (args: { key: string; maxId?: number }, { dispatch }) => {
@@ -25,10 +21,10 @@ export const expandTimelineByKey = createAppThunk(
 
 export const expandTimelineByParams = createAppThunk(
   (params: TimelineParams & { maxId?: number }, { dispatch }) => {
-    let url = '';
+    let url = "";
     const extra: Record<string, string | boolean> = {};
 
-    if (params.type === 'account') {
+    if (params.type === "account") {
       url = `/api/v1/accounts/${params.userId}/statuses`;
 
       if (!params.replies) {
@@ -46,8 +42,8 @@ export const expandTimelineByParams = createAppThunk(
       if (params.tagged) {
         extra.tagged = params.tagged;
       }
-    } else if (params.type === 'public') {
-      url = '/api/v1/timelines/public';
+    } else if (params.type === "public") {
+      url = "/api/v1/timelines/public";
     }
 
     if (params.maxId) {
@@ -59,7 +55,7 @@ export const expandTimelineByParams = createAppThunk(
 );
 
 export interface AccountTimelineParams {
-  type: 'account';
+  type: "account";
   userId: string;
   tagged?: string;
   media?: boolean;
@@ -67,62 +63,56 @@ export interface AccountTimelineParams {
   boosts?: boolean;
   replies?: boolean;
 }
-export type PublicTimelineServer = 'local' | 'remote' | 'all';
+export type PublicTimelineServer = "local" | "remote" | "all";
 export interface PublicTimelineParams {
-  type: 'public';
+  type: "public";
   tagged?: string;
   server?: PublicTimelineServer; // Defaults to 'all'
   media?: boolean;
 }
 export interface HomeTimelineParams {
-  type: 'home';
+  type: "home";
 }
-export type TimelineParams =
-  | AccountTimelineParams
-  | PublicTimelineParams
-  | HomeTimelineParams;
+export type TimelineParams = AccountTimelineParams | PublicTimelineParams | HomeTimelineParams;
 
-const ACCOUNT_FILTERS = ['boosts', 'replies', 'media', 'pinned'] as const;
+const ACCOUNT_FILTERS = ["boosts", "replies", "media", "pinned"] as const;
 
 export function timelineKey(params: TimelineParams): string {
   const { type } = params;
   const key: string[] = [type];
 
-  if (type === 'account') {
+  if (type === "account") {
     key.push(params.userId);
 
-    const view = ACCOUNT_FILTERS.reduce(
-      (prev, curr) => prev + (params[curr] ? '1' : '0'),
-      '',
-    );
+    const view = ACCOUNT_FILTERS.reduce((prev, curr) => prev + (params[curr] ? "1" : "0"), "");
 
     key.push(view);
-  } else if (type === 'public') {
-    key.push(params.server ?? 'all');
+  } else if (type === "public") {
+    key.push(params.server ?? "all");
     if (params.media) {
-      key.push('media');
+      key.push("media");
     }
   }
 
-  if (type !== 'home' && params.tagged) {
+  if (type !== "home" && params.tagged) {
     key.push(params.tagged);
   }
 
-  return key.filter(Boolean).join(':');
+  return key.filter(Boolean).join(":");
 }
 
 export function parseTimelineKey(key: string): TimelineParams | null {
-  const segments = key.split(':');
+  const segments = key.split(":");
   const type = segments[0];
 
-  if (type === 'account') {
+  if (type === "account") {
     const userId = segments[1];
     if (!userId) {
       return null;
     }
 
     const parsed: TimelineParams = {
-      type: 'account',
+      type: "account",
       userId,
       tagged: segments[3],
       pinned: false,
@@ -134,40 +124,37 @@ export function parseTimelineKey(key: string): TimelineParams | null {
     // Handle legacy keys.
     const flagsSegment = segments[2];
     if (!flagsSegment || !/^[01]{4}$/.test(flagsSegment)) {
-      if (flagsSegment === 'pinned') {
+      if (flagsSegment === "pinned") {
         parsed.pinned = true;
-      } else if (flagsSegment === 'with_replies') {
+      } else if (flagsSegment === "with_replies") {
         parsed.replies = true;
-      } else if (flagsSegment === 'media') {
+      } else if (flagsSegment === "media") {
         parsed.media = true;
       }
       return parsed;
     }
 
-    const view = segments[2]?.split('') ?? [];
+    const view = segments[2]?.split("") ?? [];
     for (let i = 0; i < view.length; i++) {
       const flagName = ACCOUNT_FILTERS[i];
       if (flagName) {
-        parsed[flagName] = view[i] === '1';
+        parsed[flagName] = view[i] === "1";
       }
     }
     return parsed;
   }
 
-  if (type === 'public') {
+  if (type === "public") {
     return {
-      type: 'public',
-      server:
-        segments[1] === 'remote' || segments[1] === 'local'
-          ? segments[1]
-          : 'all',
+      type: "public",
+      server: segments[1] === "remote" || segments[1] === "local" ? segments[1] : "all",
       tagged: segments[2],
-      media: segments[3] === 'media',
+      media: segments[3] === "media",
     };
   }
 
-  if (type === 'home') {
-    return { type: 'home' };
+  if (type === "home") {
+    return { type: "home" };
   }
 
   return null;
@@ -175,7 +162,7 @@ export function parseTimelineKey(key: string): TimelineParams | null {
 
 export function isTimelineKeyPinned(key: string, accountId?: string) {
   const parsedKey = parseTimelineKey(key);
-  const isPinned = parsedKey?.type === 'account' && parsedKey.pinned;
+  const isPinned = parsedKey?.type === "account" && parsedKey.pinned;
   if (!accountId || !isPinned) {
     return isPinned;
   }
@@ -187,7 +174,7 @@ export function isNonStatusId(value: unknown) {
 }
 
 export const disconnectTimeline = createAction(
-  'timeline/disconnect',
+  "timeline/disconnect",
   ({ timeline }: { timeline: string }) => ({
     payload: {
       timeline,
@@ -201,27 +188,27 @@ export const timelineDelete = createAction<{
   accountId: string;
   references: string[];
   reblogOf: string | null;
-}>('timelines/delete');
+}>("timelines/delete");
 
 export const timelineDeleteStatus = createAction<{
   statusId: string;
   timelineKey: string;
-}>('timelines/deleteStatus');
+}>("timelines/deleteStatus");
 
 export const insertPinnedStatusIntoTimelines = createAppThunk(
   (status: Status, { dispatch, getState }) => {
-    const currentAccountId = getState().meta.get('me', null) as string | null;
+    const currentAccountId = getState().meta.get("me", null) as string | null;
     if (!currentAccountId) {
       return;
     }
 
     const tags =
       (
-        status.get('tags') as
-          | ImmutableList<ImmutableMap<'name', string>> // We only care about the tag name.
+        status.get("tags") as
+          | ImmutableList<ImmutableMap<"name", string>> // We only care about the tag name.
           | undefined
       )
-        ?.map((tag) => tag.get('name') as string)
+        ?.map((tag) => tag.get("name") as string)
         .toArray() ?? [];
 
     const timelines = getState().timelines as ImmutableMap<string, unknown>;
@@ -230,7 +217,7 @@ export const insertPinnedStatusIntoTimelines = createAppThunk(
         return false;
       }
       const parsed = parseTimelineKey(key);
-      const isPinned = parsed?.type === 'account' && parsed.pinned;
+      const isPinned = parsed?.type === "account" && parsed.pinned;
       if (!isPinned) {
         return false;
       }
@@ -239,22 +226,22 @@ export const insertPinnedStatusIntoTimelines = createAppThunk(
     });
 
     accountTimelines.forEach((_, key) => {
-      dispatch(insertIntoTimeline(key, status.get('id') as string, 0));
+      dispatch(insertIntoTimeline(key, status.get("id") as string, 0));
     });
   },
 );
 
 export const removePinnedStatusFromTimelines = createAppThunk(
   (status: Status, { dispatch, getState }) => {
-    const currentAccountId = getState().meta.get('me', null) as string | null;
+    const currentAccountId = getState().meta.get("me", null) as string | null;
     if (!currentAccountId) {
       return;
     }
 
-    const statusId = status.get('id') as string;
+    const statusId = status.get("id") as string;
     const timelines = getState().timelines as ImmutableMap<
       string,
-      ImmutableMap<'items' | 'pendingItems', ImmutableList<string>>
+      ImmutableMap<"items" | "pendingItems", ImmutableList<string>>
     >;
 
     timelines.forEach((timeline, key) => {
@@ -263,8 +250,8 @@ export const removePinnedStatusFromTimelines = createAppThunk(
       }
 
       if (
-        timeline.get('items')?.includes(statusId) ||
-        timeline.get('pendingItems')?.includes(statusId)
+        timeline.get("items")?.includes(statusId) ||
+        timeline.get("pendingItems")?.includes(statusId)
       ) {
         dispatch(timelineDeleteStatus({ statusId, timelineKey: key }));
       }

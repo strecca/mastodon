@@ -1,15 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-import type { CustomEmojiMapArg } from '@/flavours/glitch/features/emoji/types';
-import type {
-  OnAttributeHandler,
-  OnElementHandler,
-} from '@/flavours/glitch/utils/html';
-import { htmlStringToComponents } from '@/flavours/glitch/utils/html';
-import { polymorphicForwardRef } from '@/types/polymorphic';
+import type { CustomEmojiMapArg } from "@/flavours/glitch/features/emoji/types";
+import type { OnAttributeHandler, OnElementHandler } from "@/flavours/glitch/utils/html";
+import { htmlStringToComponents } from "@/flavours/glitch/utils/html";
+import { polymorphicForwardRef } from "@/types/polymorphic";
 
-import { AnimateEmojiProvider, CustomEmojiProvider } from './context';
-import { textToEmojis } from './index';
+import { AnimateEmojiProvider, CustomEmojiProvider } from "./context";
+import { textToEmojis } from "./index";
 
 export interface EmojiHTMLProps {
   htmlString: string;
@@ -19,7 +16,7 @@ export interface EmojiHTMLProps {
   onAttribute?: OnAttributeHandler;
 }
 
-export const EmojiHTML = polymorphicForwardRef<'div', EmojiHTMLProps>(
+export const EmojiHTML = polymorphicForwardRef<"div", EmojiHTMLProps>(
   ({ extraEmojis, htmlString, onElement, onAttribute, ...props }, ref) => {
     const contents = useMemo(
       () =>
@@ -40,4 +37,4 @@ export const EmojiHTML = polymorphicForwardRef<'div', EmojiHTMLProps>(
     );
   },
 );
-EmojiHTML.displayName = 'EmojiHTML';
+EmojiHTML.displayName = "EmojiHTML";

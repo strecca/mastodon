@@ -8,7 +8,7 @@ pt-PT:
         display_name: O seu nome completo ou o seu nome divertido.
         fields: A sua página inicial, os seus pronomes, idade e tudo o que quiser.
         indexable: As suas mensagens públicas podem aparecer nos resultados da pesquisa no Mastodon. Independentemente disso, as pessoas que interagiram com as suas publicações podem ser capazes de as pesquisar.
-        note: 'Pode @mencionar outras pessoas e usar #etiquetas.'
+        note: "Pode @mencionar outras pessoas e usar #etiquetas."
         show_collections: As pessoas podem navegar pelas listas das pessoas que segue e dos seus seguidores. Independentemente disso, as pessoas que segue verão que você as segue.
         unlocked: As pessoas poderão segui-lo sem pedir aprovação. Desmarque se pretender rever os pedidos de seguimento e escolha se pretende aceitar ou rejeitar novos seguidores.
       account_alias:
@@ -76,7 +76,7 @@ pt-PT:
         domain: Este pode ser o nome de domínio que aparece no endereço de e-mail ou o registo MX por ele utilizado. Eles serão verificados aquando da inscrição.
         with_dns_records: Será feita uma tentativa de determinar os registos DNS do domínio em questão e os resultados também serão colocados na lista negra
       featured_tag:
-        name: 'Eis algumas das etiquetas que utilizou recentemente:'
+        name: "Eis algumas das etiquetas que utilizou recentemente:"
       filters:
         action: Escolha que ação executar quando uma publicação corresponder ao filtro
         actions:
@@ -130,7 +130,7 @@ pt-PT:
         hint: Opcional. Forneça mais detalhes sobre a regra
         text: Descreva uma regra ou requisito para os utilizadores nesta instância. Tente mantê-la curta e simples
       sessions:
-        otp: 'Insira o código de autenticação de dois fatores gerado pelo seu telemóvel ou use um dos seus códigos de recuperação:'
+        otp: "Insira o código de autenticação de dois fatores gerado pelo seu telemóvel ou use um dos seus códigos de recuperação:"
         webauthn: Se for uma chave USB tenha certeza de inseri-la e, se necessário, toque nela.
       settings:
         email_subscriptions: A desativação mantém os subscritores existentes, mas interrompe o envio de e-mails.
@@ -399,7 +399,7 @@ pt-PT:
         events: Eventos ativados
         template: Modelo de conteúdo
         url: URL do Endpoint
-    'no': Não
+    "no": Não
     not_recommended: Não recomendado
     overridden: Substituído
     recommended: Recomendado
@@ -409,4 +409,4 @@ pt-PT:
     title:
       sessions:
         webauthn: Utilize uma das suas chaves de segurança para entrar
-    'yes': Sim
+    "yes": Sim

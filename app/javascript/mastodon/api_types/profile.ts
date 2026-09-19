@@ -1,5 +1,5 @@
-import type { ApiAccountFieldJSON } from './accounts';
-import type { ApiFeaturedTagJSON } from './tags';
+import type { ApiAccountFieldJSON } from "./accounts";
+import type { ApiFeaturedTagJSON } from "./tags";
 
 export interface ApiProfileJSON {
   id: string;
@@ -27,20 +27,20 @@ export interface ApiProfileJSON {
 export type ApiProfileUpdateParams = Partial<
   Pick<
     ApiProfileJSON,
-    | 'avatar_description'
-    | 'header_description'
-    | 'display_name'
-    | 'note'
-    | 'locked'
-    | 'bot'
-    | 'hide_collections'
-    | 'discoverable'
-    | 'indexable'
-    | 'show_media'
-    | 'show_media_replies'
-    | 'show_featured'
+    | "avatar_description"
+    | "header_description"
+    | "display_name"
+    | "note"
+    | "locked"
+    | "bot"
+    | "hide_collections"
+    | "discoverable"
+    | "indexable"
+    | "show_media"
+    | "show_media_replies"
+    | "show_featured"
   >
 > & {
   attribution_domains?: string[];
-  fields_attributes?: Pick<ApiAccountFieldJSON, 'name' | 'value'>[];
+  fields_attributes?: Pick<ApiAccountFieldJSON, "name" | "value">[];
 };

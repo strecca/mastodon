@@ -1,22 +1,22 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { accountFactoryState, relationshipsFactory } from '@/testing/factories';
+import { accountFactoryState, relationshipsFactory } from "@/testing/factories";
 
-import { PendingBadge } from '../badge';
+import { PendingBadge } from "../badge";
 
-import { AccountListItem } from './index';
+import { AccountListItem } from "./index";
 
 const meta = {
-  title: 'Components/AccountListItem',
+  title: "Components/AccountListItem",
   component: AccountListItem,
   args: {
-    accountId: '1',
+    accountId: "1",
     withBorder: false,
   },
   parameters: {
     state: {
       accounts: {
-        '1': accountFactoryState(),
+        "1": accountFactoryState(),
       },
     },
   },
@@ -32,7 +32,7 @@ export const FollowsYou: Story = {
   parameters: {
     state: {
       relationships: {
-        '1': relationshipsFactory({
+        "1": relationshipsFactory({
           followed_by: true,
         }),
       },
@@ -42,7 +42,7 @@ export const FollowsYou: Story = {
 
 export const WithCustomStats: Story = {
   args: {
-    stats: ['posts', 'last-active'],
+    stats: ["posts", "last-active"],
   },
 };
 

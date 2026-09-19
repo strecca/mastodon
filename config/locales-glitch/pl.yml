@@ -2,8 +2,8 @@
 pl:
   admin:
     custom_emojis:
-      batch_copy_error: 'Podczas kopiowania niektórych zaznaczonych emotikon wystąpił następujący problem: %{message}'
-      batch_error: 'Wystąpił problem: %{message}'
+      batch_copy_error: "Podczas kopiowania niektórych zaznaczonych emotikon wystąpił następujący problem: %{message}"
+      batch_error: "Wystąpił problem: %{message}"
     settings:
       captcha_enabled:
         desc_html: Wymaga użycia zewnętrznych skryptów hCaptcha, co może negatywnie wpływać na bezpieczeństwo i prywatność. <strong>Może również przyczynić się do znaczącego utrudnienia procesu rejestracji niektórym, np. niepełnosprawnym, osobom.</strong> Dlatego sugeruje się używanie zaproszeń bądź ręcznie potwierdzanie kont.<br>Użytkownicy rejestrujący się za pomocą limitowanych zaproszeń nie będą musieli rozwiązywać zadania CHAPTCHA

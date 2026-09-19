@@ -1,12 +1,12 @@
-import { useCallback, forwardRef } from 'react';
+import { useCallback, forwardRef } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { usePrevious } from '../hooks/usePrevious';
+import { usePrevious } from "../hooks/usePrevious";
 
-import { AnimatedNumber } from './animated_number';
-import type { IconProp } from './icon';
-import { Icon } from './icon';
+import { AnimatedNumber } from "./animated_number";
+import type { IconProp } from "./icon";
+import { Icon } from "./icon";
 
 interface Props {
   className?: string;
@@ -68,25 +68,23 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
       [disabled, onClick],
     );
 
-    const handleMouseDown: React.MouseEventHandler<HTMLButtonElement> =
-      useCallback(
-        (e) => {
-          if (!disabled) {
-            onMouseDown?.(e);
-          }
-        },
-        [disabled, onMouseDown],
-      );
+    const handleMouseDown: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+      (e) => {
+        if (!disabled) {
+          onMouseDown?.(e);
+        }
+      },
+      [disabled, onMouseDown],
+    );
 
-    const handleKeyDown: React.KeyboardEventHandler<HTMLButtonElement> =
-      useCallback(
-        (e) => {
-          if (!disabled) {
-            onKeyDown?.(e);
-          }
-        },
-        [disabled, onKeyDown],
-      );
+    const handleKeyDown: React.KeyboardEventHandler<HTMLButtonElement> = useCallback(
+      (e) => {
+        if (!disabled) {
+          onKeyDown?.(e);
+        }
+      },
+      [disabled, onKeyDown],
+    );
 
     const buttonStyle = {
       ...style,
@@ -96,21 +94,21 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
     const previousActive = usePrevious(active) ?? active;
     const shouldAnimate = animate && active !== previousActive;
 
-    const classes = classNames(className, 'icon-button', {
+    const classes = classNames(className, "icon-button", {
       active,
       disabled,
       inverted,
       activate: shouldAnimate && active,
       deactivate: shouldAnimate && !active,
       overlayed: overlay,
-      'icon-button--with-counter': typeof counter !== 'undefined',
+      "icon-button--with-counter": typeof counter !== "undefined",
     });
 
     let contents = (
       <>
-        <Icon id={icon} icon={iconComponent} aria-hidden='true' />{' '}
-        {typeof counter !== 'undefined' && (
-          <span className='icon-button__counter'>
+        <Icon id={icon} icon={iconComponent} aria-hidden="true" />{" "}
+        {typeof counter !== "undefined" && (
+          <span className="icon-button__counter">
             <AnimatedNumber value={counter} />
           </span>
         )}
@@ -119,7 +117,7 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
 
     if (href != null) {
       contents = (
-        <a href={href} target='_blank' rel='noopener noreferrer'>
+        <a href={href} target="_blank" rel="noopener noreferrer">
           {contents}
         </a>
       );
@@ -127,7 +125,7 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
 
     return (
       <button
-        type='button'
+        type="button"
         aria-label={title}
         aria-expanded={expanded}
         aria-hidden={ariaHidden}
@@ -148,4 +146,4 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
   },
 );
 
-IconButton.displayName = 'IconButton';
+IconButton.displayName = "IconButton";

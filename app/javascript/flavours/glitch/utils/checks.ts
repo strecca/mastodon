@@ -1,7 +1,4 @@
-export function isValidUrl(
-  url: string,
-  allowedProtocols = ['https:'],
-): boolean {
+export function isValidUrl(url: string, allowedProtocols = ["https:"]): boolean {
   try {
     const parsedUrl = new URL(url);
     return allowedProtocols.includes(parsedUrl.protocol);
@@ -17,7 +14,7 @@ export function isValidUrl(
  * @param input The input string to check
  */
 export function isUrlWithoutProtocol(input: string): boolean {
-  if (!input.length || input.includes(' ') || input.includes('://')) {
+  if (!input.length || input.includes(" ") || input.includes("://")) {
     return false;
   }
 
@@ -25,10 +22,10 @@ export function isUrlWithoutProtocol(input: string): boolean {
     const url = new URL(`http://${input}`);
     const { host } = url;
     return (
-      host !== '' && // Host is not empty
-      host.includes('.') && // Host contains at least one dot
-      !host.endsWith('.') && // No trailing dot
-      !host.includes('..') && // No consecutive dots
+      host !== "" && // Host is not empty
+      host.includes(".") && // Host contains at least one dot
+      !host.endsWith(".") && // No trailing dot
+      !host.includes("..") && // No consecutive dots
       /\.[\w]{2,}$/.test(host) // TLD is at least 2 characters
     );
   } catch {}

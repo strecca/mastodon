@@ -25,7 +25,7 @@ mr:
         title: तुमचे अर्ज
       show:
         actions: कृती
-        title: 'अर्ज: %{name}'
+        title: "अर्ज: %{name}"
     authorizations:
       buttons:
         authorize: संमती द्या

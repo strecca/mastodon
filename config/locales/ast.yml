@@ -1,9 +1,9 @@
 ---
 ast:
   about:
-    about_mastodon_html: 'La rede social del futuru: ¡ensin anuncios nin vixilancia, con un diseñu éticu y descentralizáu! Controla los tos datos con Mastodon.'
+    about_mastodon_html: "La rede social del futuru: ¡ensin anuncios nin vixilancia, con un diseñu éticu y descentralizáu! Controla los tos datos con Mastodon."
     contact_unavailable: N/D
-    hosted_on: 'Mastodon ta agospiáu en: %{domain}'
+    hosted_on: "Mastodon ta agospiáu en: %{domain}"
     title: Tocante a
   accounts:
     last_active: última actividá
@@ -218,14 +218,14 @@ ast:
       title: Invitaciones
     ip_blocks:
       expires_in:
-        '1209600': 2 selmanes
-        '15778476': 6 meses
-        '2629746': 1 mes
-        '31556952': 1 añu
-        '86400': 1 día
-        '94670856': 3 años
+        "1209600": 2 selmanes
+        "15778476": 6 meses
+        "2629746": 1 mes
+        "31556952": 1 añu
+        "86400": 1 día
+        "94670856": 3 años
     relationships:
-      title: 'Rellaciones de: %{acct}'
+      title: "Rellaciones de: %{acct}"
     relays:
       status: Estáu
     report_notes:
@@ -241,7 +241,7 @@ ast:
       are_you_sure: "¿De xuru que quies facer esta aición?"
       category: Categoría
       category_description_html: El motivu pol que s'informó d'esta cuenta y/o conteníu cítase na comunicación cola cuenta de la que s'informó
-      comment_description_html: 'Pa fornir más información, %{name} escribió:'
+      comment_description_html: "Pa fornir más información, %{name} escribió:"
       created_at: Data del informe
       mark_as_resolved: Marcar como resueltu
       mark_as_sensitive: Marcar como sensible
@@ -253,8 +253,8 @@ ast:
         create_and_unresolve: Volver abrir con una nota
         delete: Desaniciar
         title: Notes
-      quick_actions_description_html: 'Toma una aición rápida o baxa pa ver el conteníu del que s''informó:'
-      report: 'Informe #%{id}'
+      quick_actions_description_html: "Toma una aición rápida o baxa pa ver el conteníu del que s'informó:"
+      report: "Informe #%{id}"
       reported_by: Perfil qu'informó
       resolved: Resolvióse
       resolved_msg: "¡L'informe resolvióse correutamente!"
@@ -378,7 +378,7 @@ ast:
         disallow: Refugar la publicación
         title: Artículos en tendencia
       tags:
-        current_score: 'Puntuación total: %{score}'
+        current_score: "Puntuación total: %{score}"
         dashboard:
           tag_accounts_measure: usos únicos
           tag_languages_dimension: Les llingües más usaes
@@ -417,9 +417,9 @@ ast:
       body: Los detalles de la cuenta nueva tán abaxo. Pues aprobar o refugar esta solicitú.
     new_report:
       body: "%{reporter} informó de: %{target}"
-      body_remote: 'Daquién dende %{domain} informó de: %{target}'
+      body_remote: "Daquién dende %{domain} informó de: %{target}"
     new_trends:
-      body: 'Los elementos siguientes precisen una revisión enantes de que puedan apaecer públicamente:'
+      body: "Los elementos siguientes precisen una revisión enantes de que puedan apaecer públicamente:"
       new_trending_links:
         title: Enllaces en tendencia
       new_trending_statuses:
@@ -473,7 +473,7 @@ ast:
     sign_in:
       preamble_html: Anicia la sesión coles credenciales del dominiu <strong>%{domain}</strong>. Si la to cuenta ta agospiada n'otru sirvidor, nun vas ser a aniciar la sesión equí.
     sign_up:
-      title: 'Creación d''una cuenta en: %{domain}.'
+      title: "Creación d'una cuenta en: %{domain}."
     status:
       account_status: Estáu de la cuenta
       functional: La cuenta ta completamente operativa.
@@ -517,7 +517,7 @@ ast:
       created_at: Data
       recipient: Dirixóse a
       reject_appeal: Refugar l'apellación
-      status: 'Publicación #%{id}'
+      status: "Publicación #%{id}"
       status_removed: La publicación yá se quitó del sistema
       your_appeal_approved: Aprobóse la to apellación
       your_appeal_pending: Unviesti una apellación
@@ -525,19 +525,19 @@ ast:
   edit_profile:
     other: Otres preferencies
   errors:
-    '400': La solicitú qu'unviesti nun yera válida o yera incorreuta.
-    '403': Nun tienes permisu pa ver esta páxina.
-    '404': La páxina que busques nun ta equí.
-    '406': Esta páxina nun ta disponible nel formatu solicitáu.
-    '410': La páxina que busques yá nun esiste.
-    '422':
+    "400": La solicitú qu'unviesti nun yera válida o yera incorreuta.
+    "403": Nun tienes permisu pa ver esta páxina.
+    "404": La páxina que busques nun ta equí.
+    "406": Esta páxina nun ta disponible nel formatu solicitáu.
+    "410": La páxina que busques yá nun esiste.
+    "422":
       content: La verificación de seguranza falló. ¿Tas bloquiando les cookies?
       title: La verificación de seguranza falló
-    '429': Ficiéronse milenta solicitúes
-    '500':
+    "429": Ficiéronse milenta solicitúes
+    "500":
       content: Sentímoslo, mas prodúxose dalgún error nel sirvidor.
       title: La páxina nun ye correuta
-    '503': Nun se pudo sirvir la páxina pola mor d'un fallu temporal del sirvidor.
+    "503": Nun se pudo sirvir la páxina pola mor d'un fallu temporal del sirvidor.
     noscript_html: Pa usar l'aplicación web de Mastodon, activa JavaScript. Tamién pues probar una de les <a href="%{apps_path}">aplicaciones natives</a> de Mastodon pa la to plataforma.
   exports:
     archive_takeout:
@@ -612,15 +612,15 @@ ast:
     delete: Desactivar
     expired: Caducó
     expires_in:
-      '1800': 30 minutos
-      '21600': 6 hores
-      '3600': 1 hora
-      '43200': 12 hores
-      '604800': 1 selmana
-      '86400': 1 día
+      "1800": 30 minutos
+      "21600": 6 hores
+      "3600": 1 hora
+      "43200": 12 hores
+      "604800": 1 selmana
+      "86400": 1 día
     expires_in_prompt: Enxamás
     generate: Xenerar un enllaz d'invitación
-    invited_by: 'Convidóte:'
+    invited_by: "Convidóte:"
     max_uses:
       one: 1 usu
       other: "%{count} usos"
@@ -670,7 +670,7 @@ ast:
     update:
       subject: "%{name} editó una publicación"
   notifications:
-    email_events_hint: 'Seleiciona los eventos de los que quies recibir avisos:'
+    email_events_hint: "Seleiciona los eventos de los que quies recibir avisos:"
   number:
     human:
       decimal_units:
@@ -685,7 +685,7 @@ ast:
     description_html: Si actives l'<strong>autenticación en dos pasos</strong> con una aplicación autenticadora, al aniciar la sesión va ser obligatorio que tengas el teléfonu a mano, preséu que xenera los pases que tienes d'introducir.
     enable: Activar
     instructions_html: "<strong>Escania esti códigu QR con Google Authenticator o otra aplicación asemeyada nel móvil</strong>. Dende agora, esa aplicación va xenerar los pases que tienes d'introducir cuando anicies la sesión."
-    manual_instructions: 'Si nun pues escaniar el códigu QR y tienes d''introducilu manualmente, equí tienes el secretu en testu ensin formatu:'
+    manual_instructions: "Si nun pues escaniar el códigu QR y tienes d'introducilu manualmente, equí tienes el secretu en testu ensin formatu:"
     setup: Configurar
     wrong_code: "¡El códigu introducíu nun yera válidu! ¿La hora del sirvidor y la del preséu son correutes?"
   pagination:
@@ -817,14 +817,14 @@ ast:
     keep_self_bookmark: Caltener los artículos que metieres en Marcadores
     keep_self_bookmark_hint: Nun desanicia nenguna publicación que metieres en Marcadores
     min_age:
-      '1209600': 2 selmanes
-      '15778476': 6 meses
-      '2629746': 1 mes
-      '31556952': 1 añu
-      '5259492': 2 meses
-      '604800': 1 selmana
-      '63113904': 2 años
-      '7889238': 3 meses
+      "1209600": 2 selmanes
+      "15778476": 6 meses
+      "2629746": 1 mes
+      "31556952": 1 añu
+      "5259492": 2 meses
+      "604800": 1 selmana
+      "63113904": 2 años
+      "7889238": 3 meses
   stream_entries:
     sensitive_content: Conteníu sensible
   tags:
@@ -846,8 +846,8 @@ ast:
         disable: Yá nun pues usar la cuenta mas el perfil y otros datos siguen intautos. Pues solicitar una copia de seguranza de los datos, camudar la configuración de la cuenta o desaniciar la cuenta.
         silence: Pues siguir usando la cuenta mas namás vas ver los artículos de los perfiles que yá siguieres nesti sirvidor y ye posible que se t'escluya de dalgunes funciones de descubrimientu. Por embargu, otros perfiles entá puen siguite manualmente.
         suspend: Yá nun pues usar la cuenta nin se pue acceder a los datos del to perfil. Pues aniciar la sesión pa pidir una copia de seguranza de los tos datos hasta que se desanicien en 30 díes, mas vamos caltener dalgunos datos básicos pa evitar que te saltes la suspensión.
-      reason: 'Motivu:'
-      statuses: 'Artículos citaos:'
+      reason: "Motivu:"
+      statuses: "Artículos citaos:"
       subject:
         disable: Conxelóse la to cuenta %{acct}
         suspend: Suspendióse la cuenta %{acct}
@@ -876,7 +876,7 @@ ast:
     follow_limit_reached: Nun pues siguir a más de %{limit} persones
     invalid_otp_token: El códigu de l'autenticación en dos pasos nun ye válidu
     rate_limited: Fixéronse milenta intentos d'autenticación. Volvi tentalo dempués.
-    signed_in_as: 'Aniciesti la sesión como:'
+    signed_in_as: "Aniciesti la sesión como:"
   verification:
     verification: Verificación
   webauthn_credentials:

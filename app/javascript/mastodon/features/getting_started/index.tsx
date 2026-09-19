@@ -1,11 +1,11 @@
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import { Column } from 'mastodon/components/column';
+import { Column } from "mastodon/components/column";
 
-import { NavigationPanel } from '../navigation_panel';
-import { LinkFooter } from '../ui/components/link_footer';
+import { NavigationPanel } from "../navigation_panel";
+import { LinkFooter } from "../ui/components/link_footer";
 
 const GettingStarted: React.FC = () => {
   const intl = useIntl();
@@ -13,16 +13,16 @@ const GettingStarted: React.FC = () => {
     <Column>
       <NavigationPanel multiColumn />
 
-      <LinkFooter context='multi-column' />
+      <LinkFooter context="multi-column" />
 
       <Helmet>
         <title>
           {intl.formatMessage({
-            id: 'getting_started.heading',
-            defaultMessage: 'Getting started',
+            id: "getting_started.heading",
+            defaultMessage: "Getting started",
           })}
         </title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

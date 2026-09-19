@@ -2,8 +2,8 @@
 de:
   admin:
     custom_emojis:
-      batch_copy_error: 'Fehler ist beim Kopieren einiger der ausgewählten Emoji aufgetreten: %{message}'
-      batch_error: 'Ein Fehler ist aufgetreten: %{message}'
+      batch_copy_error: "Fehler ist beim Kopieren einiger der ausgewählten Emoji aufgetreten: %{message}"
+      batch_error: "Ein Fehler ist aufgetreten: %{message}"
     settings:
       captcha_enabled:
         desc_html: Dies beruht auf externen Skripts von hCaptcha, was Sicherheits- und Datenschutz-Bedenken auslösen kann. Zusätzlich <strong>kann das den Registrierungsprozess für manche (besonders behinderte) Leute signifikant weniger zugänglich machen</strong>. Ziehe aus diesen Gründen bittte alternative Maßnahmen, wie Zulassungs- oder Einladungs-basierte Registrierung, in Erwägung.

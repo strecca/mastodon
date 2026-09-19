@@ -1,17 +1,17 @@
-import type { FC } from 'react';
+import type { FC } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import type { NavLinkProps } from 'react-router-dom';
+import type { NavLinkProps } from "react-router-dom";
 
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import { useAccountId } from '@/flavours/glitch/hooks/useAccountId';
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import { useAccountId } from "@/flavours/glitch/hooks/useAccountId";
 
-import { TabLink, TabList } from '../tab_list';
+import { TabLink, TabList } from "../tab_list";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
-const isActive: Required<NavLinkProps>['isActive'] = (match, location) =>
+const isActive: Required<NavLinkProps>["isActive"] = (match, location) =>
   match?.url === location.pathname ||
   (!!match?.url && location.pathname.startsWith(`${match.url}/tagged/`));
 
@@ -31,16 +31,16 @@ export const AccountTabs: FC = () => {
   return (
     <TabList>
       <TabLink isActive={isActive} to={`/@${acct}`}>
-        <FormattedMessage id='account.activity' defaultMessage='Activity' />
+        <FormattedMessage id="account.activity" defaultMessage="Activity" />
       </TabLink>
       {show_media && (
         <TabLink exact to={`/@${acct}/media`}>
-          <FormattedMessage id='account.media' defaultMessage='Media' />
+          <FormattedMessage id="account.media" defaultMessage="Media" />
         </TabLink>
       )}
       {show_featured && (
         <TabLink exact to={`/@${acct}/featured`}>
-          <FormattedMessage id='account.featured' defaultMessage='Featured' />
+          <FormattedMessage id="account.featured" defaultMessage="Featured" />
         </TabLink>
       )}
     </TabList>

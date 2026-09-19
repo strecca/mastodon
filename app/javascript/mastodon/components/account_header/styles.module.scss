@@ -133,7 +133,7 @@
   max-width: 400px;
   box-sizing: border-box;
 
-  [data-color-scheme='dark'] & {
+  [data-color-scheme="dark"] & {
     border: 1px solid var(--color-border-primary);
   }
 
@@ -316,7 +316,7 @@ $button-fallback-breakpoint: $button-breakpoint + 55px;
   position: relative;
 
   @for $col from 2 through 4 {
-    &[data-cols='#{$col}'] {
+    &[data-cols="#{$col}"] {
       --col-span: #{$col};
     }
   }
@@ -411,7 +411,7 @@ $button-fallback-breakpoint: $button-breakpoint + 55px;
   }
 
   &:not(:last-child)::after {
-    content: '';
+    content: "";
     display: block;
     border-bottom: 1px solid var(--color-border-primary);
     margin-top: 12px;
@@ -531,7 +531,7 @@ $button-fallback-breakpoint: $button-breakpoint + 55px;
     margin-top: 24px; // To align with input under label
   }
 
-  input[type='email'] {
+  input[type="email"] {
     padding: 7px 8px; // To align size with button
     background: var(--color-bg-primary);
   }

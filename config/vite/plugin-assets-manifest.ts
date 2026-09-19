@@ -1,25 +1,25 @@
 // Heavily inspired by https://github.com/ElMassimo/vite_ruby
 
-import { createHash } from 'node:crypto';
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import { createHash } from "node:crypto";
+import fs from "node:fs/promises";
+import path from "node:path";
 
-import glob from 'fast-glob';
-import type { Plugin } from 'vite';
+import glob from "fast-glob";
+import type { Plugin } from "vite";
 
 interface AssetManifestChunk {
   file: string;
   integrity: string;
 }
 
-const ALGORITHM = 'sha384';
+const ALGORITHM = "sha384";
 
 export function MastodonAssetsManifest(): Plugin {
   let manifest: string | boolean = true;
-  let jsRoot = '';
+  let jsRoot = "";
 
   return {
-    name: 'mastodon-assets-manifest',
+    name: "mastodon-assets-manifest",
     applyToEnvironment(environment) {
       return !!environment.config.build.manifest;
     },
@@ -30,7 +30,7 @@ export function MastodonAssetsManifest(): Plugin {
     async generateBundle() {
       // Glob all assets and return an array of absolute paths.
       const assetPaths = await glob(
-        ['flavours/*/{fonts,icons,images}/**/*', '{fonts,icons,images}/**/*'],
+        ["flavours/*/{fonts,icons,images}/**/*", "{fonts,icons,images}/**/*"],
         {
           cwd: jsRoot,
           absolute: true,
@@ -38,7 +38,7 @@ export function MastodonAssetsManifest(): Plugin {
       );
 
       const assetManifest: Record<string, AssetManifestChunk> = {};
-      const excludeExts = ['', '.md'];
+      const excludeExts = ["", ".md"];
       for (const file of assetPaths) {
         // Exclude files like markdown or README files with no extension.
         const ext = path.extname(file);
@@ -50,17 +50,14 @@ export function MastodonAssetsManifest(): Plugin {
         const contents = await fs.readFile(file);
         const ref = this.emitFile({
           name: path.basename(file),
-          type: 'asset',
+          type: "asset",
           source: contents,
         });
         const hashedFilename = this.getFileName(ref);
 
         // With the emitted file information, hash the contents and store in manifest.
         const name = path.relative(jsRoot, file);
-        const hash = createHash(ALGORITHM)
-          .update(contents)
-          .digest()
-          .toString('base64');
+        const hash = createHash(ALGORITHM).update(contents).digest().toString("base64");
         assetManifest[name] = {
           file: hashedFilename,
           integrity: `${ALGORITHM}-${hash}`,
@@ -68,18 +65,17 @@ export function MastodonAssetsManifest(): Plugin {
       }
 
       if (Object.keys(assetManifest).length === 0) {
-        console.warn('Asset manifest is empty');
+        console.warn("Asset manifest is empty");
         return;
       }
 
       // Get manifest location and emit the manifest.
-      const manifestDir =
-        typeof manifest === 'string' ? path.dirname(manifest) : '.vite';
+      const manifestDir = typeof manifest === "string" ? path.dirname(manifest) : ".vite";
       const fileName = `${manifestDir}/manifest-assets.json`;
 
       this.emitFile({
         fileName,
-        type: 'asset',
+        type: "asset",
         source: JSON.stringify(assetManifest, null, 2),
       });
     },

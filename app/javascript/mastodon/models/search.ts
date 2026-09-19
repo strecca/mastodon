@@ -1,8 +1,8 @@
-import type { ApiCollectionJSON } from '@/mastodon/api_types/collections';
-import type { ApiSearchResultsJSON } from '@/mastodon/api_types/search';
-import type { ApiHashtagJSON } from '@/mastodon/api_types/tags';
+import type { ApiCollectionJSON } from "@/mastodon/api_types/collections";
+import type { ApiSearchResultsJSON } from "@/mastodon/api_types/search";
+import type { ApiHashtagJSON } from "@/mastodon/api_types/tags";
 
-export type SearchType = 'account' | 'hashtag' | 'accounts' | 'statuses';
+export type SearchType = "account" | "hashtag" | "accounts" | "statuses";
 
 export interface RecentSearch {
   q: string;

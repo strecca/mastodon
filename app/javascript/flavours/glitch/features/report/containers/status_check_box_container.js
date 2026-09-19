@@ -1,8 +1,8 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { makeGetStatus } from 'flavours/glitch/selectors';
+import { makeGetStatus } from "flavours/glitch/selectors";
 
-import StatusCheckBox from '../components/status_check_box';
+import StatusCheckBox from "../components/status_check_box";
 
 const makeMapStateToProps = () => {
   const getStatus = makeGetStatus();

@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import CelebrationIcon from '@/material-icons/400-24px/celebration-fill.svg?react';
+import CelebrationIcon from "@/material-icons/400-24px/celebration-fill.svg?react";
 
-import * as badges from '.';
+import * as badges from ".";
 
 const meta = {
   component: badges.Badge,
-  title: 'Components/Badge',
+  title: "Components/Badge",
   args: {
-    domain: '',
+    domain: "",
     label: undefined,
   },
   argTypes: {
     domain: {
-      control: 'text',
+      control: "text",
     },
   },
 } satisfies Meta<typeof badges.Badge>;
@@ -24,20 +24,20 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: 'Example',
+    label: "Example",
   },
 };
 
 export const Domain: Story = {
   args: {
     ...Default.args,
-    domain: 'example.com',
+    domain: "example.com",
   },
 };
 
 export const Verified: Story = {
   render() {
-    return <badges.VerifiedBadge link='example.com' />;
+    return <badges.VerifiedBadge link="example.com" />;
   },
 };
 
@@ -50,7 +50,7 @@ export const CustomIcon: Story = {
 
 export const Admin: Story = {
   args: {
-    roleId: '1',
+    roleId: "1",
   },
   render(args) {
     return <badges.AdminBadge {...args} />;

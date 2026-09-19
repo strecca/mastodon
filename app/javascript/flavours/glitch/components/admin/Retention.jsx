@@ -1,25 +1,26 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { FormattedMessage, FormattedNumber, FormattedDate } from 'react-intl';
+import { FormattedMessage, FormattedNumber, FormattedDate } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import api from 'flavours/glitch/api';
-import { roundTo10 } from 'flavours/glitch/utils/numbers';
+import api from "flavours/glitch/api";
+import { roundTo10 } from "flavours/glitch/utils/numbers";
 
-const dateForCohort = cohort => {
-  const timeZone = 'UTC';
-  switch(cohort.frequency) {
-  case 'day':
-    return <FormattedDate value={cohort.period} month='long' day='2-digit' timeZone={timeZone} />;
-  default:
-    return <FormattedDate value={cohort.period} month='long' year='numeric' timeZone={timeZone} />;
+const dateForCohort = (cohort) => {
+  const timeZone = "UTC";
+  switch (cohort.frequency) {
+    case "day":
+      return <FormattedDate value={cohort.period} month="long" day="2-digit" timeZone={timeZone} />;
+    default:
+      return (
+        <FormattedDate value={cohort.period} month="long" year="numeric" timeZone={timeZone} />
+      );
   }
 };
 
 export default class Retention extends PureComponent {
-
   static propTypes = {
     start_at: PropTypes.string,
     end_at: PropTypes.string,
@@ -31,73 +32,99 @@ export default class Retention extends PureComponent {
     data: null,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     const { start_at, end_at, frequency } = this.props;
 
-    api(false).post('/api/v1/admin/retention', { start_at, end_at, frequency }).then(res => {
-      this.setState({
-        loading: false,
-        data: res.data,
+    api(false)
+      .post("/api/v1/admin/retention", { start_at, end_at, frequency })
+      .then((res) => {
+        this.setState({
+          loading: false,
+          data: res.data,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    }).catch(err => {
-      console.error(err);
-    });
   }
 
-  render () {
+  render() {
     const { loading, data } = this.state;
     const { frequency } = this.props;
 
     let content;
 
     if (loading) {
-      content = <FormattedMessage id='loading_indicator.label' defaultMessage='Loading…' />;
+      content = <FormattedMessage id="loading_indicator.label" defaultMessage="Loading…" />;
     } else {
       content = (
-        <table className='retention__table'>
+        <table className="retention__table">
           <thead>
             <tr>
               <th>
-                <div className='retention__table__date retention__table__label'>
-                  <FormattedMessage id='admin.dashboard.retention.cohort' defaultMessage='Sign-up month' />
+                <div className="retention__table__date retention__table__label">
+                  <FormattedMessage
+                    id="admin.dashboard.retention.cohort"
+                    defaultMessage="Sign-up month"
+                  />
                 </div>
               </th>
 
               <th>
-                <div className='retention__table__number retention__table__label'>
-                  <FormattedMessage id='admin.dashboard.retention.cohort_size' defaultMessage='New users' />
+                <div className="retention__table__number retention__table__label">
+                  <FormattedMessage
+                    id="admin.dashboard.retention.cohort_size"
+                    defaultMessage="New users"
+                  />
                 </div>
               </th>
 
               {data[0].data.slice(1).map((retention, i) => (
                 <th key={retention.date}>
-                  <div className='retention__table__number retention__table__label'>
-                    {i + 1}
-                  </div>
+                  <div className="retention__table__number retention__table__label">{i + 1}</div>
                 </th>
               ))}
             </tr>
 
             <tr>
               <td>
-                <div className='retention__table__date retention__table__average'>
-                  <FormattedMessage id='admin.dashboard.retention.average' defaultMessage='Average' />
+                <div className="retention__table__date retention__table__average">
+                  <FormattedMessage
+                    id="admin.dashboard.retention.average"
+                    defaultMessage="Average"
+                  />
                 </div>
               </td>
 
               <td>
-                <div className='retention__table__size'>
-                  <FormattedNumber value={data.reduce((sum, cohort, i) => sum + ((cohort.data[0].value * 1) - sum) / (i + 1), 0)} maximumFractionDigits={0} />
+                <div className="retention__table__size">
+                  <FormattedNumber
+                    value={data.reduce(
+                      (sum, cohort, i) => sum + (cohort.data[0].value * 1 - sum) / (i + 1),
+                      0,
+                    )}
+                    maximumFractionDigits={0}
+                  />
                 </div>
               </td>
 
               {data[0].data.slice(1).map((retention, i) => {
-                const average = data.reduce((sum, cohort, k) => cohort.data[i + 1] ? sum + (cohort.data[i + 1].rate - sum)/(k + 1) : sum, 0);
+                const average = data.reduce(
+                  (sum, cohort, k) =>
+                    cohort.data[i + 1] ? sum + (cohort.data[i + 1].rate - sum) / (k + 1) : sum,
+                  0,
+                );
 
                 return (
                   <td key={retention.date}>
-                    <div className={classNames('retention__table__box', 'retention__table__average', `retention__table__box--${roundTo10(average * 100)}`)}>
-                      <FormattedNumber value={average} style='percent' />
+                    <div
+                      className={classNames(
+                        "retention__table__box",
+                        "retention__table__average",
+                        `retention__table__box--${roundTo10(average * 100)}`,
+                      )}
+                    >
+                      <FormattedNumber value={average} style="percent" />
                     </div>
                   </td>
                 );
@@ -106,24 +133,27 @@ export default class Retention extends PureComponent {
           </thead>
 
           <tbody>
-            {data.slice(0, -1).map(cohort => (
+            {data.slice(0, -1).map((cohort) => (
               <tr key={cohort.period}>
                 <td>
-                  <div className='retention__table__date'>
-                    {dateForCohort(cohort)}
-                  </div>
+                  <div className="retention__table__date">{dateForCohort(cohort)}</div>
                 </td>
 
                 <td>
-                  <div className='retention__table__size'>
+                  <div className="retention__table__size">
                     <FormattedNumber value={cohort.data[0].value} />
                   </div>
                 </td>
 
-                {cohort.data.slice(1).map(retention => (
+                {cohort.data.slice(1).map((retention) => (
                   <td key={retention.date}>
-                    <div className={classNames('retention__table__box', `retention__table__box--${roundTo10(retention.rate * 100)}`)}>
-                      <FormattedNumber value={retention.rate} style='percent' />
+                    <div
+                      className={classNames(
+                        "retention__table__box",
+                        `retention__table__box--${roundTo10(retention.rate * 100)}`,
+                      )}
+                    >
+                      <FormattedNumber value={retention.rate} style="percent" />
                     </div>
                   </td>
                 ))}
@@ -135,21 +165,30 @@ export default class Retention extends PureComponent {
     }
 
     let title = null;
-    switch(frequency) {
-    case 'day':
-      title = <FormattedMessage id='admin.dashboard.daily_retention' defaultMessage='User retention rate by day after sign-up' />;
-      break;
-    default:
-      title = <FormattedMessage id='admin.dashboard.monthly_retention' defaultMessage='User retention rate by month after sign-up' />;
+    switch (frequency) {
+      case "day":
+        title = (
+          <FormattedMessage
+            id="admin.dashboard.daily_retention"
+            defaultMessage="User retention rate by day after sign-up"
+          />
+        );
+        break;
+      default:
+        title = (
+          <FormattedMessage
+            id="admin.dashboard.monthly_retention"
+            defaultMessage="User retention rate by month after sign-up"
+          />
+        );
     }
 
     return (
-      <div className='retention'>
+      <div className="retention">
         <h2>{title}</h2>
 
         {content}
       </div>
     );
   }
-
 }

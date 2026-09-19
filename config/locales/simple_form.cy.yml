@@ -8,7 +8,7 @@ cy:
         display_name: Eich enw llawn neu'ch enw hwyl.
         fields: Eich tudalen cartref, rhagenwau, oed, neu unrhyw beth.
         indexable: Mae'n bosib y bydd eich postiadau cyhoeddus yn ymddangos yng nghanlyniadau chwilio ar Mastodon. Mae'n bosibl y bydd pobl sydd wedi rhyngweithio â'ch postiadau yn dal i allu eu chwilio.
-        note: 'Gallwch @grybwyll pobl eraill neu #hashnodau.'
+        note: "Gallwch @grybwyll pobl eraill neu #hashnodau."
         show_collections: Bydd pobl yn gallu pori trwy'r rhai rydych yn eu dilyn a'ch dilynwyr. Bydd y bobl rydych chi'n eu dilyn yn gweld eich bod chi'n eu dilyn beth bynnag.
         unlocked: Bydd pobl yn gallu eich dilyn heb ofyn am gymeradwyaeth. Dad-diciwch os ydych am adolygu ceisiadau i'ch dilyn a dewis a ydych am dderbyn neu wrthod dilynwyr newydd.
       account_alias:
@@ -76,7 +76,7 @@ cy:
         domain: Gall hwn fod yr enw parth sy'n ymddangos yn y cyfeiriad e-bost neu'r cofnod MX y mae'n ei ddefnyddio. Byddant yn cael eu gwirio wrth gofrestru.
         with_dns_records: Gwneir ymgais i ddatrys cofnodion DNS y parth a roddwyd a bydd y canlyniadau hefyd yn cael eu rhwystro
       featured_tag:
-        name: 'Dyma rai o’r hashnodau a ddefnyddioch chi''n ddiweddar:'
+        name: "Dyma rai o’r hashnodau a ddefnyddioch chi'n ddiweddar:"
       filters:
         action: Dewiswch pa weithred i'w gyflawni pan fydd postiad yn cyd-fynd â'r hidlydd
         actions:
@@ -132,7 +132,7 @@ cy:
         hint: Dewisol. Darparwch ragor o fanylion am y rheol
         text: Disgrifiwch reol neu ofyniad ar gyfer defnyddwyr ar y gweinydd hwn. Ceisiwch ei gadw'n fyr ac yn syml
       sessions:
-        otp: 'Mewnbynnwch y cod dau gam a gynhyrchwyd gan eich ap ffôn neu defnyddiwch un o''ch codau adfer:'
+        otp: "Mewnbynnwch y cod dau gam a gynhyrchwyd gan eich ap ffôn neu defnyddiwch un o'ch codau adfer:"
         webauthn: Os mai allwedd USB ydyw, gwnewch yn siŵr ei fewnosod ac, os oes angen, tapiwch ef.
       settings:
         email_subscriptions: Mae analluogi yn cadw tanysgrifwyr presennol ond yn atal anfon e-byst.
@@ -412,7 +412,7 @@ cy:
         events: Digwyddiadau wedi'u galluogi
         template: Templed prif lwyth
         url: URL diweddbwynt
-    'no': Na
+    "no": Na
     not_recommended: Heb ei argymell
     overridden: Wedi'i gwrth-wneud
     recommended: Argymhellwyd
@@ -422,4 +422,4 @@ cy:
     title:
       sessions:
         webauthn: Defnyddiwch un o'ch allweddi diogelwch i fewngofnodi
-    'yes': Ie
+    "yes": Ie

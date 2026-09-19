@@ -1,36 +1,30 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { isEqual } from 'lodash';
+import { isEqual } from "lodash";
 
-import AlternateEmailIcon from '@/material-icons/400-24px/alternate_email.svg?react';
-import ReplyIcon from '@/material-icons/400-24px/reply-fill.svg?react';
-import { me } from 'flavours/glitch/initial_state';
-import type { NotificationGroupMention } from 'flavours/glitch/models/notification_group';
-import { useAppSelector } from 'flavours/glitch/store';
+import AlternateEmailIcon from "@/material-icons/400-24px/alternate_email.svg?react";
+import ReplyIcon from "@/material-icons/400-24px/reply-fill.svg?react";
+import { me } from "flavours/glitch/initial_state";
+import type { NotificationGroupMention } from "flavours/glitch/models/notification_group";
+import { useAppSelector } from "flavours/glitch/store";
 
-import type { LabelRenderer } from './notification_group_with_status';
-import { NotificationWithStatus } from './notification_with_status';
+import type { LabelRenderer } from "./notification_group_with_status";
+import { NotificationWithStatus } from "./notification_with_status";
 
 const mentionLabelRenderer: LabelRenderer = () => (
-  <FormattedMessage id='notification.label.mention' defaultMessage='Mention' />
+  <FormattedMessage id="notification.label.mention" defaultMessage="Mention" />
 );
 
 const privateMentionLabelRenderer: LabelRenderer = () => (
-  <FormattedMessage
-    id='notification.label.private_mention'
-    defaultMessage='Private mention'
-  />
+  <FormattedMessage id="notification.label.private_mention" defaultMessage="Private mention" />
 );
 
 const replyLabelRenderer: LabelRenderer = () => (
-  <FormattedMessage id='notification.label.reply' defaultMessage='Reply' />
+  <FormattedMessage id="notification.label.reply" defaultMessage="Reply" />
 );
 
 const privateReplyLabelRenderer: LabelRenderer = () => (
-  <FormattedMessage
-    id='notification.label.private_reply'
-    defaultMessage='Private reply'
-  />
+  <FormattedMessage id="notification.label.private_reply" defaultMessage="Private reply" />
 );
 
 export const NotificationMention: React.FC<{
@@ -38,15 +32,13 @@ export const NotificationMention: React.FC<{
   unread: boolean;
 }> = ({ notification, unread }) => {
   const [isDirect, isReply] = useAppSelector((state) => {
-    const status = notification.statusId
-      ? state.statuses.get(notification.statusId)
-      : undefined;
+    const status = notification.statusId ? state.statuses.get(notification.statusId) : undefined;
 
     if (!status) return [false, false] as const;
 
     return [
-      status.get('visibility') === 'direct',
-      status.get('in_reply_to_account_id') === me,
+      status.get("visibility") === "direct",
+      status.get("in_reply_to_account_id") === me,
     ] as const;
   }, isEqual);
 
@@ -58,9 +50,9 @@ export const NotificationMention: React.FC<{
 
   return (
     <NotificationWithStatus
-      type='mention'
+      type="mention"
       icon={isReply ? ReplyIcon : AlternateEmailIcon}
-      iconId='reply'
+      iconId="reply"
       accountIds={notification.sampleAccountIds}
       count={notification.notifications_count}
       statusId={notification.statusId}

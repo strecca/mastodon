@@ -8,7 +8,7 @@ zh-TW:
         display_name: 完整名稱或暱稱。
         fields: 烘培雞、自我認同代稱、年齡，及任何您想分享的。
         indexable: 您的公開嘟文可能會顯示於 Mastodon 之搜尋結果中。曾與您嘟文互動過的人可能無論如何都能搜尋它們。
-        note: '您可以 @mention 其他人或者使用 #主題標籤。'
+        note: "您可以 @mention 其他人或者使用 #主題標籤。"
         show_collections: 人們將能瀏覽您跟隨中及跟隨者帳號。您所跟隨之使用者能得知您正在跟隨其帳號。
         unlocked: 人們將無需額外請求您的同意便能跟隨您的帳號。取消勾選以審查跟隨請求並選擇是否同意或拒絕新跟隨者。
       account_alias:
@@ -407,7 +407,7 @@ zh-TW:
         events: 已啟用的事件
         template: Payload 樣板
         url: 端點 URL
-    'no': 否
+    "no": 否
     not_recommended: 不建議
     overridden: 已覆寫
     recommended: 建議
@@ -417,4 +417,4 @@ zh-TW:
     title:
       sessions:
         webauthn: 使用您的安全金鑰來登入
-    'yes': 是
+    "yes": 是

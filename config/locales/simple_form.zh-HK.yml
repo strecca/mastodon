@@ -6,7 +6,7 @@ zh-HK:
         display_name: 你的全名或暱稱。
         fields: 你的主頁、代名詞、年齡，任何你想顯示的資訊。
         indexable: 你的公開帖文可能會出現在 Mastodon 的搜尋結果中。無論如何，與你帖文互動過的人都能搜尋到它。
-        note: '你可以 @提及他人 或使用 #主題標籤。'
+        note: "你可以 @提及他人 或使用 #主題標籤。"
         show_collections: 大家可瀏覽你追蹤的人和你的追蹤者。你追蹤的人無論如何都會看到你追蹤了他們。
       account_alias:
         acct: 指定欲移動之帳戶的「使用者名稱@域名」
@@ -311,7 +311,7 @@ zh-HK:
         events: 已啟用事件
         template: Payload 範本
         url: 端點網址
-    'no': 否
+    "no": 否
     not_recommended: 不推薦
     overridden: 已覆寫
     recommended: 建議
@@ -321,4 +321,4 @@ zh-HK:
     title:
       sessions:
         webauthn: 使用你的安全密鑰裝置來登入
-    'yes': 是
+    "yes": 是

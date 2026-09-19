@@ -2,10 +2,10 @@
 // If there are no polyfills, then this is just Promise.resolve() which means
 // it will execute in the same tick of the event loop (i.e. near-instant).
 
-import { loadIntlPolyfills } from './intl';
+import { loadIntlPolyfills } from "./intl";
 
 function importExtraPolyfills() {
-  return import('./extra_polyfills');
+  return import("./extra_polyfills");
 }
 
 export function loadPolyfills() {
@@ -24,16 +24,16 @@ export function loadPolyfills() {
 
 // In the case of no /v support, rely on the emojibase data.
 async function loadEmojiPolyfills() {
-  if (!('unicodeSets' in RegExp.prototype)) {
-    emojiRegexPolyfill = (await import('emojibase-regex/emoji')).default;
+  if (!("unicodeSets" in RegExp.prototype)) {
+    emojiRegexPolyfill = (await import("emojibase-regex/emoji")).default;
   }
 }
 
 // Loads Vite's module preload polyfill for older browsers, but not in a Worker context.
 function loadVitePreloadPolyfill() {
-  if (typeof document === 'undefined') return;
+  if (typeof document === "undefined") return;
   // eslint-disable-next-line import/extensions
-  return import('vite/modulepreload-polyfill');
+  return import("vite/modulepreload-polyfill");
 }
 
 // Null unless polyfill is needed.

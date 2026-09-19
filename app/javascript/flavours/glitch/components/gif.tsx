@@ -1,5 +1,5 @@
-import { useHovering } from 'flavours/glitch/hooks/useHovering';
-import { autoPlayGif } from 'flavours/glitch/initial_state';
+import { useHovering } from "flavours/glitch/hooks/useHovering";
+import { autoPlayGif } from "flavours/glitch/initial_state";
 
 export const GIF: React.FC<{
   src: string;
@@ -13,8 +13,8 @@ export const GIF: React.FC<{
     <img
       className={className}
       src={hovering || animate ? src : staticSrc}
-      alt=''
-      role='presentation'
+      alt=""
+      role="presentation"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     />

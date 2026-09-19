@@ -1,5 +1,5 @@
-import { RelationshipsSeveranceEvent } from 'flavours/glitch/features/notifications/components/relationships_severance_event';
-import type { NotificationGroupSeveredRelationships } from 'flavours/glitch/models/notification_group';
+import { RelationshipsSeveranceEvent } from "flavours/glitch/features/notifications/components/relationships_severance_event";
+import type { NotificationGroupSeveredRelationships } from "flavours/glitch/models/notification_group";
 
 export const NotificationSeveredRelationships: React.FC<{
   notification: NotificationGroupSeveredRelationships;

@@ -61,7 +61,7 @@ co:
       rule:
         text: Discrizzione di una regula o esigenza per l'utilizatori di stu servore. Pruvate di guardalla corta è simplice
       sessions:
-        otp: 'Entrate u codice d’identificazione à dui fattori nant’à u vostru telefuninu, o unu di i vostri codici di ricuperazione:'
+        otp: "Entrate u codice d’identificazione à dui fattori nant’à u vostru telefuninu, o unu di i vostri codici di ricuperazione:"
         webauthn: S'ella hè una chjave USB assicuratevi di brancalla è, s'ellu c'hè unu, appughjà nant'à u buttone.
       tag:
         name: Pudete solu cambià a cassa di i caratteri, per esempiu per u rende più lighjevule
@@ -178,7 +178,7 @@ co:
         listable: Auturizà stu hashtag à esse vistu nant'à l'annuariu di i prufili
         name: Hashtag
         trendable: Auturizà stu hashtag à esse vistu in e tendenze
-    'no': Nò
+    "no": Nò
     recommended: Ricumandati
     required:
       mark: "*"
@@ -186,4 +186,4 @@ co:
     title:
       sessions:
         webauthn: Utilizà una chjave di sicurità per cunnettassi
-    'yes': Ié
+    "yes": Ié

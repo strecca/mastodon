@@ -1,16 +1,16 @@
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 
-import { afterInitialRender } from 'mastodon/hooks/useRenderSignal';
+import { afterInitialRender } from "mastodon/hooks/useRenderSignal";
 
-import { Status } from '../mastodon/features/standalone/status';
-import { loadPolyfills } from '../mastodon/polyfills';
-import ready from '../mastodon/ready';
+import { Status } from "../mastodon/features/standalone/status";
+import { loadPolyfills } from "../mastodon/polyfills";
+import ready from "../mastodon/ready";
 
 function loaded() {
-  const mountNode = document.getElementById('mastodon-status');
+  const mountNode = document.getElementById("mastodon-status");
 
   if (mountNode) {
-    const attr = mountNode.getAttribute('data-props');
+    const attr = mountNode.getAttribute("data-props");
 
     if (!attr) return;
 
@@ -34,23 +34,17 @@ loadPolyfills()
   });
 
 interface SetHeightMessage {
-  type: 'setHeight';
+  type: "setHeight";
   id: string;
   height: number;
 }
 
 function isSetHeightMessage(data: unknown): data is SetHeightMessage {
-  if (
-    data &&
-    typeof data === 'object' &&
-    'type' in data &&
-    data.type === 'setHeight'
-  )
-    return true;
+  if (data && typeof data === "object" && "type" in data && data.type === "setHeight") return true;
   else return false;
 }
 
-window.addEventListener('message', (e) => {
+window.addEventListener("message", (e) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- typings are not correct, it can be null in very rare cases
   if (!e.data || !isSetHeightMessage(e.data) || !window.parent) return;
 
@@ -58,17 +52,17 @@ window.addEventListener('message', (e) => {
 
   // Only set overflow to `hidden` once we got the expected `message` so the post can still be scrolled if
   // embedded without parent Javascript support
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow = "hidden";
 
   // We use a timeout to allow for the React page to render before calculating the height
   afterInitialRender(() => {
     window.parent.postMessage(
       {
-        type: 'setHeight',
+        type: "setHeight",
         id: data.id,
-        height: document.getElementsByTagName('html')[0]?.scrollHeight,
+        height: document.getElementsByTagName("html")[0]?.scrollHeight,
       },
-      '*',
+      "*",
     );
   });
 });

@@ -1,47 +1,38 @@
-import type { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from "react";
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { OnAttributeHandler } from '@/flavours/glitch/utils/html';
-import AdminIcon from '@/images/icons/icon_admin.svg?react';
-import ClockIcon from '@/images/icons/icon_clock.svg?react';
-import FollowerIcon from '@/images/icons/icon_follower.svg?react';
-import IconVerified from '@/images/icons/icon_verified.svg?react';
-import BlockIcon from '@/material-icons/400-24px/block.svg?react';
-import GroupsIcon from '@/material-icons/400-24px/group.svg?react';
-import PersonIcon from '@/material-icons/400-24px/person.svg?react';
-import SmartToyIcon from '@/material-icons/400-24px/smart_toy.svg?react';
-import VolumeOffIcon from '@/material-icons/400-24px/volume_off.svg?react';
+import type { OnAttributeHandler } from "@/flavours/glitch/utils/html";
+import AdminIcon from "@/images/icons/icon_admin.svg?react";
+import ClockIcon from "@/images/icons/icon_clock.svg?react";
+import FollowerIcon from "@/images/icons/icon_follower.svg?react";
+import IconVerified from "@/images/icons/icon_verified.svg?react";
+import BlockIcon from "@/material-icons/400-24px/block.svg?react";
+import GroupsIcon from "@/material-icons/400-24px/group.svg?react";
+import PersonIcon from "@/material-icons/400-24px/person.svg?react";
+import SmartToyIcon from "@/material-icons/400-24px/smart_toy.svg?react";
+import VolumeOffIcon from "@/material-icons/400-24px/volume_off.svg?react";
 
-import { EmojiHTML } from '../emoji/html';
-import { Icon } from '../icon';
+import { EmojiHTML } from "../emoji/html";
+import { Icon } from "../icon";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
-interface BadgeProps extends React.ComponentPropsWithoutRef<'div'> {
+interface BadgeProps extends React.ComponentPropsWithoutRef<"div"> {
   label: ReactNode;
   icon?: ReactNode;
   domain?: ReactNode;
   roleId?: string;
-  variant?:
-    | 'default'
-    | 'subtle'
-    | 'inverted'
-    | 'success'
-    | 'warning'
-    | 'danger';
+  variant?: "default" | "subtle" | "inverted" | "success" | "warning" | "danger";
 }
 
-type PresetBadgeProps = Omit<
-  BadgeProps,
-  'label' | 'icon' | 'domain' | 'roleId'
->;
+type PresetBadgeProps = Omit<BadgeProps, "label" | "icon" | "domain" | "roleId">;
 
 export const Badge: FC<BadgeProps> = ({
   icon = <PersonIcon />,
-  variant = 'default',
+  variant = "default",
   label,
   className,
   domain,
@@ -69,11 +60,7 @@ export const Badge: FC<BadgeProps> = ({
 export const AdminBadge: FC<Partial<BadgeProps>> = ({ label, ...props }) => (
   <Badge
     icon={<AdminIcon />}
-    label={
-      label ?? (
-        <FormattedMessage id='account.badges.admin' defaultMessage='Admin' />
-      )
-    }
+    label={label ?? <FormattedMessage id="account.badges.admin" defaultMessage="Admin" />}
     {...props}
   />
 );
@@ -81,11 +68,7 @@ export const AdminBadge: FC<Partial<BadgeProps>> = ({ label, ...props }) => (
 export const GroupBadge: FC<Partial<BadgeProps>> = ({ label, ...props }) => (
   <Badge
     icon={<GroupsIcon />}
-    label={
-      label ?? (
-        <FormattedMessage id='account.badges.group' defaultMessage='Group' />
-      )
-    }
+    label={label ?? <FormattedMessage id="account.badges.group" defaultMessage="Group" />}
     {...props}
   />
 );
@@ -93,9 +76,7 @@ export const GroupBadge: FC<Partial<BadgeProps>> = ({ label, ...props }) => (
 export const AutomatedBadge: FC<PresetBadgeProps> = (props) => (
   <Badge
     icon={<SmartToyIcon />}
-    label={
-      <FormattedMessage id='account.badges.bot' defaultMessage='Automated' />
-    }
+    label={<FormattedMessage id="account.badges.bot" defaultMessage="Automated" />}
     {...props}
   />
 );
@@ -103,54 +84,53 @@ export const AutomatedBadge: FC<PresetBadgeProps> = (props) => (
 export const FollowsYouBadge: FC<PresetBadgeProps> = (props) => (
   <Badge
     icon={<FollowerIcon />}
-    label={
-      <FormattedMessage id='account.follows_you' defaultMessage='Follows you' />
-    }
+    label={<FormattedMessage id="account.follows_you" defaultMessage="Follows you" />}
     {...props}
   />
 );
 
 export const PendingBadge: FC<PresetBadgeProps> = (props) => (
   <Badge
-    variant='warning'
+    variant="warning"
     icon={<ClockIcon />}
-    label={<FormattedMessage id='account.pending' defaultMessage='Pending' />}
+    label={<FormattedMessage id="account.pending" defaultMessage="Pending" />}
     {...props}
   />
 );
 
-export const MutedBadge: FC<
-  Partial<BadgeProps> & { expiresAt?: string | null }
-> = ({ expiresAt, label, ...props }) => {
+export const MutedBadge: FC<Partial<BadgeProps> & { expiresAt?: string | null }> = ({
+  expiresAt,
+  label,
+  ...props
+}) => {
   // Format the date, only showing the year if it's different from the current year.
   const intl = useIntl();
   let formattedDate: string | null = null;
   if (expiresAt) {
     const expiresDate = new Date(expiresAt);
-    const isCurrentYear =
-      expiresDate.getFullYear() === new Date().getFullYear();
+    const isCurrentYear = expiresDate.getFullYear() === new Date().getFullYear();
     formattedDate = intl.formatDate(expiresDate, {
-      month: 'short',
-      day: 'numeric',
-      ...(isCurrentYear ? {} : { year: 'numeric' }),
+      month: "short",
+      day: "numeric",
+      ...(isCurrentYear ? {} : { year: "numeric" }),
     });
   }
   return (
     <Badge
       icon={<VolumeOffIcon />}
-      variant='inverted'
+      variant="inverted"
       label={
         label ??
         (formattedDate ? (
           <FormattedMessage
-            id='account.badges.muted_until'
-            defaultMessage='Muted until {until}'
+            id="account.badges.muted_until"
+            defaultMessage="Muted until {until}"
             values={{
               until: formattedDate,
             }}
           />
         ) : (
-          <FormattedMessage id='account.badges.muted' defaultMessage='Muted' />
+          <FormattedMessage id="account.badges.muted" defaultMessage="Muted" />
         ))
       }
       {...props}
@@ -161,30 +141,23 @@ export const MutedBadge: FC<
 export const BlockedBadge: FC<Partial<BadgeProps>> = ({ label, ...props }) => (
   <Badge
     icon={<BlockIcon />}
-    variant='danger'
-    label={
-      label ?? (
-        <FormattedMessage
-          id='account.badges.blocked'
-          defaultMessage='Blocked'
-        />
-      )
-    }
+    variant="danger"
+    label={label ?? <FormattedMessage id="account.badges.blocked" defaultMessage="Blocked" />}
     {...props}
   />
 );
 
 const onAttribute: OnAttributeHandler = (name, value, tagName) => {
-  if (name === 'rel' && tagName === 'a') {
-    if (value === 'me') {
+  if (name === "rel" && tagName === "a") {
+    if (value === "me") {
       return null;
     }
     return [
       name,
       value
-        .split(' ')
-        .filter((x) => x !== 'me')
-        .join(' '),
+        .split(" ")
+        .filter((x) => x !== "me")
+        .join(" "),
     ];
   }
   return undefined;
@@ -195,9 +168,9 @@ export const VerifiedBadge: React.FC<{ link: string; className?: string }> = ({
   className,
 }) => (
   <Badge
-    variant='success'
-    icon={<Icon id='verified' icon={IconVerified} noFill />}
-    label={<EmojiHTML as='span' htmlString={link} onAttribute={onAttribute} />}
+    variant="success"
+    icon={<Icon id="verified" icon={IconVerified} noFill />}
+    label={<EmojiHTML as="span" htmlString={link} onAttribute={onAttribute} />}
     className={className}
   />
 );

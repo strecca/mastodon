@@ -8,7 +8,7 @@ is:
         display_name: Fullt nafn þitt eða eitthvað til gamans.
         fields: Heimasíðan þín, fornöfn, aldur eða eitthvað sem þú vilt koma á framfæri.
         indexable: Opinberar færslur þínar gætu birst í leitarniðurstöðum á Mastodon. Fólk sem hefur haft afskipti af færslunum mun eftir sem áður geta leitað í þeim.
-        note: 'Þú getur @minnst á annað fólk eða #myllumerki.'
+        note: "Þú getur @minnst á annað fólk eða #myllumerki."
         show_collections: Fólk mun geta skoðað þá sem fylgjast með þér og með hverjum þú fylgist. Fólk sem þú fylgist með mun alltaf sjá að þú sért að gera það.
         unlocked: Fólk mun geta fylgst með þér án þess að bíða eftir samykki. Taktu merkið úr þessu ef þú vilt yfirfara fylgjendabeiðnir og velja hvort þú samþykkir eða hafnar nýjum fylgjendum.
       account_alias:
@@ -76,7 +76,7 @@ is:
         domain: Þetta getur verið lénið sem birtist í tölvupóstfanginu eða MX-færslunni sem það notar. Þetta verður yfirfarið við nýskráningu.
         with_dns_records: Tilraun verður gerð til að leysa DNS-færslur uppgefins léns og munu niðurstöðurnar einnig verða útilokaðar
       featured_tag:
-        name: 'Hér eru nokkur af þeim myllumerkjum sem þú hefur notað nýlega:'
+        name: "Hér eru nokkur af þeim myllumerkjum sem þú hefur notað nýlega:"
       filters:
         action: Veldu hvaða aðgerð á að framkvæma þegar færsla samsvarar síunni
         actions:
@@ -132,7 +132,7 @@ is:
         hint: Valkvætt. Gefðu nánari upplýsingar um regluna
         text: Lýstu reglum eða kröfum sem gerðar eru til notenda á þessum netþjóni. Reyndu að hafa þetta skýrt og skorinort
       sessions:
-        otp: 'Settu inn tveggja-þátta kóðann sem farsímaforritið útbjó eða notaðu einn af endurheimtukóðunum þínum:'
+        otp: "Settu inn tveggja-þátta kóðann sem farsímaforritið útbjó eða notaðu einn af endurheimtukóðunum þínum:"
         webauthn: Ef þetta er USB-lykill, gakktu úr skugga um að honum sé stungið í samband og ef þörf þykir að ýta á hann.
       settings:
         email_subscriptions: Sé þetta gert óvirkt haldast fyrirliggjandi áskrifendur en sending tölvupósta stöðvast.
@@ -408,7 +408,7 @@ is:
         events: Virkjaðir atburðir
         template: Sniðmát gagna
         url: Slóð á endapunkt
-    'no': Nei
+    "no": Nei
     not_recommended: Ekki mælt með þessu
     overridden: Yfirtekið
     recommended: Mælt með
@@ -418,4 +418,4 @@ is:
     title:
       sessions:
         webauthn: Nota einn af öryggislyklunum þínum til að skrá inn
-    'yes': Já
+    "yes": Já

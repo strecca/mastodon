@@ -1,4 +1,4 @@
-import { ShortNumber } from 'flavours/glitch/components/short_number';
+import { ShortNumber } from "flavours/glitch/components/short_number";
 
 interface Props {
   tag: {
@@ -10,21 +10,19 @@ interface Props {
       day: string;
     }[];
     following?: boolean;
-    type: 'hashtag';
+    type: "hashtag";
   };
 }
 
 export const AutosuggestHashtag: React.FC<Props> = ({ tag }) => (
-  <div className='autosuggest-hashtag'>
-    <div className='autosuggest-hashtag__name'>
+  <div className="autosuggest-hashtag">
+    <div className="autosuggest-hashtag__name">
       #<strong>{tag.name}</strong>
     </div>
 
     {tag.history !== undefined && (
-      <div className='autosuggest-hashtag__uses'>
-        <ShortNumber
-          value={tag.history.reduce((total, day) => total + day.uses * 1, 0)}
-        />
+      <div className="autosuggest-hashtag__uses">
+        <ShortNumber value={tag.history.reduce((total, day) => total + day.uses * 1, 0)} />
       </div>
     )}
   </div>

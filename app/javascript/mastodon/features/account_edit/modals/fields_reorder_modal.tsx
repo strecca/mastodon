@@ -1,16 +1,11 @@
-import type { FC, KeyboardEventHandler } from 'react';
-import { useState, useCallback, useMemo } from 'react';
+import type { FC, KeyboardEventHandler } from "react";
+import { useState, useCallback, useMemo } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type {
-  DragEndEvent,
-  ScreenReaderInstructions,
-  Announcements,
-  Active,
-} from '@dnd-kit/core';
+import type { DragEndEvent, ScreenReaderInstructions, Announcements, Active } from "@dnd-kit/core";
 import {
   useSensors,
   useSensor,
@@ -18,79 +13,69 @@ import {
   KeyboardSensor,
   DndContext,
   closestCenter,
-} from '@dnd-kit/core';
-import {
-  restrictToVerticalAxis,
-  restrictToParentElement,
-} from '@dnd-kit/modifiers';
+} from "@dnd-kit/core";
+import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import {
   arrayMove,
   sortableKeyboardCoordinates,
   SortableContext,
   useSortable,
   verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-import { CustomEmojiProvider } from '@/mastodon/components/emoji/context';
-import { normalizeKey } from '@/mastodon/components/hotkeys/utils';
-import { Icon } from '@/mastodon/components/icon';
-import { useCustomEmojis } from '@/mastodon/hooks/useCustomEmojis';
-import type { FieldData } from '@/mastodon/reducers/slices/profile_edit';
-import {
-  patchProfile,
-  selectFieldById,
-} from '@/mastodon/reducers/slices/profile_edit';
-import {
-  createAppSelector,
-  useAppDispatch,
-  useAppSelector,
-} from '@/mastodon/store';
-import DragIndicatorIcon from '@/material-icons/400-24px/drag_indicator.svg?react';
+import { CustomEmojiProvider } from "@/mastodon/components/emoji/context";
+import { normalizeKey } from "@/mastodon/components/hotkeys/utils";
+import { Icon } from "@/mastodon/components/icon";
+import { useCustomEmojis } from "@/mastodon/hooks/useCustomEmojis";
+import type { FieldData } from "@/mastodon/reducers/slices/profile_edit";
+import { patchProfile, selectFieldById } from "@/mastodon/reducers/slices/profile_edit";
+import { createAppSelector, useAppDispatch, useAppSelector } from "@/mastodon/store";
+import DragIndicatorIcon from "@/material-icons/400-24px/drag_indicator.svg?react";
 
-import { ConfirmationModal } from '../../ui/components/confirmation_modals';
-import type { DialogModalProps } from '../../ui/components/dialog_modal';
-import { AccountField } from '../components/field';
+import { ConfirmationModal } from "../../ui/components/confirmation_modals";
+import type { DialogModalProps } from "../../ui/components/dialog_modal";
+import { AccountField } from "../components/field";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   rearrangeTitle: {
-    id: 'account_edit.field_reorder_modal.title',
-    defaultMessage: 'Rearrange fields',
+    id: "account_edit.field_reorder_modal.title",
+    defaultMessage: "Rearrange fields",
   },
   handleLabel: {
-    id: 'account_edit.field_reorder_modal.handle_label',
+    id: "account_edit.field_reorder_modal.handle_label",
     defaultMessage: 'Drag field "{item}"',
   },
   screenReaderInstructions: {
-    id: 'account_edit.field_reorder_modal.drag_instructions',
+    id: "account_edit.field_reorder_modal.drag_instructions",
     defaultMessage:
-      'To rearrange custom fields, press space or enter. While dragging, use the arrow keys to move the field up or down. Press space or enter again to drop the field in its new position, or press escape to cancel.',
+      "To rearrange custom fields, press space or enter. While dragging, use the arrow keys to move the field up or down. Press space or enter again to drop the field in its new position, or press escape to cancel.",
   },
   onDragStart: {
-    id: 'account_edit.field_reorder_modal.drag_start',
+    id: "account_edit.field_reorder_modal.drag_start",
     defaultMessage: 'Picked up field "{item}".',
   },
   onDragMove: {
-    id: 'account_edit.field_reorder_modal.drag_move',
+    id: "account_edit.field_reorder_modal.drag_move",
     defaultMessage: 'Field "{item}" was moved.',
   },
   onDragMoveOver: {
-    id: 'account_edit.field_reorder_modal.drag_over',
+    id: "account_edit.field_reorder_modal.drag_over",
     defaultMessage: 'Field "{item}" was moved over "{over}".',
   },
   onDragEnd: {
-    id: 'account_edit.field_reorder_modal.drag_end',
+    id: "account_edit.field_reorder_modal.drag_end",
     defaultMessage: 'Field "{item}" was dropped.',
   },
   onDragCancel: {
-    id: 'account_edit.field_reorder_modal.drag_cancel',
+    id: "account_edit.field_reorder_modal.drag_cancel",
     defaultMessage: 'Dragging was cancelled. Field "{item}" was dropped.',
   },
   save: {
-    id: 'account_edit.save',
-    defaultMessage: 'Save',
+    id: "account_edit.save",
+    defaultMessage: "Save",
   },
 });
 
@@ -105,9 +90,7 @@ const selectFields = createAppSelector(
 export const ReorderFieldsModal: FC<DialogModalProps> = ({ onClose }) => {
   const intl = useIntl();
   const { fields, isPending } = useAppSelector(selectFields);
-  const [fieldKeys, setFieldKeys] = useState<string[]>(
-    fields.map((field) => field.id),
-  );
+  const [fieldKeys, setFieldKeys] = useState<string[]>(fields.map((field) => field.id));
 
   const [isDragging, setIsDragging] = useState(false);
   const handleDragStart = useCallback(() => {
@@ -132,7 +115,7 @@ export const ReorderFieldsModal: FC<DialogModalProps> = ({ onClose }) => {
   const handleEscape: KeyboardEventHandler = useCallback(
     (event) => {
       const key = normalizeKey(event.key);
-      if (key === 'Escape') {
+      if (key === "Escape") {
         // Stops propagation to avoid triggering the handler in ModalRoot.
         event.stopPropagation();
 
@@ -204,7 +187,7 @@ export const ReorderFieldsModal: FC<DialogModalProps> = ({ onClose }) => {
 
   const dispatch = useAppDispatch();
   const handleSave = useCallback(() => {
-    const newFields: Pick<FieldData, 'name' | 'value'>[] = [];
+    const newFields: Pick<FieldData, "name" | "value">[] = [];
     for (const key of fieldKeys) {
       const field = fields.find((f) => f.id === key);
       if (!field) {
@@ -300,7 +283,7 @@ const ReorderFieldItem: FC<{ id: string }> = ({ id }) => {
     >
       <Icon
         icon={DragIndicatorIcon}
-        id='drag'
+        id="drag"
         className={classes.fieldHandle}
         aria-label={intl.formatMessage(messages.handleLabel, {
           item: field.name,
@@ -313,7 +296,7 @@ const ReorderFieldItem: FC<{ id: string }> = ({ id }) => {
   );
 };
 
-function labelFromActive(item: Pick<Active, 'id' | 'data'>) {
+function labelFromActive(item: Pick<Active, "id" | "data">) {
   if (item.data.current?.label) {
     return item.data.current.label as string;
   }

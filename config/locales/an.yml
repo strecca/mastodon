@@ -1,7 +1,7 @@
 ---
 an:
   about:
-    about_mastodon_html: 'Lo ret social d''o futuro: Sin anuncios, sin vichilancia corporativa, disenyo etico, y descentralización! Sé duenyo d''a tuya información con Mastodon!'
+    about_mastodon_html: "Lo ret social d'o futuro: Sin anuncios, sin vichilancia corporativa, disenyo etico, y descentralización! Sé duenyo d'a tuya información con Mastodon!"
     contact_missing: No especificau
     contact_unavailable: No disponible
     hosted_on: Mastodon alochau en %{domain}
@@ -409,7 +409,7 @@ an:
       import:
         description_html: Yes a punto d'importar una lista de bloqueyos de dominio. Per favor, revisa esta lista con muito cudiau, especialment si no has creyau esta lista tu mesmo.
         existing_relationships_warning: Relacions de seguimiento existents
-        private_comment_description_html: 'Pa aduyar-le a rastriar d''án proceden los bloqueyos importaus, los bloqueyos importaus se creyarán con o siguient comentario privau: <q>%{comment}</q>'
+        private_comment_description_html: "Pa aduyar-le a rastriar d'án proceden los bloqueyos importaus, los bloqueyos importaus se creyarán con o siguient comentario privau: <q>%{comment}</q>"
         private_comment_template: Importau dende %{source} lo %{date}
         title: Importar bloqueyos de dominio
       new:
@@ -503,12 +503,12 @@ an:
       created_msg: Nueva regla IP anyadida con exito
       delete: Eliminar
       expires_in:
-        '1209600': 2 semanas
-        '15778476': 6 meses
-        '2629746': 1 mes
-        '31556952': 1 anyo
-        '86400': 1 día
-        '94670856': 3 anyos
+        "1209600": 2 semanas
+        "15778476": 6 meses
+        "2629746": 1 mes
+        "31556952": 1 anyo
+        "86400": 1 día
+        "94670856": 3 anyos
       new:
         title: Creyar nueva regla IP
       no_ip_block_selected: No s'ha cambiau reglas IP ya que no s'ha triau garra
@@ -557,7 +557,7 @@ an:
       category_description_html: La razón per la quala se reportó esta cuenta u conteniu será citada en as comunicacions con a cuenta denunciada
       comment:
         none: Garra
-      comment_description_html: 'Pa proporcionar mas información, %{name} escribió:'
+      comment_description_html: "Pa proporcionar mas información, %{name} escribió:"
       created_at: Denunciau
       forwarded: Reninviau
       forwarded_to: Reninviau a %{domain}
@@ -573,10 +573,10 @@ an:
         placeholder: Especificar qué accions s'han preso u qualsequier atra novedat respective a esta denuncia...
         title: Notas
       notes_description_html: Veyer y deixar notas a atros moderadors y a lo tuyo yo futuro
-      quick_actions_description_html: 'Prene una acción rapida u desplaza-te enta baixo pa veyer lo conteniu denunciau:'
+      quick_actions_description_html: "Prene una acción rapida u desplaza-te enta baixo pa veyer lo conteniu denunciau:"
       remote_user_placeholder: l'usuario remoto de %{instance}
       reopen: Reubrir denuncia
-      report: 'Denunciar #%{id}'
+      report: "Denunciar #%{id}"
       reported_account: Cuenta denunciada
       reported_by: Denunciau per
       resolved: Resuelto
@@ -737,7 +737,7 @@ an:
       elasticsearch_running_check:
         message_html: No se podió connectar a Elasticsearch. Per favor, compreba que ye executando-se, u desactiva la busqueda de texto completo
       elasticsearch_version_check:
-        message_html: 'Versión incompatible de Elasticsearch: %{value}'
+        message_html: "Versión incompatible de Elasticsearch: %{value}"
         version_comparison: Elasticsearch %{running_version} se ye executando pero s'ameneste Elasticsearch %{required_version}
       rules_check:
         action: Administrar reglas d'o servidor
@@ -803,7 +803,7 @@ an:
         peaked_on_and_decaying: Aconsiguió lo pico en %{date}, agora decreixendo
         title: Etiquetas en tendencia
         trendable: Pueden amaneixer en tendencias
-        trending_rank: 'Tendencia #%{rank}'
+        trending_rank: "Tendencia #%{rank}"
         usable: Pueden usar-se
         usage_comparison: Usada %{today} vegadas hue, comparau con %{yesterday} ahiere
         used_by_over_week:
@@ -856,7 +856,7 @@ an:
       body_remote: Belún de %{domain} a denunciau a %{target}
       subject: Nuevo reporte pa la %{instance} (#%{id})
     new_trends:
-      body: 'Los siguients elementos amenesten una revisión antes que se puedan amostrar publicament:'
+      body: "Los siguients elementos amenesten una revisión antes que se puedan amostrar publicament:"
       new_trending_links:
         title: Vinclos en tendencia
       new_trending_statuses:
@@ -881,7 +881,7 @@ an:
     sensitive_content: Conteniu sensible
   application_mailer:
     salutation: "%{name}:"
-    view: 'Vista:'
+    view: "Vista:"
     view_profile: Veyer perfil
     view_status: Veyer estau
   applications:
@@ -966,7 +966,7 @@ an:
     proceed: Eliminar cuenta
     success_msg: La tuya cuenta s'eliminó con exito
     warning:
-      before: 'Antes de continar, per favor leye con atención las siguients notas:'
+      before: "Antes de continar, per favor leye con atención las siguients notas:"
       caches: Lo conteniu que ha estau almagazenau en caché per atros servidors puede persistir
       data_removal: Las tuyas publicacions y la resta de datos s'eliminarán definitivament
       irreversible: No podrás restaurar ni reactivar la tuya cuenta
@@ -989,7 +989,7 @@ an:
       description_html: Estas son las accions emprendidas contra la tuya cuenta y las alvertencias que t'han estau ninviadas per lo personal de %{instance}.
       recipient: Endrezada a
       reject_appeal: Refusar apelación
-      status: 'Publicación #%{id}'
+      status: "Publicación #%{id}"
       status_removed: Publicación ya eliminada d'o sistema
       title: "%{action} d'o %{date}"
       title_actions:
@@ -1004,19 +1004,19 @@ an:
       your_appeal_pending: Has ninviau una apelación
       your_appeal_rejected: La tuya apelación ha estau refusada
   errors:
-    '400': La solicitut que has ninviau no ye valida u yera malformada.
-    '403': No tiens permiso pa acceder ta esta pachina.
-    '404': La pachina que yeras buscando no existe.
-    '406': Esta pachina no ye disponible en o formato solicitau.
-    '410': La pachina que yeras buscando no existe mas.
-    '422':
+    "400": La solicitut que has ninviau no ye valida u yera malformada.
+    "403": No tiens permiso pa acceder ta esta pachina.
+    "404": La pachina que yeras buscando no existe.
+    "406": Esta pachina no ye disponible en o formato solicitau.
+    "410": La pachina que yeras buscando no existe mas.
+    "422":
       content: Verificación de seguranza fallida. Yes blocando qualques cookies?
       title: Verificación de seguranza fallida
-    '429': Asfixiado
-    '500':
+    "429": Asfixiado
+    "500":
       content: Lo sentimos, bella cosa ha funcionau malament per la nuestra parte.
       title: Esta pachina no ye correcta
-    '503': La pachina no s'ha puesto cargar a causa d'un fallo temporal d'o servidor.
+    "503": La pachina no s'ha puesto cargar a causa d'un fallo temporal d'o servidor.
     noscript_html: Pa usar l'aplicación web de Mastodon, per favor activa Javascript. Alternativament, preba bella d'as <a href="%{apps_path}">aplicacions nativas</a> pa Mastodon pa la tuya plataforma.
   existing_username_validator:
     not_found: no podió trobar un usuario local con ixe nombre d'usuario
@@ -1102,7 +1102,7 @@ an:
       other: Bella cosa no ye bien! Per favor, revise %{count} errors mas abaixo
   imports:
     errors:
-      invalid_csv_file: 'Fichero CSV no valido. Error: %{error}'
+      invalid_csv_file: "Fichero CSV no valido. Error: %{error}"
       over_rows_processing_limit: contiene mas de %{count} ringleras
     modes:
       merge: Unir
@@ -1122,15 +1122,15 @@ an:
     delete: Desactivar
     expired: Expiradas
     expires_in:
-      '1800': 30 menutos
-      '21600': 6 horas
-      '3600': 1 hora
-      '43200': 12 horas
-      '604800': 1 semana
-      '86400': 1 día
+      "1800": 30 menutos
+      "21600": 6 horas
+      "3600": 1 hora
+      "43200": 12 horas
+      "604800": 1 semana
+      "86400": 1 día
     expires_in_prompt: Nunca
     generate: Chenerar
-    invited_by: 'Estiés convidau per:'
+    invited_by: "Estiés convidau per:"
     max_uses:
       one: 1 uso
       other: "%{count} usos"
@@ -1179,7 +1179,7 @@ an:
     set_redirect: Establir redirección
     warning:
       backreference_required: La nueva cuenta ha d'estar configurada primero pa fer referencia a esta
-      before: 'Antes de continar, per favor leye con atención las siguients notas:'
+      before: "Antes de continar, per favor leye con atención las siguients notas:"
       cooldown: Dimpués de migrar i hai un periodo d'aspera entre lo qual no podrás tornar a migrar
       disabled_account: La tuya cuenta actual no será completament utilizable dimpués. Manimenos, tendrás acceso a la exportación de datos asinas como a la reactivación.
       followers: Esta acción migrará a totz los seguidores d'a cuenta actual a la nueva cuenta
@@ -1190,7 +1190,7 @@ an:
   move_handler:
     carry_blocks_over_text: Este usuario se mudó dende %{acct}, que hebas blocau.
     carry_mutes_over_text: Este usuario se mudó dende %{acct}, que hebas silenciau.
-    copy_account_note_text: 'Este usuario se mudó dende %{acct}, aquí yeran los tuyos notas anteriors sobre ell:'
+    copy_account_note_text: "Este usuario se mudó dende %{acct}, aquí yeran los tuyos notas anteriors sobre ell:"
   navigation:
     toggle_menu: Alternar menú
   notification_mailer:
@@ -1200,7 +1200,7 @@ an:
       sign_up:
         subject: "%{name} se rechistró"
     favourite:
-      body: 'Lo tuyo estau estió marcau como favorito per %{name}:'
+      body: "Lo tuyo estau estió marcau como favorito per %{name}:"
       subject: "%{name} marcó como favorito lo tuyo estau"
       title: Nuevo favorito
     follow:
@@ -1210,11 +1210,11 @@ an:
     follow_request:
       action: Administrar solicitutz pa seguir
       body: "%{name} ha solicitau seguir-te"
-      subject: 'Seguidor pendient: %{name}'
+      subject: "Seguidor pendient: %{name}"
       title: Nueva solicitut pa seguir
     mention:
       action: Responder
-      body: 'Estiés mencionau per %{name} en:'
+      body: "Estiés mencionau per %{name} en:"
       subject: Estiés mencionau per %{name}
       title: Nueva mención
     poll:
@@ -1228,7 +1228,7 @@ an:
     update:
       subject: "%{name} editó una publicación"
   notifications:
-    email_events_hint: 'Tría los eventos pa los quals deseyas recibir notificacions:'
+    email_events_hint: "Tría los eventos pa los quals deseyas recibir notificacions:"
   number:
     human:
       decimal_units:
@@ -1244,7 +1244,7 @@ an:
     description_html: Si habilitas <strong>autenticación de dos factors</strong> a traviés d'una aplicación d'autenticación, l'ingreso requerirá que sías en posesión d'o tuyo telefono, que chenerará codigos pa que ingreses.
     enable: Activar
     instructions_html: "<strong>Escaneya este codigo QR dende Google Authenticator u una aplicación TOPT semellant en o tuyo telefono</strong>. A partir d'agora, esta aplicación chenerará codigos que habrás d'ingresar quan quieras iniciar sesión."
-    manual_instructions: 'Si no puetz escaniar lo codigo QR y amenestes escrebir-lo manualment, este ye lo secreto en texto plano:'
+    manual_instructions: "Si no puetz escaniar lo codigo QR y amenestes escrebir-lo manualment, este ye lo secreto en texto plano:"
     setup: Configurar
     wrong_code: Lo codigo ingresau ye invalido! Ye correcta la hora d'o dispositivo y lo servidor?
   pagination:
@@ -1300,10 +1300,10 @@ an:
     errors:
       invalid_rules: no fa referencia a reglas validas
   rss:
-    content_warning: 'Alvertencia de conteniu:'
+    content_warning: "Alvertencia de conteniu:"
     descriptions:
       account: Publicacions publicas de @%{acct}
-      tag: 'Publicacions publicas etiquetadas con #%{hashtag}'
+      tag: "Publicacions publicas etiquetadas con #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Ha superau lo limite de %{limit} publicacions programadas pa ixe día
     over_total_limit: Ha superau lo limite de %{limit} publicacions programadas
@@ -1374,7 +1374,7 @@ an:
       audio:
         one: "%{count} audio"
         other: "%{count} audios"
-      description: 'Adchunto: %{attached}'
+      description: "Adchunto: %{attached}"
       image:
         one: "%{count} imachen"
         other: "%{count} imachens"
@@ -1382,11 +1382,11 @@ an:
         one: "%{count} video"
         other: "%{count} videos"
     boosted_from_html: Empentau dende %{acct_link}
-    content_warning: 'Alerta de conteniu: %{warning}'
+    content_warning: "Alerta de conteniu: %{warning}"
     default_language: Igual que l'idioma d'a interficie
     disallowed_hashtags:
-      one: 'conteneba un hashtag no permitiu: %{tags}'
-      other: 'conteneba los hashtags no permitius: %{tags}'
+      one: "conteneba un hashtag no permitiu: %{tags}"
+      other: "conteneba los hashtags no permitius: %{tags}"
     edited_at_html: Editau %{date}
     errors:
       in_reply_not_found: Lo estau a lo qual intentas responder no existe.
@@ -1419,14 +1419,14 @@ an:
     keep_self_fav: Mantener publicacions que marqués como favoritas
     keep_self_fav_hint: No borra publicacions tuyas que haigas marcau como favoritas
     min_age:
-      '1209600': 2 semanas
-      '15778476': 6 meses
-      '2629746': 1 mes
-      '31556952': 1 anyo
-      '5259492': 2 meses
-      '604800': 1 semana
-      '63113904': 2 anyos
-      '7889238': 3 meses
+      "1209600": 2 semanas
+      "15778476": 6 meses
+      "2629746": 1 mes
+      "31556952": 1 anyo
+      "5259492": 2 meses
+      "604800": 1 semana
+      "63113904": 2 anyos
+      "7889238": 3 meses
     min_age_label: Branquil de tiempo
     min_favs: Mantener mensaches con un numero de favoritos mayor que
     min_reblogs: Mantener publicacions reblogueadas mas de
@@ -1472,7 +1472,7 @@ an:
       title: Descargar fichero
     suspicious_sign_in:
       change_password: cambies la tuya clau
-      details: 'Aquí son los detalles de l''inicio de sesión:'
+      details: "Aquí son los detalles de l'inicio de sesión:"
       explanation: Hemos detectau un inicio de sesión en a tuya cuenta dende una nueva adreza IP.
       further_actions_html: Si no estiés tu, te recomendamos que %{action} immediatament y habilites l'autenticación de dos factors pa mantener la tuya cuenta segura.
       subject: La tuya cuenta ha estau accedida dende una nueva adreza IP
@@ -1490,8 +1490,8 @@ an:
         sensitive: A partir d'agora totz los fichers multimedia que puyes serán marcaus como sensibles y amagaus dimpués d'una alvertencia que caldrá clicar.
         silence: Encara puetz usar la tuya cuenta, pero nomás las personas que te son seguindo veyerán las tuyas publicacions en este servidor, y puetz estar excluyiu de quantas funcionalidatz d'escubrimiento. Manimenos, atras cuentas podrán empecipiar a seguir-te manualment.
         suspend: Ya no puetz utilizar la tuya cuenta, y lo tuyo perfil y la resta de datos ya no son accesibles. Encara puetz iniciar sesión pa solicitar una copia de seguranza d'os tuyos datos, dica que estes sían eliminaus per completo en uns 30 días, encara que conservaremos qualques datos basicos pa impedir que enguileyes la suspensión.
-      reason: 'Razón:'
-      statuses: 'Publicacions citadas:'
+      reason: "Razón:"
+      statuses: "Publicacions citadas:"
       subject:
         delete_statuses: Las tuyas publicacions en %{acct} han estau eliminadas
         disable: La suya cuenta %{acct} ha estau conchelada
@@ -1516,7 +1516,7 @@ an:
     follow_limit_reached: No puetz seguir a mas de %{limit} personas
     invalid_otp_token: Codigo de dos factors incorrecto
     otp_lost_help_html: Si perdiés a l'acceso a totz dos, puetz meter-te en contancto con %{email}
-    signed_in_as: 'Sesión iniciada como:'
+    signed_in_as: "Sesión iniciada como:"
   verification:
     verification: Verificación
   webauthn_credentials:

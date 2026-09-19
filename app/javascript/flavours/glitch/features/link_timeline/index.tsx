@@ -1,17 +1,17 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from "react";
 
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import TrendingUpIcon from '@/material-icons/400-24px/trending_up.svg?react';
-import { expandLinkTimeline } from 'flavours/glitch/actions/timelines';
-import { Column } from 'flavours/glitch/components/column';
-import type { ColumnRef } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import StatusListContainer from 'flavours/glitch/features/ui/containers/status_list_container';
-import type { Card } from 'flavours/glitch/models/status';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import TrendingUpIcon from "@/material-icons/400-24px/trending_up.svg?react";
+import { expandLinkTimeline } from "flavours/glitch/actions/timelines";
+import { Column } from "flavours/glitch/components/column";
+import type { ColumnRef } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import StatusListContainer from "flavours/glitch/features/ui/containers/status_list_container";
+import type { Card } from "flavours/glitch/models/status";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
 export const LinkTimeline: React.FC<{
   multiColumn: boolean;
@@ -21,14 +21,10 @@ export const LinkTimeline: React.FC<{
   const dispatch = useAppDispatch();
   const columnRef = useRef<ColumnRef>(null);
   const firstStatusId = useAppSelector((state) =>
-    decodedUrl
-      ? (state.timelines.getIn([`link:${decodedUrl}`, 'items', 0]) as string)
-      : undefined,
+    decodedUrl ? (state.timelines.getIn([`link:${decodedUrl}`, "items", 0]) as string) : undefined,
   );
   const story = useAppSelector((state) =>
-    firstStatusId
-      ? (state.statuses.getIn([firstStatusId, 'card']) as Card)
-      : undefined,
+    firstStatusId ? (state.statuses.getIn([firstStatusId, "card"]) as Card) : undefined,
   );
 
   const handleHeaderClick = useCallback(() => {
@@ -49,7 +45,7 @@ export const LinkTimeline: React.FC<{
   return (
     <Column bindToDocument={!multiColumn} ref={columnRef} label={story?.title}>
       <ColumnHeader
-        icon='explore'
+        icon="explore"
         iconComponent={TrendingUpIcon}
         title={story?.title}
         onClick={handleHeaderClick}
@@ -68,7 +64,7 @@ export const LinkTimeline: React.FC<{
 
       <Helmet>
         <title>{story?.title}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

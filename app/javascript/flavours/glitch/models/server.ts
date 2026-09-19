@@ -2,7 +2,7 @@ import type {
   ApiInstanceJSON,
   ApiExtendedDescriptionJSON,
   ApiDomainBlockJSON,
-} from 'flavours/glitch/api_types/instance';
+} from "flavours/glitch/api_types/instance";
 
 export type Server = ApiInstanceJSON;
 
@@ -16,6 +16,4 @@ export const createExtendedDescriptionFromServerJSON = (
 
 export type DomainBlock = ApiDomainBlockJSON;
 
-export const createDomainBlockFromServerJSON = (
-  obj: ApiDomainBlockJSON,
-): DomainBlock => obj;
+export const createDomainBlockFromServerJSON = (obj: ApiDomainBlockJSON): DomainBlock => obj;

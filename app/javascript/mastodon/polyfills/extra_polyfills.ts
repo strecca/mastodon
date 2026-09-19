@@ -1,1 +1,1 @@
-import 'requestidlecallback';
+import "requestidlecallback";

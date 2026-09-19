@@ -1,68 +1,63 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 
 import {
   apiClearNotifications,
   apiFetchNotificationGroups,
-} from 'flavours/glitch/api/notifications';
-import type { ApiAccountJSON } from 'flavours/glitch/api_types/accounts';
-import type { ApiCollectionJSON } from 'flavours/glitch/api_types/collections';
+} from "flavours/glitch/api/notifications";
+import type { ApiAccountJSON } from "flavours/glitch/api_types/accounts";
+import type { ApiCollectionJSON } from "flavours/glitch/api_types/collections";
 import type {
   ApiNotificationGroupJSON,
   ApiNotificationJSON,
   NotificationType,
-} from 'flavours/glitch/api_types/notifications';
-import { allNotificationTypes } from 'flavours/glitch/api_types/notifications';
-import type { ApiStatusJSON } from 'flavours/glitch/api_types/statuses';
-import { usePendingItems } from 'flavours/glitch/initial_state';
-import type { NotificationGap } from 'flavours/glitch/reducers/notification_groups';
+} from "flavours/glitch/api_types/notifications";
+import { allNotificationTypes } from "flavours/glitch/api_types/notifications";
+import type { ApiStatusJSON } from "flavours/glitch/api_types/statuses";
+import { usePendingItems } from "flavours/glitch/initial_state";
+import type { NotificationGap } from "flavours/glitch/reducers/notification_groups";
 import {
   selectSettingsNotificationsExcludedTypes,
   selectSettingsNotificationsGroupFollows,
   selectSettingsNotificationsQuickFilterActive,
   selectSettingsNotificationsShows,
-} from 'flavours/glitch/selectors/settings';
-import type { AppDispatch, RootState } from 'flavours/glitch/store';
-import {
-  createAppAsyncThunk,
-  createDataLoadingThunk,
-} from 'flavours/glitch/store/typed_functions';
+} from "flavours/glitch/selectors/settings";
+import type { AppDispatch, RootState } from "flavours/glitch/store";
+import { createAppAsyncThunk, createDataLoadingThunk } from "flavours/glitch/store/typed_functions";
 
-import { fetchAccountsForCollectionPreview } from '../reducers/slices/collections';
+import { fetchAccountsForCollectionPreview } from "../reducers/slices/collections";
 
-import { importFetchedAccounts, importFetchedStatuses } from './importer';
-import { NOTIFICATIONS_FILTER_SET } from './notifications';
-import { saveSettings } from './settings';
+import { importFetchedAccounts, importFetchedStatuses } from "./importer";
+import { NOTIFICATIONS_FILTER_SET } from "./notifications";
+import { saveSettings } from "./settings";
 
 function notificationTypeForFilter(type: NotificationType) {
-  if (type === 'quoted_update') return 'update';
+  if (type === "quoted_update") return "update";
   else return type;
 }
 
 function notificationTypeForQuickFilter(type: NotificationType) {
   switch (type) {
-    case 'quoted_update':
-      return 'update';
-    case 'quote':
-      return 'mention';
-    case 'collection_update':
-      return 'collection';
-    case 'added_to_collection':
-      return 'collection';
+    case "quoted_update":
+      return "update";
+    case "quote":
+      return "mention";
+    case "collection_update":
+      return "collection";
+    case "added_to_collection":
+      return "collection";
     default:
       return type;
   }
 }
 
 function excludeAllTypesExcept(filter: string) {
-  return allNotificationTypes.filter(
-    (item) => notificationTypeForQuickFilter(item) !== filter,
-  );
+  return allNotificationTypes.filter((item) => notificationTypeForQuickFilter(item) !== filter);
 }
 
 function getExcludedTypes(state: RootState) {
   const activeFilter = selectSettingsNotificationsQuickFilterActive(state);
 
-  return activeFilter === 'all'
+  return activeFilter === "all"
     ? selectSettingsNotificationsExcludedTypes(state)
     : excludeAllTypesExcept(activeFilter);
 }
@@ -76,43 +71,40 @@ function dispatchAssociatedRecords(
   const collections: ApiCollectionJSON[] = [];
 
   notifications.forEach((notification) => {
-    if (notification.type === 'admin.report') {
+    if (notification.type === "admin.report") {
       fetchedAccounts.push(notification.report.target_account);
     }
 
-    if (notification.type === 'moderation_warning') {
+    if (notification.type === "moderation_warning") {
       fetchedAccounts.push(notification.moderation_warning.target_account);
     }
 
-    if ('status' in notification && notification.status) {
+    if ("status" in notification && notification.status) {
       fetchedStatuses.push(notification.status);
     }
 
-    if ('collection' in notification && notification.collection) {
+    if ("collection" in notification && notification.collection) {
       collections.push(notification.collection);
     }
   });
 
-  if (fetchedAccounts.length > 0)
-    dispatch(importFetchedAccounts(fetchedAccounts));
+  if (fetchedAccounts.length > 0) dispatch(importFetchedAccounts(fetchedAccounts));
 
-  if (fetchedStatuses.length > 0)
-    dispatch(importFetchedStatuses(fetchedStatuses));
+  if (fetchedStatuses.length > 0) dispatch(importFetchedStatuses(fetchedStatuses));
 
-  if (collections.length > 0)
-    void fetchAccountsForCollectionPreview(collections, dispatch);
+  if (collections.length > 0) void fetchAccountsForCollectionPreview(collections, dispatch);
 }
 
 function selectNotificationGroupedTypes(state: RootState) {
-  const types: NotificationType[] = ['favourite', 'reblog'];
+  const types: NotificationType[] = ["favourite", "reblog"];
 
-  if (selectSettingsNotificationsGroupFollows(state)) types.push('follow');
+  if (selectSettingsNotificationsGroupFollows(state)) types.push("follow");
 
   return types;
 }
 
 export const fetchNotifications = createDataLoadingThunk(
-  'notificationGroups/fetch',
+  "notificationGroups/fetch",
   async (_params, { getState }) =>
     apiFetchNotificationGroups({
       grouped_types: selectNotificationGroupedTypes(getState()),
@@ -122,13 +114,12 @@ export const fetchNotifications = createDataLoadingThunk(
     dispatch(importFetchedAccounts(accounts));
     dispatch(importFetchedStatuses(statuses));
     dispatchAssociatedRecords(dispatch, notifications);
-    const payload: (ApiNotificationGroupJSON | NotificationGap)[] =
-      notifications;
+    const payload: (ApiNotificationGroupJSON | NotificationGap)[] = notifications;
 
     // TODO: might be worth not using gaps for that…
     // if (nextLink) payload.push({ type: 'gap', loadUrl: nextLink.uri });
     if (notifications.length > 1)
-      payload.push({ type: 'gap', maxId: notifications.at(-1)?.page_min_id });
+      payload.push({ type: "gap", maxId: notifications.at(-1)?.page_min_id });
 
     return payload;
     // dispatch(submitMarkers());
@@ -136,7 +127,7 @@ export const fetchNotifications = createDataLoadingThunk(
 );
 
 export const fetchNotificationsGap = createDataLoadingThunk(
-  'notificationGroups/fetchGap',
+  "notificationGroups/fetchGap",
   async (params: { gap: NotificationGap }, { getState }) =>
     apiFetchNotificationGroups({
       grouped_types: selectNotificationGroupedTypes(getState()),
@@ -153,7 +144,7 @@ export const fetchNotificationsGap = createDataLoadingThunk(
 );
 
 export const pollRecentNotifications = createDataLoadingThunk(
-  'notificationGroups/pollRecentNotifications',
+  "notificationGroups/pollRecentNotifications",
   async (_params, { getState }) => {
     return apiFetchNotificationGroups({
       grouped_types: selectNotificationGroupedTypes(getState()),
@@ -161,9 +152,7 @@ export const pollRecentNotifications = createDataLoadingThunk(
       exclude_types: getExcludedTypes(getState()),
       // In slow mode, we don't want to include notifications that duplicate the already-displayed ones
       since_id: usePendingItems
-        ? getState().notificationGroups.groups.find(
-            (group) => group.type !== 'gap',
-          )?.page_max_id
+        ? getState().notificationGroups.groups.find((group) => group.type !== "gap")?.page_max_id
         : undefined,
     });
   },
@@ -180,32 +169,31 @@ export const pollRecentNotifications = createDataLoadingThunk(
 );
 
 export const processNewNotificationForGroups = createAppAsyncThunk(
-  'notificationGroups/processNew',
+  "notificationGroups/processNew",
   (notification: ApiNotificationJSON, { dispatch, getState }) => {
     const state = getState();
     const activeFilter = selectSettingsNotificationsQuickFilterActive(state);
     const notificationShows = selectSettingsNotificationsShows(state);
 
     const showInColumn =
-      activeFilter === 'all'
-        ? notificationShows[notificationTypeForFilter(notification.type)] !==
-          false
+      activeFilter === "all"
+        ? notificationShows[notificationTypeForFilter(notification.type)] !== false
         : activeFilter === notificationTypeForQuickFilter(notification.type);
 
     if (!showInColumn) return;
 
     if (
-      (notification.type === 'mention' ||
-        notification.type === 'quote' ||
-        notification.type === 'update' ||
-        notification.type === 'quoted_update') &&
+      (notification.type === "mention" ||
+        notification.type === "quote" ||
+        notification.type === "update" ||
+        notification.type === "quoted_update") &&
       notification.status?.filtered
     ) {
       const filters = notification.status.filtered.filter((result) =>
-        result.filter.context.includes('notifications'),
+        result.filter.context.includes("notifications"),
       );
 
-      if (filters.some((result) => result.filter.filter_action === 'hide')) {
+      if (filters.some((result) => result.filter.filter_action === "hide")) {
         return;
       }
     }
@@ -219,15 +207,12 @@ export const processNewNotificationForGroups = createAppAsyncThunk(
   },
 );
 
-export const loadPending = createAction('notificationGroups/loadPending');
+export const loadPending = createAction("notificationGroups/loadPending");
 
 export const updateScrollPosition = createAppAsyncThunk(
-  'notificationGroups/updateScrollPosition',
+  "notificationGroups/updateScrollPosition",
   ({ top }: { top: boolean }, { dispatch, getState }) => {
-    if (
-      top &&
-      getState().notificationGroups.mergedNotifications === 'needs-reload'
-    ) {
+    if (top && getState().notificationGroups.mergedNotifications === "needs-reload") {
       void dispatch(fetchNotifications());
     }
 
@@ -236,11 +221,11 @@ export const updateScrollPosition = createAppAsyncThunk(
 );
 
 export const setNotificationsFilter = createAppAsyncThunk(
-  'notifications/filter/set',
+  "notifications/filter/set",
   ({ filterType }: { filterType: string }, { dispatch }) => {
     dispatch({
       type: NOTIFICATIONS_FILTER_SET,
-      path: ['notifications', 'quickFilter', 'active'],
+      path: ["notifications", "quickFilter", "active"],
       value: filterType,
     });
     void dispatch(fetchNotifications());
@@ -248,40 +233,34 @@ export const setNotificationsFilter = createAppAsyncThunk(
   },
 );
 
-export const clearNotifications = createDataLoadingThunk(
-  'notifications/clear',
-  () => apiClearNotifications(),
+export const clearNotifications = createDataLoadingThunk("notifications/clear", () =>
+  apiClearNotifications(),
 );
 
-export const markNotificationsAsRead = createAction(
-  'notificationGroups/markAsRead',
-);
+export const markNotificationsAsRead = createAction("notificationGroups/markAsRead");
 
 export const mountNotifications = createAppAsyncThunk(
-  'notificationGroups/mount',
+  "notificationGroups/mount",
   (_, { dispatch, getState }) => {
     const state = getState();
 
     if (
       state.notificationGroups.mounted === 0 &&
-      state.notificationGroups.mergedNotifications === 'needs-reload'
+      state.notificationGroups.mergedNotifications === "needs-reload"
     ) {
       void dispatch(fetchNotifications());
     }
   },
 );
 
-export const unmountNotifications = createAction('notificationGroups/unmount');
+export const unmountNotifications = createAction("notificationGroups/unmount");
 
 export const refreshStaleNotificationGroups = createAppAsyncThunk<{
   deferredRefresh: boolean;
-}>('notificationGroups/refreshStale', (_, { dispatch, getState }) => {
+}>("notificationGroups/refreshStale", (_, { dispatch, getState }) => {
   const state = getState();
 
-  if (
-    state.notificationGroups.scrolledToTop ||
-    !state.notificationGroups.mounted
-  ) {
+  if (state.notificationGroups.scrolledToTop || !state.notificationGroups.mounted) {
     void dispatch(fetchNotifications());
     return { deferredRefresh: false };
   }

@@ -1,7 +1,7 @@
 ---
 eo:
   about:
-    about_mastodon_html: 'La socia retejo de la estonteco: sen reklamo, sen observado por firmao, etika desegno, kaj malcentrigo! Regu viajn informojn per Mastodon!'
+    about_mastodon_html: "La socia retejo de la estonteco: sen reklamo, sen observado por firmao, etika desegno, kaj malcentrigo! Regu viajn informojn per Mastodon!"
     contact_missing: Ne elektita
     contact_unavailable: Ne disponebla
     hosted_on: "%{domain} estas nodo de Mastodon"
@@ -322,7 +322,7 @@ eo:
         title: Nova anonco
       preview:
         disclaimer: Pro uzantoj ne povas elekti ne ricevi ilin, retpoŝtaj sciigoj devus esti uzata nur por gravaj anoncoj kiel memaj breĉoj de datumo aŭ sciigoj pri la fermado de la servilo.
-        explanation_html: 'La retpoŝto estos sendita al <strong>%{display_count} uzantoj</strong>. La jena teksto estos inkluzivita en la retmesaĝon:'
+        explanation_html: "La retpoŝto estos sendita al <strong>%{display_count} uzantoj</strong>. La jena teksto estos inkluzivita en la retmesaĝon:"
         title: Antaŭrigardu sciigan anoncon
       publish: Publikigi
       published_msg: Anonco sukcese publikigita!
@@ -475,10 +475,10 @@ eo:
       import:
         description_html: Vi importos liston de domajnblokoj.
         existing_relationships_warning: Ekzistantaj sekvorilatoj
-        private_comment_description_html: 'Por helpi vin, importitaj blokoj kreitas kun la privata komento: <q>%{comment}</q>'
+        private_comment_description_html: "Por helpi vin, importitaj blokoj kreitas kun la privata komento: <q>%{comment}</q>"
         private_comment_template: Enportita el %{source} je %{date}
         title: Importi domajnblokojn
-      invalid_domain_block: '1 au pli da domajnblokadoj ignoritas ĉar la eraro: %{error}'
+      invalid_domain_block: "1 au pli da domajnblokadoj ignoritas ĉar la eraro: %{error}"
       new:
         title: Importi domajnblokojn
       no_file: Neniu dosiero elektita
@@ -611,12 +611,12 @@ eo:
       created_msg: Nova IP-regulo sukcese aldonita
       delete: Forigi
       expires_in:
-        '1209600': 2 semajnoj
-        '15778476': 6 monatoj
-        '2629746': 1 monato
-        '31556952': 1 jaro
-        '86400': 1 tago
-        '94670856': 3 jaroj
+        "1209600": 2 semajnoj
+        "15778476": 6 monatoj
+        "2629746": 1 monato
+        "31556952": 1 jaro
+        "86400": 1 tago
+        "94670856": 3 jaroj
       new:
         title: Krei novan IP-regulon
       no_ip_block_selected: Neniu IP-regulo estis ŝanĝita ĉar neniu estis elektita
@@ -671,7 +671,7 @@ eo:
       category_description_html: La kialo pri ĉi tiuj konto kaj enhavo raportitaj sendotas al la raportita konto
       comment:
         none: Nenio
-      comment_description_html: 'Por doni pli da informo, %{name} skribis:'
+      comment_description_html: "Por doni pli da informo, %{name} skribis:"
       confirm: Konfirmi
       confirm_action: Konfirmi moderigadagon kontra @%{acct}
       created_at: Raportita
@@ -690,11 +690,11 @@ eo:
         placeholder: Priskribu faritajn agojn, aŭ ajnan novan informon pri tiu signalo…
         title: Notoj
       notes_description_html: Vidi kaj lasi notojn por aliaj kontrolantoj kaj estonta vi
-      processed_msg: 'La raporto #%{id} sukcese prilaborita'
-      quick_actions_description_html: 'Agu au movu malsupre por vidi raportitajn enhavojn:'
+      processed_msg: "La raporto #%{id} sukcese prilaborita"
+      quick_actions_description_html: "Agu au movu malsupre por vidi raportitajn enhavojn:"
       remote_user_placeholder: la ekstera uzanto de %{instance}
       reopen: Remalfermi signalon
-      report: 'Raporto #%{id}'
+      report: "Raporto #%{id}"
       reported_account: Raportita konto
       reported_by: Raportita de
       reported_with_application: Raportita per aplikaĵo
@@ -705,16 +705,16 @@ eo:
       statuses_description_html: Sentema enhavo referencitas kun la raportita konto
       summary:
         action_preambles:
-          delete_html: 'Vi ja tuj <strong>forigos</strong> kelke da afiŝoj de <strong>@%{acct}</strong>. Tio faros kiel jene:'
-          mark_as_sensitive_html: 'Vi ja tuj <strong>markos</strong> kelke da afiŝoj de <strong>@%{acct}</strong> kiel <strong>tiklaj</strong>. Tio faros kiel:'
-          silence_html: 'Vi ja tuj <strong>limigos</strong> kelke da afiŝoj de <strong>@%{acct}</strong>. Tio faros kiel:'
-          suspend_html: 'Vi ja tuj <strong>suspendos</strong> la konton de <strong>@%{acct}</strong>. Tio faros kiel:'
+          delete_html: "Vi ja tuj <strong>forigos</strong> kelke da afiŝoj de <strong>@%{acct}</strong>. Tio faros kiel jene:"
+          mark_as_sensitive_html: "Vi ja tuj <strong>markos</strong> kelke da afiŝoj de <strong>@%{acct}</strong> kiel <strong>tiklaj</strong>. Tio faros kiel:"
+          silence_html: "Vi ja tuj <strong>limigos</strong> kelke da afiŝoj de <strong>@%{acct}</strong>. Tio faros kiel:"
+          suspend_html: "Vi ja tuj <strong>suspendos</strong> la konton de <strong>@%{acct}</strong>. Tio faros kiel:"
         actions:
           delete_html: Forigi la sentemajn afiŝojn
           mark_as_sensitive_html: Markigi la audovidaĵojn de sentemaj afiŝoj kiel sentemaj
           silence_html: Ege limigi atingon de <strong>@%{acct}</strong> per kauzi ilia profilo kaj enhavoj esti videbla nur al personoj kiu jam sekvis ilin au permane serĉi ĝin
           suspend_html: Suspendi <strong>@%{acct}</strong>, fari ties profilon kaj enhavojn neatingeblaj kaj maleblaj interagi kun
-        close_report: 'Marki la raporto #%{id} kiel solvita'
+        close_report: "Marki la raporto #%{id} kiel solvita"
         close_reports_html: Marki <strong>ĉiuj</strong> raportoj kontraŭ <strong>@%{acct}</strong> kiel solvitaj
         delete_data_html: Forigi profilon kaj enhavojn de <strong>@%{acct}</strong> post 30 tagoj se ili ne malsuspenditas dum la dauro
         preview_preamble_html: "<strong>@%{acct}</strong> akiros averton kun ĉi tiuj enhavoj:"
@@ -724,7 +724,7 @@ eo:
       target_origin: Origino de raportita konto
       title: Raportoj
       unassign: Malasigni
-      unknown_action_msg: 'Nekonata ago: %{action}'
+      unknown_action_msg: "Nekonata ago: %{action}"
       unresolved: Nesolvitaj
       updated_at: Ĝisdatigita
       view_profile: Vidi profilon
@@ -874,7 +874,7 @@ eo:
       back_to_account: Reveni al konta paĝo
       back_to_report: Reveni al raportpaĝo
       batch:
-        add_to_report: 'Aldoni al raporto #%{id}'
+        add_to_report: "Aldoni al raporto #%{id}"
         remove_from_report: Forigi de raporto
         report: Raporti
       contents: Enhavoj
@@ -933,7 +933,7 @@ eo:
       elasticsearch_running_check:
         message_html: Ne eblas konekti Elasticsearch. Bonvolu kontroli ke ĝi funkcias, aǔ malŝaltu plentekstan serĉon
       elasticsearch_version_check:
-        message_html: 'Nekongrua Elasticsearch-versio: %{value}'
+        message_html: "Nekongrua Elasticsearch-versio: %{value}"
         version_comparison: Elasticsearch %{running_version} instalitas sed %{required_version} bezonitas
       rules_check:
         action: Administri servilajn regulojn
@@ -995,7 +995,7 @@ eo:
       notified_on_html: Uzantojn sciigis je %{date}
       notify_users: Informu uzantojn
       preview:
-        explanation_html: 'La retmesaĝo estos alsendata al <strong>%{display_count} uzantoj</strong>, kiuj kreis konton antaŭ %{date}. La sekvonta teksto inkluziviĝos en la retmesaĝo:'
+        explanation_html: "La retmesaĝo estos alsendata al <strong>%{display_count} uzantoj</strong>, kiuj kreis konton antaŭ %{date}. La sekvonta teksto inkluziviĝos en la retmesaĝo:"
         send_preview: Sendu antaŭrigardon al %{email}
         send_to_all:
           one: Sendi %{display_count} retpoŝton
@@ -1072,7 +1072,7 @@ eo:
         peaked_on_and_decaying: Maksimumo estas je %{date}, nun ĝi malpliiĝas
         title: Tendencantaj kradvortoj
         trendable: Povas aperi en tendencoj
-        trending_rank: 'Populara #%{rank}'
+        trending_rank: "Populara #%{rank}"
         usable: Povas esti uzata
         usage_comparison: Uzita %{today}-foje hodiau, sed estas %{yesterday} hierau
         used_by_over_week:
@@ -1154,7 +1154,7 @@ eo:
       body: Novaj versioj de Mastodon estis publikigitaj, vi eble volas ĝisdatigi!
       subject: Novaj versioj de Mastodon disponeblas por %{instance}!
     new_trends:
-      body: 'La eroj bezonas kontrolon antau ol ili povas montritas publike:'
+      body: "La eroj bezonas kontrolon antau ol ili povas montritas publike:"
       new_trending_links:
         title: Tendencantaj ligiloj
       new_trending_statuses:
@@ -1181,7 +1181,7 @@ eo:
     notification_preferences: Ŝanĝi retpoŝtajn preferojn
     salutation: "%{name},"
     unsubscribe: Malabonu
-    view: 'Vidi:'
+    view: "Vidi:"
     view_profile: Vidi profilon
     view_status: Vidi afiŝon
   applications:
@@ -1241,7 +1241,7 @@ eo:
     rules:
       accept: Akcepti
       back: Reen
-      invited_by: 'Vi povas aliĝi al %{domain} danke al la invito, kiun vi ricevis de:'
+      invited_by: "Vi povas aliĝi al %{domain} danke al la invito, kiun vi ricevis de:"
       preamble: Ĉi tioj fiksitas kaj devigitas de kontrolantoj de %{domain}.
       preamble_invited: Antaŭ ol daŭrigi, bonvolu konsideri la bazajn regulojn fiksitajn de la moderigaĵoj de %{domain}.
       title: Bazaj reguloj.
@@ -1276,7 +1276,7 @@ eo:
   author_attribution:
     example_title: Ekzempla teksto
     hint_html: Ĉu vi skribas novaĵojn aŭ blogartikolojn ekster Mastodon? Kontrolu kiel vi estas kreditita kiam ili estas kunhavataj ĉe Mastodon.
-    instructions: 'Certigu, ke ĉi tiu kodo estas en la HTML de via artikolo:'
+    instructions: "Certigu, ke ĉi tiu kodo estas en la HTML de via artikolo:"
     more_from_html: Pli de %{name}
     s_blog: Blogo de %{name}
     then_instructions: Poste, aldonu la domajnan nomon de la publikigado en la suba kampo.
@@ -1314,7 +1314,7 @@ eo:
     proceed: Forigi konton
     success_msg: Via konto estis sukcese forigita
     warning:
-      before: 'Antau ol dauri, legu ĉi tiujn notojn zorgeme:'
+      before: "Antau ol dauri, legu ĉi tiujn notojn zorgeme:"
       caches: Enhavo kiu kaŝmemorigitas de aliaj serviloj eble restas
       data_removal: Viaj afiŝoj kaj aliaj informoj estos forigita por ĉiam
       email_change_html: Vi povas <a href="%{path}">ŝanĝi vian retadreson</a> sen forigi vian konton
@@ -1340,7 +1340,7 @@ eo:
       description_html: Ĉioj estas agoj kaj vartoj kontra via konto de %{instance}.
       recipient: Senditas por
       reject_appeal: Malakcepti apelacion
-      status: 'Afiŝo #%{id}'
+      status: "Afiŝo #%{id}"
       status_removed: Afiŝo jam estas forigita de sistemo
       title: "%{action} de %{date}"
       title_actions:
@@ -1361,19 +1361,19 @@ eo:
     native: Denaska
     twemoji: Twemoji
   errors:
-    '400': La peto kiun vi sendis estas nevalida au malformas.
-    '403': Vi ne havas la rajton por vidi ĉi tiun paĝon.
-    '404': La paĝo ke kiun vi serĉas ne ekzistas ĉi tie.
-    '406': Ĉi tiu paĝo ne estas disponebla kun petita formato.
-    '410': La paĝo, kiun vi serĉas, ne plu ekzistas ĉi tie.
-    '422':
+    "400": La peto kiun vi sendis estas nevalida au malformas.
+    "403": Vi ne havas la rajton por vidi ĉi tiun paĝon.
+    "404": La paĝo ke kiun vi serĉas ne ekzistas ĉi tie.
+    "406": Ĉi tiu paĝo ne estas disponebla kun petita formato.
+    "410": La paĝo, kiun vi serĉas, ne plu ekzistas ĉi tie.
+    "422":
       content: Sekureca konfirmo malsukcesa. Ĉu vi blokas kuketojn?
       title: Sekureca konfirmo malsukcesa
-    '429': Datumtrafiko limigita
-    '500':
+    "429": Datumtrafiko limigita
+    "500":
       content: Ni bedaŭras, io malsukcesis niaflanke.
       title: Ĉi tiu paĝo ne estas ĝusta
-    '503': La paĝo ne povas montritis pro malpermanenta servilmalfunkcio.
+    "503": La paĝo ne povas montritis pro malpermanenta servilmalfunkcio.
     noscript_html: |-
       Por uzi la retan aplikaĵon de Mastodon, bonvolu ebligi JavaScript. Alimaniere, provu unu el la
       <a href="%{apps_path}">operaciumaj aplikaĵoj</a> por Mastodon por via platformo.
@@ -1550,16 +1550,16 @@ eo:
     delete: Malaktivigi
     expired: Eksvalida
     expires_in:
-      '1800': 30 minutoj
-      '21600': 6 horoj
-      '3600': 1 horo
-      '43200': 12 horoj
-      '604800': 1 semajno
-      '86400': 1 tago
+      "1800": 30 minutoj
+      "21600": 6 horoj
+      "3600": 1 horo
+      "43200": 12 horoj
+      "604800": 1 semajno
+      "86400": 1 tago
     expires_in_prompt: Neniam
     generate: Krei
     invalid: Ĉi tiu invito ne validas
-    invited_by: 'Vi estis invitita de:'
+    invited_by: "Vi estis invitita de:"
     max_uses:
       one: 1 uzo
       other: "%{count} uzoj"
@@ -1613,7 +1613,7 @@ eo:
     set_redirect: Agordi alidirekton
     warning:
       backreference_required: La nova konto devas unue fiksitis antaureferenci al ĉi tio
-      before: 'Antau ol dauri, legu ĉi tiujn notojn zorgeme:'
+      before: "Antau ol dauri, legu ĉi tiujn notojn zorgeme:"
       cooldown: Malantau ol translokigo, havas atenddauro kiam vi ne povas translokigi denove
       disabled_account: Via nuna konto ne estos tute uzebla poste.
       followers: Ĉi tiu ago translokigos ĉi tiujn sekvantojn de la nuna konto al la nova konto
@@ -1624,7 +1624,7 @@ eo:
   move_handler:
     carry_blocks_over_text: Ĉi tiu uzanto translokis de %{acct} kiun vi blokis.
     carry_mutes_over_text: Ĉi tiu uzanto translokis de %{acct} kiun vi silentigis.
-    copy_account_note_text: 'Ĉi tiu uzanto translokis de %{acct}, ĉi tio estas viaj antauaj notoj pri ĝi:'
+    copy_account_note_text: "Ĉi tiu uzanto translokis de %{acct}, ĉi tio estas viaj antauaj notoj pri ĝi:"
   navigation:
     toggle_menu: Baskuli menuon
   notification_mailer:
@@ -1654,11 +1654,11 @@ eo:
     poll:
       subject: Enketo de %{name} finitas
     quote:
-      body: 'Via afiŝo estis citita de %{name}:'
+      body: "Via afiŝo estis citita de %{name}:"
       subject: "%{name} citis vian afiŝon"
       title: Nova citaĵo
     reblog:
-      body: 'Via mesaĝo estis diskonigita de %{name}:'
+      body: "Via mesaĝo estis diskonigita de %{name}:"
       subject: "%{name} diskonigis vian afiŝon"
       title: Nova diskonigo
     status:
@@ -1668,7 +1668,7 @@ eo:
   notifications:
     administration_emails: Sciigoj retpoŝtaj de administacio
     email_events: Eventoj por retpoŝtaj sciigoj
-    email_events_hint: 'Elekti la eventojn pri kioj vi volas ricevi sciigojn:'
+    email_events_hint: "Elekti la eventojn pri kioj vi volas ricevi sciigojn:"
   number:
     human:
       decimal_units:
@@ -1684,7 +1684,7 @@ eo:
     description_html: Se vi ŝaltas <strong>dufaktoran aŭtentigon</strong> per aŭtentiga programo, saluti postulos ke vi havas vian telefonon, kiu generos ĵetonon por enigi.
     enable: Ŝalti
     instructions_html: "<strong>Skanu ĉi tiun QR-kodon per Google Authenticator aŭ per simila aplikaĵo en via poŝtelefono</strong>. De tiam, la aplikaĵo kreos nombrojn, kiujn vi devos enmeti."
-    manual_instructions: 'Se vi ne povas skani la QR-kodon kaj bezonas enmeti ĝin mane, jen la tut-teksta sekreto:'
+    manual_instructions: "Se vi ne povas skani la QR-kodon kaj bezonas enmeti ĝin mane, jen la tut-teksta sekreto:"
     setup: Agordi
     wrong_code: La enmetita kodo estis nevalida! Ĉu la servila tempo kaj la aparata tempo ĝustas?
   pagination:
@@ -1757,10 +1757,10 @@ eo:
     errors:
       invalid_rules: ne referencas validajn regulojn
   rss:
-    content_warning: 'Averto pri enhavo:'
+    content_warning: "Averto pri enhavo:"
     descriptions:
       account: Publikaj mesaĝoj de @%{acct}
-      tag: 'Publikaj afiŝoj pri #%{hashtag}'
+      tag: "Publikaj afiŝoj pri #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Vi transpasis la limigon al %{limit} samtage planitaj mesaĝoj
     over_total_limit: Vi transpasis la limigon al %{limit} planitaj mesaĝoj
@@ -1854,7 +1854,7 @@ eo:
       audio:
         one: "%{count} aŭdaĵo"
         other: "%{count} aŭdaĵoj"
-      description: 'Ligita: %{attached}'
+      description: "Ligita: %{attached}"
       image:
         one: "%{count} bildo"
         other: "%{count} bildoj"
@@ -1862,11 +1862,11 @@ eo:
         one: "%{count} video"
         other: "%{count} videoj"
     boosted_from_html: Diskonigita de %{acct_link}
-    content_warning: 'Averto pri enhavo: %{warning}'
+    content_warning: "Averto pri enhavo: %{warning}"
     default_language: Sama lingvo kiel tiu de la interfaco
     disallowed_hashtags:
-      one: 'enhavas malpermesitan kradvorton: %{tags}'
-      other: 'enhavis malpermesitan kradvorton: %{tags}'
+      one: "enhavas malpermesitan kradvorton: %{tags}"
+      other: "enhavis malpermesitan kradvorton: %{tags}"
     edited_at_html: Redaktis je %{date}
     errors:
       in_reply_not_found: Mesaĝo kiun vi provas respondi ŝajnas ne ekzisti.
@@ -1909,14 +1909,14 @@ eo:
     keep_self_fav: Konservi afiŝojn kiujn vi stelumis
     keep_self_fav_hint: Ne forigi proprajn afiŝojn se vi stelumis ilin
     min_age:
-      '1209600': 2 semajnoj
-      '15778476': 6 monatoj
-      '2629746': 1 monato
-      '31556952': 1 jaro
-      '5259492': 2 monatoj
-      '604800': 1 semajno
-      '63113904': 2 jaroj
-      '7889238': 3 monatoj
+      "1209600": 2 semajnoj
+      "15778476": 6 monatoj
+      "2629746": 1 monato
+      "31556952": 1 jaro
+      "5259492": 2 monatoj
+      "604800": 1 semajno
+      "63113904": 2 jaroj
+      "7889238": 3 monatoj
     min_age_label: Aĝlimo
     min_favs: Konservi afiŝojn stelumitajn almenaŭ
     min_favs_hint: Oni ne forigas viajn afiŝojn, kiuj estas diskonigitaj almenaŭ ĉi tiun nombron da fojoj. Lasu malplena por forigi afiŝojn sendepende de iliaj nombroj da diskonigoj
@@ -1961,7 +1961,7 @@ eo:
     webauthn: Sekurecaj ŝlosiloj
   user_mailer:
     announcement_published:
-      description: 'La administrantoj de %{domain} faras anoncon:'
+      description: "La administrantoj de %{domain} faras anoncon:"
       subject: Serva anonco
       title: "%{domain} serva anonco"
     appeal_approved:
@@ -1981,22 +1981,22 @@ eo:
       subject: Via arkivo estas preta por elŝutado
       title: Arkiva elŝuto
     failed_2fa:
-      details: 'Jen detaloj de la provaĵo de ensaluti:'
+      details: "Jen detaloj de la provaĵo de ensaluti:"
       explanation: Iu provis ensaluti al via konto sed provizis nevalidan duan aŭtentikigfaktoron.
       further_actions_html: Se ĉi tio ne estis vi, ni rekomendas ke vi %{action} tuj ĉar ĝi povas esti endanĝerigita.
       subject: Malsukceso dum la dua aŭtentikigfaktoro
       title: Du-faktora aŭtentigo malsukcesis
     suspicious_sign_in:
       change_password: ŝanĝi vian pasvorton
-      details: 'Ĉi-sube estas detaloj pri la saluto:'
+      details: "Ĉi-sube estas detaloj pri la saluto:"
       explanation: Ni detektis saluton en via konto de nova IP-adreso.
       further_actions_html: Se ne estas vi, ni rekomendas ke vi %{action} tuj por sekurigi vian konton.
       subject: Via konto estas alirita de nova IP-adreso
       title: Nova saluto
     terms_of_service_changed:
       agreement: Se vi daŭrige uzos %{domain}, vi aŭtomate interkonsentos pri ĉi tiuj kondiĉoj. Se vi malkonsentas pri la novaj kondiĉoj, vi ĉiutempe rajtas nuligi la interkonsenton kun %{domain} per forigi vian konton.
-      changelog: 'Facile dirite, la ŝanĝoj estas la jenaj:'
-      description: 'Vi ricevas ĉi tiun retmesaĝon ĉar ni faras iujn ŝanĝojn al niaj servokondiĉoj ĉe %{domain}. Ĉi tiuj ĝisdatigoj efektiviĝos %{date}. Ni instigas vin revizii la ĝisdatigitajn terminojn plene ĉi tie:'
+      changelog: "Facile dirite, la ŝanĝoj estas la jenaj:"
+      description: "Vi ricevas ĉi tiun retmesaĝon ĉar ni faras iujn ŝanĝojn al niaj servokondiĉoj ĉe %{domain}. Ĉi tiuj ĝisdatigoj efektiviĝos %{date}. Ni instigas vin revizii la ĝisdatigitajn terminojn plene ĉi tie:"
       description_html: Vi ricevas ĉi tiun retmesaĝon ĉar ni faras iujn ŝanĝojn al niaj servokondiĉoj ĉe %{domain}. Ĉi tiuj ĝisdatigoj efektiviĝos <strong>%{date}</strong> Ni instigas vin revizii la <a href="%{path}" target="_blank">ĝisdatigitajn terminojn plene ĉi tie</a>.
       sign_off: La teamo de %{domain}
       subject: Ĝisdatigoj al niaj kondiĉoj de servo
@@ -2015,8 +2015,8 @@ eo:
         sensitive: Malantau ol nun, ĉiuj viaj alŝutitaj audovidaĵoj markitas kiel sentemaj kaj kaŝitas.
         silence: Vi ankorau povas uzi vian konton, sed nur personoj kiuj jam sekvas vin vidos viajn mesaĝojn en tiu ĉi servilo, kaj vi eble estos ekskluzive el diversaj malkovrigaj funkcioj. Tamen, aliaj ankoraŭ povas permane eksekvi vin.
         suspend: Vi ne povas uzi vian konton plu, kaj via profilo kaj aliaj datumoj ne estas disponeblaj plu.
-      reason: 'Kialo:'
-      statuses: 'Afiŝoj citataj:'
+      reason: "Kialo:"
+      statuses: "Afiŝoj citataj:"
       subject:
         delete_statuses: Viaj afiŝoj ĉe %{acct} estas forigitaj
         disable: Via konto %{acct} estas frostigita
@@ -2038,7 +2038,7 @@ eo:
       apps_ios_action: Elŝutu ĉe la App Store
       apps_step: Elŝutu niajn oficialajn aplikaĵojn.
       apps_title: Aplikaĵoj de Mastodon
-      checklist_subtitle: 'Nin eku vin en ĉi tiu nova socia rando:'
+      checklist_subtitle: "Nin eku vin en ĉi tiu nova socia rando:"
       checklist_title: Bonvenan Markolisto
       edit_profile_action: Agordi
       edit_profile_step: Plibonigi viajn interagojn per havas finitan profilon.
@@ -2080,7 +2080,7 @@ eo:
     otp_lost_help_html: Se vi perdas aliron al ambaŭ, vi povas kontakti %{email}
     rate_limited: Estas tro multaj aŭtentigaj provoj, reprovu poste.
     seamless_external_login: Vi estas ensalutinta per ekstera servo, do pasvortaj kaj retpoŝtaj agordoj ne estas disponeblaj.
-    signed_in_as: 'Salutinta kiel:'
+    signed_in_as: "Salutinta kiel:"
   verification:
     extra_instructions_html: <strong>Konsilo:</strong> La ligilo en via retejo povas esti nevidebla. La grava parto estas <code>rel="me"</code>, kiu evitas identoŝtelon en retejoj kun enhavo generita de uzantoj. Vi povas eĉ uzi <code>link</code>-etikedon en la <code>header</code> de la paĝo anstataŭ <code>a</code>, sed la HTML devas esti atingebla sen plenumado de JavaScript.
     here_is_how: Jen gvidilo

@@ -51,7 +51,7 @@ kab:
         callback_urls: URL n tririt n wawal
         scopes: Tinerfadin
         secret: Tuffirt n umsaɣ
-        title: 'Asnas: %{name}'
+        title: "Asnas: %{name}"
     authorizations:
       buttons:
         authorize: Ssireg

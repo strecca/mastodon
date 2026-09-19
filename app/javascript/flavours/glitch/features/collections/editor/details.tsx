@@ -1,24 +1,21 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from "react";
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
-import { isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled } from "@reduxjs/toolkit";
 
-import { ComboboxMenuItem } from '@/flavours/glitch/components/form_fields/combobox_field';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import { useCurrentAccountId } from '@/flavours/glitch/hooks/useAccountId';
-import { languages } from '@/flavours/glitch/initial_state';
-import {
-  hasSpecialCharacters,
-  inputToHashtag,
-} from '@/flavours/glitch/utils/hashtags';
+import { ComboboxMenuItem } from "@/flavours/glitch/components/form_fields/combobox_field";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import { useCurrentAccountId } from "@/flavours/glitch/hooks/useAccountId";
+import { languages } from "@/flavours/glitch/initial_state";
+import { hasSpecialCharacters, inputToHashtag } from "@/flavours/glitch/utils/hashtags";
 import type {
   ApiCreateCollectionPayload,
   ApiUpdateCollectionPayload,
-} from 'flavours/glitch/api_types/collections';
-import { Button } from 'flavours/glitch/components/button';
+} from "flavours/glitch/api_types/collections";
+import { Button } from "flavours/glitch/components/button";
 import {
   CheckboxField,
   ComboboxField,
@@ -27,41 +24,34 @@ import {
   RadioButtonField,
   SelectField,
   TextAreaField,
-} from 'flavours/glitch/components/form_fields';
-import { TextInputField } from 'flavours/glitch/components/form_fields/text_input_field';
-import { useSearchTags } from 'flavours/glitch/hooks/useSearchTags';
-import type { TagSearchResult } from 'flavours/glitch/hooks/useSearchTags';
+} from "flavours/glitch/components/form_fields";
+import { TextInputField } from "flavours/glitch/components/form_fields/text_input_field";
+import { useSearchTags } from "flavours/glitch/hooks/useSearchTags";
+import type { TagSearchResult } from "flavours/glitch/hooks/useSearchTags";
 import {
   createCollection,
   updateCollection,
   updateCollectionEditorField,
-} from 'flavours/glitch/reducers/slices/collections';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+} from "flavours/glitch/reducers/slices/collections";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
-import { getCollectionPath } from '../utils';
+import { getCollectionPath } from "../utils";
 
-import classes from './styles.module.scss';
-import { WizardStepTitle } from './wizard_step_title';
+import classes from "./styles.module.scss";
+import { WizardStepTitle } from "./wizard_step_title";
 
 export const CollectionDetails: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const {
-    id,
-    name,
-    description,
-    topic,
-    language,
-    discoverable,
-    sensitive,
-    items,
-  } = useAppSelector((state) => state.collections.editor);
+  const { id, name, description, topic, language, discoverable, sensitive, items } = useAppSelector(
+    (state) => state.collections.editor,
+  );
 
   const handleNameChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(
         updateCollectionEditorField({
-          field: 'name',
+          field: "name",
           value: event.target.value,
         }),
       );
@@ -73,7 +63,7 @@ export const CollectionDetails: React.FC = () => {
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       dispatch(
         updateCollectionEditorField({
-          field: 'description',
+          field: "description",
           value: event.target.value,
         }),
       );
@@ -85,8 +75,8 @@ export const CollectionDetails: React.FC = () => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(
         updateCollectionEditorField({
-          field: 'discoverable',
-          value: event.target.value === 'public',
+          field: "discoverable",
+          value: event.target.value === "public",
         }),
       );
     },
@@ -97,7 +87,7 @@ export const CollectionDetails: React.FC = () => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(
         updateCollectionEditorField({
-          field: 'sensitive',
+          field: "sensitive",
           value: event.target.checked,
         }),
       );
@@ -178,24 +168,19 @@ export const CollectionDetails: React.FC = () => {
             step={2}
             title={
               <FormattedMessage
-                id='collections.create.basic_details_title'
-                defaultMessage='Basic details'
+                id="collections.create.basic_details_title"
+                defaultMessage="Basic details"
               />
             }
           />
         )}
         <TextInputField
           required
-          label={
-            <FormattedMessage
-              id='collections.collection_name'
-              defaultMessage='Name'
-            />
-          }
+          label={<FormattedMessage id="collections.collection_name" defaultMessage="Name" />}
           hint={
             <FormattedMessage
-              id='collections.name_length_hint'
-              defaultMessage='40 characters limit'
+              id="collections.name_length_hint"
+              defaultMessage="40 characters limit"
             />
           }
           value={name}
@@ -207,14 +192,14 @@ export const CollectionDetails: React.FC = () => {
           required={false}
           label={
             <FormattedMessage
-              id='collections.collection_description'
-              defaultMessage='Description'
+              id="collections.collection_description"
+              defaultMessage="Description"
             />
           }
           hint={
             <FormattedMessage
-              id='collections.description_length_hint'
-              defaultMessage='100 characters limit'
+              id="collections.description_length_hint"
+              defaultMessage="100 characters limit"
             />
           }
           value={description}
@@ -228,43 +213,32 @@ export const CollectionDetails: React.FC = () => {
 
         <Fieldset
           legend={
-            <FormattedMessage
-              id='collections.visibility_title'
-              defaultMessage='Visibility'
-            />
+            <FormattedMessage id="collections.visibility_title" defaultMessage="Visibility" />
           }
         >
           <RadioButtonField
-            label={
-              <FormattedMessage
-                id='collections.visibility_public'
-                defaultMessage='Public'
-              />
-            }
+            label={<FormattedMessage id="collections.visibility_public" defaultMessage="Public" />}
             hint={
               <FormattedMessage
-                id='collections.visibility_public_hint'
-                defaultMessage='Discoverable in search results and other areas where recommendations appear.'
+                id="collections.visibility_public_hint"
+                defaultMessage="Discoverable in search results and other areas where recommendations appear."
               />
             }
-            value='public'
+            value="public"
             checked={discoverable}
             onChange={handleDiscoverableChange}
           />
           <RadioButtonField
             label={
-              <FormattedMessage
-                id='collections.visibility_unlisted'
-                defaultMessage='Unlisted'
-              />
+              <FormattedMessage id="collections.visibility_unlisted" defaultMessage="Unlisted" />
             }
             hint={
               <FormattedMessage
-                id='collections.visibility_unlisted_hint'
-                defaultMessage='Visible to anyone with a link. Hidden from search results and recommendations.'
+                id="collections.visibility_unlisted_hint"
+                defaultMessage="Visible to anyone with a link. Hidden from search results and recommendations."
               />
             }
-            value='unlisted'
+            value="unlisted"
             checked={!discoverable}
             onChange={handleDiscoverableChange}
           />
@@ -272,22 +246,19 @@ export const CollectionDetails: React.FC = () => {
 
         <Fieldset
           legend={
-            <FormattedMessage
-              id='collections.content_warning'
-              defaultMessage='Content warning'
-            />
+            <FormattedMessage id="collections.content_warning" defaultMessage="Content warning" />
           }
         >
           <CheckboxField
             label={
               <FormattedMessage
-                id='collections.mark_as_sensitive'
-                defaultMessage='Mark as sensitive'
+                id="collections.mark_as_sensitive"
+                defaultMessage="Mark as sensitive"
               />
             }
             hint={
               <FormattedMessage
-                id='collections.mark_as_sensitive_hint'
+                id="collections.mark_as_sensitive_hint"
                 defaultMessage="Hides the collection's description and accounts behind a content warning. The collection name will still be visible."
               />
             }
@@ -298,13 +269,13 @@ export const CollectionDetails: React.FC = () => {
       </FormStack>
 
       <div className={classes.stickyFooter}>
-        <Button type='submit'>
+        <Button type="submit">
           {id ? (
-            <FormattedMessage id='lists.save' defaultMessage='Save' />
+            <FormattedMessage id="lists.save" defaultMessage="Save" />
           ) : (
             <FormattedMessage
-              id='collections.create_collection'
-              defaultMessage='Create collection'
+              id="collections.create_collection"
+              defaultMessage="Create collection"
             />
           )}
         </Button>
@@ -326,7 +297,7 @@ const TopicField: React.FC = () => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(
         updateCollectionEditorField({
-          field: 'topic',
+          field: "topic",
           value: inputToHashtag(event.target.value),
         }),
       );
@@ -339,7 +310,7 @@ const TopicField: React.FC = () => {
     (item: TagSearchResult) => {
       dispatch(
         updateCollectionEditorField({
-          field: 'topic',
+          field: "topic",
           value: inputToHashtag(item.name),
         }),
       );
@@ -347,29 +318,20 @@ const TopicField: React.FC = () => {
     [dispatch],
   );
 
-  const topicHasSpecialCharacters = useMemo(
-    () => hasSpecialCharacters(topic),
-    [topic],
-  );
+  const topicHasSpecialCharacters = useMemo(() => hasSpecialCharacters(topic), [topic]);
 
-  const isCurrentTopicOnlySuggestion =
-    tags.length === 1 && tags[0]?.id === 'new';
+  const isCurrentTopicOnlySuggestion = tags.length === 1 && tags[0]?.id === "new";
   const hideTagSuggestions = !tags.length || isCurrentTopicOnlySuggestion;
 
   return (
     <ComboboxField
       required={false}
       icon={null}
-      label={
-        <FormattedMessage
-          id='collections.collection_topic'
-          defaultMessage='Topic'
-        />
-      }
+      label={<FormattedMessage id="collections.collection_topic" defaultMessage="Topic" />}
       hint={
         <FormattedMessage
-          id='collections.topic_hint'
-          defaultMessage='Add a hashtag that helps others understand the main topic of this collection.'
+          id="collections.topic_hint"
+          defaultMessage="Add a hashtag that helps others understand the main topic of this collection."
         />
       }
       value={topic}
@@ -378,18 +340,17 @@ const TopicField: React.FC = () => {
       renderItem={renderTagItem}
       onSelectItem={handleSelectTopicSuggestion}
       onChange={handleTopicChange}
-      autoCapitalize='off'
-      autoCorrect='off'
-      spellCheck='false'
+      autoCapitalize="off"
+      autoCorrect="off"
+      spellCheck="false"
       maxLength={40}
       status={
         topicHasSpecialCharacters
           ? {
-              variant: 'warning',
+              variant: "warning",
               message: intl.formatMessage({
-                id: 'collections.topic_special_chars_hint',
-                defaultMessage:
-                  'Special characters will be removed when saving',
+                id: "collections.topic_special_chars_hint",
+                defaultMessage: "Special characters will be removed when saving",
               }),
             }
           : undefined
@@ -411,7 +372,7 @@ const LanguageField: React.FC = () => {
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       dispatch(
         updateCollectionEditorField({
-          field: 'language',
+          field: "language",
           value: event.target.value,
         }),
       );
@@ -421,20 +382,12 @@ const LanguageField: React.FC = () => {
 
   return (
     <SelectField
-      label={
-        <FormattedMessage
-          id='collections.collection_language'
-          defaultMessage='Language'
-        />
-      }
+      label={<FormattedMessage id="collections.collection_language" defaultMessage="Language" />}
       value={language}
       onChange={handleLanguageChange}
     >
-      <option value=''>
-        <FormattedMessage
-          id='collections.collection_language_none'
-          defaultMessage='None'
-        />
+      <option value="">
+        <FormattedMessage id="collections.collection_language_none" defaultMessage="None" />
       </option>
       {languages?.map(([code, name, localName]) => (
         <option key={code} value={code}>

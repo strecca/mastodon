@@ -7,7 +7,7 @@ fy:
         display_name: Jo folsleine namme of in aardige bynamme.
         fields: Jo website, persoanlike foarnammewurden, leeftiid, alles wat jo mar kwyt wolle.
         indexable: Jo iepenbiere berjochten kinne ferskine yn de sykresultaten op Mastodon. Minsken dy’t reagearre hawwe op jo berjochten kinne se hoe dan ek trochsykje.
-        note: 'Jo kinne oare minsken @fermelde of #hashtags brûke.'
+        note: "Jo kinne oare minsken @fermelde of #hashtags brûke."
         show_collections: Minsken kinne sjen wa’t jo folgje en wa’t jo folget.
         unlocked: Minsken kinne jo folgje sûnder dêrfoar tastimming freegje te hoegen. Wannear’t jo nije folgers hânmjittich goedkarre wolle, moatte jo dizze opsje deselektearje.
       account_alias:
@@ -67,7 +67,7 @@ fy:
         domain: Dit kin de domeinnamme wêze dy’t werjûn wurdt yn it e-mailadres of yn it MX-record dat it brûkt. Se wurde kontrolearre wylst de registraasje.
         with_dns_records: Der wurdt in besykjen dien om de oanbelangjende DNS-records op te sykjen, wêrnei de resultaten ek blokkearre wurde
       featured_tag:
-        name: 'Hjir binne inkelde fan de hashtags dy’t jo koartlyn brûkt hawwe:'
+        name: "Hjir binne inkelde fan de hashtags dy’t jo koartlyn brûkt hawwe:"
       filters:
         actions:
           blur: Media ferstopje efter in warskôging, sûnder de tekst sels te ferstopjen
@@ -117,7 +117,7 @@ fy:
         hint: Opsjoneel. Jou mear details oer de rigel
         text: Omskriuw in rigel of eask foar brûkers op dizze server. Probearje it koart en simpel te hâlden
       sessions:
-        otp: 'Fier de twa-stapstagongskoade fan jo mobile telefoan ôf yn of brûk ien fan jo werstelkoaden:'
+        otp: "Fier de twa-stapstagongskoade fan jo mobile telefoan ôf yn of brûk ien fan jo werstelkoaden:"
         webauthn: Wannear’t it in USB-kaai is, soargje der dan foar dat jo dizze yn de kompjûter stekke en, wannear nedich, aktivearje.
       settings:
         indexable: Jo profylside kin yn de sykresultaten fan Google, Bing, DuckDuckGo en oare sykmasinen ferskine.
@@ -133,7 +133,7 @@ fy:
         arbitration_address: Kin itselde wêze as boppesteande strjitteof ‘N/A’ by gebrûk fan e-mail.
         arbitration_website: Kin in webformulier wêze, of ‘N/A’ as e-mail brûkt wurdt.
         choice_of_law: Stêd, regio, grûngebiet of steat dêr’t de ynterne materiële wetten fan tapassing binne op alle oanspraken.
-        dmca_address: 'Brûk foar behearders yn de FS: it adres dat registrearre is yn de DMCA Designated Agent Directory. Op fersyk is der in postbuslist beskikber. Brûk it DMCA Designated Agent Post Office Box Waiver Request om it Copyright Office te e-mailen en te beskriuwen dat jo in thúsbasearre ynhâldsmoderator binne dy’t wraak of fergelding frezet foar jo dieden en in postbus brûke moat om jo húsadres út it publike domein te hâlden.'
+        dmca_address: "Brûk foar behearders yn de FS: it adres dat registrearre is yn de DMCA Designated Agent Directory. Op fersyk is der in postbuslist beskikber. Brûk it DMCA Designated Agent Post Office Box Waiver Request om it Copyright Office te e-mailen en te beskriuwen dat jo in thúsbasearre ynhâldsmoderator binne dy’t wraak of fergelding frezet foar jo dieden en in postbus brûke moat om jo húsadres út it publike domein te hâlden."
         dmca_email: Kin itselde e-mailadres wêze as ‘E-mailadres foar juridyske berjochten’ hjirboppe.
         domain: In unike identifikaasje fan de online tsjinst dy’t ferliend wurdt.
         jurisdiction: Fermeld it lân wêr’t de persoan wennet dy’t de rekkeningen betellet. As it in bedriuw of in oare entiteit is, fermeld it lân wêr’t it opnommen is en de stêd, regio, grûngebiet of steat, foar safier fan tapassing.
@@ -355,7 +355,7 @@ fy:
         events: Ynskeakele eveneminten
         template: Payload-sjabloan
         url: Einpunt-URL
-    'no': Nee
+    "no": Nee
     not_recommended: Net oanrekommandearre
     overridden: Oerskreaun
     recommended: Oanrekommandearre
@@ -365,4 +365,4 @@ fy:
     title:
       sessions:
         webauthn: Brûk ien fan jo befeiligingskaaien om oan te melden
-    'yes': Ja
+    "yes": Ja

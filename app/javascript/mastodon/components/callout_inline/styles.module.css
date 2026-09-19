@@ -5,19 +5,19 @@
   font-size: 13px;
   font-weight: 500;
 
-  &[data-variant='success'] {
+  &[data-variant="success"] {
     color: var(--color-text-success);
   }
 
-  &[data-variant='warning'] {
+  &[data-variant="warning"] {
     color: var(--color-text-warning);
   }
 
-  &[data-variant='error'] {
+  &[data-variant="error"] {
     color: var(--color-text-error);
   }
 
-  &[data-variant='info'] {
+  &[data-variant="info"] {
     color: var(--color-text-primary);
   }
 }

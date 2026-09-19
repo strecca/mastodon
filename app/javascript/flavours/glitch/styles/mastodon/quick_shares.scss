@@ -23,7 +23,9 @@
     font-size: 14px;
     text-decoration: none;
 
-    &:hover { text-decoration: underline; }
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -80,7 +82,9 @@
     font-weight: 700;
     cursor: pointer;
 
-    &:hover { background: #5152e0; }
+    &:hover {
+      background: #5152e0;
+    }
 
     &:disabled {
       background: #b3b3f5;
@@ -117,7 +121,9 @@
     font-weight: 700;
     text-decoration: none;
 
-    &:hover { background: #e4e4ff; }
+    &:hover {
+      background: #e4e4ff;
+    }
   }
 
   &__share-block {
@@ -142,7 +148,9 @@
     font-weight: 700;
     cursor: pointer;
 
-    &:hover { background: #f0f0ff; }
+    &:hover {
+      background: #f0f0ff;
+    }
   }
 
   &__compose-hint {
@@ -166,7 +174,9 @@
     font-size: 15px;
     cursor: pointer;
 
-    &:hover { background: #f5f5f5; }
+    &:hover {
+      background: #f5f5f5;
+    }
   }
 }
 

@@ -1,27 +1,23 @@
-import { useCallback, useEffect, useId } from 'react';
+import { useCallback, useEffect, useId } from "react";
 
-import { defineMessages, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from "react-intl";
 
-import type { Map as ImmutableMap } from 'immutable';
-import { List as ImmutableList } from 'immutable';
+import type { Map as ImmutableMap } from "immutable";
+import { List as ImmutableList } from "immutable";
 
-import { expandAccountFeaturedTimeline } from '@/mastodon/actions/timelines';
-import { Icon } from '@/mastodon/components/icon';
-import { StatusQuoteManager } from '@/mastodon/components/status_quoted';
-import {
-  createAppSelector,
-  useAppDispatch,
-  useAppSelector,
-} from '@/mastodon/store';
-import PushPinIcon from '@/material-icons/400-24px/push_pin.svg?react';
+import { expandAccountFeaturedTimeline } from "@/mastodon/actions/timelines";
+import { Icon } from "@/mastodon/components/icon";
+import { StatusQuoteManager } from "@/mastodon/components/status_quoted";
+import { createAppSelector, useAppDispatch, useAppSelector } from "@/mastodon/store";
+import PushPinIcon from "@/material-icons/400-24px/push_pin.svg?react";
 
-import { Carousel } from './carousel';
+import { Carousel } from "./carousel";
 
 const pinnedStatusesSelector = createAppSelector(
   [
     (state, accountId: string, tagged?: string) =>
       (state.timelines as ImmutableMap<string, unknown>).getIn(
-        [`account:${accountId}:pinned${tagged ? `:${tagged}` : ''}`, 'items'],
+        [`account:${accountId}:pinned${tagged ? `:${tagged}` : ""}`, "items"],
         ImmutableList(),
       ) as ImmutableList<string>,
   ],
@@ -29,15 +25,15 @@ const pinnedStatusesSelector = createAppSelector(
 );
 
 const messages = defineMessages({
-  previous: { id: 'lightbox.previous', defaultMessage: 'Previous' },
-  next: { id: 'lightbox.next', defaultMessage: 'Next' },
+  previous: { id: "lightbox.previous", defaultMessage: "Previous" },
+  next: { id: "lightbox.next", defaultMessage: "Next" },
   current: {
-    id: 'featured_carousel.current',
-    defaultMessage: '<sr>Post</sr> {current, number} / {max, number}',
+    id: "featured_carousel.current",
+    defaultMessage: "<sr>Post</sr> {current, number} / {max, number}",
   },
   slide: {
-    id: 'featured_carousel.slide',
-    defaultMessage: 'Post {current, number} of {max, number}',
+    id: "featured_carousel.slide",
+    defaultMessage: "Post {current, number} of {max, number}",
   },
 });
 
@@ -59,9 +55,7 @@ export const FeaturedCarousel: React.FC<{
   );
 
   const renderSlide = useCallback(
-    ({ id }: { id: string }) => (
-      <StatusQuoteManager id={id} contextType='account' withCounters />
-    ),
+    ({ id }: { id: string }) => <StatusQuoteManager id={id} contextType="account" withCounters />,
     [],
   );
 
@@ -74,14 +68,14 @@ export const FeaturedCarousel: React.FC<{
       items={pinnedStatuses}
       renderItem={renderSlide}
       aria-labelledby={`${accessibilityId}-title`}
-      classNamePrefix='featured-carousel'
+      classNamePrefix="featured-carousel"
       messages={messages}
     >
-      <h4 className='featured-carousel__title' id={`${accessibilityId}-title`}>
-        <Icon id='thumb-tack' icon={PushPinIcon} />
+      <h4 className="featured-carousel__title" id={`${accessibilityId}-title`}>
+        <Icon id="thumb-tack" icon={PushPinIcon} />
         <FormattedMessage
-          id='featured_carousel.header'
-          defaultMessage='{count, plural, one {Pinned Post} other {Pinned Posts}}'
+          id="featured_carousel.header"
+          defaultMessage="{count, plural, one {Pinned Post} other {Pinned Posts}}"
           values={{ count: pinnedStatuses.length }}
         />
       </h4>

@@ -17,31 +17,31 @@
   :listened_queues_only: true
   :schedule:
     scheduled_statuses_scheduler:
-      every: '5m'
+      every: "5m"
       class: Scheduler::ScheduledStatusesScheduler
       queue: scheduler
     vacuum_scheduler:
-      cron: '<%= Random.rand(0..59) %> <%= Random.rand(3..5) %> * * *'
+      cron: "<%= Random.rand(0..59) %> <%= Random.rand(3..5) %> * * *"
       class: Scheduler::VacuumScheduler
       queue: scheduler
     user_cleanup_scheduler:
-      cron: '<%= Random.rand(0..59) %> <%= Random.rand(4..6) %> * * *'
+      cron: "<%= Random.rand(0..59) %> <%= Random.rand(4..6) %> * * *"
       class: Scheduler::UserCleanupScheduler
       queue: scheduler
     ip_cleanup_scheduler:
-      cron: '<%= Random.rand(0..59) %> <%= Random.rand(3..5) %> * * *'
+      cron: "<%= Random.rand(0..59) %> <%= Random.rand(3..5) %> * * *"
       class: Scheduler::IpCleanupScheduler
       queue: scheduler
     pghero_scheduler:
-      cron: '0 0 * * *'
+      cron: "0 0 * * *"
       class: Scheduler::PgheroScheduler
       queue: scheduler
     accounts_statuses_cleanup_scheduler:
-      every: '15m'
+      every: "15m"
       class: Scheduler::AccountsStatusesCleanupScheduler
       queue: scheduler
     suspended_user_cleanup_scheduler:
-      every: '15m'
+      every: "15m"
       class: Scheduler::SuspendedUserCleanupScheduler
       queue: scheduler
     auto_close_registrations_scheduler:
@@ -49,11 +49,11 @@
       class: Scheduler::AutoCloseRegistrationsScheduler
       queue: scheduler
     community_moderation_reminder_scheduler:
-      cron: '<%= Random.rand(0..59) %> 7 * * *'
+      cron: "<%= Random.rand(0..59) %> 7 * * *"
       class: Scheduler::CommunityModerationReminderScheduler
       queue: scheduler
     community_stale_entry_scheduler:
-      cron: '<%= Random.rand(0..59) %> 3 * * *'
+      cron: "<%= Random.rand(0..59) %> 3 * * *"
       class: Scheduler::CommunityStaleEntryScheduler
       queue: scheduler
     community_visit_digest_scheduler:
@@ -61,23 +61,23 @@
       class: Scheduler::CommunityVisitDigestScheduler
       queue: scheduler
     member_notification_flush_scheduler:
-      every: '15m'
+      every: "15m"
       class: Scheduler::MemberNotificationFlushScheduler
       queue: scheduler
     event_import_scheduler:
-      cron: '0 2 * * *'
+      cron: "0 2 * * *"
       class: Scheduler::EventImportScheduler
       queue: scheduler
     expire_listings_scheduler:
-      cron: '0 3 * * *'
+      cron: "0 3 * * *"
       class: Scheduler::ExpireListingsScheduler
       queue: scheduler
     daily_digest_scheduler:
-      cron: '0 5 * * *'
+      cron: "0 5 * * *"
       class: Scheduler::DailyDigestScheduler
       queue: scheduler
     translation_catchup_scheduler:
-      cron: '0 1 * * *'
+      cron: "0 1 * * *"
       class: Scheduler::TranslationCatchupScheduler
       queue: scheduler
     collection_item_cleanup_scheduler:
@@ -85,6 +85,6 @@
       class: Scheduler::CollectionItemCleanupScheduler
       queue: scheduler
     repair_remote_collections_scheduler:
-      every: ['24h', first_in: '1s']
+      every: ["24h", first_in: "1s"]
       class: Scheduler::RepairRemoteCollectionsScheduler
       queue: scheduler

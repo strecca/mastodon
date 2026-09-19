@@ -1,39 +1,39 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import { FormattedMessage, defineMessages, useIntl } from 'react-intl';
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import AddIcon from '@/material-icons/400-24px/add.svg?react';
-import ArrowBackIcon from '@/material-icons/400-24px/arrow_back.svg?react';
-import ChevronLeftIcon from '@/material-icons/400-24px/chevron_left.svg?react';
-import ChevronRightIcon from '@/material-icons/400-24px/chevron_right.svg?react';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import UnfoldLessIcon from '@/material-icons/400-24px/unfold_less.svg?react';
-import UnfoldMoreIcon from '@/material-icons/400-24px/unfold_more.svg?react';
-import type { IconProp } from 'flavours/glitch/components/icon';
-import { Icon } from 'flavours/glitch/components/icon';
-import { ButtonInTabsBar } from 'flavours/glitch/features/ui/util/columns_context';
-import { useIdentity } from 'flavours/glitch/identity_context';
+import AddIcon from "@/material-icons/400-24px/add.svg?react";
+import ArrowBackIcon from "@/material-icons/400-24px/arrow_back.svg?react";
+import ChevronLeftIcon from "@/material-icons/400-24px/chevron_left.svg?react";
+import ChevronRightIcon from "@/material-icons/400-24px/chevron_right.svg?react";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import UnfoldLessIcon from "@/material-icons/400-24px/unfold_less.svg?react";
+import UnfoldMoreIcon from "@/material-icons/400-24px/unfold_more.svg?react";
+import type { IconProp } from "flavours/glitch/components/icon";
+import { Icon } from "flavours/glitch/components/icon";
+import { ButtonInTabsBar } from "flavours/glitch/features/ui/util/columns_context";
+import { useIdentity } from "flavours/glitch/identity_context";
 
-import { useColumnIndexContext } from '../features/ui/components/columns_area';
-import { getColumnSkipLinkId } from '../features/ui/components/skip_links';
+import { useColumnIndexContext } from "../features/ui/components/columns_area";
+import { getColumnSkipLinkId } from "../features/ui/components/skip_links";
 
-import { NavigationFocusTarget } from './navigation_focus_target';
-import { useAppHistory } from './router';
+import { NavigationFocusTarget } from "./navigation_focus_target";
+import { useAppHistory } from "./router";
 
 export const messages = defineMessages({
-  show: { id: 'column_header.show_settings', defaultMessage: 'Show settings' },
-  hide: { id: 'column_header.hide_settings', defaultMessage: 'Hide settings' },
+  show: { id: "column_header.show_settings", defaultMessage: "Show settings" },
+  hide: { id: "column_header.hide_settings", defaultMessage: "Hide settings" },
   moveLeft: {
-    id: 'column_header.moveLeft_settings',
-    defaultMessage: 'Move column to the left',
+    id: "column_header.moveLeft_settings",
+    defaultMessage: "Move column to the left",
   },
   moveRight: {
-    id: 'column_header.moveRight_settings',
-    defaultMessage: 'Move column to the right',
+    id: "column_header.moveRight_settings",
+    defaultMessage: "Move column to the right",
   },
-  back: { id: 'column_back_button.label', defaultMessage: 'Back' },
+  back: { id: "column_back_button.label", defaultMessage: "Back" },
 });
 
 const BackButton: React.FC<{
@@ -47,28 +47,22 @@ const BackButton: React.FC<{
     if (history.location.state?.fromMastodon) {
       history.goBack();
     } else {
-      history.push('/');
+      history.push("/");
     }
   }, [history]);
 
   return (
     <button
       onClick={handleBackClick}
-      className={classNames('column-header__back-button', {
+      className={classNames("column-header__back-button", {
         compact: hasTitle,
       })}
       id={!hasTitle ? getColumnSkipLinkId(columnIndex) : undefined}
       aria-label={intl.formatMessage(messages.back)}
-      type='button'
+      type="button"
     >
-      <Icon
-        id='chevron-left'
-        icon={ArrowBackIcon}
-        className='column-back-button__icon'
-      />
-      {!hasTitle && (
-        <FormattedMessage id='column_back_button.label' defaultMessage='Back' />
-      )}
+      <Icon id="chevron-left" icon={ArrowBackIcon} className="column-back-button__icon" />
+      {!hasTitle && <FormattedMessage id="column_back_button.label" defaultMessage="Back" />}
     </button>
   );
 };
@@ -143,26 +137,26 @@ export const ColumnHeader: React.FC<Props> = ({
 
   const handlePin = useCallback(() => {
     if (!pinned) {
-      history.replace('/');
+      history.replace("/");
     }
 
     onPin?.();
   }, [history, pinned, onPin]);
 
-  const wrapperClassName = classNames('column-header__wrapper', className, {
+  const wrapperClassName = classNames("column-header__wrapper", className, {
     active,
   });
 
-  const headingClassName = classNames('column-header', {
+  const headingClassName = classNames("column-header", {
     active,
   });
 
-  const collapsibleClassName = classNames('column-header__collapsible', {
+  const collapsibleClassName = classNames("column-header__collapsible", {
     collapsed,
     animating,
   });
 
-  const collapsibleButtonClassName = classNames('column-header__button', {
+  const collapsibleButtonClassName = classNames("column-header__button", {
     active: !collapsed,
   });
 
@@ -170,7 +164,7 @@ export const ColumnHeader: React.FC<Props> = ({
 
   if (children) {
     extraContent = (
-      <div key='extra-content' className='column-header__collapsible__extra'>
+      <div key="extra-content" className="column-header__collapsible__extra">
         {children}
       </div>
     );
@@ -178,55 +172,44 @@ export const ColumnHeader: React.FC<Props> = ({
 
   if (multiColumn && pinned) {
     pinButton = (
-      <button
-        className='text-btn column-header__setting-btn'
-        onClick={handlePin}
-        type='button'
-      >
-        <Icon id='times' icon={CloseIcon} />{' '}
-        <FormattedMessage id='column_header.unpin' defaultMessage='Unpin' />
+      <button className="text-btn column-header__setting-btn" onClick={handlePin} type="button">
+        <Icon id="times" icon={CloseIcon} />{" "}
+        <FormattedMessage id="column_header.unpin" defaultMessage="Unpin" />
       </button>
     );
 
     moveButtons = (
-      <div className='column-header__setting-arrows'>
+      <div className="column-header__setting-arrows">
         <button
           title={intl.formatMessage(messages.moveLeft)}
           aria-label={intl.formatMessage(messages.moveLeft)}
-          className='icon-button column-header__setting-btn'
+          className="icon-button column-header__setting-btn"
           onClick={handleMoveLeft}
-          type='button'
+          type="button"
         >
-          <Icon id='chevron-left' icon={ChevronLeftIcon} />
+          <Icon id="chevron-left" icon={ChevronLeftIcon} />
         </button>
         <button
           title={intl.formatMessage(messages.moveRight)}
           aria-label={intl.formatMessage(messages.moveRight)}
-          className='icon-button column-header__setting-btn'
+          className="icon-button column-header__setting-btn"
           onClick={handleMoveRight}
-          type='button'
+          type="button"
         >
-          <Icon id='chevron-right' icon={ChevronRightIcon} />
+          <Icon id="chevron-right" icon={ChevronRightIcon} />
         </button>
       </div>
     );
   } else if (multiColumn && onPin) {
     pinButton = (
-      <button
-        className='text-btn column-header__setting-btn'
-        onClick={handlePin}
-        type='button'
-      >
-        <Icon id='plus' icon={AddIcon} />{' '}
-        <FormattedMessage id='column_header.pin' defaultMessage='Pin' />
+      <button className="text-btn column-header__setting-btn" onClick={handlePin} type="button">
+        <Icon id="plus" icon={AddIcon} />{" "}
+        <FormattedMessage id="column_header.pin" defaultMessage="Pin" />
       </button>
     );
   }
 
-  if (
-    !pinned &&
-    ((multiColumn && history.location.state?.fromMastodon) || showBackButton)
-  ) {
+  if (!pinned && ((multiColumn && history.location.state?.fromMastodon) || showBackButton)) {
     backButton = <BackButton hasTitle={!!title} />;
   }
 
@@ -234,7 +217,7 @@ export const ColumnHeader: React.FC<Props> = ({
 
   if (multiColumn) {
     collapsedContent.push(
-      <div key='buttons' className='column-header__advanced-buttons'>
+      <div key="buttons" className="column-header__advanced-buttons">
         {pinButton}
         {moveButtons}
       </div>,
@@ -246,18 +229,13 @@ export const ColumnHeader: React.FC<Props> = ({
       <button
         className={collapsibleButtonClassName}
         title={intl.formatMessage(collapsed ? messages.show : messages.hide)}
-        aria-label={intl.formatMessage(
-          collapsed ? messages.show : messages.hide,
-        )}
+        aria-label={intl.formatMessage(collapsed ? messages.show : messages.hide)}
         onClick={handleToggleClick}
-        type='button'
+        type="button"
       >
-        <i className='icon-with-badge'>
-          <Icon
-            id='sliders'
-            icon={collapsed ? UnfoldMoreIcon : UnfoldLessIcon}
-          />
-          {collapseIssues && <i className='icon-with-badge__issue-badge' />}
+        <i className="icon-with-badge">
+          <Icon id="sliders" icon={collapsed ? UnfoldMoreIcon : UnfoldLessIcon} />
+          {collapseIssues && <i className="icon-with-badge__issue-badge" />}
         </i>
       </button>
     );
@@ -271,14 +249,14 @@ export const ColumnHeader: React.FC<Props> = ({
   const titleContents = (
     <>
       {!backButton && hasIcon && (
-        <Icon id={icon} icon={iconComponent} className='column-header__icon' />
+        <Icon id={icon} icon={iconComponent} className="column-header__icon" />
       )}
-      <span className='column-header__text'>{title}</span>
+      <span className="column-header__text">{title}</span>
     </>
   );
 
-  const titleClassNames = classNames('column-header__title', {
-    'column-header__title--with-back-button': !!backButton,
+  const titleClassNames = classNames("column-header__title", {
+    "column-header__title--with-back-button": !!backButton,
   });
 
   const component = (
@@ -286,32 +264,25 @@ export const ColumnHeader: React.FC<Props> = ({
       <div className={headingClassName}>
         {backButton}
         {hasTitle && (
-          <NavigationFocusTarget
-            as='h1'
-            className='column-header__title-wrapper'
-          >
+          <NavigationFocusTarget as="h1" className="column-header__title-wrapper">
             {onClick ? (
               <button
                 onClick={handleTitleClick}
                 className={titleClassNames}
-                type='button'
+                type="button"
                 id={getColumnSkipLinkId(columnIndex)}
               >
                 {titleContents}
               </button>
             ) : (
-              <span
-                className={titleClassNames}
-                tabIndex={-1}
-                id={getColumnSkipLinkId(columnIndex)}
-              >
+              <span className={titleClassNames} tabIndex={-1} id={getColumnSkipLinkId(columnIndex)}>
                 {titleContents}
               </span>
             )}
           </NavigationFocusTarget>
         )}
 
-        <div className='column-header__buttons'>
+        <div className="column-header__buttons">
           {extraButton}
           {collapseButton}
         </div>
@@ -322,7 +293,7 @@ export const ColumnHeader: React.FC<Props> = ({
         tabIndex={collapsed ? -1 : undefined}
         onTransitionEnd={handleTransitionEnd}
       >
-        <div className='column-header__collapsible-inner'>
+        <div className="column-header__collapsible-inner">
           {(!collapsed || animating) && collapsedContent}
         </div>
       </div>

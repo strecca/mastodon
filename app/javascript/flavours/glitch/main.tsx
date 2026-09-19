@@ -1,28 +1,29 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-import { Globals } from '@react-spring/web';
+import { Globals } from "@react-spring/web";
 
-import * as perf from '@/flavours/glitch/utils/performance';
-import { setupBrowserNotifications } from 'flavours/glitch/actions/notifications';
-import Mastodon from 'flavours/glitch/containers/mastodon';
-import { me, reduceMotion } from 'flavours/glitch/initial_state';
-import ready from 'flavours/glitch/ready';
-import { store } from 'flavours/glitch/store';
+import * as perf from "@/flavours/glitch/utils/performance";
+import { setupBrowserNotifications } from "flavours/glitch/actions/notifications";
+import Mastodon from "flavours/glitch/containers/mastodon";
+import { me, reduceMotion } from "flavours/glitch/initial_state";
+import ready from "flavours/glitch/ready";
+import { store } from "flavours/glitch/store";
 
-import { isDevelopment, isProduction } from './utils/environment';
+import { isDevelopment, isProduction } from "./utils/environment";
 
 function main() {
-  perf.start('main()');
+  perf.start("main()");
 
   return ready(async () => {
-    const mountNode = document.getElementById('mastodon');
+    const mountNode = document.getElementById("mastodon");
     if (!mountNode) {
-      throw new Error('Mount node not found');
+      throw new Error("Mount node not found");
     }
-    const props = JSON.parse(
-      mountNode.getAttribute('data-props') ?? '{}',
-    ) as Record<string, unknown>;
+    const props = JSON.parse(mountNode.getAttribute("data-props") ?? "{}") as Record<
+      string,
+      unknown
+    >;
 
     if (reduceMotion) {
       Globals.assign({
@@ -30,7 +31,7 @@ function main() {
       });
     }
 
-    const { initializeEmoji } = await import('./features/emoji/index');
+    const { initializeEmoji } = await import("./features/emoji/index");
     await initializeEmoji();
 
     const root = createRoot(mountNode);
@@ -46,36 +47,34 @@ function main() {
     // PWA icon, not just members. Push notifications specifically need an
     // account, so that part alone stays gated on `me` below.
     if (
-      'serviceWorker' in navigator &&
+      "serviceWorker" in navigator &&
       (isDevelopment() || isProduction()) // Disallow testing environment
     ) {
-      let swPath = '/sw.js';
+      let swPath = "/sw.js";
       if (isDevelopment()) {
-        const { default: swDevUrl } =
-          await import('@/flavours/glitch/service_worker/sw?url');
+        const { default: swDevUrl } = await import("@/flavours/glitch/service_worker/sw?url");
         swPath = swDevUrl;
       }
 
       await navigator.serviceWorker.register(swPath, {
-        scope: '/',
-        type: 'module',
+        scope: "/",
+        type: "module",
       });
 
       if (
         me &&
         isProduction() &&
-        'Notification' in window &&
-        Notification.permission === 'granted'
+        "Notification" in window &&
+        Notification.permission === "granted"
       ) {
-        const registerPushNotifications = await import(
-          'flavours/glitch/actions/push_notifications'
-        );
+        const registerPushNotifications =
+          await import("flavours/glitch/actions/push_notifications");
 
         store.dispatch(registerPushNotifications.register());
       }
     }
 
-    perf.stop('main()');
+    perf.stop("main()");
   });
 }
 

@@ -1,8 +1,8 @@
-import type { ApiNotificationRequestJSON } from 'mastodon/api_types/notifications';
+import type { ApiNotificationRequestJSON } from "mastodon/api_types/notifications";
 
 export interface NotificationRequest extends Omit<
   ApiNotificationRequestJSON,
-  'account' | 'notifications_count'
+  "account" | "notifications_count"
 > {
   account_id: string;
   notifications_count: number;

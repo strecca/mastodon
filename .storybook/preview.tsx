@@ -1,31 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from "react-intl";
 
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter, Route } from "react-router";
 
-import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
 
-import type { Preview } from '@storybook/react-vite';
-import { initialize, mswLoader } from 'msw-storybook-addon';
-import { action } from 'storybook/actions';
+import type { Preview } from "@storybook/react-vite";
+import { initialize, mswLoader } from "msw-storybook-addon";
+import { action } from "storybook/actions";
 
 import {
   importCustomEmojiData,
   importLegacyShortcodes,
   importEmojiData,
-} from '@/mastodon/features/emoji/loader';
-import { IdentityContext } from '@/mastodon/identity_context';
-import type { LocaleData } from '@/mastodon/locales';
-import { reducerWithInitialState } from '@/mastodon/reducers';
-import { defaultMiddleware } from '@/mastodon/store/store';
-import { mockHandlers, unhandledRequestHandler } from '@/testing/api';
+} from "@/mastodon/features/emoji/loader";
+import { IdentityContext } from "@/mastodon/identity_context";
+import type { LocaleData } from "@/mastodon/locales";
+import { reducerWithInitialState } from "@/mastodon/reducers";
+import { defaultMiddleware } from "@/mastodon/store/store";
+import { mockHandlers, unhandledRequestHandler } from "@/testing/api";
 
-import { modes } from './modes';
+import { modes } from "./modes";
 
-import '../app/javascript/styles/application.scss';
-import './styles.css';
+import "../app/javascript/styles/application.scss";
+import "./styles.css";
 
 // Disabling locales in Storybook as it's breaking with Vite 8.
 // const localeFiles = import.meta.glob('@/mastodon/locales/*.json', {
@@ -39,7 +39,7 @@ initialize({
 
 const preview: Preview = {
   // Auto-generate docs: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   globalTypes: {
     // locale: {
     //   description: 'Locale for the story',
@@ -53,31 +53,31 @@ const preview: Preview = {
     //   },
     // },
     theme: {
-      description: 'Theme for the story',
+      description: "Theme for the story",
       toolbar: {
-        title: 'Theme',
+        title: "Theme",
         items: [
-          { value: 'light', icon: 'circlehollow' },
-          { value: 'dark', icon: 'circle' },
+          { value: "light", icon: "circlehollow" },
+          { value: "dark", icon: "circle" },
         ],
       },
     },
     loggedIn: {
-      description: 'Whether a user is logged in',
+      description: "Whether a user is logged in",
       toolbar: {
-        title: 'Logged in',
-        icon: 'user',
+        title: "Logged in",
+        icon: "user",
         items: [
-          { value: 'true', title: 'logged in' },
-          { value: 'false', title: 'logged out' },
+          { value: "true", title: "logged in" },
+          { value: "false", title: "logged out" },
         ],
       },
     },
   },
   initialGlobals: {
-    locale: 'en',
-    theme: 'light',
-    loggedIn: 'true',
+    locale: "en",
+    theme: "light",
+    loggedIn: "true",
   },
   decorators: [
     (Story, { parameters, globals, args, argTypes }) => {
@@ -92,7 +92,7 @@ const preview: Preview = {
         if (argType?.reduxPath) {
           const reduxPath = Array.isArray(argType.reduxPath)
             ? argType.reduxPath.map((p) => p.toString())
-            : argType.reduxPath.split('.');
+            : argType.reduxPath.split(".");
 
           reduxPath.reduce((acc, key, i) => {
             if (acc[key] === undefined) {
@@ -107,12 +107,10 @@ const preview: Preview = {
       }
 
       let stateFnState: Record<string, unknown> = {};
-      if (typeof stateFn === 'function') {
+      if (typeof stateFn === "function") {
         stateFnState =
           (
-            stateFn as (
-              args: Record<string, unknown>,
-            ) => Record<string, unknown> | undefined | null
+            stateFn as (args: Record<string, unknown>) => Record<string, unknown> | undefined | null
           )(args) ?? {};
       }
 
@@ -140,17 +138,15 @@ const preview: Preview = {
       );
     },
     (Story, { globals }) => {
-      const currentLocale = globals.locale || 'en';
-      const [messages, setMessages] = useState<
-        Record<string, Record<string, string>>
-      >({});
+      const currentLocale = globals.locale || "en";
+      const [messages, setMessages] = useState<Record<string, Record<string, string>>>({});
       const currentLocaleData = messages[currentLocale];
 
       useEffect(() => {
         async function loadLocaleData() {
           const { default: localeFile } = (await import(
             `@/mastodon/locales/${currentLocale}.json`
-          )) as { default: LocaleData['messages'] };
+          )) as { default: LocaleData["messages"] };
           setMessages((prevLocales) => ({
             ...prevLocales,
             [currentLocale]: localeFile,
@@ -178,10 +174,10 @@ const preview: Preview = {
       <MemoryRouter>
         <Story />
         <Route
-          path='*'
+          path="*"
           // eslint-disable-next-line react/jsx-no-bind
           render={({ location }) => {
-            if (location.pathname !== '/') {
+            if (location.pathname !== "/") {
               action(`route change to ${location.pathname}`)(location);
             }
             return null;
@@ -190,12 +186,12 @@ const preview: Preview = {
       </MemoryRouter>
     ),
     (Story, { globals }) => {
-      const signedIn = globals.loggedIn !== 'false';
+      const signedIn = globals.loggedIn !== "false";
       return (
         <IdentityContext.Provider
           value={{
             signedIn,
-            accountId: signedIn ? '123' : undefined,
+            accountId: signedIn ? "123" : undefined,
             disabledAccountId: undefined,
             permissions: 0,
           }}
@@ -206,9 +202,7 @@ const preview: Preview = {
     },
     (Story, { parameters }) => {
       useEffect(() => {
-        document.documentElement.dataset.redesign = parameters.redesign
-          ? 'true'
-          : 'false';
+        document.documentElement.dataset.redesign = parameters.redesign ? "true" : "false";
       }, [parameters.redesign]);
       return <Story />;
     },
@@ -220,7 +214,7 @@ const preview: Preview = {
     ({ globals: { locale } }) => importEmojiData(locale),
   ],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
 
     controls: {
       matchers: {
@@ -233,7 +227,7 @@ const preview: Preview = {
       // 'todo' - show a11y violations in the test UI only
       // 'error' - fail CI on a11y violations
       // 'off' - skip a11y checks entirely
-      test: 'todo',
+      test: "todo",
     },
 
     state: {},

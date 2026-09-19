@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { SelectField, Select } from './select_field';
+import { SelectField, Select } from "./select_field";
 
 const meta = {
-  title: 'Components/Form Fields/SelectField',
+  title: "Components/Form Fields/SelectField",
   component: SelectField,
   args: {
-    label: 'Fruit preference',
-    hint: 'Select your favourite fruit or not. Up to you.',
+    label: "Fruit preference",
+    hint: "Select your favourite fruit or not. Up to you.",
     children: (
       <>
         <option>Apple</option>
@@ -51,7 +51,7 @@ export const Optional: Story = {
 export const WithError: Story = {
   args: {
     required: false,
-    status: 'error',
+    status: "error",
   },
 };
 

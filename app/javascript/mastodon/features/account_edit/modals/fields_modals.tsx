@@ -1,94 +1,78 @@
-import {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from 'react';
-import type { FC, FocusEventHandler } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
+import type { FC, FocusEventHandler } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { closeModal } from '@/mastodon/actions/modal';
-import { Button } from '@/mastodon/components/button';
-import type { FieldStatus } from '@/mastodon/components/form_fields';
-import { EmojiTextInputField } from '@/mastodon/components/form_fields';
-import { useCustomEmojis } from '@/mastodon/hooks/useCustomEmojis';
-import {
-  removeField,
-  selectFieldById,
-  updateField,
-} from '@/mastodon/reducers/slices/profile_edit';
-import {
-  createAppSelector,
-  useAppDispatch,
-  useAppSelector,
-} from '@/mastodon/store';
-import { isUrlWithoutProtocol } from '@/mastodon/utils/checks';
+import { closeModal } from "@/mastodon/actions/modal";
+import { Button } from "@/mastodon/components/button";
+import type { FieldStatus } from "@/mastodon/components/form_fields";
+import { EmojiTextInputField } from "@/mastodon/components/form_fields";
+import { useCustomEmojis } from "@/mastodon/hooks/useCustomEmojis";
+import { removeField, selectFieldById, updateField } from "@/mastodon/reducers/slices/profile_edit";
+import { createAppSelector, useAppDispatch, useAppSelector } from "@/mastodon/store";
+import { isUrlWithoutProtocol } from "@/mastodon/utils/checks";
 
-import { ConfirmationModal } from '../../ui/components/confirmation_modals';
-import type { DialogModalProps } from '../../ui/components/dialog_modal';
-import { DialogModal } from '../../ui/components/dialog_modal';
+import { ConfirmationModal } from "../../ui/components/confirmation_modals";
+import type { DialogModalProps } from "../../ui/components/dialog_modal";
+import { DialogModal } from "../../ui/components/dialog_modal";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   editTitle: {
-    id: 'account_edit.field_edit_modal.edit_title',
-    defaultMessage: 'Edit custom field',
+    id: "account_edit.field_edit_modal.edit_title",
+    defaultMessage: "Edit custom field",
   },
   addTitle: {
-    id: 'account_edit.field_edit_modal.add_title',
-    defaultMessage: 'Add custom field',
+    id: "account_edit.field_edit_modal.add_title",
+    defaultMessage: "Add custom field",
   },
   editLabelField: {
-    id: 'account_edit.field_edit_modal.name_label',
-    defaultMessage: 'Label',
+    id: "account_edit.field_edit_modal.name_label",
+    defaultMessage: "Label",
   },
   editLabelHint: {
-    id: 'account_edit.field_edit_modal.name_hint',
-    defaultMessage: 'E.g. “Personal website”',
+    id: "account_edit.field_edit_modal.name_hint",
+    defaultMessage: "E.g. “Personal website”",
   },
   editValueField: {
-    id: 'account_edit.field_edit_modal.value_label',
-    defaultMessage: 'Value',
+    id: "account_edit.field_edit_modal.value_label",
+    defaultMessage: "Value",
   },
   editValueHint: {
-    id: 'account_edit.field_edit_modal.value_hint',
-    defaultMessage: 'E.g. “https://example.me”',
+    id: "account_edit.field_edit_modal.value_hint",
+    defaultMessage: "E.g. “https://example.me”",
   },
   save: {
-    id: 'account_edit.save',
-    defaultMessage: 'Save',
+    id: "account_edit.save",
+    defaultMessage: "Save",
   },
   discardMessage: {
-    id: 'account_edit.field_edit_modal.discard_message',
-    defaultMessage:
-      'You have unsaved changes. Are you sure you want to discard them?',
+    id: "account_edit.field_edit_modal.discard_message",
+    defaultMessage: "You have unsaved changes. Are you sure you want to discard them?",
   },
   discardConfirm: {
-    id: 'account_edit.field_edit_modal.discard_confirm',
-    defaultMessage: 'Discard',
+    id: "account_edit.field_edit_modal.discard_confirm",
+    defaultMessage: "Discard",
   },
   errorBlank: {
-    id: 'form_error.blank',
-    defaultMessage: 'Field cannot be blank.',
+    id: "form_error.blank",
+    defaultMessage: "Field cannot be blank.",
   },
   warningLength: {
-    id: 'account_edit.field_edit_modal.length_warning',
+    id: "account_edit.field_edit_modal.length_warning",
     defaultMessage:
-      'Recommended character limit exceeded. Mobile users might not see your field in full.',
+      "Recommended character limit exceeded. Mobile users might not see your field in full.",
   },
   warningUrlEmoji: {
-    id: 'account_edit.field_edit_modal.link_emoji_warning',
+    id: "account_edit.field_edit_modal.link_emoji_warning",
     defaultMessage:
-      'We recommend against the use of custom emoji in combination with urls. Custom fields containing both will display as text only instead of as a link, in order to prevent user confusion.',
+      "We recommend against the use of custom emoji in combination with urls. Custom fields containing both will display as text only instead of as a link, in order to prevent user confusion.",
   },
   warningUrlProtocol: {
-    id: 'account_edit.field_edit_modal.url_warning',
-    defaultMessage:
-      'To add a link, please include {protocol} at the beginning.',
-    description: '{protocol} is https://',
+    id: "account_edit.field_edit_modal.url_warning",
+    defaultMessage: "To add a link, please include {protocol} at the beginning.",
+    description: "{protocol} is https://",
   },
 });
 
@@ -126,8 +110,8 @@ export const EditFieldModal = forwardRef<
   const field = useAppSelector((state) => selectFieldById(state, fieldKey));
   const oldLabel = lastLabel ?? field?.name;
   const oldValue = lastValue ?? field?.value;
-  const [newLabel, setNewLabel] = useState(oldLabel ?? '');
-  const [newValue, setNewValue] = useState(oldValue ?? '');
+  const [newLabel, setNewLabel] = useState(oldLabel ?? "");
+  const [newValue, setNewValue] = useState(oldValue ?? "");
   const isDirty = newLabel !== oldLabel || newValue !== oldValue;
 
   const { nameLimit, valueLimit } = useAppSelector(selectFieldLimits);
@@ -139,22 +123,19 @@ export const EditFieldModal = forwardRef<
   }>({});
 
   const customEmojis = useCustomEmojis();
-  const customEmojiCodes = useMemo(
-    () => Object.keys(customEmojis),
-    [customEmojis],
-  );
+  const customEmojiCodes = useMemo(() => Object.keys(customEmojis), [customEmojis]);
   const checkField = useCallback(
     (value: string): FieldStatus | null => {
       if (!value.trim()) {
         return {
-          variant: 'error',
+          variant: "error",
           message: intl.formatMessage(messages.errorBlank),
         };
       }
 
       if (value.length > RECOMMENDED_LIMIT) {
         return {
-          variant: 'warning',
+          variant: "warning",
           message: intl.formatMessage(messages.warningLength, {
             max: RECOMMENDED_LIMIT,
           }),
@@ -162,21 +143,19 @@ export const EditFieldModal = forwardRef<
       }
 
       const hasLink = /https?:\/\//.test(value);
-      const hasEmoji = customEmojiCodes.some((code) =>
-        value.includes(`:${code}:`),
-      );
+      const hasEmoji = customEmojiCodes.some((code) => value.includes(`:${code}:`));
       if (hasLink && hasEmoji) {
         return {
-          variant: 'warning',
+          variant: "warning",
           message: intl.formatMessage(messages.warningUrlEmoji),
         };
       }
 
       if (isUrlWithoutProtocol(value)) {
         return {
-          variant: 'warning',
+          variant: "warning",
           message: intl.formatMessage(messages.warningUrlProtocol, {
-            protocol: 'https://',
+            protocol: "https://",
           }),
         };
       }
@@ -190,7 +169,7 @@ export const EditFieldModal = forwardRef<
     (event) => {
       const { name, value } = event.target;
       const result = checkField(value);
-      if (name !== 'label' && name !== 'value') {
+      if (name !== "label" && name !== "value") {
         return;
       }
       setFieldStatuses((statuses) => ({
@@ -209,7 +188,7 @@ export const EditFieldModal = forwardRef<
 
     const labelStatus = checkField(newLabel);
     const valueStatus = checkField(newValue);
-    if (labelStatus?.variant === 'error' || valueStatus?.variant === 'error') {
+    if (labelStatus?.variant === "error" || valueStatus?.variant === "error") {
       setFieldStatuses({
         label: labelStatus ?? undefined,
         value: valueStatus ?? undefined,
@@ -217,13 +196,11 @@ export const EditFieldModal = forwardRef<
       return;
     }
 
-    void dispatch(
-      updateField({ id: fieldKey, name: newLabel, value: newValue }),
-    ).then(() => {
+    void dispatch(updateField({ id: fieldKey, name: newLabel, value: newValue })).then(() => {
       // Close without confirmation.
       dispatch(
         closeModal({
-          modalType: 'ACCOUNT_EDIT_FIELD_EDIT',
+          modalType: "ACCOUNT_EDIT_FIELD_EDIT",
           ignoreFocus: false,
         }),
       );
@@ -255,18 +232,14 @@ export const EditFieldModal = forwardRef<
     <ConfirmationModal
       noCloseOnConfirm
       onClose={onClose}
-      title={
-        field
-          ? intl.formatMessage(messages.editTitle)
-          : intl.formatMessage(messages.addTitle)
-      }
+      title={field ? intl.formatMessage(messages.editTitle) : intl.formatMessage(messages.addTitle)}
       confirm={intl.formatMessage(messages.save)}
       onConfirm={handleSave}
       updating={isPending}
       className={classes.wrapper}
     >
       <EmojiTextInputField
-        name='label'
+        name="label"
         value={newLabel}
         onChange={setNewLabel}
         onBlur={handleBlur}
@@ -279,7 +252,7 @@ export const EditFieldModal = forwardRef<
       />
 
       <EmojiTextInputField
-        name='value'
+        name="value"
         value={newValue}
         onChange={setNewValue}
         onBlur={handleBlur}
@@ -293,7 +266,7 @@ export const EditFieldModal = forwardRef<
     </ConfirmationModal>
   );
 });
-EditFieldModal.displayName = 'EditFieldModal';
+EditFieldModal.displayName = "EditFieldModal";
 
 export const DeleteFieldModal: FC<DialogModalProps & { fieldKey: string }> = ({
   onClose,
@@ -310,23 +283,23 @@ export const DeleteFieldModal: FC<DialogModalProps & { fieldKey: string }> = ({
       onClose={onClose}
       title={
         <FormattedMessage
-          id='account_edit.field_delete_modal.title'
-          defaultMessage='Delete custom field?'
+          id="account_edit.field_delete_modal.title"
+          defaultMessage="Delete custom field?"
         />
       }
       buttons={
         <Button dangerous onClick={handleDelete} disabled={isPending}>
           <FormattedMessage
-            id='account_edit.field_delete_modal.delete_button'
-            defaultMessage='Delete'
+            id="account_edit.field_delete_modal.delete_button"
+            defaultMessage="Delete"
           />
         </Button>
       }
     >
       <FormattedMessage
-        id='account_edit.field_delete_modal.confirm'
-        defaultMessage='Are you sure you want to delete this custom field? This action can’t be undone.'
-        tagName='p'
+        id="account_edit.field_delete_modal.confirm"
+        defaultMessage="Are you sure you want to delete this custom field? This action can’t be undone."
+        tagName="p"
       />
     </DialogModal>
   );

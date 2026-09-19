@@ -3,24 +3,15 @@ import {
   apiRequestGet,
   apiRequestDelete,
   apiRequestPatch,
-} from 'flavours/glitch/api';
-import type {
-  ApiAccountJSON,
-  ApiFamiliarFollowersJSON,
-} from 'flavours/glitch/api_types/accounts';
-import type { ApiRelationshipJSON } from 'flavours/glitch/api_types/relationships';
-import type {
-  ApiFeaturedTagJSON,
-  ApiHashtagJSON,
-} from 'flavours/glitch/api_types/tags';
+} from "flavours/glitch/api";
+import type { ApiAccountJSON, ApiFamiliarFollowersJSON } from "flavours/glitch/api_types/accounts";
+import type { ApiRelationshipJSON } from "flavours/glitch/api_types/relationships";
+import type { ApiFeaturedTagJSON, ApiHashtagJSON } from "flavours/glitch/api_types/tags";
 
-import type {
-  ApiProfileJSON,
-  ApiProfileUpdateParams,
-} from '../api_types/profile';
+import type { ApiProfileJSON, ApiProfileUpdateParams } from "../api_types/profile";
 
 export const apiGetAccounts = (ids: string[]) =>
-  apiRequestGet<ApiAccountJSON[]>('v1/accounts', {
+  apiRequestGet<ApiAccountJSON[]>("v1/accounts", {
     id: ids,
   });
 
@@ -43,9 +34,7 @@ export const apiUnfollowAccount = (id: string) =>
   apiRequestPost<ApiRelationshipJSON>(`v1/accounts/${id}/unfollow`);
 
 export const apiRemoveAccountFromFollowers = (id: string) =>
-  apiRequestPost<ApiRelationshipJSON>(
-    `v1/accounts/${id}/remove_from_followers`,
-  );
+  apiRequestPost<ApiRelationshipJSON>(`v1/accounts/${id}/remove_from_followers`);
 
 export const apiGetFeaturedTags = (id: string) =>
   apiRequestGet<ApiHashtagJSON[]>(`v1/accounts/${id}/featured_tags`);
@@ -54,32 +43,29 @@ export const apiGetCurrentFeaturedTags = () =>
   apiRequestGet<ApiFeaturedTagJSON[]>(`v1/featured_tags`);
 
 export const apiPostFeaturedTag = (name: string) =>
-  apiRequestPost<ApiFeaturedTagJSON>('v1/featured_tags', { name });
+  apiRequestPost<ApiFeaturedTagJSON>("v1/featured_tags", { name });
 
-export const apiDeleteFeaturedTag = (id: string) =>
-  apiRequestDelete(`v1/featured_tags/${id}`);
+export const apiDeleteFeaturedTag = (id: string) => apiRequestDelete(`v1/featured_tags/${id}`);
 
 export const apiGetTagSuggestions = () =>
-  apiRequestGet<ApiHashtagJSON[]>('v1/featured_tags/suggestions');
+  apiRequestGet<ApiHashtagJSON[]>("v1/featured_tags/suggestions");
 
 export const apiGetEndorsedAccounts = (id: string) =>
   apiRequestGet<ApiAccountJSON>(`v1/accounts/${id}/endorsements`);
 
 export const apiGetFamiliarFollowers = (id: string) =>
-  apiRequestGet<ApiFamiliarFollowersJSON>('v1/accounts/familiar_followers', {
+  apiRequestGet<ApiFamiliarFollowersJSON>("v1/accounts/familiar_followers", {
     id,
   });
 
-export const apiGetProfile = () => apiRequestGet<ApiProfileJSON>('v1/profile');
+export const apiGetProfile = () => apiRequestGet<ApiProfileJSON>("v1/profile");
 
 export const apiPatchProfile = (params: ApiProfileUpdateParams | FormData) =>
-  apiRequestPatch<ApiProfileJSON>('v1/profile', params);
+  apiRequestPatch<ApiProfileJSON>("v1/profile", params);
 
-export const apiDeleteProfileAvatar = () =>
-  apiRequestDelete('v1/profile/avatar');
+export const apiDeleteProfileAvatar = () => apiRequestDelete("v1/profile/avatar");
 
-export const apiDeleteProfileHeader = () =>
-  apiRequestDelete('v1/profile/header');
+export const apiDeleteProfileHeader = () => apiRequestDelete("v1/profile/header");
 
 export const apiSubscribeByEmail = (id: string, email: string) =>
   apiRequestPost(`v1/accounts/${id}/email_subscriptions`, { email });

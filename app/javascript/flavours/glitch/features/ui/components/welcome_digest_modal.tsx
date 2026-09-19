@@ -1,16 +1,16 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import { FormattedMessage } from "react-intl";
+import { useHistory } from "react-router-dom";
 
-import { Button } from 'flavours/glitch/components/button';
+import { Button } from "flavours/glitch/components/button";
 import {
   ModalShell,
   ModalShellActions,
   ModalShellBody,
-} from 'flavours/glitch/components/modal_shell';
-import { markWelcomeDigestRead } from 'flavours/glitch/reducers/slices/welcome_digest';
-import { useAppDispatch } from 'flavours/glitch/store';
+} from "flavours/glitch/components/modal_shell";
+import { markWelcomeDigestRead } from "flavours/glitch/reducers/slices/welcome_digest";
+import { useAppDispatch } from "flavours/glitch/store";
 
 export interface WelcomeDigestModalProps {
   content: string;
@@ -25,10 +25,7 @@ export interface WelcomeDigestModalProps {
 const LINK_RE = /(\[[^\]]+\]\(\/[^)\s]+\))/g;
 const LINK_MATCH_RE = /^\[([^\]]+)\]\((\/[^)\s]+)\)$/;
 
-export const WelcomeDigestModal: React.FC<WelcomeDigestModalProps> = ({
-  content,
-  onClose,
-}) => {
+export const WelcomeDigestModal: React.FC<WelcomeDigestModalProps> = ({ content, onClose }) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -51,7 +48,7 @@ export const WelcomeDigestModal: React.FC<WelcomeDigestModalProps> = ({
   const handleLinkClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
-      const path = e.currentTarget.getAttribute('href');
+      const path = e.currentTarget.getAttribute("href");
       dismiss();
       if (path) history.push(path);
     },
@@ -75,18 +72,15 @@ export const WelcomeDigestModal: React.FC<WelcomeDigestModalProps> = ({
     <ModalShell onSubmit={handleSubmit}>
       <ModalShellBody>
         <h1>
-          <FormattedMessage
-            id='welcome_digest.title'
-            defaultMessage='Welcome back!'
-          />
+          <FormattedMessage id="welcome_digest.title" defaultMessage="Welcome back!" />
         </h1>
         <p>{renderContent(content)}</p>
       </ModalShellBody>
 
       <ModalShellActions>
         {/* eslint-disable-next-line jsx-a11y/no-autofocus -- we are in a modal and thus autofocusing is justified */}
-        <Button type='submit' autoFocus>
-          <FormattedMessage id='welcome_digest.dismiss' defaultMessage='Got it' />
+        <Button type="submit" autoFocus>
+          <FormattedMessage id="welcome_digest.dismiss" defaultMessage="Got it" />
         </Button>
       </ModalShellActions>
     </ModalShell>

@@ -1,34 +1,32 @@
-import { useCallback, useEffect } from 'react';
-import type { FC } from 'react';
+import { useCallback, useEffect } from "react";
+import type { FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { fetchRelationships } from '@/mastodon/actions/accounts';
-import { openModal } from '@/mastodon/actions/modal';
-import { useAppDispatch, useAppSelector } from '@/mastodon/store';
-import EditIcon from '@/material-icons/400-24px/edit_square.svg?react';
+import { fetchRelationships } from "@/mastodon/actions/accounts";
+import { openModal } from "@/mastodon/actions/modal";
+import { useAppDispatch, useAppSelector } from "@/mastodon/store";
+import EditIcon from "@/material-icons/400-24px/edit_square.svg?react";
 
-import { Callout } from '../callout';
-import { IconButton } from '../icon_button';
+import { Callout } from "../callout";
+import { IconButton } from "../icon_button";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   title: {
-    id: 'account.note.title',
-    defaultMessage: 'Personal note (visible only to you)',
+    id: "account.note.title",
+    defaultMessage: "Personal note (visible only to you)",
   },
   editButton: {
-    id: 'account.note.edit_button',
-    defaultMessage: 'Edit',
+    id: "account.note.edit_button",
+    defaultMessage: "Edit",
   },
 });
 
 export const AccountNote: FC<{ accountId: string }> = ({ accountId }) => {
   const intl = useIntl();
-  const relationship = useAppSelector((state) =>
-    state.relationships.get(accountId),
-  );
+  const relationship = useAppSelector((state) => state.relationships.get(accountId));
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!relationship) {
@@ -39,7 +37,7 @@ export const AccountNote: FC<{ accountId: string }> = ({ accountId }) => {
   const handleEdit = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'ACCOUNT_NOTE',
+        modalType: "ACCOUNT_NOTE",
         modalProps: { accountId },
       }),
     );
@@ -56,7 +54,7 @@ export const AccountNote: FC<{ accountId: string }> = ({ accountId }) => {
       className={classes.note}
       extraContent={
         <IconButton
-          icon='edit'
+          icon="edit"
           iconComponent={EditIcon}
           title={intl.formatMessage(messages.editButton)}
           className={classes.noteEditButton}

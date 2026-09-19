@@ -76,7 +76,7 @@ es:
         domain: Este puede ser el nombre de dominio que aparece en la dirección de correo electrónico o el registro MX que utiliza. Se comprobarán al registrarse.
         with_dns_records: Se hará un intento de resolver los registros DNS del dominio dado y los resultados serán también puestos en lista negra
       featured_tag:
-        name: 'Aquí están algunas de las etiquetas que más has utilizado recientemente:'
+        name: "Aquí están algunas de las etiquetas que más has utilizado recientemente:"
       filters:
         action: Elige qué acción realizar cuando una publicación coincide con el filtro
         actions:
@@ -132,7 +132,7 @@ es:
         hint: Opcional. Proporciona más detalles sobre la regla
         text: Describe una norma o requisito para los usuarios de este servidor. Intenta hacerla corta y sencilla
       sessions:
-        otp: 'Introduce el código de autenticación de dos factores generado por tu aplicación de teléfono o usa uno de tus códigos de recuperación:'
+        otp: "Introduce el código de autenticación de dos factores generado por tu aplicación de teléfono o usa uno de tus códigos de recuperación:"
         webauthn: Si es una tecla USB, asegúrese de insertarla y, si es necesario, púlsela.
       settings:
         email_subscriptions: Deshabilitar retiene a los suscriptores existentes pero detiene el envío de correos electrónicos.
@@ -408,7 +408,7 @@ es:
         events: Eventos habilitados
         template: Plantilla de carga
         url: URL de Endpoint
-    'no': 'No'
+    "no": "No"
     not_recommended: No recomendado
     overridden: Sobrescrito
     recommended: Recomendado
@@ -418,4 +418,4 @@ es:
     title:
       sessions:
         webauthn: Utiliza una de sus claves de seguridad para iniciar sesión
-    'yes': Sí
+    "yes": Sí

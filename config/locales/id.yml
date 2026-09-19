@@ -1,7 +1,7 @@
 ---
 id:
   about:
-    about_mastodon_html: 'Jaringan sosial masa depan: Tanpa iklan, tanpa pemantauan perusahaan, desain etis, dan terdesentralisasi! Miliki data Anda dengan Mastodon!'
+    about_mastodon_html: "Jaringan sosial masa depan: Tanpa iklan, tanpa pemantauan perusahaan, desain etis, dan terdesentralisasi! Miliki data Anda dengan Mastodon!"
     contact_missing: Belum ditetapkan
     contact_unavailable: Tidak Tersedia
     hosted_on: Mastodon dihosting di %{domain}
@@ -407,10 +407,10 @@ id:
       import:
         description_html: Anda akan mengimpor daftar blok domain. Harap tinjau daftar ini dengan sangat hati-hati, terutama jika Anda sendiri tidak menulis daftar ini.
         existing_relationships_warning: Hubungan tindak lanjut yang ada
-        private_comment_description_html: 'Untuk membantu Anda melacak asal blok yang diimpor, blok yang diimpor akan dibuat dengan komentar pribadi berikut: <q>%{comment}</q>'
+        private_comment_description_html: "Untuk membantu Anda melacak asal blok yang diimpor, blok yang diimpor akan dibuat dengan komentar pribadi berikut: <q>%{comment}</q>"
         private_comment_template: Diimpor dari %{source} pada %{date}
         title: Impor blok domain
-      invalid_domain_block: 'Satu atau lebih blokir domain dilewati karena kesalahan berikut: %{error}'
+      invalid_domain_block: "Satu atau lebih blokir domain dilewati karena kesalahan berikut: %{error}"
       new:
         title: Impor blok domain
       no_file: Tidak ada file dipilih
@@ -499,12 +499,12 @@ id:
       created_msg: Berhasil menambah aturan IP baru
       delete: Hapus
       expires_in:
-        '1209600': 2 minggu
-        '15778476': 6 bulan
-        '2629746': 1 bulan
-        '31556952': 1 tahun
-        '86400': 1 hari
-        '94670856': 3 tahun
+        "1209600": 2 minggu
+        "15778476": 6 bulan
+        "2629746": 1 bulan
+        "31556952": 1 tahun
+        "86400": 1 hari
+        "94670856": 3 tahun
       new:
         title: Buat aturan IP baru
       no_ip_block_selected: Tak ada aturan IP yang berubah karena tak ada yang dipilih
@@ -549,7 +549,7 @@ id:
       category_description_html: Alasan akun dan/atau konten ini dilaporkan akan disampaikan saat berkomunikasi dengan akun yang dilaporkan
       comment:
         none: Tidak ada
-      comment_description_html: 'Untuk menyediakan lebih banyak informasi, %{name} menulis:'
+      comment_description_html: "Untuk menyediakan lebih banyak informasi, %{name} menulis:"
       created_at: Dilaporkan
       forwarded: Diteruskan
       forwarded_to: Diteruskan ke %{domain}
@@ -565,10 +565,10 @@ id:
         placeholder: Jelaskan aksi yang telah dilakukan, atau pembaruan lain yang berhubungan...
         title: Catatan
       notes_description_html: Lihat dan tinggalkan catatan kepada moderator lain dan Anda di masa depan
-      quick_actions_description_html: 'Lakukan tindakan cepat atau gulir ke bawah untuk melihat konten yang dilaporkan:'
+      quick_actions_description_html: "Lakukan tindakan cepat atau gulir ke bawah untuk melihat konten yang dilaporkan:"
       remote_user_placeholder: pengguna jarak jauh dari %{instance}
       reopen: Buka lagi laporan
-      report: 'Laporkan #%{id}'
+      report: "Laporkan #%{id}"
       reported_account: Akun yang dilaporkan
       reported_by: Dilaporkan oleh
       resolved: Terseleseikan
@@ -726,7 +726,7 @@ id:
       elasticsearch_running_check:
         message_html: Tidak dapat tersambung ke Elasticsearch. Pastikan itu berjalan, atau nonaktifkan pencarian teks penuh
       elasticsearch_version_check:
-        message_html: 'Versi Elasticsearch tidak kompatibel: %{value}'
+        message_html: "Versi Elasticsearch tidak kompatibel: %{value}"
         version_comparison: Elasticsearch %{running_version} sedang berjalan, sementara yang diwajibkan adalah %{required_version}
       rules_check:
         action: Kelola aturan server
@@ -790,7 +790,7 @@ id:
         peaked_on_and_decaying: Populer pada %{date}, kini mulai turun
         title: Tagar sedang tren
         trendable: Dapat muncul di bawah tren
-        trending_rank: 'Sedang tren #%{rank}'
+        trending_rank: "Sedang tren #%{rank}"
         usable: Dapat digunakan
         usage_comparison: Digunakan %{today} kali hari ini, dibandingkan %{yesterday} kemarin
         used_by_over_week:
@@ -841,7 +841,7 @@ id:
       body_remote: Seseorang dari %{domain} telah melaporkan %{target}
       subject: Laporan baru untuk %{instance} (#%{id})
     new_trends:
-      body: 'Item berikut harus ditinjau sebelum ditampilkan secara publik:'
+      body: "Item berikut harus ditinjau sebelum ditampilkan secara publik:"
       new_trending_links:
         title: Tautan sedang tren
       new_trending_statuses:
@@ -866,7 +866,7 @@ id:
     sensitive_content: Konten sensitif
   application_mailer:
     salutation: "%{name},"
-    view: 'Tampilan:'
+    view: "Tampilan:"
     view_profile: Lihat profil
     view_status: Lihat status
   applications:
@@ -950,7 +950,7 @@ id:
     proceed: Hapus akun
     success_msg: Akun Anda berhasil dihapus
     warning:
-      before: 'Sebelum melanjutkan, silakan baca catatan ini dengan hati-hati:'
+      before: "Sebelum melanjutkan, silakan baca catatan ini dengan hati-hati:"
       caches: Konten yang telah tersimpan di server lain mungkin akan tetap di sana
       data_removal: Kiriman Anda dan data lainnya akan dihapus secara permanen
       irreversible: Anda tidak akan bisa lagi mengembalikan atau mengaktifkan kembali akun Anda
@@ -973,7 +973,7 @@ id:
       description_html: Ini adalah tindakan yang dilakukan terhadap akun Anda dan peringatan telah dikirim oleh staf %{instance}.
       recipient: Dialamatkan untuk
       reject_appeal: Tolak banding
-      status: 'Kiriman #%{id}'
+      status: "Kiriman #%{id}"
       status_removed: Kirim sudah dihapus dari sistem
       title: "%{action} dari %{date}"
       title_actions:
@@ -988,19 +988,19 @@ id:
       your_appeal_pending: Anda telah mengirim banding
       your_appeal_rejected: Banding Anda ditolak
   errors:
-    '400': Permintaan yang dikirim tidak valid atau cacat.
-    '403': Anda tidak mempunyai izin untuk melihat halaman ini.
-    '404': Halaman yang anda cari tidak ditemukan
-    '406': Halaman ini tidak tersedia dalam format yang diminta.
-    '410': Halaman yang anda cari sudah tidak dapat ditemukan lagi.
-    '422':
+    "400": Permintaan yang dikirim tidak valid atau cacat.
+    "403": Anda tidak mempunyai izin untuk melihat halaman ini.
+    "404": Halaman yang anda cari tidak ditemukan
+    "406": Halaman ini tidak tersedia dalam format yang diminta.
+    "410": Halaman yang anda cari sudah tidak dapat ditemukan lagi.
+    "422":
       content: Verifikasi keamanan gagal. Apa anda memblokir cookie?
       title: Verifikasi keamanan gagal
-    '429': Lambat
-    '500':
+    "429": Lambat
+    "500":
       content: Maaf, ada sesuatu yang salah pada sistem kami.
       title: Halaman ini tidak benar
-    '503': Halaman ini tidak dapat ditampilkan karena kegagalan server sementara.
+    "503": Halaman ini tidak dapat ditampilkan karena kegagalan server sementara.
     noscript_html: Untuk menggunakan aplikasi web Mastodon, tolong aktifkan JavaScript. Sebagai alternatif, cobalah <a href="%{apps_path}">aplikasi murni</a> Mastodon untuk platform Anda.
   existing_username_validator:
     not_found: tidak dapat menemukan pengguna lokal dengan nama pengguna tersebut
@@ -1079,7 +1079,7 @@ id:
       other: Ada yang belum benar! Silakan tinjau %{count} kesalahan di bawah ini
   imports:
     errors:
-      invalid_csv_file: 'Berkas CVS tidak sah. Kesalahan: %{error}'
+      invalid_csv_file: "Berkas CVS tidak sah. Kesalahan: %{error}"
       over_rows_processing_limit: berisi lebih dari %{count} baris
     modes:
       merge: Gabung
@@ -1099,15 +1099,15 @@ id:
     delete: Nonaktifkan
     expired: Kedaluwarsa
     expires_in:
-      '1800': 30 menit
-      '21600': 6 jam
-      '3600': 1 jam
-      '43200': 12 jam
-      '604800': 1 minggu
-      '86400': 1 hari
+      "1800": 30 menit
+      "21600": 6 jam
+      "3600": 1 jam
+      "43200": 12 jam
+      "604800": 1 minggu
+      "86400": 1 hari
     expires_in_prompt: Tak pernah
     generate: Buat tautan undangan
-    invited_by: 'Anda diundang oleh:'
+    invited_by: "Anda diundang oleh:"
     max_uses:
       other: "%{count} penggunaan"
     max_uses_prompt: Tanpa batas
@@ -1155,7 +1155,7 @@ id:
     set_redirect: Atur peralihan
     warning:
       backreference_required: Akun baru harus dikonfigurasi terlebih dahulu agar merujuk ke akun ini
-      before: 'Sebelum lanjut, mohon perhatikan catatan ini:'
+      before: "Sebelum lanjut, mohon perhatikan catatan ini:"
       cooldown: Setelah pindah akun adalah masa tenang, masa Anda tidak dapat pindah akun lagi
       disabled_account: Akun Anda tidak akan dapat dipakai secara penuh. Namun, Anda tetap akan memiliki akses ke ekspor data dan aktivasi ulang.
       followers: Tindakan ini akan memindah semua pengikut Anda dari akun sekarang ke akun baru
@@ -1166,7 +1166,7 @@ id:
   move_handler:
     carry_blocks_over_text: Pengguna ini pindah dari %{acct}, yang telah Anda blokir sebelumnya.
     carry_mutes_over_text: Pengguna ini pindah dari %{acct}, yang telah Anda bisukan sebelumnya.
-    copy_account_note_text: 'Pengguna ini pindah dari %{acct}, ini dia pesan Anda sebelumnya tentang mereka:'
+    copy_account_note_text: "Pengguna ini pindah dari %{acct}, ini dia pesan Anda sebelumnya tentang mereka:"
   navigation:
     toggle_menu: Saklar menu
   notification_mailer:
@@ -1176,7 +1176,7 @@ id:
       sign_up:
         subject: "%{name} mendaftar"
     favourite:
-      body: 'Status anda disukai oleh %{name}:'
+      body: "Status anda disukai oleh %{name}:"
       subject: "%{name} menyukai status anda"
       title: Favorit baru
     follow:
@@ -1186,17 +1186,17 @@ id:
     follow_request:
       action: Kelola permintaan mengikuti
       body: "%{name} meminta untuk mengikuti anda"
-      subject: 'Pengikut menunggu: %{name}'
+      subject: "Pengikut menunggu: %{name}"
       title: Permintaan mengikuti baru
     mention:
       action: Balas
-      body: 'Anda disebut oleh %{name} pada:'
+      body: "Anda disebut oleh %{name} pada:"
       subject: Anda disebut oleh %{name}
       title: Sebutan baru
     poll:
       subject: Japat oleh %{name} telah berakhir
     reblog:
-      body: 'Status anda di-boost oleh %{name}:'
+      body: "Status anda di-boost oleh %{name}:"
       subject: "%{name} mem-boost status anda"
       title: Boost baru
     status:
@@ -1204,7 +1204,7 @@ id:
     update:
       subject: "%{name} mengedit kiriman"
   notifications:
-    email_events_hint: 'Pilih event yang ingin Anda terima notifikasinya:'
+    email_events_hint: "Pilih event yang ingin Anda terima notifikasinya:"
   number:
     human:
       decimal_units:
@@ -1220,7 +1220,7 @@ id:
     description_html: Jika Anda mengaktifkan <strong>autentikasi dua-faktor</strong> menggunakan aplikasi autentikator, Anda membutuhkan ponsel untuk masuk akun, yang akan membuat token untuk dimasukkan.
     enable: Aktifkan
     instructions_html: "<strong>Pindai kode QR ini dengan Google Authenticator anda atau aplikasi TOTP lainnya di ponsel anda</strong>. Mulai sekarang, aplikasi tersebut akan membuat token yang bisa anda gunakan untuk masuk akun."
-    manual_instructions: 'Jika anda tidak bisa memindai kode QR dan harus memasukkannya secara manual, ini dia kode rahasia yang harus dimasukkan:'
+    manual_instructions: "Jika anda tidak bisa memindai kode QR dan harus memasukkannya secara manual, ini dia kode rahasia yang harus dimasukkan:"
     setup: Persiapan
     wrong_code: Kode yang dimasukkan tidak cocok! Apakah waktu server dan waktu di ponsel sudah benar?
   pagination:
@@ -1273,10 +1273,10 @@ id:
     errors:
       invalid_rules: tidak mereferensikan aturan yang valid
   rss:
-    content_warning: 'Peringatan konten:'
+    content_warning: "Peringatan konten:"
     descriptions:
       account: Kiriman publik dari @%{acct}
-      tag: 'Kiriman publik ditagari #%{hashtag}'
+      tag: "Kiriman publik ditagari #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Anda telah melampaui batas %{limit} kiriman terjadwal untuk sehari
     over_total_limit: Anda telah melampaui batas %{limit} kiriman terjadwal
@@ -1346,16 +1346,16 @@ id:
     attached:
       audio:
         other: "%{count} audio"
-      description: 'Terlampir: %{attached}'
+      description: "Terlampir: %{attached}"
       image:
         other: "%{count} gambar"
       video:
         other: "%{count} video"
     boosted_from_html: Boost dari %{acct_link}
-    content_warning: 'Peringatan konten: %{warning}'
+    content_warning: "Peringatan konten: %{warning}"
     default_language: Sama seperti bahasa antarmuka
     disallowed_hashtags:
-      other: 'berisi tagar yang tidak diizinkan: %{tags}'
+      other: "berisi tagar yang tidak diizinkan: %{tags}"
     edited_at_html: Diedit %{date}
     errors:
       in_reply_not_found: Status yang ingin Anda balas sudah tidak ada.
@@ -1388,14 +1388,14 @@ id:
     keep_self_fav: Simpan kiriman favorit Anda
     keep_self_fav_hint: Tidak menghapus kiriman Anda yang Anda favoritkan
     min_age:
-      '1209600': 2 minggu
-      '15778476': 6 bulan
-      '2629746': 1 bulan
-      '31556952': 1 tahun
-      '5259492': 2 bulan
-      '604800': 1 minggu
-      '63113904': 2 tahun
-      '7889238': 3 bulan
+      "1209600": 2 minggu
+      "15778476": 6 bulan
+      "2629746": 1 bulan
+      "31556952": 1 tahun
+      "5259492": 2 bulan
+      "604800": 1 minggu
+      "63113904": 2 tahun
+      "7889238": 3 bulan
     min_age_label: Batas usia
     min_favs: Simpan kiriman favorit lebih dari
     min_reblogs: Simpan kiriman yang di-boost lebih dari
@@ -1441,7 +1441,7 @@ id:
       title: Ambil arsip
     suspicious_sign_in:
       change_password: mengubah kata sandi Anda
-      details: 'Ini rincian masuk akun Anda:'
+      details: "Ini rincian masuk akun Anda:"
       explanation: Kami mendeteksi masuk akun Anda dari alamat IP baru.
       further_actions_html: Jika ini bukan Anda, kami menyarankan Anda untuk melakukan %{action} langsung dan mengaktifkan otentikasi dua-faktor untuk mengamankan akun Anda.
       subject: Akun Anda telah diakses dari alamat IP baru
@@ -1459,8 +1459,8 @@ id:
         sensitive: Mulai sekarang, semua berkas media yang telah Anda unggah akan ditandai sebagai sensitif dan disembunyikan di balik peringatan yang harus diklik.
         silence: Anda masih tetap dapat menggunakan akun tetapi hanya orang yang mengikuti Anda yang dapat melihat kiriman Anda di server ini, dan Anda mungkin akan dikeluarkan dari fitur pencarian akun. Bagaimana pun, orang lain tetap dapat mengikuti Anda secara manual.
         suspend: Anda tidak dapat menggunakan akun Anda, dan profil serta data lain Anda tidak lagi dapat diakses. Anda masih tetap bisa masuk akun untuk minta cadangan data sampai data Anda akan dihapus permanen 30 hari lagi, tapi kami akan menyimpan beberapa data dasar untuk mencegah Anda menghindari penangguhan.
-      reason: 'Alasan:'
-      statuses: 'Kiriman mengutip:'
+      reason: "Alasan:"
+      statuses: "Kiriman mengutip:"
       subject:
         delete_statuses: Postingan anda pada %{acct} telah dihapus
         disable: Akun Anda %{acct} telah dibekukan
@@ -1485,7 +1485,7 @@ id:
     follow_limit_reached: Anda tidak dapat mengikuti lebih dari %{limit} orang
     invalid_otp_token: Kode dua faktor tidak cocok
     otp_lost_help_html: Jika Anda kehilangan akses keduanya, Anda dapat menghubungi %{email}
-    signed_in_as: 'Masuk sebagai:'
+    signed_in_as: "Masuk sebagai:"
   verification:
     verification: Verifikasi
   webauthn_credentials:

@@ -1,25 +1,25 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { List as ImmutableList } from 'immutable';
+import { List as ImmutableList } from "immutable";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import RefreshIcon from '@/material-icons/400-24px/refresh.svg?react';
-import { fetchQuotes } from 'mastodon/actions/interactions_typed';
-import { ColumnHeader } from 'mastodon/components/column_header';
-import { Icon } from 'mastodon/components/icon';
-import { LoadingIndicator } from 'mastodon/components/loading_indicator';
-import StatusList from 'mastodon/components/status_list';
-import { useIdentity } from 'mastodon/identity_context';
-import { domain } from 'mastodon/initial_state';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+import RefreshIcon from "@/material-icons/400-24px/refresh.svg?react";
+import { fetchQuotes } from "mastodon/actions/interactions_typed";
+import { ColumnHeader } from "mastodon/components/column_header";
+import { Icon } from "mastodon/components/icon";
+import { LoadingIndicator } from "mastodon/components/loading_indicator";
+import StatusList from "mastodon/components/status_list";
+import { useIdentity } from "mastodon/identity_context";
+import { domain } from "mastodon/initial_state";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
-import Column from '../ui/components/column';
+import Column from "../ui/components/column";
 
 const messages = defineMessages({
-  refresh: { id: 'refresh', defaultMessage: 'Refresh' },
+  refresh: { id: "refresh", defaultMessage: "Refresh" },
 });
 
 const emptyList = ImmutableList();
@@ -36,24 +36,22 @@ export const Quotes: React.FC<{
   const { accountId: me } = useIdentity();
 
   const isCorrectStatusId: boolean = useAppSelector(
-    (state) => state.status_lists.getIn(['quotes', 'statusId']) === statusId,
+    (state) => state.status_lists.getIn(["quotes", "statusId"]) === statusId,
   );
   const quotedAccountId = useAppSelector(
-    (state) =>
-      state.statuses.getIn([statusId, 'account']) as string | undefined,
+    (state) => state.statuses.getIn([statusId, "account"]) as string | undefined,
   );
   const quotedAccount = useAppSelector((state) =>
     quotedAccountId ? state.accounts.get(quotedAccountId) : undefined,
   );
   const statusIds = useAppSelector((state) =>
-    state.status_lists.getIn(['quotes', 'items'], emptyList),
+    state.status_lists.getIn(["quotes", "items"], emptyList),
   );
   const nextUrl = useAppSelector(
-    (state) =>
-      state.status_lists.getIn(['quotes', 'next']) as string | undefined,
+    (state) => state.status_lists.getIn(["quotes", "next"]) as string | undefined,
   );
   const isLoading = useAppSelector((state) =>
-    state.status_lists.getIn(['quotes', 'isLoading'], true),
+    state.status_lists.getIn(["quotes", "isLoading"], true),
   );
   const hasMore = !!nextUrl;
 
@@ -80,8 +78,8 @@ export const Quotes: React.FC<{
 
   const emptyMessage = (
     <FormattedMessage
-      id='status.quotes.empty'
-      defaultMessage='No one has quoted this post yet. When someone does, it will show up here.'
+      id="status.quotes.empty"
+      defaultMessage="No one has quoted this post yet. When someone does, it will show up here."
     />
   );
 
@@ -92,19 +90,19 @@ export const Quotes: React.FC<{
   } else if (quotedAccount?.username === quotedAccount?.acct) {
     // Local account, we know this to be exhaustive
     prependMessage = (
-      <div className='follow_requests-unlocked_explanation'>
+      <div className="follow_requests-unlocked_explanation">
         <FormattedMessage
-          id='status.quotes.local_other_disclaimer'
-          defaultMessage='Quotes rejected by the author will not be shown.'
+          id="status.quotes.local_other_disclaimer"
+          defaultMessage="Quotes rejected by the author will not be shown."
         />
       </div>
     );
   } else {
     prependMessage = (
-      <div className='follow_requests-unlocked_explanation'>
+      <div className="follow_requests-unlocked_explanation">
         <FormattedMessage
-          id='status.quotes.remote_other_disclaimer'
-          defaultMessage='Only quotes from {domain} are guaranteed to be shown here. Quotes rejected by the author will not be shown.'
+          id="status.quotes.remote_other_disclaimer"
+          defaultMessage="Only quotes from {domain} are guaranteed to be shown here. Quotes rejected by the author will not be shown."
           values={{ domain: <strong>{domain}</strong> }}
         />
       </div>
@@ -118,19 +116,19 @@ export const Quotes: React.FC<{
         multiColumn={multiColumn}
         extraButton={
           <button
-            type='button'
-            className='column-header__button'
+            type="button"
+            className="column-header__button"
             title={intl.formatMessage(messages.refresh)}
             aria-label={intl.formatMessage(messages.refresh)}
             onClick={handleRefresh}
           >
-            <Icon id='refresh' icon={RefreshIcon} />
+            <Icon id="refresh" icon={RefreshIcon} />
           </button>
         }
       />
 
       <StatusList
-        scrollKey='quotes_timeline'
+        scrollKey="quotes_timeline"
         statusIds={statusIds}
         onLoadMore={handleLoadMore}
         hasMore={hasMore}
@@ -141,7 +139,7 @@ export const Quotes: React.FC<{
       />
 
       <Helmet>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

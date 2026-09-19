@@ -7,7 +7,7 @@ ia:
         display_name: Tu prenomine e nomine de familia o tu pseudonymo.
         fields: Tu pagina principal, pronomines, etate, tote lo que tu vole.
         indexable: Tu messages public pote apparer in le resultatos de recerca sur Mastodon. Le personas qui ha interagite con tu messages pote cercar los in omne caso.
-        note: 'Tu pote @mentionar altere personas o #hashtags.'
+        note: "Tu pote @mentionar altere personas o #hashtags."
         show_collections: Le gente potera percurrer le listas de personas que tu seque e qui te seque. Le personas que tu seque videra que tu les seque in omne caso.
         unlocked: Le personas potera sequer te sin requestar approbation. Dismarca si tu vole revider le requestas de sequimento e seliger si acceptar o rejectar nove sequitores.
       account_alias:
@@ -72,7 +72,7 @@ ia:
         domain: Isto pote esser le nomine de dominio que apparera in le adresse de e-mail o le registro MX que illo usa. Illos essera verificate durante le inscription.
         with_dns_records: Un tentativa de resolver le registros DNS del dominio date essera facite e le resultatos essera equalmente blocate
       featured_tag:
-        name: 'Ecce alcun del hashtags que tu usava le plus recentemente:'
+        name: "Ecce alcun del hashtags que tu usava le plus recentemente:"
       filters:
         actions:
           blur: Celar contento multimedial detra un advertimento, sin celar le texto mesme
@@ -123,7 +123,7 @@ ia:
         hint: Optional. Forni altere detalios re le regula
         text: Describe un regula o requisito pro usatores sur iste servitor. Tenta de mantener lo breve e simple
       sessions:
-        otp: 'Insere le codice a duo factores generate per le app de tu telephono o usa un de tu codices de recuperation:'
+        otp: "Insere le codice a duo factores generate per le app de tu telephono o usa un de tu codices de recuperation:"
         webauthn: Si illo es un clave USB cura de inserer lo e, si necessari, tocca lo.
       settings:
         indexable: Tu pagina del profilo pote apparer in resultatos del recerca sur Google, Bing, e alteros.
@@ -380,7 +380,7 @@ ia:
         events: Eventos activate
         template: Modello de carga utile
         url: URL de extremo
-    'no': 'No'
+    "no": "No"
     not_recommended: Non recommendate
     overridden: Supplantate
     recommended: Recommendate
@@ -390,4 +390,4 @@ ia:
     title:
       sessions:
         webauthn: Usa un de tu claves de securitate pro acceder
-    'yes': Si
+    "yes": Si

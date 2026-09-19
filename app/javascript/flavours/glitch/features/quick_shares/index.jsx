@@ -1,26 +1,27 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from "react";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import { Column } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import api from 'flavours/glitch/api';
+import { Column } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import api from "flavours/glitch/api";
 
 const formatDate = (iso) => {
   const d = new Date(iso);
-  return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
+  return d.toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" });
 };
 
 const QuickShareIndex = ({ multiColumn }) => {
   const [shares, setShares] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [excluded, setExcluded] = useState(() => new Set());
 
   useEffect(() => {
-    api().get('/api/v1/community_quick_shares')
+    api()
+      .get("/api/v1/community_quick_shares")
       .then((res) => setShares(res.data))
       .finally(() => setLoading(false));
   }, []);
@@ -55,24 +56,26 @@ const QuickShareIndex = ({ multiColumn }) => {
 
   return (
     <Column>
-      <ColumnHeader icon='description' title='Barbara & David' multiColumn={multiColumn} />
-      <Helmet><title>Barbara & David · miacivezza</title></Helmet>
-      <div className='qs-index'>
-        <div className='qs-index__controls'>
+      <ColumnHeader icon="description" title="Barbara & David" multiColumn={multiColumn} />
+      <Helmet>
+        <title>Barbara & David · miacivezza</title>
+      </Helmet>
+      <div className="qs-index">
+        <div className="qs-index__controls">
           <input
-            type='text'
-            className='qs-index__search'
-            placeholder='Search…'
+            type="text"
+            className="qs-index__search"
+            placeholder="Search…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
           {posters.length > 1 && (
-            <div className='qs-index__chips'>
+            <div className="qs-index__chips">
               {posters.map(({ username, displayName }) => (
                 <button
                   key={username}
-                  type='button'
-                  className={`qs-index__chip${excluded.has(username) ? '' : ' qs-index__chip--active'}`}
+                  type="button"
+                  className={`qs-index__chip${excluded.has(username) ? "" : " qs-index__chip--active"}`}
                   onClick={() => togglePoster(username)}
                 >
                   {displayName}
@@ -83,16 +86,16 @@ const QuickShareIndex = ({ multiColumn }) => {
         </div>
 
         {loading ? (
-          <p className='qs-index__empty'>Loading…</p>
+          <p className="qs-index__empty">Loading…</p>
         ) : visible.length === 0 ? (
-          <p className='qs-index__empty'>Nothing here yet.</p>
+          <p className="qs-index__empty">Nothing here yet.</p>
         ) : (
-          <ul className='qs-index__list'>
+          <ul className="qs-index__list">
             {visible.map((s) => (
-              <li key={s.id} className='qs-index__item'>
-                <Link to={`/shared/${s.slug}`} className='qs-index__link'>
-                  <span className='qs-index__item-caption'>{s.caption}</span>
-                  <span className='qs-index__item-meta'>
+              <li key={s.id} className="qs-index__item">
+                <Link to={`/shared/${s.slug}`} className="qs-index__link">
+                  <span className="qs-index__item-caption">{s.caption}</span>
+                  <span className="qs-index__item-meta">
                     {s.account.display_name || s.account.username} · {formatDate(s.created_at)}
                   </span>
                 </Link>
@@ -101,7 +104,9 @@ const QuickShareIndex = ({ multiColumn }) => {
           </ul>
         )}
 
-        <Link to='/guide' className='qs-page__back'>← Back to How It Works</Link>
+        <Link to="/guide" className="qs-page__back">
+          ← Back to How It Works
+        </Link>
       </div>
     </Column>
   );

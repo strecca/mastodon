@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
 const emptyComponent = () => null;
 
 class Bundle extends PureComponent {
-
   static propTypes = {
     fetchComponent: PropTypes.func.isRequired,
     loading: PropTypes.func,
@@ -19,7 +18,7 @@ class Bundle extends PureComponent {
     renderDelay: 0,
   };
 
-  static cache = new Map;
+  static cache = new Map();
 
   state = {
     mod: undefined,
@@ -36,7 +35,7 @@ class Bundle extends PureComponent {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
@@ -69,7 +68,7 @@ class Bundle extends PureComponent {
         this.setState({ mod: mod.default });
       })
       .catch((error) => {
-        console.error('Bundle fetching error:', error);
+        console.error("Bundle fetching error:", error);
         this.setState({ mod: null });
       });
   };
@@ -77,10 +76,10 @@ class Bundle extends PureComponent {
   render() {
     const { loading: Loading, error: Error, children, renderDelay } = this.props;
     const { mod, forceRender } = this.state;
-    const elapsed = this.timestamp ? (new Date() - this.timestamp) : renderDelay;
+    const elapsed = this.timestamp ? new Date() - this.timestamp : renderDelay;
 
     if (mod === undefined) {
-      return (elapsed >= renderDelay || forceRender) ? <Loading /> : null;
+      return elapsed >= renderDelay || forceRender ? <Loading /> : null;
     }
 
     if (mod === null) {
@@ -89,7 +88,6 @@ class Bundle extends PureComponent {
 
     return children(mod);
   }
-
 }
 
 export default Bundle;

@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { expandCommunityTimeline } from 'flavours/glitch/actions/timelines';
-import { Callout } from 'flavours/glitch/components/callout';
-import StatusListContainer from 'flavours/glitch/features/ui/containers/status_list_container';
-import { useAppDispatch } from 'flavours/glitch/store';
+import { expandCommunityTimeline } from "flavours/glitch/actions/timelines";
+import { Callout } from "flavours/glitch/components/callout";
+import StatusListContainer from "flavours/glitch/features/ui/containers/status_list_container";
+import { useAppDispatch } from "flavours/glitch/store";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 export const LatestActivity = () => {
   const dispatch = useAppDispatch();
@@ -21,13 +21,13 @@ export const LatestActivity = () => {
       prepend={
         <Callout className={classes.banner}>
           <FormattedMessage
-            id='custom_homepage.these_are_the_latest_posts'
-            defaultMessage='These are the latest 40 posts from accounts on this server.'
+            id="custom_homepage.these_are_the_latest_posts"
+            defaultMessage="These are the latest 40 posts from accounts on this server."
           />
         </Callout>
       }
-      scrollKey='custom_homepage'
-      timelineId='community'
+      scrollKey="custom_homepage"
+      timelineId="community"
       maxItems={40}
       bindToDocument
     />

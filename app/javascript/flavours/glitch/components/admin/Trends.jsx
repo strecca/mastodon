@@ -1,15 +1,14 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import api from 'flavours/glitch/api';
-import { Hashtag } from 'flavours/glitch/components/hashtag';
+import api from "flavours/glitch/api";
+import { Hashtag } from "flavours/glitch/components/hashtag";
 
 export default class Trends extends PureComponent {
-
   static propTypes = {
     limit: PropTypes.number.isRequired,
   };
@@ -19,20 +18,23 @@ export default class Trends extends PureComponent {
     data: null,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     const { limit } = this.props;
 
-    api(false).get('/api/v1/admin/trends/tags', { params: { limit } }).then(res => {
-      this.setState({
-        loading: false,
-        data: res.data,
+    api(false)
+      .get("/api/v1/admin/trends/tags", { params: { limit } })
+      .then((res) => {
+        this.setState({
+          loading: false,
+          data: res.data,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    }).catch(err => {
-      console.error(err);
-    });
   }
 
-  render () {
+  render() {
     const { limit } = this.props;
     const { loading, data } = this.state;
 
@@ -49,15 +51,18 @@ export default class Trends extends PureComponent {
     } else {
       content = (
         <div>
-          {data.map(hashtag => (
+          {data.map((hashtag) => (
             <Hashtag
               key={hashtag.name}
               name={hashtag.name}
               href={hashtag.id === undefined ? undefined : `/admin/tags/${hashtag.id}`}
               people={hashtag.history[0].accounts * 1 + hashtag.history[1].accounts * 1}
               uses={hashtag.history[0].uses * 1 + hashtag.history[1].uses * 1}
-              history={hashtag.history.reverse().map(day => day.uses)}
-              className={classNames(hashtag.requires_review && 'trends__item--requires-review', !hashtag.trendable && !hashtag.requires_review && 'trends__item--disabled')}
+              history={hashtag.history.reverse().map((day) => day.uses)}
+              className={classNames(
+                hashtag.requires_review && "trends__item--requires-review",
+                !hashtag.trendable && !hashtag.requires_review && "trends__item--disabled",
+              )}
             />
           ))}
         </div>
@@ -65,12 +70,11 @@ export default class Trends extends PureComponent {
     }
 
     return (
-      <div className='trends trends--compact'>
-        <FormattedMessage id='trends.trending_now' defaultMessage='Trending now' tagName='h2' />
+      <div className="trends trends--compact">
+        <FormattedMessage id="trends.trending_now" defaultMessage="Trending now" tagName="h2" />
 
         {content}
       </div>
     );
   }
-
 }

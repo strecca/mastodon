@@ -1,17 +1,14 @@
-import { useId } from 'react';
+import { useId } from "react";
 
-import type { ApiCollectionJSON } from '@/mastodon/api_types/collections';
-import { Toggle } from '@/mastodon/components/form_fields';
-import {
-  ListItemContent,
-  ListItemWrapper,
-} from '@/mastodon/components/list_item';
+import type { ApiCollectionJSON } from "@/mastodon/api_types/collections";
+import { Toggle } from "@/mastodon/components/form_fields";
+import { ListItemContent, ListItemWrapper } from "@/mastodon/components/list_item";
 import {
   AvatarGrid,
   CollectionInfo,
-} from 'mastodon/features/collections/components/collection_lockup';
+} from "mastodon/features/collections/components/collection_lockup";
 
-import classes from './collection_toggle.module.scss';
+import classes from "./collection_toggle.module.scss";
 
 export interface CollectionToggleProps {
   collection: ApiCollectionJSON;
@@ -53,7 +50,7 @@ export const CollectionToggle: React.FC<CollectionToggleProps> = ({
       }
     >
       <ListItemContent
-        as='label'
+        as="label"
         htmlFor={toggleId}
         subtitle={
           subtitle ?? (

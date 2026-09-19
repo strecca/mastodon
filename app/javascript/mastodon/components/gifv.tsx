@@ -1,4 +1,4 @@
-import { useCallback, useState, forwardRef } from 'react';
+import { useCallback, useState, forwardRef } from "react";
 
 interface Props {
   src: string;
@@ -12,10 +12,7 @@ interface Props {
 }
 
 export const GIFV = forwardRef<HTMLVideoElement, Props>(
-  (
-    { src, alt, lang, width, height, onClick, onMouseDown, onTouchStart },
-    ref,
-  ) => {
+  ({ src, alt, lang, width, height, onClick, onMouseDown, onTouchStart }, ref) => {
     const [loading, setLoading] = useState(true);
 
     const handleLoadedData = useCallback(() => {
@@ -31,21 +28,15 @@ export const GIFV = forwardRef<HTMLVideoElement, Props>(
     );
 
     return (
-      <div className='gifv'>
+      <div className="gifv">
         {loading && (
-          <canvas
-            role='button'
-            tabIndex={0}
-            aria-label={alt}
-            lang={lang}
-            onClick={handleClick}
-          />
+          <canvas role="button" tabIndex={0} aria-label={alt} lang={lang} onClick={handleClick} />
         )}
 
         <video
           ref={ref}
           src={src}
-          role='button'
+          role="button"
           tabIndex={0}
           aria-label={alt}
           lang={lang}
@@ -65,4 +56,4 @@ export const GIFV = forwardRef<HTMLVideoElement, Props>(
   },
 );
 
-GIFV.displayName = 'GIFV';
+GIFV.displayName = "GIFV";

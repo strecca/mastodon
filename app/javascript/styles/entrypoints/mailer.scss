@@ -1,4 +1,4 @@
-@use '../fonts/inter';
+@use "../fonts/inter";
 
 body {
   accent-color: #6364ff;
@@ -21,7 +21,7 @@ h6 {
   background-color: transparent;
   padding: 0;
   border: none;
-  font-family: Inter, 'Lucida Grande', sans-serif;
+  font-family: Inter, "Lucida Grande", sans-serif;
 }
 
 img {
@@ -44,7 +44,7 @@ table + p {
 
 .email {
   min-width: 280px;
-  font-family: Inter, 'Lucida Grande', sans-serif;
+  font-family: Inter, "Lucida Grande", sans-serif;
   overflow-wrap: anywhere;
   color: #17063b;
   background-color: #f3f2f5;
@@ -206,7 +206,7 @@ table + p {
 .email-dir-rtl {
   direction: rtl;
 
-  [dir='rtl'] & {
+  [dir="rtl"] & {
     direction: ltr;
   }
 }
@@ -248,7 +248,7 @@ table + p {
   &.email-dir-rtl > .email-desktop-column {
     direction: ltr;
 
-    [dir='rtl'] & {
+    [dir="rtl"] & {
       direction: rtl;
     }
   }
@@ -267,7 +267,7 @@ table + p {
 .email-header-td {
   padding: 16px 32px;
   background-color: #1b001f;
-  background-image: url('../../images/mailer-new/common/header-bg-start.png');
+  background-image: url("../../images/mailer-new/common/header-bg-start.png");
   background-position: left top;
   background-repeat: repeat;
 }
@@ -434,7 +434,7 @@ table + p {
 
 // Body content
 .email-body-td {
-  background-image: url('../../images/mailer-new/common/header-bg-end.png');
+  background-image: url("../../images/mailer-new/common/header-bg-end.png");
   background-position: left top;
   background-repeat: no-repeat;
 }
@@ -545,7 +545,7 @@ table + p {
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
-  font-family: Inter, 'Lucida Grande', sans-serif;
+  font-family: Inter, "Lucida Grande", sans-serif;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -660,7 +660,7 @@ table + p {
 
   .ellipsis {
     &::after {
-      content: '…';
+      content: "…";
     }
   }
 }
@@ -725,7 +725,7 @@ table + p {
 .email-banner-table {
   border-radius: 12px;
   background-color: #1b001f;
-  background-image: url('../../images/mailer-new/common/header-bg-start.png');
+  background-image: url("../../images/mailer-new/common/header-bg-start.png");
   background-position: left top;
   background-repeat: repeat;
 }
@@ -1010,7 +1010,7 @@ table + p {
 // Extra content on light purple background
 .email-extra-wave {
   height: 42px;
-  background-image: url('../../images/mailer-new/welcome/purple-extra-soft-wave.png');
+  background-image: url("../../images/mailer-new/welcome/purple-extra-soft-wave.png");
   background-position: bottom center;
   background-repeat: no-repeat;
 }
@@ -1018,7 +1018,7 @@ table + p {
 .email-extra-td {
   padding: 32px 32px 24px;
   background-color: #f0f0ff;
-  background-image: url('../../images/mailer-new/welcome/purple-extra-soft-spacer.png'); // Using an image to maintain the color even in forced dark modes
+  background-image: url("../../images/mailer-new/welcome/purple-extra-soft-spacer.png"); // Using an image to maintain the color even in forced dark modes
 
   .email-column-td {
     padding-top: 8px;

@@ -51,7 +51,7 @@ ka:
         callback_urls: ქოლბექ ურლები
         scopes: ფარგლები
         secret: კლიენტის სერვერი
-        title: 'აპლიკაცია: %{name}'
+        title: "აპლიკაცია: %{name}"
     authorizations:
       buttons:
         authorize: ავტორიზაცია

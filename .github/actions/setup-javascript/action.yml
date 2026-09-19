@@ -1,17 +1,17 @@
-name: 'Setup Javascript'
-description: 'Setup a Javascript environment ready to run the Mastodon code'
+name: "Setup Javascript"
+description: "Setup a Javascript environment ready to run the Mastodon code"
 inputs:
   onlyProduction:
     description: Only install production dependencies
-    default: 'false'
+    default: "false"
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Set up Node.js
       uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
       with:
-        node-version-file: '.nvmrc'
+        node-version-file: ".nvmrc"
 
     # The following is needed because we can not use `cache: true` for `setup-node`, as it does not support Corepack yet and mess up with the cache location if ran after Node is installed
     - name: Enable corepack

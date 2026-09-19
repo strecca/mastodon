@@ -1,19 +1,14 @@
-import {
-  apiRequestPost,
-  apiRequestPut,
-  apiRequestGet,
-  apiRequestDelete,
-} from 'mastodon/api';
-import type { ApiAccountJSON } from 'mastodon/api_types/accounts';
-import type { ApiListJSON } from 'mastodon/api_types/lists';
+import { apiRequestPost, apiRequestPut, apiRequestGet, apiRequestDelete } from "mastodon/api";
+import type { ApiAccountJSON } from "mastodon/api_types/accounts";
+import type { ApiListJSON } from "mastodon/api_types/lists";
 
 export const apiCreate = (list: Partial<ApiListJSON>) =>
-  apiRequestPost<ApiListJSON>('v1/lists', list);
+  apiRequestPost<ApiListJSON>("v1/lists", list);
 
 export const apiUpdate = (list: Partial<ApiListJSON>) =>
   apiRequestPut<ApiListJSON>(`v1/lists/${list.id}`, list);
 
-export const apiGetLists = () => apiRequestGet<ApiListJSON[]>('v1/lists');
+export const apiGetLists = () => apiRequestGet<ApiListJSON[]>("v1/lists");
 
 export const apiGetListAccounts = (listId: string) =>
   apiRequestGet<ApiAccountJSON[]>(`v1/lists/${listId}/accounts`, {

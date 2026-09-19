@@ -1,12 +1,12 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { useSpring, animated, config, to } from '@react-spring/web';
-import { createUseGesture, dragAction, pinchAction } from '@use-gesture/react';
+import { useSpring, animated, config, to } from "@react-spring/web";
+import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
 
-import { Blurhash } from 'mastodon/components/blurhash';
-import { LoadingIndicator } from 'mastodon/components/loading_indicator';
+import { Blurhash } from "mastodon/components/blurhash";
+import { LoadingIndicator } from "mastodon/components/loading_indicator";
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 4;
@@ -29,11 +29,10 @@ const createZoomMatrix = (
   const { clientWidth, clientHeight } = container;
   const { offsetWidth, offsetHeight } = image;
 
-  const type =
-    fullWidth / fullHeight < clientWidth / clientHeight ? 'width' : 'height';
+  const type = fullWidth / fullHeight < clientWidth / clientHeight ? "width" : "height";
 
   const initialScale =
-    type === 'width'
+    type === "width"
       ? Math.min(clientWidth, fullWidth) / offsetWidth
       : Math.min(clientHeight, fullHeight) / offsetHeight;
 
@@ -58,8 +57,7 @@ const getBounds = (zoomMatrix: ZoomMatrix | null, scale: number) => {
     };
   }
 
-  const { containerWidth, containerHeight, imageWidth, imageHeight } =
-    zoomMatrix;
+  const { containerWidth, containerHeight, imageWidth, imageHeight } = zoomMatrix;
 
   const bounds = {
     left: -Math.max(imageWidth * scale - containerWidth, 0) / 2,
@@ -86,8 +84,8 @@ interface ZoomableImageProps {
 }
 
 export const ZoomableImage: React.FC<ZoomableImageProps> = ({
-  alt = '',
-  lang = '',
+  alt = "",
+  lang = "",
   src,
   width,
   height,
@@ -103,14 +101,14 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = ({
       e.preventDefault();
     };
 
-    document.addEventListener('gesturestart', handler);
-    document.addEventListener('gesturechange', handler);
-    document.addEventListener('gestureend', handler);
+    document.addEventListener("gesturestart", handler);
+    document.addEventListener("gesturechange", handler);
+    document.addEventListener("gestureend", handler);
 
     return () => {
-      document.removeEventListener('gesturestart', handler);
-      document.removeEventListener('gesturechange', handler);
-      document.removeEventListener('gestureend', handler);
+      document.removeEventListener("gesturestart", handler);
+      document.removeEventListener("gesturechange", handler);
+      document.removeEventListener("gestureend", handler);
     };
   }, []);
 
@@ -206,8 +204,7 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = ({
         }
 
         if (first) {
-          const { width, height, x, y } =
-            imageRef.current.getBoundingClientRect();
+          const { width, height, x, y } = imageRef.current.getBoundingClientRect();
           const tx = ox - (x + width / 2);
           const ty = oy - (y + height / 2);
 
@@ -245,12 +242,7 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = ({
       return;
     }
 
-    zoomMatrixRef.current = createZoomMatrix(
-      containerRef.current,
-      imageRef.current,
-      width,
-      height,
-    );
+    zoomMatrixRef.current = createZoomMatrix(containerRef.current, imageRef.current, width, height);
 
     if (!zoomedIn) {
       void api.start({ scale: MIN_SCALE, x: 0, y: 0 });
@@ -285,16 +277,16 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = ({
 
   return (
     <div
-      className={classNames('zoomable-image', {
-        'zoomable-image--zoomed-in': zoomedIn,
-        'zoomable-image--error': error,
-        'zoomable-image--dragging': dragging,
+      className={classNames("zoomable-image", {
+        "zoomable-image--zoomed-in": zoomedIn,
+        "zoomable-image--error": error,
+        "zoomable-image--dragging": dragging,
       })}
       ref={containerRef}
     >
       {!loaded && blurhash && (
         <div
-          className='zoomable-image__preview'
+          className="zoomable-image__preview"
           style={{
             aspectRatio: `${width}/${height}`,
             height: `min(${height}px, 100%)`,

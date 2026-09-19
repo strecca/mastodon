@@ -1,4 +1,4 @@
-import type { MastodonLocation } from 'mastodon/components/router';
+import type { MastodonLocation } from "mastodon/components/router";
 
 export type ShouldUpdateScrollFn = (
   prevLocationContext: MastodonLocation | null,
@@ -11,10 +11,7 @@ export type ShouldUpdateScrollFn = (
  * need to prevent this.
  */
 
-export const defaultShouldUpdateScroll: ShouldUpdateScrollFn = (
-  prevLocation,
-  location,
-) => {
+export const defaultShouldUpdateScroll: ShouldUpdateScrollFn = (prevLocation, location) => {
   // If the change is caused by opening a modal, do not scroll to top
   const shouldUpdateScroll = !(
     location.state?.mastodonModalKey &&

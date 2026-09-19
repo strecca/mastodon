@@ -52,7 +52,7 @@ fi:
         callback_urls: Takaisinkutsu-URL:t
         scopes: Oikeudet
         secret: Asiakasohjelman salaisuus
-        title: 'Sovellus: %{name}'
+        title: "Sovellus: %{name}"
     authorizations:
       buttons:
         authorize: Valtuuta
@@ -85,11 +85,11 @@ fi:
         invalid_client: Asiakasohjelman todennus epäonnistui, koska asiakas on tuntematon, asiakkaan todennus ei ollut mukana tai todennustapaa ei tueta.
         invalid_code_challenge_method:
           one: Muuttujan code_challenge_method arvon on oltava %{challenge_methods}.
-          other: 'Muuttujan code_challenge_method arvon on oltava jokin seuraavista: %{challenge_methods}.'
+          other: "Muuttujan code_challenge_method arvon on oltava jokin seuraavista: %{challenge_methods}."
         invalid_grant: Valtuutuslupa on virheellinen, vanhentunut, peruttu, valtuutuspyynnössä käytettyä uudelleenohjaus-URI:tä vastaamaton tai myönnetty toiselle asiakkaalle.
         invalid_redirect_uri: Uudelleenohjaus-URI on virheellinen.
         invalid_request:
-          missing_param: 'Vaadittu parametri puuttuu: %{value}.'
+          missing_param: "Vaadittu parametri puuttuu: %{value}."
           request_not_authorized: Pyyntö on valtuutettava. Vaadittu parametri pyynnön valtuuttamiseksi puuttuu tai on virheellinen.
           unknown: Pyynnöstä puuttuu vaadittu parametri, se sisältää tukemattoman parametriarvon tai on muulla tavoin väärin muotoiltu.
         invalid_resource_owner: Annetut resurssin omistajan tunnnukset ovat virheelliset, tai resurssin omistajaa ei löydy

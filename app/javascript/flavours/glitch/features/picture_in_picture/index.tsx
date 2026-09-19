@@ -1,17 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { removePictureInPicture } from 'flavours/glitch/actions/picture_in_picture';
-import { Audio } from 'flavours/glitch/features/audio';
-import { Video } from 'flavours/glitch/features/video';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from 'flavours/glitch/store/typed_functions';
+import { removePictureInPicture } from "flavours/glitch/actions/picture_in_picture";
+import { Audio } from "flavours/glitch/features/audio";
+import { Video } from "flavours/glitch/features/video";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store/typed_functions";
 
-import { Footer } from './components/footer';
-import { Header } from './components/header';
+import { Footer } from "./components/footer";
+import { Header } from "./components/header";
 
 export const PictureInPicture: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +22,7 @@ export const PictureInPicture: React.FC = () => {
   const left = useAppSelector(
     // @ts-expect-error - `local_settings` is not yet typed
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    (s) => s.getIn(['local_settings', 'media', 'pop_in_position']) === 'left',
+    (s) => s.getIn(["local_settings", "media", "pop_in_position"]) === "left",
   );
 
   if (pipState.type === null) {
@@ -53,7 +50,7 @@ export const PictureInPicture: React.FC = () => {
   let player;
 
   switch (type) {
-    case 'video':
+    case "video":
       player = (
         <Video
           src={src}
@@ -65,7 +62,7 @@ export const PictureInPicture: React.FC = () => {
         />
       );
       break;
-    case 'audio':
+    case "audio":
       player = (
         <Audio
           src={src}
@@ -82,7 +79,7 @@ export const PictureInPicture: React.FC = () => {
   }
 
   return (
-    <div className={classNames('picture-in-picture', { left })}>
+    <div className={classNames("picture-in-picture", { left })}>
       <Header accountId={accountId} statusId={statusId} onClose={handleClose} />
 
       {player}

@@ -7,7 +7,7 @@ lt:
         display_name: Tavo pilnas vardas arba smagus vardas.
         fields: Tavo pagrindinis puslapis, įvardžiai, amžius, bet kas, ko tik nori.
         indexable: Tavo vieši įrašai gali būti rodomi Mastodon paieškos rezultatuose. Žmonės, kurie bendravo su tavo įrašais, gali jų ieškoti nepriklausomai nuo to.
-        note: 'Gali @paminėti kitus žmones arba #grotažymes.'
+        note: "Gali @paminėti kitus žmones arba #grotažymes."
         show_collections: Žmonės galės peržiūrėti tavo sekimus ir sekėjus. Žmonės, kuriuos seki, matys, kad juos seki, nepaisant to.
         unlocked: Žmonės galės jus sekti nepaprašę patvirtinimo. Panaikinkite žymėjimą, jei norite peržiūrėti sekimo prašymus ir pasirinkti, ar priimti, ar atmesti naujus sekėjus.
       account_alias:
@@ -71,7 +71,7 @@ lt:
       email_domain_block:
         with_dns_records: Bus bandoma išspręsti nurodyto domeno DNS įrašus, o rezultatai taip pat bus blokuojami
       featured_tag:
-        name: 'Štai keletas pastaruoju metu dažniausiai tavo naudotų grotažymių:'
+        name: "Štai keletas pastaruoju metu dažniausiai tavo naudotų grotažymių:"
       filters:
         actions:
           blur: Slėpti mediją po įspėjimu, neslepiant paties teksto
@@ -102,7 +102,7 @@ lt:
       rule:
         hint: Pasirinktinai. Pateik daugiau informacijos apie taisyklę.
       sessions:
-        otp: 'Įvesk telefono programėlėje sugeneruotą dviejų tapatybės kodą arba naudok vieną iš atkūrimo kodų:'
+        otp: "Įvesk telefono programėlėje sugeneruotą dviejų tapatybės kodą arba naudok vieną iš atkūrimo kodų:"
         webauthn: Jei tai USB raktas, būtinai jį įkišk ir, jei reikia, paspausk.
       settings:
         indexable: Tavo profilio puslapis gali būti rodomas paieškos rezultatuose Google, Bing ir kituose.
@@ -276,7 +276,7 @@ lt:
         events: Įjungti įvykiai
         template: Naudingosios apkrovos šablonas
         url: Galutinio taško URL
-    'no': Ne
+    "no": Ne
     not_recommended: Nerekomenduojama
     overridden: Pakeista
     recommended: Rekomenduojama
@@ -286,4 +286,4 @@ lt:
     title:
       sessions:
         webauthn: Prisijungimui naudoti vieną iš saugumo raktų
-    'yes': Taip
+    "yes": Taip

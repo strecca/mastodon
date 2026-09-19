@@ -53,7 +53,9 @@
     border-radius: 8px;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
 
     &:hover,
     &:focus-visible {
@@ -219,7 +221,7 @@
       background: var(--color-bg-brand-softest);
     }
 
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       accent-color: var(--color-bg-brand-base);
     }
   }
@@ -555,8 +557,8 @@
       background: var(--color-bg-brand-softest);
     }
 
-    input[type='checkbox'],
-    input[type='radio'] {
+    input[type="checkbox"],
+    input[type="radio"] {
       accent-color: var(--color-bg-brand-base);
     }
   }
@@ -920,7 +922,7 @@
     color: var(--color-text-primary);
     cursor: pointer;
 
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       accent-color: var(--color-bg-brand-base);
     }
   }

@@ -1,17 +1,17 @@
-name: 'CodeQL'
+name: "CodeQL"
 
 on:
   merge_group:
   push:
     branches:
-      - 'main'
-      - 'stable-*'
+      - "main"
+      - "stable-*"
   pull_request:
     branches:
-      - 'main'
-      - 'stable-*'
+      - "main"
+      - "stable-*"
   schedule:
-    - cron: '22 6 * * 1'
+    - cron: "22 6 * * 1"
 
 jobs:
   analyze:
@@ -26,7 +26,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['actions', 'javascript', 'ruby']
+        language: ["actions", "javascript", "ruby"]
         # CodeQL supports [ 'actions', 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
@@ -64,4 +64,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@7211b7c8077ea37d8641b6271f6a365a22a5fbfa # v4
         with:
-          category: '/language:${{matrix.language}}'
+          category: "/language:${{matrix.language}}"

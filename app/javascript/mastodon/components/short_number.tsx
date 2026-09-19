@@ -1,14 +1,11 @@
-import { memo } from 'react';
-import type { JSX } from 'react';
+import { memo } from "react";
+import type { JSX } from "react";
 
-import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from "react-intl";
 
-import { toShortNumber, pluralReady, DECIMAL_UNITS } from '../utils/numbers';
+import { toShortNumber, pluralReady, DECIMAL_UNITS } from "../utils/numbers";
 
-type ShortNumberRenderer = (
-  displayNumber: JSX.Element,
-  pluralReady: number,
-) => JSX.Element;
+type ShortNumberRenderer = (displayNumber: JSX.Element, pluralReady: number) => JSX.Element;
 
 interface ShortNumberProps {
   value: number;
@@ -16,17 +13,13 @@ interface ShortNumberProps {
   children?: ShortNumberRenderer;
 }
 
-export const ShortNumberRenderer: React.FC<ShortNumberProps> = ({
-  value,
-  renderer,
-  children,
-}) => {
+export const ShortNumberRenderer: React.FC<ShortNumberProps> = ({ value, renderer, children }) => {
   const shortNumber = toShortNumber(value);
   const [, division] = shortNumber;
 
   if (children && renderer) {
     console.warn(
-      'Both renderer prop and renderer as a child provided. This is a mistake and you really should fix that. Only renderer passed as a child will be used.',
+      "Both renderer prop and renderer as a child provided. This is a mistake and you really should fix that. Only renderer passed as a child will be used.",
     );
   }
 
@@ -34,10 +27,7 @@ export const ShortNumberRenderer: React.FC<ShortNumberProps> = ({
 
   const displayNumber = <ShortNumberCounter value={shortNumber} />;
 
-  return (
-    customRenderer?.(displayNumber, pluralReady(value, division)) ??
-    displayNumber
-  );
+  return customRenderer?.(displayNumber, pluralReady(value, division)) ?? displayNumber;
 };
 export const ShortNumber = memo(ShortNumberRenderer);
 
@@ -51,7 +41,7 @@ const ShortNumberCounter: React.FC<ShortNumberCounterProps> = ({ value }) => {
     <FormattedNumber
       value={rawNumber ?? 0}
       maximumFractionDigits={maxFractionDigits}
-      roundingMode='trunc'
+      roundingMode="trunc"
     />
   );
 
@@ -60,29 +50,17 @@ const ShortNumberCounter: React.FC<ShortNumberCounterProps> = ({ value }) => {
   switch (unit) {
     case DECIMAL_UNITS.THOUSAND: {
       return (
-        <FormattedMessage
-          id='units.short.thousand'
-          defaultMessage='{count}K'
-          values={values}
-        />
+        <FormattedMessage id="units.short.thousand" defaultMessage="{count}K" values={values} />
       );
     }
     case DECIMAL_UNITS.MILLION: {
       return (
-        <FormattedMessage
-          id='units.short.million'
-          defaultMessage='{count}M'
-          values={values}
-        />
+        <FormattedMessage id="units.short.million" defaultMessage="{count}M" values={values} />
       );
     }
     case DECIMAL_UNITS.BILLION: {
       return (
-        <FormattedMessage
-          id='units.short.billion'
-          defaultMessage='{count}B'
-          values={values}
-        />
+        <FormattedMessage id="units.short.billion" defaultMessage="{count}B" values={values} />
       );
     }
     // Not sure if we should go farther - @Sasha-Sorokin

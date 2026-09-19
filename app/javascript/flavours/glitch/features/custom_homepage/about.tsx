@@ -1,33 +1,31 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { fetchExtendedDescription } from 'flavours/glitch/actions/server';
-import { Account } from 'flavours/glitch/components/account';
-import { Skeleton } from 'flavours/glitch/components/skeleton';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
+import { fetchExtendedDescription } from "flavours/glitch/actions/server";
+import { Account } from "flavours/glitch/components/account";
+import { Skeleton } from "flavours/glitch/components/skeleton";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 const Placeholder = () => (
   <div className={classes.placeholder}>
-    <Skeleton width='100%' />
-    <Skeleton width='100%' />
-    <Skeleton width='100%' />
+    <Skeleton width="100%" />
+    <Skeleton width="100%" />
+    <Skeleton width="100%" />
   </div>
 );
 
 export const About = () => {
   const dispatch = useAppDispatch();
   const server = useAppSelector((state) => state.server.server);
-  const extendedDescription = useAppSelector(
-    (state) => state.server.extendedDescription,
-  );
+  const extendedDescription = useAppSelector((state) => state.server.extendedDescription);
 
-  const accountId = server.item?.contact.account?.id ?? '';
+  const accountId = server.item?.contact.account?.id ?? "";
   const isLoading = extendedDescription.isLoading;
   const hasContent = (extendedDescription.item?.content.length ?? 0) > 0;
-  const content = extendedDescription.item?.content ?? '';
+  const content = extendedDescription.item?.content ?? "";
 
   useEffect(() => {
     void dispatch(fetchExtendedDescription());
@@ -37,10 +35,7 @@ export const About = () => {
     <>
       <div className={classes.block}>
         <h2>
-          <FormattedMessage
-            id='custom_homepage.administered_by'
-            defaultMessage='Administered by'
-          />
+          <FormattedMessage id="custom_homepage.administered_by" defaultMessage="Administered by" />
         </h2>
         <Account id={accountId} size={36} minimal />
       </div>
@@ -48,23 +43,20 @@ export const About = () => {
       <div className={classes.block}>
         <h2>
           <FormattedMessage
-            id='custom_homepage.about_this_server'
-            defaultMessage='About this server'
+            id="custom_homepage.about_this_server"
+            defaultMessage="About this server"
           />
         </h2>
         {isLoading ? (
           <Placeholder />
         ) : hasContent ? (
-          <div
-            className='prose'
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+          <div className="prose" dangerouslySetInnerHTML={{ __html: content }} />
         ) : (
-          <div className='prose'>
+          <div className="prose">
             <p>
               <FormattedMessage
-                id='about.not_available'
-                defaultMessage='This information has not been made available on this server.'
+                id="about.not_available"
+                defaultMessage="This information has not been made available on this server."
               />
             </p>
           </div>

@@ -1,13 +1,13 @@
-import type { MouseEventHandler } from 'react';
-import { useCallback, useRef, useId } from 'react';
+import type { MouseEventHandler } from "react";
+import { useCallback, useRef, useId } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { AnimateEmojiProvider } from './emoji/context';
+import { AnimateEmojiProvider } from "./emoji/context";
 
 export enum BannerVariant {
-  Warning = 'warning',
-  Filter = 'filter',
+  Warning = "warning",
+  Filter = "filter",
 }
 
 const stopPropagation: MouseEventHandler = (e) => {
@@ -39,8 +39,8 @@ export const StatusBanner: React.FC<{
     <AnimateEmojiProvider
       className={
         variant === BannerVariant.Warning
-          ? 'content-warning'
-          : 'content-warning content-warning--filter'
+          ? "content-warning"
+          : "content-warning content-warning--filter"
       }
       onClick={forwardClick}
       onMouseUp={stopPropagation}
@@ -49,26 +49,17 @@ export const StatusBanner: React.FC<{
 
       <button
         ref={buttonRef}
-        type='button'
-        className='link-button'
+        type="button"
+        className="link-button"
         onClick={onClick}
         aria-describedby={descriptionId}
       >
         {expanded ? (
-          <FormattedMessage
-            id='content_warning.hide'
-            defaultMessage='Hide post'
-          />
+          <FormattedMessage id="content_warning.hide" defaultMessage="Hide post" />
         ) : variant === BannerVariant.Warning ? (
-          <FormattedMessage
-            id='content_warning.show_more'
-            defaultMessage='Show more'
-          />
+          <FormattedMessage id="content_warning.show_more" defaultMessage="Show more" />
         ) : (
-          <FormattedMessage
-            id='content_warning.show'
-            defaultMessage='Show anyway'
-          />
+          <FormattedMessage id="content_warning.show" defaultMessage="Show anyway" />
         )}
       </button>
     </AnimateEmojiProvider>

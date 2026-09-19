@@ -1,5 +1,5 @@
-import type { RefCallback } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { RefCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export function useVisibility({
   observerOptions,
@@ -7,17 +7,14 @@ export function useVisibility({
   observerOptions?: IntersectionObserverInit;
 } = {}) {
   const [isIntersecting, setIsIntersecting] = useState(false);
-  const handleIntersect: IntersectionObserverCallback = useCallback(
-    (entries) => {
-      const entry = entries.at(0);
-      if (!entry) {
-        return;
-      }
+  const handleIntersect: IntersectionObserverCallback = useCallback((entries) => {
+    const entry = entries.at(0);
+    if (!entry) {
+      return;
+    }
 
-      setIsIntersecting(entry.isIntersecting);
-    },
-    [],
-  );
+    setIsIntersecting(entry.isIntersecting);
+  }, []);
   const observer = useMemo(
     () => new IntersectionObserver(handleIntersect, observerOptions),
     [handleIntersect, observerOptions],

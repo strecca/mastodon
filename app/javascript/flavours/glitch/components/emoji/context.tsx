@@ -1,25 +1,11 @@
-import type {
-  FC,
-  MouseEventHandler,
-  PropsWithChildren,
-  ReactNode,
-} from 'react';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import type { FC, MouseEventHandler, PropsWithChildren, ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
-import { cleanExtraEmojis } from '@/flavours/glitch/features/emoji/normalize';
-import { useCustomEmojis } from '@/flavours/glitch/hooks/useCustomEmojis';
-import { autoPlayGif } from '@/flavours/glitch/initial_state';
-import { polymorphicForwardRef } from '@/types/polymorphic';
-import type {
-  CustomEmojiMapArg,
-  ExtraCustomEmojiMap,
-} from 'flavours/glitch/features/emoji/types';
+import { cleanExtraEmojis } from "@/flavours/glitch/features/emoji/normalize";
+import { useCustomEmojis } from "@/flavours/glitch/hooks/useCustomEmojis";
+import { autoPlayGif } from "@/flavours/glitch/initial_state";
+import { polymorphicForwardRef } from "@/types/polymorphic";
+import type { CustomEmojiMapArg, ExtraCustomEmojiMap } from "flavours/glitch/features/emoji/types";
 
 // Animation context
 export const AnimateEmojiContext = createContext<boolean | null>(null);
@@ -29,21 +15,8 @@ type AnimateEmojiProviderProps = Required<PropsWithChildren> & {
   className?: string;
 };
 
-export const AnimateEmojiProvider = polymorphicForwardRef<
-  'div',
-  AnimateEmojiProviderProps
->(
-  (
-    {
-      children,
-      as: Wrapper = 'div',
-      className,
-      onMouseEnter,
-      onMouseLeave,
-      ...props
-    },
-    ref,
-  ) => {
+export const AnimateEmojiProvider = polymorphicForwardRef<"div", AnimateEmojiProviderProps>(
+  ({ children, as: Wrapper = "div", className, onMouseEnter, onMouseLeave, ...props }, ref) => {
     const [animate, setAnimate] = useState(autoPlayGif ?? false);
 
     const handleEnter: MouseEventHandler<HTMLDivElement> = useCallback(
@@ -83,14 +56,12 @@ export const AnimateEmojiProvider = polymorphicForwardRef<
         onMouseLeave={handleLeave}
         ref={ref}
       >
-        <AnimateEmojiContext.Provider value={animate}>
-          {children}
-        </AnimateEmojiContext.Provider>
+        <AnimateEmojiContext.Provider value={animate}>{children}</AnimateEmojiContext.Provider>
       </Wrapper>
     );
   },
 );
-AnimateEmojiProvider.displayName = 'AnimateEmojiProvider';
+AnimateEmojiProvider.displayName = "AnimateEmojiProvider";
 
 // Handle custom emoji
 export const CustomEmojiContext = createContext<ExtraCustomEmojiMap>({});
@@ -103,16 +74,10 @@ export const CustomEmojiProvider = ({
   if (!emojis) {
     return children;
   }
-  return (
-    <CustomEmojiContext.Provider value={emojis}>
-      {children}
-    </CustomEmojiContext.Provider>
-  );
+  return <CustomEmojiContext.Provider value={emojis}>{children}</CustomEmojiContext.Provider>;
 };
 
-export const LocalCustomEmojiProvider: FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const LocalCustomEmojiProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const emojis = useCustomEmojis();
   return <CustomEmojiProvider emojis={emojis}>{children}</CustomEmojiProvider>;
 };

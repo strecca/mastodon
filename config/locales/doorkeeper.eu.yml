@@ -52,7 +52,7 @@ eu:
         callback_urls: Itzulera URL-ak
         scopes: Irismena
         secret: Bezeroaren sekretua
-        title: 'Aplikazioa: %{name}'
+        title: "Aplikazioa: %{name}"
     authorizations:
       buttons:
         authorize: Baimendu
@@ -86,7 +86,7 @@ eu:
         invalid_grant: Emandako baimena baliogabea da, iraungi edo indargabetu da, ez dator bat baimen-eskaeran erabilitako birbideratze URI-arekin edo beste bezero batek sortu du.
         invalid_redirect_uri: Sartutako birbideratze URI-a baliogabea da.
         invalid_request:
-          missing_param: 'Beharrezko parametroa falta da: %{value}.'
+          missing_param: "Beharrezko parametroa falta da: %{value}."
           request_not_authorized: Eskaera baimendu behar da. Eskaera baimentzeko beharrezko parametroa falta da edo baliogabea da.
           unknown: Eskaerak beharrezkoa den parametro bat falta du, onartu gabeko parametro-balio bat du, edo beste moduren batean gaizki osatua dago.
         invalid_resource_owner: Emandako baliabidearen jabearen kredentzialak baliogabeak dira, edo baliabidearen jabea ez da aurkitu

@@ -15,7 +15,7 @@ tt:
         action_with_app: Расла һәм %{app} эченә кайт
         title: Email адресын раслагыз
       email_changed:
-        explanation: 'Сезнең аккаунтыгызның email адресы моңа үзгәртеләчәк:'
+        explanation: "Сезнең аккаунтыгызның email адресы моңа үзгәртеләчәк:"
       reset_password_instructions:
         action: Серсүзне үзгәртү
         title: Серсүзне алыштыру
@@ -23,7 +23,7 @@ tt:
         title: 2FA кабызылды
       webauthn_credential:
         deleted:
-          subject: 'Mastodon: Иминлек ачкычы бетерелгән'
+          subject: "Mastodon: Иминлек ачкычы бетерелгән"
     passwords:
       updated: Серсүзегез уңышлы үзгәртелде. Сез хәзер кердегез.
       updated_not_active: Серсүзегез уңышлы үзгәртелде.

@@ -52,7 +52,7 @@ lv:
         callback_urls: Atzvanīšanas URL
         scopes: Darbības sfēras
         secret: Klienta noslēpums
-        title: 'Lietotne: %{name}'
+        title: "Lietotne: %{name}"
     authorizations:
       buttons:
         authorize: Pilnvarot
@@ -86,7 +86,7 @@ lv:
         invalid_grant: Sniegtais pilnvarošanas piešķīrums nav derīgs, tam ir beidzies derīgums, tas ir atsaukts, tas neatbilst pilnvarošanas pieprasījumā izmantotajam pārvirzīšanas URI vai tika izsniegts citam klientam.
         invalid_redirect_uri: Iekļauts novirzīšanas uri nav derīgs.
         invalid_request:
-          missing_param: 'Trūkst pieprasītā parametra: %{value}.'
+          missing_param: "Trūkst pieprasītā parametra: %{value}."
           request_not_authorized: Pieprasījums ir jāpilnvaro. Trūkst vai nav derīgas pieprasījuma pilnvarošanai nepieciešamās vērtības.
           unknown: Pieprasījumā trūkst nepieciešamā parametra, tajā ir neatbalstīta parametra vērtība vai tas ir citādi nepareizi veidots.
         invalid_resource_owner: Norādītie resursa īpašnieka akreditācijas dati nav derīgi, vai arī resursa īpašnieku nevar atrast

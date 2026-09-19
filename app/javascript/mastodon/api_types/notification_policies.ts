@@ -1,6 +1,6 @@
 // See app/serializers/rest/notification_policy_serializer.rb
 
-export type NotificationPolicyValue = 'accept' | 'filter' | 'drop';
+export type NotificationPolicyValue = "accept" | "filter" | "drop";
 
 export interface NotificationPolicyJSON {
   for_not_following: NotificationPolicyValue;

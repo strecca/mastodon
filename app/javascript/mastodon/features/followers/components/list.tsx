@@ -1,17 +1,17 @@
-import { useMemo } from 'react';
-import type { FC, ReactNode } from 'react';
+import { useMemo } from "react";
+import type { FC, ReactNode } from "react";
 
-import { AccountListItem } from '@/mastodon/components/account_list_item';
-import { Column } from '@/mastodon/components/column';
-import { ColumnBackButton } from '@/mastodon/components/column_back_button';
-import { LoadingIndicator } from '@/mastodon/components/loading_indicator';
-import ScrollableList from '@/mastodon/components/scrollable_list';
-import { BundleColumnError } from '@/mastodon/features/ui/components/bundle_column_error';
-import { useAccount } from '@/mastodon/hooks/useAccount';
-import { useAccountVisibility } from '@/mastodon/hooks/useAccountVisibility';
-import { useLayout } from '@/mastodon/hooks/useLayout';
+import { AccountListItem } from "@/mastodon/components/account_list_item";
+import { Column } from "@/mastodon/components/column";
+import { ColumnBackButton } from "@/mastodon/components/column_back_button";
+import { LoadingIndicator } from "@/mastodon/components/loading_indicator";
+import ScrollableList from "@/mastodon/components/scrollable_list";
+import { BundleColumnError } from "@/mastodon/features/ui/components/bundle_column_error";
+import { useAccount } from "@/mastodon/hooks/useAccount";
+import { useAccountVisibility } from "@/mastodon/hooks/useAccountVisibility";
+import { useLayout } from "@/mastodon/hooks/useLayout";
 
-import { RemoteHint } from './remote';
+import { RemoteHint } from "./remote";
 
 export interface AccountList {
   hasMore: boolean;
@@ -80,7 +80,7 @@ export const AccountList: FC<AccountListProps> = ({
 
   // Null means accountId does not exist (e.g. invalid acct). Undefined means loading.
   if (accountId === null) {
-    return <BundleColumnError multiColumn={multiColumn} errorType='routing' />;
+    return <BundleColumnError multiColumn={multiColumn} errorType="routing" />;
   }
 
   if (!accountId || !account) {
@@ -91,7 +91,7 @@ export const AccountList: FC<AccountListProps> = ({
     );
   }
 
-  const domain = account.acct.split('@')[1];
+  const domain = account.acct.split("@")[1];
 
   return (
     <Column>

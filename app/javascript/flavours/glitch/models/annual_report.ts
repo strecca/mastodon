@@ -21,12 +21,7 @@ export interface TopStatuses {
   by_replies: string;
 }
 
-export type Archetype =
-  | 'lurker'
-  | 'booster'
-  | 'pollster'
-  | 'replier'
-  | 'oracle';
+export type Archetype = "lurker" | "booster" | "pollster" | "replier" | "oracle";
 
 interface AnnualReportV1 {
   most_used_apps: NameAndCount[];

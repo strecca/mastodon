@@ -52,7 +52,7 @@ sk:
         callback_urls: Návratové adresy URL
         scopes: Povolenia
         secret: Tajné slovo klienta
-        title: 'Aplikácia: %{name}'
+        title: "Aplikácia: %{name}"
     authorizations:
       buttons:
         authorize: Povoliť
@@ -85,7 +85,7 @@ sk:
         invalid_grant: Dané povolenie je neplatné, vypršalo, bolo zrušené, nesúhlasí s presmerovacou URI použitou v autorizačnej požiadavke alebo bolo vydané pre iného klienta.
         invalid_redirect_uri: Presmerovacia URI je neplatná.
         invalid_request:
-          missing_param: 'Chýba požadovaný parameter: %{value}.'
+          missing_param: "Chýba požadovaný parameter: %{value}."
           request_not_authorized: Žiadosť je potrebné schváliť. Chýba požadovaný parameter pre schválenie žiadosti alebo je neplatný.
           unknown: V požiadavke chýba požadovaný parameter, obsahuje nepodporovanú hodnotu parametra alebo je inak chybne vytvorená.
         invalid_resource_owner: Uvedené prihlasovacie údaje sú neplatné alebo nenájdené

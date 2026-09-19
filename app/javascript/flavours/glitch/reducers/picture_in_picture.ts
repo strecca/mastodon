@@ -1,10 +1,10 @@
-import type { Reducer } from '@reduxjs/toolkit';
+import type { Reducer } from "@reduxjs/toolkit";
 
 import {
   deployPictureInPictureAction,
   removePictureInPicture,
-} from 'flavours/glitch/actions/picture_in_picture';
-import { timelineDelete } from 'flavours/glitch/actions/timelines_typed';
+} from "flavours/glitch/actions/picture_in_picture";
+import { timelineDelete } from "flavours/glitch/actions/timelines_typed";
 
 export interface PIPMediaProps {
   src: string;
@@ -20,7 +20,7 @@ export interface PIPMediaProps {
 interface PIPStateWithValue extends Partial<PIPMediaProps> {
   statusId: string;
   accountId: string;
-  type: 'audio' | 'video';
+  type: "audio" | "video";
 }
 
 interface PIPStateEmpty extends Partial<PIPMediaProps> {
@@ -36,10 +36,7 @@ const initialState = {
   currentTime: 0,
 };
 
-export const pictureInPictureReducer: Reducer<PIPState> = (
-  state = initialState,
-  action,
-) => {
+export const pictureInPictureReducer: Reducer<PIPState> = (state = initialState, action) => {
   if (deployPictureInPictureAction.match(action))
     return {
       statusId: action.payload.statusId,
@@ -49,8 +46,7 @@ export const pictureInPictureReducer: Reducer<PIPState> = (
     };
   else if (removePictureInPicture.match(action)) return initialState;
   else if (timelineDelete.match(action))
-    if (state.type && state.statusId === action.payload.statusId)
-      return initialState;
+    if (state.type && state.statusId === action.payload.statusId) return initialState;
 
   return state;
 };

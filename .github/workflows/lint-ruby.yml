@@ -3,26 +3,26 @@ on:
   merge_group:
   push:
     branches:
-      - 'main'
-      - 'stable-*'
+      - "main"
+      - "stable-*"
     paths:
-      - 'Gemfile*'
-      - '.rubocop*.yml'
-      - '.ruby-version'
-      - 'bin/rubocop'
-      - '**/*.rb'
-      - '**/*.rake'
-      - '.github/workflows/lint-ruby.yml'
+      - "Gemfile*"
+      - ".rubocop*.yml"
+      - ".ruby-version"
+      - "bin/rubocop"
+      - "**/*.rb"
+      - "**/*.rake"
+      - ".github/workflows/lint-ruby.yml"
 
   pull_request:
     paths:
-      - 'Gemfile*'
-      - '.rubocop*.yml'
-      - '.ruby-version'
-      - 'bin/rubocop'
-      - '**/*.rb'
-      - '**/*.rake'
-      - '.github/workflows/lint-ruby.yml'
+      - "Gemfile*"
+      - ".rubocop*.yml"
+      - ".ruby-version"
+      - "bin/rubocop"
+      - "**/*.rb"
+      - "**/*.rake"
+      - ".github/workflows/lint-ruby.yml"
 
 jobs:
   lint:

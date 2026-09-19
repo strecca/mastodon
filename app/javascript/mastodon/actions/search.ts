@@ -1,31 +1,25 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 
-import { apiGetSearch } from 'mastodon/api/search';
-import type { ApiSearchType } from 'mastodon/api_types/search';
-import type {
-  RecentSearch,
-  SearchType as RecentSearchType,
-} from 'mastodon/models/search';
-import { searchHistory } from 'mastodon/settings';
-import {
-  createDataLoadingThunk,
-  createAppAsyncThunk,
-} from 'mastodon/store/typed_functions';
+import { apiGetSearch } from "mastodon/api/search";
+import type { ApiSearchType } from "mastodon/api_types/search";
+import type { RecentSearch, SearchType as RecentSearchType } from "mastodon/models/search";
+import { searchHistory } from "mastodon/settings";
+import { createDataLoadingThunk, createAppAsyncThunk } from "mastodon/store/typed_functions";
 
 import {
   fetchAccountsForCollectionPreview,
   importFetchedCollections,
-} from '../reducers/slices/collections';
+} from "../reducers/slices/collections";
 
-import { fetchRelationships } from './accounts';
-import { importFetchedAccounts, importFetchedStatuses } from './importer';
+import { fetchRelationships } from "./accounts";
+import { importFetchedAccounts, importFetchedStatuses } from "./importer";
 
-export const SEARCH_HISTORY_UPDATE = 'SEARCH_HISTORY_UPDATE';
+export const SEARCH_HISTORY_UPDATE = "SEARCH_HISTORY_UPDATE";
 
 export const submitSearch = createDataLoadingThunk(
-  'search/submit',
+  "search/submit",
   async ({ q, type }: { q: string; type?: ApiSearchType }, { getState }) => {
-    const signedIn = !!getState().meta.get('me');
+    const signedIn = !!getState().meta.get("me");
 
     return apiGetSearch({
       q,
@@ -57,7 +51,7 @@ export const submitSearch = createDataLoadingThunk(
 );
 
 export const expandSearch = createDataLoadingThunk(
-  'search/expand',
+  "search/expand",
   async ({ type }: { type: ApiSearchType }, { getState }) => {
     const q = getState().search.q;
     const results = getState().search.results;
@@ -93,7 +87,7 @@ export const expandSearch = createDataLoadingThunk(
 );
 
 export const openURL = createDataLoadingThunk(
-  'search/openURL',
+  "search/openURL",
   ({ url }: { url: string }) =>
     apiGetSearch({
       q: url,
@@ -115,18 +109,15 @@ export const openURL = createDataLoadingThunk(
 );
 
 export const clickSearchResult = createAppAsyncThunk(
-  'search/clickResult',
-  (
-    { q, type }: { q: string; type?: RecentSearchType },
-    { dispatch, getState },
-  ) => {
+  "search/clickResult",
+  ({ q, type }: { q: string; type?: RecentSearchType }, { dispatch, getState }) => {
     const previous = getState().search.recent;
 
     if (previous.some((x) => x.q === q && x.type === type)) {
       return;
     }
 
-    const me = getState().meta.get('me') as string;
+    const me = getState().meta.get("me") as string;
     const current = [{ type, q }, ...previous].slice(0, 4);
 
     searchHistory.set(me, current);
@@ -135,30 +126,23 @@ export const clickSearchResult = createAppAsyncThunk(
 );
 
 export const forgetSearchResult = createAppAsyncThunk(
-  'search/forgetResult',
-  (
-    { q, type }: { q: string; type?: RecentSearchType },
-    { dispatch, getState },
-  ) => {
+  "search/forgetResult",
+  ({ q, type }: { q: string; type?: RecentSearchType }, { dispatch, getState }) => {
     const previous = getState().search.recent;
-    const me = getState().meta.get('me') as string;
-    const current = previous.filter(
-      (result) => result.q !== q || result.type !== type,
-    );
+    const me = getState().meta.get("me") as string;
+    const current = previous.filter((result) => result.q !== q || result.type !== type);
 
     searchHistory.set(me, current);
     dispatch(updateSearchHistory(current));
   },
 );
 
-export const updateSearchHistory = createAction<RecentSearch[]>(
-  'search/updateHistory',
-);
+export const updateSearchHistory = createAction<RecentSearch[]>("search/updateHistory");
 
 export const hydrateSearch = createAppAsyncThunk(
-  'search/hydrate',
+  "search/hydrate",
   (_args, { dispatch, getState }) => {
-    const me = getState().meta.get('me') as string;
+    const me = getState().meta.get("me") as string;
     const history = searchHistory.get(me);
 
     if (history !== null) {

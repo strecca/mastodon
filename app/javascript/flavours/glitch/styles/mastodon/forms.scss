@@ -1,5 +1,5 @@
-@use 'sass:color';
-@use 'variables' as *;
+@use "sass:color";
+@use "variables" as *;
 
 code {
   font-family: $font-monospace, monospace;
@@ -17,7 +17,7 @@ code {
   color: #333;
 
   a {
-    color: #8B3E24;
+    color: #8b3e24;
     font-weight: 500;
     text-decoration: underline;
   }
@@ -51,13 +51,9 @@ code {
   margin-inline: auto;
 
   &::after {
-    content: '';
+    content: "";
     display: block;
-    background: linear-gradient(
-      to bottom,
-      var(--color-bg-secondary),
-      transparent
-    );
+    background: linear-gradient(to bottom, var(--color-bg-secondary), transparent);
     position: absolute;
     top: 0;
     inset-inline-start: 0;
@@ -455,9 +451,9 @@ code {
       max-width: 100%;
       height: auto;
       border-radius: var(--avatar-border-radius);
-      background: url('@/images/void.png');
+      background: url("@/images/void.png");
 
-      &[src$='missing.png'] {
+      &[src$="missing.png"] {
         visibility: hidden;
       }
 
@@ -537,7 +533,7 @@ code {
       width: auto;
     }
 
-    input[type='radio'] {
+    input[type="radio"] {
       accent-color: var(--color-text-brand);
       width: 15px;
       height: 15px;
@@ -558,7 +554,7 @@ code {
         flex: 1 1 auto;
       }
 
-      input[type='checkbox'] {
+      input[type="checkbox"] {
         position: absolute;
         inset-inline-start: 0;
         top: 5px;
@@ -572,7 +568,7 @@ code {
   }
 
   label.checkbox {
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       accent-color: var(--color-text-brand);
       width: 15px;
       height: 15px;
@@ -586,12 +582,12 @@ code {
     border-radius: 4px;
   }
 
-  input[type='text'],
-  input[type='number'],
-  input[type='email'],
-  input[type='password'],
-  input[type='url'],
-  input[type='datetime-local'],
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  input[type="datetime-local"],
   textarea {
     box-sizing: border-box;
     font-size: 14px;
@@ -630,11 +626,11 @@ code {
     resize: vertical;
   }
 
-  input[type='text'],
-  input[type='number'],
-  input[type='email'],
-  input[type='password'],
-  input[type='datetime-local'] {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="datetime-local"] {
     &:focus:user-invalid:not(:placeholder-shown),
     &:required:user-invalid:not(:placeholder-shown) {
       border-color: var(--color-border-error);
@@ -791,7 +787,7 @@ code {
       text-overflow: ellipsis;
 
       &::after {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 0;
@@ -819,12 +815,12 @@ code {
 }
 
 .simple_form .input.field_with_errors,
-[data-has-error='true'] {
-  input[type='text'],
-  input[type='number'],
-  input[type='email'],
-  input[type='password'],
-  input[type='datetime-local'],
+[data-has-error="true"] {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="datetime-local"],
   textarea,
   select {
     border-color: var(--color-border-error);
@@ -840,7 +836,7 @@ code {
   &::after {
     --icon-size: 11px;
 
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
@@ -1205,7 +1201,7 @@ code {
     flex: 1 1 auto;
   }
 
-  input[type='text'] {
+  input[type="text"] {
     background: transparent;
     border: 0;
     padding: 10px;
@@ -1347,7 +1343,7 @@ code {
 
       // Connector line between circles
       &::after {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         inset-inline: var(--circle-size) 0;
@@ -1402,11 +1398,11 @@ code {
     transform: none;
   }
 
-  [aria-current='step'] .circle {
+  [aria-current="step"] .circle {
     border-color: var(--color-bg-brand-base);
 
     &::before {
-      content: '';
+      content: "";
       width: 10px;
       height: 10px;
       border-radius: 50%;
@@ -1474,7 +1470,7 @@ code {
 
     &.invalid::before {
       display: block;
-      content: '';
+      content: "";
       width: 100%;
       height: 100%;
       position: absolute;
@@ -1674,7 +1670,9 @@ code {
     color: var(--color-text-secondary);
     background: transparent;
     border: 1px solid transparent;
-    transition: background 0.1s, border-color 0.1s;
+    transition:
+      background 0.1s,
+      border-color 0.1s;
 
     &:hover {
       background: var(--color-bg-secondary);

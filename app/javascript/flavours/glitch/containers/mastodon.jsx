@@ -1,25 +1,25 @@
-import { PureComponent } from 'react';
+import { PureComponent } from "react";
 
-import { Helmet } from '@unhead/react/helmet';
-import { Route } from 'react-router-dom';
+import { Helmet } from "@unhead/react/helmet";
+import { Route } from "react-router-dom";
 
-import { Provider as ReduxProvider } from 'react-redux';
+import { Provider as ReduxProvider } from "react-redux";
 
-import { checkDeprecatedLocalSettings } from 'flavours/glitch/actions/local_settings';
-import { hydrateStore } from 'flavours/glitch/actions/store';
-import { connectUserStream } from 'flavours/glitch/actions/streaming';
-import ErrorBoundary from 'flavours/glitch/components/error_boundary';
-import { FocusTargetProvider } from '@/flavours/glitch/components/navigation_focus_target';
-import { Router } from 'flavours/glitch/components/router';
-import UI from 'flavours/glitch/features/ui';
-import { IdentityContext, createIdentityContext } from 'flavours/glitch/identity_context';
-import { initialState, title as siteTitle } from 'flavours/glitch/initial_state';
-import { IntlProvider } from 'flavours/glitch/locales';
-import { store } from 'flavours/glitch/store';
-import { isProduction } from 'flavours/glitch/utils/environment';
-import { BodyScrollLock } from 'flavours/glitch/features/ui/components/body_scroll_lock';
+import { checkDeprecatedLocalSettings } from "flavours/glitch/actions/local_settings";
+import { hydrateStore } from "flavours/glitch/actions/store";
+import { connectUserStream } from "flavours/glitch/actions/streaming";
+import ErrorBoundary from "flavours/glitch/components/error_boundary";
+import { FocusTargetProvider } from "@/flavours/glitch/components/navigation_focus_target";
+import { Router } from "flavours/glitch/components/router";
+import UI from "flavours/glitch/features/ui";
+import { IdentityContext, createIdentityContext } from "flavours/glitch/identity_context";
+import { initialState, title as siteTitle } from "flavours/glitch/initial_state";
+import { IntlProvider } from "flavours/glitch/locales";
+import { store } from "flavours/glitch/store";
+import { isProduction } from "flavours/glitch/utils/environment";
+import { BodyScrollLock } from "flavours/glitch/features/ui/components/body_scroll_lock";
 
-import { ScrollContext } from './scroll_container/scroll_context';
+import { ScrollContext } from "./scroll_container/scroll_context";
 
 const title = isProduction() ? siteTitle : `${siteTitle} (Dev)`;
 
@@ -39,14 +39,14 @@ export default class Mastodon extends PureComponent {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this.disconnect) {
       this.disconnect();
       this.disconnect = null;
     }
   }
 
-  render () {
+  render() {
     return (
       <IdentityContext.Provider value={this.identity}>
         <IntlProvider>
@@ -55,7 +55,7 @@ export default class Mastodon extends PureComponent {
               <Router>
                 <ScrollContext>
                   <FocusTargetProvider>
-                    <Route path='/' component={UI} />
+                    <Route path="/" component={UI} />
                   </FocusTargetProvider>
                 </ScrollContext>
                 <BodyScrollLock />
@@ -68,5 +68,4 @@ export default class Mastodon extends PureComponent {
       </IdentityContext.Provider>
     );
   }
-
 }

@@ -1,7 +1,7 @@
 ---
 sco:
   about:
-    about_mastodon_html: 'The social network o wir future: Nae adverts, nae corporate surveillance; ethical design, an decentralization! Ain yer ain data wi Mastodon!'
+    about_mastodon_html: "The social network o wir future: Nae adverts, nae corporate surveillance; ethical design, an decentralization! Ain yer ain data wi Mastodon!"
     contact_missing: No set
     contact_unavailable: N/A
     hosted_on: Mastodon hostit on %{domain}
@@ -407,7 +407,7 @@ sco:
       import:
         description_html: Ye'r aboot tae import a list o domain dingies. Please luik ower this list affa carefu like, especially if ye didnae write this list yersel.
         existing_relationships_warning: Existin follae relationships
-        private_comment_description_html: 'Tae help ye track whaur importit dingies come fae, importit dingies wull be makkit wi the follaein private comment: <q>%{comment}</q>'
+        private_comment_description_html: "Tae help ye track whaur importit dingies come fae, importit dingies wull be makkit wi the follaein private comment: <q>%{comment}</q>"
         private_comment_template: Importit fae %{source} on %{date}
         title: Import domain dingies
       new:
@@ -501,12 +501,12 @@ sco:
       created_msg: Successfully addit new IP rule
       delete: Delete
       expires_in:
-        '1209600': 2 weeks
-        '15778476': 6 month
-        '2629746': 1 month
-        '31556952': 1 year
-        '86400': 1 day
-        '94670856': 3 year
+        "1209600": 2 weeks
+        "15778476": 6 month
+        "2629746": 1 month
+        "31556952": 1 year
+        "86400": 1 day
+        "94670856": 3 year
       new:
         title: Mak new IP rule
       no_ip_block_selected: Nae IP rules wis chynged as naen wis selectit
@@ -552,7 +552,7 @@ sco:
       category_description_html: The raison thit this accoont an/or content wis clyped on wull be cited in communication wi the clyped on accoont
       comment:
         none: Naen
-      comment_description_html: 'Fir tae gie mair information, %{name} wrate:'
+      comment_description_html: "Fir tae gie mair information, %{name} wrate:"
       created_at: Clyped on
       forwarded: Forretit
       forwarded_to: Forertit tae %{domain}
@@ -568,10 +568,10 @@ sco:
         placeholder: Describe whit actions hae been taen, or onie ither relatit updates...
         title: Notes
       notes_description_html: View an lea notes tae ither moderators an yer future sel
-      quick_actions_description_html: 'Tak a quick action or scrow doon fir tae see clyped on content:'
+      quick_actions_description_html: "Tak a quick action or scrow doon fir tae see clyped on content:"
       remote_user_placeholder: the remote uiser fae %{instance}
       reopen: Reopen clype
-      report: 'Clype #%{id}'
+      report: "Clype #%{id}"
       reported_account: Clyped on accoont
       reported_by: Clyped on bi
       resolved: Resolvt
@@ -728,7 +728,7 @@ sco:
       elasticsearch_running_check:
         message_html: Cuidnae connect tae Elasticseirch. Please check that it is rinnin, or turn aff ful-text seirch
       elasticsearch_version_check:
-        message_html: 'Incompatible Elasticseirch version: %{value}'
+        message_html: "Incompatible Elasticseirch version: %{value}"
         version_comparison: Elasticseirch %{running_version} is rinnin whilst %{required_version} is requirt
       rules_check:
         action: Manage server rules
@@ -794,7 +794,7 @@ sco:
         peaked_on_and_decaying: Peaked on %{date}, noo fawin aff
         title: Trendin hashtags
         trendable: Kin appear unner trends
-        trending_rank: 'Trendin #%{rank}'
+        trending_rank: "Trendin #%{rank}"
         usable: Kin be uised
         usage_comparison: Uised %{today} times the day, compart tae %{yesterday} yisterday
         used_by_over_week:
@@ -847,7 +847,7 @@ sco:
       body_remote: Somebody fae %{domain} haes clyped on %{target}
       subject: New coype fir %{instance} (#%{id})
     new_trends:
-      body: 'The follaein items need luiked ower afore they kin get displayit publicly:'
+      body: "The follaein items need luiked ower afore they kin get displayit publicly:"
       new_trending_links:
         title: Trendin links
       new_trending_statuses:
@@ -872,7 +872,7 @@ sco:
     sensitive_content: Sensitive content
   application_mailer:
     salutation: "%{name},"
-    view: 'View:'
+    view: "View:"
     view_profile: View profile
     view_status: View post
   applications:
@@ -954,7 +954,7 @@ sco:
     proceed: Delete accoont
     success_msg: Yer accoont wis successfully deletit
     warning:
-      before: 'Afore proceedin, please read thir notes careful:'
+      before: "Afore proceedin, please read thir notes careful:"
       caches: Content thit haes been cached bi ither servers eull mibbie persist
       data_removal: Yer posts an ither data wull get permanently removed
       irreversible: Ye wullnae be able tae restore or reactivate yer accoont
@@ -977,7 +977,7 @@ sco:
       description_html: Thir's actions taen aginst yer accoont an warnins thit hae been sent tae ye bi the staff o %{instance}.
       recipient: Addressed tae
       reject_appeal: Rejeck appeal
-      status: 'Post #%{id}'
+      status: "Post #%{id}"
       status_removed: Post awriddy taen aff the system
       title: "%{action} fae %{date}"
       title_actions:
@@ -992,19 +992,19 @@ sco:
       your_appeal_pending: Ye hae submittit a appeal
       your_appeal_rejected: Yer appeal haes been rejectit
   errors:
-    '400': The request thit ye submittit wisnae valid or it wis illformt.
-    '403': Ye dinnae hae permission fir tae luik at this page.
-    '404': The page thit ye'r luikin fir isnae here.
-    '406': This page isnae available in the requestit format.
-    '410': The page thit ye wur luikin fir disnae exist here oniemair.
-    '422':
+    "400": The request thit ye submittit wisnae valid or it wis illformt.
+    "403": Ye dinnae hae permission fir tae luik at this page.
+    "404": The page thit ye'r luikin fir isnae here.
+    "406": This page isnae available in the requestit format.
+    "410": The page thit ye wur luikin fir disnae exist here oniemair.
+    "422":
       content: Security verification failt. Ur ye dingiein cookies?
       title: Security verification failt
-    '429': Ower monie requests
-    '500':
+    "429": Ower monie requests
+    "500":
       content: We're sorry, but somethin went wrang on oor en.
       title: This page isnae correct
-    '503': The page cuidnae be served doon tae a temporary server failure.
+    "503": The page cuidnae be served doon tae a temporary server failure.
     noscript_html: Fir tae uise the Mastodon wab application, please turn on JavaScript. Alternatively, try ane o the <a href="%{apps_path}">native apps</a> fir Mastodon fir yer platform.
   existing_username_validator:
     not_found: cuidnae fin a local uiser wi that uisernemm
@@ -1090,7 +1090,7 @@ sco:
       other: Somethin isnae quite richt yit! Please review %{count} errors ablow
   imports:
     errors:
-      invalid_csv_file: 'Invalid CSV file. Error: %{error}'
+      invalid_csv_file: "Invalid CSV file. Error: %{error}"
       over_rows_processing_limit: contains mair nor %{count} rows
     modes:
       merge: Merge
@@ -1110,15 +1110,15 @@ sco:
     delete: Deactivate
     expired: Expirt
     expires_in:
-      '1800': 30 minties
-      '21600': 6 oors
-      '3600': 1 oor
-      '43200': 12 oors
-      '604800': 1 week
-      '86400': 1 day
+      "1800": 30 minties
+      "21600": 6 oors
+      "3600": 1 oor
+      "43200": 12 oors
+      "604800": 1 week
+      "86400": 1 day
     expires_in_prompt: Niver
     generate: Generate invite link
-    invited_by: 'Ye got invitit bi:'
+    invited_by: "Ye got invitit bi:"
     max_uses:
       one: 1 uise
       other: "%{count} uises"
@@ -1167,7 +1167,7 @@ sco:
     set_redirect: Set redirect
     warning:
       backreference_required: The new accoont haes tae be configurt furst fir tae back-reference this ane
-      before: 'Afore proceedin, please read thir notes carefully:'
+      before: "Afore proceedin, please read thir notes carefully:"
       cooldown: Efter flittin there a waitin period durin which ye will cannae flit again
       disabled_account: Yer current accoont wullnae be fully uisable efterwart. Hou an iver, ye wull hae access tae data export as weil as re-activation.
       followers: This action wull flit aw follaers fae the current accoont tae the new accoont
@@ -1178,7 +1178,7 @@ sco:
   move_handler:
     carry_blocks_over_text: This uiser flittit fae %{acct}, thit ye'v dingied.
     carry_mutes_over_text: This uiser flittit fae %{acct}, thit ye'v wheesht.
-    copy_account_note_text: 'This uiser flittit fae %{acct}, here yer previous notes aboot them:'
+    copy_account_note_text: "This uiser flittit fae %{acct}, here yer previous notes aboot them:"
   navigation:
     toggle_menu: Toggle menu
   notification_mailer:
@@ -1188,7 +1188,7 @@ sco:
       sign_up:
         subject: "%{name} signt up"
     favourite:
-      body: 'Yer post wis favouritit bi %{name}:'
+      body: "Yer post wis favouritit bi %{name}:"
       subject: "%{name} favouritit yer post"
       title: New favourite
     follow:
@@ -1198,17 +1198,17 @@ sco:
     follow_request:
       action: Manage follae requests
       body: "%{name} haes requestit tae follae ye"
-      subject: 'Pendin follaer: %{name}'
+      subject: "Pendin follaer: %{name}"
       title: New follae request
     mention:
       action: Reply
-      body: 'Ye wur menshied bi %{name} in:'
+      body: "Ye wur menshied bi %{name} in:"
       subject: Ye got mentioned bi %{name}
       title: New menshie
     poll:
       subject: A poll bi %{name} haes endit
     reblog:
-      body: 'Yer post wis heezed bi %{name}:'
+      body: "Yer post wis heezed bi %{name}:"
       subject: "%{name} heezed yer post"
       title: New heeze
     status:
@@ -1216,7 +1216,7 @@ sco:
     update:
       subject: "%{name} editit a post"
   notifications:
-    email_events_hint: 'Pick events thit ye''r wantin tae get notes fir:'
+    email_events_hint: "Pick events thit ye'r wantin tae get notes fir:"
   number:
     human:
       decimal_units:
@@ -1232,7 +1232,7 @@ sco:
     description_html: If ye turn on <strong>twa-factor authentication</strong> uisin a authenticator app, loggin in wull require ye fir tae be in possession o yer phone, thit wull generate tokens fir ye tae pit in.
     enable: Turn on
     instructions_html: "<strong>Scan this QR code intae Google Authenticator or a similar TOTP app on yer phone</strong>. Fae noo on, that app will generate tokens thit ye wull hae tae pit in whan ye'r loggin in."
-    manual_instructions: 'If ye cannae scan in the QR code an need tae pit it in bi haun, here the plain-text secret:'
+    manual_instructions: "If ye cannae scan in the QR code an need tae pit it in bi haun, here the plain-text secret:"
     setup: Set up
     wrong_code: The enterit code wisnae valid! Is yer server time an device time richt?
   pagination:
@@ -1285,10 +1285,10 @@ sco:
     errors:
       invalid_rules: disnae reference valid rules
   rss:
-    content_warning: 'Content warnin:'
+    content_warning: "Content warnin:"
     descriptions:
       account: Public posts fae @%{acct}
-      tag: 'Public posts tagged #%{hashtag}'
+      tag: "Public posts tagged #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Ye'v went by the limit o %{limit} scheduled posts thit ye'r allooed fir the day
     over_total_limit: Ye'v went by the limit o %{limit} scheduled posts
@@ -1359,7 +1359,7 @@ sco:
       audio:
         one: "%{count} audio"
         other: "%{count} audio"
-      description: 'Attached: %{attached}'
+      description: "Attached: %{attached}"
       image:
         one: "%{count} image"
         other: "%{count} images"
@@ -1367,11 +1367,11 @@ sco:
         one: "%{count} video"
         other: "%{count} videos"
     boosted_from_html: Heezed fae %{acct_link}
-    content_warning: 'Content warnin: %{warning}'
+    content_warning: "Content warnin: %{warning}"
     default_language: Same as interface leid
     disallowed_hashtags:
-      one: 'containt a disallooed hashtag: %{tags}'
-      other: 'containt the disallooed hashtags: %{tags}'
+      one: "containt a disallooed hashtag: %{tags}"
+      other: "containt the disallooed hashtags: %{tags}"
     edited_at_html: Editit %{date}
     errors:
       in_reply_not_found: The post thit ye'r trying tae reply tae disnae appear tae exist.
@@ -1404,14 +1404,14 @@ sco:
     keep_self_fav: Keep posts thit ye favouritit
     keep_self_fav_hint: Disnae delete yer ain posts if ye'v favouritit them
     min_age:
-      '1209600': 2 weeks
-      '15778476': 6 month
-      '2629746': 1 month
-      '31556952': 1 year
-      '5259492': 2 month
-      '604800': 1 week
-      '63113904': 2 year
-      '7889238': 3 month
+      "1209600": 2 weeks
+      "15778476": 6 month
+      "2629746": 1 month
+      "31556952": 1 year
+      "5259492": 2 month
+      "604800": 1 week
+      "63113904": 2 year
+      "7889238": 3 month
     min_age_label: Age threshaud
     min_favs: Keep posts favouritit at least
     min_reblogs: Keep posts heezed at least
@@ -1457,7 +1457,7 @@ sco:
       title: Archive takoot
     suspicious_sign_in:
       change_password: chynge yer passwird
-      details: 'Here details o the sign-in:'
+      details: "Here details o the sign-in:"
       explanation: We've detectit a sign-in tae yer accoont fae a new IP address.
       further_actions_html: If this wisnae you, we recommend thit ye %{action} immediately an turn on twa-factor authentication fir tae keep yer accoont secure.
       subject: Yer accoont haes been accessed fae a new IP address
@@ -1475,8 +1475,8 @@ sco:
         sensitive: Fae noo on, aw yer uploadit media files will get mairkt as sensitive an hid ahin a click-throu warnin.
         silence: Ye kin stull uise yer accoont but ainly fowk thit's awriddy follaein ye wull see yer posts on this server, an ye'll mibbie get excludit fae various discovery features. Hou an iver, ithers kin still follae ye bi haun.
         suspend: Ye kin nae langer uise yer accoont, an yer profile an ither data urnae accessible onie mair. Ye kin stull login fir tae request a backup o yer data tae the data is fully taen doon in aboot 30 days, but we wull retain some basic data fir tae prevent ye fae evadin the suspension.
-      reason: 'Raison:'
-      statuses: 'Posts citit:'
+      reason: "Raison:"
+      statuses: "Posts citit:"
       subject:
         delete_statuses: Yer posts on %{acct} hae been removed
         disable: Yer accoont %{acct} haes been froze
@@ -1501,7 +1501,7 @@ sco:
     follow_limit_reached: Ye cannae follae mair than %{limit} fowk
     invalid_otp_token: Invalid twa-factor code
     otp_lost_help_html: If ye lost access tae baith, ye kin get in touch wi %{email}
-    signed_in_as: 'Signt in as:'
+    signed_in_as: "Signt in as:"
   verification:
     verification: Verification
   webauthn_credentials:

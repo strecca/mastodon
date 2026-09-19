@@ -1,8 +1,8 @@
-import type { ComponentClass, MouseEventHandler, ReactNode } from 'react';
+import type { ComponentClass, MouseEventHandler, ReactNode } from "react";
 
-import type { Account } from '@/mastodon/models/account';
+import type { Account } from "@/mastodon/models/account";
 
-import type { StatusHeaderRenderFn } from './header';
+import type { StatusHeaderRenderFn } from "./header";
 
 // Taken from the Status component.
 export interface StatusProps {

@@ -1,121 +1,115 @@
-import { useCallback, useEffect } from 'react';
-import type { FC } from 'react';
+import { useCallback, useEffect } from "react";
+import type { FC } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
-import type { ModalType } from '@/flavours/glitch/actions/modal';
-import { openModal } from '@/flavours/glitch/actions/modal';
-import { AccountBio } from '@/flavours/glitch/components/account_bio';
-import { Avatar } from '@/flavours/glitch/components/avatar';
-import { Button } from '@/flavours/glitch/components/button';
-import { DismissibleCallout } from '@/flavours/glitch/components/callout/dismissible';
-import { CustomEmojiProvider } from '@/flavours/glitch/components/emoji/context';
-import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
-import { ToggleField } from '@/flavours/glitch/components/form_fields';
-import { useElementHandledLink } from '@/flavours/glitch/components/status/handled_link';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import { useCurrentAccountId } from '@/flavours/glitch/hooks/useAccountId';
-import { useCustomEmojis } from '@/flavours/glitch/hooks/useCustomEmojis';
-import { autoPlayGif } from '@/flavours/glitch/initial_state';
-import {
-  fetchProfile,
-  patchProfile,
-} from '@/flavours/glitch/reducers/slices/profile_edit';
-import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import type { ModalType } from "@/flavours/glitch/actions/modal";
+import { openModal } from "@/flavours/glitch/actions/modal";
+import { AccountBio } from "@/flavours/glitch/components/account_bio";
+import { Avatar } from "@/flavours/glitch/components/avatar";
+import { Button } from "@/flavours/glitch/components/button";
+import { DismissibleCallout } from "@/flavours/glitch/components/callout/dismissible";
+import { CustomEmojiProvider } from "@/flavours/glitch/components/emoji/context";
+import { EmojiHTML } from "@/flavours/glitch/components/emoji/html";
+import { ToggleField } from "@/flavours/glitch/components/form_fields";
+import { useElementHandledLink } from "@/flavours/glitch/components/status/handled_link";
+import { useAccount } from "@/flavours/glitch/hooks/useAccount";
+import { useCurrentAccountId } from "@/flavours/glitch/hooks/useAccountId";
+import { useCustomEmojis } from "@/flavours/glitch/hooks/useCustomEmojis";
+import { autoPlayGif } from "@/flavours/glitch/initial_state";
+import { fetchProfile, patchProfile } from "@/flavours/glitch/reducers/slices/profile_edit";
+import { useAppDispatch, useAppSelector } from "@/flavours/glitch/store";
 
-import { AccountEditColumn, AccountEditEmptyColumn } from './components/column';
-import { EditButton } from './components/edit_button';
-import { AccountField } from './components/field';
-import { AccountFieldActions } from './components/field_actions';
-import { AccountImageEdit } from './components/image_edit';
-import { AccountEditSection } from './components/section';
-import classes from './styles.module.scss';
+import { AccountEditColumn, AccountEditEmptyColumn } from "./components/column";
+import { EditButton } from "./components/edit_button";
+import { AccountField } from "./components/field";
+import { AccountFieldActions } from "./components/field_actions";
+import { AccountImageEdit } from "./components/image_edit";
+import { AccountEditSection } from "./components/section";
+import classes from "./styles.module.scss";
 
 export const messages = defineMessages({
   columnTitle: {
-    id: 'account_edit.column_title',
-    defaultMessage: 'Edit Profile',
+    id: "account_edit.column_title",
+    defaultMessage: "Edit Profile",
   },
   displayNameTitle: {
-    id: 'account_edit.display_name.title',
-    defaultMessage: 'Display name',
+    id: "account_edit.display_name.title",
+    defaultMessage: "Display name",
   },
   displayNamePlaceholder: {
-    id: 'account_edit.display_name.placeholder',
-    defaultMessage:
-      'Your display name is how your name appears on your profile and in timelines.',
+    id: "account_edit.display_name.placeholder",
+    defaultMessage: "Your display name is how your name appears on your profile and in timelines.",
   },
   displayNameAddLabel: {
-    id: 'account_edit.display_name.add_label',
-    defaultMessage: 'Add display name',
+    id: "account_edit.display_name.add_label",
+    defaultMessage: "Add display name",
   },
   displayNameEditLabel: {
-    id: 'account_edit.display_name.edit_label',
-    defaultMessage: 'Edit display name',
+    id: "account_edit.display_name.edit_label",
+    defaultMessage: "Edit display name",
   },
   bioTitle: {
-    id: 'account_edit.bio.title',
-    defaultMessage: 'Bio',
+    id: "account_edit.bio.title",
+    defaultMessage: "Bio",
   },
   bioPlaceholder: {
-    id: 'account_edit.bio.placeholder',
-    defaultMessage: 'Add a short introduction to help others identify you.',
+    id: "account_edit.bio.placeholder",
+    defaultMessage: "Add a short introduction to help others identify you.",
   },
   bioAddLabel: {
-    id: 'account_edit.bio.add_label',
-    defaultMessage: 'Add bio',
+    id: "account_edit.bio.add_label",
+    defaultMessage: "Add bio",
   },
   bioEditLabel: {
-    id: 'account_edit.bio.edit_label',
-    defaultMessage: 'Edit bio',
+    id: "account_edit.bio.edit_label",
+    defaultMessage: "Edit bio",
   },
   customFieldsTitle: {
-    id: 'account_edit.custom_fields.title',
-    defaultMessage: 'Custom fields',
+    id: "account_edit.custom_fields.title",
+    defaultMessage: "Custom fields",
   },
   customFieldsPlaceholder: {
-    id: 'account_edit.custom_fields.placeholder',
-    defaultMessage:
-      'Add your pronouns, external links, or anything else you’d like to share.',
+    id: "account_edit.custom_fields.placeholder",
+    defaultMessage: "Add your pronouns, external links, or anything else you’d like to share.",
   },
   customFieldsAddLabel: {
-    id: 'account_edit.custom_fields.add_label',
-    defaultMessage: 'Add field',
+    id: "account_edit.custom_fields.add_label",
+    defaultMessage: "Add field",
   },
   customFieldsEditLabel: {
-    id: 'account_edit.custom_fields.edit_label',
-    defaultMessage: 'Edit field',
+    id: "account_edit.custom_fields.edit_label",
+    defaultMessage: "Edit field",
   },
   customFieldsTipTitle: {
-    id: 'account_edit.custom_fields.tip_title',
-    defaultMessage: 'Tip: Adding verified links',
+    id: "account_edit.custom_fields.tip_title",
+    defaultMessage: "Tip: Adding verified links",
   },
   featuredHashtagsTitle: {
-    id: 'account_edit.featured_hashtags.title',
-    defaultMessage: 'Featured hashtags',
+    id: "account_edit.featured_hashtags.title",
+    defaultMessage: "Featured hashtags",
   },
   featuredHashtagsPlaceholder: {
-    id: 'account_edit.featured_hashtags.placeholder',
-    defaultMessage:
-      'Help others identify, and have quick access to, your favorite topics.',
+    id: "account_edit.featured_hashtags.placeholder",
+    defaultMessage: "Help others identify, and have quick access to, your favorite topics.",
   },
   featuredHashtagsEditLabel: {
-    id: 'account_edit.featured_hashtags.edit_label',
-    defaultMessage: 'Add hashtags',
+    id: "account_edit.featured_hashtags.edit_label",
+    defaultMessage: "Add hashtags",
   },
   profileTabTitle: {
-    id: 'account_edit.profile_tab.title',
-    defaultMessage: 'Profile display settings',
+    id: "account_edit.profile_tab.title",
+    defaultMessage: "Profile display settings",
   },
   profileTabSubtitle: {
-    id: 'account_edit.profile_tab.subtitle',
-    defaultMessage: 'Customize how your profile is displayed.',
+    id: "account_edit.profile_tab.subtitle",
+    defaultMessage: "Customize how your profile is displayed.",
   },
   advancedSettingsTitle: {
-    id: 'account_edit.advanced_settings.title',
-    defaultMessage: 'Advanced settings',
+    id: "account_edit.advanced_settings.title",
+    defaultMessage: "Advanced settings",
   },
 });
 
@@ -132,8 +126,7 @@ export const AccountEdit: FC = () => {
   }, [dispatch]);
 
   const maxFieldCount = useAppSelector(
-    (state) =>
-      state.server.server.item?.configuration.accounts.max_profile_fields ?? 4,
+    (state) => state.server.server.item?.configuration.accounts.max_profile_fields ?? 4,
   );
 
   const handleOpenModal = useCallback(
@@ -155,27 +148,27 @@ export const AccountEdit: FC = () => {
     [dispatch],
   );
   const handleNameEdit = useCallback(() => {
-    handleOpenModal('ACCOUNT_EDIT_NAME', { ignoreFocus: true });
+    handleOpenModal("ACCOUNT_EDIT_NAME", { ignoreFocus: true });
   }, [handleOpenModal]);
   const handleBioEdit = useCallback(() => {
-    handleOpenModal('ACCOUNT_EDIT_BIO', { ignoreFocus: true });
+    handleOpenModal("ACCOUNT_EDIT_BIO", { ignoreFocus: true });
   }, [handleOpenModal]);
   const handleCustomFieldAdd = useCallback(() => {
-    handleOpenModal('ACCOUNT_EDIT_FIELD_EDIT');
+    handleOpenModal("ACCOUNT_EDIT_FIELD_EDIT");
   }, [handleOpenModal]);
   const handleCustomFieldReorder = useCallback(() => {
-    handleOpenModal('ACCOUNT_EDIT_FIELDS_REORDER');
+    handleOpenModal("ACCOUNT_EDIT_FIELDS_REORDER");
   }, [handleOpenModal]);
   const handleCustomFieldsVerifiedHelp = useCallback(() => {
-    handleOpenModal('ACCOUNT_EDIT_VERIFY_LINKS');
+    handleOpenModal("ACCOUNT_EDIT_VERIFY_LINKS");
   }, [handleOpenModal]);
   const handleProfileDisplayEdit = useCallback(() => {
-    handleOpenModal('ACCOUNT_EDIT_PROFILE_DISPLAY');
+    handleOpenModal("ACCOUNT_EDIT_PROFILE_DISPLAY");
   }, [handleOpenModal]);
 
   const history = useHistory();
   const handleFeaturedTagsEdit = useCallback(() => {
-    history.push('/profile/featured_tags');
+    history.push("/profile/featured_tags");
   }, [history]);
 
   const handleBotToggle = useCallback(() => {
@@ -199,18 +192,15 @@ export const AccountEdit: FC = () => {
   const hasTags = profile.featuredTags.length > 0;
 
   return (
-    <AccountEditColumn
-      title={intl.formatMessage(messages.columnTitle)}
-      to={`/@${account.acct}`}
-    >
+    <AccountEditColumn title={intl.formatMessage(messages.columnTitle)} to={`/@${account.acct}`}>
       <header>
         <div className={classes.profileImage}>
-          {headerSrc && <img src={headerSrc} alt='' />}
-          <AccountImageEdit location='header' />
+          {headerSrc && <img src={headerSrc} alt="" />}
+          <AccountImageEdit location="header" />
         </div>
         <div className={classes.avatar}>
           <Avatar account={account} size={80} />
-          <AccountImageEdit location='avatar' />
+          <AccountImageEdit location="avatar" />
         </div>
       </header>
 
@@ -223,9 +213,7 @@ export const AccountEdit: FC = () => {
             <EditButton
               onClick={handleNameEdit}
               label={intl.formatMessage(
-                hasName
-                  ? messages.displayNameEditLabel
-                  : messages.displayNameAddLabel,
+                hasName ? messages.displayNameEditLabel : messages.displayNameAddLabel,
               )}
               icon={hasName}
             />
@@ -241,18 +229,12 @@ export const AccountEdit: FC = () => {
           buttons={
             <EditButton
               onClick={handleBioEdit}
-              label={intl.formatMessage(
-                hasBio ? messages.bioEditLabel : messages.bioAddLabel,
-              )}
+              label={intl.formatMessage(hasBio ? messages.bioEditLabel : messages.bioAddLabel)}
               icon={hasBio}
             />
           }
         >
-          <AccountBio
-            showDropdown
-            accountId={profile.id}
-            className={classes.bio}
-          />
+          <AccountBio showDropdown accountId={profile.id} className={classes.bio} />
         </AccountEditSection>
 
         <AccountEditSection
@@ -262,13 +244,10 @@ export const AccountEdit: FC = () => {
           buttons={
             <div className={classes.fieldButtons}>
               {profile.fields.length > 1 && (
-                <Button
-                  className={classes.editButton}
-                  onClick={handleCustomFieldReorder}
-                >
+                <Button className={classes.editButton} onClick={handleCustomFieldReorder}>
                   <FormattedMessage
-                    id='account_edit.custom_fields.reorder_button'
-                    defaultMessage='Reorder fields'
+                    id="account_edit.custom_fields.reorder_button"
+                    defaultMessage="Reorder fields"
                   />
                 </Button>
               )}
@@ -299,18 +278,18 @@ export const AccountEdit: FC = () => {
             plain
           >
             <FormattedMessage
-              id='account_edit.custom_fields.verified_hint'
-              defaultMessage='How do I add a verified link?'
+              id="account_edit.custom_fields.verified_hint"
+              defaultMessage="How do I add a verified link?"
             />
           </Button>
           {!hasFields && (
             <DismissibleCallout
-              id='profile_edit_fields_tip'
+              id="profile_edit_fields_tip"
               title={intl.formatMessage(messages.customFieldsTipTitle)}
             >
               <FormattedMessage
-                id='account_edit.custom_fields.tip_content'
-                defaultMessage='You can easily add credibility to your Mastodon account by verifying links to any websites you own.'
+                id="account_edit.custom_fields.tip_content"
+                defaultMessage="You can easily add credibility to your Mastodon account by verifying links to any websites you own."
               />
             </DismissibleCallout>
           )}
@@ -328,7 +307,7 @@ export const AccountEdit: FC = () => {
             />
           }
         >
-          {profile.featuredTags.map((tag) => `#${tag.name}`).join(', ')}
+          {profile.featuredTags.map((tag) => `#${tag.name}`).join(", ")}
         </AccountEditSection>
 
         <AccountEditSection
@@ -336,13 +315,10 @@ export const AccountEdit: FC = () => {
           description={messages.profileTabSubtitle}
           showDescription
           buttons={
-            <Button
-              className={classes.editButton}
-              onClick={handleProfileDisplayEdit}
-            >
+            <Button className={classes.editButton} onClick={handleProfileDisplayEdit}>
               <FormattedMessage
-                id='account_edit.profile_tab.button_label'
-                defaultMessage='Customize'
+                id="account_edit.profile_tab.button_label"
+                defaultMessage="Customize"
               />
             </Button>
           }
@@ -355,14 +331,14 @@ export const AccountEdit: FC = () => {
             disabled={isPending}
             label={
               <FormattedMessage
-                id='account_edit.advanced_settings.bot_label'
-                defaultMessage='Automated account'
+                id="account_edit.advanced_settings.bot_label"
+                defaultMessage="Automated account"
               />
             }
             hint={
               <FormattedMessage
-                id='account_edit.advanced_settings.bot_hint'
-                defaultMessage='Signal to others that the account mainly performs automated actions and might not be monitored'
+                id="account_edit.advanced_settings.bot_hint"
+                defaultMessage="Signal to others that the account mainly performs automated actions and might not be monitored"
               />
             }
           />

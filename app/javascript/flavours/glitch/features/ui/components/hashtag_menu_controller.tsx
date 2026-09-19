@@ -1,43 +1,38 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo } from "react";
 
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages } from "react-intl";
 
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
-import type {
-  OffsetValue,
-  UsePopperOptions,
-} from 'react-overlays/esm/usePopper';
-import Overlay from 'react-overlays/Overlay';
+import type { OffsetValue, UsePopperOptions } from "react-overlays/esm/usePopper";
+import Overlay from "react-overlays/Overlay";
 
-import { DropdownMenu } from 'flavours/glitch/components/dropdown_menu';
-import { useIdentity } from 'flavours/glitch/identity_context';
-import type { MenuItem } from 'flavours/glitch/models/dropdown_menu';
-import { useAppSelector } from 'flavours/glitch/store';
+import { DropdownMenu } from "flavours/glitch/components/dropdown_menu";
+import { useIdentity } from "flavours/glitch/identity_context";
+import type { MenuItem } from "flavours/glitch/models/dropdown_menu";
+import { useAppSelector } from "flavours/glitch/store";
 
 const messages = defineMessages({
   browseHashtag: {
-    id: 'hashtag.browse',
-    defaultMessage: 'Browse posts in #{hashtag}',
+    id: "hashtag.browse",
+    defaultMessage: "Browse posts in #{hashtag}",
   },
   browseHashtagFromAccount: {
-    id: 'hashtag.browse_from_account',
-    defaultMessage: 'Browse posts from @{name} in #{hashtag}',
+    id: "hashtag.browse_from_account",
+    defaultMessage: "Browse posts from @{name} in #{hashtag}",
   },
-  muteHashtag: { id: 'hashtag.mute', defaultMessage: 'Mute #{hashtag}' },
+  muteHashtag: { id: "hashtag.mute", defaultMessage: "Mute #{hashtag}" },
 });
 
 const offset = [5, 5] as OffsetValue;
-const popperConfig = { strategy: 'fixed' } as UsePopperOptions;
+const popperConfig = { strategy: "fixed" } as UsePopperOptions;
 
-const isHashtagLink = (
-  element: HTMLAnchorElement | null,
-): element is HTMLAnchorElement => {
+const isHashtagLink = (element: HTMLAnchorElement | null): element is HTMLAnchorElement => {
   if (!element) {
     return false;
   }
 
-  return element.matches('[data-menu-hashtag]');
+  return element.matches("[data-menu-hashtag]");
 };
 
 interface TargetParams {
@@ -67,7 +62,7 @@ export const HashtagMenuController: React.FC = () => {
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      const targetElement = (e.target as HTMLElement).closest('a');
+      const targetElement = (e.target as HTMLElement).closest("a");
 
       if (e.button !== 0 || e.ctrlKey || e.metaKey) {
         return;
@@ -77,8 +72,8 @@ export const HashtagMenuController: React.FC = () => {
         return;
       }
 
-      const hashtag = targetElement.text.replace(/^#/, '');
-      const accountId = targetElement.getAttribute('data-menu-hashtag');
+      const hashtag = targetElement.text.replace(/^#/, "");
+      const accountId = targetElement.getAttribute("data-menu-hashtag");
 
       if (!hashtag || !accountId) {
         return;
@@ -89,10 +84,10 @@ export const HashtagMenuController: React.FC = () => {
       setTarget({ element: targetElement, hashtag, accountId });
     };
 
-    document.addEventListener('click', handleClick, { capture: true });
+    document.addEventListener("click", handleClick, { capture: true });
 
     return () => {
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener("click", handleClick);
     };
   }, []);
 
@@ -122,7 +117,7 @@ export const HashtagMenuController: React.FC = () => {
         text: intl.formatMessage(messages.muteHashtag, {
           hashtag,
         }),
-        href: '/filters',
+        href: "/filters",
         dangerous: true,
       });
     }
@@ -138,7 +133,7 @@ export const HashtagMenuController: React.FC = () => {
     <Overlay
       show={open}
       offset={offset}
-      placement='bottom'
+      placement="bottom"
       flip
       target={element}
       popperConfig={popperConfig}
@@ -146,16 +141,9 @@ export const HashtagMenuController: React.FC = () => {
       {({ props, arrowProps, placement }) => (
         <div {...props}>
           <div className={`dropdown-animation dropdown-menu ${placement}`}>
-            <div
-              className={`dropdown-menu__arrow ${placement}`}
-              {...arrowProps}
-            />
+            <div className={`dropdown-menu__arrow ${placement}`} {...arrowProps} />
 
-            <DropdownMenu
-              items={menu}
-              onClose={handleClose}
-              openedViaKeyboard={false}
-            />
+            <DropdownMenu items={menu} onClose={handleClose} openedViaKeyboard={false} />
           </div>
         </div>
       )}

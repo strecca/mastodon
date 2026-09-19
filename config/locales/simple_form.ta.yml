@@ -65,4 +65,4 @@ ta:
         with_dns_records: களத்தின் IP மற்றும் MX records-ஐ உள்ளடக்கு
     required:
       text: தேவை
-    'yes': ஆம்
+    "yes": ஆம்

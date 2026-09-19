@@ -1,34 +1,33 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { defineMessages, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from "react-intl";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import ImmutablePureComponent from 'react-immutable-pure-component';
-import { connect } from 'react-redux';
+import ImmutablePropTypes from "react-immutable-proptypes";
+import ImmutablePureComponent from "react-immutable-pure-component";
+import { connect } from "react-redux";
 
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 
-import { injectIntl } from '@/mastodon/components/intl';
-import BlockIcon from '@/material-icons/400-24px/block-fill.svg?react';
-import { Account } from 'mastodon/components/account';
+import { injectIntl } from "@/mastodon/components/intl";
+import BlockIcon from "@/material-icons/400-24px/block-fill.svg?react";
+import { Account } from "mastodon/components/account";
 
-import { fetchBlocks, expandBlocks } from '../../actions/blocks';
-import { LoadingIndicator } from '../../components/loading_indicator';
-import ScrollableList from '../../components/scrollable_list';
-import Column from '../ui/components/column';
+import { fetchBlocks, expandBlocks } from "../../actions/blocks";
+import { LoadingIndicator } from "../../components/loading_indicator";
+import ScrollableList from "../../components/scrollable_list";
+import Column from "../ui/components/column";
 
 const messages = defineMessages({
-  heading: { id: 'column.blocks', defaultMessage: 'Blocked users' },
+  heading: { id: "column.blocks", defaultMessage: "Blocked users" },
 });
 
-const mapStateToProps = state => ({
-  accountIds: state.getIn(['user_lists', 'blocks', 'items']),
-  hasMore: !!state.getIn(['user_lists', 'blocks', 'next']),
-  isLoading: state.getIn(['user_lists', 'blocks', 'isLoading'], true),
+const mapStateToProps = (state) => ({
+  accountIds: state.getIn(["user_lists", "blocks", "items"]),
+  hasMore: !!state.getIn(["user_lists", "blocks", "next"]),
+  isLoading: state.getIn(["user_lists", "blocks", "isLoading"], true),
 });
 
 class Blocks extends ImmutablePureComponent {
-
   static propTypes = {
     params: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -39,15 +38,19 @@ class Blocks extends ImmutablePureComponent {
     multiColumn: PropTypes.bool,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.dispatch(fetchBlocks());
   }
 
-  handleLoadMore = debounce(() => {
-    this.props.dispatch(expandBlocks());
-  }, 300, { leading: true });
+  handleLoadMore = debounce(
+    () => {
+      this.props.dispatch(expandBlocks());
+    },
+    300,
+    { leading: true },
+  );
 
-  render () {
+  render() {
     const { intl, accountIds, hasMore, multiColumn, isLoading } = this.props;
 
     if (!accountIds) {
@@ -58,26 +61,36 @@ class Blocks extends ImmutablePureComponent {
       );
     }
 
-    const emptyMessage = <FormattedMessage id='empty_column.blocks' defaultMessage="You haven't blocked any users yet." />;
+    const emptyMessage = (
+      <FormattedMessage
+        id="empty_column.blocks"
+        defaultMessage="You haven't blocked any users yet."
+      />
+    );
 
     return (
-      <Column bindToDocument={!multiColumn} icon='ban' iconComponent={BlockIcon} heading={intl.formatMessage(messages.heading)} alwaysShowBackButton>
+      <Column
+        bindToDocument={!multiColumn}
+        icon="ban"
+        iconComponent={BlockIcon}
+        heading={intl.formatMessage(messages.heading)}
+        alwaysShowBackButton
+      >
         <ScrollableList
-          scrollKey='blocks'
+          scrollKey="blocks"
           onLoadMore={this.handleLoadMore}
           hasMore={hasMore}
           isLoading={isLoading}
           emptyMessage={emptyMessage}
           bindToDocument={!multiColumn}
         >
-          {accountIds.map(id =>
-            <Account key={id} id={id} defaultAction='block' />,
-          )}
+          {accountIds.map((id) => (
+            <Account key={id} id={id} defaultAction="block" />
+          ))}
         </ScrollableList>
       </Column>
     );
   }
-
 }
 
 export default connect(mapStateToProps)(injectIntl(Blocks));

@@ -1,15 +1,15 @@
-import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import type { FC } from "react";
+import { useEffect, useState } from "react";
 
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedDate, FormattedMessage } from "react-intl";
 
-import { dismissAnnouncement } from '@/flavours/glitch/actions/announcements';
-import type { ApiAnnouncementJSON } from '@/flavours/glitch/api_types/announcements';
-import { AnimateEmojiProvider } from '@/flavours/glitch/components/emoji/context';
-import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
-import { useAppDispatch } from '@/flavours/glitch/store';
+import { dismissAnnouncement } from "@/flavours/glitch/actions/announcements";
+import type { ApiAnnouncementJSON } from "@/flavours/glitch/api_types/announcements";
+import { AnimateEmojiProvider } from "@/flavours/glitch/components/emoji/context";
+import { EmojiHTML } from "@/flavours/glitch/components/emoji/html";
+import { useAppDispatch } from "@/flavours/glitch/store";
 
-import { ReactionsBar } from './reactions';
+import { ReactionsBar } from "./reactions";
 
 export interface IAnnouncement extends ApiAnnouncementJSON {
   contentHtml: string;
@@ -20,10 +20,7 @@ interface AnnouncementProps {
   active?: boolean;
 }
 
-export const Announcement: FC<AnnouncementProps> = ({
-  announcement,
-  active,
-}) => {
+export const Announcement: FC<AnnouncementProps> = ({ announcement, active }) => {
   const { read, id } = announcement;
 
   // Dismiss announcement when it becomes active.
@@ -49,33 +46,28 @@ export const Announcement: FC<AnnouncementProps> = ({
 
   return (
     <AnimateEmojiProvider>
-      <strong className='announcements__range'>
-        <FormattedMessage
-          id='announcement.announcement'
-          defaultMessage='Announcement'
-        />
+      <strong className="announcements__range">
+        <FormattedMessage id="announcement.announcement" defaultMessage="Announcement" />
         <span>
-          {' · '}
+          {" · "}
           <Timestamp announcement={announcement} />
         </span>
       </strong>
 
       <EmojiHTML
-        className='announcements__content translate'
+        className="announcements__content translate"
         htmlString={announcement.contentHtml}
         extraEmojis={announcement.emojis}
       />
 
       <ReactionsBar reactions={announcement.reactions} id={announcement.id} />
 
-      {!isVisuallyRead && <span className='announcements__unread' />}
+      {!isVisuallyRead && <span className="announcements__unread" />}
     </AnimateEmojiProvider>
   );
 };
 
-const Timestamp: FC<Pick<AnnouncementProps, 'announcement'>> = ({
-  announcement,
-}) => {
+const Timestamp: FC<Pick<AnnouncementProps, "announcement">> = ({ announcement }) => {
   const startsAt = announcement.starts_at && new Date(announcement.starts_at);
   const endsAt = announcement.ends_at && new Date(announcement.ends_at);
   const now = new Date();
@@ -84,8 +76,7 @@ const Timestamp: FC<Pick<AnnouncementProps, 'announcement'>> = ({
 
   if (hasTimeRange) {
     const skipYear =
-      startsAt.getFullYear() === endsAt.getFullYear() &&
-      endsAt.getFullYear() === now.getFullYear();
+      startsAt.getFullYear() === endsAt.getFullYear() && endsAt.getFullYear() === now.getFullYear();
     const skipEndDate =
       startsAt.getDate() === endsAt.getDate() &&
       startsAt.getMonth() === endsAt.getMonth() &&
@@ -94,28 +85,20 @@ const Timestamp: FC<Pick<AnnouncementProps, 'announcement'>> = ({
       <>
         <FormattedDate
           value={startsAt}
-          year={
-            skipYear || startsAt.getFullYear() === now.getFullYear()
-              ? undefined
-              : 'numeric'
-          }
-          month='short'
-          day='2-digit'
-          hour={skipTime ? undefined : '2-digit'}
-          minute={skipTime ? undefined : '2-digit'}
-        />{' '}
-        -{' '}
+          year={skipYear || startsAt.getFullYear() === now.getFullYear() ? undefined : "numeric"}
+          month="short"
+          day="2-digit"
+          hour={skipTime ? undefined : "2-digit"}
+          minute={skipTime ? undefined : "2-digit"}
+        />{" "}
+        -{" "}
         <FormattedDate
           value={endsAt}
-          year={
-            skipYear || endsAt.getFullYear() === now.getFullYear()
-              ? undefined
-              : 'numeric'
-          }
-          month={skipEndDate ? undefined : 'short'}
-          day={skipEndDate ? undefined : '2-digit'}
-          hour={skipTime ? undefined : '2-digit'}
-          minute={skipTime ? undefined : '2-digit'}
+          year={skipYear || endsAt.getFullYear() === now.getFullYear() ? undefined : "numeric"}
+          month={skipEndDate ? undefined : "short"}
+          day={skipEndDate ? undefined : "2-digit"}
+          hour={skipTime ? undefined : "2-digit"}
+          minute={skipTime ? undefined : "2-digit"}
         />
       </>
     );
@@ -124,13 +107,11 @@ const Timestamp: FC<Pick<AnnouncementProps, 'announcement'>> = ({
   return (
     <FormattedDate
       value={publishedAt}
-      year={
-        publishedAt.getFullYear() === now.getFullYear() ? undefined : 'numeric'
-      }
-      month='short'
-      day='2-digit'
-      hour={skipTime ? undefined : '2-digit'}
-      minute={skipTime ? undefined : '2-digit'}
+      year={publishedAt.getFullYear() === now.getFullYear() ? undefined : "numeric"}
+      month="short"
+      day="2-digit"
+      hour={skipTime ? undefined : "2-digit"}
+      minute={skipTime ? undefined : "2-digit"}
     />
   );
 };

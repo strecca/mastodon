@@ -1,22 +1,15 @@
-import {
-  Children,
-  cloneElement,
-  createContext,
-  forwardRef,
-  useCallback,
-  useContext,
-} from 'react';
+import { Children, cloneElement, createContext, forwardRef, useCallback, useContext } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { List, Record } from 'immutable';
+import type { List, Record } from "immutable";
 
-import { useAppSelector } from '@/mastodon/store';
-import { Footer } from 'mastodon/features/custom_homepage/components/footer';
-import { Header } from 'mastodon/features/custom_homepage/components/header';
-import { CollapsibleNavigationPanel } from 'mastodon/features/navigation_panel';
+import { useAppSelector } from "@/mastodon/store";
+import { Footer } from "mastodon/features/custom_homepage/components/footer";
+import { Header } from "mastodon/features/custom_homepage/components/header";
+import { CollapsibleNavigationPanel } from "mastodon/features/navigation_panel";
 
-import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useBreakpoint } from "../hooks/useBreakpoint";
 import {
   Compose,
   Notifications,
@@ -29,14 +22,14 @@ import {
   BookmarkedStatuses,
   ListTimeline,
   Directory,
-} from '../util/async-components';
-import { useColumnsContext } from '../util/columns_context';
+} from "../util/async-components";
+import { useColumnsContext } from "../util/columns_context";
 
-import Bundle from './bundle';
-import { BundleColumnError } from './bundle_column_error';
-import { ColumnLoading } from './column_loading';
-import { ComposePanel, RedirectToMobileComposeIfNeeded } from './compose_panel';
-import DrawerLoading from './drawer_loading';
+import Bundle from "./bundle";
+import { BundleColumnError } from "./bundle_column_error";
+import { ColumnLoading } from "./column_loading";
+import { ComposePanel, RedirectToMobileComposeIfNeeded } from "./compose_panel";
+import DrawerLoading from "./drawer_loading";
 
 const componentMap = {
   COMPOSE: Compose,
@@ -65,7 +58,7 @@ const TabsBarPortal = () => {
     [setTabsBarElement],
   );
 
-  return <div id='tabs-bar__portal' ref={setRef} />;
+  return <div id="tabs-bar__portal" ref={setRef} />;
 };
 
 export const ColumnIndexContext = createContext(1);
@@ -91,27 +84,23 @@ export const ColumnsArea = forwardRef<
     children: React.ReactElement | React.ReactElement[];
   }
 >(({ children, minimalShell, singleColumn }, ref) => {
-  const renderComposePanel = !useBreakpoint('full');
+  const renderComposePanel = !useBreakpoint("full");
   const columns = useAppSelector((state) =>
-    (state.settings as Record<{ columns: List<Record<Column>> }>).get(
-      'columns',
-    ),
+    (state.settings as Record<{ columns: List<Record<Column>> }>).get("columns"),
   );
-  const isModalOpen = useAppSelector(
-    (state) => !state.modal.get('stack').isEmpty(),
-  );
+  const isModalOpen = useAppSelector((state) => !state.modal.get("stack").isEmpty());
 
   if (minimalShell) {
     return (
-      <div className='columns-area__panels'>
-        <div className='columns-area__panels__main'>
+      <div className="columns-area__panels">
+        <div className="columns-area__panels__main">
           <Header />
 
-          <div className='tabs-bar__wrapper'>
+          <div className="tabs-bar__wrapper">
             <TabsBarPortal />
           </div>
 
-          <div className='columns-area columns-area--mobile'>{children}</div>
+          <div className="columns-area columns-area--mobile">{children}</div>
 
           <Footer />
         </div>
@@ -121,20 +110,20 @@ export const ColumnsArea = forwardRef<
 
   if (singleColumn) {
     return (
-      <div className='columns-area__panels'>
-        <div className='columns-area__panels__pane columns-area__panels__pane--compositional'>
-          <div className='columns-area__panels__pane__inner'>
+      <div className="columns-area__panels">
+        <div className="columns-area__panels__pane columns-area__panels__pane--compositional">
+          <div className="columns-area__panels__pane__inner">
             {renderComposePanel && <ComposePanel />}
             <RedirectToMobileComposeIfNeeded />
           </div>
         </div>
 
-        <main className='columns-area__panels__main'>
-          <div className='tabs-bar__wrapper'>
+        <main className="columns-area__panels__main">
+          <div className="tabs-bar__wrapper">
             <TabsBarPortal />
           </div>
 
-          <div className='columns-area columns-area--mobile'>{children}</div>
+          <div className="columns-area columns-area--mobile">{children}</div>
         </main>
 
         <CollapsibleNavigationPanel />
@@ -144,17 +133,15 @@ export const ColumnsArea = forwardRef<
 
   return (
     <main
-      className={classNames('columns-area', { unscrollable: isModalOpen })}
+      className={classNames("columns-area", { unscrollable: isModalOpen })}
       ref={ref}
       tabIndex={isModalOpen ? undefined : 0}
     >
       {columns.map((column, index) => {
-        const params = column.get('params')
-          ? column.get('params')?.toJS()
-          : null;
+        const params = column.get("params") ? column.get("params")?.toJS() : null;
         const other = params?.other ?? {};
-        const uuid = column.get('uuid');
-        const id = column.get('id');
+        const uuid = column.get("uuid");
+        const id = column.get("id");
 
         return (
           <ColumnIndexContext.Provider value={index} key={uuid}>
@@ -165,12 +152,7 @@ export const ColumnsArea = forwardRef<
               error={ErrorComponent}
             >
               {(SpecificComponent: FetchedComponent) => (
-                <SpecificComponent
-                  columnId={uuid}
-                  params={params}
-                  multiColumn
-                  {...other}
-                />
+                <SpecificComponent columnId={uuid} params={params} multiColumn {...other} />
               )}
             </Bundle>
           </ColumnIndexContext.Provider>
@@ -178,22 +160,20 @@ export const ColumnsArea = forwardRef<
       })}
 
       <ColumnIndexContext.Provider value={columns.size}>
-        {Children.map(children, (child) =>
-          cloneElement(child, { multiColumn: true }),
-        )}
+        {Children.map(children, (child) => cloneElement(child, { multiColumn: true }))}
       </ColumnIndexContext.Provider>
     </main>
   );
 });
 
-ColumnsArea.displayName = 'ColumnsArea';
+ColumnsArea.displayName = "ColumnsArea";
 
 const ErrorComponent = (props: { onRetry: () => void }) => {
-  return <BundleColumnError multiColumn errorType='network' {...props} />;
+  return <BundleColumnError multiColumn errorType="network" {...props} />;
 };
 
 const renderLoading = (columnId: string) => {
   const LoadingComponent =
-    columnId === 'COMPOSE' ? <DrawerLoading /> : <ColumnLoading multiColumn />;
+    columnId === "COMPOSE" ? <DrawerLoading /> : <ColumnLoading multiColumn />;
   return () => LoadingComponent;
 };

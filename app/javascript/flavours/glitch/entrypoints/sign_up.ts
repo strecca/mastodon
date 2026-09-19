@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
-import ready from 'flavours/glitch/ready';
+import ready from "flavours/glitch/ready";
 
 async function checkConfirmation() {
-  const response = await axios.get('/api/v1/emails/check_confirmation', {
-    headers: { Accept: 'application/json' },
+  const response = await axios.get("/api/v1/emails/check_confirmation", {
+    headers: { Accept: "application/json" },
     withCredentials: true,
   });
 
   if (response.status === 200 && response.data === true) {
-    window.location.href = '/start';
+    window.location.href = "/start";
   }
 }
 
@@ -18,33 +18,31 @@ ready(() => {
     void checkConfirmation();
   }, 5000);
 
-  document
-    .querySelectorAll<HTMLButtonElement>('button.timer-button')
-    .forEach((button) => {
-      let counter = 30;
+  document.querySelectorAll<HTMLButtonElement>("button.timer-button").forEach((button) => {
+    let counter = 30;
 
-      const container = document.createElement('span');
+    const container = document.createElement("span");
 
-      const updateCounter = () => {
-        container.innerText = ` (${counter})`;
-      };
+    const updateCounter = () => {
+      container.innerText = ` (${counter})`;
+    };
 
-      updateCounter();
+    updateCounter();
 
-      const countdown = setInterval(() => {
-        counter--;
+    const countdown = setInterval(() => {
+      counter--;
 
-        if (counter === 0) {
-          button.disabled = false;
-          button.removeChild(container);
-          clearInterval(countdown);
-        } else {
-          updateCounter();
-        }
-      }, 1000);
+      if (counter === 0) {
+        button.disabled = false;
+        button.removeChild(container);
+        clearInterval(countdown);
+      } else {
+        updateCounter();
+      }
+    }, 1000);
 
-      button.appendChild(container);
-    });
+    button.appendChild(container);
+  });
 }).catch((e: unknown) => {
   throw e;
 });

@@ -8,7 +8,7 @@ sq:
         display_name: Emri juaj i plotë, ose emri juaj lojcak.
         fields: Faqja juaj hyrëse, përemra, moshë, ç’të keni qejf.
         indexable: Postimet tuaja publike mund të shfaqen në përfundime kërkimesh në Mastodon. Pavarësisht nga kjo, personat që kanë ndërvepruar me postimet tuaja, mund të jenë në gjendje të kërkojnë për to.
-        note: 'Mundeni të @përmendni persona apo #hashtagë të tjerë.'
+        note: "Mundeni të @përmendni persona apo #hashtagë të tjerë."
         show_collections: Njerëzit do të jenë në gjendje të shfletojnë ndjekjet dhe ndjekësit tuaj. Njerëzit që ndiqni, do ta shohin që i ndiqni.
         unlocked: Njerëzit do të jenë në gjendje t’ju ndjekin pa u dashur miratim. Hiqjani shenjën, nëse doni të shqyrtoni kërkesa ndjekjeje dhe të zgjidhni pranimin apo hedhjen poshtë e ndjekësve të rinj.
       account_alias:
@@ -75,7 +75,7 @@ sq:
         domain: Ky mund të jetë emri i përkatësisë që shfaqet te adresa email, ose zëri MX që përdor. Do të kontrollohen gjatë regjistrimit.
         with_dns_records: Do të bëhet një përpjekje për ftillimin e zërave DNS të përkatësisë së dhënë dhe do të futen në listë bllokimesh edhe përfundimet
       featured_tag:
-        name: 'Ja disa nga hashtag-ët që përdorët tani afër:'
+        name: "Ja disa nga hashtag-ët që përdorët tani afër:"
       filters:
         action: Zgjidhni cili veprim të kryhet, kur një postim ka përkim me një filtër
         actions:
@@ -131,7 +131,7 @@ sq:
         hint: Opsionale. Jepni më tepër hollësi rreth këtij rregulli
         text: Përshkruani një rregull ose një domosdoshmëri për përdoruesit në këtë shërbyes. Përpiquni të jetë i shkurtër dhe i thjeshtë
       sessions:
-        otp: 'Jepni kodin dyfaktorësh të prodhuar nga aplikacioni i telefonit tuaj ose përdorni një nga kodet tuaj të rikthimeve:'
+        otp: "Jepni kodin dyfaktorësh të prodhuar nga aplikacioni i telefonit tuaj ose përdorni një nga kodet tuaj të rikthimeve:"
         webauthn: Nëse është një diskth USB, sigurohuni se e keni futur dhe, në qoftë e nevojshme, prekeni.
       settings:
         email_subscriptions: Çaktivzimi i mban pajtimtarët ekzistues, por resht dërgim email-esh.
@@ -407,7 +407,7 @@ sq:
         events: Akte të aktivizuar
         template: Gjedhe ngarkese
         url: URL pikëmbarimi
-    'no': Jo
+    "no": Jo
     not_recommended: Jo e këshilluar
     overridden: I anashkaluar
     recommended: E rekomanduar
@@ -417,4 +417,4 @@ sq:
     title:
       sessions:
         webauthn: Që të bëhet hyrja, përdorni një nga kyçet tuaj të sigurisë
-    'yes': Po
+    "yes": Po

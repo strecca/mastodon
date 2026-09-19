@@ -52,7 +52,7 @@ ku:
         callback_urls: Girêdanên banga vegerê
         scopes: Berfirehî
         secret: Rajegirî veşartî
-        title: 'Sepan: %{name}'
+        title: "Sepan: %{name}"
     authorizations:
       buttons:
         authorize: Destûr bide
@@ -85,7 +85,7 @@ ku:
         invalid_grant: Mafê ku hatiye peyda kirin ne derbasdar e, qediya ye, pûç e, girêdana ya ku di daxwaza mafê de tê bikaranîn li hev nagire an jî rajegirekî din hildaye.
         invalid_redirect_uri: Girêdan beralîkirî ya di nav da ne derbasdar e.
         invalid_request:
-          missing_param: 'Pîvana hewce dike kêm e: %{value}.'
+          missing_param: "Pîvana hewce dike kêm e: %{value}."
           request_not_authorized: Hewceye daxwazî rêdayî be. Ji bo daxwazî rêdayî be pîvana hewce dike kêm an jî betal e.
           unknown: Di nav daxwazîyê de pîvanekî hewceyî kêm e. Nirxekî pîvanê bê piştgirêdayî tê de heye an jî wek din xelet e.
         invalid_resource_owner: Bawernameyên xwediyê çavkanîyê yên hatine pêşkeş kirin ne derbasdar e an jî xwedîyê çavkanîyê nayê dîtin

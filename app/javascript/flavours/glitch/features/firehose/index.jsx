@@ -1,77 +1,92 @@
-import PropTypes from 'prop-types';
-import { useRef, useCallback, useEffect } from 'react';
+import PropTypes from "prop-types";
+import { useRef, useCallback, useEffect } from "react";
 
-import { useIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { useIntl, defineMessages, FormattedMessage } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
-import { NavLink } from 'react-router-dom';
+import { Helmet } from "@unhead/react/helmet";
+import { NavLink } from "react-router-dom";
 
-import { useIdentity } from '@/flavours/glitch/identity_context';
-import PublicIcon from '@/material-icons/400-24px/public.svg?react';
-import { addColumn } from 'flavours/glitch/actions/columns';
-import { changeSetting } from 'flavours/glitch/actions/settings';
-import { connectPublicStream, connectCommunityStream } from 'flavours/glitch/actions/streaming';
-import { expandPublicTimeline, expandCommunityTimeline } from 'flavours/glitch/actions/timelines';
-import { DismissableBanner } from 'flavours/glitch/components/dismissable_banner';
-import SettingText from 'flavours/glitch/components/setting_text';
-import { localLiveFeedAccess, remoteLiveFeedAccess, domain } from 'flavours/glitch/initial_state';
-import { canViewFeed } from 'flavours/glitch/permissions';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import { useIdentity } from "@/flavours/glitch/identity_context";
+import PublicIcon from "@/material-icons/400-24px/public.svg?react";
+import { addColumn } from "flavours/glitch/actions/columns";
+import { changeSetting } from "flavours/glitch/actions/settings";
+import { connectPublicStream, connectCommunityStream } from "flavours/glitch/actions/streaming";
+import { expandPublicTimeline, expandCommunityTimeline } from "flavours/glitch/actions/timelines";
+import { DismissableBanner } from "flavours/glitch/components/dismissable_banner";
+import SettingText from "flavours/glitch/components/setting_text";
+import { localLiveFeedAccess, remoteLiveFeedAccess, domain } from "flavours/glitch/initial_state";
+import { canViewFeed } from "flavours/glitch/permissions";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
-import Column from '../../components/column';
-import ColumnHeader from '../../components/column_header';
-import SettingToggle from '../notifications/components/setting_toggle';
-import StatusListContainer from '../ui/containers/status_list_container';
+import Column from "../../components/column";
+import ColumnHeader from "../../components/column_header";
+import SettingToggle from "../notifications/components/setting_toggle";
+import StatusListContainer from "../ui/containers/status_list_container";
 
 const messages = defineMessages({
-  title: { id: 'column.firehose_community', defaultMessage: 'Live feeds of Community Posts' },
+  title: { id: "column.firehose_community", defaultMessage: "Live feeds of Community Posts" },
   title_local: {
-    id: 'column.firehose_community_local',
-    defaultMessage: 'Live feeds of Community Posts',
+    id: "column.firehose_community_local",
+    defaultMessage: "Live feeds of Community Posts",
   },
   title_singular: {
-    id: 'column.firehose_community_singular',
-    defaultMessage: 'Live feeds of Community Posts',
+    id: "column.firehose_community_singular",
+    defaultMessage: "Live feeds of Community Posts",
   },
-  filter_regex: { id: 'home.column_settings.filter_regex', defaultMessage: 'Filter out by regular expressions' },
+  filter_regex: {
+    id: "home.column_settings.filter_regex",
+    defaultMessage: "Filter out by regular expressions",
+  },
 });
 
 const ColumnSettings = () => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const settings = useAppSelector((state) => state.getIn(['settings', 'firehose']));
+  const settings = useAppSelector((state) => state.getIn(["settings", "firehose"]));
   const onChange = useCallback(
-    (key, checked) => dispatch(changeSetting(['firehose', ...key], checked)),
+    (key, checked) => dispatch(changeSetting(["firehose", ...key], checked)),
     [dispatch],
   );
 
   return (
-    <div className='column-settings'>
+    <div className="column-settings">
       <section>
-        <div className='column-settings__row'>
+        <div className="column-settings__row">
           <SettingToggle
             settings={settings}
-            settingPath={['onlyMedia']}
+            settingPath={["onlyMedia"]}
             onChange={onChange}
-            label={<FormattedMessage id='community.column_settings.media_only' defaultMessage='Media only' />}
+            label={
+              <FormattedMessage
+                id="community.column_settings.media_only"
+                defaultMessage="Media only"
+              />
+            }
           />
 
           <SettingToggle
             settings={settings}
-            settingPath={['allowLocalOnly']}
+            settingPath={["allowLocalOnly"]}
             onChange={onChange}
-            label={<FormattedMessage id='firehose.column_settings.allow_local_only' defaultMessage='See All posts' />}
+            label={
+              <FormattedMessage
+                id="firehose.column_settings.allow_local_only"
+                defaultMessage="See All posts"
+              />
+            }
           />
         </div>
       </section>
 
       <section>
-        <h3><FormattedMessage id='home.column_settings.advanced' defaultMessage='Advanced' /></h3>
+        <h3>
+          <FormattedMessage id="home.column_settings.advanced" defaultMessage="Advanced" />
+        </h3>
 
-        <div className='column-settings__row'>
+        <div className="column-settings__row">
           <SettingText
             settings={settings}
-            settingPath={['regex', 'body']}
+            settingPath={["regex", "body"]}
             onChange={onChange}
             label={intl.formatMessage(messages.filter_regex)}
           />
@@ -87,41 +102,56 @@ const Firehose = ({ feedType, multiColumn }) => {
   const { signedIn, permissions } = useIdentity();
   const columnRef = useRef(null);
 
-  const allowLocalOnly = useAppSelector((state) => state.getIn(['settings', 'firehose', 'allowLocalOnly']));
-  const regex = useAppSelector((state) => state.getIn(['settings', 'firehose', 'regex', 'body']));
-
-  const onlyMedia = useAppSelector((state) => state.getIn(['settings', 'firehose', 'onlyMedia'], false));
-  const hasUnread = useAppSelector((state) => state.getIn(['timelines', `${feedType}${feedType === 'public' && allowLocalOnly ? ':allow_local_only' : ''}${onlyMedia ? ':media' : ''}`, 'unread'], 0) > 0);
-
-  const handlePin = useCallback(
-    () => {
-      switch(feedType) {
-      case 'community':
-        dispatch(addColumn('COMMUNITY', { other: { onlyMedia }, regex: { body: regex } }));
-        break;
-      case 'public':
-        dispatch(addColumn('PUBLIC', { other: { onlyMedia, allowLocalOnly }, regex: { body: regex }  }));
-        break;
-      case 'public:remote':
-        dispatch(addColumn('REMOTE', { other: { onlyMedia, onlyRemote: true }, regex: { body: regex }  }));
-        break;
-      }
-    },
-    [dispatch, onlyMedia, feedType, allowLocalOnly, regex],
+  const allowLocalOnly = useAppSelector((state) =>
+    state.getIn(["settings", "firehose", "allowLocalOnly"]),
   );
+  const regex = useAppSelector((state) => state.getIn(["settings", "firehose", "regex", "body"]));
+
+  const onlyMedia = useAppSelector((state) =>
+    state.getIn(["settings", "firehose", "onlyMedia"], false),
+  );
+  const hasUnread = useAppSelector(
+    (state) =>
+      state.getIn(
+        [
+          "timelines",
+          `${feedType}${feedType === "public" && allowLocalOnly ? ":allow_local_only" : ""}${onlyMedia ? ":media" : ""}`,
+          "unread",
+        ],
+        0,
+      ) > 0,
+  );
+
+  const handlePin = useCallback(() => {
+    switch (feedType) {
+      case "community":
+        dispatch(addColumn("COMMUNITY", { other: { onlyMedia }, regex: { body: regex } }));
+        break;
+      case "public":
+        dispatch(
+          addColumn("PUBLIC", { other: { onlyMedia, allowLocalOnly }, regex: { body: regex } }),
+        );
+        break;
+      case "public:remote":
+        dispatch(
+          addColumn("REMOTE", { other: { onlyMedia, onlyRemote: true }, regex: { body: regex } }),
+        );
+        break;
+    }
+  }, [dispatch, onlyMedia, feedType, allowLocalOnly, regex]);
 
   const handleLoadMore = useCallback(
     (maxId) => {
-      switch(feedType) {
-      case 'community':
-        dispatch(expandCommunityTimeline({ maxId, onlyMedia }));
-        break;
-      case 'public':
-        dispatch(expandPublicTimeline({ maxId, onlyMedia, allowLocalOnly }));
-        break;
-      case 'public:remote':
-        dispatch(expandPublicTimeline({ maxId, onlyMedia, onlyRemote: true }));
-        break;
+      switch (feedType) {
+        case "community":
+          dispatch(expandCommunityTimeline({ maxId, onlyMedia }));
+          break;
+        case "public":
+          dispatch(expandPublicTimeline({ maxId, onlyMedia, allowLocalOnly }));
+          break;
+        case "public:remote":
+          dispatch(expandPublicTimeline({ maxId, onlyMedia, onlyRemote: true }));
+          break;
       }
     },
     [dispatch, onlyMedia, allowLocalOnly, feedType],
@@ -132,72 +162,81 @@ const Firehose = ({ feedType, multiColumn }) => {
   useEffect(() => {
     let disconnect;
 
-    switch(feedType) {
-    case 'community':
-      dispatch(expandCommunityTimeline({ onlyMedia }));
-      if (signedIn) {
-        disconnect = dispatch(connectCommunityStream({ onlyMedia }));
-      }
-      break;
-    case 'public':
-      dispatch(expandPublicTimeline({ onlyMedia, allowLocalOnly }));
-      if (signedIn) {
-        disconnect = dispatch(connectPublicStream({ onlyMedia, allowLocalOnly }));
-      }
-      break;
-    case 'public:remote':
-      dispatch(expandPublicTimeline({ onlyMedia, onlyRemote: true }));
-      if (signedIn) {
-        disconnect = dispatch(connectPublicStream({ onlyMedia, onlyRemote: true }));
-      }
-      break;
+    switch (feedType) {
+      case "community":
+        dispatch(expandCommunityTimeline({ onlyMedia }));
+        if (signedIn) {
+          disconnect = dispatch(connectCommunityStream({ onlyMedia }));
+        }
+        break;
+      case "public":
+        dispatch(expandPublicTimeline({ onlyMedia, allowLocalOnly }));
+        if (signedIn) {
+          disconnect = dispatch(connectPublicStream({ onlyMedia, allowLocalOnly }));
+        }
+        break;
+      case "public:remote":
+        dispatch(expandPublicTimeline({ onlyMedia, onlyRemote: true }));
+        if (signedIn) {
+          disconnect = dispatch(connectPublicStream({ onlyMedia, onlyRemote: true }));
+        }
+        break;
     }
 
     return () => disconnect?.();
   }, [dispatch, signedIn, feedType, onlyMedia, allowLocalOnly]);
 
-  const prependBanner = feedType === 'community' ? (
-    <DismissableBanner id='community_timeline'>
-      <FormattedMessage
-        id='dismissable_banner.community_timeline'
-        defaultMessage='These are the most recent public posts from people whose accounts are hosted by {domain}.'
-        values={{ domain }}
-      />
-    </DismissableBanner>
-  ) : (
-    <DismissableBanner id='public_timeline'>
-      <FormattedMessage
-        id='dismissable_banner.public_timeline_community'
-        defaultMessage='These are the most recent public posts shared on {domain}.'
-        values={{ domain }}
-      />
-    </DismissableBanner>
-  );
+  const prependBanner =
+    feedType === "community" ? (
+      <DismissableBanner id="community_timeline">
+        <FormattedMessage
+          id="dismissable_banner.community_timeline"
+          defaultMessage="These are the most recent public posts from people whose accounts are hosted by {domain}."
+          values={{ domain }}
+        />
+      </DismissableBanner>
+    ) : (
+      <DismissableBanner id="public_timeline">
+        <FormattedMessage
+          id="dismissable_banner.public_timeline_community"
+          defaultMessage="These are the most recent public posts shared on {domain}."
+          values={{ domain }}
+        />
+      </DismissableBanner>
+    );
 
-  const emptyMessage = feedType === 'community' ? (
-    <FormattedMessage
-      id='empty_column.community'
-      defaultMessage='The local timeline is empty. Write something publicly to get the ball rolling!'
-    />
-  ) : (
-    <FormattedMessage
-      id='empty_column.public'
-      defaultMessage='There is nothing here! Write something publicly, or manually follow users from other servers to fill it up'
-    />
-  );
+  const emptyMessage =
+    feedType === "community" ? (
+      <FormattedMessage
+        id="empty_column.community"
+        defaultMessage="The local timeline is empty. Write something publicly to get the ball rolling!"
+      />
+    ) : (
+      <FormattedMessage
+        id="empty_column.public"
+        defaultMessage="There is nothing here! Write something publicly, or manually follow users from other servers to fill it up"
+      />
+    );
 
-  const canViewSelectedFeed = canViewFeed(signedIn, permissions, feedType === 'community' ? localLiveFeedAccess : remoteLiveFeedAccess);
+  const canViewSelectedFeed = canViewFeed(
+    signedIn,
+    permissions,
+    feedType === "community" ? localLiveFeedAccess : remoteLiveFeedAccess,
+  );
 
   const disabledTimelineMessage = (
     <FormattedMessage
-      id='empty_column.disabled_feed'
-      defaultMessage='This feed has been disabled by your server administrators.'
+      id="empty_column.disabled_feed"
+      defaultMessage="This feed has been disabled by your server administrators."
     />
   );
 
   let title;
 
-  if (canViewFeed(signedIn, permissions, localLiveFeedAccess) && canViewFeed(signedIn, permissions, remoteLiveFeedAccess)) {
+  if (
+    canViewFeed(signedIn, permissions, localLiveFeedAccess) &&
+    canViewFeed(signedIn, permissions, remoteLiveFeedAccess)
+  ) {
     title = messages.title;
   } else if (canViewFeed(signedIn, permissions, localLiveFeedAccess)) {
     title = messages.title_local;
@@ -206,9 +245,13 @@ const Firehose = ({ feedType, multiColumn }) => {
   }
 
   return (
-    <Column bindToDocument={!multiColumn} ref={columnRef} label={intl.formatMessage(messages.title)}>
+    <Column
+      bindToDocument={!multiColumn}
+      ref={columnRef}
+      label={intl.formatMessage(messages.title)}
+    >
       <ColumnHeader
-        icon='globe'
+        icon="globe"
         iconComponent={PublicIcon}
         active={hasUnread}
         title={intl.formatMessage(title)}
@@ -219,18 +262,22 @@ const Firehose = ({ feedType, multiColumn }) => {
         <ColumnSettings />
       </ColumnHeader>
 
-      <div className='account__section-headline'>
-        <NavLink exact to='/community'>
-          <FormattedMessage tagName='div' id='firehose.community' defaultMessage='Click here to see All Community Categories' />
+      <div className="account__section-headline">
+        <NavLink exact to="/community">
+          <FormattedMessage
+            tagName="div"
+            id="firehose.community"
+            defaultMessage="Click here to see All Community Categories"
+          />
         </NavLink>
       </div>
 
       <StatusListContainer
         prepend={prependBanner}
-        timelineId={`${feedType}${feedType === 'public' && allowLocalOnly ? ':allow_local_only' : ''}${onlyMedia ? ':media' : ''}`}
+        timelineId={`${feedType}${feedType === "public" && allowLocalOnly ? ":allow_local_only" : ""}${onlyMedia ? ":media" : ""}`}
         onLoadMore={handleLoadMore}
         trackScroll
-        scrollKey='firehose'
+        scrollKey="firehose"
         emptyMessage={canViewSelectedFeed ? emptyMessage : disabledTimelineMessage}
         bindToDocument={!multiColumn}
         regex={regex}
@@ -238,7 +285,7 @@ const Firehose = ({ feedType, multiColumn }) => {
 
       <Helmet>
         <title>{intl.formatMessage(messages.title)}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

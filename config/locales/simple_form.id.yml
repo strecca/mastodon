@@ -55,7 +55,7 @@ id:
         domain: Ini bisa berupa nama domain yang tampil di alamat email atau data MX yang memakainya. Mereka akan diperiksa saat mendaftar.
         with_dns_records: Usaha untuk menyelesaikan data DNS domain yang diberikan akan dilakukan dan hasilnya akan masuk daftar hitam
       featured_tag:
-        name: 'Ini adalah beberapa tagar yang sering Anda gunakan:'
+        name: "Ini adalah beberapa tagar yang sering Anda gunakan:"
       filters:
         actions:
           hide: Sembunyikan konten yang disaring, seperti itu tidak ada
@@ -94,7 +94,7 @@ id:
       rule:
         text: Jelaskan aturan atau persyaratan untuk pengguna di server ini. Buatlah pendek dan sederhana
       sessions:
-        otp: 'Masukkan kode dua faktor dari aplikasi ponsel atau gunakan kode pemulihan Anda:'
+        otp: "Masukkan kode dua faktor dari aplikasi ponsel atau gunakan kode pemulihan Anda:"
         webauthn: Jika ini kunci USB pastikan dalam keadaan tercolok dan, jika perlu, ketuk.
       tag:
         name: Anda hanya dapat mengubahnya ke huruf kecil/besar, misalnya, agar lebih mudah dibaca
@@ -265,7 +265,7 @@ id:
       webhook:
         events: Acara yang diaktifkan
         url: URL Titik Akhir
-    'no': Tidak
+    "no": Tidak
     not_recommended: Tidak disarankan
     recommended: Direkomendasikan
     required:
@@ -274,4 +274,4 @@ id:
     title:
       sessions:
         webauthn: Gunakan salah satu kunci keamanan untuk masuk
-    'yes': Ya
+    "yes": Ya

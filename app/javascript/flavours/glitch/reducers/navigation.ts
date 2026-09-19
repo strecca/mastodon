@@ -1,10 +1,10 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit";
 
 import {
   openNavigation,
   closeNavigation,
   toggleNavigation,
-} from 'flavours/glitch/actions/navigation';
+} from "flavours/glitch/actions/navigation";
 
 interface State {
   open: boolean;

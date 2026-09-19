@@ -1,39 +1,39 @@
-import type { PropsWithChildren } from 'react';
-import { useCallback } from 'react';
+import type { PropsWithChildren } from "react";
+import { useCallback } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import CollectionsIcon from '@/material-icons/400-24px/category.svg?react';
-import HomeIcon from '@/material-icons/400-24px/home-fill.svg?react';
-import InsertChartIcon from '@/material-icons/400-24px/insert_chart.svg?react';
-import PersonAddIcon from '@/material-icons/400-24px/person_add.svg?react';
-import RepeatIcon from '@/material-icons/400-24px/repeat.svg?react';
-import ReplyAllIcon from '@/material-icons/400-24px/reply_all.svg?react';
-import StarIcon from '@/material-icons/400-24px/star.svg?react';
-import { setNotificationsFilter } from 'mastodon/actions/notification_groups';
-import { Icon } from 'mastodon/components/icon';
+import CollectionsIcon from "@/material-icons/400-24px/category.svg?react";
+import HomeIcon from "@/material-icons/400-24px/home-fill.svg?react";
+import InsertChartIcon from "@/material-icons/400-24px/insert_chart.svg?react";
+import PersonAddIcon from "@/material-icons/400-24px/person_add.svg?react";
+import RepeatIcon from "@/material-icons/400-24px/repeat.svg?react";
+import ReplyAllIcon from "@/material-icons/400-24px/reply_all.svg?react";
+import StarIcon from "@/material-icons/400-24px/star.svg?react";
+import { setNotificationsFilter } from "mastodon/actions/notification_groups";
+import { Icon } from "mastodon/components/icon";
 import {
   selectSettingsNotificationsQuickFilterActive,
   selectSettingsNotificationsQuickFilterAdvanced,
-} from 'mastodon/selectors/settings';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+} from "mastodon/selectors/settings";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
 const tooltips = defineMessages({
-  mentions: { id: 'notifications.filter.mentions', defaultMessage: 'Mentions' },
+  mentions: { id: "notifications.filter.mentions", defaultMessage: "Mentions" },
   favourites: {
-    id: 'notifications.filter.favourites',
-    defaultMessage: 'Favorites',
+    id: "notifications.filter.favourites",
+    defaultMessage: "Favorites",
   },
-  boosts: { id: 'notifications.filter.boosts', defaultMessage: 'Boosts' },
-  polls: { id: 'notifications.filter.polls', defaultMessage: 'Poll results' },
-  follows: { id: 'notifications.filter.follows', defaultMessage: 'Follows' },
+  boosts: { id: "notifications.filter.boosts", defaultMessage: "Boosts" },
+  polls: { id: "notifications.filter.polls", defaultMessage: "Poll results" },
+  follows: { id: "notifications.filter.follows", defaultMessage: "Follows" },
   collections: {
-    id: 'notifications.filter.collections',
-    defaultMessage: 'Collections',
+    id: "notifications.filter.collections",
+    defaultMessage: "Collections",
   },
   statuses: {
-    id: 'notifications.filter.statuses',
-    defaultMessage: 'Updates from people you follow',
+    id: "notifications.filter.statuses",
+    defaultMessage: "Updates from people you follow",
   },
 });
 
@@ -52,10 +52,10 @@ const BarButton: React.FC<
 
   return (
     <button
-      className={selectedFilter === type ? 'active' : ''}
+      className={selectedFilter === type ? "active" : ""}
       onClick={onClick}
       title={title}
-      type='button'
+      type="button"
     >
       {children}
     </button>
@@ -65,94 +65,81 @@ const BarButton: React.FC<
 export const FilterBar: React.FC = () => {
   const intl = useIntl();
 
-  const selectedFilter = useAppSelector(
-    selectSettingsNotificationsQuickFilterActive,
-  );
-  const advancedMode = useAppSelector(
-    selectSettingsNotificationsQuickFilterAdvanced,
-  );
+  const selectedFilter = useAppSelector(selectSettingsNotificationsQuickFilterActive);
+  const advancedMode = useAppSelector(selectSettingsNotificationsQuickFilterAdvanced);
 
   if (advancedMode)
     return (
-      <div className='notification__filter-bar'>
-        <BarButton selectedFilter={selectedFilter} type='all' key='all'>
-          <FormattedMessage
-            id='notifications.filter.all'
-            defaultMessage='All'
-          />
+      <div className="notification__filter-bar">
+        <BarButton selectedFilter={selectedFilter} type="all" key="all">
+          <FormattedMessage id="notifications.filter.all" defaultMessage="All" />
         </BarButton>
         <BarButton
           selectedFilter={selectedFilter}
-          type='mention'
-          key='mention'
+          type="mention"
+          key="mention"
           title={intl.formatMessage(tooltips.mentions)}
         >
-          <Icon id='reply-all' icon={ReplyAllIcon} />
+          <Icon id="reply-all" icon={ReplyAllIcon} />
         </BarButton>
         <BarButton
           selectedFilter={selectedFilter}
-          type='favourite'
-          key='favourite'
+          type="favourite"
+          key="favourite"
           title={intl.formatMessage(tooltips.favourites)}
         >
-          <Icon id='star' icon={StarIcon} />
+          <Icon id="star" icon={StarIcon} />
         </BarButton>
         <BarButton
           selectedFilter={selectedFilter}
-          type='reblog'
-          key='reblog'
+          type="reblog"
+          key="reblog"
           title={intl.formatMessage(tooltips.boosts)}
         >
-          <Icon id='retweet' icon={RepeatIcon} />
+          <Icon id="retweet" icon={RepeatIcon} />
         </BarButton>
         <BarButton
           selectedFilter={selectedFilter}
-          type='poll'
-          key='poll'
+          type="poll"
+          key="poll"
           title={intl.formatMessage(tooltips.polls)}
         >
-          <Icon id='tasks' icon={InsertChartIcon} />
+          <Icon id="tasks" icon={InsertChartIcon} />
         </BarButton>
         <BarButton
           selectedFilter={selectedFilter}
-          type='status'
-          key='status'
+          type="status"
+          key="status"
           title={intl.formatMessage(tooltips.statuses)}
         >
-          <Icon id='home' icon={HomeIcon} />
+          <Icon id="home" icon={HomeIcon} />
         </BarButton>
         <BarButton
           selectedFilter={selectedFilter}
-          type='follow'
-          key='follow'
+          type="follow"
+          key="follow"
           title={intl.formatMessage(tooltips.follows)}
         >
-          <Icon id='user-plus' icon={PersonAddIcon} />
+          <Icon id="user-plus" icon={PersonAddIcon} />
         </BarButton>
         <BarButton
           selectedFilter={selectedFilter}
-          type='collection'
-          key='collection'
+          type="collection"
+          key="collection"
           title={intl.formatMessage(tooltips.collections)}
         >
-          <Icon id='collections' icon={CollectionsIcon} />
+          <Icon id="collections" icon={CollectionsIcon} />
         </BarButton>
       </div>
     );
   else
     return (
-      <div className='notification__filter-bar'>
-        <BarButton selectedFilter={selectedFilter} type='all' key='all'>
-          <FormattedMessage
-            id='notifications.filter.all'
-            defaultMessage='All'
-          />
+      <div className="notification__filter-bar">
+        <BarButton selectedFilter={selectedFilter} type="all" key="all">
+          <FormattedMessage id="notifications.filter.all" defaultMessage="All" />
         </BarButton>
-        <BarButton selectedFilter={selectedFilter} type='mention' key='mention'>
-          <FormattedMessage
-            id='notifications.filter.mentions'
-            defaultMessage='Mentions'
-          />
+        <BarButton selectedFilter={selectedFilter} type="mention" key="mention">
+          <FormattedMessage id="notifications.filter.mentions" defaultMessage="Mentions" />
         </BarButton>
       </div>
     );

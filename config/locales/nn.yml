@@ -1,7 +1,7 @@
 ---
 nn:
   about:
-    about_mastodon_html: 'Framtidas sosiale nettverk: Ingen annonsar, ingen verksemder som overvaker deg, etisk design og desentralisering! Eig dataene dine med Mastodon!'
+    about_mastodon_html: "Framtidas sosiale nettverk: Ingen annonsar, ingen verksemder som overvaker deg, etisk design og desentralisering! Eig dataene dine med Mastodon!"
     contact_missing: Ikkje sett
     contact_unavailable: I/T
     default_thumbnail_description: To smilande teikneseriemastodontar (som ser ut som elefantar) kastar eit papirfly til kvarandre. Dei er omgjevne av klårblå himmel og flytande planetar med tre og fleire mastodontar på.
@@ -334,7 +334,7 @@ nn:
         title: Ny kunngjering
       preview:
         disclaimer: Av di folk ikkje kan velja bort epostvarsel, bør du avgrensa dei til viktige kunngjeringar som datainnbrot eller varsel om at tenaren skal stengja.
-        explanation_html: 'Denne eposten blir send til <strong>%{display_count} folk</strong>. Denne teksten vil stå i eposten:'
+        explanation_html: "Denne eposten blir send til <strong>%{display_count} folk</strong>. Denne teksten vil stå i eposten:"
         title: Førehandsvis kunngjeringa
       publish: Publiser
       published_msg: Kunngjeringa er offentleggjord!
@@ -349,7 +349,7 @@ nn:
       back_to_account: Tilbake til kontosida
       back_to_report: Tilbake til rapporteringssida
       batch:
-        add_to_report: 'Legg til rapport #%{id}'
+        add_to_report: "Legg til rapport #%{id}"
         remove_from_report: Fjern frå rapport
         report: Rapporter
       collection_title: Samling av %{name}
@@ -584,10 +584,10 @@ nn:
       import:
         description_html: Du skal til å importera ei liste over domeneblokkeringar. Gjer vel og sjå nøye gjennom lista, særleg om du ikkje har laga ho sjølv.
         existing_relationships_warning: Noverande fylgjeforhold
-        private_comment_description_html: 'For å hjelpa deg med å halda oversikt over kvar importerte blokkeringar kjem frå, vil dei bli oppretta med fylgjande private kommentar: <q>%{comment}</q>'
+        private_comment_description_html: "For å hjelpa deg med å halda oversikt over kvar importerte blokkeringar kjem frå, vil dei bli oppretta med fylgjande private kommentar: <q>%{comment}</q>"
         private_comment_template: Importert frå %{source} den %{date}
         title: Importer domeneblokkeringar
-      invalid_domain_block: 'Hoppa over ei eller fleire domeneblokker på grunn av fylgjande feil: %{error}'
+      invalid_domain_block: "Hoppa over ei eller fleire domeneblokker på grunn av fylgjande feil: %{error}"
       new:
         title: Importer domeneblokkeringar
       no_file: Inga fil vald
@@ -721,12 +721,12 @@ nn:
       created_msg: La vellykket til en ny IP-regel
       delete: Slett
       expires_in:
-        '1209600': 2 uker
-        '15778476': 6 måneder
-        '2629746': 1 måned
-        '31556952': 1 år
-        '86400': 1 dag
-        '94670856': 3 år
+        "1209600": 2 uker
+        "15778476": 6 måneder
+        "2629746": 1 måned
+        "31556952": 1 år
+        "86400": 1 dag
+        "94670856": 3 år
       new:
         title: Opprett ny IP-regel
       no_ip_block_selected: Ingen IP-regler ble endret da ingen ble valgt
@@ -783,7 +783,7 @@ nn:
       collections: Samlingar (%{count})
       comment:
         none: Ingen
-      comment_description_html: 'For å gje meir informasjon, skreiv %{name}:'
+      comment_description_html: "For å gje meir informasjon, skreiv %{name}:"
       confirm: Stadfest
       confirm_action: Stadfest at du vil moderera brukarkontoen @%{acct}
       created_at: Rapportert
@@ -803,11 +803,11 @@ nn:
         placeholder: Beskriv hvilke handlinger som har blitt tatt, eller andre relaterte oppdateringer...
         title: Merknad
       notes_description_html: Sjå og skriv merknadar til andre moderatorar og ditt framtidige sjølv
-      processed_msg: 'Du har handsama rapport #%{id}'
-      quick_actions_description_html: 'Utfør ei handling eller bla ned for å sjå det rapporterte innhaldet:'
+      processed_msg: "Du har handsama rapport #%{id}"
+      quick_actions_description_html: "Utfør ei handling eller bla ned for å sjå det rapporterte innhaldet:"
       remote_user_placeholder: den eksterne brukaren frå %{instance}
       reopen: Opn rapport igjen
-      report: 'Rapporter #%{id}'
+      report: "Rapporter #%{id}"
       reported_account: Rapportert konto
       reported_by: Rapportert av
       reported_content: Rapportert innhald
@@ -820,10 +820,10 @@ nn:
       statuses_description_html: Støytande innhald vil bli inkludert i kommunikasjonen med den rapporterte kontoen
       summary:
         action_preambles:
-          delete_html: 'Du er i ferd med å <strong>fjerna</strong> nokre av innlegga til <strong>@%{acct}</strong>. Det vil:'
-          mark_as_sensitive_html: 'Du er i ferd med å <strong>markera</strong> nokre av innlegga til <strong>@%{acct}</strong> som <strong>sensitive</strong>. Dette vil:'
-          silence_html: 'Du er i ferd med å <strong>avgrensa</strong> kontoen til <strong>@%{acct}</strong>. Dette vil:'
-          suspend_html: 'Du er i ferd med å <strong>stenga</strong> kontoen til <strong>@%{acct}</strong>. Dette vil:'
+          delete_html: "Du er i ferd med å <strong>fjerna</strong> nokre av innlegga til <strong>@%{acct}</strong>. Det vil:"
+          mark_as_sensitive_html: "Du er i ferd med å <strong>markera</strong> nokre av innlegga til <strong>@%{acct}</strong> som <strong>sensitive</strong>. Dette vil:"
+          silence_html: "Du er i ferd med å <strong>avgrensa</strong> kontoen til <strong>@%{acct}</strong>. Dette vil:"
+          suspend_html: "Du er i ferd med å <strong>stenga</strong> kontoen til <strong>@%{acct}</strong>. Dette vil:"
         actions:
           delete_html: Fjerna dei påtala innlegga
           mark_as_sensitive_html: Markera dei påtala mediefilene som sensitive
@@ -839,7 +839,7 @@ nn:
       target_origin: Opprinnelse for innrapportert konto
       title: Rapportar
       unassign: Avset
-      unknown_action_msg: 'Ukjend handling: %{action}'
+      unknown_action_msg: "Ukjend handling: %{action}"
       unresolved: Uløyst
       updated_at: Oppdatert
       view_profile: Vis profil
@@ -1018,7 +1018,7 @@ nn:
       back_to_account: Tilbake til kontosida
       back_to_report: Attende til rapporteringssida
       batch:
-        add_to_report: 'Legg til rapport #%{id}'
+        add_to_report: "Legg til rapport #%{id}"
         remove_from_report: Fjern fra rapport
         report: Rapport
       contents: Innhald
@@ -1079,7 +1079,7 @@ nn:
       elasticsearch_running_check:
         message_html: Kunne ikke koble til Elasticsearch. Kontroller at den kjører, eller deaktiver fulltekstsøk
       elasticsearch_version_check:
-        message_html: 'Inkompatibel Elasticsearch-versjon: %{value}'
+        message_html: "Inkompatibel Elasticsearch-versjon: %{value}"
         version_comparison: Elasticsearch %{running_version} kjører mens %{required_version} er påkrevd
       rules_check:
         action: Handter tenarreglar
@@ -1141,7 +1141,7 @@ nn:
       notified_on_html: Brukarane vart varsla %{date}
       notify_users: Varsle brukarane
       preview:
-        explanation_html: 'Eposten vil bli send til <strong>%{display_count} brukarar</strong> som har registrert seg før %{date}. Denne teksten vil stå i eposten:'
+        explanation_html: "Eposten vil bli send til <strong>%{display_count} brukarar</strong> som har registrert seg før %{date}. Denne teksten vil stå i eposten:"
         send_preview: Send førehandsvising til %{email}
         send_to_all:
           one: Send %{display_count} epost
@@ -1218,7 +1218,7 @@ nn:
         peaked_on_and_decaying: Nådde toppen %{date}, nå på vei ned
         title: Populære emneknagger
         trendable: Kan vises under trender
-        trending_rank: 'Trender #%{rank}'
+        trending_rank: "Trender #%{rank}"
         usable: Kan brukes
         usage_comparison: Brukt %{today} ganger i dag, sammenlignet med %{yesterday} i går
         used_by_over_week:
@@ -1301,7 +1301,7 @@ nn:
       body: Nye versjonar av Mastodon er tilgjengeleg, du vil kanskje oppdatera!
       subject: Nye versjonar av Mastodon er tilgjengeleg for %{instance}!
     new_trends:
-      body: 'Du må sjå gjennom desse elementa før dei kan visast offentleg:'
+      body: "Du må sjå gjennom desse elementa før dei kan visast offentleg:"
       new_trending_links:
         title: Populære lenker
       new_trending_statuses:
@@ -1331,7 +1331,7 @@ nn:
     notification_preferences: Endre e-post-innstillingane
     salutation: Hei %{name},
     unsubscribe: Meld av
-    view: 'Sjå:'
+    view: "Sjå:"
     view_profile: Sjå profil
     view_status: Sjå status
   applications:
@@ -1392,7 +1392,7 @@ nn:
     rules:
       accept: Godkjenn
       back: Attende
-      invited_by: 'Du kan bli med i %{domain} takka vere invitasjonen du har fått frå:'
+      invited_by: "Du kan bli med i %{domain} takka vere invitasjonen du har fått frå:"
       preamble: Disse angis og håndheves av %{domain}-moderatorene.
       preamble_invited: Før du held fram, ver snill og sjå gjennom reglane bestemt av moderatorane av %{domain}.
       read_more: Les meir
@@ -1428,7 +1428,7 @@ nn:
   author_attribution:
     example_title: Eksempeltekst
     hint_html: Skriv du nyhende eller blogginnlegg utanfor Mastodon? Her kan du kontrollera korleis du blir kreditert når artiklane dine blir delte på Mastodon.
-    instructions: 'Sjå til at denne koden er i HTML-koden i artikkelen din:'
+    instructions: "Sjå til at denne koden er i HTML-koden i artikkelen din:"
     more_from_html: Meir frå %{name}
     s_blog: Bloggen til %{name}
     then_instructions: Så legg du til domenenamnet for publikasjonen i feltet under.
@@ -1473,7 +1473,7 @@ nn:
     proceed: Slett konto
     success_msg: Kontoen din er sletta
     warning:
-      before: 'Ver venleg og les desse punkta nøye før du held fram:'
+      before: "Ver venleg og les desse punkta nøye før du held fram:"
       caches: Innhold som har blitt mellomlagret av andre tjenere kan kanskje fortsette å eksistere
       data_removal: Innlegga dine og andre data vert fjerna for alltid
       email_change_html: Du kan <a href="%{path}">byta e-postadressa di</a> utan å sletta kontoen din
@@ -1499,7 +1499,7 @@ nn:
       description_html: Dette er tiltakene mot din konto og advarsler som har blitt sent til deg av %{instance}-personalet.
       recipient: Adressert til
       reject_appeal: Avvis klage
-      status: 'Innlegg #%{id}'
+      status: "Innlegg #%{id}"
       status_removed: Innlegg allerede fjernet fra systemet
       title: "%{action} fra %{date}"
       title_actions:
@@ -1558,19 +1558,19 @@ nn:
     native: Innebygd
     twemoji: Twemoji
   errors:
-    '400': Søknaden du sende var ugyldig eller sett opp feil.
-    '403': Du har ikkje løyve til å sjå denne sida.
-    '404': Sida du leitar etter finst ikkje.
-    '406': Denne sida er ikkje tilgjengeleg i dette oppsettet.
-    '410': Sida du leitar etter finst ikkje her lenger.
-    '422':
+    "400": Søknaden du sende var ugyldig eller sett opp feil.
+    "403": Du har ikkje løyve til å sjå denne sida.
+    "404": Sida du leitar etter finst ikkje.
+    "406": Denne sida er ikkje tilgjengeleg i dette oppsettet.
+    "410": Sida du leitar etter finst ikkje her lenger.
+    "422":
       content: Sikkerhetsverifisering feilet. Blokkerer du informasjonskapsler?
       title: Sikkerhetsverifisering feilet
-    '429': For mange forespørsler
-    '500':
+    "429": For mange forespørsler
+    "500":
       content: Orsak. Vi har gjort noko feil.
       title: Denne sida er ikkje rett
-    '503': Siden kunne ikke vises på grunn av en midlertidig serverfeil.
+    "503": Siden kunne ikke vises på grunn av en midlertidig serverfeil.
     noscript_html: For å bruke Mastodon webapplikasjon må du aktivere JavaScript. Alternativt kan du forsøke en av de mange <a href="%{apps_path}">integrerte appene</a> for Mastodon til din plattform.
   existing_username_validator:
     not_found: fann ingen lokalbrukar med det namnet
@@ -1665,8 +1665,8 @@ nn:
     errors:
       empty: Tom CSV-fil
       incompatible_type: Ikkje kompatibel med importtypen du valde
-      invalid_csv_file: 'Ugyldig CSV-fil. Feil: %{error}'
-      invalid_json_file: 'Ugyldig JSON-fil. Feil: %{error}'
+      invalid_csv_file: "Ugyldig CSV-fil. Feil: %{error}"
+      invalid_json_file: "Ugyldig JSON-fil. Feil: %{error}"
       over_rows_processing_limit: inneholder flere enn %{count} rader
       status_not_found_warning: Nokre av filtra dine gøymer visse innlegg som denne tenaren ikkje kjenner til. Desse innlegga blir ikkje gøymde automatisk viss dei blir oppdaga av tenaren din seinare.
       too_large: Fila er for stor
@@ -1756,16 +1756,16 @@ nn:
     delete: Slå av
     expired: Utgått
     expires_in:
-      '1800': 30 minutt
-      '21600': 6 timar
-      '3600': 1 time
-      '43200': 12 timar
-      '604800': 1 veke
-      '86400': 1 dag
+      "1800": 30 minutt
+      "21600": 6 timar
+      "3600": 1 time
+      "43200": 12 timar
+      "604800": 1 veke
+      "86400": 1 dag
     expires_in_prompt: Aldri
     generate: Lag innbydingslenkje
     invalid: Denne invitasjonen er ikkje gyldig
-    invited_by: 'Du vart innboden av:'
+    invited_by: "Du vart innboden av:"
     max_uses:
       one: 1 bruk
       other: "%{count} bruk"
@@ -1826,7 +1826,7 @@ nn:
     set_redirect: Bestem omdirigering
     warning:
       backreference_required: Den nye kontoen må fyrst konfigurerast til å visa til denne
-      before: 'Før du fortsetter, vennligst les disse notisene nøye:'
+      before: "Før du fortsetter, vennligst les disse notisene nøye:"
       cooldown: Etter flytting er det en nedkjølingsperiode der du ikke vil kunne flytte igjen
       disabled_account: Din nåværende konto vil ikke være fullt brukbar etterpå. Men du vil ha tilgang til dataeksportering såvel som reaktivering.
       followers: Denne handlinga flyttar alle fylgjarar frå denne kontoen til den nye
@@ -1838,7 +1838,7 @@ nn:
   move_handler:
     carry_blocks_over_text: Denne brukaren flytta frå %{acct}, som du hadde blokkert.
     carry_mutes_over_text: Denne brukeren flyttet fra %{acct}, som du hadde dempet.
-    copy_account_note_text: 'Denne brukeren flyttet fra %{acct}, her var dine tidligere notater om dem:'
+    copy_account_note_text: "Denne brukeren flyttet fra %{acct}, her var dine tidligere notater om dem:"
   navigation:
     toggle_menu: Vis/gøym menyen
   notification_fallbacks:
@@ -1869,7 +1869,7 @@ nn:
       sign_up:
         subject: "%{name} registrerte seg"
     favourite:
-      body: 'Statusen din vart merkt som favoritt av %{name}:'
+      body: "Statusen din vart merkt som favoritt av %{name}:"
       subject: "%{name} merkte statusen din som favoritt"
       title: Nye favorittar
     follow:
@@ -1879,11 +1879,11 @@ nn:
     follow_request:
       action: Gå gjennom førespurnader
       body: "%{name} har bedt om å fylgja deg"
-      subject: 'Ventande fylgjar: %{name}'
+      subject: "Ventande fylgjar: %{name}"
       title: Ny fylgjeførespurnad
     mention:
       action: Svar
-      body: 'Du vart nemnd av %{name} i:'
+      body: "Du vart nemnd av %{name} i:"
       subject: Du vart nemnd av %{name}
       title: Ny omtale
     moderation_warning:
@@ -1891,13 +1891,13 @@ nn:
     poll:
       subject: Meiningsmålinga frå %{name} er avslutta
     quote:
-      body: 'Innlegget ditt vart sitert av %{name}:'
+      body: "Innlegget ditt vart sitert av %{name}:"
       subject: "%{name} siterte innlegget ditt"
       title: Nytt sitat
     quoted_update:
       subject: "%{name} redigerte eit innlegg du har sitert"
     reblog:
-      body: 'Statusen din vart framheva av %{name}:'
+      body: "Statusen din vart framheva av %{name}:"
       subject: "%{name} framheva statusen din"
       title: Ny framheving
     severed_relationships:
@@ -1909,7 +1909,7 @@ nn:
   notifications:
     administration_emails: Epostvarsel for administrator
     email_events: Hendingar for epostvarsel
-    email_events_hint: 'Velg hendelser som du vil motta varslinger for:'
+    email_events_hint: "Velg hendelser som du vil motta varslinger for:"
   number:
     human:
       decimal_units:
@@ -1925,7 +1925,7 @@ nn:
     description_html: Viss du skrur på <strong>tofaktorinnlogging</strong> med ein innloggingsapp, må du ha telefonen din klar når du loggar inn. Telefonen lagar innloggingsnyklar du må skriva inn.
     enable: Aktiver
     instructions_html: "<strong>Skann denne QR-koden i Google authenticator eller annan tofaktor-app på telefonen din</strong>. Frå no vil den appen laga tilgangsnyklar som du skriv inn når du vil logga inn."
-    manual_instructions: 'Hvis du ikke kan skanne QR-koden og må skrive den inn manuelt, her er tekstkoden i ren tekst:'
+    manual_instructions: "Hvis du ikke kan skanne QR-koden og må skrive den inn manuelt, her er tekstkoden i ren tekst:"
     setup: Sett opp
     wrong_code: Den innskrevne koden var ugyldig! Er tjenertiden og enhetstiden riktige?
   pagination:
@@ -2000,10 +2000,10 @@ nn:
     errors:
       invalid_rules: viser ikkje til gyldige reglar
   rss:
-    content_warning: 'Innhaldsvarsel:'
+    content_warning: "Innhaldsvarsel:"
     descriptions:
       account: Offentlige innlegg fra @%{acct}
-      tag: 'Offentlige innlegg merket med #%{hashtag}'
+      tag: "Offentlige innlegg merket med #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Du har overskredet grensen på %{limit} planlagte tuter for den dagen
     over_total_limit: Du har overskredet grensen på %{limit} planlagte tuter
@@ -2097,7 +2097,7 @@ nn:
       audio:
         one: "%{count} ljod"
         other: "%{count} ljodar"
-      description: 'Vedlagt: %{attached}'
+      description: "Vedlagt: %{attached}"
       image:
         one: "%{count} bilete"
         other: "%{count} bilete"
@@ -2105,14 +2105,14 @@ nn:
         one: "%{count} video"
         other: "%{count} videoar"
     boosted_from_html: Framheva av %{acct_link}
-    content_warning: 'Innhaldsåtvaring: %{warning}'
+    content_warning: "Innhaldsåtvaring: %{warning}"
     content_warnings:
       hide: Gøym inlegget
       show: Vis meir
     default_language: Samme språk som brukergrensesnittet
     disallowed_hashtags:
-      one: 'inneheldt ein emneknagg som ikkje var tillaten: %{tags}'
-      other: 'inneheldt emneknaggen som ikkje var tillaten: %{tags}'
+      one: "inneheldt ein emneknagg som ikkje var tillaten: %{tags}"
+      other: "inneheldt emneknaggen som ikkje var tillaten: %{tags}"
     edited_at_html: Redigert %{date}
     errors:
       in_reply_not_found: Det ser ut til at tutet du freistar å svara ikkje finst.
@@ -2163,14 +2163,14 @@ nn:
     keep_self_fav: Behald innlegg som favoritt
     keep_self_fav_hint: Sletter ikkje dine eigne innlegg om du har favorittmerka dei
     min_age:
-      '1209600': 2 veker
-      '15778476': 6 månader
-      '2629746': 1 månad
-      '31556952': 1 år
-      '5259492': 2 månader
-      '604800': 1 veke
-      '63113904': 2 år
-      '7889238': 3 månader
+      "1209600": 2 veker
+      "15778476": 6 månader
+      "2629746": 1 månad
+      "31556952": 1 år
+      "5259492": 2 månader
+      "604800": 1 veke
+      "63113904": 2 år
+      "7889238": 3 månader
     min_age_label: Aldersterskel
     min_favs: Behold innlegg som er favorittmarkert av minst
     min_favs_hint: Slettar ingen av innlegga dine som har fått minst så mange favorittar. La det stå tomt for å sletta innlegga uansett kor mange favorittar dei har fått
@@ -2243,7 +2243,7 @@ nn:
         title: Stopp å abonnera på %{type}?
   user_mailer:
     announcement_published:
-      description: 'Styrarane på %{domain} har ei kunngjering:'
+      description: "Styrarane på %{domain} har ei kunngjering:"
       subject: Kunngjering om tenesta
       title: Kunngjering frå %{domain}
     appeal_approved:
@@ -2263,22 +2263,22 @@ nn:
       subject: Arkivet ditt er klart til å lastes ned
       title: Nedlasting av arkiv
     failed_2fa:
-      details: 'Her er detaljane om innloggingsforsøket:'
+      details: "Her er detaljane om innloggingsforsøket:"
       explanation: Nokon har prøvd å logge inn på kontoen din, men brukte ein ugyldig andre-autentiseringsfaktor.
       further_actions_html: Om dette ikkje var deg, rår me deg til å %{action} med éin gong, då det kan vere kompomittert.
       subject: To-faktor-autentiseringsfeil
       title: Mislukka to-faktor-autentisering
     suspicious_sign_in:
       change_password: endre passord
-      details: 'Her er påloggingsdetaljane:'
+      details: "Her er påloggingsdetaljane:"
       explanation: Vi har oppdaga ei pålogging til din konto frå ei ny IP-adresse.
       further_actions_html: Om dette ikkje var deg, tilrår vi at du %{action} no og aktiverar 2-trinnsinnlogging for å halde kontoen din sikker.
       subject: Din konto er opna frå ei ny IP-adresse
       title: Ei ny pålogging
     terms_of_service_changed:
       agreement: Viss du held fram å bruka %{domain}, seier du deg einig i vilkåra. Viss du er usamd i dei oppdaterte vilkåra, kan du slutta å bruka %{domain} når du vil ved å sletta brukarkontoen din.
-      changelog: 'Denne oppdateringa, kort fortalt:'
-      description: 'Du får denne eposten fordi me har endra tenestvilkåra på %{domain}. Desse endringane kjem i kraft %{date}. Me oppmodar deg til å sjå på dei oppdaterte vilkåra her:'
+      changelog: "Denne oppdateringa, kort fortalt:"
+      description: "Du får denne eposten fordi me har endra tenestvilkåra på %{domain}. Desse endringane kjem i kraft %{date}. Me oppmodar deg til å sjå på dei oppdaterte vilkåra her:"
       description_html: Du får denne eposten fordi me har endra tenestvilkåra på %{domain}. Desse endringane kjem i kraft <strong>%{date}</strong>. Me oppmodar deg til å sjå på <a href="%{path}" target="_blank">dei oppdaterte vilkåra her</a>.
       sign_off: Folka på %{domain}
       subject: Endra bruksvilkår
@@ -2297,8 +2297,8 @@ nn:
         sensitive: Frå no av vil alle dine opplasta mediefiler bli markert som ømtolig og skjult bak ei klikk-åtvaring.
         silence: Medan kontoen din er avgrensa, vil berre folk som allereie fylgjer deg sjå dine tutar på denne tenaren, og du kan bli ekskludert fra diverse offentlige oppføringer. Andre kan framleis fylgje deg manuelt.
         suspend: Du kan ikkje lenger bruka kontoen din, og profilen og andre data er ikkje lenger tilgjengelege. Du kan framleis logga inn for å be om ein sikkerheitskopi av data før dei blir fullstendig sletta om omtrent 30 dagar, men me vil lagra nokre grunnleggjande data for å syta for at du ikkje omgår utestenginga.
-      reason: 'Årsak:'
-      statuses: 'Innlegg sitert:'
+      reason: "Årsak:"
+      statuses: "Innlegg sitert:"
       subject:
         delete_statuses: Dine innlegg på %{acct} har blitt fjernet
         disable: Kontoen din, %{acct}, har blitt fryst
@@ -2320,7 +2320,7 @@ nn:
       apps_ios_action: Last ned på App Store
       apps_step: Last ned dei offisielle appane våre.
       apps_title: Mastodon-appar
-      checklist_subtitle: 'La oss hjelpa deg i gang på denne nye sosiale reisa:'
+      checklist_subtitle: "La oss hjelpa deg i gang på denne nye sosiale reisa:"
       checklist_title: Kom i gang
       edit_profile_action: Tilpass til deg
       edit_profile_step: Få fleire samhandlingar ved å fylla ut profilen din.
@@ -2362,7 +2362,7 @@ nn:
     otp_lost_help_html: Hvis du mistet tilgangen til begge deler, kan du komme i kontakt med %{email}
     rate_limited: For mange autentiseringsforsøk, prøv igjen seinare.
     seamless_external_login: Du er logga inn gjennom ei ekstern tenest, så passord- og epostinnstillingar er ikkje tilgjengelege.
-    signed_in_as: 'Logga inn som:'
+    signed_in_as: "Logga inn som:"
   verification:
     extra_instructions_html: <strong>Tips:</strong> Linken på nettsida di kan vera usynleg. Den viktige delen er <code>rel="me"</code>, som på nettstader med brukargenerert innhald vil hindra at andre kan låst som dei er deg. Du kan til og med bruka <code>link</code> i staden for <code>a</code> i toppteksten til sida, men HTML-koden må vera tilgjengeleg utan å måtte køyra JavaScript.
     here_is_how: Slik gjer du

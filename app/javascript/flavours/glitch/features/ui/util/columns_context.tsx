@@ -1,6 +1,6 @@
-import type { ReactElement } from 'react';
-import { createContext, useContext, useMemo, useState } from 'react';
-import { createPortal } from 'react-dom';
+import type { ReactElement } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 export const ColumnsContext = createContext<{
   tabsBarElement: HTMLElement | null;
@@ -35,17 +35,12 @@ type ContextValue = React.ContextType<typeof ColumnsContext>;
 export const ColumnsContextProvider: React.FC<
   React.PropsWithChildren<{ multiColumn: boolean }>
 > = ({ multiColumn, children }) => {
-  const [tabsBarElement, setTabsBarElement] =
-    useState<ContextValue['tabsBarElement']>(null);
+  const [tabsBarElement, setTabsBarElement] = useState<ContextValue["tabsBarElement"]>(null);
 
   const contextValue = useMemo<ContextValue>(
     () => ({ multiColumn, tabsBarElement, setTabsBarElement }),
     [multiColumn, tabsBarElement],
   );
 
-  return (
-    <ColumnsContext.Provider value={contextValue}>
-      {children}
-    </ColumnsContext.Provider>
-  );
+  return <ColumnsContext.Provider value={contextValue}>{children}</ColumnsContext.Provider>;
 };

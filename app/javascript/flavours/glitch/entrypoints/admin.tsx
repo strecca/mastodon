@@ -1,13 +1,13 @@
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 
-import { decode, ValidationError } from 'blurhash';
-import { on } from 'delegated-events';
-import fuzzysort from 'fuzzysort';
+import { decode, ValidationError } from "blurhash";
+import { on } from "delegated-events";
+import fuzzysort from "fuzzysort";
 
-import ready from 'flavours/glitch/ready';
+import ready from "flavours/glitch/ready";
 
-import '../styles/mastodon/admin.scss';
-import '../styles/mastodon/community_directory_admin.scss';
+import "../styles/mastodon/admin.scss";
+import "../styles/mastodon/community_directory_admin.scss";
 
 interface QuickSearchAction {
   label: string;
@@ -22,16 +22,16 @@ let quickSearchActions: QuickSearchAction[] = [];
 
 function escapeHtml(value: string) {
   return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function renderQuickSearchCard(action: QuickSearchAction) {
   const caveatHtml = action.caveat
     ? `<p class="quick-search__caveat">⚠ ${escapeHtml(action.caveat)}</p>`
-    : '';
+    : "";
 
   return `
     <a class="quick-search__card" href="${escapeHtml(action.url)}">
@@ -44,47 +44,41 @@ function renderQuickSearchCard(action: QuickSearchAction) {
 }
 
 function renderQuickSearchResults(query: string) {
-  const container = document.querySelector<HTMLDivElement>(
-    '#quick-search-results',
-  );
+  const container = document.querySelector<HTMLDivElement>("#quick-search-results");
   if (!container) return;
 
   const trimmed = query.trim();
 
   if (!trimmed) {
-    const categories = [
-      ...new Set(quickSearchActions.map((action) => action.category)),
-    ];
+    const categories = [...new Set(quickSearchActions.map((action) => action.category))];
     container.innerHTML = categories
       .map((category) => {
-        const items = quickSearchActions.filter(
-          (action) => action.category === category,
-        );
+        const items = quickSearchActions.filter((action) => action.category === category);
         return `
           <div class="quick-search__group">
             <h2 class="quick-search__group-title">${escapeHtml(category)}</h2>
-            ${items.map(renderQuickSearchCard).join('')}
+            ${items.map(renderQuickSearchCard).join("")}
           </div>
         `;
       })
-      .join('');
+      .join("");
     return;
   }
 
   const results = fuzzysort
     .go(trimmed, quickSearchActions, {
-      keys: ['label', 'keywords', 'description'],
+      keys: ["label", "keywords", "description"],
       limit: 20,
       threshold: -10000,
     })
     .map((result) => result.obj);
 
   container.innerHTML = results.length
-    ? results.map(renderQuickSearchCard).join('')
+    ? results.map(renderQuickSearchCard).join("")
     : '<p class="quick-search__empty">No matching admin action found. Try different words.</p>';
 }
 
-on('input', '#quick-search-input', ({ target }) => {
+on("input", "#quick-search-input", ({ target }) => {
   if (target instanceof HTMLInputElement) {
     renderQuickSearchResults(target.value);
   }
@@ -99,63 +93,46 @@ const setAnnouncementEndsAttributes = (target: HTMLInputElement) => {
   if (!element) return;
 
   if (valid) {
-    element.classList.remove('optional');
+    element.classList.remove("optional");
     element.required = true;
     element.min = target.value;
   } else {
-    element.classList.add('optional');
-    element.removeAttribute('required');
-    element.removeAttribute('min');
+    element.classList.add("optional");
+    element.removeAttribute("required");
+    element.removeAttribute("min");
   }
 };
 
-on(
-  'change',
-  'input[type="datetime-local"]#announcement_starts_at',
-  ({ target }) => {
-    if (target instanceof HTMLInputElement)
-      setAnnouncementEndsAttributes(target);
-  },
-);
+on("change", 'input[type="datetime-local"]#announcement_starts_at', ({ target }) => {
+  if (target instanceof HTMLInputElement) setAnnouncementEndsAttributes(target);
+});
 
 const batchCheckboxClassName = '.batch-checkbox input[type="checkbox"]';
 
 const showSelectAll = () => {
-  const selectAllMatchingElement = document.querySelector(
-    '.batch-table__select-all',
-  );
-  selectAllMatchingElement?.classList.add('active');
+  const selectAllMatchingElement = document.querySelector(".batch-table__select-all");
+  selectAllMatchingElement?.classList.add("active");
 };
 
 const hideSelectAll = () => {
-  const selectAllMatchingElement = document.querySelector(
-    '.batch-table__select-all',
-  );
-  const hiddenField = document.querySelector<HTMLInputElement>(
-    'input#select_all_matching',
-  );
-  const selectedMsg = document.querySelector(
-    '.batch-table__select-all .selected',
-  );
-  const notSelectedMsg = document.querySelector(
-    '.batch-table__select-all .not-selected',
-  );
+  const selectAllMatchingElement = document.querySelector(".batch-table__select-all");
+  const hiddenField = document.querySelector<HTMLInputElement>("input#select_all_matching");
+  const selectedMsg = document.querySelector(".batch-table__select-all .selected");
+  const notSelectedMsg = document.querySelector(".batch-table__select-all .not-selected");
 
-  selectAllMatchingElement?.classList.remove('active');
-  selectedMsg?.classList.remove('active');
-  notSelectedMsg?.classList.add('active');
-  if (hiddenField) hiddenField.value = '0';
+  selectAllMatchingElement?.classList.remove("active");
+  selectedMsg?.classList.remove("active");
+  notSelectedMsg?.classList.add("active");
+  if (hiddenField) hiddenField.value = "0";
 };
 
-on('change', '#batch_checkbox_all', ({ target }) => {
+on("change", "#batch_checkbox_all", ({ target }) => {
   if (!(target instanceof HTMLInputElement)) return;
 
-  const selectAllMatchingElement = document.querySelector(
-    '.batch-table__select-all',
-  );
+  const selectAllMatchingElement = document.querySelector(".batch-table__select-all");
 
   target
-    .closest('.batch-table')
+    .closest(".batch-table")
     ?.querySelectorAll<HTMLInputElement>(batchCheckboxClassName)
     .forEach((content) => {
       content.checked = target.checked;
@@ -170,44 +147,34 @@ on('change', '#batch_checkbox_all', ({ target }) => {
   }
 });
 
-on('click', '.batch-table__select-all button', () => {
-  const hiddenField = document.querySelector<HTMLInputElement>(
-    '#select_all_matching',
-  );
+on("click", ".batch-table__select-all button", () => {
+  const hiddenField = document.querySelector<HTMLInputElement>("#select_all_matching");
 
   if (!hiddenField) return;
 
-  const active = hiddenField.value === '1';
-  const selectedMsg = document.querySelector(
-    '.batch-table__select-all .selected',
-  );
-  const notSelectedMsg = document.querySelector(
-    '.batch-table__select-all .not-selected',
-  );
+  const active = hiddenField.value === "1";
+  const selectedMsg = document.querySelector(".batch-table__select-all .selected");
+  const notSelectedMsg = document.querySelector(".batch-table__select-all .not-selected");
 
   if (!selectedMsg || !notSelectedMsg) return;
 
   if (active) {
-    hiddenField.value = '0';
-    selectedMsg.classList.remove('active');
-    notSelectedMsg.classList.add('active');
+    hiddenField.value = "0";
+    selectedMsg.classList.remove("active");
+    notSelectedMsg.classList.add("active");
   } else {
-    hiddenField.value = '1';
-    notSelectedMsg.classList.remove('active');
-    selectedMsg.classList.add('active');
+    hiddenField.value = "1";
+    notSelectedMsg.classList.remove("active");
+    selectedMsg.classList.add("active");
   }
 });
 
-on('change', batchCheckboxClassName, (event) => {
-  const targetTable = (event.target as HTMLElement).closest('.batch-table');
+on("change", batchCheckboxClassName, (event) => {
+  const targetTable = (event.target as HTMLElement).closest(".batch-table");
   if (!targetTable) return;
 
-  const checkAllElement = targetTable.querySelector<HTMLInputElement>(
-    'input#batch_checkbox_all',
-  );
-  const selectAllMatchingElement = targetTable.querySelector(
-    '.batch-table__select-all',
-  );
+  const checkAllElement = targetTable.querySelector<HTMLInputElement>("input#batch_checkbox_all");
+  const selectAllMatchingElement = targetTable.querySelector(".batch-table__select-all");
 
   if (checkAllElement) {
     const allCheckboxes = Array.from(
@@ -215,8 +182,7 @@ on('change', batchCheckboxClassName, (event) => {
     );
     checkAllElement.checked = allCheckboxes.every((content) => content.checked);
     checkAllElement.indeterminate =
-      !checkAllElement.checked &&
-      allCheckboxes.some((content) => content.checked);
+      !checkAllElement.checked && allCheckboxes.some((content) => content.checked);
 
     if (selectAllMatchingElement) {
       if (checkAllElement.checked) {
@@ -228,157 +194,126 @@ on('change', batchCheckboxClassName, (event) => {
   }
 });
 
-on('change', '.filter-subset--with-select select', ({ target }) => {
+on("change", ".filter-subset--with-select select", ({ target }) => {
   if (target instanceof HTMLSelectElement) target.form?.submit();
 });
 
 const onDomainBlockSeverityChange = (target: HTMLSelectElement) => {
-  const rejectMediaDiv = document.querySelector(
-    '.input.with_label.domain_block_reject_media',
-  );
-  const rejectReportsDiv = document.querySelector(
-    '.input.with_label.domain_block_reject_reports',
-  );
+  const rejectMediaDiv = document.querySelector(".input.with_label.domain_block_reject_media");
+  const rejectReportsDiv = document.querySelector(".input.with_label.domain_block_reject_reports");
 
   if (rejectMediaDiv && rejectMediaDiv instanceof HTMLElement) {
-    rejectMediaDiv.style.display =
-      target.value === 'suspend' ? 'none' : 'block';
+    rejectMediaDiv.style.display = target.value === "suspend" ? "none" : "block";
   }
 
   if (rejectReportsDiv && rejectReportsDiv instanceof HTMLElement) {
-    rejectReportsDiv.style.display =
-      target.value === 'suspend' ? 'none' : 'block';
+    rejectReportsDiv.style.display = target.value === "suspend" ? "none" : "block";
   }
 };
 
-on('change', '#domain_block_severity', ({ target }) => {
+on("change", "#domain_block_severity", ({ target }) => {
   if (target instanceof HTMLSelectElement) onDomainBlockSeverityChange(target);
 });
 
 const onChangeInviteUsersPermission = (target: HTMLInputElement) => {
   const inviteBypassApprovalCheckbox = document.querySelector<HTMLInputElement>(
-    'input#user_role_permissions_as_keys_invite_bypass_approval',
+    "input#user_role_permissions_as_keys_invite_bypass_approval",
   );
 
   if (inviteBypassApprovalCheckbox) {
     inviteBypassApprovalCheckbox.disabled = !target.checked;
 
     if (target.checked) {
-      inviteBypassApprovalCheckbox.parentElement?.classList.remove('disabled');
-      inviteBypassApprovalCheckbox.parentElement?.parentElement?.classList.remove(
-        'disabled',
-      );
+      inviteBypassApprovalCheckbox.parentElement?.classList.remove("disabled");
+      inviteBypassApprovalCheckbox.parentElement?.parentElement?.classList.remove("disabled");
     } else {
-      inviteBypassApprovalCheckbox.parentElement?.classList.add('disabled');
-      inviteBypassApprovalCheckbox.parentElement?.parentElement?.classList.add(
-        'disabled',
-      );
+      inviteBypassApprovalCheckbox.parentElement?.classList.add("disabled");
+      inviteBypassApprovalCheckbox.parentElement?.parentElement?.classList.add("disabled");
     }
   }
 };
 
-on(
-  'change',
-  'input#user_role_permissions_as_keys_invite_users',
-  ({ target }) => {
-    if (target instanceof HTMLInputElement) {
-      onChangeInviteUsersPermission(target);
-    }
-  },
-);
+on("change", "input#user_role_permissions_as_keys_invite_users", ({ target }) => {
+  if (target instanceof HTMLInputElement) {
+    onChangeInviteUsersPermission(target);
+  }
+});
 
 function onEnableBootstrapTimelineAccountsChange(target: HTMLInputElement) {
-  const bootstrapTimelineAccountsField =
-    document.querySelector<HTMLInputElement>(
-      '#form_admin_settings_bootstrap_timeline_accounts',
-    );
+  const bootstrapTimelineAccountsField = document.querySelector<HTMLInputElement>(
+    "#form_admin_settings_bootstrap_timeline_accounts",
+  );
 
   if (bootstrapTimelineAccountsField) {
     bootstrapTimelineAccountsField.disabled = !target.checked;
     if (target.checked) {
-      bootstrapTimelineAccountsField.parentElement?.classList.remove(
-        'disabled',
-      );
-      bootstrapTimelineAccountsField.parentElement?.parentElement?.classList.remove(
-        'disabled',
-      );
+      bootstrapTimelineAccountsField.parentElement?.classList.remove("disabled");
+      bootstrapTimelineAccountsField.parentElement?.parentElement?.classList.remove("disabled");
     } else {
-      bootstrapTimelineAccountsField.parentElement?.classList.add('disabled');
-      bootstrapTimelineAccountsField.parentElement?.parentElement?.classList.add(
-        'disabled',
-      );
+      bootstrapTimelineAccountsField.parentElement?.classList.add("disabled");
+      bootstrapTimelineAccountsField.parentElement?.parentElement?.classList.add("disabled");
     }
   }
 }
 
-on(
-  'change',
-  '#form_admin_settings_enable_bootstrap_timeline_accounts',
-  ({ target }) => {
-    if (target instanceof HTMLInputElement)
-      onEnableBootstrapTimelineAccountsChange(target);
-  },
-);
+on("change", "#form_admin_settings_enable_bootstrap_timeline_accounts", ({ target }) => {
+  if (target instanceof HTMLInputElement) onEnableBootstrapTimelineAccountsChange(target);
+});
 
 const onChangeRegistrationMode = (target: HTMLSelectElement) => {
-  const enabled = target.value === 'approved';
+  const enabled = target.value === "approved";
 
   document
-    .querySelectorAll<HTMLElement>(
-      '.form_admin_settings_registrations_mode .warning-hint',
-    )
+    .querySelectorAll<HTMLElement>(".form_admin_settings_registrations_mode .warning-hint")
     .forEach((warning_hint) => {
-      warning_hint.style.display = target.value === 'open' ? 'inline' : 'none';
+      warning_hint.style.display = target.value === "open" ? "inline" : "none";
     });
 
   document
-    .querySelectorAll<HTMLInputElement>(
-      'input#form_admin_settings_require_invite_text',
-    )
+    .querySelectorAll<HTMLInputElement>("input#form_admin_settings_require_invite_text")
     .forEach((input) => {
       input.disabled = !enabled;
       if (enabled) {
         let element: HTMLElement | null = input;
         do {
-          element.classList.remove('disabled');
+          element.classList.remove("disabled");
           element = element.parentElement;
-        } while (element && !element.classList.contains('fields-group'));
+        } while (element && !element.classList.contains("fields-group"));
       } else {
         let element: HTMLElement | null = input;
         do {
-          element.classList.add('disabled');
+          element.classList.add("disabled");
           element = element.parentElement;
-        } while (element && !element.classList.contains('fields-group'));
+        } while (element && !element.classList.contains("fields-group"));
       }
     });
 };
 
 function convertUTCDateTimeToLocal(value: string) {
-  const date = new Date(value + 'Z');
-  const twoChars = (x: number) => x.toString().padStart(2, '0');
+  const date = new Date(value + "Z");
+  const twoChars = (x: number) => x.toString().padStart(2, "0");
   return `${date.getFullYear()}-${twoChars(date.getMonth() + 1)}-${twoChars(date.getDate())}T${twoChars(date.getHours())}:${twoChars(date.getMinutes())}`;
 }
 
 function convertLocalDatetimeToUTC(value: string) {
   const date = new Date(value);
   const fullISO8601 = date.toISOString();
-  return fullISO8601.slice(0, fullISO8601.indexOf('T') + 6);
+  return fullISO8601.slice(0, fullISO8601.indexOf("T") + 6);
 }
 
-on('change', '#form_admin_settings_registrations_mode', ({ target }) => {
+on("change", "#form_admin_settings_registrations_mode", ({ target }) => {
   if (target instanceof HTMLSelectElement) onChangeRegistrationMode(target);
 });
 
 async function mountReactComponent(element: Element) {
-  const componentName = element.getAttribute('data-admin-component');
-  const stringProps = element.getAttribute('data-props');
+  const componentName = element.getAttribute("data-admin-component");
+  const stringProps = element.getAttribute("data-props");
 
   if (!stringProps) return;
 
   const componentProps = JSON.parse(stringProps) as object;
 
-  const { default: AdminComponent } =
-    await import('@/flavours/glitch/containers/admin_component');
+  const { default: AdminComponent } = await import("@/flavours/glitch/containers/admin_component");
 
   const { default: Component } = (await import(
     `@/flavours/glitch/components/admin/${componentName}.jsx`
@@ -394,80 +329,67 @@ async function mountReactComponent(element: Element) {
 }
 
 ready(() => {
-  const quickSearchDataElement = document.querySelector<HTMLScriptElement>(
-    '#quick-search-data',
-  );
+  const quickSearchDataElement = document.querySelector<HTMLScriptElement>("#quick-search-data");
   if (quickSearchDataElement?.textContent) {
-    quickSearchActions = JSON.parse(
-      quickSearchDataElement.textContent,
-    ) as QuickSearchAction[];
-    renderQuickSearchResults('');
+    quickSearchActions = JSON.parse(quickSearchDataElement.textContent) as QuickSearchAction[];
+    renderQuickSearchResults("");
   }
 
   const domainBlockSeveritySelect = document.querySelector<HTMLSelectElement>(
-    'select#domain_block_severity',
+    "select#domain_block_severity",
   );
-  if (domainBlockSeveritySelect)
-    onDomainBlockSeverityChange(domainBlockSeveritySelect);
+  if (domainBlockSeveritySelect) onDomainBlockSeverityChange(domainBlockSeveritySelect);
 
-  const enableBootstrapTimelineAccounts =
-    document.querySelector<HTMLInputElement>(
-      'input#form_admin_settings_enable_bootstrap_timeline_accounts',
-    );
+  const enableBootstrapTimelineAccounts = document.querySelector<HTMLInputElement>(
+    "input#form_admin_settings_enable_bootstrap_timeline_accounts",
+  );
   if (enableBootstrapTimelineAccounts)
     onEnableBootstrapTimelineAccountsChange(enableBootstrapTimelineAccounts);
 
   const registrationMode = document.querySelector<HTMLSelectElement>(
-    'select#form_admin_settings_registrations_mode',
+    "select#form_admin_settings_registrations_mode",
   );
   if (registrationMode) onChangeRegistrationMode(registrationMode);
 
-  const inviteUsersPermissionChecbkox =
-    document.querySelector<HTMLInputElement>(
-      'input#user_role_permissions_as_keys_invite_users',
-    );
-  if (inviteUsersPermissionChecbkox)
-    onChangeInviteUsersPermission(inviteUsersPermissionChecbkox);
-
-  const checkAllElement = document.querySelector<HTMLInputElement>(
-    '#batch_checkbox_all',
+  const inviteUsersPermissionChecbkox = document.querySelector<HTMLInputElement>(
+    "input#user_role_permissions_as_keys_invite_users",
   );
+  if (inviteUsersPermissionChecbkox) onChangeInviteUsersPermission(inviteUsersPermissionChecbkox);
+
+  const checkAllElement = document.querySelector<HTMLInputElement>("#batch_checkbox_all");
   if (checkAllElement) {
     const allCheckboxes = Array.from(
       document.querySelectorAll<HTMLInputElement>(batchCheckboxClassName),
     );
     checkAllElement.checked = allCheckboxes.every((content) => content.checked);
     checkAllElement.indeterminate =
-      !checkAllElement.checked &&
-      allCheckboxes.some((content) => content.checked);
+      !checkAllElement.checked && allCheckboxes.some((content) => content.checked);
   }
 
   document
-    .querySelector<HTMLAnchorElement>('a#add-instance-button')
-    ?.addEventListener('click', (e) => {
+    .querySelector<HTMLAnchorElement>("a#add-instance-button")
+    ?.addEventListener("click", (e) => {
       const domain = document.querySelector<HTMLInputElement>(
         'input[type="text"]#by_domain',
       )?.value;
 
       if (domain && e.target instanceof HTMLAnchorElement) {
         const url = new URL(e.target.href);
-        url.searchParams.set('_domain', domain);
+        url.searchParams.set("_domain", domain);
         e.target.href = url.toString();
       }
     });
 
-  document
-    .querySelectorAll<HTMLInputElement>('input[type="datetime-local"]')
-    .forEach((element) => {
-      if (element.value) {
-        element.value = convertUTCDateTimeToLocal(element.value);
-      }
-      if (element.placeholder) {
-        element.placeholder = convertUTCDateTimeToLocal(element.placeholder);
-      }
-    });
+  document.querySelectorAll<HTMLInputElement>('input[type="datetime-local"]').forEach((element) => {
+    if (element.value) {
+      element.value = convertUTCDateTimeToLocal(element.value);
+    }
+    if (element.placeholder) {
+      element.placeholder = convertUTCDateTimeToLocal(element.placeholder);
+    }
+  });
 
-  on('submit', 'form', ({ target }) => {
+  on("submit", "form", ({ target }) => {
     if (target instanceof HTMLFormElement)
       target
         .querySelectorAll<HTMLInputElement>('input[type="datetime-local"]')
@@ -485,49 +407,41 @@ ready(() => {
     setAnnouncementEndsAttributes(announcementStartsAt);
   }
 
-  document.querySelectorAll('[data-admin-component]').forEach((element) => {
+  document.querySelectorAll("[data-admin-component]").forEach((element) => {
     void mountReactComponent(element);
   });
 
-  document
-    .querySelectorAll<HTMLCanvasElement>('canvas[data-blurhash]')
-    .forEach((canvas) => {
-      const blurhash = canvas.dataset.blurhash;
-      if (blurhash) {
-        try {
-          // decode returns a Uint8ClampedArray<ArrayBufferLike> not Uint8ClampedArray<ArrayBuffer>
-          const pixels = decode(
-            blurhash,
-            32,
-            32,
-          ) as Uint8ClampedArray<ArrayBuffer>;
-          const ctx = canvas.getContext('2d');
-          const imageData = new ImageData(pixels, 32, 32);
+  document.querySelectorAll<HTMLCanvasElement>("canvas[data-blurhash]").forEach((canvas) => {
+    const blurhash = canvas.dataset.blurhash;
+    if (blurhash) {
+      try {
+        // decode returns a Uint8ClampedArray<ArrayBufferLike> not Uint8ClampedArray<ArrayBuffer>
+        const pixels = decode(blurhash, 32, 32) as Uint8ClampedArray<ArrayBuffer>;
+        const ctx = canvas.getContext("2d");
+        const imageData = new ImageData(pixels, 32, 32);
 
-          ctx?.putImageData(imageData, 0, 0);
-        } catch (err) {
-          if (err instanceof ValidationError) {
-            // ignore blurhash validation errors
-            return;
-          }
-
-          throw err;
+        ctx?.putImageData(imageData, 0, 0);
+      } catch (err) {
+        if (err instanceof ValidationError) {
+          // ignore blurhash validation errors
+          return;
         }
-      }
-    });
 
-  document
-    .querySelectorAll<HTMLDivElement>('.preview-card')
-    .forEach((previewCard) => {
-      const spoilerButton = previewCard.querySelector('.spoiler-button');
-      if (!spoilerButton) {
-        return;
+        throw err;
       }
+    }
+  });
 
-      spoilerButton.addEventListener('click', () => {
-        previewCard.classList.toggle('preview-card--image-visible');
-      });
+  document.querySelectorAll<HTMLDivElement>(".preview-card").forEach((previewCard) => {
+    const spoilerButton = previewCard.querySelector(".spoiler-button");
+    if (!spoilerButton) {
+      return;
+    }
+
+    spoilerButton.addEventListener("click", () => {
+      previewCard.classList.toggle("preview-card--image-visible");
     });
+  });
 }).catch((reason: unknown) => {
   throw reason;
 });

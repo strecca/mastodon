@@ -1,8 +1,5 @@
-import { apiRequestGet } from 'mastodon/api';
-import type {
-  ApiSearchType,
-  ApiSearchResultsJSON,
-} from 'mastodon/api_types/search';
+import { apiRequestGet } from "mastodon/api";
+import type { ApiSearchType, ApiSearchResultsJSON } from "mastodon/api_types/search";
 
 export const apiGetSearch = (
   params: {
@@ -17,7 +14,7 @@ export const apiGetSearch = (
   } = {},
 ) =>
   apiRequestGet<ApiSearchResultsJSON>(
-    'v2/search',
+    "v2/search",
     {
       ...params,
     },

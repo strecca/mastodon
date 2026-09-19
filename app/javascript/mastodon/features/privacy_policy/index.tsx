@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, useIntl, defineMessages } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import { NavigationFocusTarget } from '@/mastodon/components/navigation_focus_target';
-import { apiGetPrivacyPolicy } from 'mastodon/api/instance';
-import type { ApiPrivacyPolicyJSON } from 'mastodon/api_types/instance';
-import { Column } from 'mastodon/components/column';
-import { FormattedDateWrapper } from 'mastodon/components/formatted_date';
-import { Skeleton } from 'mastodon/components/skeleton';
+import { NavigationFocusTarget } from "@/mastodon/components/navigation_focus_target";
+import { apiGetPrivacyPolicy } from "mastodon/api/instance";
+import type { ApiPrivacyPolicyJSON } from "mastodon/api_types/instance";
+import { Column } from "mastodon/components/column";
+import { FormattedDateWrapper } from "mastodon/components/formatted_date";
+import { Skeleton } from "mastodon/components/skeleton";
 
-import { getColumnSkipLinkId } from '../ui/components/skip_links';
+import { getColumnSkipLinkId } from "../ui/components/skip_links";
 
 const messages = defineMessages({
-  title: { id: 'privacy_policy.title', defaultMessage: 'Privacy Policy' },
+  title: { id: "privacy_policy.title", defaultMessage: "Privacy Policy" },
 });
 
 const PrivacyPolicy: React.FC<{
@@ -29,7 +29,7 @@ const PrivacyPolicy: React.FC<{
       .then((data) => {
         setResponse(data);
         setLoading(false);
-        return '';
+        return "";
       })
       .catch(() => {
         setLoading(false);
@@ -37,31 +37,25 @@ const PrivacyPolicy: React.FC<{
   }, []);
 
   return (
-    <Column
-      bindToDocument={!multiColumn}
-      label={intl.formatMessage(messages.title)}
-    >
-      <div className='scrollable privacy-policy'>
-        <div className='column-title'>
-          <NavigationFocusTarget as='h1' id={getColumnSkipLinkId(1)}>
-            <FormattedMessage
-              id='privacy_policy.title'
-              defaultMessage='Privacy Policy'
-            />
+    <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)}>
+      <div className="scrollable privacy-policy">
+        <div className="column-title">
+          <NavigationFocusTarget as="h1" id={getColumnSkipLinkId(1)}>
+            <FormattedMessage id="privacy_policy.title" defaultMessage="Privacy Policy" />
           </NavigationFocusTarget>
           <p>
             <FormattedMessage
-              id='privacy_policy.last_updated'
-              defaultMessage='Last updated {date}'
+              id="privacy_policy.last_updated"
+              defaultMessage="Last updated {date}"
               values={{
                 date: loading ? (
-                  <Skeleton width='10ch' />
+                  <Skeleton width="10ch" />
                 ) : (
                   <FormattedDateWrapper
                     value={response?.updated_at}
-                    year='numeric'
-                    month='short'
-                    day='2-digit'
+                    year="numeric"
+                    month="short"
+                    day="2-digit"
                   />
                 ),
               }}
@@ -71,7 +65,7 @@ const PrivacyPolicy: React.FC<{
 
         {response && (
           <div
-            className='privacy-policy__body prose'
+            className="privacy-policy__body prose"
             dangerouslySetInnerHTML={{ __html: response.content }}
           />
         )}
@@ -79,7 +73,7 @@ const PrivacyPolicy: React.FC<{
 
       <Helmet>
         <title>{intl.formatMessage(messages.title)}</title>
-        <meta name='robots' content='all' />
+        <meta name="robots" content="all" />
       </Helmet>
     </Column>
   );

@@ -1,186 +1,259 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from "react";
 
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages } from "react-intl";
 
-import api from 'flavours/glitch/api';
-import { compressImage } from 'flavours/glitch/utils/compress_image';
-import { TYPE_LABELS, TYPE_DESCRIPTIONS, CONDITION_LABELS, listingOptionLabel } from '../option_labels';
+import api from "flavours/glitch/api";
+import { compressImage } from "flavours/glitch/utils/compress_image";
+import {
+  TYPE_LABELS,
+  TYPE_DESCRIPTIONS,
+  CONDITION_LABELS,
+  listingOptionLabel,
+} from "../option_labels";
 
 const messages = defineMessages({
-  compressingLarge: { id: 'community.upload.compressing', defaultMessage: 'Compressing large image ({mb} MB) — please wait…' },
-  imageTooLarge:    { id: 'community.upload.too_large', defaultMessage: 'Image is too large ({mb} MB). Please resize to under 80 MB before uploading.' },
-  uploadFailed:     { id: 'community.upload.failed', defaultMessage: 'Upload failed — please try again.' },
+  compressingLarge: {
+    id: "community.upload.compressing",
+    defaultMessage: "Compressing large image ({mb} MB) — please wait…",
+  },
+  imageTooLarge: {
+    id: "community.upload.too_large",
+    defaultMessage: "Image is too large ({mb} MB). Please resize to under 80 MB before uploading.",
+  },
+  uploadFailed: {
+    id: "community.upload.failed",
+    defaultMessage: "Upload failed — please try again.",
+  },
 });
 
-const CONDITIONS = ['new_item', 'like_new', 'used', 'damaged'];
+const CONDITIONS = ["new_item", "like_new", "used", "damaged"];
 
-const CURRENCIES = ['EUR', 'USD', 'GBP', 'CHF'];
+const CURRENCIES = ["EUR", "USD", "GBP", "CHF"];
 
-const RENTAL_PERIODS = ['day', 'week', 'month', 'year'];
+const RENTAL_PERIODS = ["day", "week", "month", "year"];
 
-const LISTING_TYPES = ['giveaway', 'trade', 'sell', 'rent', 'iso'];
+const LISTING_TYPES = ["giveaway", "trade", "sell", "rent", "iso"];
 
 const MAX_IMAGES = 4;
 
 export const ListingForm = ({ initial, onSubmit, saving }) => {
   const intl = useIntl();
-  const [listingType,   setListingType]   = useState(initial?.listing_type  ?? 'giveaway');
-  const [title,         setTitle]         = useState(initial?.title         ?? '');
-  const [description,   setDescription]   = useState(initial?.description   ?? '');
-  const [price,         setPrice]         = useState(initial?.price         ?? '');
-  const [currency,      setCurrency]      = useState(initial?.currency      ?? 'EUR');
-  const [rentalPeriod,  setRentalPeriod]  = useState(initial?.rental_period ?? 'month');
-  const [tradeFor,      setTradeFor]      = useState(initial?.trade_for     ?? '');
-  const [condition,     setCondition]     = useState(initial?.condition     ?? 'used');
-  const [location,      setLocation]      = useState(initial?.location      ?? 'Civezza');
+  const [listingType, setListingType] = useState(initial?.listing_type ?? "giveaway");
+  const [title, setTitle] = useState(initial?.title ?? "");
+  const [description, setDescription] = useState(initial?.description ?? "");
+  const [price, setPrice] = useState(initial?.price ?? "");
+  const [currency, setCurrency] = useState(initial?.currency ?? "EUR");
+  const [rentalPeriod, setRentalPeriod] = useState(initial?.rental_period ?? "month");
+  const [tradeFor, setTradeFor] = useState(initial?.trade_for ?? "");
+  const [condition, setCondition] = useState(initial?.condition ?? "used");
+  const [location, setLocation] = useState(initial?.location ?? "Civezza");
   // Unified image list: { mediaId, previewUrl } — covers both saved and newly uploaded
-  const [images,      setImages]      = useState(() => {
-    const ids      = initial?.image_media_ids  ?? [];
-    const previews = initial?.image_previews   ?? [];
-    const originals = initial?.images          ?? [];
+  const [images, setImages] = useState(() => {
+    const ids = initial?.image_media_ids ?? [];
+    const previews = initial?.image_previews ?? [];
+    const originals = initial?.images ?? [];
     return ids.map((id, i) => ({
-      mediaId:    String(id),
+      mediaId: String(id),
       previewUrl: previews[i] ?? originals[i] ?? null,
     }));
   });
-  const [uploading,     setUploading]     = useState(false);
-  const [uploadError,   setUploadError]   = useState(null);
-  const [uploadStatus,  setUploadStatus]  = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState(null);
   const fileRef = useRef(null);
 
-  const needsPrice    = listingType === 'sell' || listingType === 'rent';
-  const needsRental   = listingType === 'rent';
-  const needsTrade    = listingType === 'trade';
-  const needsCondition = listingType !== 'iso';
+  const needsPrice = listingType === "sell" || listingType === "rent";
+  const needsRental = listingType === "rent";
+  const needsTrade = listingType === "trade";
+  const needsCondition = listingType !== "iso";
 
-  const handleImages = useCallback(async (e) => {
-    const files   = Array.from(e.target.files);
-    const allowed = MAX_IMAGES - images.length;
-    const toUpload = files.slice(0, allowed);
-    e.target.value = '';
-    if (!toUpload.length) return;
+  const handleImages = useCallback(
+    async (e) => {
+      const files = Array.from(e.target.files);
+      const allowed = MAX_IMAGES - images.length;
+      const toUpload = files.slice(0, allowed);
+      e.target.value = "";
+      if (!toUpload.length) return;
 
-    setUploading(true);
-    setUploadError(null);
-    setUploadStatus(null);
-    for (const file of toUpload) {
-      try {
-        const compressed = await compressImage(file, { onLargeFile: (mb) => setUploadStatus(intl.formatMessage(messages.compressingLarge, { mb })) });
-        setUploadStatus(null);
-        const fd = new FormData();
-        fd.append('file', compressed);
-        const res = await api().post('/api/v2/media', fd, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        setImages(prev => [...prev, {
-          mediaId:    String(res.data.id),
-          previewUrl: res.data.url || res.data.preview_url,
-        }]);
-      } catch (err) {
-        setUploadStatus(null);
-        setUploadError(err?.message === 'too_large'
-          ? intl.formatMessage(messages.imageTooLarge, { mb: err.sizeMB })
-          : intl.formatMessage(messages.uploadFailed));
+      setUploading(true);
+      setUploadError(null);
+      setUploadStatus(null);
+      for (const file of toUpload) {
+        try {
+          const compressed = await compressImage(file, {
+            onLargeFile: (mb) =>
+              setUploadStatus(intl.formatMessage(messages.compressingLarge, { mb })),
+          });
+          setUploadStatus(null);
+          const fd = new FormData();
+          fd.append("file", compressed);
+          const res = await api().post("/api/v2/media", fd, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          setImages((prev) => [
+            ...prev,
+            {
+              mediaId: String(res.data.id),
+              previewUrl: res.data.url || res.data.preview_url,
+            },
+          ]);
+        } catch (err) {
+          setUploadStatus(null);
+          setUploadError(
+            err?.message === "too_large"
+              ? intl.formatMessage(messages.imageTooLarge, { mb: err.sizeMB })
+              : intl.formatMessage(messages.uploadFailed),
+          );
+        }
       }
-    }
-    setUploading(false);
-  }, [images.length]);
+      setUploading(false);
+    },
+    [images.length],
+  );
 
   const removeImage = useCallback((idx) => {
-    setImages(prev => prev.filter((_, i) => i !== idx));
+    setImages((prev) => prev.filter((_, i) => i !== idx));
   }, []);
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    const fd = new FormData();
-    fd.append('listing[listing_type]', listingType);
-    fd.append('listing[title]',        title.trim());
-    fd.append('listing[description]',  description.trim());
-    fd.append('listing[location]',     location.trim());
-    if (needsPrice)    fd.append('listing[price]',          price);
-    if (needsPrice)    fd.append('listing[currency]',       currency);
-    if (needsRental)   fd.append('listing[rental_period]',  rentalPeriod);
-    if (needsTrade)    fd.append('listing[trade_for]',      tradeFor.trim());
-    if (needsCondition) fd.append('listing[condition_value]', condition);
-    // Always send the complete current media_ids list (empty = remove all)
-    images.forEach(img => fd.append('media_ids[]', img.mediaId));
-    if (images.length === 0) fd.append('media_ids[]', ''); // signal "replace with empty"
-    onSubmit(fd);
-  }, [listingType, title, description, location, price, currency, rentalPeriod, tradeFor, condition, images, needsPrice, needsRental, needsTrade, needsCondition, onSubmit]);
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const fd = new FormData();
+      fd.append("listing[listing_type]", listingType);
+      fd.append("listing[title]", title.trim());
+      fd.append("listing[description]", description.trim());
+      fd.append("listing[location]", location.trim());
+      if (needsPrice) fd.append("listing[price]", price);
+      if (needsPrice) fd.append("listing[currency]", currency);
+      if (needsRental) fd.append("listing[rental_period]", rentalPeriod);
+      if (needsTrade) fd.append("listing[trade_for]", tradeFor.trim());
+      if (needsCondition) fd.append("listing[condition_value]", condition);
+      // Always send the complete current media_ids list (empty = remove all)
+      images.forEach((img) => fd.append("media_ids[]", img.mediaId));
+      if (images.length === 0) fd.append("media_ids[]", ""); // signal "replace with empty"
+      onSubmit(fd);
+    },
+    [
+      listingType,
+      title,
+      description,
+      location,
+      price,
+      currency,
+      rentalPeriod,
+      tradeFor,
+      condition,
+      images,
+      needsPrice,
+      needsRental,
+      needsTrade,
+      needsCondition,
+      onSubmit,
+    ],
+  );
 
   const handleFormKeyDown = useCallback((e) => {
     // Stop Mastodon's global keyboard handler from seeing keystrokes in form fields.
     // For non-textarea inputs, also prevent Enter from submitting the form early.
     e.stopPropagation();
-    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+    if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
       e.preventDefault();
     }
   }, []);
 
   return (
-    <form className='cl-form' onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
-
+    <form className="cl-form" onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
       {/* Listing type */}
-      <div className='cl-form__field'>
-        <label className='cl-form__label'>Type</label>
-        <div className='cl-form__type-grid'>
-          {LISTING_TYPES.map(t => (
+      <div className="cl-form__field">
+        <label className="cl-form__label">Type</label>
+        <div className="cl-form__type-grid">
+          {LISTING_TYPES.map((t) => (
             <button
               key={t}
-              type='button'
-              className={`cl-form__type-btn${listingType === t ? ' cl-form__type-btn--active' : ''}`}
+              type="button"
+              className={`cl-form__type-btn${listingType === t ? " cl-form__type-btn--active" : ""}`}
               onClick={() => setListingType(t)}
             >
-              <span className='cl-form__type-btn-label'>{listingOptionLabel(TYPE_LABELS, t, intl.locale)}</span>
-              <span className='cl-form__type-btn-desc'>{listingOptionLabel(TYPE_DESCRIPTIONS, t, intl.locale)}</span>
+              <span className="cl-form__type-btn-label">
+                {listingOptionLabel(TYPE_LABELS, t, intl.locale)}
+              </span>
+              <span className="cl-form__type-btn-desc">
+                {listingOptionLabel(TYPE_DESCRIPTIONS, t, intl.locale)}
+              </span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Title */}
-      <div className='cl-form__field'>
-        <label className='cl-form__label' htmlFor='cl-title'>Title <span className='cl-form__required'>*</span></label>
+      <div className="cl-form__field">
+        <label className="cl-form__label" htmlFor="cl-title">
+          Title <span className="cl-form__required">*</span>
+        </label>
         <input
-          id='cl-title'
-          className='cl-form__input'
-          type='text'
+          id="cl-title"
+          className="cl-form__input"
+          type="text"
           maxLength={120}
           required
           value={title}
-          onChange={e => setTitle(e.target.value)}
-          placeholder='What are you listing?'
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="What are you listing?"
         />
       </div>
 
       {/* Price (sell / rent) */}
       {needsPrice && (
-        <div className='cl-form__field cl-form__field--row'>
-          <div className='cl-form__field--grow'>
-            <label className='cl-form__label' htmlFor='cl-price'>Price <span className='cl-form__required'>*</span></label>
+        <div className="cl-form__field cl-form__field--row">
+          <div className="cl-form__field--grow">
+            <label className="cl-form__label" htmlFor="cl-price">
+              Price <span className="cl-form__required">*</span>
+            </label>
             <input
-              id='cl-price'
-              className='cl-form__input'
-              type='number'
-              min='0'
-              step='0.01'
+              id="cl-price"
+              className="cl-form__input"
+              type="number"
+              min="0"
+              step="0.01"
               required
               value={price}
-              onChange={e => setPrice(e.target.value)}
-              placeholder='0.00'
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="0.00"
             />
           </div>
           <div>
-            <label className='cl-form__label' htmlFor='cl-currency'>Currency</label>
-            <select id='cl-currency' className='cl-form__select' value={currency} onChange={e => setCurrency(e.target.value)}>
-              {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+            <label className="cl-form__label" htmlFor="cl-currency">
+              Currency
+            </label>
+            <select
+              id="cl-currency"
+              className="cl-form__select"
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+            >
+              {CURRENCIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
             </select>
           </div>
           {needsRental && (
             <div>
-              <label className='cl-form__label' htmlFor='cl-period'>Per</label>
-              <select id='cl-period' className='cl-form__select' value={rentalPeriod} onChange={e => setRentalPeriod(e.target.value)}>
-                {RENTAL_PERIODS.map(p => <option key={p} value={p}>{p}</option>)}
+              <label className="cl-form__label" htmlFor="cl-period">
+                Per
+              </label>
+              <select
+                id="cl-period"
+                className="cl-form__select"
+                value={rentalPeriod}
+                onChange={(e) => setRentalPeriod(e.target.value)}
+              >
+                {RENTAL_PERIODS.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
               </select>
             </div>
           )}
@@ -189,30 +262,35 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
 
       {/* Trade for */}
       {needsTrade && (
-        <div className='cl-form__field'>
-          <label className='cl-form__label' htmlFor='cl-trade-for'>Looking for (what to trade for)</label>
+        <div className="cl-form__field">
+          <label className="cl-form__label" htmlFor="cl-trade-for">
+            Looking for (what to trade for)
+          </label>
           <input
-            id='cl-trade-for'
-            className='cl-form__input'
-            type='text'
+            id="cl-trade-for"
+            className="cl-form__input"
+            type="text"
             maxLength={200}
             value={tradeFor}
-            onChange={e => setTradeFor(e.target.value)}
-            placeholder='e.g. Road bike, vintage camera…'
+            onChange={(e) => setTradeFor(e.target.value)}
+            placeholder="e.g. Road bike, vintage camera…"
           />
         </div>
       )}
 
       {/* Condition (not for ISO) */}
       {needsCondition && (
-        <div className='cl-form__field'>
-          <label className='cl-form__label'>Condition</label>
-          <div className='cl-form__condition-row'>
-            {CONDITIONS.map(c => (
-              <label key={c} className={`cl-form__condition-opt${condition === c ? ' cl-form__condition-opt--active' : ''}`}>
+        <div className="cl-form__field">
+          <label className="cl-form__label">Condition</label>
+          <div className="cl-form__condition-row">
+            {CONDITIONS.map((c) => (
+              <label
+                key={c}
+                className={`cl-form__condition-opt${condition === c ? " cl-form__condition-opt--active" : ""}`}
+              >
                 <input
-                  type='radio'
-                  name='condition'
+                  type="radio"
+                  name="condition"
                   value={c}
                   checked={condition === c}
                   onChange={() => setCondition(c)}
@@ -225,74 +303,83 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
       )}
 
       {/* Description */}
-      <div className='cl-form__field'>
-        <label className='cl-form__label' htmlFor='cl-desc'>Description</label>
+      <div className="cl-form__field">
+        <label className="cl-form__label" htmlFor="cl-desc">
+          Description
+        </label>
         <textarea
-          id='cl-desc'
-          className='cl-form__textarea'
+          id="cl-desc"
+          className="cl-form__textarea"
           rows={4}
           maxLength={1000}
           value={description}
-          onChange={e => setDescription(e.target.value)}
-          placeholder='Describe the item…'
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Describe the item…"
         />
       </div>
 
       {/* Location */}
-      <div className='cl-form__field'>
-        <label className='cl-form__label' htmlFor='cl-location'>Location</label>
+      <div className="cl-form__field">
+        <label className="cl-form__label" htmlFor="cl-location">
+          Location
+        </label>
         <input
-          id='cl-location'
-          className='cl-form__input'
-          type='text'
+          id="cl-location"
+          className="cl-form__input"
+          type="text"
           maxLength={100}
           value={location}
-          onChange={e => setLocation(e.target.value)}
-          placeholder='e.g. Civezza, Imperia…'
+          onChange={(e) => setLocation(e.target.value)}
+          placeholder="e.g. Civezza, Imperia…"
         />
       </div>
 
       {/* Images — unified list, every photo has an X */}
-      <div className='cl-form__field'>
-        <label className='cl-form__label'>Photos ({images.length}/{MAX_IMAGES})</label>
+      <div className="cl-form__field">
+        <label className="cl-form__label">
+          Photos ({images.length}/{MAX_IMAGES})
+        </label>
 
         {images.length > 0 && (
-          <div className='cl-form__img-row'>
+          <div className="cl-form__img-row">
             {images.map((img, i) => (
-              <div key={img.mediaId} className='cl-form__img-thumb'>
-                {img.previewUrl
-                  ? <img src={img.previewUrl} alt='' loading='lazy' />
-                  : <div className='cl-form__img-placeholder'>📷</div>
-                }
+              <div key={img.mediaId} className="cl-form__img-thumb">
+                {img.previewUrl ? (
+                  <img src={img.previewUrl} alt="" loading="lazy" />
+                ) : (
+                  <div className="cl-form__img-placeholder">📷</div>
+                )}
                 <button
-                  type='button'
-                  className='cl-form__img-remove'
+                  type="button"
+                  className="cl-form__img-remove"
                   onClick={() => removeImage(i)}
-                  title='Remove photo'
-                >×</button>
+                  title="Remove photo"
+                >
+                  ×
+                </button>
               </div>
             ))}
           </div>
         )}
 
-        {uploadError && <div className='cl-form__upload-error'>{uploadError}</div>}
+        {uploadError && <div className="cl-form__upload-error">{uploadError}</div>}
 
         {images.length < MAX_IMAGES && (
           <>
             <button
-              type='button'
-              className='button button-secondary cl-form__add-img-btn'
+              type="button"
+              className="button button-secondary cl-form__add-img-btn"
               onClick={() => fileRef.current?.click()}
               disabled={uploading}
             >
-              {uploading ? (uploadStatus || 'Uploading…') : '+ Add Photo'}
+              {uploading ? uploadStatus || "Uploading…" : "+ Add Photo"}
             </button>
             <input
               ref={fileRef}
-              type='file'
-              accept='image/jpeg,image/png,image/webp,image/gif'
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
               multiple
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               onChange={handleImages}
             />
           </>
@@ -300,9 +387,9 @@ export const ListingForm = ({ initial, onSubmit, saving }) => {
       </div>
 
       {/* Submit */}
-      <div className='cl-form__actions'>
-        <button type='submit' className='button' disabled={saving || uploading}>
-          {saving ? 'Saving…' : (initial ? 'Save Changes' : 'Post Listing')}
+      <div className="cl-form__actions">
+        <button type="submit" className="button" disabled={saving || uploading}>
+          {saving ? "Saving…" : initial ? "Save Changes" : "Post Listing"}
         </button>
       </div>
     </form>

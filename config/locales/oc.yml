@@ -303,12 +303,12 @@ oc:
       add_new: Crear una règla
       delete: Suprimir
       expires_in:
-        '1209600': 2 setmanas
-        '15778476': 6 meses
-        '2629746': 1 mes
-        '31556952': 1 an
-        '86400': 1 jorn
-        '94670856': 3 ans
+        "1209600": 2 setmanas
+        "15778476": 6 meses
+        "2629746": 1 mes
+        "31556952": 1 an
+        "86400": 1 jorn
+        "94670856": 3 ans
       new:
         title: Crear una règlas IP novèla
       title: Règlas IP
@@ -356,7 +356,7 @@ oc:
         delete: Escafar
         placeholder: Explicatz las accions que son estadas menadas o quicòm de ligat al senhalament…
       reopen: Tornar dobrir lo rapòrt
-      report: 'Senhalament #%{id}'
+      report: "Senhalament #%{id}"
       reported_account: Compte senhalat
       reported_by: Senhalat per
       resolved: Resolgut
@@ -449,7 +449,7 @@ oc:
     sensitive_content: Contengut sensible
   application_mailer:
     salutation: "%{name},"
-    view: 'Veire :'
+    view: "Veire :"
     view_profile: Veire lo perfil
     view_status: Veire los estatuts
   applications:
@@ -520,7 +520,7 @@ oc:
     proceed: Suprimir lo compte
     success_msg: Compte ben suprimit
     warning:
-      before: 'Abans de contunhar, volgatz legir aquestas nòtas amb atencion :'
+      before: "Abans de contunhar, volgatz legir aquestas nòtas amb atencion :"
       caches: Lo contengut en cache suls autres servidors pòt demorar
       data_removal: Vòstras publicacions e las autras donadas seràn suprimidas per totjorn
       irreversible: Poiretz pas restaurar o reactivar vòstre compte
@@ -532,15 +532,15 @@ oc:
       title_actions:
         none: Avertiment
   errors:
-    '403': Avètz pas l’autorizacion de veire aquesta pagina.
-    '404': La pagina que cercatz existís pas aquí.
-    '406': La pagina es pas disponibla dins lo format demandat.
-    '410': La pagina que cercatz existís pas mai aquí.
-    '422':
+    "403": Avètz pas l’autorizacion de veire aquesta pagina.
+    "404": La pagina que cercatz existís pas aquí.
+    "406": La pagina es pas disponibla dins lo format demandat.
+    "410": La pagina que cercatz existís pas mai aquí.
+    "422":
       content: Verificacion de seguretat fracassada. Blocatz los cookies ?
       title: Verificacion de seguretat fracassada
-    '429': Lo servidor mòla (subrecargada)
-    '500':
+    "429": Lo servidor mòla (subrecargada)
+    "500":
       content: Un quicomet a pas foncionat coma caliá.
       title: Aquesta pagina es pas corrècta
     noscript_html: Per utilizar l’aplicacion web de Mastodon, mercés d’activar JavaScript. O podètz utilizar <a href="%{apps_path}">una aplicacion</a> per vòstra plataforma coma alernativa.
@@ -619,15 +619,15 @@ oc:
     delete: Desactivar
     expired: Expirat
     expires_in:
-      '1800': 30 minutas
-      '21600': 6 oras
-      '3600': 1 ora
-      '43200': 12 oras
-      '604800': 1 setmana
-      '86400': 1 jorn
+      "1800": 30 minutas
+      "21600": 6 oras
+      "3600": 1 ora
+      "43200": 12 oras
+      "604800": 1 setmana
+      "86400": 1 jorn
     expires_in_prompt: Jamai
     generate: Generar
-    invited_by: 'Vos a convidat :'
+    invited_by: "Vos a convidat :"
     max_uses:
       one: 1 persona
       other: "%{count} personas"
@@ -663,7 +663,7 @@ oc:
     redirecting_to: Vòstre compte manda a %{acct}.
     set_redirect: Definir redireccion
     warning:
-      before: 'Abans de contunhar, volgatz legir aquestas nòtas amb atencion :'
+      before: "Abans de contunhar, volgatz legir aquestas nòtas amb atencion :"
       only_redirect_html: Autrament, podètz <a href="%{path}">solament definir una redireccion sus vòstre perfil</a>.
   moderation:
     title: Moderacion
@@ -682,7 +682,7 @@ oc:
     follow_request:
       action: Gerir las demandas d’abonament
       body: "%{name} a demandat a vos sègre"
-      subject: 'Demandas en espèra : %{name}'
+      subject: "Demandas en espèra : %{name}"
       title: Novèla demanda d’abonament
     mention:
       action: Respondre
@@ -700,7 +700,7 @@ oc:
     update:
       subject: "%{name} modifiquèt sa publicacion"
   notifications:
-    email_events_hint: 'Seleccionatz los eveniments que volètz recebre :'
+    email_events_hint: "Seleccionatz los eveniments que volètz recebre :"
   number:
     human:
       decimal_units:
@@ -753,7 +753,7 @@ oc:
   remote_follow:
     missing_resource: URL de redireccion pas trobada
   rss:
-    content_warning: 'Avís de contengut :'
+    content_warning: "Avís de contengut :"
   scheduled_statuses:
     over_daily_limit: Avètz passat la limita de %{limit}  tuts programats per aquel jorn
     over_total_limit: Avètz passat la limita de %{limit}  tuts programats
@@ -818,7 +818,7 @@ oc:
       audio:
         one: "%{count} àudio"
         other: "%{count} àudios"
-      description: 'Ajustat : %{attached}'
+      description: "Ajustat : %{attached}"
       image:
         one: "%{count} imatge"
         other: "%{count} imatges"
@@ -826,11 +826,11 @@ oc:
         one: "%{count} vidèo"
         other: "%{count} vidèos"
     boosted_from_html: Partejat de %{acct_link}
-    content_warning: 'Avertiment de contengut : %{warning}'
+    content_warning: "Avertiment de contengut : %{warning}"
     default_language: Parièr que la lenga d’interfàcia
     disallowed_hashtags:
-      one: 'conten una etiqueta desactivada : %{tags}'
-      other: 'conten las etiquetas desactivadas : %{tags}'
+      one: "conten una etiqueta desactivada : %{tags}"
+      other: "conten las etiquetas desactivadas : %{tags}"
     edited_at_html: Modificat %{date}
     errors:
       in_reply_not_found: La publicacion que respondètz sembla pas mai exisitir.
@@ -861,14 +861,14 @@ oc:
     keep_self_fav: Gardar las publicacions que metèretz en favorit
     keep_self_fav_hint: Suprimís pas vòstras publicacions se las avètz mesas en favorits
     min_age:
-      '1209600': 2 setmanas
-      '15778476': 6 meses
-      '2629746': 1 mes
-      '31556952': 1 an
-      '5259492': 2 meses
-      '604800': 1 setmana
-      '63113904': 2 ans
-      '7889238': 3 meses
+      "1209600": 2 setmanas
+      "15778476": 6 meses
+      "2629746": 1 mes
+      "31556952": 1 an
+      "5259492": 2 meses
+      "604800": 1 setmana
+      "63113904": 2 ans
+      "7889238": 3 meses
     min_age_label: Sulhet d’ancianetat
     min_favs: Gardar al mens las publicacion en favorit
     min_reblogs: Gardar las publicacions partejadas al mens
@@ -901,8 +901,8 @@ oc:
       subject: Vòstre archiu es prèst per telecargament
       title: Archiu per emportar
     warning:
-      reason: 'Motiu :'
-      statuses: 'Publicacion citada :'
+      reason: "Motiu :"
+      statuses: "Publicacion citada :"
       subject:
         disable: Vòstre compte %{acct} es gelat
         none: Avertiment per %{acct}
@@ -922,7 +922,7 @@ oc:
     follow_limit_reached: Podètz pas sègre mai de %{limit} personas
     invalid_otp_token: Còdi d’autentificacion en dos temps invalid
     otp_lost_help_html: Se perdatz l’accès al dos, podètz benlèu contactar %{email}
-    signed_in_as: 'Session a :'
+    signed_in_as: "Session a :"
   verification:
     verification: Verificacion
   webauthn_credentials:

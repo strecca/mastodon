@@ -7,7 +7,7 @@ eu:
         display_name: Zure izena edo ezizena.
         fields: Zure webgunea, izenordainak, adina, nahi duzun guztia.
         indexable: Zure argitalpen publikoak bilaketa-emaitzetan ager daitezke Mastodonen. Zure argitalpenekin elkarregin duten jendeak ikusi ahal izango dituzte, hala ere.
-        note: 'Beste pertsona edo #traola batzuk @aipatu ditzakezu.'
+        note: "Beste pertsona edo #traola batzuk @aipatu ditzakezu."
         show_collections: Pertsonek zuk jarraitzen dituzunak eta zure jarraitzaileak arakatu ahal izango dute. Jarraitzen dituzun pertsonak jarraitzen dituzula ikusi ahal izando dute, hala ere.
         unlocked: Pertsonek zuri jarraitu ahal izango dizute onarpen-eskaerarik gabe. Desgaitu jarraipen-eskaerak berrikusi nahi badituzu eta hauek onartu edo ez erabaki nahi baduzu.
       account_alias:
@@ -71,7 +71,7 @@ eu:
         domain: Hau eposta helbidean agertzen den domeinu-izena edo MX erregistroak erabiltzen duena izan daiteke. Izen-ematean egiaztatuko dira.
         with_dns_records: Emandako domeinuaren DNS erregistroak ebazteko saiakera bat egingo da eta emaitzak ere zerrenda beltzean sartuko dira
       featured_tag:
-        name: 'Hemen dituzu azkenaldian gehien erabili dituzun traoletako batzuk:'
+        name: "Hemen dituzu azkenaldian gehien erabili dituzun traoletako batzuk:"
       filters:
         action: Aukeratu ze ekintza burutu behar den bidalketa bat iragazkiarekin bat datorrenean
         actions:
@@ -124,7 +124,7 @@ eu:
         hint: Aukerakoa. Eman arauari buruzko xehetasun gehiago.
         text: Deskribatu zerbitzari honetako erabiltzaileentzako arau edo betekizun bat. Saiatu labur eta sinple idazten
       sessions:
-        otp: 'Sartu zure telefonoko aplikazioak sortutako bi faktoreetako kodea, edo erabili zure berreskuratze kodeetako bat:'
+        otp: "Sartu zure telefonoko aplikazioak sortutako bi faktoreetako kodea, edo erabili zure berreskuratze kodeetako bat:"
         webauthn: USB gako bat bada, ziurtatu sartu duzula, eta behar izanez gero ukitu ezazu.
       settings:
         indexable: Zure profila bilaketa-emaitzetan ager daiteke Google, Bing eta beste batzuetan.
@@ -379,7 +379,7 @@ eu:
         events: Gertaerak gaituta
         template: Karga txantiloia
         url: Amaiera-puntuaren URLa
-    'no': Ez
+    "no": Ez
     not_recommended: Ez gomendatua
     overridden: Gainidatzita
     recommended: Aholkatua
@@ -389,4 +389,4 @@ eu:
     title:
       sessions:
         webauthn: Erabili zure segurtasun gakoetako bat saioa hasteko
-    'yes': Bai
+    "yes": Bai

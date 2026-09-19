@@ -1,14 +1,13 @@
-import { useCallback, useId } from 'react';
+import { useCallback, useId } from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import { useAppSelector } from 'flavours/glitch/store';
+import { useAppSelector } from "flavours/glitch/store";
 
-import classes from './skip_links.module.scss';
+import classes from "./skip_links.module.scss";
 
-export const getNavigationSkipLinkId = () => 'skip-link-target-nav';
-export const getColumnSkipLinkId = (index: number) =>
-  `skip-link-target-content-${index}`;
+export const getNavigationSkipLinkId = () => "skip-link-target-nav";
+export const getColumnSkipLinkId = (index: number) => `skip-link-target-content-${index}`;
 
 export const SkipLinks: React.FC<{
   multiColumn: boolean;
@@ -17,7 +16,7 @@ export const SkipLinks: React.FC<{
   const intl = useIntl();
   const columnCount = useAppSelector((state) => {
     const settings = state.settings as Immutable.Collection<string, unknown>;
-    return (settings.get('columns') as Immutable.Map<number, unknown>).size;
+    return (settings.get("columns") as Immutable.Map<number, unknown>).size;
   });
 
   const focusMultiColumnNavbar = useCallback(
@@ -31,10 +30,10 @@ export const SkipLinks: React.FC<{
   return (
     <ul className={classes.list}>
       <li className={classes.listItem}>
-        <SkipLink target={getColumnSkipLinkId(1)} hotkey='1'>
+        <SkipLink target={getColumnSkipLinkId(1)} hotkey="1">
           {intl.formatMessage({
-            id: 'skip_links.skip_to_content',
-            defaultMessage: 'Skip to main content',
+            id: "skip_links.skip_to_content",
+            defaultMessage: "Skip to main content",
           })}
         </SkipLink>
       </li>
@@ -42,11 +41,11 @@ export const SkipLinks: React.FC<{
         <SkipLink
           target={multiColumn ? `/getting-started` : getNavigationSkipLinkId()}
           onRouterLinkClick={multiColumn ? focusMultiColumnNavbar : undefined}
-          hotkey={multiColumn ? `${columnCount}` : '2'}
+          hotkey={multiColumn ? `${columnCount}` : "2"}
         >
           {intl.formatMessage({
-            id: 'skip_links.skip_to_navigation',
-            defaultMessage: 'Skip to main navigation',
+            id: "skip_links.skip_to_navigation",
+            defaultMessage: "Skip to main navigation",
           })}
         </SkipLink>
       </li>
@@ -70,12 +69,12 @@ const SkipLink: React.FC<{
       <span id={id} className={classes.hotkeyHint}>
         {intl.formatMessage(
           {
-            id: 'skip_links.hotkey',
-            defaultMessage: '<span>Hotkey</span> {hotkey}',
+            id: "skip_links.hotkey",
+            defaultMessage: "<span>Hotkey</span> {hotkey}",
           },
           {
             hotkey,
-            span: (text) => <span className='sr-only'>{text}</span>,
+            span: (text) => <span className="sr-only">{text}</span>,
           },
         )}
       </span>

@@ -1,7 +1,7 @@
 // See app/serializers/rest/base_collection_serializer.rb
 
-import type { ApiAccountJSON } from './accounts';
-import type { ApiTagJSON } from './statuses';
+import type { ApiAccountJSON } from "./accounts";
+import type { ApiTagJSON } from "./statuses";
 
 /**
  * Returned when fetching all collections for an account,
@@ -56,7 +56,7 @@ export interface ApiCollectionWithAccountsJSON extends ApiWrappedCollectionJSON 
 export interface CollectionAccountItem {
   id: string;
   account_id?: string; // Only present when state is 'accepted' (or the collection is your own)
-  state: 'pending' | 'accepted' | 'rejected' | 'revoked';
+  state: "pending" | "accepted" | "rejected" | "revoked";
   created_at: string;
 }
 
@@ -70,10 +70,10 @@ export interface WrappedCollectionAccountItem {
 
 type CommonPayloadFields = Pick<
   ApiCollectionJSON,
-  'name' | 'description' | 'sensitive' | 'discoverable'
+  "name" | "description" | "sensitive" | "discoverable"
 > & {
   tag_name?: string | null;
-  language?: ApiCollectionJSON['language'];
+  language?: ApiCollectionJSON["language"];
 };
 
 export interface ApiUpdateCollectionPayload extends Partial<CommonPayloadFields> {

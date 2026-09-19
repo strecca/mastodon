@@ -30,7 +30,7 @@
 
   &:focus:user-invalid,
   &:required:user-invalid,
-  [data-has-error='true'] & {
+  [data-has-error="true"] & {
     outline-color: var(--color-border-error);
   }
 

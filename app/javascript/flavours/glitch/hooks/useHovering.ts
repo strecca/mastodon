@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
 export const useHovering = (animate?: boolean) => {
   const [hovering, setHovering] = useState<boolean>(animate ?? false);

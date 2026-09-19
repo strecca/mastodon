@@ -1,15 +1,22 @@
-import escapeTextContentForBrowser from 'escape-html';
+import escapeTextContentForBrowser from "escape-html";
 
-import { autoHideCW } from '../../utils/content_warning';
+import { autoHideCW } from "../../utils/content_warning";
 
-import { importCustomEmoji } from './emoji';
+import { importCustomEmoji } from "./emoji";
 
 const domParser = new DOMParser();
 
-export function searchTextFromRawStatus (status) {
-  const spoilerText   = status.spoiler_text || '';
-  const searchContent = ([spoilerText, status.content].concat((status.poll && status.poll.options) ? status.poll.options.map(option => option.title) : [])).concat(status.media_attachments.map(att => att.description)).join('\n\n').replace(/<br\s*\/?>/g, '\n').replace(/<\/p><p>/g, '\n\n');
-  return domParser.parseFromString(searchContent, 'text/html').documentElement.textContent;
+export function searchTextFromRawStatus(status) {
+  const spoilerText = status.spoiler_text || "";
+  const searchContent = [spoilerText, status.content]
+    .concat(
+      status.poll && status.poll.options ? status.poll.options.map((option) => option.title) : [],
+    )
+    .concat(status.media_attachments.map((att) => att.description))
+    .join("\n\n")
+    .replace(/<br\s*\/?>/g, "\n")
+    .replace(/<\/p><p>/g, "\n\n");
+  return domParser.parseFromString(searchContent, "text/html").documentElement.textContent;
 }
 
 export function normalizeFilterResult(result) {
@@ -21,19 +28,18 @@ export function normalizeFilterResult(result) {
 }
 
 function stripQuoteFallback(text) {
-  const wrapper = document.createElement('div');
+  const wrapper = document.createElement("div");
   wrapper.innerHTML = text;
 
-  wrapper.querySelector('.quote-inline')?.remove();
+  wrapper.querySelector(".quote-inline")?.remove();
 
   return wrapper.innerHTML;
 }
 
 export function normalizeStatus(status, normalOldStatus, { settings, bogusQuotePolicy = false }) {
-  const normalStatus   = { ...status };
+  const normalStatus = { ...status };
 
-  if (bogusQuotePolicy)
-    normalStatus.quote_approval = null;
+  if (bogusQuotePolicy) normalStatus.quote_approval = null;
 
   normalStatus.account = status.account.id;
 
@@ -55,7 +61,7 @@ export function normalizeStatus(status, normalOldStatus, { settings, bogusQuoteP
   if (status.card) {
     normalStatus.card = {
       ...status.card,
-      authors: status.card.authors.map(author => ({
+      authors: status.card.authors.map((author) => ({
         ...author,
         accountId: author.account?.id,
         account: undefined,
@@ -70,50 +76,71 @@ export function normalizeStatus(status, normalOldStatus, { settings, bogusQuoteP
   // Only calculate these values when status first encountered and
   // when the underlying values change. Otherwise keep the ones
   // already in the reducer
-  if (normalOldStatus && normalOldStatus.get('content') === normalStatus.content && normalOldStatus.get('spoiler_text') === normalStatus.spoiler_text) {
-    normalStatus.search_index = normalOldStatus.get('search_index');
-    normalStatus.contentHtml = normalOldStatus.get('contentHtml');
-    normalStatus.spoilerHtml = normalOldStatus.get('spoilerHtml');
-    normalStatus.hidden = normalOldStatus.get('hidden');
+  if (
+    normalOldStatus &&
+    normalOldStatus.get("content") === normalStatus.content &&
+    normalOldStatus.get("spoiler_text") === normalStatus.spoiler_text
+  ) {
+    normalStatus.search_index = normalOldStatus.get("search_index");
+    normalStatus.contentHtml = normalOldStatus.get("contentHtml");
+    normalStatus.spoilerHtml = normalOldStatus.get("spoilerHtml");
+    normalStatus.hidden = normalOldStatus.get("hidden");
 
-    if (normalOldStatus.get('translation')) {
-      normalStatus.translation = normalOldStatus.get('translation');
+    if (normalOldStatus.get("translation")) {
+      normalStatus.translation = normalOldStatus.get("translation");
     }
   } else {
-    const spoilerText   = normalStatus.spoiler_text || '';
-    const searchContent = ([spoilerText, status.content].concat((status.poll && status.poll.options) ? status.poll.options.map(option => option.title) : [])).concat(status.media_attachments.map(att => att.description)).join('\n\n').replace(/<br\s*\/?>/g, '\n').replace(/<\/p><p>/g, '\n\n');
+    const spoilerText = normalStatus.spoiler_text || "";
+    const searchContent = [spoilerText, status.content]
+      .concat(
+        status.poll && status.poll.options ? status.poll.options.map((option) => option.title) : [],
+      )
+      .concat(status.media_attachments.map((att) => att.description))
+      .join("\n\n")
+      .replace(/<br\s*\/?>/g, "\n")
+      .replace(/<\/p><p>/g, "\n\n");
 
-    normalStatus.search_index = domParser.parseFromString(searchContent, 'text/html').documentElement.textContent;
-    normalStatus.contentHtml  = normalStatus.content;
-    normalStatus.spoilerHtml  = escapeTextContentForBrowser(spoilerText);
-    normalStatus.hidden       = (spoilerText.length > 0 || normalStatus.sensitive) && autoHideCW(settings, spoilerText);
+    normalStatus.search_index = domParser.parseFromString(
+      searchContent,
+      "text/html",
+    ).documentElement.textContent;
+    normalStatus.contentHtml = normalStatus.content;
+    normalStatus.spoilerHtml = escapeTextContentForBrowser(spoilerText);
+    normalStatus.hidden =
+      (spoilerText.length > 0 || normalStatus.sensitive) && autoHideCW(settings, spoilerText);
 
     // Remove quote fallback link from the DOM so it doesn't mess with paragraph margins
     if (normalStatus.quote) {
       normalStatus.contentHtml = stripQuoteFallback(normalStatus.contentHtml);
     }
 
-    if (normalStatus.url && !(normalStatus.url.startsWith('http://') || normalStatus.url.startsWith('https://'))) {
+    if (
+      normalStatus.url &&
+      !(normalStatus.url.startsWith("http://") || normalStatus.url.startsWith("https://"))
+    ) {
       normalStatus.url = null;
     }
 
     normalStatus.url ||= normalStatus.uri;
 
-    normalStatus.media_attachments.forEach(item => {
-      if (item.remote_url && !(item.remote_url.startsWith('http://') || item.remote_url.startsWith('https://')))
+    normalStatus.media_attachments.forEach((item) => {
+      if (
+        item.remote_url &&
+        !(item.remote_url.startsWith("http://") || item.remote_url.startsWith("https://"))
+      )
         item.remote_url = null;
     });
   }
 
   if (normalOldStatus) {
-    normalStatus.quote_approval ||= normalOldStatus.get('quote_approval');
+    normalStatus.quote_approval ||= normalOldStatus.get("quote_approval");
 
-    const list = normalOldStatus.get('media_attachments');
+    const list = normalOldStatus.get("media_attachments");
     if (normalStatus.media_attachments && list) {
-      normalStatus.media_attachments.forEach(item => {
-        const oldItem = list.find(i => i.get('id') === item.id);
-        if (oldItem && oldItem.get('description') === item.description) {
-          item.translation = oldItem.get('translation');
+      normalStatus.media_attachments.forEach((item) => {
+        const oldItem = list.find((i) => i.get("id") === item.id);
+        if (oldItem && oldItem.get("description") === item.description) {
+          item.translation = oldItem.get("translation");
         }
       });
     }
@@ -133,7 +160,7 @@ export function normalizeStatusTranslation(translation, status) {
   };
 
   // Remove quote fallback link from the DOM so it doesn't mess with paragraph margins
-  if (status.get('quote')) {
+  if (status.get("quote")) {
     normalTranslation.contentHtml = stripQuoteFallback(normalTranslation.contentHtml);
   }
 

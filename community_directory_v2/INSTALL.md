@@ -26,9 +26,9 @@ This is a significant build. I'm going to create the files now — starting with
 Already created (14 files): Generator, admin controller, actions (2), reducer (1), shared components (5), admin UI (3 + field_editor + form_preview)
 Still needed:
 
-Admin reducer (reducers/community_directory.js)
+Admin reducer (reducers/community*directory.js)
 Public landing page (the scrolling cards grid showing all categories)
-SCSS styles for every community-* and cd-* class
+SCSS styles for every community-* and cd-\_ class
 Generator fix: routes are in config/routes/api.rb not config/routes.rb, and it also needs to inject web_app.rb for SPA routing
 Wiring patch file with exact lines to add to async-components.js, ui/index.jsx, reducers/index.ts, config/routes/api.rb, config/routes/web_app.rb
 
@@ -75,13 +75,13 @@ install_community_directory.sh — automated Mac-compatible script that patches 
 
 Every time you click "Generate" in the admin form builder, the CommunityDirectoryGenerator service does all of this in one shot:
 Files it CREATES (new, per category):
-CreatedExample for "artists"Feature folder with 4 thin React pagesfeatures/community_artists/index.jsx, show/index.jsx, new/index.jsx, edit/index.jsxConfig JSONfeatures/community_artists/config.jsonRails modelapp/models/community_artist.rbRails controllerapp/controllers/api/v1/community_artists_controller.rbDatabase migrationdb/migrate/..._create_community_artists.rb
+CreatedExample for "artists"Feature folder with 4 thin React pagesfeatures/community_artists/index.jsx, show/index.jsx, new/index.jsx, edit/index.jsxConfig JSONfeatures/community_artists/config.jsonRails modelapp/models/community_artist.rbRails controllerapp/controllers/api/v1/community_artists_controller.rbDatabase migrationdb/migrate/...\_create_community_artists.rb
 Files it AUTO-UPDATES (existing, injected into):
-ModifiedWhat gets injectedasync-components.js4 new lazy-load exports (CommunityArtists, CommunityArtistsShow, CommunityArtistsNew, CommunityArtistsEdit)ui/index.jsxImport names + 4 <WrappedRoute> entries for /community_artists, /community_artists/:id, etc.config/routes/api.rbresources :community_artists, only: [:index, :show, :create, :update, :destroy]config/routes/web_app.rb/community_artists/(*any) so Rails serves the SPA for direct URL navigationDatabaseRuns bin/rails db:migrate automatically in development
+ModifiedWhat gets injectedasync-components.js4 new lazy-load exports (CommunityArtists, CommunityArtistsShow, CommunityArtistsNew, CommunityArtistsEdit)ui/index.jsxImport names + 4 <WrappedRoute> entries for /community_artists, /community_artists/:id, etc.config/routes/api.rbresources :community_artists, only: [:index, :show, :create, :update, :destroy]config/routes/web_app.rb/community_artists/(\*any) so Rails serves the SPA for direct URL navigationDatabaseRuns bin/rails db:migrate automatically in development
 Files that DON'T need updating per category (by design):
 
-reducers/index.ts — registered once during install. The single community_entries reducer handles ALL categories dynamically by keying state on categoryKey. When "artists" actions fire, they use the prefix COMMUNITY_ENTRIES/artists/FETCH_SUCCESS and the reducer routes them to the right bucket automatically.
-The public hub at /community — it queries the API at runtime, reads all community_* tables from the database, and renders cards for each one. New categories appear automatically with no file changes.
+reducers/index.ts — registered once during install. The single community*entries reducer handles ALL categories dynamically by keying state on categoryKey. When "artists" actions fire, they use the prefix COMMUNITY_ENTRIES/artists/FETCH_SUCCESS and the reducer routes them to the right bucket automatically.
+The public hub at /community — it queries the API at runtime, reads all community*\* tables from the database, and renders cards for each one. New categories appear automatically with no file changes.
 
 The one manual step after each generation: you need to restart Vite so it picks up the new React files:
 bashrm -rf public/packs-dev tmp/cache && bin/dev
@@ -101,19 +101,19 @@ cp -R community_directory_v2/app/ app/
 
 This places:
 
-| File | Purpose |
-|------|---------|
-| `app/services/community_directory_generator.rb` | Rails scaffolding engine |
-| `app/controllers/api/v1/community_directory_controller.rb` | Admin API (generate, list categories) |
-| `app/controllers/api/v1/community_directory_public_controller.rb` | Public API (browse categories) |
-| `app/javascript/flavours/glitch/actions/community_directory.js` | Admin Redux actions |
-| `app/javascript/flavours/glitch/actions/community_entries.js` | Generic CRUD actions for all categories |
-| `app/javascript/flavours/glitch/reducers/community_directory.js` | Admin state reducer |
-| `app/javascript/flavours/glitch/reducers/community_entries.js` | Generic entries reducer (all categories) |
-| `app/javascript/flavours/glitch/components/community_directory/` | 5 shared components |
-| `app/javascript/flavours/glitch/features/community_directory/` | Admin UI (3 files) |
-| `app/javascript/flavours/glitch/features/community_hub/index.jsx` | Public landing page |
-| `app/javascript/flavours/glitch/styles/mastodon/community_directory.scss` | All styles |
+| File                                                                      | Purpose                                  |
+| ------------------------------------------------------------------------- | ---------------------------------------- |
+| `app/services/community_directory_generator.rb`                           | Rails scaffolding engine                 |
+| `app/controllers/api/v1/community_directory_controller.rb`                | Admin API (generate, list categories)    |
+| `app/controllers/api/v1/community_directory_public_controller.rb`         | Public API (browse categories)           |
+| `app/javascript/flavours/glitch/actions/community_directory.js`           | Admin Redux actions                      |
+| `app/javascript/flavours/glitch/actions/community_entries.js`             | Generic CRUD actions for all categories  |
+| `app/javascript/flavours/glitch/reducers/community_directory.js`          | Admin state reducer                      |
+| `app/javascript/flavours/glitch/reducers/community_entries.js`            | Generic entries reducer (all categories) |
+| `app/javascript/flavours/glitch/components/community_directory/`          | 5 shared components                      |
+| `app/javascript/flavours/glitch/features/community_directory/`            | Admin UI (3 files)                       |
+| `app/javascript/flavours/glitch/features/community_hub/index.jsx`         | Public landing page                      |
+| `app/javascript/flavours/glitch/styles/mastodon/community_directory.scss` | All styles                               |
 
 ## Step 2: Wire async-components.js
 
@@ -122,16 +122,16 @@ This places:
 Add these exports at the **end** of the file:
 
 ```js
-export function CommunityHub () {
-  return import('../../community_hub');
+export function CommunityHub() {
+  return import("../../community_hub");
 }
 
-export function CommunityDirectory () {
-  return import('../../community_directory');
+export function CommunityDirectory() {
+  return import("../../community_directory");
 }
 
-export function CommunityDirectoryFormBuilder () {
-  return import('../../community_directory/admin');
+export function CommunityDirectoryFormBuilder() {
+  return import("../../community_directory/admin");
 }
 ```
 
@@ -153,8 +153,9 @@ and add these three names **inside** the import, before the closing `}`:
 ### 3b. Add WrappedRoute entries
 
 Find this line:
+
 ```jsx
-<WrappedRoute path='/explore' component={Explore} content={children} />
+<WrappedRoute path="/explore" component={Explore} content={children} />
 ```
 
 Add these **before** it:
@@ -175,8 +176,8 @@ Add these **before** it:
 After the existing import lines, add:
 
 ```ts
-import community_directory from './community_directory';
-import community_entries from './community_entries';
+import community_directory from "./community_directory";
+import community_entries from "./community_entries";
 ```
 
 ### 4b. Add to the reducers object
@@ -222,7 +223,7 @@ Add these lines inside the `%w(` array, before the closing `).each`:
 Add this line at the end:
 
 ```scss
-@use 'mastodon/community_directory';
+@use "mastodon/community_directory";
 ```
 
 ## Step 8: Add kaminari gem (if not present)
@@ -262,18 +263,19 @@ bin/dev
 
 When you generate "artists", the system writes:
 
-| Generated file | Purpose |
-|---------------|---------|
-| `features/community_artists/config.json` | Field definitions, layout, groups |
-| `features/community_artists/index.jsx` | List page (imports shared EntryList) |
-| `features/community_artists/show/index.jsx` | Detail page (imports shared EntryDetail) |
-| `features/community_artists/new/index.jsx` | Create form (imports shared EntryForm) |
-| `features/community_artists/edit/index.jsx` | Edit form (imports shared EntryForm) |
-| `app/models/community_artist.rb` | Rails model with validations + search scope |
-| `app/controllers/api/v1/community_artists_controller.rb` | CRUD API controller |
-| `db/migrate/..._create_community_artists.rb` | Database migration |
+| Generated file                                           | Purpose                                     |
+| -------------------------------------------------------- | ------------------------------------------- |
+| `features/community_artists/config.json`                 | Field definitions, layout, groups           |
+| `features/community_artists/index.jsx`                   | List page (imports shared EntryList)        |
+| `features/community_artists/show/index.jsx`              | Detail page (imports shared EntryDetail)    |
+| `features/community_artists/new/index.jsx`               | Create form (imports shared EntryForm)      |
+| `features/community_artists/edit/index.jsx`              | Edit form (imports shared EntryForm)        |
+| `app/models/community_artist.rb`                         | Rails model with validations + search scope |
+| `app/controllers/api/v1/community_artists_controller.rb` | CRUD API controller                         |
+| `db/migrate/..._create_community_artists.rb`             | Database migration                          |
 
 Plus it auto-injects into:
+
 - `async-components.js` — lazy-load entries
 - `ui/index.jsx` — React routes
 - `config/routes/api.rb` — API routes

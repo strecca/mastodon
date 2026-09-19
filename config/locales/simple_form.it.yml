@@ -8,7 +8,7 @@ it:
         display_name: Il tuo nome completo o il tuo soprannome.
         fields: La tua homepage, i pronomi, l'età, tutto quello che vuoi.
         indexable: I tuoi post pubblici potrebbero apparire nei risultati di ricerca su Mastodon. Le persone che hanno interagito con i tuoi post potrebbero essere in grado di cercarli anche se non hai attivato questa impostazione.
-        note: 'Puoi @menzionare altre persone o usare gli #hashtags.'
+        note: "Puoi @menzionare altre persone o usare gli #hashtags."
         show_collections: Le persone saranno in grado di navigare tra chi segui e chi ti segue. Le persone che segui vedranno che segui loro a prescindere.
         unlocked: Le persone potranno seguirti senza richiedere l'approvazione. Deseleziona questa opzione, se vuoi rivedere le richieste per poterti seguire e scegliere se accettare o rifiutare i nuovi follower.
       account_alias:
@@ -76,7 +76,7 @@ it:
         domain: Questo può essere il nome di dominio che appare nell'indirizzo e-mail o nel record MX che utilizza. Verranno controllati al momento dell'iscrizione.
         with_dns_records: Sarà effettuato un tentativo di risolvere i record DNS del dominio in questione e i risultati saranno inseriti anche nella blacklist
       featured_tag:
-        name: 'Ecco alcuni degli hashtag che hai usato di più recentemente:'
+        name: "Ecco alcuni degli hashtag che hai usato di più recentemente:"
       filters:
         action: Scegli quale azione eseguire quando un post corrisponde al filtro
         actions:
@@ -132,7 +132,7 @@ it:
         hint: Opzionale. Fornisce maggiori dettagli sulla regola
         text: Descrivi una regola o un requisito per gli utenti su questo server. Prova a mantenerla breve e semplice
       sessions:
-        otp: 'Inserisci il codice a due fattori generato dall''app del tuo telefono o usa uno dei codici di recupero:'
+        otp: "Inserisci il codice a due fattori generato dall'app del tuo telefono o usa uno dei codici di recupero:"
         webauthn: Se si tratta di una chiavetta USB assicurati di inserirla e, se necessario, toccarla.
       settings:
         email_subscriptions: Disabilitando questa opzione, si mantengono gli iscritti esistenti ma si interrompe l'invio delle email.
@@ -408,7 +408,7 @@ it:
         events: Eventi abilitati
         template: Modello di carico utile
         url: URL endpoint
-    'no': 'No'
+    "no": "No"
     not_recommended: Non consigliato
     overridden: Sostituito
     recommended: Consigliato
@@ -418,4 +418,4 @@ it:
     title:
       sessions:
         webauthn: Usa una delle tue chiavi di sicurezza per accedere
-    'yes': Si
+    "yes": Si

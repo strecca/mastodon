@@ -1,14 +1,12 @@
-import punycode from 'punycode/';
+import punycode from "punycode/";
 
-const IDNA_PREFIX = 'xn--';
+const IDNA_PREFIX = "xn--";
 
 export const decode = (domain: string) => {
   return domain
-    .split('.')
+    .split(".")
     .map((part) =>
-      part.startsWith(IDNA_PREFIX)
-        ? punycode.decode(part.slice(IDNA_PREFIX.length))
-        : part,
+      part.startsWith(IDNA_PREFIX) ? punycode.decode(part.slice(IDNA_PREFIX.length)) : part,
     )
-    .join('.');
+    .join(".");
 };

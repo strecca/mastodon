@@ -52,7 +52,7 @@ et:
         callback_urls: Ümbersuunamise URLid
         scopes: Ulatused
         secret: Kliendi salasõna
-        title: 'Rakendus: %{name}'
+        title: "Rakendus: %{name}"
     authorizations:
       buttons:
         authorize: Autoriseeri
@@ -89,7 +89,7 @@ et:
         invalid_grant: Antud autoriseerimisluba on vale, aegunud, tagasi võetud, ei kattu kasutatud ümbersuunamise URLid või oli antud teisele kliendile.
         invalid_redirect_uri: Antud ümbersuunamise URL ei ole õige.
         invalid_request:
-          missing_param: 'Puudub nõutud parameeter: %{value}.'
+          missing_param: "Puudub nõutud parameeter: %{value}."
           request_not_authorized: Päring vajab autoriseerimist. Autoriseerimispäringuks vajalik parameeter puudub või on vigane.
           unknown: Taotluses puudub nõutav parameeter, see sisaldab toetamata parameetri väärtust või on muul viisil valesti vormindatud.
         invalid_resource_owner: Antud ressursi omaniku andmed on valed või ressursi omanikku ei leitud

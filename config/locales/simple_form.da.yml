@@ -8,7 +8,7 @@ da:
         display_name: Dit fulde navn eller et kaldenavn.
         fields: Din hjemmeside, dine pronominer, din alder, eller hvad du har lyst til.
         indexable: Dine offentlige indlæg vil kunne vises i Mastodon-søgeresultater. Folk, som har interageret med dem, vil kunne finde dem uanset.
-        note: 'Du kan @omtale andre personer eller #hashtags.'
+        note: "Du kan @omtale andre personer eller #hashtags."
         show_collections: Folk vil kunne se, hvem du følger, og hvem der følger dig. Personer, som du følger, vil kunne se, at du følger dem.
         unlocked: Folk vil kunne følge dig uden at anmode om godkendelse. Fjern markeringen, hvis du vil gennemgå anmodninger om at følge, og vælge, om du vil acceptere eller afvise nye følgere.
       account_alias:
@@ -76,7 +76,7 @@ da:
         domain: Dette kan være domænenavnet vist i den benyttede i e-mailadresse eller MX-post. Begge tjekkes under tilmelding.
         with_dns_records: Et forsøg på at opløse det givne domænes DNS-poster foretages, og resultaterne blokeres ligeledes
       featured_tag:
-        name: 'Her er nogle af dine hyppigst brugte hashtags:'
+        name: "Her er nogle af dine hyppigst brugte hashtags:"
       filters:
         action: Vælg, hvilken handling, der skal udføres, når et indlæg matcher filteret
         actions:
@@ -132,7 +132,7 @@ da:
         hint: Valgfrit. Oplys yderligere detaljer om reglen
         text: Beskriv på en kort og enkel form en regel/krav for brugere på denne server
       sessions:
-        otp: 'Angiv tofaktorkoden generet af din mobil-app eller brug en af dine gendannelseskoder:'
+        otp: "Angiv tofaktorkoden generet af din mobil-app eller brug en af dine gendannelseskoder:"
         webauthn: Er det en USB-nøgle, så sørg for at isætte den og, om nødvendigt, åbne den manuelt.
       settings:
         email_subscriptions: Deaktivering bevarer eksisterende abonnenter, men stopper udsendelsen af e-mails.
@@ -408,7 +408,7 @@ da:
         events: Aktive begivenheder
         template: Payload skabelon
         url: Endepunkts-URL
-    'no': Nej
+    "no": Nej
     not_recommended: Ikke anbefalet
     overridden: Tilsidesat
     recommended: Anbefalet
@@ -418,4 +418,4 @@ da:
     title:
       sessions:
         webauthn: Brug en af dine sikkerhedskoder til indlogning
-    'yes': Ja
+    "yes": Ja

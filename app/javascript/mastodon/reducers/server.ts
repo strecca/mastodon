@@ -1,21 +1,17 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit";
 
 import {
   fetchServer,
   fetchServerTranslationLanguages,
   fetchExtendedDescription,
   fetchDomainBlocks,
-} from 'mastodon/actions/server';
-import type {
-  Server,
-  ExtendedDescription,
-  DomainBlock,
-} from 'mastodon/models/server';
+} from "mastodon/actions/server";
+import type { Server, ExtendedDescription, DomainBlock } from "mastodon/models/server";
 import {
   createServerFromServerJSON,
   createExtendedDescriptionFromServerJSON,
   createDomainBlockFromServerJSON,
-} from 'mastodon/models/server';
+} from "mastodon/models/server";
 
 interface State {
   server: {
@@ -82,9 +78,7 @@ export const serverReducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(fetchExtendedDescription.fulfilled, (state, action) => {
-    state.extendedDescription.item = createExtendedDescriptionFromServerJSON(
-      action.payload,
-    );
+    state.extendedDescription.item = createExtendedDescriptionFromServerJSON(action.payload);
     state.extendedDescription.isLoading = false;
   });
 
@@ -96,13 +90,10 @@ export const serverReducer = createReducer(initialState, (builder) => {
     state.translationLanguages.isLoading = true;
   });
 
-  builder.addCase(
-    fetchServerTranslationLanguages.fulfilled,
-    (state, action) => {
-      state.translationLanguages.item = action.payload;
-      state.translationLanguages.isLoading = false;
-    },
-  );
+  builder.addCase(fetchServerTranslationLanguages.fulfilled, (state, action) => {
+    state.translationLanguages.item = action.payload;
+    state.translationLanguages.isLoading = false;
+  });
 
   builder.addCase(fetchServerTranslationLanguages.rejected, (state) => {
     state.translationLanguages.isLoading = false;
@@ -113,9 +104,7 @@ export const serverReducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(fetchDomainBlocks.fulfilled, (state, action) => {
-    state.domainBlocks.items = action.payload.map((obj) =>
-      createDomainBlockFromServerJSON(obj),
-    );
+    state.domainBlocks.items = action.payload.map((obj) => createDomainBlockFromServerJSON(obj));
     state.domainBlocks.isLoading = false;
     state.domainBlocks.isAvailable = true;
   });

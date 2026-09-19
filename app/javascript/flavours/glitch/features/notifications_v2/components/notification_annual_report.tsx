@@ -1,14 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import CelebrationIcon from '@/material-icons/400-24px/celebration.svg?react';
-import { openModal } from 'flavours/glitch/actions/modal';
-import { Icon } from 'flavours/glitch/components/icon';
-import type { NotificationGroupAnnualReport } from 'flavours/glitch/models/notification_group';
-import { useAppDispatch } from 'flavours/glitch/store';
+import CelebrationIcon from "@/material-icons/400-24px/celebration.svg?react";
+import { openModal } from "flavours/glitch/actions/modal";
+import { Icon } from "flavours/glitch/components/icon";
+import type { NotificationGroupAnnualReport } from "flavours/glitch/models/notification_group";
+import { useAppDispatch } from "flavours/glitch/store";
 
 export const NotificationAnnualReport: React.FC<{
   notification: NotificationGroupAnnualReport;
@@ -20,7 +20,7 @@ export const NotificationAnnualReport: React.FC<{
   const handleClick = useCallback(() => {
     dispatch(
       openModal({
-        modalType: 'ANNUAL_REPORT',
+        modalType: "ANNUAL_REPORT",
         modalProps: { year },
       }),
     );
@@ -28,29 +28,29 @@ export const NotificationAnnualReport: React.FC<{
 
   return (
     <div
-      role='button'
+      role="button"
       className={classNames(
-        'notification-group notification-group--link notification-group--annual-report focusable',
-        { 'notification-group--unread': unread },
+        "notification-group notification-group--link notification-group--annual-report focusable",
+        { "notification-group--unread": unread },
       )}
       tabIndex={0}
     >
-      <div className='notification-group__icon'>
-        <Icon id='celebration' icon={CelebrationIcon} />
+      <div className="notification-group__icon">
+        <Icon id="celebration" icon={CelebrationIcon} />
       </div>
 
-      <div className='notification-group__main'>
+      <div className="notification-group__main">
         <p>
           <FormattedMessage
-            id='notification.annual_report.message'
+            id="notification.annual_report.message"
             defaultMessage="Your {year} #Wrapstodon awaits! Unveil your year's highlights and memorable moments on Mastodon!"
             values={{ year }}
           />
         </p>
-        <button onClick={handleClick} className='link-button' type='button'>
+        <button onClick={handleClick} className="link-button" type="button">
           <FormattedMessage
-            id='notification.annual_report.view'
-            defaultMessage='View #Wrapstodon'
+            id="notification.annual_report.view"
+            defaultMessage="View #Wrapstodon"
           />
         </button>
       </div>

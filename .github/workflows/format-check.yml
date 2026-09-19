@@ -3,8 +3,8 @@ on:
   merge_group:
   push:
     branches:
-      - 'main'
-      - 'stable-*'
+      - "main"
+      - "stable-*"
   pull_request:
 
 jobs:

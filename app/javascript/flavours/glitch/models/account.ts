@@ -1,17 +1,17 @@
-import type { RecordOf } from 'immutable';
-import { List as ImmutableList, Record as ImmutableRecord } from 'immutable';
+import type { RecordOf } from "immutable";
+import { List as ImmutableList, Record as ImmutableRecord } from "immutable";
 
-import escapeTextContentForBrowser from 'escape-html';
+import escapeTextContentForBrowser from "escape-html";
 
 import type {
   ApiAccountFieldJSON,
   ApiAccountRoleJSON,
   ApiAccountJSON,
-} from 'flavours/glitch/api_types/accounts';
-import { unescapeHTML } from 'flavours/glitch/utils/html';
+} from "flavours/glitch/api_types/accounts";
+import { unescapeHTML } from "flavours/glitch/utils/html";
 
-import { CustomEmojiFactory } from './custom_emoji';
-import type { CustomEmoji } from './custom_emoji';
+import { CustomEmojiFactory } from "./custom_emoji";
+import type { CustomEmoji } from "./custom_emoji";
 
 // AccountField
 export interface AccountFieldShape extends Required<ApiAccountFieldJSON> {
@@ -23,11 +23,11 @@ export interface AccountFieldShape extends Required<ApiAccountFieldJSON> {
 type AccountField = RecordOf<AccountFieldShape>;
 
 const AccountFieldFactory = ImmutableRecord<AccountFieldShape>({
-  name: '',
-  value: '',
+  name: "",
+  value: "",
   verified_at: null,
-  name_emojified: '',
-  value_emojified: '',
+  name_emojified: "",
+  value_emojified: "",
   value_plain: null,
 });
 
@@ -36,14 +36,14 @@ export type AccountRoleShape = ApiAccountRoleJSON;
 export type AccountRole = RecordOf<AccountRoleShape>;
 
 const AccountRoleFactory = ImmutableRecord<AccountRoleShape>({
-  color: '',
-  id: '',
-  name: '',
+  color: "",
+  id: "",
+  name: "",
 });
 
 // Account
 export interface AccountShape extends Required<
-  Omit<ApiAccountJSON, 'emojis' | 'fields' | 'roles' | 'moved' | 'url'>
+  Omit<ApiAccountJSON, "emojis" | "fields" | "roles" | "moved" | "url">
 > {
   emojis: ImmutableList<CustomEmoji>;
   fields: ImmutableList<AccountField>;
@@ -59,41 +59,41 @@ export interface AccountShape extends Required<
 export type Account = RecordOf<AccountShape>;
 
 export const accountDefaultValues: AccountShape = {
-  acct: '',
-  avatar: '',
-  avatar_static: '',
-  avatar_description: '',
+  acct: "",
+  avatar: "",
+  avatar_static: "",
+  avatar_description: "",
   bot: false,
-  created_at: '',
+  created_at: "",
   discoverable: false,
   indexable: false,
-  display_name: '',
-  display_name_html: '',
+  display_name: "",
+  display_name_html: "",
   emojis: ImmutableList<CustomEmoji>(),
   feature_approval: {
     automatic: [],
     manual: [],
-    current_user: 'missing',
+    current_user: "missing",
   },
   fields: ImmutableList<AccountField>(),
   group: false,
-  header: '',
-  header_static: '',
-  header_description: '',
-  id: '',
-  last_status_at: '',
+  header: "",
+  header_static: "",
+  header_description: "",
+  id: "",
+  last_status_at: "",
   locked: false,
   noindex: false,
   show_featured: true,
   show_media: true,
   show_media_replies: true,
-  note: '',
-  note_emojified: '',
-  note_plain: 'string',
+  note: "",
+  note_emojified: "",
+  note_plain: "string",
   roles: ImmutableList<AccountRole>(),
-  uri: '',
-  url: '',
-  username: '',
+  uri: "",
+  url: "",
+  username: "",
   followers_count: 0,
   following_count: 0,
   statuses_count: 0,
@@ -124,31 +124,21 @@ export function createAccountFromServerJSON(serverJSON: ApiAccountJSON) {
   const { moved, ...accountJSON } = serverJSON;
 
   const displayName =
-    accountJSON.display_name.trim().length === 0
-      ? accountJSON.username
-      : accountJSON.display_name;
+    accountJSON.display_name.trim().length === 0 ? accountJSON.username : accountJSON.display_name;
 
-  const accountNote =
-    accountJSON.note && accountJSON.note !== '<p></p>' ? accountJSON.note : '';
+  const accountNote = accountJSON.note && accountJSON.note !== "<p></p>" ? accountJSON.note : "";
 
   return AccountFactory({
     ...accountJSON,
     moved: moved?.id,
-    fields: ImmutableList(
-      serverJSON.fields.map((field) => createAccountField(field)),
-    ),
-    emojis: ImmutableList(
-      serverJSON.emojis.map((emoji) => CustomEmojiFactory(emoji)),
-    ),
-    roles: ImmutableList(
-      serverJSON.roles?.map((role) => AccountRoleFactory(role)),
-    ),
+    fields: ImmutableList(serverJSON.fields.map((field) => createAccountField(field))),
+    emojis: ImmutableList(serverJSON.emojis.map((emoji) => CustomEmojiFactory(emoji))),
+    roles: ImmutableList(serverJSON.roles?.map((role) => AccountRoleFactory(role))),
     display_name_html: escapeTextContentForBrowser(displayName),
     note_emojified: accountNote,
     note_plain: unescapeHTML(accountNote),
     url:
-      accountJSON.url?.startsWith('http://') ||
-      accountJSON.url?.startsWith('https://')
+      accountJSON.url?.startsWith("http://") || accountJSON.url?.startsWith("https://")
         ? accountJSON.url
         : accountJSON.uri,
   });

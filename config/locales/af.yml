@@ -106,7 +106,7 @@ af:
       approve_appeal: Aanvaar appèl
       reject_appeal: Verwerp appèl
   errors:
-    '403': Jy het nie toestemming om hierdie bladsy te sien nie.
+    "403": Jy het nie toestemming om hierdie bladsy te sien nie.
   exports:
     bookmarks: Boekmerke
     lists: Lyste
@@ -139,10 +139,10 @@ af:
   privacy_policy:
     title: Privaatheidsbeleid
   rss:
-    content_warning: 'Inhoudwaarskuwing:'
+    content_warning: "Inhoudwaarskuwing:"
     descriptions:
       account: Openbare plasings vanaf @%{acct}
-      tag: 'Openbare plasings met die etiket #%{hashtag}'
+      tag: "Openbare plasings met die etiket #%{hashtag}"
   sessions:
     browsers:
       blackberry: BlackBerry
@@ -154,7 +154,7 @@ af:
     edit_profile: Redigeer profiel
     preferences: Voorkeure
   statuses:
-    content_warning: 'Inhoud waarskuwing: %{warning}'
+    content_warning: "Inhoud waarskuwing: %{warning}"
     errors:
       in_reply_not_found: Die plasing waarop jy probeer reageer blyk nie te bestaan nie.
   statuses_cleanup:

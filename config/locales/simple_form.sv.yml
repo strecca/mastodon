@@ -8,7 +8,7 @@ sv:
         display_name: Ditt fullständiga namn eller ditt roliga namn.
         fields: Din hemsida, ditt pronomen, din ålder, vadhelst du vill.
         indexable: Dina offentliga inlägg kan visas i sökresultat på Mastodon. Personer som har interagerat med dina inlägg kan söka dem oavsett.
-        note: 'Du kan @nämna andra personer eller #hashtaggar.'
+        note: "Du kan @nämna andra personer eller #hashtaggar."
         show_collections: Andra kan se vem du följer och vem som följer dig. De du följer kan alltid se att du följer dem.
         unlocked: Andra kommer att kunna följa dig utan att begära godkännande. Avmarkera om du vill granska följeslagare och välja om du vill acceptera eller avvisa nya följare.
       account_alias:
@@ -53,7 +53,7 @@ sv:
         locale: Språket för användargränssnittet, e-postmeddelanden och push-aviseringar
         password: Använd minst 8 tecken
         phrase: Matchas oavsett användande i text eller innehållsvarning för ett inlägg
-        scopes: 'Vilka API: er applikationen kommer tillåtas åtkomst till. Om du väljer en omfattning på högstanivån behöver du inte välja individuella sådana.'
+        scopes: "Vilka API: er applikationen kommer tillåtas åtkomst till. Om du väljer en omfattning på högstanivån behöver du inte välja individuella sådana."
         setting_advanced_layout: Visa Mastodon med en layout med flera kolumner, så att du kan se tidslinjen, aviseringar, och en tredje kolumn som du väljer själv. Rekommenderas inte för mindre skärmar.
         setting_aggregate_reblogs: Visa inte nya boostar för inlägg som nyligen blivit boostade (påverkar endast nymottagna boostar)
         setting_always_send_emails: E-postnotiser kommer vanligtvis inte skickas när du aktivt använder Mastodon
@@ -76,7 +76,7 @@ sv:
         domain: Detta kan vara domännamnet som dyker upp i e-postadressen eller MX-posten som används. De kommer kontrolleras vid registrering.
         with_dns_records: Ett försök att slå upp den angivna domänens DNS-poster kommer att göras och resultaten kommer också att blockeras
       featured_tag:
-        name: 'Här är några av de hashtaggar du använt nyligen:'
+        name: "Här är några av de hashtaggar du använt nyligen:"
       filters:
         action: Välj vilken åtgärd som ska utföras när ett inlägg matchar filtret
         actions:
@@ -132,7 +132,7 @@ sv:
         hint: Valfritt. Ange mer information om regeln
         text: Beskriv en regel eller ett krav för användare av denna server. Försök hålla det kort och koncist
       sessions:
-        otp: 'Ange tvåfaktorskoden som genererades av din telefonapp, eller använd någon av dina återställningskoder:'
+        otp: "Ange tvåfaktorskoden som genererades av din telefonapp, eller använd någon av dina återställningskoder:"
         webauthn: Om det är en USB-nyckel se till att sätta in den och, om nödvändigt, tryck på den.
       settings:
         email_subscriptions: Om detta inaktiveras behålls befintliga prenumeranter men slutar skicka e-post.
@@ -408,7 +408,7 @@ sv:
         events: Aktiverade händelser
         template: Lastmall
         url: Slutpunkts-URL
-    'no': Nej
+    "no": Nej
     not_recommended: Rekommenderas inte
     overridden: Åsidosatt
     recommended: Rekommenderad
@@ -418,4 +418,4 @@ sv:
     title:
       sessions:
         webauthn: Använd en av dina säkerhetsnycklar för att logga in
-    'yes': Ja
+    "yes": Ja

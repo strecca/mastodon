@@ -1,32 +1,31 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from 'react';
-import { forwardRef, useCallback, useEffect, useRef } from 'react';
+import type { ComponentPropsWithoutRef, CSSProperties } from "react";
+import { forwardRef, useCallback, useEffect, useRef } from "react";
 
-import classes from './checkbox.module.scss';
-import type { CommonFieldWrapperProps } from './form_field_wrapper';
-import { FormFieldWrapper } from './form_field_wrapper';
+import classes from "./checkbox.module.scss";
+import type { CommonFieldWrapperProps } from "./form_field_wrapper";
+import { FormFieldWrapper } from "./form_field_wrapper";
 
-type Props = Omit<ComponentPropsWithoutRef<'input'>, 'type'> & {
+type Props = Omit<ComponentPropsWithoutRef<"input">, "type"> & {
   size?: number;
   indeterminate?: boolean;
 };
 
-export const CheckboxField = forwardRef<
-  HTMLInputElement,
-  Props & CommonFieldWrapperProps
->(({ id, label, hint, status, required, ...otherProps }, ref) => (
-  <FormFieldWrapper
-    label={label}
-    hint={hint}
-    required={required}
-    status={status}
-    inputId={id}
-    inputPlacement='inline-start'
-  >
-    {(inputProps) => <Checkbox {...otherProps} {...inputProps} ref={ref} />}
-  </FormFieldWrapper>
-));
+export const CheckboxField = forwardRef<HTMLInputElement, Props & CommonFieldWrapperProps>(
+  ({ id, label, hint, status, required, ...otherProps }, ref) => (
+    <FormFieldWrapper
+      label={label}
+      hint={hint}
+      required={required}
+      status={status}
+      inputId={id}
+      inputPlacement="inline-start"
+    >
+      {(inputProps) => <Checkbox {...otherProps} {...inputProps} ref={ref} />}
+    </FormFieldWrapper>
+  ),
+);
 
-CheckboxField.displayName = 'CheckboxField';
+CheckboxField.displayName = "CheckboxField";
 
 export const Checkbox = forwardRef<HTMLInputElement, Props>(
   ({ className, size, indeterminate, ...otherProps }, ref) => {
@@ -35,7 +34,7 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>(
     const handleRef = useCallback(
       (element: HTMLInputElement | null) => {
         inputRef.current = element;
-        if (typeof ref === 'function') {
+        if (typeof ref === "function") {
           ref(element);
         } else if (ref) {
           ref.current = element;
@@ -53,13 +52,13 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>(
     return (
       <input
         {...otherProps}
-        type='checkbox'
+        type="checkbox"
         className={classes.checkbox}
-        style={size ? ({ '--size': `${size}px` } as CSSProperties) : undefined}
+        style={size ? ({ "--size": `${size}px` } as CSSProperties) : undefined}
         ref={handleRef}
       />
     );
   },
 );
 
-Checkbox.displayName = 'Checkbox';
+Checkbox.displayName = "Checkbox";

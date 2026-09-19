@@ -1,7 +1,7 @@
 ---
 ie:
   about:
-    about_mastodon_html: 'Li social rete del futur: sin reclams, sin supervision de corporationes, con un dessine etical e decentralisation! Repossede vor data med Mastodon!'
+    about_mastodon_html: "Li social rete del futur: sin reclams, sin supervision de corporationes, con un dessine etical e decentralisation! Repossede vor data med Mastodon!"
     contact_missing: Ne assignat
     contact_unavailable: Ne disponibil
     hosted_on: Mastodon logiat che %{domain}
@@ -383,7 +383,7 @@ ie:
         hint: Li dominia-blocca ne va prevenir li creation de intradas por contos in li database, ma it va retroactivmen e automaticmen aplica specific metodes de moderation a ti contos.
         severity:
           desc_html: "<strong>Limitar</strong> va far que postas de contos che ti dominia es ínvisibil a quicunc ne ja seque les. <strong>Suspender</strong> va remover omni contenete, medie e profil-data por li contos de ti dominia de tui servitor. Usa <strong>Null</strong> si tu vole simplicmen rejecter medie-files."
-          noop: 'Null'
+          noop: "Null"
           silence: Limitar
           suspend: Suspender
         title: Nov dominia-blocca
@@ -425,10 +425,10 @@ ie:
       import:
         description_html: Tu va importar un liste de dominia-bloccas. Ples controlar ti liste tre cuidosimen, precipue si tu ne creat li liste personalmen.
         existing_relationships_warning: Existent seque-relationes
-        private_comment_description_html: 'Por auxiliar te saver de u veni importat bloccas, importat bloccas va esser creat con li sequent privat comenta: <q>%{comment}</q>'
+        private_comment_description_html: "Por auxiliar te saver de u veni importat bloccas, importat bloccas va esser creat con li sequent privat comenta: <q>%{comment}</q>"
         private_comment_template: Importat de %{source} ye %{date}
         title: Importar dominia-bloccas
-      invalid_domain_block: 'Un o plu dominia-bloccas esset omisset pro li sequent errore(s): %{error}'
+      invalid_domain_block: "Un o plu dominia-bloccas esset omisset pro li sequent errore(s): %{error}"
       new:
         title: Importar dominia-bloccas
       no_file: Null file selectet
@@ -522,12 +522,12 @@ ie:
       created_msg: Successosimen adjuntet nov IP-regul
       delete: Deleter
       expires_in:
-        '1209600': 2 semanes
-        '15778476': 6 mensus
-        '2629746': 1 mensu
-        '31556952': 1 annu
-        '86400': 1 die
-        '94670856': 3 annus
+        "1209600": 2 semanes
+        "15778476": 6 mensus
+        "2629746": 1 mensu
+        "31556952": 1 annu
+        "86400": 1 die
+        "94670856": 3 annus
       new:
         title: Crear nov IP-regul
       no_ip_block_selected: Null IP-regules esset changeat pro que null esset selectet
@@ -579,8 +579,8 @@ ie:
       category: Categorie
       category_description_html: Li rason pro quel ti conto e/o contenete esset raportat va esser citat in comunication con li conto raportat
       comment:
-        none: 'Null'
-      comment_description_html: 'Por provider plu mult information, %{name} scrit:'
+        none: "Null"
+      comment_description_html: "Por provider plu mult information, %{name} scrit:"
       confirm: Confirmar
       confirm_action: Confirmar moderatori action contra @%{acct}
       created_at: Raportat
@@ -599,11 +599,11 @@ ie:
         placeholder: Descrir li actiones queles ha esset fat, o quelcunc altri relatent actualisationes...
         title: Notas
       notes_description_html: Vider e lassar notas a altri moderatores e a tui futuri self
-      processed_msg: 'Raporte #%{id} successosimen tractat'
-      quick_actions_description_html: 'Fa un rapid action o ear ad-infra por vider li contenete raportat:'
+      processed_msg: "Raporte #%{id} successosimen tractat"
+      quick_actions_description_html: "Fa un rapid action o ear ad-infra por vider li contenete raportat:"
       remote_user_placeholder: li lontan usator de %{instance}
       reopen: Reaperter raporte
-      report: 'Raporte #%{id}'
+      report: "Raporte #%{id}"
       reported_account: Raportat conto
       reported_by: Raportat de
       resolved: Soluet
@@ -613,16 +613,16 @@ ie:
       statuses_description_html: Ofensiv contenete va esser citat in comunication con li raportat conto
       summary:
         action_preambles:
-          delete_html: 'Tu va <strong>remover</strong> alcun postas de <strong>@%{acct}</strong>''. To va:'
-          mark_as_sensitive_html: 'Tu va <strong>marcar</strong> alcun postas de <strong>@%{acct}</strong> quam <strong>sensitiv</strong>. To va:'
-          silence_html: 'Tu va <strong>limitar</strong> li conto de <strong>@%{acct}</strong>. To va:'
-          suspend_html: 'Tu va <strong>suspender</strong> li conto de <strong>@%{acct}</strong>. To va:'
+          delete_html: "Tu va <strong>remover</strong> alcun postas de <strong>@%{acct}</strong>'. To va:"
+          mark_as_sensitive_html: "Tu va <strong>marcar</strong> alcun postas de <strong>@%{acct}</strong> quam <strong>sensitiv</strong>. To va:"
+          silence_html: "Tu va <strong>limitar</strong> li conto de <strong>@%{acct}</strong>. To va:"
+          suspend_html: "Tu va <strong>suspender</strong> li conto de <strong>@%{acct}</strong>. To va:"
         actions:
           delete_html: Remover li ofendent postas
           mark_as_sensitive_html: Marcar li medie del ofendent postas quam sensitiv
           silence_html: Severimen limitar li atingement de <strong>@%{acct}</strong> per far su profil e contenete visibil solmen a persones qui ja seque ilu o qui sercha su profil manualmen
           suspend_html: Suspender <strong>@%{acct}</strong>, fante su profil e contenete ínaccessibil e ínpossibil con quel interacter
-        close_report: 'Marcar raporte #%{id} quam resoluet'
+        close_report: "Marcar raporte #%{id} quam resoluet"
         close_reports_html: Marcar <strong>omni</strong> raportes contra <strong>@%{acct}</strong> quam soluet
         delete_data_html: Deleter li profil e contenete de <strong>@%{acct}</strong> 30 dies pos nu, except si ilu es dessuspendet ante tande
         preview_preamble_html: "<strong>@%{acct}</strong> va reciver un admoniment con li sequent contenete:"
@@ -631,7 +631,7 @@ ie:
       target_origin: Orígine del conto raportat
       title: Raportes
       unassign: Ínassignar
-      unknown_action_msg: 'Ínconosset action: %{action}'
+      unknown_action_msg: "Ínconosset action: %{action}"
       unresolved: Ínresoluet
       updated_at: Actualisat
       view_profile: Vider profil
@@ -820,7 +820,7 @@ ie:
       elasticsearch_running_check:
         message_html: Ne posset conexer a Elasticsearch. Ples confirmar que it ha esset executet, o desactivar serchada de plen textu
       elasticsearch_version_check:
-        message_html: 'Version de Elasticsearch íncompatibil: %{value}'
+        message_html: "Version de Elasticsearch íncompatibil: %{value}"
         version_comparison: Elasticsearch %{running_version} executet ma %{required_version} postulat
       rules_check:
         action: Gerer regules de servitor
@@ -899,9 +899,9 @@ ie:
         peaked_on_and_decaying: Atinget su cime ye %{date}, nu deperient
         title: Populari hashtags
         trendable: Posse aparir in tendenties
-        trending_rank: 'Tendentie #%{rank}'
+        trending_rank: "Tendentie #%{rank}"
         usable: Permisset
-        usage_comparison: 'Usat hodie: %{today} vez(es), yer: %{yesterday}'
+        usage_comparison: "Usat hodie: %{today} vez(es), yer: %{yesterday}"
         used_by_over_week:
           one: Usat de un person durant li ultim semane
           other: Usat de %{count} persones durant li ultim semane
@@ -961,7 +961,7 @@ ie:
       body: Nov versiones de Mastodon ha esset lansat, vu fórsan vole actualisar!
       subject: Nov versiones Mastodon es disponibil por %{instance}!
     new_trends:
-      body: 'Li sequent elementes besona un revision ante que on posse monstrar les publicmen:'
+      body: "Li sequent elementes besona un revision ante que on posse monstrar les publicmen:"
       new_trending_links:
         title: Populari ligamentes
       new_trending_statuses:
@@ -987,7 +987,7 @@ ie:
   application_mailer:
     salutation: "%{name},"
     unsubscribe: Desabonnar
-    view: 'Vider:'
+    view: "Vider:"
     view_profile: Vider profil
     view_status: Vider posta
   applications:
@@ -1044,7 +1044,7 @@ ie:
     rules:
       accept: Acceptar
       back: Retro
-      invited_by: 'Tu posse adherer %{domain} mersí al invitation quel tu recivet de:'
+      invited_by: "Tu posse adherer %{domain} mersí al invitation quel tu recivet de:"
       preamble: Tis es etablisset e infortiat del moderatores de %{domain}.
       preamble_invited: Ante que tu procede, ples considerar li regules establisset del moderatores de %{domain}.
       title: Quelc regules basic.
@@ -1101,7 +1101,7 @@ ie:
     proceed: Deleter li conto
     success_msg: Tui conto esset successosimen deletet
     warning:
-      before: 'Ante proceder, ples leer ti notas cuidosimen:'
+      before: "Ante proceder, ples leer ti notas cuidosimen:"
       caches: Contenete quel ha esset inmagasinat de altri servitores fórsan va persister
       data_removal: Tui postas e altri data va esser permanentmen removet
       irreversible: Tu ne va posser restaurar o reactivisar tui conto
@@ -1124,7 +1124,7 @@ ie:
       description_html: Tis es li actiones fat contra tui conto e admonimentes misset a te del personale de %{instance}.
       recipient: Adressat a
       reject_appeal: Rejecter apelle
-      status: 'Posta #%{id}'
+      status: "Posta #%{id}"
       status_removed: Posta ja removet del sistema
       title: "%{action} de %{date}"
       title_actions:
@@ -1141,19 +1141,19 @@ ie:
   edit_profile:
     other: Altri
   errors:
-    '400': Li demande quel tu inviat esset ínvalid o misformat.
-    '403': Tu ne have permission vider ti-ci págine.
-    '404': Li págine quel tu sercha ne es ci.
-    '406': Ti-ci págine ne es disponibil in li formate petit.
-    '410': Li págine quel tu serchat ne plu existe ci.
-    '422':
+    "400": Li demande quel tu inviat esset ínvalid o misformat.
+    "403": Tu ne have permission vider ti-ci págine.
+    "404": Li págine quel tu sercha ne es ci.
+    "406": Ti-ci págine ne es disponibil in li formate petit.
+    "410": Li págine quel tu serchat ne plu existe ci.
+    "422":
       content: Verification de securitá fallit. Esque tu blocca cookies?
       title: Verification de securitá fallit
-    '429': Tro mult demandes
-    '500':
+    "429": Tro mult demandes
+    "500":
       content: Pardona nos, alquo errat in nor servitor.
       title: Ti-ci págine ne es corect
-    '503': On ne posset servir li págine pro un falliment temporari del servitor.
+    "503": On ne posset servir li págine pro un falliment temporari del servitor.
     noscript_html: Por usar li web-aplication de Mastodon, ples activisar JavaScript. Alternativmen, prova un del <a href="%{apps_path}">nativ aplicationes</a> por Mastodon por tui platform.
   existing_username_validator:
     not_found: ne posset trovar un local usator con ti usator-nómine
@@ -1232,7 +1232,7 @@ ie:
     copy: Copiar
     delete: Deleter
     deselect: Desselecter omnis
-    none: 'Null'
+    none: "Null"
     order_by: Ordinar per
     save_changes: Conservar changes
     select_all_matching_items:
@@ -1246,7 +1246,7 @@ ie:
     errors:
       empty: li file es vacui
       incompatible_type: Íncompatibil con li selectet specie de importation
-      invalid_csv_file: 'Ínvalid file CSV. Errore: %{error}'
+      invalid_csv_file: "Ínvalid file CSV. Errore: %{error}"
       over_rows_processing_limit: contene plu quam %{count} lineas
       too_large: li file es tro grand
     failures: Fallites
@@ -1290,16 +1290,16 @@ ie:
     delete: Desactivisar
     expired: Expirat
     expires_in:
-      '1800': 30 minutes
-      '21600': 6 hores
-      '3600': 1 hor
-      '43200': 12 hores
-      '604800': 1 semane
-      '86400': 1 die
+      "1800": 30 minutes
+      "21600": 6 hores
+      "3600": 1 hor
+      "43200": 12 hores
+      "604800": 1 semane
+      "86400": 1 die
     expires_in_prompt: Nequande
     generate: Generar ligament de invitation
     invalid: Ti-ci invitation ne es valid
-    invited_by: 'Tu esset invitat de:'
+    invited_by: "Tu esset invitat de:"
     max_uses:
       one: 1 use
       other: "%{count} uses"
@@ -1351,7 +1351,7 @@ ie:
     set_redirect: Configurar un redirection
     warning:
       backreference_required: Li nov conto deve in prim esser configurat por retroreferentiar ti-ci conto
-      before: 'Ante proceder, ples leer ti notas cuidosimen:'
+      before: "Ante proceder, ples leer ti notas cuidosimen:"
       cooldown: Pos mover se, hay un periode de atendida durant quel tu ne va posser mover te denov
       disabled_account: Tui actual conto ne va esser completmen usabil pos to. Támen, tu va posser accesser li exportation de data, e anc reactivisation.
       followers: Ti-ci action va mover omni sequitores del actual conto al nov conto
@@ -1362,7 +1362,7 @@ ie:
   move_handler:
     carry_blocks_over_text: Ti usator translocat se de %{acct}, quel tu hat bloccat.
     carry_mutes_over_text: Ti-ci usator movet se de %{acct}, quel tu hat silentiat.
-    copy_account_note_text: 'Vi tui notas pri ti usator qui translocat se de %{acct}:'
+    copy_account_note_text: "Vi tui notas pri ti usator qui translocat se de %{acct}:"
   navigation:
     toggle_menu: Changear menú
   notification_mailer:
@@ -1372,7 +1372,7 @@ ie:
       sign_up:
         subject: "%{name} adheret"
     favourite:
-      body: 'Tui posta esset favoritisat de %{name}:'
+      body: "Tui posta esset favoritisat de %{name}:"
       subject: "%{name} favoritisat tui posta"
       title: Nov favoritisation
     follow:
@@ -1382,17 +1382,17 @@ ie:
     follow_request:
       action: Tractar petitiones de sequer
       body: "%{name} ha petit sequer te"
-      subject: 'Pendent sequitor: %{name}'
+      subject: "Pendent sequitor: %{name}"
       title: Nov petition de sequer
     mention:
       action: Responder
-      body: 'Tu esset mentionat de %{name} in:'
+      body: "Tu esset mentionat de %{name} in:"
       subject: Tu esset mentionat de %{name}
       title: Nov mention
     poll:
       subject: Un balotation de %{name} ha finit
     reblog:
-      body: 'Tui posta esset boostat de %{name}:'
+      body: "Tui posta esset boostat de %{name}:"
       subject: "%{name} boostat tui posta"
       title: Nov boost
     status:
@@ -1400,7 +1400,7 @@ ie:
     update:
       subject: "%{name} modificat un posta"
   notifications:
-    email_events_hint: 'Selecte li evenimentes pri queles tu vole reciver notificationes:'
+    email_events_hint: "Selecte li evenimentes pri queles tu vole reciver notificationes:"
   number:
     human:
       decimal_units:
@@ -1416,7 +1416,7 @@ ie:
     description_html: Si tu activisa <strong>2-factor autentication</strong> per un aplication de autentication, aperter un session va postular que tu have possession de tui telefon, quel va generar codes por que tu mey inmetter les.
     enable: Activar
     instructions_html: "<strong>Scande ti-ci code QR ad-in Google Authenticator o un simil aplication TOTP in tu telefon</strong>. Pos nu, ti aplication va generar codes queles tu va dever inmetter quande tu aperte un session."
-    manual_instructions: 'Si tu ne posse scander li code QR e besona inmetter it manualmen, vi li crud-text secrete:'
+    manual_instructions: "Si tu ne posse scander li code QR e besona inmetter it manualmen, vi li crud-text secrete:"
     setup: Configurar
     wrong_code: Li inmettet code esset ínvalid! Esque li témpor del servitor e del aparate corect?
   pagination:
@@ -1486,10 +1486,10 @@ ie:
     errors:
       invalid_rules: ne refere valid regules
   rss:
-    content_warning: 'Avise pri li contenete:'
+    content_warning: "Avise pri li contenete:"
     descriptions:
       account: Public postas de @%{acct}
-      tag: 'Public postas con li hashtag #%{hashtag}'
+      tag: "Public postas con li hashtag #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: Tu ha atinget li límite de %{limit} planat postas por hodie
     over_total_limit: Tu ha atinget li límite de %{limit} planat postas
@@ -1580,7 +1580,7 @@ ie:
       audio:
         one: "%{count} audio-file"
         other: "%{count} audio-files"
-      description: 'Atachat: %{attached}'
+      description: "Atachat: %{attached}"
       image:
         one: "%{count} image"
         other: "%{count} images"
@@ -1588,11 +1588,11 @@ ie:
         one: "%{count} video"
         other: "%{count} videos"
     boosted_from_html: Boostat de %{acct_link}
-    content_warning: 'Avise de contenete: %{warning}'
+    content_warning: "Avise de contenete: %{warning}"
     default_language: Sam quam li lingue del interfacie
     disallowed_hashtags:
-      one: 'contenet un ínpermisset hashtag: %{tags}'
-      other: 'contenet li ínpermisset hashtags: %{tags}'
+      one: "contenet un ínpermisset hashtag: %{tags}"
+      other: "contenet li ínpermisset hashtags: %{tags}"
     edited_at_html: Modificat ye %{date}
     errors:
       in_reply_not_found: Li posta a quel tu prova responder ne sembla exister.
@@ -1625,14 +1625,14 @@ ie:
     keep_self_fav: Retener postas favorit de te
     keep_self_fav_hint: Ne delete tui propri postas si tu ha favoritisat les
     min_age:
-      '1209600': 2 semanes
-      '15778476': 6 mensus
-      '2629746': 1 mensu
-      '31556952': 1 annu
-      '5259492': 2 mensus
-      '604800': 1 semane
-      '63113904': 2 annus
-      '7889238': 3 mensus
+      "1209600": 2 semanes
+      "15778476": 6 mensus
+      "2629746": 1 mensu
+      "31556952": 1 annu
+      "5259492": 2 mensus
+      "604800": 1 semane
+      "63113904": 2 annus
+      "7889238": 3 mensus
     min_age_label: Sill de etá
     min_favs: Conservar postas favoritisat adminim
     min_favs_hint: Ne delete quelcunc de tui postas quel ha recivet adminim ti-ci númere de favoritisationes. Lassar vacui por deleter postas sin egard a su númere de favoritisationes
@@ -1688,14 +1688,14 @@ ie:
       subject: Tui archive es pret por descargar
       title: Descargar archive
     failed_2fa:
-      details: 'Vi li detallies del prova de intrar:'
+      details: "Vi li detallies del prova de intrar:"
       explanation: Alqui provat accesser tui conto ma usat un ínvalid duesim factor de autentication.
       further_actions_html: Si it ne esset tu, noi recomanda que tu strax %{action} nam li conto posse esser compromisset.
       subject: Falliment de autentication de duesim factor
       title: Fallit autentication de duesim factor
     suspicious_sign_in:
       change_password: changear tui passa-parol
-      details: 'Vi li detallies del apertion de session:'
+      details: "Vi li detallies del apertion de session:"
       explanation: On detectet un intration a tui conto de un nov IP-adresse.
       further_actions_html: Si to ne esset tu, on recomanda que tu %{action} strax e activisar 2-factor autentication por mantener tui conto secur.
       subject: Tui conto ha esset accesset de un nov IP-adresse
@@ -1713,8 +1713,8 @@ ie:
         sensitive: Pos nu, omni tui cargat medie-files va esser marcat quam sensitiv e celat detra un avise que on deve cliccar por transpassar.
         silence: Tu ancor posse usar tui conto, ma solmen gente qui ja seque te va posser vider tui postas in ti-ci servitor, e tu va esser excludet de utensiles de decovrition. Támen, altres ancor posse sequer te manualmen.
         suspend: Tu ne plu posse usar tui conto, e tui profil e altri data nu es ínaccessibil. Tu ancor posse intrar por solicitar un archive de tui data til que li data es removet in circa 30 dies, ma noi va retener quelc basic data pri te por preventer te evitar li suspension.
-      reason: 'Rason:'
-      statuses: 'Postas citat:'
+      reason: "Rason:"
+      statuses: "Postas citat:"
       subject:
         delete_statuses: Tui postas che %{acct} ha esset removet
         disable: Tui conto %{acct} ha esset gelat
@@ -1736,7 +1736,7 @@ ie:
       apps_ios_action: Descargar sur li App Store
       apps_step: Descargar nor aplis oficial.
       apps_title: Aplis de Mastodon
-      checklist_subtitle: 'Lass nos auxiliar te comensar sur ti-ci frontiera social:'
+      checklist_subtitle: "Lass nos auxiliar te comensar sur ti-ci frontiera social:"
       checklist_title: Lista de benevenit
       edit_profile_action: Personalisar
       edit_profile_step: Agranda tui interactiones per un profil detalliat.
@@ -1777,7 +1777,7 @@ ie:
     invalid_otp_token: Ínvalid 2-factor code
     otp_lost_help_html: Si tu perdit accesse a ambis, tu posse contacter %{email}
     rate_limited: Tro mult de provas de autentication, ples provar denov plu tard.
-    signed_in_as: 'Session apertet quam:'
+    signed_in_as: "Session apertet quam:"
   verification:
     extra_instructions_html: '<strong>Nota</strong>: Li ligament in tui websitu posse esser ínvisibil. Li important parte es <code>rel="me"</code> quel prevente fals self-identification in websitus con contenete generat de usatores. Tu posse mem usar un <code>link</code> element in li cap-section del págine vice <code>a</code>, ma li HTML code deve esser accessibil sin executer JavaScript.'
     here_is_how: Vide qualmen

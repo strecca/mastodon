@@ -1,33 +1,31 @@
-import type { ChangeEventHandler, FC } from 'react';
-import { useCallback } from 'react';
+import type { ChangeEventHandler, FC } from "react";
+import { useCallback } from "react";
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { Callout } from '@/mastodon/components/callout';
-import { ToggleField } from '@/mastodon/components/form_fields';
-import { LoadingIndicator } from '@/mastodon/components/loading_indicator';
-import { patchProfile } from '@/mastodon/reducers/slices/profile_edit';
-import { useAppDispatch, useAppSelector } from '@/mastodon/store';
+import { Callout } from "@/mastodon/components/callout";
+import { ToggleField } from "@/mastodon/components/form_fields";
+import { LoadingIndicator } from "@/mastodon/components/loading_indicator";
+import { patchProfile } from "@/mastodon/reducers/slices/profile_edit";
+import { useAppDispatch, useAppSelector } from "@/mastodon/store";
 
-import type { DialogModalProps } from '../../ui/components/dialog_modal';
-import { DialogModal } from '../../ui/components/dialog_modal';
-import { messages } from '../index';
+import type { DialogModalProps } from "../../ui/components/dialog_modal";
+import { DialogModal } from "../../ui/components/dialog_modal";
+import { messages } from "../index";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 export const ProfileDisplayModal: FC<DialogModalProps> = ({ onClose }) => {
   const intl = useIntl();
 
   const { profile, isPending } = useAppSelector((state) => state.profileEdit);
-  const serverName = useAppSelector(
-    (state) => state.meta.get('domain') as string,
-  );
+  const serverName = useAppSelector((state) => state.meta.get("domain") as string);
 
   const dispatch = useAppDispatch();
   const handleToggleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     (event) => {
       const { name, checked } = event.target;
-      const targetChecked = name === 'hide_collections' ? !checked : checked;
+      const targetChecked = name === "hide_collections" ? !checked : checked;
       void dispatch(patchProfile({ [name]: targetChecked }));
     },
     [dispatch],
@@ -48,17 +46,17 @@ export const ProfileDisplayModal: FC<DialogModalProps> = ({ onClose }) => {
           checked={profile.showMedia}
           onChange={handleToggleChange}
           disabled={isPending}
-          name='show_media'
+          name="show_media"
           label={
             <FormattedMessage
-              id='account_edit.profile_tab.show_media.title'
-              defaultMessage='Show ‘Media’ tab'
+              id="account_edit.profile_tab.show_media.title"
+              defaultMessage="Show ‘Media’ tab"
             />
           }
           hint={
             <FormattedMessage
-              id='account_edit.profile_tab.show_media.description'
-              defaultMessage='‘Media’ is an optional tab that shows your posts containing images or videos.'
+              id="account_edit.profile_tab.show_media.description"
+              defaultMessage="‘Media’ is an optional tab that shows your posts containing images or videos."
             />
           }
         />
@@ -68,17 +66,17 @@ export const ProfileDisplayModal: FC<DialogModalProps> = ({ onClose }) => {
             checked={profile.showMediaReplies}
             onChange={handleToggleChange}
             disabled={isPending}
-            name='show_media_replies'
+            name="show_media_replies"
             label={
               <FormattedMessage
-                id='account_edit.profile_tab.show_media_replies.title'
-                defaultMessage='Include replies on ‘Media’ tab'
+                id="account_edit.profile_tab.show_media_replies.title"
+                defaultMessage="Include replies on ‘Media’ tab"
               />
             }
             hint={
               <FormattedMessage
-                id='account_edit.profile_tab.show_media_replies.description'
-                defaultMessage='When enabled, Media tab shows both your posts and replies to other people’s posts.'
+                id="account_edit.profile_tab.show_media_replies.description"
+                defaultMessage="When enabled, Media tab shows both your posts and replies to other people’s posts."
               />
             }
           />
@@ -88,17 +86,17 @@ export const ProfileDisplayModal: FC<DialogModalProps> = ({ onClose }) => {
           checked={profile.showFeatured}
           onChange={handleToggleChange}
           disabled={isPending}
-          name='show_featured'
+          name="show_featured"
           label={
             <FormattedMessage
-              id='account_edit.profile_tab.show_featured.title'
-              defaultMessage='Show ‘Featured’ tab'
+              id="account_edit.profile_tab.show_featured.title"
+              defaultMessage="Show ‘Featured’ tab"
             />
           }
           hint={
             <FormattedMessage
-              id='account_edit.profile_tab.show_featured.description'
-              defaultMessage='‘Featured’ is an optional tab where you can showcase other accounts.'
+              id="account_edit.profile_tab.show_featured.description"
+              defaultMessage="‘Featured’ is an optional tab where you can showcase other accounts."
             />
           }
         />
@@ -107,17 +105,17 @@ export const ProfileDisplayModal: FC<DialogModalProps> = ({ onClose }) => {
           checked={!profile.hideCollections}
           onChange={handleToggleChange}
           disabled={isPending}
-          name='hide_collections'
+          name="hide_collections"
           label={
             <FormattedMessage
-              id='account_edit.profile_tab.show_relations.title'
-              defaultMessage='Show ‘Followers’ and ‘Following’'
+              id="account_edit.profile_tab.show_relations.title"
+              defaultMessage="Show ‘Followers’ and ‘Following’"
             />
           }
           hint={
             <FormattedMessage
-              id='account_edit.profile_tab.show_relations.description'
-              defaultMessage='Shows accounts you follow and follows you to other users in your profile. People will still be able to see if you are following them.'
+              id="account_edit.profile_tab.show_relations.description"
+              defaultMessage="Shows accounts you follow and follows you to other users in your profile. People will still be able to see if you are following them."
             />
           }
         />
@@ -126,15 +124,15 @@ export const ProfileDisplayModal: FC<DialogModalProps> = ({ onClose }) => {
       <Callout
         title={
           <FormattedMessage
-            id='account_edit.profile_tab.hint.title'
-            defaultMessage='Displays still vary'
+            id="account_edit.profile_tab.hint.title"
+            defaultMessage="Displays still vary"
           />
         }
         icon={false}
       >
         <FormattedMessage
-          id='account_edit.profile_tab.hint.description'
-          defaultMessage='These settings customize what users see on {server} in the official apps, but they may not apply to users on other servers and 3rd party apps.'
+          id="account_edit.profile_tab.hint.description"
+          defaultMessage="These settings customize what users see on {server} in the official apps, but they may not apply to users on other servers and 3rd party apps."
           values={{
             server: serverName,
           }}

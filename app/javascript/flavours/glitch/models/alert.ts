@@ -1,4 +1,4 @@
-import type { MessageDescriptor } from 'react-intl';
+import type { MessageDescriptor } from "react-intl";
 
 export type TranslatableString = string | MessageDescriptor;
 

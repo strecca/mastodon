@@ -4,8 +4,8 @@ on:
   merge_group:
   push:
     branches:
-      - 'main'
-      - 'stable-*'
+      - "main"
+      - "stable-*"
   pull_request:
 
 env:
@@ -41,7 +41,7 @@ jobs:
       - name: Set up Javascript environment
         uses: ./.github/actions/setup-javascript
         with:
-          onlyProduction: 'true'
+          onlyProduction: "true"
 
       - name: Cache assets from compilation
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
@@ -119,22 +119,22 @@ jobs:
       OIDC_SCOPE: read
       SAML_ENABLED: true
       CAS_ENABLED: true
-      BUNDLE_WITH: 'pam_authentication test'
+      BUNDLE_WITH: "pam_authentication test"
       GITHUB_RSPEC: ${{ matrix.ruby-version == '.ruby-version' && github.event.pull_request && 'true' }}
 
     strategy:
       fail-fast: false
       matrix:
         ruby-version:
-          - '3.3'
-          - '3.4'
-          - '.ruby-version'
+          - "3.3"
+          - "3.4"
+          - ".ruby-version"
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
 
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
-          path: './'
+          path: "./"
           name: ${{ github.sha }}
 
       - name: Expand archived asset artifacts
@@ -221,16 +221,16 @@ jobs:
       fail-fast: false
       matrix:
         ruby-version:
-          - '3.3'
-          - '3.4'
-          - '.ruby-version'
+          - "3.3"
+          - "3.4"
+          - ".ruby-version"
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
 
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
-          path: './'
+          path: "./"
           name: ${{ github.sha }}
 
       - name: Expand archived asset artifacts
@@ -248,7 +248,7 @@ jobs:
         uses: ./.github/actions/setup-javascript
 
       - name: Load database schema
-        run: './bin/rails db:create db:schema:load db:seed'
+        run: "./bin/rails db:create db:schema:load db:seed"
 
       - name: Cache Playwright Chromium browser
         id: playwright-cache
@@ -354,15 +354,15 @@ jobs:
       fail-fast: false
       matrix:
         ruby-version:
-          - '3.3'
-          - '3.4'
-          - '.ruby-version'
+          - "3.3"
+          - "3.4"
+          - ".ruby-version"
         search-image:
           - docker.elastic.co/elasticsearch/elasticsearch:7.17.29
         include:
-          - ruby-version: '.ruby-version'
+          - ruby-version: ".ruby-version"
             search-image: docker.elastic.co/elasticsearch/elasticsearch:8.19.2
-          - ruby-version: '.ruby-version'
+          - ruby-version: ".ruby-version"
             search-image: opensearchproject/opensearch:2
 
     steps:
@@ -370,7 +370,7 @@ jobs:
 
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
-          path: './'
+          path: "./"
           name: ${{ github.sha }}
 
       - name: Set up Ruby environment
@@ -384,7 +384,7 @@ jobs:
         uses: ./.github/actions/setup-javascript
 
       - name: Load database schema
-        run: './bin/rails db:create db:schema:load db:seed'
+        run: "./bin/rails db:create db:schema:load db:seed"
 
       - run: bin/rspec --tag search
 

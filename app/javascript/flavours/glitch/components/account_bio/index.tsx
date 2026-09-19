@@ -1,10 +1,10 @@
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { useAppSelector } from '../../store';
-import { EmojiHTML } from '../emoji/html';
-import { useElementHandledLink } from '../status/handled_link';
+import { useAppSelector } from "../../store";
+import { EmojiHTML } from "../emoji/html";
+import { useElementHandledLink } from "../status/handled_link";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 interface AccountBioProps {
   className?: string;
@@ -24,7 +24,7 @@ export const AccountBio: React.FC<AccountBioProps> = ({
   const note = useAppSelector((state) => {
     const account = state.accounts.get(accountId);
     if (!account) {
-      return '';
+      return "";
     }
     return account.note_emojified;
   });
@@ -41,7 +41,7 @@ export const AccountBio: React.FC<AccountBioProps> = ({
     <EmojiHTML
       htmlString={note}
       extraEmojis={extraEmojis}
-      className={classNames(className, 'translate')}
+      className={classNames(className, "translate")}
       {...htmlHandlers}
     />
   );

@@ -1,17 +1,17 @@
-import { useCallback } from 'react';
-import type { FC } from 'react';
+import { useCallback } from "react";
+import type { FC } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { cancelPasteLinkCompose } from '@/flavours/glitch/actions/compose_typed';
-import { useAppDispatch } from '@/flavours/glitch/store';
-import CancelFillIcon from '@/material-icons/400-24px/cancel-fill.svg?react';
-import { DisplayName } from 'flavours/glitch/components/display_name';
-import { IconButton } from 'flavours/glitch/components/icon_button';
-import { Skeleton } from 'flavours/glitch/components/skeleton';
+import { cancelPasteLinkCompose } from "@/flavours/glitch/actions/compose_typed";
+import { useAppDispatch } from "@/flavours/glitch/store";
+import CancelFillIcon from "@/material-icons/400-24px/cancel-fill.svg?react";
+import { DisplayName } from "flavours/glitch/components/display_name";
+import { IconButton } from "flavours/glitch/components/icon_button";
+import { Skeleton } from "flavours/glitch/components/skeleton";
 
 const messages = defineMessages({
-  quote_cancel: { id: 'status.quote.cancel', defaultMessage: 'Cancel quote' },
+  quote_cancel: { id: "status.quote.cancel", defaultMessage: "Cancel quote" },
 });
 
 export const QuotePlaceholder: FC = () => {
@@ -22,24 +22,24 @@ export const QuotePlaceholder: FC = () => {
   }, [dispatch]);
 
   return (
-    <div className='status__quote'>
-      <div className='status'>
-        <div className='status__info'>
-          <div className='status__avatar'>
-            <Skeleton width='32px' height='32px' />
+    <div className="status__quote">
+      <div className="status">
+        <div className="status__info">
+          <div className="status__avatar">
+            <Skeleton width="32px" height="32px" />
           </div>
-          <div className='status__display-name'>
+          <div className="status__display-name">
             <DisplayName />
           </div>
           <IconButton
             onClick={handleQuoteCancel}
-            className='status__quote-cancel'
+            className="status__quote-cancel"
             title={intl.formatMessage(messages.quote_cancel)}
-            icon='cancel-fill'
+            icon="cancel-fill"
             iconComponent={CancelFillIcon}
           />
         </div>
-        <div className='status__content'>
+        <div className="status__content">
           <Skeleton />
         </div>
       </div>

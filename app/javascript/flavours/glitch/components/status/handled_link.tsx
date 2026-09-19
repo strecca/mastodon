@@ -1,21 +1,21 @@
-import { useCallback, useEffect, useRef } from 'react';
-import type { ComponentProps, FC } from 'react';
+import { useCallback, useEffect, useRef } from "react";
+import type { ComponentProps, FC } from "react";
 
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-import type { ApiMentionJSON } from '@/flavours/glitch/api_types/statuses';
-import { getCollectionPath } from '@/flavours/glitch/features/collections/utils';
-import { useAppSelector } from '@/flavours/glitch/store';
-import type { OnElementHandler } from '@/flavours/glitch/utils/html';
-import { decode as decodeIDNA } from 'flavours/glitch/utils/idna';
+import type { ApiMentionJSON } from "@/flavours/glitch/api_types/statuses";
+import { getCollectionPath } from "@/flavours/glitch/features/collections/utils";
+import { useAppSelector } from "@/flavours/glitch/store";
+import type { OnElementHandler } from "@/flavours/glitch/utils/html";
+import { decode as decodeIDNA } from "flavours/glitch/utils/idna";
 
 export interface HandledLinkProps {
   href: string;
   text: string;
   prevText?: string;
   hashtagAccountId?: string;
-  mention?: Pick<ApiMentionJSON, 'id' | 'acct' | 'username'>;
+  mention?: Pick<ApiMentionJSON, "id" | "acct" | "username">;
   collectionId?: string;
 }
 
@@ -23,10 +23,10 @@ const textMatchesTarget = (text: string, origin: string, host: string) => {
   return (
     text === origin ||
     text === host ||
-    text.startsWith(origin + '/') ||
-    text.startsWith(host + '/') ||
-    'www.' + text === host ||
-    ('www.' + text).startsWith(host + '/')
+    text.startsWith(origin + "/") ||
+    text.startsWith(host + "/") ||
+    "www." + text === host ||
+    ("www." + text).startsWith(host + "/")
   );
 };
 
@@ -41,7 +41,7 @@ export const isLinkMisleading = (link: HTMLAnchorElement) => {
     if (node instanceof Text) {
       linkTextParts.push(node.textContent);
     } else if (node instanceof HTMLElement) {
-      if (node.classList.contains('invisible')) return;
+      if (node.classList.contains("invisible")) return;
       for (const child of node.childNodes) {
         walk(child);
       }
@@ -50,17 +50,15 @@ export const isLinkMisleading = (link: HTMLAnchorElement) => {
 
   walk(link);
 
-  const linkText = linkTextParts.join('');
+  const linkText = linkTextParts.join("");
   const targetURL = new URL(link.href);
 
-  if (targetURL.protocol === 'magnet:') {
-    return !linkText.startsWith('magnet:');
+  if (targetURL.protocol === "magnet:") {
+    return !linkText.startsWith("magnet:");
   }
 
-  if (targetURL.protocol === 'xmpp:') {
-    return !(
-      linkText === targetURL.href || 'xmpp:' + linkText === targetURL.href
-    );
+  if (targetURL.protocol === "xmpp:") {
+    return !(linkText === targetURL.href || "xmpp:" + linkText === targetURL.href);
   }
 
   // The following may not work with international domain names
@@ -72,13 +70,12 @@ export const isLinkMisleading = (link: HTMLAnchorElement) => {
   }
 
   // The link hasn't been recognized, maybe it features an international domain name
-  const hostname = decodeIDNA(targetURL.hostname).normalize('NFKC');
+  const hostname = decodeIDNA(targetURL.hostname).normalize("NFKC");
   const host = targetURL.host.replace(targetURL.hostname, hostname);
   const origin = targetURL.origin.replace(targetURL.host, host);
-  const text = linkText.normalize('NFKC');
+  const text = linkText.normalize("NFKC");
   return !(
-    textMatchesTarget(text, origin, host) ||
-    textMatchesTarget(text.toLowerCase(), origin, host)
+    textMatchesTarget(text, origin, host) || textMatchesTarget(text.toLowerCase(), origin, host)
   );
 };
 
@@ -86,28 +83,28 @@ export const tagMisleadingLink = (link: HTMLAnchorElement) => {
   try {
     if (isLinkMisleading(link)) {
       const url = new URL(link.href);
-      const tag = document.createElement('span');
-      tag.classList.add('link-origin-tag');
+      const tag = document.createElement("span");
+      tag.classList.add("link-origin-tag");
       switch (url.protocol) {
-        case 'xmpp:':
+        case "xmpp:":
           tag.textContent = `[${url.href}]`;
           break;
-        case 'magnet:':
-          tag.textContent = '(magnet)';
+        case "magnet:":
+          tag.textContent = "(magnet)";
           break;
         default:
           tag.textContent = `[${url.host}]`;
       }
-      link.insertAdjacentText('beforeend', ' ');
-      link.insertAdjacentElement('beforeend', tag);
+      link.insertAdjacentText("beforeend", " ");
+      link.insertAdjacentElement("beforeend", tag);
     }
   } catch (e) {
     // The URL is invalid, remove the href just to be safe
-    if (e instanceof TypeError) link.removeAttribute('href');
+    if (e instanceof TypeError) link.removeAttribute("href");
   }
 };
 
-export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
+export const HandledLink: FC<HandledLinkProps & ComponentProps<"a">> = ({
   href,
   text,
   prevText,
@@ -120,12 +117,12 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
 }) => {
   const rewriteMentions = useAppSelector(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    (state) => state.local_settings.get('rewrite_mentions', 'no') as string,
+    (state) => state.local_settings.get("rewrite_mentions", "no") as string,
   );
   const tagLinks = useAppSelector(
     (state) =>
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      state.local_settings.get('tag_misleading_links', false) as string,
+      state.local_settings.get("tag_misleading_links", false) as string,
   );
 
   const linkRef = useRef<HTMLAnchorElement>(null);
@@ -136,19 +133,19 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
 
   // Handle hashtags
   if (
-    (text.startsWith('#') ||
-      prevText?.endsWith('#') ||
-      text.startsWith('＃') ||
-      prevText?.endsWith('＃')) &&
-    !text.includes('%')
+    (text.startsWith("#") ||
+      prevText?.endsWith("#") ||
+      text.startsWith("＃") ||
+      prevText?.endsWith("＃")) &&
+    !text.includes("%")
   ) {
     const hashtag = text.slice(1).trim();
 
     return (
       <Link
-        className={classNames('mention hashtag', className)}
+        className={classNames("mention hashtag", className)}
         to={`/tags/${encodeURIComponent(hashtag)}`}
-        rel='tag'
+        rel="tag"
         data-menu-hashtag={hashtagAccountId}
       >
         {children}
@@ -156,18 +153,15 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
     );
   } else if (mention) {
     // glitch-soc feature to rewrite mentions
-    if (rewriteMentions !== 'no') {
+    if (rewriteMentions !== "no") {
       return (
         <Link
-          className={classNames('mention', className)}
+          className={classNames("mention", className)}
           to={`/@${mention.acct}`}
           title={`@${mention.acct}`}
           data-hover-card-account={mention.id}
         >
-          @
-          <span>
-            {rewriteMentions === 'acct' ? mention.acct : mention.username}
-          </span>
+          @<span>{rewriteMentions === "acct" ? mention.acct : mention.username}</span>
         </Link>
       );
     }
@@ -175,7 +169,7 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
     // Handle mentions
     return (
       <Link
-        className={classNames('mention', className)}
+        className={classNames("mention", className)}
         to={`/@${mention.acct}`}
         title={`@${mention.acct}`}
         data-hover-card-account={mention.id}
@@ -185,19 +179,16 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
     );
   } else if (collectionId) {
     return (
-      <Link
-        className={classNames(className)}
-        to={getCollectionPath(collectionId)}
-      >
+      <Link className={classNames(className)} to={getCollectionPath(collectionId)}>
         {children}
       </Link>
     );
   }
 
   // Non-absolute paths treated as internal links. This shouldn't happen, but just in case.
-  if (href.startsWith('/')) {
+  if (href.startsWith("/")) {
     return (
-      <Link className={classNames('unhandled-link', className)} to={href}>
+      <Link className={classNames("unhandled-link", className)} to={href}>
         {children}
       </Link>
     );
@@ -208,10 +199,10 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
       {...props}
       href={href}
       title={href}
-      className={classNames('unhandled-link', className)}
-      target='_blank'
-      rel='noopener'
-      translate='no'
+      className={classNames("unhandled-link", className)}
+      target="_blank"
+      rel="noopener"
+      translate="no"
       ref={linkRef}
     >
       {children}

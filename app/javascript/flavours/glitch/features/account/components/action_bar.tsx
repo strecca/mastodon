@@ -1,13 +1,13 @@
-import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from "react-intl";
 
-import { NavLink } from 'react-router-dom';
-import type { NavLinkProps } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
+import type { NavLinkProps } from "react-router-dom";
 
-import InfoIcon from '@/material-icons/400-24px/info.svg?react';
-import { Icon } from 'flavours/glitch/components/icon';
-import type { Account } from 'flavours/glitch/models/account';
+import InfoIcon from "@/material-icons/400-24px/info.svg?react";
+import { Icon } from "flavours/glitch/components/icon";
+import type { Account } from "flavours/glitch/models/account";
 
-const isStatusesPageActive: NavLinkProps['isActive'] = (match, location) => {
+const isStatusesPageActive: NavLinkProps["isActive"] = (match, location) => {
   if (!match) {
     return false;
   }
@@ -18,11 +18,11 @@ export const ActionBar: React.FC<{ account: Account }> = ({ account }) => {
   if (account.suspended) {
     return (
       <div>
-        <div className='account__disclaimer'>
-          <Icon id='info-circle' icon={InfoIcon} />
+        <div className="account__disclaimer">
+          <Icon id="info-circle" icon={InfoIcon} />
           <FormattedMessage
-            id='account.suspended_disclaimer_full'
-            defaultMessage='This user has been suspended by a moderator.'
+            id="account.suspended_disclaimer_full"
+            defaultMessage="This user has been suspended by a moderator."
           />
         </div>
       </div>
@@ -31,20 +31,17 @@ export const ActionBar: React.FC<{ account: Account }> = ({ account }) => {
 
   let extraInfo = null;
 
-  if (account.get('acct') !== account.get('username')) {
+  if (account.get("acct") !== account.get("username")) {
     extraInfo = (
-      <div className='account__disclaimer'>
-        <Icon id='info-circle' icon={InfoIcon} />
+      <div className="account__disclaimer">
+        <Icon id="info-circle" icon={InfoIcon} />
         <div>
           <FormattedMessage
-            id='account.disclaimer_full'
+            id="account.disclaimer_full"
             defaultMessage="Information below may reflect the user's profile incompletely."
-          />{' '}
-          <a target='_blank' rel='noopener' href={account.get('url')}>
-            <FormattedMessage
-              id='account.view_full_profile'
-              defaultMessage='View full profile'
-            />
+          />{" "}
+          <a target="_blank" rel="noopener" href={account.get("url")}>
+            <FormattedMessage id="account.view_full_profile" defaultMessage="View full profile" />
           </a>
         </div>
       </div>
@@ -55,56 +52,44 @@ export const ActionBar: React.FC<{ account: Account }> = ({ account }) => {
     <div>
       {extraInfo}
 
-      <div className='account__action-bar'>
-        <div className='account__action-bar-links'>
+      <div className="account__action-bar">
+        <div className="account__action-bar-links">
           <NavLink
             isActive={isStatusesPageActive}
-            activeClassName='active'
-            className='account__action-bar__tab'
-            to={`/@${account.get('acct')}`}
+            activeClassName="active"
+            className="account__action-bar__tab"
+            to={`/@${account.get("acct")}`}
           >
-            <FormattedMessage
-              id='account.posts'
-              defaultMessage='Posts'
-              tagName='span'
-            />
+            <FormattedMessage id="account.posts" defaultMessage="Posts" tagName="span" />
             <strong>
-              <FormattedNumber value={account.get('statuses_count')} />
+              <FormattedNumber value={account.get("statuses_count")} />
             </strong>
           </NavLink>
 
           <NavLink
             exact
-            activeClassName='active'
-            className='account__action-bar__tab'
-            to={`/@${account.get('acct')}/following`}
+            activeClassName="active"
+            className="account__action-bar__tab"
+            to={`/@${account.get("acct")}/following`}
           >
-            <FormattedMessage
-              id='account.follows'
-              defaultMessage='Follows'
-              tagName='span'
-            />
+            <FormattedMessage id="account.follows" defaultMessage="Follows" tagName="span" />
             <strong>
-              <FormattedNumber value={account.get('following_count')} />
+              <FormattedNumber value={account.get("following_count")} />
             </strong>
           </NavLink>
 
           <NavLink
             exact
-            activeClassName='active'
-            className='account__action-bar__tab'
-            to={`/@${account.get('acct')}/followers`}
+            activeClassName="active"
+            className="account__action-bar__tab"
+            to={`/@${account.get("acct")}/followers`}
           >
-            <FormattedMessage
-              id='account.followers'
-              defaultMessage='Followers'
-              tagName='span'
-            />
+            <FormattedMessage id="account.followers" defaultMessage="Followers" tagName="span" />
             <strong>
-              {account.get('followers_count') < 0 ? (
-                '-'
+              {account.get("followers_count") < 0 ? (
+                "-"
               ) : (
-                <FormattedNumber value={account.get('followers_count')} />
+                <FormattedNumber value={account.get("followers_count")} />
               )}
             </strong>
           </NavLink>

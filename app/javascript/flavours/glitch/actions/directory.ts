@@ -1,15 +1,15 @@
-import type { List as ImmutableList } from 'immutable';
+import type { List as ImmutableList } from "immutable";
 
-import { apiGetDirectory } from 'flavours/glitch/api/directory';
-import { createDataLoadingThunk } from 'flavours/glitch/store/typed_functions';
+import { apiGetDirectory } from "flavours/glitch/api/directory";
+import { createDataLoadingThunk } from "flavours/glitch/store/typed_functions";
 
-import { fetchRelationships } from './accounts';
-import { importFetchedAccounts } from './importer';
+import { fetchRelationships } from "./accounts";
+import { importFetchedAccounts } from "./importer";
 
 const DIRECTORY_FETCH_LIMIT = 20;
 
 export const fetchDirectory = createDataLoadingThunk(
-  'directory/fetch',
+  "directory/fetch",
   async (params: Parameters<typeof apiGetDirectory>[0]) =>
     apiGetDirectory(params, DIRECTORY_FETCH_LIMIT),
   (data, { dispatch }) => {
@@ -21,17 +21,14 @@ export const fetchDirectory = createDataLoadingThunk(
 );
 
 export const expandDirectory = createDataLoadingThunk(
-  'directory/expand',
+  "directory/expand",
   async (params: Parameters<typeof apiGetDirectory>[0], { getState }) => {
     const loadedItems = getState().user_lists.getIn([
-      'directory',
-      'items',
+      "directory",
+      "items",
     ]) as ImmutableList<unknown>;
 
-    return apiGetDirectory(
-      { ...params, offset: loadedItems.size },
-      DIRECTORY_FETCH_LIMIT,
-    );
+    return apiGetDirectory({ ...params, offset: loadedItems.size }, DIRECTORY_FETCH_LIMIT);
   },
   (data, { dispatch }) => {
     dispatch(importFetchedAccounts(data));

@@ -1,41 +1,41 @@
-import type { KeyboardEventHandler } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import type { KeyboardEventHandler } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { animated, useSpring } from '@react-spring/web';
-import escapeTextContentForBrowser from 'escape-html';
+import { animated, useSpring } from "@react-spring/web";
+import escapeTextContentForBrowser from "escape-html";
 
-import { EmojiHTML } from '@/mastodon/components/emoji/html';
-import CheckIcon from '@/material-icons/400-24px/check.svg?react';
-import { openModal } from 'mastodon/actions/modal';
-import { fetchPoll, vote } from 'mastodon/actions/polls';
-import { Icon } from 'mastodon/components/icon';
-import { useIdentity } from 'mastodon/identity_context';
-import type * as Model from 'mastodon/models/poll';
-import type { Status } from 'mastodon/models/status';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+import { EmojiHTML } from "@/mastodon/components/emoji/html";
+import CheckIcon from "@/material-icons/400-24px/check.svg?react";
+import { openModal } from "mastodon/actions/modal";
+import { fetchPoll, vote } from "mastodon/actions/polls";
+import { Icon } from "mastodon/components/icon";
+import { useIdentity } from "mastodon/identity_context";
+import type * as Model from "mastodon/models/poll";
+import type { Status } from "mastodon/models/status";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
-import { RelativeTimestamp } from './relative_timestamp';
+import { RelativeTimestamp } from "./relative_timestamp";
 
 const messages = defineMessages({
   closed: {
-    id: 'poll.closed',
-    defaultMessage: 'Closed',
+    id: "poll.closed",
+    defaultMessage: "Closed",
   },
   voted: {
-    id: 'poll.voted',
-    defaultMessage: 'You voted for this answer',
+    id: "poll.voted",
+    defaultMessage: "You voted for this answer",
   },
   votes: {
-    id: 'poll.votes',
-    defaultMessage: '{votes, plural, one {# vote} other {# votes}}',
+    id: "poll.votes",
+    defaultMessage: "{votes, plural, one {# vote} other {# votes}}",
   },
 });
 
-const isPollExpired = (expiresAt: Model.Poll['expires_at']) =>
+const isPollExpired = (expiresAt: Model.Poll["expires_at"]) =>
   expiresAt !== null && new Date(expiresAt).getTime() < Date.now();
 
 interface PollProps {
@@ -79,23 +79,22 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
     if (poll.voters_count) {
       return (
         <FormattedMessage
-          id='poll.total_people'
-          defaultMessage='{count, plural, one {# person} other {# people}}'
+          id="poll.total_people"
+          defaultMessage="{count, plural, one {# person} other {# people}}"
           values={{ count: poll.voters_count }}
         />
       );
     }
     return (
       <FormattedMessage
-        id='poll.total_votes'
-        defaultMessage='{count, plural, one {# vote} other {# votes}}'
+        id="poll.total_votes"
+        defaultMessage="{count, plural, one {# vote} other {# votes}}"
         values={{ count: poll.votes_count }}
       />
     );
   }, [poll]);
 
-  const voteDisabled =
-    disabled || Object.values(selected).every((item) => !item);
+  const voteDisabled = disabled || Object.values(selected).every((item) => !item);
 
   // Event handlers
   const handleVote = useCallback(() => {
@@ -108,11 +107,11 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
     } else {
       dispatch(
         openModal({
-          modalType: 'INTERACTION',
+          modalType: "INTERACTION",
           modalProps: {
-            intent: 'vote',
-            accountId: status.getIn(['account', 'id']),
-            url: status.get('uri'),
+            intent: "vote",
+            accountId: status.getIn(["account", "id"]),
+            url: status.get("uri"),
           },
         }),
       );
@@ -153,7 +152,7 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
   const showResults = poll.voted || revealed || expired;
 
   return (
-    <div className='poll'>
+    <div className="poll">
       <ul>
         {poll.options.map((option, i) => (
           <PollOption
@@ -168,35 +167,31 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
         ))}
       </ul>
 
-      <div className='poll__footer'>
+      <div className="poll__footer">
         {!showResults && (
           <button
-            className='button button-secondary'
+            className="button button-secondary"
             disabled={voteDisabled}
             onClick={handleVote}
-            type='button'
+            type="button"
           >
-            <FormattedMessage id='poll.vote' defaultMessage='Vote' />
+            <FormattedMessage id="poll.vote" defaultMessage="Vote" />
           </button>
         )}
         {!showResults && (
           <>
-            <button className='poll__link' onClick={handleReveal} type='button'>
-              <FormattedMessage id='poll.reveal' defaultMessage='See results' />
-            </button>{' '}
-            ·{' '}
+            <button className="poll__link" onClick={handleReveal} type="button">
+              <FormattedMessage id="poll.reveal" defaultMessage="See results" />
+            </button>{" "}
+            ·{" "}
           </>
         )}
         {showResults && !disabled && (
           <>
-            <button
-              className='poll__link'
-              onClick={handleRefresh}
-              type='button'
-            >
-              <FormattedMessage id='poll.refresh' defaultMessage='Refresh' />
-            </button>{' '}
-            ·{' '}
+            <button className="poll__link" onClick={handleRefresh} type="button">
+              <FormattedMessage id="poll.refresh" defaultMessage="Refresh" />
+            </button>{" "}
+            ·{" "}
           </>
         )}
         {votesCount}
@@ -206,7 +201,7 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
   );
 };
 
-type PollOptionProps = Pick<PollProps, 'disabled' | 'lang'> & {
+type PollOptionProps = Pick<PollProps, "disabled" | "lang"> & {
   active: boolean;
   onChange: (index: number) => void;
   poll: Model.Poll;
@@ -216,8 +211,7 @@ type PollOptionProps = Pick<PollProps, 'disabled' | 'lang'> & {
 };
 
 const PollOption: React.FC<PollOptionProps> = (props) => {
-  const { active, lang, disabled, poll, option, index, showResults, onChange } =
-    props;
+  const { active, lang, disabled, poll, option, index, showResults, onChange } = props;
   const voted = option.voted || poll.own_votes?.includes(index);
   const title = option.translation?.title ?? option.title;
 
@@ -226,9 +220,7 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
   // Derived values
   const percent = useMemo(() => {
     const pollVotesCount = poll.voters_count ?? poll.votes_count;
-    return pollVotesCount === 0
-      ? 0
-      : (option.votes_count / pollVotesCount) * 100;
+    return pollVotesCount === 0 ? 0 : (option.votes_count / pollVotesCount) * 100;
   }, [option, poll]);
   const isLeading = useMemo(
     () =>
@@ -253,7 +245,7 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
   }, [index, onChange]);
   const handleOptionKeyPress: KeyboardEventHandler = useCallback(
     (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
+      if (event.key === "Enter" || event.key === " ") {
         onChange(index);
         event.stopPropagation();
         event.preventDefault();
@@ -264,7 +256,7 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 
   const widthSpring = useSpring({
     from: {
-      width: '0%',
+      width: "0%",
     },
     to: {
       width: `${percent}%`,
@@ -273,12 +265,10 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 
   return (
     <li>
-      <label
-        className={classNames('poll__option', { selectable: !showResults })}
-      >
+      <label className={classNames("poll__option", { selectable: !showResults })}>
         <input
-          name='vote-options'
-          type={poll.multiple ? 'checkbox' : 'radio'}
+          name="vote-options"
+          type={poll.multiple ? "checkbox" : "radio"}
           value={index}
           checked={active}
           onChange={handleOptionChange}
@@ -287,12 +277,12 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 
         {!showResults && (
           <span
-            className={classNames('poll__input', {
+            className={classNames("poll__input", {
               checkbox: poll.multiple,
               active,
             })}
             tabIndex={0}
-            role={poll.multiple ? 'checkbox' : 'radio'}
+            role={poll.multiple ? "checkbox" : "radio"}
             onKeyDown={handleOptionKeyPress}
             aria-checked={active}
             aria-label={title}
@@ -302,7 +292,7 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
         )}
         {showResults && (
           <span
-            className='poll__number'
+            className="poll__number"
             title={intl.formatMessage(messages.votes, {
               votes: option.votes_count,
             })}
@@ -312,18 +302,18 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
         )}
 
         <EmojiHTML
-          className='poll__option__text translate'
+          className="poll__option__text translate"
           lang={lang}
           htmlString={titleHtml}
           extraEmojis={poll.emojis}
         />
 
         {!!voted && (
-          <span className='poll__voted'>
+          <span className="poll__voted">
             <Icon
-              id='check'
+              id="check"
               icon={CheckIcon}
-              className='poll__voted__mark'
+              className="poll__voted__mark"
               aria-label={intl.formatMessage(messages.voted)}
             />
           </span>
@@ -332,7 +322,7 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
 
       {showResults && (
         <animated.span
-          className={classNames('poll__chart', { leading: isLeading })}
+          className={classNames("poll__chart", { leading: isLeading })}
           style={widthSpring}
         />
       )}

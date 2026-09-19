@@ -1,12 +1,12 @@
 ---
-'no':
+"no":
   simple_form:
     hints:
       account:
         display_name: Ditt fulle navn eller ditt morsomme navn.
         fields: Din hjemmeside, uttalelse, alder, eller alt annet du vil.
         indexable: Dine offentlige innlegg kan vises i søkeresultat på Mastodon. Personer som har samhandlet med innleggene dine kan finne de uansett.
-        note: 'Du kan @nevne andre eller #emneknagger.'
+        note: "Du kan @nevne andre eller #emneknagger."
         show_collections: Folk vil kunne bla gjennom de du følger og dine følgere. Folk du følger vil uansett se at du følger dem.
       account_alias:
         acct: Spesifiser brukernavn@domene til kontoen du vil flytte fra
@@ -64,7 +64,7 @@
         domain: Dette kan være domenenavnet som vises i e-postadressen eller MX-oppføringen den bruker. De vil bli sjekket ved oppretting av konto.
         with_dns_records: Et forsøk på å slå opp det gitte domenets DNS-poster vil bli gjort, og resultatene vil også bli blokkert
       featured_tag:
-        name: 'Her er noen av emneknaggene du har brukt i det siste:'
+        name: "Her er noen av emneknaggene du har brukt i det siste:"
       filters:
         actions:
           hide: Skjul filtrert innhold fullstendig, som om det ikke eksisterte
@@ -303,7 +303,7 @@
         events: Aktiverte hendelser
         template: Nyttelast mal
         url: Endepunkt lenke
-    'no': Nei
+    "no": Nei
     not_recommended: Ikke anbefalt
     overridden: Overstyrt
     recommended: Anbefalt
@@ -313,4 +313,4 @@
     title:
       sessions:
         webauthn: Bruk en av sikkerhetsnøklene dine til å logge på
-    'yes': Ja
+    "yes": Ja

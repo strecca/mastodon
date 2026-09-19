@@ -55,7 +55,7 @@ an:
         domain: Este puede estar lo nombre de dominio que amaneixe en l'adreza de correu electronico u lo rechistro MX que utiliza. Se comprebarán en rechistrar-se.
         with_dns_records: Se ferá un intento de resolver los rechistros DNS d'o dominio dau y los resultaus serán tamién mesos en lista negra
       featured_tag:
-        name: 'Aquí son belunas d''as etiquetas que mas has utilizau recientment:'
+        name: "Aquí son belunas d'as etiquetas que mas has utilizau recientment:"
       filters:
         actions:
           hide: Amagar completament lo conteniu filtrau, comportando-se como si no existise
@@ -96,7 +96,7 @@ an:
       rule:
         text: Describe una norma u requisito pa los usuarios d'este servidor. Intenta fer-la curta y sencilla
       sessions:
-        otp: 'Escribe lo codigo d''autenticación de dos factors chenerau per la tuya aplicación de telefono u usa un d''os tuyos codigos de recuperación:'
+        otp: "Escribe lo codigo d'autenticación de dos factors chenerau per la tuya aplicación de telefono u usa un d'os tuyos codigos de recuperación:"
         webauthn: Si ye una tecla USB, s'asegure de ficar-la y, si ye necesario, la prete.
       tag:
         name: Nomás se puede cambiar lo cajón d'as letras, per eixemplo, pa que sía mas leyible
@@ -269,7 +269,7 @@ an:
       webhook:
         events: Eventos habilitaus
         url: URL de Endpoint
-    'no': 'No'
+    "no": "No"
     not_recommended: No recomendau
     recommended: Recomendau
     required:
@@ -278,4 +278,4 @@ an:
     title:
       sessions:
         webauthn: Utilice una d'as suyas claus de seguranza pa iniciar sesión
-    'yes': Ell
+    "yes": Ell

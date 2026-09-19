@@ -1,13 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { fetchAccount } from '../actions/accounts';
-import { createAppSelector, useAppDispatch, useAppSelector } from '../store';
+import { fetchAccount } from "../actions/accounts";
+import { createAppSelector, useAppDispatch, useAppSelector } from "../store";
 
 export const accountSelector = createAppSelector(
-  [
-    (state) => state.accounts,
-    (_, accountId: string | null | undefined) => accountId,
-  ],
+  [(state) => state.accounts, (_, accountId: string | null | undefined) => accountId],
   (accounts, accountId) => (accountId ? accounts.get(accountId) : undefined),
 );
 

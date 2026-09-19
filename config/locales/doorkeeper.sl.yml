@@ -52,7 +52,7 @@ sl:
         callback_urls: Povratni URL-ji
         scopes: Obsegi
         secret: Skrivnost odjemalca
-        title: 'Program: %{name}'
+        title: "Program: %{name}"
     authorizations:
       buttons:
         authorize: Odobri
@@ -86,7 +86,7 @@ sl:
         invalid_grant: Predložena odobritev je neveljavna, je potekla, je preklicana, se ne ujema z URI-jem za preusmeritev uporabljenim v zahtevi za odobritev, ali pa je bila izdana drugemu odjemalcu.
         invalid_redirect_uri: URI za preusmeritev ni veljaven.
         invalid_request:
-          missing_param: 'Zahtevani parameter manjka: %{value}.'
+          missing_param: "Zahtevani parameter manjka: %{value}."
           request_not_authorized: Zahtevo je potrebno odobriti. Zahtevani parameter za odobritev zahteve manjka ali ni veljaven.
           unknown: Zahtevku manjka zahtevani parameter, vključuje nepodprto vrednost parametra ali je nepravilno oblikovan.
         invalid_resource_owner: Predložene poverilnice lastnika virov niso veljavne ali pa lastnika virov ni mogoče najti

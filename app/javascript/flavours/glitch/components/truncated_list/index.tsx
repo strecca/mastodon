@@ -1,12 +1,12 @@
-import { useCallback, useId, useState } from 'react';
+import { useCallback, useId, useState } from "react";
 
-import { Article } from '@/flavours/glitch/components/scrollable_list/components';
-import KeyboardArrowDownIcon from '@/material-icons/400-24px/keyboard_arrow_down.svg?react';
-import KeyboardArrowUpIcon from '@/material-icons/400-24px/keyboard_arrow_up.svg?react';
+import { Article } from "@/flavours/glitch/components/scrollable_list/components";
+import KeyboardArrowDownIcon from "@/material-icons/400-24px/keyboard_arrow_down.svg?react";
+import KeyboardArrowUpIcon from "@/material-icons/400-24px/keyboard_arrow_up.svg?react";
 
-import { Icon } from '../icon';
-import type { IconProp } from '../icon';
-import { ListItemButton, ListItemWrapper } from '../list_item';
+import { Icon } from "../icon";
+import type { IconProp } from "../icon";
+import { ListItemButton, ListItemWrapper } from "../list_item";
 
 export interface TruncatedListItemInfo<TListItem> {
   item: TListItem;
@@ -24,9 +24,7 @@ interface ToggleButtonOptions {
 interface TruncatedListProps<TListItem> {
   visibleItems: TListItem[];
   truncatedItems: TListItem[];
-  renderListItem: (
-    itemInfo: TruncatedListItemInfo<TListItem>,
-  ) => React.ReactElement;
+  renderListItem: (itemInfo: TruncatedListItemInfo<TListItem>) => React.ReactElement;
   toggleButton: ToggleButtonOptions;
 }
 
@@ -52,8 +50,7 @@ export const TruncatedListItems = <TListItem,>({
   const hasHiddenAccounts = truncatedItems.length > 0;
   // Add the toggle button's item to the list size when needed
   const initialListSize = visibleItems.length + (hasHiddenAccounts ? 1 : 0);
-  const totalListLength =
-    initialListSize + (showTruncatedItems ? truncatedItems.length : 0);
+  const totalListLength = initialListSize + (showTruncatedItems ? truncatedItems.length : 0);
 
   return (
     <>
@@ -62,8 +59,7 @@ export const TruncatedListItems = <TListItem,>({
           item,
           index,
           totalListLength,
-          isLastElement:
-            index === visibleItems.length - 1 && !hasHiddenAccounts,
+          isLastElement: index === visibleItems.length - 1 && !hasHiddenAccounts,
         });
       })}
       {hasHiddenAccounts && (
@@ -74,19 +70,11 @@ export const TruncatedListItems = <TListItem,>({
           aria-describedby={toggleButtonDescId}
         >
           <ListItemWrapper
-            icon={
-              toggleButton.icon && (
-                <Icon id='toggle-icon' icon={toggleButton.icon} />
-              )
-            }
+            icon={toggleButton.icon && <Icon id="toggle-icon" icon={toggleButton.icon} />}
             sideContent={
               <Icon
-                id='open-status'
-                icon={
-                  showTruncatedItems
-                    ? KeyboardArrowUpIcon
-                    : KeyboardArrowDownIcon
-                }
+                id="open-status"
+                icon={showTruncatedItems ? KeyboardArrowUpIcon : KeyboardArrowDownIcon}
               />
             }
           >

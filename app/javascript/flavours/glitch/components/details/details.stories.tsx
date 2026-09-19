@@ -1,21 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Details } from './index';
+import { Details } from "./index";
 
 const meta = {
   component: Details,
-  title: 'Components/Details',
+  title: "Components/Details",
   args: {
-    summary: 'Here is the summary title',
-    children: (
-      <p>
-        And here are the details that are hidden until you click the summary.
-      </p>
-    ),
+    summary: "Here is the summary title",
+    children: <p>And here are the details that are hidden until you click the summary.</p>,
   },
   render(props) {
     return (
-      <div style={{ width: '400px' }}>
+      <div style={{ width: "400px" }}>
         <Details {...props} />
       </div>
     );

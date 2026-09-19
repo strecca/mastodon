@@ -1,49 +1,45 @@
-import { resolve } from 'node:path';
+import { resolve } from "node:path";
 
-import type { StorybookConfig } from '@storybook/react-vite';
+import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
   stories: [
     {
-      directory: '../app/javascript/mastodon',
-      files: '**/*.stories.@(js|jsx|mjs|ts|tsx)',
-      titlePrefix: 'Vanilla',
+      directory: "../app/javascript/mastodon",
+      files: "**/*.stories.@(js|jsx|mjs|ts|tsx)",
+      titlePrefix: "Vanilla",
     },
     {
-      directory: '../app/javascript/flavours/glitch',
-      files: '**/*.stories.@(js|jsx|mjs|ts|tsx)',
-      titlePrefix: 'Glitch',
+      directory: "../app/javascript/flavours/glitch",
+      files: "**/*.stories.@(js|jsx|mjs|ts|tsx)",
+      titlePrefix: "Glitch",
     },
   ],
-  addons: [
-    '@storybook/addon-docs',
-    '@storybook/addon-a11y',
-    '@storybook/addon-vitest',
-  ],
+  addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-vitest"],
   framework: {
-    name: '@storybook/react-vite',
+    name: "@storybook/react-vite",
     options: {},
   },
   staticDirs: [
-    './static',
+    "./static",
     // We need to manually specify the assets because of the symlink in public/sw.js
     ...[
-      'avatars',
-      'emoji',
-      'headers',
-      'sounds',
-      'badge.png',
-      'loading.gif',
-      'loading.png',
-      'oops.gif',
-      'oops.png',
+      "avatars",
+      "emoji",
+      "headers",
+      "sounds",
+      "badge.png",
+      "loading.gif",
+      "loading.png",
+      "oops.gif",
+      "oops.png",
     ].map((path) => ({ from: `../public/${path}`, to: `/${path}` })),
-    { from: '../app/javascript/images/logo.svg', to: '/custom-emoji/logo.svg' },
+    { from: "../app/javascript/images/logo.svg", to: "/custom-emoji/logo.svg" },
   ],
   viteFinal(config) {
     // For an unknown reason, Storybook does not use the root
     // from the Vite config so we need to set it manually.
-    config.root = resolve(import.meta.dirname, '../app/javascript');
+    config.root = resolve(import.meta.dirname, "../app/javascript");
     return config;
   },
 };

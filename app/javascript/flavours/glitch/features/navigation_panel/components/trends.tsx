@@ -1,23 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import type { List as ImmutableList, Map as ImmutableMap } from 'immutable';
+import type { List as ImmutableList, Map as ImmutableMap } from "immutable";
 
-import { fetchTrendingHashtags } from 'flavours/glitch/actions/trends';
-import { ImmutableHashtag as Hashtag } from 'flavours/glitch/components/hashtag';
-import { showTrends } from 'flavours/glitch/initial_state';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
+import { fetchTrendingHashtags } from "flavours/glitch/actions/trends";
+import { ImmutableHashtag as Hashtag } from "flavours/glitch/components/hashtag";
+import { showTrends } from "flavours/glitch/initial_state";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
 export const Trends: React.FC = () => {
   const dispatch = useAppDispatch();
   const trends = useAppSelector(
     (state) =>
-      state.trends.getIn(['tags', 'items']) as ImmutableList<
-        ImmutableMap<string, unknown>
-      >,
+      state.trends.getIn(["tags", "items"]) as ImmutableList<ImmutableMap<string, unknown>>,
   );
 
   useEffect(() => {
@@ -37,19 +35,16 @@ export const Trends: React.FC = () => {
   }
 
   return (
-    <aside className='navigation-panel__portal'>
-      <div className='getting-started__trends'>
-        <h2 className='getting-started__trends-heading'>
-          <Link to={'/explore/tags'}>
-            <FormattedMessage
-              id='trends.trending_now'
-              defaultMessage='Trending now'
-            />
+    <aside className="navigation-panel__portal">
+      <div className="getting-started__trends">
+        <h2 className="getting-started__trends-heading">
+          <Link to={"/explore/tags"}>
+            <FormattedMessage id="trends.trending_now" defaultMessage="Trending now" />
           </Link>
         </h2>
 
         {trends.take(4).map((hashtag) => (
-          <Hashtag key={hashtag.get('name') as string} hashtag={hashtag} />
+          <Hashtag key={hashtag.get("name") as string} hashtag={hashtag} />
         ))}
       </div>
     </aside>

@@ -53,7 +53,9 @@
     border-radius: 8px;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
 
     &:hover,
     &:focus-visible {
@@ -241,7 +243,10 @@
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
-    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease,
+      color 0.15s ease;
     line-height: 1.4;
 
     &:hover {
@@ -278,7 +283,9 @@
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:hover,
   &:focus-visible {
@@ -306,7 +313,9 @@
     height: 34px;
     border-radius: 50%;
     background: white;
-    box-shadow: 0 0 24px white, 0 0 48px rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 0 24px white,
+      0 0 48px rgba(255, 255, 255, 0.5);
     z-index: 1;
   }
 
@@ -321,10 +330,30 @@
     bottom: 0;
     border-radius: 50%;
 
-    &--1 { width: 200%; height: 75px; left: -50%; background: #e6b29d; }
-    &--2 { width: 180%; height: 60px; left: -40%; background: #c29182; }
-    &--3 { width: 150%; height: 50px; left: -25%; background: #b77873; }
-    &--4 { width: 120%; height: 35px; left: -10%; background: #a16773; }
+    &--1 {
+      width: 200%;
+      height: 75px;
+      left: -50%;
+      background: #e6b29d;
+    }
+    &--2 {
+      width: 180%;
+      height: 60px;
+      left: -40%;
+      background: #c29182;
+    }
+    &--3 {
+      width: 150%;
+      height: 50px;
+      left: -25%;
+      background: #b77873;
+    }
+    &--4 {
+      width: 120%;
+      height: 35px;
+      left: -10%;
+      background: #a16773;
+    }
   }
 
   &__ocean {
@@ -346,8 +375,16 @@
     width: 60%;
     left: 20%;
 
-    &--2 { top: 50%; width: 40%; left: 30%; }
-    &--3 { top: 70%; width: 80%; left: 10%; }
+    &--2 {
+      top: 50%;
+      width: 40%;
+      left: 30%;
+    }
+    &--3 {
+      top: 70%;
+      width: 80%;
+      left: 10%;
+    }
   }
 
   &__trees {
@@ -363,9 +400,15 @@
     flex-direction: column;
     align-items: center;
 
-    &--1 { left: 10%; }
-    &--2 { left: 21%; }
-    &--3 { right: 14%; }
+    &--1 {
+      left: 10%;
+    }
+    &--2 {
+      left: 21%;
+    }
+    &--3 {
+      right: 14%;
+    }
   }
 
   &__foliage {
@@ -523,7 +566,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 .community-entry-detail {
-
   // ── Hero — landscape art banner (mirrors card landscape, scaled up) ─────────
 
   &__hero {
@@ -543,7 +585,9 @@
     height: 32px;
     border-radius: 50%;
     background: white;
-    box-shadow: 0 0 20px white, 0 0 40px rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 0 20px white,
+      0 0 40px rgba(255, 255, 255, 0.5);
     z-index: 1;
   }
 
@@ -558,10 +602,30 @@
     bottom: 0;
     border-radius: 50%;
 
-    &--1 { width: 200%; height: 52px; left: -50%; background: #e6b29d; }
-    &--2 { width: 180%; height: 40px; left: -40%; background: #c29182; }
-    &--3 { width: 150%; height: 30px; left: -25%; background: #b77873; }
-    &--4 { width: 120%; height: 20px; left: -10%; background: #a16773; }
+    &--1 {
+      width: 200%;
+      height: 52px;
+      left: -50%;
+      background: #e6b29d;
+    }
+    &--2 {
+      width: 180%;
+      height: 40px;
+      left: -40%;
+      background: #c29182;
+    }
+    &--3 {
+      width: 150%;
+      height: 30px;
+      left: -25%;
+      background: #b77873;
+    }
+    &--4 {
+      width: 120%;
+      height: 20px;
+      left: -10%;
+      background: #a16773;
+    }
   }
 
   &__filter {
@@ -909,8 +973,8 @@
       background: var(--color-bg-brand-softest);
     }
 
-    input[type='checkbox'],
-    input[type='radio'] {
+    input[type="checkbox"],
+    input[type="radio"] {
       accent-color: var(--color-bg-brand-base);
     }
   }
@@ -1274,7 +1338,7 @@
     color: var(--color-text-primary);
     cursor: pointer;
 
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       accent-color: var(--color-bg-brand-base);
     }
   }
@@ -1518,10 +1582,25 @@
     gap: 2px;
   }
 
-  &__card-name { font-size: 16px; font-weight: 700; color: var(--color-text-primary); }
-  &__card-slug { font-size: 12px; color: var(--color-text-tertiary); font-family: monospace; }
-  &__card-desc { font-size: 13px; color: var(--color-text-secondary); margin: 4px 0 0; }
-  &__card-count { font-size: 12px; color: var(--color-text-tertiary); }
+  &__card-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+  &__card-slug {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    font-family: monospace;
+  }
+  &__card-desc {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 4px 0 0;
+  }
+  &__card-count {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+  }
 
   &__card-actions {
     display: flex;
@@ -1578,8 +1657,12 @@
     font-family: inherit;
     outline: none;
 
-    &:focus { border-color: var(--color-border-brand); }
-    &::placeholder { color: var(--color-text-tertiary); }
+    &:focus {
+      border-color: var(--color-border-brand);
+    }
+    &::placeholder {
+      color: var(--color-text-tertiary);
+    }
   }
 
   &__save-limits {
@@ -1756,7 +1839,9 @@
     outline: none;
     transition: border-color 0.15s ease;
 
-    &:focus { border-color: var(--color-border-brand); }
+    &:focus {
+      border-color: var(--color-border-brand);
+    }
   }
 
   &__checkbox {

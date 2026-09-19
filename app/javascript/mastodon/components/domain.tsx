@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { unblockDomain } from 'mastodon/actions/domain_blocks';
-import { useAppDispatch } from 'mastodon/store';
+import { unblockDomain } from "mastodon/actions/domain_blocks";
+import { useAppDispatch } from "mastodon/store";
 
-import { Button } from './button';
+import { Button } from "./button";
 
 export const Domain: React.FC<{
   domain: string;
@@ -19,17 +19,14 @@ export const Domain: React.FC<{
   }, [dispatch, domain, onUnblock]);
 
   return (
-    <div className='domain'>
-      <div className='domain__domain-name'>
+    <div className="domain">
+      <div className="domain__domain-name">
         <strong>{domain}</strong>
       </div>
 
-      <div className='domain__buttons'>
+      <div className="domain__buttons">
         <Button onClick={handleDomainUnblock}>
-          <FormattedMessage
-            id='account.unblock_domain_short'
-            defaultMessage='Unblock'
-          />
+          <FormattedMessage id="account.unblock_domain_short" defaultMessage="Unblock" />
         </Button>
       </div>
     </div>

@@ -1,10 +1,10 @@
-import type { ComponentPropsWithoutRef, FC } from 'react';
+import type { ComponentPropsWithoutRef, FC } from "react";
 
-import classNames from 'classnames';
-import type { NavLinkProps } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import classNames from "classnames";
+import type { NavLinkProps } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 interface TabListProps {
   /**
@@ -18,7 +18,7 @@ interface TabListProps {
  * Display a simple row of links as tabs.
  * The current page will be highlighted automatically based on the link destination.
  */
-export const TabList: FC<TabListProps & ComponentPropsWithoutRef<'div'>> = ({
+export const TabList: FC<TabListProps & ComponentPropsWithoutRef<"div">> = ({
   plain,
   className,
   children,
@@ -27,22 +27,14 @@ export const TabList: FC<TabListProps & ComponentPropsWithoutRef<'div'>> = ({
   return (
     <div
       {...otherProps}
-      className={classNames(
-        className,
-        classes.tabList,
-        !plain && classes.withSpaceAndBorder,
-      )}
+      className={classNames(className, classes.tabList, !plain && classes.withSpaceAndBorder)}
     >
       {children}
     </div>
   );
 };
 
-export const TabLink: FC<NavLinkProps> = ({
-  className,
-  children,
-  ...otherProps
-}) => {
+export const TabLink: FC<NavLinkProps> = ({ className, children, ...otherProps }) => {
   return (
     <NavLink className={classNames(classes.tab, className)} {...otherProps}>
       {children}

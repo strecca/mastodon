@@ -1,28 +1,24 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import StarIcon from '@/material-icons/400-24px/star-fill.svg?react';
-import {
-  addColumn,
-  removeColumn,
-  moveColumn,
-} from 'flavours/glitch/actions/columns';
+import StarIcon from "@/material-icons/400-24px/star-fill.svg?react";
+import { addColumn, removeColumn, moveColumn } from "flavours/glitch/actions/columns";
 import {
   fetchFavouritedStatuses,
   expandFavouritedStatuses,
-} from 'flavours/glitch/actions/favourites';
-import { Column } from 'flavours/glitch/components/column';
-import type { ColumnRef } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import StatusList from 'flavours/glitch/components/status_list';
-import { getStatusList } from 'flavours/glitch/selectors';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+} from "flavours/glitch/actions/favourites";
+import { Column } from "flavours/glitch/components/column";
+import type { ColumnRef } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import StatusList from "flavours/glitch/components/status_list";
+import { getStatusList } from "flavours/glitch/selectors";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
 const messages = defineMessages({
-  heading: { id: 'column.favourites', defaultMessage: 'Favorites' },
+  heading: { id: "column.favourites", defaultMessage: "Favorites" },
 });
 
 const Favourites: React.FC<{ columnId: string; multiColumn: boolean }> = ({
@@ -32,16 +28,11 @@ const Favourites: React.FC<{ columnId: string; multiColumn: boolean }> = ({
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const columnRef = useRef<ColumnRef>(null);
-  const statusIds = useAppSelector((state) =>
-    getStatusList(state, 'favourites'),
-  );
+  const statusIds = useAppSelector((state) => getStatusList(state, "favourites"));
   const isLoading = useAppSelector(
-    (state) =>
-      state.status_lists.getIn(['favourites', 'isLoading'], true) as boolean,
+    (state) => state.status_lists.getIn(["favourites", "isLoading"], true) as boolean,
   );
-  const hasMore = useAppSelector(
-    (state) => !!state.status_lists.getIn(['favourites', 'next']),
-  );
+  const hasMore = useAppSelector((state) => !!state.status_lists.getIn(["favourites", "next"]));
 
   useEffect(() => {
     dispatch(fetchFavouritedStatuses());
@@ -51,7 +42,7 @@ const Favourites: React.FC<{ columnId: string; multiColumn: boolean }> = ({
     if (columnId) {
       dispatch(removeColumn(columnId));
     } else {
-      dispatch(addColumn('FAVOURITES', {}));
+      dispatch(addColumn("FAVOURITES", {}));
     }
   }, [dispatch, columnId]);
 
@@ -74,7 +65,7 @@ const Favourites: React.FC<{ columnId: string; multiColumn: boolean }> = ({
 
   const emptyMessage = (
     <FormattedMessage
-      id='empty_column.favourited_statuses'
+      id="empty_column.favourited_statuses"
       defaultMessage="You don't have any favorite posts yet. When you favorite one, it will show up here."
     />
   );
@@ -86,7 +77,7 @@ const Favourites: React.FC<{ columnId: string; multiColumn: boolean }> = ({
       label={intl.formatMessage(messages.heading)}
     >
       <ColumnHeader
-        icon='star'
+        icon="star"
         iconComponent={StarIcon}
         title={intl.formatMessage(messages.heading)}
         onPin={handlePin}
@@ -106,12 +97,12 @@ const Favourites: React.FC<{ columnId: string; multiColumn: boolean }> = ({
         onLoadMore={handleLoadMore}
         emptyMessage={emptyMessage}
         bindToDocument={!multiColumn}
-        timelineId='favourites'
+        timelineId="favourites"
       />
 
       <Helmet>
         <title>{intl.formatMessage(messages.heading)}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

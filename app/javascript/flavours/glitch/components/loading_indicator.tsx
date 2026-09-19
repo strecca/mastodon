@@ -1,9 +1,9 @@
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages } from "react-intl";
 
-import { CircularProgress } from './circular_progress';
+import { CircularProgress } from "./circular_progress";
 
 const messages = defineMessages({
-  loading: { id: 'loading_indicator.label', defaultMessage: 'Loading…' },
+  loading: { id: "loading_indicator.label", defaultMessage: "Loading…" },
 });
 
 interface LoadingIndicatorProps {
@@ -16,23 +16,21 @@ interface LoadingIndicatorProps {
   role?: string;
 }
 
-export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
-  role = 'progressbar',
-}) => {
+export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({ role = "progressbar" }) => {
   const intl = useIntl();
 
   const a11yProps =
-    role === 'progressbar'
+    role === "progressbar"
       ? ({
           role,
-          'aria-busy': true,
-          'aria-live': 'polite',
+          "aria-busy": true,
+          "aria-live": "polite",
         } as const)
       : undefined;
 
   return (
     <div
-      className='loading-indicator'
+      className="loading-indicator"
       {...a11yProps}
       aria-label={intl.formatMessage(messages.loading)}
     >

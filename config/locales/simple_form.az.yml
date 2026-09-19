@@ -15,7 +15,7 @@ az:
       domain_allow:
         domain: Bu domen, bu serverdən veri ala biləcək və ondan gələn verilər emal olunacaq və saxlanılanacaq
       featured_tag:
-        name: 'Budur, təzəlikcə istifadə etdiyiniz mövzu etiketlərindən bəziləri:'
+        name: "Budur, təzəlikcə istifadə etdiyiniz mövzu etiketlərindən bəziləri:"
       form_admin_settings:
         content_cache_retention_period: Digər serverlərdən olan bütün göndərişlər (təkrar paylaşımlar və cavablar daxil olmaqla) göstərilən gün sayından sonra, lokal istifadəçilərin həmin göndərişlərlə qarşılıqlı əlaqəsinə baxılmadan silinəcək. Buna, lokal istifadəçinin həmin göndərişi əlfəcinlərə və ya sevimlilərə əlavə etdiyi hallar da daxildir. Fərqli instansiyalardakı istifadəçilər arasında olan şəxsi adçəkmələr də itəcək və bərpası mümkün olmayacaq. Bu ayarın istifadəsi xüsusi məqsədli instansiyalar üçün nəzərdə tutulub və ümumi məqsədli istifadəyə tətbiq edildikdə bir çox istifadəçi gözləntilərini qarşılamaya bilər.
       imports:
@@ -24,7 +24,7 @@ az:
         severities:
           no_access: Bütün resurslara erişimi əngəllə
       sessions:
-        otp: 'Telefon tətbiqiniz tərəfindən yaradılmış iki faktorlu kodu daxil edin və ya geri qaytarma kodlarınızdan birini istifadə edin:'
+        otp: "Telefon tətbiqiniz tərəfindən yaradılmış iki faktorlu kodu daxil edin və ya geri qaytarma kodlarınızdan birini istifadə edin:"
       user_role:
         permissions_as_keys: Bu rola sahib istifadəçilər bunlara erişə biləcək...
     labels:

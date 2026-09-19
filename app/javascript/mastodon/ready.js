@@ -16,17 +16,17 @@ export default function ready(callback) {
         return;
       }
 
-      if (typeof result?.then === 'function') {
+      if (typeof result?.then === "function") {
         result.then(resolve).catch(reject);
       } else {
         resolve();
       }
     }
 
-    if (['interactive', 'complete'].includes(document.readyState)) {
+    if (["interactive", "complete"].includes(document.readyState)) {
       loaded();
     } else {
-      document.addEventListener('DOMContentLoaded', loaded);
+      document.addEventListener("DOMContentLoaded", loaded);
     }
   });
 }

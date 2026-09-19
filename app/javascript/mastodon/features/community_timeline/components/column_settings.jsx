@@ -1,16 +1,15 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import ImmutablePropTypes from "react-immutable-proptypes";
 
-import { injectIntl } from '@/mastodon/components/intl';
+import { injectIntl } from "@/mastodon/components/intl";
 
-import SettingToggle from '../../notifications/components/setting_toggle';
+import SettingToggle from "../../notifications/components/setting_toggle";
 
 class ColumnSettings extends PureComponent {
-
   static propTypes = {
     settings: ImmutablePropTypes.map.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -18,20 +17,29 @@ class ColumnSettings extends PureComponent {
     columnId: PropTypes.string,
   };
 
-  render () {
+  render() {
     const { settings, onChange } = this.props;
 
     return (
-      <div className='column-settings'>
+      <div className="column-settings">
         <section>
-          <div className='column-settings__row'>
-            <SettingToggle settings={settings} settingPath={['other', 'onlyMedia']} onChange={onChange} label={<FormattedMessage id='community.column_settings.media_only' defaultMessage='Media only' />} />
+          <div className="column-settings__row">
+            <SettingToggle
+              settings={settings}
+              settingPath={["other", "onlyMedia"]}
+              onChange={onChange}
+              label={
+                <FormattedMessage
+                  id="community.column_settings.media_only"
+                  defaultMessage="Media only"
+                />
+              }
+            />
           </div>
         </section>
       </div>
     );
   }
-
 }
 
 export default injectIntl(ColumnSettings);

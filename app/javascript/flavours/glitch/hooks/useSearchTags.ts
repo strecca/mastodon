@@ -1,21 +1,21 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from "react";
 
-import { defineMessages, useIntl } from 'react-intl';
+import { defineMessages, useIntl } from "react-intl";
 
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 
-import { apiGetSearch } from 'flavours/glitch/api/search';
-import type { ApiHashtagJSON } from 'flavours/glitch/api_types/tags';
-import { trimHashFromStart } from 'flavours/glitch/utils/hashtags';
+import { apiGetSearch } from "flavours/glitch/api/search";
+import type { ApiHashtagJSON } from "flavours/glitch/api_types/tags";
+import { trimHashFromStart } from "flavours/glitch/utils/hashtags";
 
-export type TagSearchResult = Omit<ApiHashtagJSON, 'url' | 'history'> & {
+export type TagSearchResult = Omit<ApiHashtagJSON, "url" | "history"> & {
   label?: string;
 };
 
 const messages = defineMessages({
   addTag: {
-    id: 'account_edit_tags.add_tag',
-    defaultMessage: 'Add #{tagName}',
+    id: "account_edit_tags.add_tag",
+    defaultMessage: "Add #{tagName}",
   },
 });
 
@@ -27,7 +27,7 @@ const fetchSearchHashtags = ({
   q: string;
   limit: number;
   signal: AbortSignal;
-}) => apiGetSearch({ q, type: 'hashtags', limit }, { signal });
+}) => apiGetSearch({ q, type: "hashtags", limit }, { signal });
 
 export function useSearchTags({
   query,
@@ -40,9 +40,7 @@ export function useSearchTags({
 } = {}) {
   const intl = useIntl();
   const [fetchedTags, setFetchedTags] = useState<ApiHashtagJSON[]>([]);
-  const [loadingState, setLoadingState] = useState<
-    'idle' | 'loading' | 'error'
-  >('idle');
+  const [loadingState, setLoadingState] = useState<"idle" | "loading" | "error">("idle");
 
   const searchRequestRef = useRef<AbortController | null>(null);
 
@@ -59,7 +57,7 @@ export function useSearchTags({
         return;
       }
 
-      setLoadingState('loading');
+      setLoadingState("loading");
 
       searchRequestRef.current = new AbortController();
 
@@ -69,14 +67,12 @@ export function useSearchTags({
         signal: searchRequestRef.current.signal,
       })
         .then(({ hashtags }) => {
-          const tags = filterResults
-            ? hashtags.filter(filterResults)
-            : hashtags;
+          const tags = filterResults ? hashtags.filter(filterResults) : hashtags;
           setFetchedTags(tags);
-          setLoadingState('idle');
+          setLoadingState("idle");
         })
         .catch(() => {
-          setLoadingState('error');
+          setLoadingState("error");
         });
     },
     500,
@@ -85,12 +81,12 @@ export function useSearchTags({
 
   const resetSearch = useCallback(() => {
     setFetchedTags([]);
-    setLoadingState('idle');
+    setLoadingState("idle");
   }, []);
 
   // Add dedicated item for adding the current query
   const tags = useMemo(() => {
-    const trimmedQuery = query ? trimHashFromStart(query.trim()) : '';
+    const trimmedQuery = query ? trimHashFromStart(query.trim()) : "";
     if (!trimmedQuery) {
       return fetchedTags as TagSearchResult[];
     }
@@ -98,12 +94,10 @@ export function useSearchTags({
     const results: TagSearchResult[] = [...fetchedTags]; // Make array mutable
     if (
       trimmedQuery.length > 0 &&
-      results.every(
-        (result) => result.name.toLowerCase() !== trimmedQuery.toLowerCase(),
-      )
+      results.every((result) => result.name.toLowerCase() !== trimmedQuery.toLowerCase())
     ) {
       results.push({
-        id: 'new',
+        id: "new",
         name: trimmedQuery,
         label: intl.formatMessage(messages.addTag, { tagName: trimmedQuery }),
       });
@@ -115,7 +109,7 @@ export function useSearchTags({
     tags,
     searchTags,
     resetSearch,
-    isLoading: loadingState === 'loading',
-    isError: loadingState === 'error',
+    isLoading: loadingState === "loading",
+    isError: loadingState === "error",
   };
 }

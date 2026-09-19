@@ -1,4 +1,4 @@
-import type { ValueOf } from '../../types/util';
+import type { ValueOf } from "../../types/util";
 
 export const DECIMAL_UNITS = Object.freeze({
   ONE: 1,
@@ -53,10 +53,7 @@ export function toShortNumber(sourceNumber: number): ShortNumber {
  * pluralReady(1793, DECIMAL_UNITS.THOUSAND)
  * // => 1790
  */
-export function pluralReady(
-  sourceNumber: number,
-  division: DecimalUnits | null,
-): number {
+export function pluralReady(sourceNumber: number, division: DecimalUnits | null): number {
   if (division == null || division < DECIMAL_UNITS.HUNDRED) {
     return sourceNumber;
   }

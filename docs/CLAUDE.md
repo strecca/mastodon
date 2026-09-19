@@ -1,6 +1,6 @@
 KEY information:
 
-Contents: Mac Intel, Node v24, VS Code terminal, no sudo, no Windows assumptions, think-ahead error scanning preferences. I do a lot of Development environment testing so that I can run apps in my Firefox or Chrome browser at a http://localhost address.  # Global Preferences
+Contents: Mac Intel, Node v24, VS Code terminal, no sudo, no Windows assumptions, think-ahead error scanning preferences. I do a lot of Development environment testing so that I can run apps in my Firefox or Chrome browser at a http://localhost address. # Global Preferences
 
 - Mac Intel development machine
 - Node v24.12.0
@@ -12,7 +12,7 @@ Contents: Mac Intel, Node v24, VS Code terminal, no sudo, no Windows assumptions
 - Always think ahead for errors that logically follow from the same pattern
 - No placeholder code or generic templates — full production implementations
 - Never suggest a Brew Install of any component to avoid Homebrew’s dependency management or to ensure compatibility with Apple’s approved software paths
-"This is a scaffolding tool, not a runtime feature. Read docs/COMMUNITY_DIRECTORY_ARCHITECTURE.md before any changes. Generated pages are thin wrappers — modify shared components at components/community_directory/, not individual feature pages."
+  "This is a scaffolding tool, not a runtime feature. Read docs/COMMUNITY_DIRECTORY_ARCHITECTURE.md before any changes. Generated pages are thin wrappers — modify shared components at components/community_directory/, not individual feature pages."
 
 # Community Directory — Architecture & Design Document
 
@@ -44,6 +44,7 @@ cards, and search filters — all driven by a `config.json` file that defines th
 layout, groups, and filter options for a given category.
 
 Files:
+
 - `entry_list.jsx` — Filterable list page with search, checkbox filters, auth-gated add button
 - `entry_card.jsx` — Preview card in list view with account info, preview fields, truncation
 - `entry_detail.jsx` — Full detail page with grouped field layout, owner-only edit link
@@ -58,6 +59,7 @@ The form builder UI where the admin designs a category's fields, groups, and lay
 Routes: `/community_directory` (landing) and `/community_directory/admin` (form builder).
 
 Files:
+
 - `index.jsx` — Admin landing: lists existing generated categories with entry counts
 - `admin/index.jsx` — Form builder: category name/display/description, groups, fields, preview, generate button
 - `admin/components/field_editor.jsx` — Individual field config (label, type, options, required, searchable, column, group)
@@ -83,26 +85,29 @@ generated categories at runtime — new categories appear automatically after ge
 When the admin generates "artists," the system creates:
 
 ### New files written to disk:
-| File | Purpose |
-|---|---|
-| `features/community_artists/config.json` | Field definitions, layout, groups, filter config |
-| `features/community_artists/index.jsx` | List page — thin wrapper importing shared `EntryList` |
-| `features/community_artists/show/index.jsx` | Detail page — thin wrapper importing shared `EntryDetail` |
-| `features/community_artists/new/index.jsx` | Create form — thin wrapper importing shared `EntryForm` |
-| `features/community_artists/edit/index.jsx` | Edit form — thin wrapper importing shared `EntryForm` |
-| `app/models/community_artist.rb` | Rails model with validations + ILIKE search scope |
-| `app/controllers/api/v1/community_artists_controller.rb` | CRUD API with owner authorization |
-| `db/migrate/..._create_community_artists.rb` | PostgreSQL migration |
+
+| File                                                     | Purpose                                                   |
+| -------------------------------------------------------- | --------------------------------------------------------- |
+| `features/community_artists/config.json`                 | Field definitions, layout, groups, filter config          |
+| `features/community_artists/index.jsx`                   | List page — thin wrapper importing shared `EntryList`     |
+| `features/community_artists/show/index.jsx`              | Detail page — thin wrapper importing shared `EntryDetail` |
+| `features/community_artists/new/index.jsx`               | Create form — thin wrapper importing shared `EntryForm`   |
+| `features/community_artists/edit/index.jsx`              | Edit form — thin wrapper importing shared `EntryForm`     |
+| `app/models/community_artist.rb`                         | Rails model with validations + ILIKE search scope         |
+| `app/controllers/api/v1/community_artists_controller.rb` | CRUD API with owner authorization                         |
+| `db/migrate/..._create_community_artists.rb`             | PostgreSQL migration                                      |
 
 ### Existing files auto-injected into:
-| File | What's injected |
-|---|---|
+
+| File                                   | What's injected                                                                                         |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | `features/ui/util/async-components.js` | 4 lazy-load exports (CommunityArtists, CommunityArtistsShow, CommunityArtistsNew, CommunityArtistsEdit) |
-| `features/ui/index.jsx` | Import names + 4 `<WrappedRoute>` entries |
-| `config/routes/api.rb` | `resources :community_artists, only: [:index, :show, :create, :update, :destroy]` |
-| `config/routes/web_app.rb` | `/community_artists/(*any)` for SPA routing |
+| `features/ui/index.jsx`                | Import names + 4 `<WrappedRoute>` entries                                                               |
+| `config/routes/api.rb`                 | `resources :community_artists, only: [:index, :show, :create, :update, :destroy]`                       |
+| `config/routes/web_app.rb`             | `/community_artists/(*any)` for SPA routing                                                             |
 
 ### NOT modified per category (by design):
+
 - `reducers/index.ts` — registered once during initial install
 - `reducers/community_entries.js` — single reducer handles ALL categories via `categoryKey`
 - `actions/community_entries.js` — single actions module handles ALL categories via factory pattern
@@ -114,15 +119,20 @@ Generated feature pages are intentionally thin (15-20 lines each). They import a
 component and pass the category's `config.json`. Example for `community_artists/index.jsx`:
 
 ```jsx
-import { Column } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import { EntryList } from 'flavours/glitch/components/community_directory/entry_list';
-import config from './config.json';
+import { Column } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import { EntryList } from "flavours/glitch/components/community_directory/entry_list";
+import config from "./config.json";
 
 const CommunityArtists = ({ multiColumn }) => {
   return (
-    <Column bindToDocument={!multiColumn} label={'Community Artists'}>
-      <ColumnHeader title={'Community Artists'} icon='address-book' multiColumn={multiColumn} showBackButton />
+    <Column bindToDocument={!multiColumn} label={"Community Artists"}>
+      <ColumnHeader
+        title={"Community Artists"}
+        icon="address-book"
+        multiColumn={multiColumn}
+        showBackButton
+      />
       <EntryList config={config} multiColumn={multiColumn} />
     </Column>
   );
@@ -138,12 +148,14 @@ generated category automatically.
 ### Actions: `actions/community_entries.js`
 
 Uses a factory pattern. All action types include the category key:
+
 ```
 COMMUNITY_ENTRIES/artists/FETCH_SUCCESS
 COMMUNITY_ENTRIES/events/CREATE_SUCCESS
 ```
 
 Functions accept `categoryKey` and `apiEndpoint` from config.json:
+
 - `fetchEntries(categoryKey, apiEndpoint, query, page)`
 - `fetchEntry(categoryKey, apiEndpoint, id)`
 - `createEntry(categoryKey, apiEndpoint, formData)`
@@ -154,6 +166,7 @@ Functions accept `categoryKey` and `apiEndpoint` from config.json:
 ### Reducer: `reducers/community_entries.js`
 
 Single reducer storing state for ALL categories in an ImmutableMap keyed by `categoryKey`:
+
 ```
 state.community_entries = ImmutableMap({
   artists: { entries: List, entriesLoading, currentEntry, total, page, pages, error },
@@ -198,13 +211,12 @@ Each generated category has a `config.json` that drives all shared components:
       "group": "details"
     }
   ],
-  "groups": [
-    { "name": "details", "label": "Artist Details", "columns": 2 }
-  ]
+  "groups": [{ "name": "details", "label": "Artist Details", "columns": 2 }]
 }
 ```
 
 ### Widget types:
+
 - `text` → `<input type="text">`, PostgreSQL `string`
 - `textarea` → `<textarea>`, PostgreSQL `text`
 - `select` → `<select>` with options, PostgreSQL `string`
@@ -216,24 +228,27 @@ Each generated category has a `config.json` that drives all shared components:
 - `number` → `<input type="number">`, PostgreSQL `integer`
 
 ### Column positioning:
+
 - `"full"` → full width
 - `"1"` → left column in a 2-column group
 - `"2"` → right column in a 2-column group
 
 ### Searchable flag:
+
 - For `text`/`textarea`/`select`/`radio`/`url`/`email`: generates PostgreSQL `ILIKE` search scope
 - For `select`/`checkboxes`/`radio` with options: renders checkbox filter groups in the UI
 - Searchable fields get database indexes
 
 ## 7. Permissions Model
 
-| Role | Can See | Can Do |
-|---|---|---|
-| Public (not logged in) | All categories, all entries, all details, search/filter | Browse only |
-| Logged-in subscriber | Everything public sees | Add new entries, edit entries they own |
-| Admin | Everything subscriber sees | Access `/community_directory` admin, generate new categories |
+| Role                   | Can See                                                 | Can Do                                                       |
+| ---------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| Public (not logged in) | All categories, all entries, all details, search/filter | Browse only                                                  |
+| Logged-in subscriber   | Everything public sees                                  | Add new entries, edit entries they own                       |
+| Admin                  | Everything subscriber sees                              | Access `/community_directory` admin, generate new categories |
 
 ### How ownership works:
+
 - Every entry has an `account_id` foreign key to the Mastodon `accounts` table
 - On create, `current_account` is assigned as owner
 - Edit/delete restricted to `entry.account_id == current_account.id || current_account.admin?`
@@ -243,44 +258,51 @@ Each generated category has a `config.json` that drives all shared components:
 ## 8. Glitch-soc Integration Patterns
 
 ### Routing architecture (three-layer lazy-loading):
+
 1. `async-components.js` — registry of factory functions returning `import()` calls
 2. `ui/index.jsx` — `<WrappedRoute>` components pass factory to `<Bundle>`
 3. `<Bundle>` — executes import on mount, shows spinner, renders component with `params` and `multiColumn` props
 
 ### Generated pages receive props from Bundle:
+
 - `params` (from react-router match.params) — NOT from hooks
 - `multiColumn` (boolean)
 
 ### State access patterns:
+
 - Root state is an ImmutableRecord — both `state.foo` and `state.get('foo')` work
 - Use `useAppSelector` and `useAppDispatch` from `flavours/glitch/store`
 - Sub-state is Immutable: use `.get()`, `.getIn()`, `.size` for Lists, `fromJS()` for conversion
 
 ### Key imports:
+
 ```jsx
-import { Column } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { RelativeTimestamp } from 'flavours/glitch/components/relative_timestamp';
-import { Avatar } from 'flavours/glitch/components/avatar';
-import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity_context';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
-import api from 'flavours/glitch/api';  // axios instance with auth headers
-import CategoryIcon from '@/material-icons/400-24px/category.svg?react';
+import { Column } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
+import { RelativeTimestamp } from "flavours/glitch/components/relative_timestamp";
+import { Avatar } from "flavours/glitch/components/avatar";
+import { identityContextPropShape, withIdentity } from "flavours/glitch/identity_context";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
+import api from "flavours/glitch/api"; // axios instance with auth headers
+import CategoryIcon from "@/material-icons/400-24px/category.svg?react";
 ```
 
 ### Helmet:
+
 ```jsx
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 ```
 
 ### Navigation:
+
 - `useHistory` from `react-router-dom` for programmatic navigation
 - `<Link to="...">` for declarative links
 
 ## 9. File Locations Reference
 
 ### Rails backend:
+
 ```
 app/services/community_directory_generator.rb          # The scaffolding engine
 app/controllers/api/v1/community_directory_controller.rb    # Admin API (generate, list)
@@ -288,6 +310,7 @@ app/controllers/api/v1/community_directory_public_controller.rb  # Public API (b
 ```
 
 ### Redux layer:
+
 ```
 app/javascript/flavours/glitch/actions/community_directory.js  # Admin actions (fetchCategories, generateCategory)
 app/javascript/flavours/glitch/actions/community_entries.js    # Generic CRUD (all categories)
@@ -296,6 +319,7 @@ app/javascript/flavours/glitch/reducers/community_entries.js   # All categories 
 ```
 
 ### Shared React components:
+
 ```
 app/javascript/flavours/glitch/components/community_directory/entry_list.jsx
 app/javascript/flavours/glitch/components/community_directory/entry_card.jsx
@@ -305,6 +329,7 @@ app/javascript/flavours/glitch/components/community_directory/search_filters.jsx
 ```
 
 ### Admin UI:
+
 ```
 app/javascript/flavours/glitch/features/community_directory/index.jsx
 app/javascript/flavours/glitch/features/community_directory/admin/index.jsx
@@ -313,16 +338,19 @@ app/javascript/flavours/glitch/features/community_directory/admin/components/for
 ```
 
 ### Public hub:
+
 ```
 app/javascript/flavours/glitch/features/community_hub/index.jsx
 ```
 
 ### Styles:
+
 ```
 app/javascript/flavours/glitch/styles/mastodon/community_directory.scss
 ```
 
 ### Wiring files modified during install:
+
 ```
 app/javascript/flavours/glitch/features/ui/util/async-components.js  # 3 lazy loaders added
 app/javascript/flavours/glitch/features/ui/index.jsx                  # 3 routes + imports added
@@ -335,13 +363,16 @@ config/routes/web_app.rb                                               # SPA cat
 ## 10. API Endpoints
 
 ### Admin (requires admin auth):
+
 - `GET /api/v1/community_directory/categories` — list all generated categories
 - `POST /api/v1/community_directory/generate` — trigger scaffolding with form config payload
 
 ### Public (no auth):
+
 - `GET /api/v1/community_directory_public` — list all categories with counts (for hub page)
 
 ### Per-category (generated, e.g. for "artists"):
+
 - `GET /api/v1/community_artists` — list entries (supports `?q=search&page=1`)
 - `GET /api/v1/community_artists/:id` — show single entry
 - `POST /api/v1/community_artists` — create entry (auth required)
@@ -351,6 +382,7 @@ config/routes/web_app.rb                                               # SPA cat
 ## 11. Routes
 
 ### Frontend (React):
+
 - `/community` — public hub (category card grid)
 - `/community_directory` — admin landing (category list)
 - `/community_directory/admin` — admin form builder
@@ -360,7 +392,9 @@ config/routes/web_app.rb                                               # SPA cat
 - `/community_artists/:id/edit` — generated edit form
 
 ### Note on route ordering in ui/index.jsx:
+
 More specific routes MUST come before less specific ones:
+
 ```jsx
 <WrappedRoute path='/community_artists/new' exact ... />
 <WrappedRoute path='/community_artists/:id/edit' exact ... />
@@ -371,13 +405,16 @@ More specific routes MUST come before less specific ones:
 ## 12. Development Workflow
 
 ### After generating a new category:
+
 ```bash
 rm -rf public/packs-dev tmp/cache && bin/dev
 ```
+
 Vite HMR does NOT reliably pick up new files written to disk. The full cache clear + restart
 is the only dependable method.
 
 ### Dev environment:
+
 - Mac Intel
 - Node v24.12.0
 - Docker-based Mastodon dev
@@ -422,12 +459,13 @@ auth-gating complexity in the hub and keeps the admin namespace clean.
   has not yet been implemented — it would go in the navigation panel component
 
 # WHERE WE START IN THIS SESSION: This is MacPro2020:mastodon davidh$ writing now: It is May 18, 2026 around 09:50 as I begin. On May 17 my chat conversation with Claude Opus 4.6 Extended produced the above content and files. ALL OF THE CHANGES IN THE ABOVE SCRIPT HAVE BEEN MADE MANUALLY. I am running a Vite localhost Development environment which is actually inside a Docker environment. I am pulling from the mastodon glitch-soc fork in github but have not necessarily pulled in all of the glitch-soc and mastodon mail merges or changes. admin
+
 @admin
 500
 
 localhost:3000: About · Profiles directory · Privacy policy
 
 Mastodon: About · Get the app · Keyboard shortcuts · View source code · v4.6.0-alpha.7+glitch
-My problem that you will assist to solve is that once I have accessed http://localhost:3000/community_directory/admin and completed building the fields for a table that should be named 'community_artists' I then click the "Generate Community Feature" and perhaps 3 seconds of processing passes before a red highlighted text message reports at the top of the form 'Request failed with status code 500'  I tried twice and I see no evidence that a single file has been written.   
-I am suspicious of community_directory_v2/app/javascript/flavours/glitch/components/community_directory/entry_list.jsx  -- it refers to getting values from a 'config.json' file and I see none inside of this whole application. 
-I A WONDERING IF IT IS A PROBLEM WITH RUBY WRITE  
+My problem that you will assist to solve is that once I have accessed http://localhost:3000/community_directory/admin and completed building the fields for a table that should be named 'community_artists' I then click the "Generate Community Feature" and perhaps 3 seconds of processing passes before a red highlighted text message reports at the top of the form 'Request failed with status code 500' I tried twice and I see no evidence that a single file has been written.  
+I am suspicious of community_directory_v2/app/javascript/flavours/glitch/components/community_directory/entry_list.jsx -- it refers to getting values from a 'config.json' file and I see none inside of this whole application.
+I A WONDERING IF IT IS A PROBLEM WITH RUBY WRITE

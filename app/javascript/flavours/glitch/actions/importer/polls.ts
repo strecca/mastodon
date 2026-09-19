@@ -1,7 +1,5 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 
-import type { Poll } from 'flavours/glitch/models/poll';
+import type { Poll } from "flavours/glitch/models/poll";
 
-export const importPolls = createAction<{ polls: Poll[] }>(
-  'poll/importMultiple',
-);
+export const importPolls = createAction<{ polls: Poll[] }>("poll/importMultiple");

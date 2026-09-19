@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { fetchRelationships } from '../actions/accounts';
-import { useAppDispatch, useAppSelector } from '../store';
+import { fetchRelationships } from "../actions/accounts";
+import { useAppDispatch, useAppSelector } from "../store";
 
 export function useRelationship(accountId?: string | null) {
   const relationship = useAppSelector((state) =>

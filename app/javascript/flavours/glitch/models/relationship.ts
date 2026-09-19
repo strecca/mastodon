@@ -1,7 +1,7 @@
-import type { RecordOf } from 'immutable';
-import { Record } from 'immutable';
+import type { RecordOf } from "immutable";
+import { Record } from "immutable";
 
-import type { ApiRelationshipJSON } from 'flavours/glitch/api_types/relationships';
+import type { ApiRelationshipJSON } from "flavours/glitch/api_types/relationships";
 
 type RelationshipShape = Required<ApiRelationshipJSON>; // no changes from server shape
 export type Relationship = RecordOf<RelationshipShape>;
@@ -13,12 +13,12 @@ const RelationshipFactory = Record<RelationshipShape>({
   endorsed: false,
   followed_by: false,
   following: false,
-  id: '',
+  id: "",
   languages: null,
   muting: false,
   muting_notifications: false,
   muting_expires_at: null,
-  note: '',
+  note: "",
   notifying: false,
   requested_by: false,
   requested: false,

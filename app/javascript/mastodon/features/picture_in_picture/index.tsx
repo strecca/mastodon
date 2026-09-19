@@ -1,12 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { removePictureInPicture } from 'mastodon/actions/picture_in_picture';
-import { Audio } from 'mastodon/features/audio';
-import { Video } from 'mastodon/features/video';
-import { useAppDispatch, useAppSelector } from 'mastodon/store/typed_functions';
+import { removePictureInPicture } from "mastodon/actions/picture_in_picture";
+import { Audio } from "mastodon/features/audio";
+import { Video } from "mastodon/features/video";
+import { useAppDispatch, useAppSelector } from "mastodon/store/typed_functions";
 
-import { Footer } from './components/footer';
-import { Header } from './components/header';
+import { Footer } from "./components/footer";
+import { Header } from "./components/header";
 
 export const PictureInPicture: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +42,7 @@ export const PictureInPicture: React.FC = () => {
   let player;
 
   switch (type) {
-    case 'video':
+    case "video":
       player = (
         <Video
           src={src}
@@ -54,7 +54,7 @@ export const PictureInPicture: React.FC = () => {
         />
       );
       break;
-    case 'audio':
+    case "audio":
       player = (
         <Audio
           src={src}
@@ -71,7 +71,7 @@ export const PictureInPicture: React.FC = () => {
   }
 
   return (
-    <div className='picture-in-picture'>
+    <div className="picture-in-picture">
       <Header accountId={accountId} statusId={statusId} onClose={handleClose} />
 
       {player}

@@ -1,21 +1,20 @@
-import { createReducer } from '@reduxjs/toolkit';
-import type { UnknownAction } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit";
+import type { UnknownAction } from "@reduxjs/toolkit";
 
-import type { AxiosError } from 'axios';
+import type { AxiosError } from "axios";
 
-import { ACCOUNT_LOOKUP_FAIL } from 'flavours/glitch/actions/accounts';
-import { importAccounts } from 'flavours/glitch/actions/importer/accounts';
-import { domain } from 'flavours/glitch/initial_state';
+import { ACCOUNT_LOOKUP_FAIL } from "flavours/glitch/actions/accounts";
+import { importAccounts } from "flavours/glitch/actions/importer/accounts";
+import { domain } from "flavours/glitch/initial_state";
 
 interface AccountLookupFailAction extends UnknownAction {
   acct: string;
   error?: AxiosError;
 }
 
-const pattern = new RegExp(`@${domain}$`, 'gi');
+const pattern = new RegExp(`@${domain}$`, "gi");
 
-export const normalizeForLookup = (str: string) =>
-  str.toLowerCase().replace(pattern, '');
+export const normalizeForLookup = (str: string) => str.toLowerCase().replace(pattern, "");
 
 const initialState: Record<string, string | null> = {};
 

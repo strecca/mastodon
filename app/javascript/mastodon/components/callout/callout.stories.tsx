@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { action } from 'storybook/actions';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { action } from "storybook/actions";
 
-import { Callout } from '.';
+import { Callout } from ".";
 
 const meta = {
-  title: 'Components/Callout',
+  title: "Components/Callout",
   args: {
-    children: 'Contents here',
-    title: 'Title',
-    onPrimary: action('Primary action clicked'),
-    primaryLabel: 'Primary',
-    onSecondary: action('Secondary action clicked'),
-    secondaryLabel: 'Secondary',
-    onClose: action('Close clicked'),
+    children: "Contents here",
+    title: "Title",
+    onPrimary: action("Primary action clicked"),
+    primaryLabel: "Primary",
+    onSecondary: action("Secondary action clicked"),
+    secondaryLabel: "Secondary",
+    onClose: action("Close clicked"),
   },
   component: Callout,
   render(args) {
     return (
-      <div style={{ minWidth: 'min(400px, calc(100vw - 2rem))' }}>
+      <div style={{ minWidth: "min(400px, calc(100vw - 2rem))" }}>
         <Callout {...args} />
       </div>
     );
@@ -30,15 +30,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    variant: 'default',
+    variant: "default",
   },
 };
 
 export const NoTitle: Story = {
   args: {
-    title: '',
-    primaryLabel: '',
-    secondaryLabel: '',
+    title: "",
+    primaryLabel: "",
+    secondaryLabel: "",
     onClose: undefined,
   },
 };
@@ -67,36 +67,36 @@ export const OnlyText: Story = {
 
 export const Subtle: Story = {
   args: {
-    variant: 'subtle',
+    variant: "subtle",
   },
 };
 
 export const Feature: Story = {
   args: {
-    variant: 'feature',
+    variant: "feature",
   },
 };
 
 export const Inverted: Story = {
   args: {
-    variant: 'inverted',
+    variant: "inverted",
   },
 };
 
 export const Success: Story = {
   args: {
-    variant: 'success',
+    variant: "success",
   },
 };
 
 export const Warning: Story = {
   args: {
-    variant: 'warning',
+    variant: "warning",
   },
 };
 
 export const Error: Story = {
   args: {
-    variant: 'error',
+    variant: "error",
   },
 };

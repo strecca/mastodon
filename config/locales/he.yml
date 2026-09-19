@@ -342,7 +342,7 @@ he:
         title: הכרזה חדשה
       preview:
         disclaimer: כיוון שהמשתמשים לא יכולים לבטל אותם, הודעות דוא"ל צריכות להיות מוגבלות בשימוש להודעות חשובות כגון הודעות על גניבת מידע אישי או הודעות על סגירת השרת.
-        explanation_html: 'הדואל ישלח אל <strong>%{display_count} משתמשיםות</strong>. להלן המלל שישלח בדואל:'
+        explanation_html: "הדואל ישלח אל <strong>%{display_count} משתמשיםות</strong>. להלן המלל שישלח בדואל:"
         title: צפיה מקדימה בהודעה
       publish: פרסום
       published_msg: ההכרזה פורסמה בהצלחה!
@@ -604,10 +604,10 @@ he:
       import:
         description_html: הנכם עומדים ליבא רשימת חסימות. אנא וודאו היטב שאתם יודעים מה הרשימה כוללת, במיוחד אם לא יצרתם אותה בעצמכם.
         existing_relationships_warning: קשרי עקיבה קיימים
-        private_comment_description_html: 'כדי לסייע במעקב מאיכן הגיעו חסימות, חסימות מיובאות ילוו בהערה פרטית זו: <q>%{comment}</q>'
+        private_comment_description_html: "כדי לסייע במעקב מאיכן הגיעו חסימות, חסימות מיובאות ילוו בהערה פרטית זו: <q>%{comment}</q>"
         private_comment_template: יובא מתוך %{source} בתאריך %{date}
         title: יבוא רשימת שרתים חסומים
-      invalid_domain_block: 'חסימה של שרת אחד או יותר דולגו בשל השגיאה הבאה: %{error}'
+      invalid_domain_block: "חסימה של שרת אחד או יותר דולגו בשל השגיאה הבאה: %{error}"
       new:
         title: יבוא רשימת שרתים חסומים
       no_file: לא נבחר קובץ
@@ -747,12 +747,12 @@ he:
       created_msg: כלל IP חדש הוסף בהצלחה
       delete: למחוק
       expires_in:
-        '1209600': שבועיים
-        '15778476': 6 חודשים
-        '2629746': חודש אחד
-        '31556952': שנה אחת
-        '86400': יום אחד
-        '94670856': 3 שנים
+        "1209600": שבועיים
+        "15778476": 6 חודשים
+        "2629746": חודש אחד
+        "31556952": שנה אחת
+        "86400": יום אחד
+        "94670856": 3 שנים
       new:
         title: יצירת כלל IP
       no_ip_block_selected: שום כלל IP לא שונה כי שום כלל IP לא נבחר
@@ -832,10 +832,10 @@ he:
         title: הערות
       notes_description_html: צפייה והשארת הערות למנחים אחרים או לעצמך לעתיד
       processed_msg: דיווח %{id} עוּבָּד בהצלחה
-      quick_actions_description_html: 'נקוט/י פעולה מהירה או גלול/י למטה לצפייה בתוכן המדווח:'
+      quick_actions_description_html: "נקוט/י פעולה מהירה או גלול/י למטה לצפייה בתוכן המדווח:"
       remote_user_placeholder: המשתמש המרוחק מ-%{instance}
       reopen: פתיחת דו"ח מחדש
-      report: 'דווח על #%{id}'
+      report: "דווח על #%{id}"
       reported_account: חשבון מדווח
       reported_by: דווח על ידי
       reported_content: התוכן עליו דווח
@@ -848,26 +848,26 @@ he:
       statuses_description_html: התוכן הפוגע יצוטט בתקשורת עם החשבון המדווח
       summary:
         action_preambles:
-          delete_html: 'הפעולה <strong>תמחק</strong> כמה הודעות של חשבון <strong>@%{acct}</strong>. תוצאות הפעולה יהיו:'
-          mark_as_sensitive_html: 'הפעולה הבאה <strong>תסמן</strong> כמה הודעות של חשבון <strong>@%{acct}</strong> כ<strong>רגישות</strong>. תוצאות הפעולה יהיו:'
-          silence_html: 'הפעולה הבאה <strong>תגביל</strong> את החשבון <strong>@%{acct}</strong>. תוצאות הפעולה יהיו:'
-          suspend_html: 'הפעולה הבאה <strong>תקפיא</strong> את החשבון <strong>@%{acct}</strong>. תוצאות הפעולה יהיו:'
+          delete_html: "הפעולה <strong>תמחק</strong> כמה הודעות של חשבון <strong>@%{acct}</strong>. תוצאות הפעולה יהיו:"
+          mark_as_sensitive_html: "הפעולה הבאה <strong>תסמן</strong> כמה הודעות של חשבון <strong>@%{acct}</strong> כ<strong>רגישות</strong>. תוצאות הפעולה יהיו:"
+          silence_html: "הפעולה הבאה <strong>תגביל</strong> את החשבון <strong>@%{acct}</strong>. תוצאות הפעולה יהיו:"
+          suspend_html: "הפעולה הבאה <strong>תקפיא</strong> את החשבון <strong>@%{acct}</strong>. תוצאות הפעולה יהיו:"
         actions:
           delete_html: הסרת ההודעות החורגות
           mark_as_sensitive_html: סימון המדיה בהודעות החורגות כרגיש לצפיה
           silence_html: הגבלה חמורה של תפוצת <strong>@%{acct}</strong> על ידי הפיכת החשבון ותכניו לזמינים רק למי שכבר עוקב אחריו או מי שיחפשו את עמוד הפרופיל שלו ישירות
           suspend_html: הקפאת החשבון <strong>@%{acct}</strong>, הפיכת הפרופיל והתוכן לנסתרים ולא ניתנים לתקשורת
-        close_report: 'סימון דיווח #%{id} בתור פתור'
+        close_report: "סימון דיווח #%{id} בתור פתור"
         close_reports_html: סימון <strong>כל</strong> הדיווחים נגד <strong>@%{acct}</strong> בתור פתורים
         delete_data_html: למחוק את הפרופיל והתוכן של <strong>@%{acct}</strong> בעוד 30 יום אלא אם תוסר ההגבלה עליהם לפני כן
-        preview_preamble_html: 'שליחת אזהרה אל <strong>@%{acct}</strong> בזו הלשון:'
+        preview_preamble_html: "שליחת אזהרה אל <strong>@%{acct}</strong> בזו הלשון:"
         record_strike_html: ציין נקודה שחורה נגד <strong>@%{acct}</strong> כדי לסייע בשיפוטו בדיווחים עתידיים על חריגות
         send_email_html: שליחת דואל אזהרה אל <strong>@%{acct}</strong>
         warning_placeholder: צידוקים אפשריים נוספים לפעולה המשמעתית.
       target_origin: מקור החשבון המדווח
       title: דיווחים
       unassign: ביטול הקצאה
-      unknown_action_msg: 'פעולה לא מוכרת: %{action}'
+      unknown_action_msg: "פעולה לא מוכרת: %{action}"
       unresolved: לא פתור
       updated_at: עודכן
       view_profile: צפה בפרופיל
@@ -875,7 +875,7 @@ he:
       add_new: הוספת תפקיד
       assigned_users:
         many: "%{count} משתמשים"
-        one: 'משתמש %{count} '
+        one: "משתמש %{count} "
         other: "%{count} משתמשים"
         two: "%{count} שני משתמשים"
       categories:
@@ -1111,7 +1111,7 @@ he:
       elasticsearch_running_check:
         message_html: לא ניתן להתחבר לחיפוש אלסטיק. בדקו בבקשה הוא רץ, או בטלו את חיפוש הטקסט המלא
       elasticsearch_version_check:
-        message_html: 'גרסת חיפוש אלסטיק לא מתאימה: %{value}'
+        message_html: "גרסת חיפוש אלסטיק לא מתאימה: %{value}"
         version_comparison: גרסת חיפוש אלסטיק %{running_version} רצה בעוד גרסא %{required_version} נדרשת
       rules_check:
         action: ניהול כללי שרת
@@ -1173,7 +1173,7 @@ he:
       notified_on_html: המשתמשים קיבלו הודעה בתאריך %{date}
       notify_users: להודיע למשתמשים
       preview:
-        explanation_html: 'הדואל ישלח אל <strong>%{display_count} משתמשיםות</strong> שנרשמו לפני %{date}. להלן המלל שישלח בדואל:'
+        explanation_html: "הדואל ישלח אל <strong>%{display_count} משתמשיםות</strong> שנרשמו לפני %{date}. להלן המלל שישלח בדואל:"
         send_preview: שליחת הצצה מוקדמת אל %{email}
         send_to_all:
           many: שליחת %{display_count} הודעות דואל
@@ -1189,16 +1189,16 @@ he:
     trends:
       allow: לאפשר
       approved: אישור
-      confirm_allow: 'וידוא: האם לאשר את התגיות שנבחרו?'
-      confirm_disallow: 'וידוא: האם לאסור את התגיות שנבחרו?'
+      confirm_allow: "וידוא: האם לאשר את התגיות שנבחרו?"
+      confirm_disallow: "וידוא: האם לאסור את התגיות שנבחרו?"
       disallow: לא לאשר
       links:
         allow: אישור קישורית
         allow_provider: אישור מפרסם
-        confirm_allow: 'וידוא: האם לאשר את הקישורים שנבחרו?'
-        confirm_allow_provider: 'וידוא: האם לאשר את הספקים שנבחרו?'
-        confirm_disallow: 'וידוא: האם לאסור את הקישורים שנבחרו?'
-        confirm_disallow_provider: 'וידוא: האם לאסור את הספקים שנבחרו?'
+        confirm_allow: "וידוא: האם לאשר את הקישורים שנבחרו?"
+        confirm_allow_provider: "וידוא: האם לאשר את הספקים שנבחרו?"
+        confirm_disallow: "וידוא: האם לאסור את הקישורים שנבחרו?"
+        confirm_disallow_provider: "וידוא: האם לאסור את הספקים שנבחרו?"
         description_html: בקישוריות אלה נעשה כרגע שימוש על ידי חשבונות רבים שהשרת שלך רואה הודעות מהם. זה עשוי לסייע למשתמשיך לברר מה קורה בעולם. שום קישוריות לא יוצגו עד שתאשרו את המפרסם. ניתן גם לאפשר או לדחות קישוריות ספציפיות.
         disallow: לא לאשר קישורית
         disallow_provider: לא לאשר מפרסם
@@ -1224,10 +1224,10 @@ he:
       statuses:
         allow: הרשאת הודעה
         allow_account: הרשאת מחבר/ת
-        confirm_allow: 'וידוא: האם לאשר את הסטטוסים שנבחרו?'
-        confirm_allow_account: 'וידוא: האם לאשר את החשבונות שנבחרו?'
-        confirm_disallow: 'וידוא: האם לאסור את הסטטוסים שנבחרו?'
-        confirm_disallow_account: 'וידוא: האם לאסור את החשבונות שנבחרו?'
+        confirm_allow: "וידוא: האם לאשר את הסטטוסים שנבחרו?"
+        confirm_allow_account: "וידוא: האם לאשר את החשבונות שנבחרו?"
+        confirm_disallow: "וידוא: האם לאסור את הסטטוסים שנבחרו?"
+        confirm_disallow_account: "וידוא: האם לאסור את החשבונות שנבחרו?"
         description_html: אלו הן הודעות שהשרת שלך מכיר וזוכות להדהודים וחיבובים רבים כרגע. זה עשוי למשתמשיך החדשים והחוזרים למצוא עוד נעקבים. ההודעות לא מוצגות עד שיאושר המחבר/ת, והמחבר/ת יאשרו שחשבונים יומלץ לאחרים. ניתן לאשר או לדחות הודעות ספציפיות.
         disallow: לדחות הודעה
         disallow_account: לא לאשר מחבר/ת
@@ -1256,7 +1256,7 @@ he:
         peaked_on_and_decaying: הגיע לשיא ב-%{date}, ודועך עכשיו
         title: תגיות חמות
         trendable: עשויה להופיע תחת נושאים חמים
-        trending_rank: 'מדורגת #%{rank}'
+        trending_rank: "מדורגת #%{rank}"
         usable: ניתנת לשימוש
         usage_comparison: שומשה %{today} פעמים היום, לעומת %{yesterday} אתמול
         used_by_over_week:
@@ -1343,7 +1343,7 @@ he:
       body: יצאו עדכוני גרסת מסטודון חדשים, כדאי לעדכן!
       subject: יצאו עדכוני גרסת מסטודון חדשים בשביל %{instance}!
     new_trends:
-      body: 'הפריטים הבאים זקוקים לסקירה לפני שניתן יהיה להציגם פומבית:'
+      body: "הפריטים הבאים זקוקים לסקירה לפני שניתן יהיה להציגם פומבית:"
       new_trending_links:
         title: נושאים חמים
       new_trending_statuses:
@@ -1373,7 +1373,7 @@ he:
     notification_preferences: שינוי העדפות דוא"ל
     salutation: "%{name},"
     unsubscribe: בטל מנוי
-    view: 'תצוגה:'
+    view: "תצוגה:"
     view_profile: צפיה בפרופיל
     view_status: הצגת הודעה
   applications:
@@ -1434,7 +1434,7 @@ he:
     rules:
       accept: הסכמה
       back: בחזרה
-      invited_by: 'ניתן להצטרף אל %{domain} הודות להזמנה מאת:'
+      invited_by: "ניתן להצטרף אל %{domain} הודות להזמנה מאת:"
       preamble: אלו נקבעים ונאכפים ע"י המנחים של %{domain}.
       preamble_invited: לפני ההמשך יש להתחשב בחוקי המקום כפי שקבעו מנהלי הדיון על %{domain}.
       read_more: לקריאה נוספת
@@ -1470,7 +1470,7 @@ he:
   author_attribution:
     example_title: טקסט לדוגמה
     hint_html: האם יש לך בלוג או טור חדשות שמתפרסם מחוץ למסטודון? ניתן לשלוט איך יוצג הקרדיט שלך כשמשתפים את הלינק במסטודון.
-    instructions: 'ודאו כי הקוד הזה נכלל בקוד ה־HTML של המאמרים שלכם:'
+    instructions: "ודאו כי הקוד הזה נכלל בקוד ה־HTML של המאמרים שלכם:"
     more_from_html: עוד מאת %{name}
     s_blog: הבלוג של %{name}
     then_instructions: לאחר מכן, הוסיפו את שם המתחם של האתר המפרסם בשדה למטה.
@@ -1515,7 +1515,7 @@ he:
     proceed: מחיקת חשבון
     success_msg: חשבונך נמחק בהצלחה
     warning:
-      before: 'לפני שנמשיך, נא לקרוא בזהירות את ההערות הבאות:'
+      before: "לפני שנמשיך, נא לקרוא בזהירות את ההערות הבאות:"
       caches: מידע שהוטמן על ידי שרתים אחרים עשוי להתמיד
       data_removal: הודעותיך וכל מידע אחר יוסרו לתמיד
       email_change_html: ניתן <a href="%{path}">לשנות את כתובת הדוא"ל שלך</a> מבלי למחוק את החשבון
@@ -1541,7 +1541,7 @@ he:
       description_html: אלו הן הפעולות שננקטו כנגד חשבונך והאזהרות שנשלחו אליך על ידי צוות %{instance}.
       recipient: הנמען
       reject_appeal: דחיית ערעור
-      status: 'הודעה #%{id}'
+      status: "הודעה #%{id}"
       status_removed: ההודעה כבר הוסרה מהמערכת
       title: "%{action} מתאריך %{date}"
       title_actions:
@@ -1602,19 +1602,19 @@ he:
     native: מקומי
     twemoji: Twemoji
   errors:
-    '400': הבקשה שהגשת לא תקינה.
-    '403': חסרות לך הרשאות לצפיה בעמוד זה.
-    '404': הדף המבוקש לא קיים.
-    '406': הדף לא זמין בפורמט המבוקש.
-    '410': הדף המבוקש כבר לא קיים.
-    '422':
+    "400": הבקשה שהגשת לא תקינה.
+    "403": חסרות לך הרשאות לצפיה בעמוד זה.
+    "404": הדף המבוקש לא קיים.
+    "406": הדף לא זמין בפורמט המבוקש.
+    "410": הדף המבוקש כבר לא קיים.
+    "422":
       content: בדיקת אבטחה נכשלה. החסמת עוגיותיך מפנינו?
       title: בדיקת בטיחות נכשלה
-    '429': יותר מדי קריאות לשרת
-    '500':
+    "429": יותר מדי קריאות לשרת
+    "500":
       content: אנו מצטערות, אבל משהו השתבש בצד שלנו.
       title: דף זה אינו נכון
-    '503': לא ניתן להציג דף זה עקב תקלת שרת זמנית.
+    "503": לא ניתן להציג דף זה עקב תקלת שרת זמנית.
     noscript_html: על מנת להשתמש ביישום הווב של מסטודון, נא לאפשר שימוש בג'אווהסקריפט. לחילופין אפשר לנסות את אחת ה<a href="%{apps_path}">אפליקציות הילידיות</a> שלנו המתאימה לסביבתך.
   existing_username_validator:
     not_found: לא נמצא משתמש מקומי בשם זה
@@ -1723,8 +1723,8 @@ he:
     errors:
       empty: קובץ CSV ריק
       incompatible_type: אין תאימות עם סוג היבוא שנבחר
-      invalid_csv_file: 'קובץ CSV שבור. שגיאה: %{error}'
-      invalid_json_file: 'קובץ JSON שבור. שגיאה: %{error}'
+      invalid_csv_file: "קובץ CSV שבור. שגיאה: %{error}"
+      invalid_json_file: "קובץ JSON שבור. שגיאה: %{error}"
       over_rows_processing_limit: מכיל יותר מ-%{count} עמודות
       status_not_found_warning: חלק מהסננים שלך מסתירים הודעות ספציפיות שאינן מוכרות על ידי שרת זה. הודעות אלו לא יסוננו אוטומטית אם הן יתגלו על ידי השרת מאוחר יותר.
       too_large: קובץ גדול מדי
@@ -1842,12 +1842,12 @@ he:
     delete: ביטול הפעלה
     expired: פג תוקף
     expires_in:
-      '1800': חצי שעה
-      '21600': 6 שעות
-      '3600': שעה
-      '43200': 12 שעות
-      '604800': שבוע
-      '86400': יום אחד
+      "1800": חצי שעה
+      "21600": 6 שעות
+      "3600": שעה
+      "43200": 12 שעות
+      "604800": שבוע
+      "86400": יום אחד
     expires_in_prompt: לעולם לא
     generate: יצירת קישור להזמנה
     invalid: הזמנה זו אינה תקפה
@@ -1914,7 +1914,7 @@ he:
     set_redirect: הגדר הפניה
     warning:
       backreference_required: ראשית יש להגדיר את החשבון החדש כך שיצביע לאחור לעבר חשבון זה
-      before: 'לפני שנמשיך, נא לקרוא בזהירות את ההערות הבאות:'
+      before: "לפני שנמשיך, נא לקרוא בזהירות את ההערות הבאות:"
       cooldown: לאחר המעבר ישנה תקופת המתנה בה לא ניתן לעבור שוב
       disabled_account: חשבונך הנוכחי לא יהיה שמיש לחלוטין לאחר מכן. עם זאת, ניתן יהיה לגשת ליצוא המידע, וכמו כן להפעילו מחדש.
       followers: פעולה זו תעביר את כל העוקבים מהחשבון הנוכחי לחשבון החדש
@@ -1926,7 +1926,7 @@ he:
   move_handler:
     carry_blocks_over_text: חשבון זה עבר מ-%{acct}, אותו חסמת בעבר.
     carry_mutes_over_text: חשבון זה עבר מ-%{acct}, אותו השתקת בעבר.
-    copy_account_note_text: 'חשבון זה הועבר מ-%{acct}, הנה הערותיך הקודמות לגביהם:'
+    copy_account_note_text: "חשבון זה הועבר מ-%{acct}, הנה הערותיך הקודמות לגביהם:"
   navigation:
     toggle_menu: הצגת\הסתרת תפריט
   notification_fallbacks:
@@ -1959,7 +1959,7 @@ he:
       sign_up:
         subject: "%{name} נרשמו"
     favourite:
-      body: 'הודעתך חובבה על ידי %{name}:'
+      body: "הודעתך חובבה על ידי %{name}:"
       subject: הודעתך חובבה על ידי %{name}
       title: חיבוב חדש
     follow:
@@ -1969,11 +1969,11 @@ he:
     follow_request:
       action: ניהול בקשות מעקב
       body: התקבלה בקשת מעקב מ־%{name}
-      subject: 'בקשת מעקב בהמתנה: %{name}'
+      subject: "בקשת מעקב בהמתנה: %{name}"
       title: בקשת מעקב חדשה
     mention:
       action: תגובה
-      body: 'התקבלה פניה עבורך מאת %{name} ב:'
+      body: "התקבלה פניה עבורך מאת %{name} ב:"
       subject: התקבלה פניה עבורך מאת %{name}
       title: אזכור חדש
     moderation_warning:
@@ -1981,13 +1981,13 @@ he:
     poll:
       subject: סקר מאת %{name} הסתיים
     quote:
-      body: 'הודעתך צוטטה על ידי %{name}:'
+      body: "הודעתך צוטטה על ידי %{name}:"
       subject: "%{name} ציטט.ה את הודעתך"
       title: ציטוט חדש
     quoted_update:
       subject: "%{name} ערך הודעה שהשתמשת בה בציטוט"
     reblog:
-      body: 'הודעתך הודהדה על ידי %{name}:'
+      body: "הודעתך הודהדה על ידי %{name}:"
       subject: הודעתך הודהדה על ידי%{name}
       title: הדהוד חדש
     severed_relationships:
@@ -1999,7 +1999,7 @@ he:
   notifications:
     administration_emails: התראות לדוא"ל חשבון מנהל
     email_events: ארועים להתראות דוא"ל
-    email_events_hint: 'בחר/י ארועים עבורים תרצה/י לקבל התראות:'
+    email_events_hint: "בחר/י ארועים עבורים תרצה/י לקבל התראות:"
   number:
     human:
       decimal_units:
@@ -2015,7 +2015,7 @@ he:
     description_html: אם אופשר <strong>אימות דו-גורמי</strong> בעזרת אפליקציית אימות, כניסה לאתר תדרוש שימוש בטלפון ליצירת אסימוני כניסה עבורך.
     enable: לאפשר
     instructions_html: "<strong>נא לסרוק את קוד ה-QR בעזרת Google Authenticator או יישום TOTP דומה בטלפונך</strong>. מעתה ואילך, יישום זה ייצר אסימונים שיש להזין בזמן הכניסה לאתר."
-    manual_instructions: 'אם לא ניתן לסרוק את קוד ה-QR ויש להכניסו ידנית, הנה הסוד כטקסט:'
+    manual_instructions: "אם לא ניתן לסרוק את קוד ה-QR ויש להכניסו ידנית, הנה הסוד כטקסט:"
     setup: הגדרה
     wrong_code: הקוד שהוכנס אינו תקין! האם זמן השרת וזמן המכשיר נכונים?
   pagination:
@@ -2090,10 +2090,10 @@ he:
     errors:
       invalid_rules: לא מתייחס לכללים קבילים
   rss:
-    content_warning: 'אזהרת תוכן:'
+    content_warning: "אזהרת תוכן:"
     descriptions:
       account: הודעות ציבוריות מחשבון @%{acct}
-      tag: 'הודעות ציבוריות עם תיוג #%{hashtag}'
+      tag: "הודעות ציבוריות עם תיוג #%{hashtag}"
   scheduled_statuses:
     over_daily_limit: חרגת מהמספר המקסימלי של הודעות מתוזמנות להיום, שהוא %{limit}
     over_total_limit: חרגת מהמספר המקסימלי של הודעות מתוזמנות, שהוא %{limit}
@@ -2189,7 +2189,7 @@ he:
         one: אודיו %{count}
         other: "%{count} אודיו"
         two: "%{count} אודיו"
-      description: 'מצורף: %{attached}'
+      description: "מצורף: %{attached}"
       image:
         many: "%{count} תמונות"
         one: תמונה %{count}
@@ -2201,16 +2201,16 @@ he:
         other: "%{count} סרטונים"
         two: "%{count} סרטונים"
     boosted_from_html: הודהד מ-%{acct_link}
-    content_warning: 'אזהרת תוכן: %{warning}'
+    content_warning: "אזהרת תוכן: %{warning}"
     content_warnings:
       hide: להסתיר הודעה
       show: הצג עוד
     default_language: זהה לשפת ממשק
     disallowed_hashtags:
-      many: 'מכיל את התגיות האסורות: %{tags}'
-      one: 'מכיל את התגית האסורה: %{tags}'
-      other: 'מכיל את התגיות האסורות: %{tags}'
-      two: 'מכיל את התגיות האסורות: %{tags}'
+      many: "מכיל את התגיות האסורות: %{tags}"
+      one: "מכיל את התגית האסורה: %{tags}"
+      other: "מכיל את התגיות האסורות: %{tags}"
+      two: "מכיל את התגיות האסורות: %{tags}"
     edited_at_html: נערך ב-%{date}
     errors:
       in_reply_not_found: נראה שההודעה שנסית להגיב לה לא קיימת.
@@ -2261,14 +2261,14 @@ he:
     keep_self_fav: שמור הודעות שחיבבת
     keep_self_fav_hint: לא מוחק הודעות שלך אם חיבבת אותם
     min_age:
-      '1209600': שבועיים
-      '15778476': חצי שנה
-      '2629746': חודש
-      '31556952': שנה
-      '5259492': חודשיים
-      '604800': שבוע
-      '63113904': שנתיים
-      '7889238': 3 חודשים
+      "1209600": שבועיים
+      "15778476": חצי שנה
+      "2629746": חודש
+      "31556952": שנה
+      "5259492": חודשיים
+      "604800": שבוע
+      "63113904": שנתיים
+      "7889238": 3 חודשים
     min_age_label: סף גיל
     min_favs: השאר הודעות מחובבות לפחות
     min_favs_hint: לא תימחקנה הודעות שלך שקיבלו לפחות מספר זה של חיבובים. אם יישאר ריק, הודעות תימחקנה ללא תלות במספר החיבובים שלהן.
@@ -2341,7 +2341,7 @@ he:
         title: לבטל הרשמה אל %{type}?
   user_mailer:
     announcement_published:
-      description: 'צוות ההנהלה של %{domain} מפרסם הודעה:'
+      description: "צוות ההנהלה של %{domain} מפרסם הודעה:"
       subject: הודעת שירות
       title: הודעת שירות מאת %{domain}
     appeal_approved:
@@ -2361,22 +2361,22 @@ he:
       subject: הארכיון שלך מוכן להורדה
       title: הוצאת ארכיון
     failed_2fa:
-      details: 'הנה פרטי נסיון ההתחברות:'
+      details: "הנה פרטי נסיון ההתחברות:"
       explanation: פלוני אלמוני ניסה להתחבר לחשבונך אך האימות המשני נכשל.
       further_actions_html: אם הנסיון לא היה שלך, אנו ממליצים על %{action} באופן מיידי כדי שהחשבון לא יפול קורבן.
       subject: נכשל אימות בגורם שני
       title: אימות בגורם שני נכשל
     suspicious_sign_in:
       change_password: שינוי הסיסמא שלך
-      details: 'הנה פרטי ההתחברות:'
+      details: "הנה פרטי ההתחברות:"
       explanation: זיהינו התחברות לחשבונך מכתובת IP חדשה.
       further_actions_html: אם לא את/ה התחברת, אנו ממליצים שתבצע/י %{action} מיידית ותאפשר/י אימות דו גורמי על מנת לשמור על החשבון בטוח.
       subject: נרשמה גישה לחשבונך מכתובת IP חדשה
       title: התחברות חדשה
     terms_of_service_changed:
       agreement: עם המשך השימוש בשרת %{domain} אתן מסכימות לתנאים הללו. אם אינכם מסכימים עם עדכוני תנאי השירות, אתן יכולות להפסיק את ההסכם עם %{domain} בכל עת על ידי מחיקת החשבון.
-      changelog: 'בקצרה, הנה משמעות העדכון עבורך:'
-      description: 'קיבלת הודעת דואל זו כיוון שאנו מבצעים שינויים במסמך תנאי השירות של %{domain}. השינויים יכנסו לתוקף בתאריך %{date}. אנו מעודדים אותך לעבור על השינויים במסמך המלא כאן:'
+      changelog: "בקצרה, הנה משמעות העדכון עבורך:"
+      description: "קיבלת הודעת דואל זו כיוון שאנו מבצעים שינויים במסמך תנאי השירות של %{domain}. השינויים יכנסו לתוקף בתאריך %{date}. אנו מעודדים אותך לעבור על השינויים במסמך המלא כאן:"
       description_html: קיבלת הודעת דואל זו כיוון שאנו מבצעים שינויים במסמך תנאי השירות של %{domain}. השינויים יכנסו לתוקף בתאריך <strong>%{date}</strong>. אנו מעודדים אותך לעבור על <a href="%{path}" target="_blank">השינויים במסמך המלא כאן</a>.
       sign_off: צוות %{domain}
       subject: עדכונים לתנאי השירות שלנו
@@ -2395,8 +2395,8 @@ he:
         sensitive: מעתה ואילך כל קבצי המדיה שיועלו על ידך יסומנו כרגישים ויוסתרו מאחורי אזהרה.
         silence: ניתן עדיין להשתמש בחשבונך אבל רק אנשים שכבר עוקבים אחריך יראו את הודעותיך בשרת זה, וייתכן שתוחרג/י ממסכי התגליות. עם זאת, אחרים יוכלו עדיין לעקוב אחריך.
         suspend: לא ניתן יותר להשתמש בחשבונך, ופרופילך וכל מידע אחר לא נגישים יותר. ניתן עדיין להתחבר על מנת לבקש גיבוי של המידע שלך עד שיוסר סופית בעוד כ-30 יום, אבל מידע מסויים ישמר על מנת לוודא שלא תחמוק/י מההשעיה.
-      reason: 'סיבה:'
-      statuses: 'הודעות מצוטטות:'
+      reason: "סיבה:"
+      statuses: "הודעות מצוטטות:"
       subject:
         delete_statuses: ההודעות שלכם ב%{acct} הוסרו
         disable: חשבונך %{acct} הוקפא
@@ -2418,7 +2418,7 @@ he:
       apps_ios_action: זמין ב־App Store
       apps_step: התקינו את היישומונים הרשמיים.
       apps_title: יישומונים של מסטודון
-      checklist_subtitle: 'נעזור לך לצאת למסע אל האופק החברתי החדש:'
+      checklist_subtitle: "נעזור לך לצאת למסע אל האופק החברתי החדש:"
       checklist_title: רשימת פריטים לקבלת הפנים
       edit_profile_action: התאמה אישית
       edit_profile_step: כדאי להשלים את הפרופיל כדי לעודד אחרים ליצירת קשר.
@@ -2462,7 +2462,7 @@ he:
     otp_lost_help_html: אם איבדת גישה לשניהם, ניתן ליצור קשר ב-%{email}
     rate_limited: יותר מדי ניסיונות אימות, נסו שוב מאוחר יותר.
     seamless_external_login: את.ה מחובר דרך שירות חיצוני, לכן אפשרויות הסיסמא והדוא"ל לא מאופשרות.
-    signed_in_as: 'מחובר בתור:'
+    signed_in_as: "מחובר בתור:"
   verification:
     extra_instructions_html: <strong>טיפ:</strong> הלינק באתר שלך יכול להיות מוסתר. החלק החשוב הוא <code>rel="me"</code> שמונע התחזות על אתרים עם תוכן משתמשים. ניתן גם ליצור תגית <code>link</code> בכותרת העמוד במקום קישור <code>a</code> אבל קוד ה־HTML חייב להופיע שם ללא הרצה של ג'אווהסקריפט.
     here_is_how: זה נעשה כך

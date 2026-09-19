@@ -8,7 +8,7 @@ et:
         display_name: Su täisnimi või naljanimi.
         fields: Su koduleht, sugu, vanus. Mistahes, mida soovid.
         indexable: Sinu avalikud postitused võivad ilmuda Mastodoni otsingutulemustes. Inimesed, kes on sinu postitustele reageerinud, saavad neid otsida nii või naa.
-        note: 'Saad @mainida teisi inimesi või #teemaviiteid.'
+        note: "Saad @mainida teisi inimesi või #teemaviiteid."
         show_collections: Inimesed saavad sirvida su jälgijaid ja jälgitavaid. Inimesed, keda sa jälgid, näevad seda sõltumata seadistusest.
         unlocked: Teised kasutajad saavad sind jälgima hakata nõusolekut küsimata. Eemalda märge, kui soovid jälgimistaotlusi üle vaadata ja valida, kas nõustuda või keelduda uute jälgijatega.
       account_alias:
@@ -76,7 +76,7 @@ et:
         domain: See võib olla e-postiaadressis näha olev domeen või MX-kirje, mida aadress kasutab. Kontroll toimub liitumise käigus.
         with_dns_records: Püütakse lahendada selle domeeni DNS-kirjed ja ühtlasi blokeerida ka selle tulemused
       featured_tag:
-        name: 'Siin on mõned neist teemaviidetest, mida oled viimati kasutanud:'
+        name: "Siin on mõned neist teemaviidetest, mida oled viimati kasutanud:"
       filters:
         action: Vali tegevus, kui postitus vastab filtrile
         actions:
@@ -132,7 +132,7 @@ et:
         hint: Valikuline. Anna reegli kohta rohkem üksikasju
         text: Reegli või nõude kirjeldus selle serveri kasutajatele. Võimalikult lühidalt ja lihtsalt
       sessions:
-        otp: 'Kaheastmelise autentimise kood telefonirakendusest või mõni taastekood:'
+        otp: "Kaheastmelise autentimise kood telefonirakendusest või mõni taastekood:"
         webauthn: Kui see on USB-võti, sisesta see ning vajadusel aktiveeri.
       settings:
         email_subscriptions: Funktsionaalsuse keelamine säilitab olemasolevad tellijad, kuid peatab e-kirjade saatmise.
@@ -408,7 +408,7 @@ et:
         events: Lubatud sündmused
         template: Manuse mall
         url: Lõpp-punkti URL
-    'no': Ei
+    "no": Ei
     not_recommended: Pole soovitatav
     overridden: Ülekirjutatud
     recommended: Soovituslik
@@ -418,4 +418,4 @@ et:
     title:
       sessions:
         webauthn: Kasuta sisenemiseks ühte turvavõtmeist
-    'yes': Jah
+    "yes": Jah

@@ -2,7 +2,7 @@
 // See https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API
 // for a good breakdown of the concepts behind this.
 
-import Queue from 'tiny-queue';
+import Queue from "tiny-queue";
 
 const taskQueue = new Queue();
 let runningRequestIdleCallback = false;

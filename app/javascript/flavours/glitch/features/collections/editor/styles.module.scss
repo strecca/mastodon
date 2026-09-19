@@ -44,11 +44,7 @@
   bottom: var(--bottom-spacing);
   margin-top: -16px;
   padding: 16px;
-  background-image: linear-gradient(
-    to bottom,
-    transparent,
-    var(--color-bg-primary) 24px
-  );
+  background-image: linear-gradient(to bottom, transparent, var(--color-bg-primary) 24px);
 }
 
 .formFieldStack {
@@ -64,11 +60,11 @@
   user-select: none;
   border-bottom: 1px solid var(--color-border-primary);
 
-  &[data-highlighted='true'] {
+  &[data-highlighted="true"] {
     background: var(--color-bg-overlay-highlight);
   }
 
-  &[aria-disabled='true'] {
+  &[aria-disabled="true"] {
     opacity: 0.6;
     cursor: not-allowed;
   }

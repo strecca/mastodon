@@ -1,43 +1,38 @@
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 
-import { IntlMessageFormat } from 'intl-messageformat';
-import type {
-  FormatDateOptions,
-  IntlShape,
-  MessageDescriptor,
-  PrimitiveType,
-} from 'react-intl';
-import { defineMessages } from 'react-intl';
+import { IntlMessageFormat } from "intl-messageformat";
+import type { FormatDateOptions, IntlShape, MessageDescriptor, PrimitiveType } from "react-intl";
+import { defineMessages } from "react-intl";
 
-import axios from 'axios';
-import { on } from 'delegated-events';
-import { throttle } from 'lodash';
+import axios from "axios";
+import { on } from "delegated-events";
+import { throttle } from "lodash";
 
-import { determineEmojiMode } from '@/flavours/glitch/features/emoji/mode';
-import { updateHtmlWithEmoji } from '@/flavours/glitch/features/emoji/render';
-import loadKeyboardExtensions from '@/flavours/glitch/load_keyboard_extensions';
-import { loadLocale, getLocale } from '@/flavours/glitch/locales';
-import { loadPolyfills } from '@/flavours/glitch/polyfills';
-import ready from '@/flavours/glitch/ready';
-import { assetHost } from '@/flavours/glitch/utils/config';
-import { getNestedProperty } from '@/flavours/glitch/utils/objects';
-import { isDarkMode } from '@/flavours/glitch/utils/theme';
-import { formatTime } from '@/flavours/glitch/utils/time';
+import { determineEmojiMode } from "@/flavours/glitch/features/emoji/mode";
+import { updateHtmlWithEmoji } from "@/flavours/glitch/features/emoji/render";
+import loadKeyboardExtensions from "@/flavours/glitch/load_keyboard_extensions";
+import { loadLocale, getLocale } from "@/flavours/glitch/locales";
+import { loadPolyfills } from "@/flavours/glitch/polyfills";
+import ready from "@/flavours/glitch/ready";
+import { assetHost } from "@/flavours/glitch/utils/config";
+import { getNestedProperty } from "@/flavours/glitch/utils/objects";
+import { isDarkMode } from "@/flavours/glitch/utils/theme";
+import { formatTime } from "@/flavours/glitch/utils/time";
 
-import 'cocoon-js-vanilla';
+import "cocoon-js-vanilla";
 
 const messages = defineMessages({
   usernameTaken: {
-    id: 'username.taken',
-    defaultMessage: 'That username is taken. Try another',
+    id: "username.taken",
+    defaultMessage: "That username is taken. Try another",
   },
   passwordExceedsLength: {
-    id: 'password_confirmation.exceeds_maxlength',
-    defaultMessage: 'Password confirmation exceeds the maximum password length',
+    id: "password_confirmation.exceeds_maxlength",
+    defaultMessage: "Password confirmation exceeds the maximum password length",
   },
   passwordDoesNotMatch: {
-    id: 'password_confirmation.mismatching',
-    defaultMessage: 'Password confirmation does not match',
+    id: "password_confirmation.mismatching",
+    defaultMessage: "Password confirmation does not match",
   },
 });
 
@@ -47,21 +42,21 @@ async function loaded() {
   const locale = document.documentElement.lang;
 
   const dateTimeFormat = new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
   });
 
   const dateFormat = new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 
   const timeFormat = new Intl.DateTimeFormat(locale, {
-    timeStyle: 'short',
+    timeStyle: "short",
   });
 
   const formatMessage = (
@@ -78,22 +73,21 @@ async function loaded() {
     return messageFormat.format(values) as string;
   };
 
-  let emojiStyle = 'auto';
-  const initialStateText =
-    document.getElementById('initial-state')?.textContent;
+  let emojiStyle = "auto";
+  const initialStateText = document.getElementById("initial-state")?.textContent;
   if (initialStateText) {
     const stateEmojiStyle = getNestedProperty(
       JSON.parse(initialStateText) as unknown,
-      'meta',
-      'emoji_style',
+      "meta",
+      "emoji_style",
     );
-    if (typeof stateEmojiStyle === 'string') {
+    if (typeof stateEmojiStyle === "string") {
       emojiStyle = stateEmojiStyle;
     }
   }
   const emojiMode = determineEmojiMode(emojiStyle);
   const darkTheme = isDarkMode();
-  for (const element of document.querySelectorAll('.emojify')) {
+  for (const element of document.querySelectorAll(".emojify")) {
     await updateHtmlWithEmoji({
       assetHost,
       element,
@@ -103,15 +97,13 @@ async function loaded() {
     });
   }
 
-  document
-    .querySelectorAll<HTMLTimeElement>('time.formatted')
-    .forEach((content) => {
-      const datetime = new Date(content.dateTime);
-      const formattedDate = dateTimeFormat.format(datetime);
+  document.querySelectorAll<HTMLTimeElement>("time.formatted").forEach((content) => {
+    const datetime = new Date(content.dateTime);
+    const formattedDate = dateTimeFormat.format(datetime);
 
-      content.title = formattedDate;
-      content.textContent = formattedDate;
-    });
+    content.title = formattedDate;
+    content.textContent = formattedDate;
+  });
 
   const isToday = (date: Date) => {
     const today = new Date();
@@ -123,70 +115,62 @@ async function loaded() {
     );
   };
   const todayFormat = new IntlMessageFormat(
-    localeData['relative_format.today'] ?? 'Today at {time}',
+    localeData["relative_format.today"] ?? "Today at {time}",
     locale,
   );
 
-  document
-    .querySelectorAll<HTMLTimeElement>('time.relative-formatted')
-    .forEach((content) => {
-      const datetime = new Date(content.dateTime);
+  document.querySelectorAll<HTMLTimeElement>("time.relative-formatted").forEach((content) => {
+    const datetime = new Date(content.dateTime);
 
-      let formattedContent: string;
+    let formattedContent: string;
 
-      if (isToday(datetime)) {
-        const formattedTime = timeFormat.format(datetime);
+    if (isToday(datetime)) {
+      const formattedTime = timeFormat.format(datetime);
 
-        formattedContent = todayFormat.format({
-          time: formattedTime,
-        }) as string;
-      } else {
-        formattedContent = dateFormat.format(datetime);
-      }
+      formattedContent = todayFormat.format({
+        time: formattedTime,
+      }) as string;
+    } else {
+      formattedContent = dateFormat.format(datetime);
+    }
 
-      const timeGiven = content.dateTime.includes('T');
-      content.title = timeGiven
-        ? dateTimeFormat.format(datetime)
-        : dateFormat.format(datetime);
+    const timeGiven = content.dateTime.includes("T");
+    content.title = timeGiven ? dateTimeFormat.format(datetime) : dateFormat.format(datetime);
 
-      content.textContent = formattedContent;
+    content.textContent = formattedContent;
+  });
+
+  document.querySelectorAll<HTMLTimeElement>("time.time-ago").forEach((content) => {
+    const datetime = new Date(content.dateTime);
+
+    const timeGiven = content.dateTime.includes("T");
+    content.title = timeGiven ? dateTimeFormat.format(datetime) : dateFormat.format(datetime);
+    const now = Date.now();
+    content.textContent = formatTime({
+      // We don't want to show future dates.
+      timestamp: Math.min(datetime.getTime(), now),
+      now,
+      intl: {
+        formatMessage: formatMessage as IntlShape["formatMessage"],
+        formatDate: (date: Date, options: FormatDateOptions) =>
+          new Intl.DateTimeFormat(locale, options).format(date),
+      },
+      noTime: !timeGiven,
     });
-
-  document
-    .querySelectorAll<HTMLTimeElement>('time.time-ago')
-    .forEach((content) => {
-      const datetime = new Date(content.dateTime);
-
-      const timeGiven = content.dateTime.includes('T');
-      content.title = timeGiven
-        ? dateTimeFormat.format(datetime)
-        : dateFormat.format(datetime);
-      const now = Date.now();
-      content.textContent = formatTime({
-        // We don't want to show future dates.
-        timestamp: Math.min(datetime.getTime(), now),
-        now,
-        intl: {
-          formatMessage: formatMessage as IntlShape['formatMessage'],
-          formatDate: (date: Date, options: FormatDateOptions) =>
-            new Intl.DateTimeFormat(locale, options).format(date),
-        },
-        noTime: !timeGiven,
-      });
-    });
+  });
 
   updateDefaultQuotePrivacyFromPrivacy(
-    document.querySelector('#user_settings_attributes_default_privacy'),
+    document.querySelector("#user_settings_attributes_default_privacy"),
   );
 
   truncateRuleHints();
 
   applyRailsA11yPatches();
 
-  const reactComponents = document.querySelectorAll('[data-component]');
+  const reactComponents = document.querySelectorAll("[data-component]");
 
   if (reactComponents.length > 0) {
-    import('flavours/glitch/containers/media_container')
+    import("flavours/glitch/containers/media_container")
       .then(({ default: MediaContainer }) => {
         reactComponents.forEach((component) => {
           Array.from(component.children).forEach((child) => {
@@ -194,12 +178,10 @@ async function loaded() {
           });
         });
 
-        const content = document.createElement('div');
+        const content = document.createElement("div");
 
         const root = createRoot(content);
-        root.render(
-          <MediaContainer locale={locale} components={reactComponents} />,
-        );
+        root.render(<MediaContainer locale={locale} components={reactComponents} />);
         document.body.appendChild(content);
 
         return true;
@@ -210,8 +192,8 @@ async function loaded() {
   }
 
   on(
-    'input',
-    'input#user_account_attributes_username',
+    "input",
+    "input#user_account_attributes_username",
     throttle(
       ({ target }) => {
         if (!(target instanceof HTMLInputElement)) return;
@@ -219,7 +201,7 @@ async function loaded() {
         const checkedUsername = target.value;
         if (checkedUsername && checkedUsername.length > 0) {
           axios
-            .get('/api/v1/accounts/lookup', {
+            .get("/api/v1/accounts/lookup", {
               params: { acct: checkedUsername },
             })
             .then(() => {
@@ -233,11 +215,11 @@ async function loaded() {
             .catch(() => {
               // Only update the validity if the result is for the currently-typed username
               if (checkedUsername === target.value) {
-                target.setCustomValidity('');
+                target.setCustomValidity("");
               }
             });
         } else {
-          target.setCustomValidity('');
+          target.setCustomValidity("");
         }
       },
       500,
@@ -245,35 +227,27 @@ async function loaded() {
     ),
   );
 
-  on('input', '#user_password,#user_password_confirmation', () => {
-    const password = document.querySelector<HTMLInputElement>(
-      'input#user_password',
-    );
+  on("input", "#user_password,#user_password_confirmation", () => {
+    const password = document.querySelector<HTMLInputElement>("input#user_password");
     const confirmation = document.querySelector<HTMLInputElement>(
-      'input#user_password_confirmation',
+      "input#user_password_confirmation",
     );
     if (!confirmation || !password) return;
 
     if (confirmation.value && confirmation.value.length > password.maxLength) {
-      confirmation.setCustomValidity(
-        formatMessage(messages.passwordExceedsLength),
-      );
+      confirmation.setCustomValidity(formatMessage(messages.passwordExceedsLength));
     } else if (password.value && password.value !== confirmation.value) {
-      confirmation.setCustomValidity(
-        formatMessage(messages.passwordDoesNotMatch),
-      );
+      confirmation.setCustomValidity(formatMessage(messages.passwordDoesNotMatch));
     } else {
-      confirmation.setCustomValidity('');
+      confirmation.setCustomValidity("");
     }
   });
 }
 
-on('change', '#edit_profile input[type=file]', ({ target }) => {
+on("change", "#edit_profile input[type=file]", ({ target }) => {
   if (!(target instanceof HTMLInputElement)) return;
 
-  const avatar = document.querySelector<HTMLImageElement>(
-    `img#${target.id}-preview`,
-  );
+  const avatar = document.querySelector<HTMLImageElement>(`img#${target.id}-preview`);
 
   if (!avatar) return;
 
@@ -285,7 +259,7 @@ on('change', '#edit_profile input[type=file]', ({ target }) => {
   if (url) avatar.src = url;
 });
 
-on('click', '.input-copy input', ({ target }) => {
+on("click", ".input-copy input", ({ target }) => {
   if (!(target instanceof HTMLInputElement)) return;
 
   target.focus();
@@ -293,12 +267,10 @@ on('click', '.input-copy input', ({ target }) => {
   target.setSelectionRange(0, target.value.length);
 });
 
-on('click', '.input-copy button', ({ target }) => {
+on("click", ".input-copy button", ({ target }) => {
   if (!(target instanceof HTMLButtonElement)) return;
 
-  const input = target.parentNode?.querySelector<HTMLInputElement>(
-    '.input-copy__wrapper input',
-  );
+  const input = target.parentNode?.querySelector<HTMLInputElement>(".input-copy__wrapper input");
 
   if (!input) return;
 
@@ -308,10 +280,10 @@ on('click', '.input-copy button', ({ target }) => {
       const parent = target.parentElement;
 
       if (parent) {
-        parent.classList.add('copied');
+        parent.classList.add("copied");
 
         setTimeout(() => {
-          parent.classList.remove('copied');
+          parent.classList.remove("copied");
         }, 700);
       }
 
@@ -323,57 +295,52 @@ on('click', '.input-copy button', ({ target }) => {
 });
 
 const toggleSidebar = () => {
-  const sidebar = document.querySelector<HTMLUListElement>('.sidebar ul');
-  const toggleButton = document.querySelector<HTMLAnchorElement>(
-    'a.sidebar__toggle__icon',
-  );
+  const sidebar = document.querySelector<HTMLUListElement>(".sidebar ul");
+  const toggleButton = document.querySelector<HTMLAnchorElement>("a.sidebar__toggle__icon");
 
   if (!sidebar || !toggleButton) return;
 
-  if (sidebar.classList.contains('visible')) {
-    document.body.style.overflow = '';
-    toggleButton.setAttribute('aria-expanded', 'false');
+  if (sidebar.classList.contains("visible")) {
+    document.body.style.overflow = "";
+    toggleButton.setAttribute("aria-expanded", "false");
   } else {
-    document.body.style.overflow = 'hidden';
-    toggleButton.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = "hidden";
+    toggleButton.setAttribute("aria-expanded", "true");
   }
 
-  toggleButton.classList.toggle('active');
-  sidebar.classList.toggle('visible');
+  toggleButton.classList.toggle("active");
+  sidebar.classList.toggle("visible");
 };
 
-on('click', '.sidebar__toggle__icon', () => {
+on("click", ".sidebar__toggle__icon", () => {
   toggleSidebar();
 });
 
-on('keydown', '.sidebar__toggle__icon', (e) => {
-  if (e.key === ' ' || e.key === 'Enter') {
+on("keydown", ".sidebar__toggle__icon", (e) => {
+  if (e.key === " " || e.key === "Enter") {
     e.preventDefault();
     toggleSidebar();
   }
 });
 
-on('mouseover', 'img.custom-emoji', ({ target }) => {
+on("mouseover", "img.custom-emoji", ({ target }) => {
   if (target instanceof HTMLImageElement && target.dataset.original)
     target.src = target.dataset.original;
 });
-on('mouseout', 'img.custom-emoji', ({ target }) => {
+on("mouseout", "img.custom-emoji", ({ target }) => {
   if (target instanceof HTMLImageElement && target.dataset.static)
     target.src = target.dataset.static;
 });
 
-const setInputDisabled = (
-  input: HTMLInputElement | HTMLSelectElement,
-  disabled: boolean,
-) => {
+const setInputDisabled = (input: HTMLInputElement | HTMLSelectElement, disabled: boolean) => {
   input.disabled = disabled;
 
-  const wrapper = input.closest('.with_label');
+  const wrapper = input.closest(".with_label");
   if (wrapper) {
-    wrapper.classList.toggle('disabled', input.disabled);
+    wrapper.classList.toggle("disabled", input.disabled);
 
     const hidden =
-      input.type === 'checkbox' &&
+      input.type === "checkbox" &&
       wrapper.querySelector<HTMLInputElement>('input[type=hidden][value="0"]');
     if (hidden) {
       hidden.disabled = input.disabled;
@@ -381,23 +348,19 @@ const setInputDisabled = (
   }
 };
 
-const setInputHint = (
-  input: HTMLInputElement | HTMLSelectElement,
-  hintPrefix: string,
-) => {
-  const fieldWrapper = input.closest<HTMLElement>('.fields-group > .input');
+const setInputHint = (input: HTMLInputElement | HTMLSelectElement, hintPrefix: string) => {
+  const fieldWrapper = input.closest<HTMLElement>(".fields-group > .input");
   if (!fieldWrapper) return;
 
   const hint = fieldWrapper.dataset[`${hintPrefix}Hint`];
-  const hintElement =
-    fieldWrapper.querySelector<HTMLSpanElement>(':scope > .hint');
+  const hintElement = fieldWrapper.querySelector<HTMLSpanElement>(":scope > .hint");
 
   if (hint) {
     if (hintElement) {
       hintElement.textContent = hint;
     } else {
-      const newHintElement = document.createElement('span');
-      newHintElement.className = 'hint';
+      const newHintElement = document.createElement("span");
+      newHintElement.className = "hint";
       newHintElement.textContent = hint;
       fieldWrapper.appendChild(newHintElement);
     }
@@ -406,55 +369,52 @@ const setInputHint = (
   }
 };
 
-on('change', '#account_statuses_cleanup_policy_enabled', ({ target }) => {
+on("change", "#account_statuses_cleanup_policy_enabled", ({ target }) => {
   if (!(target instanceof HTMLInputElement) || !target.form) return;
 
   target.form
     .querySelectorAll<HTMLInputElement | HTMLSelectElement>(
-      'input:not([type=hidden], #account_statuses_cleanup_policy_enabled), select',
+      "input:not([type=hidden], #account_statuses_cleanup_policy_enabled), select",
     )
     .forEach((input) => {
       setInputDisabled(input, !target.checked);
     });
 });
 
-const updateDefaultQuotePrivacyFromPrivacy = (
-  privacySelect: EventTarget | null,
-) => {
-  if (!(privacySelect instanceof HTMLSelectElement) || !privacySelect.form)
-    return;
+const updateDefaultQuotePrivacyFromPrivacy = (privacySelect: EventTarget | null) => {
+  if (!(privacySelect instanceof HTMLSelectElement) || !privacySelect.form) return;
 
   const select = privacySelect.form.querySelector<HTMLSelectElement>(
-    'select#user_settings_attributes_default_quote_policy',
+    "select#user_settings_attributes_default_quote_policy",
   );
   if (!select) return;
 
   setInputHint(select, privacySelect.value);
 
-  if (privacySelect.value === 'private') {
-    select.value = 'nobody';
+  if (privacySelect.value === "private") {
+    select.value = "nobody";
     setInputDisabled(select, true);
   } else {
     setInputDisabled(select, false);
   }
 };
 
-on('change', '#user_settings_attributes_default_privacy', ({ target }) => {
+on("change", "#user_settings_attributes_default_privacy", ({ target }) => {
   updateDefaultQuotePrivacyFromPrivacy(target);
 });
 
 // Empty the honeypot fields in JS in case something like an extension
 // automatically filled them.
-on('submit', '#registration_new_user,#new_user', () => {
+on("submit", "#registration_new_user,#new_user", () => {
   [
-    'user_website',
-    'user_confirm_password',
-    'registration_user_website',
-    'registration_user_confirm_password',
+    "user_website",
+    "user_confirm_password",
+    "registration_user_website",
+    "registration_user_confirm_password",
   ].forEach((id) => {
     const field = document.querySelector<HTMLInputElement>(`input#${id}`);
     if (field) {
-      field.value = '';
+      field.value = "";
     }
   });
 });
@@ -464,8 +424,7 @@ on('submit', '#registration_new_user,#new_user', () => {
 const MAX_RULE_HINT_LENGTH = 100;
 
 function truncateRuleHints() {
-  const ruleListItems =
-    document.querySelectorAll<HTMLLIElement>('.rules-list li');
+  const ruleListItems = document.querySelectorAll<HTMLLIElement>(".rules-list li");
   if (!ruleListItems.length) return;
 
   ruleListItems.forEach((item) => {
@@ -474,13 +433,11 @@ function truncateRuleHints() {
 }
 
 function toggleRuleHint(listItem: HTMLLIElement, isInitialSetup?: boolean) {
-  const hint = listItem.querySelector<HTMLSpanElement>(
-    '.rules-list__hint-text',
-  );
+  const hint = listItem.querySelector<HTMLSpanElement>(".rules-list__hint-text");
   if (!hint) return;
 
   const hintText = hint.innerHTML;
-  const hintToggleButton = listItem.querySelector('button');
+  const hintToggleButton = listItem.querySelector("button");
 
   if (hintText.length > MAX_RULE_HINT_LENGTH) {
     // Store full hint in a data attribute, then truncate it with an '…'
@@ -489,8 +446,8 @@ function toggleRuleHint(listItem: HTMLLIElement, isInitialSetup?: boolean) {
 
     if (hintToggleButton) {
       // Reveal toggle button if needed
-      hintToggleButton.removeAttribute('hidden');
-      hintToggleButton.setAttribute('aria-expanded', 'false');
+      hintToggleButton.removeAttribute("hidden");
+      hintToggleButton.setAttribute("aria-expanded", "false");
     }
   } else if (!isInitialSetup) {
     const { fullHint } = hint.dataset;
@@ -499,18 +456,18 @@ function toggleRuleHint(listItem: HTMLLIElement, isInitialSetup?: boolean) {
       hint.innerHTML = fullHint;
       delete hint.dataset.fullHint;
 
-      hintToggleButton?.setAttribute('aria-expanded', 'true');
+      hintToggleButton?.setAttribute("aria-expanded", "true");
       hint.parentElement?.focus();
     }
   }
 }
 
-on('click', '.rules-list button', ({ target }) => {
+on("click", ".rules-list button", ({ target }) => {
   if (!(target instanceof HTMLElement)) {
     return;
   }
 
-  const listItem = target.closest('li');
+  const listItem = target.closest("li");
 
   if (listItem) {
     toggleRuleHint(listItem);
@@ -525,76 +482,68 @@ function applyRailsA11yPatches() {
   /**
    * Mark current navigation item with aria-current
    */
-  const activeNavLink = document.querySelector(
-    '.simple-navigation-active-leaf a.selected',
-  );
-  activeNavLink?.setAttribute('aria-current', 'page');
+  const activeNavLink = document.querySelector(".simple-navigation-active-leaf a.selected");
+  activeNavLink?.setAttribute("aria-current", "page");
 
   /**
    * Hides the asterisk added to labels of required form fields
    * from assistive tech. (Those fields already have the `required` attribute)
    */
-  document
-    .querySelectorAll<HTMLElement>('.simple_form label.required abbr')
-    .forEach((element) => {
-      element.setAttribute('aria-hidden', 'true');
-    });
+  document.querySelectorAll<HTMLElement>(".simple_form label.required abbr").forEach((element) => {
+    element.setAttribute("aria-hidden", "true");
+  });
 
   /**
    * Associate form field hints with their inputs via aria-describedby
    */
-  document
-    .querySelectorAll<HTMLDivElement>('.simple_form .field_with_hint')
-    .forEach((field) => {
-      const inputs = field.querySelectorAll<
-        HTMLInputElement | HTMLTextAreaElement
-      >("input[type='text'], input[type='checkbox'], textarea");
+  document.querySelectorAll<HTMLDivElement>(".simple_form .field_with_hint").forEach((field) => {
+    const inputs = field.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+      "input[type='text'], input[type='checkbox'], textarea",
+    );
 
-      const hint = field.querySelector<HTMLDivElement>('.hint');
+    const hint = field.querySelector<HTMLDivElement>(".hint");
 
-      // Bail out if there are more than one input as
-      // the association can't be safely made.
-      if (inputs.length !== 1 || !inputs[0] || !hint) {
-        return;
-      }
+    // Bail out if there are more than one input as
+    // the association can't be safely made.
+    if (inputs.length !== 1 || !inputs[0] || !hint) {
+      return;
+    }
 
-      const input = inputs[0];
-      const inputId = input.getAttribute('id');
-      const hintId = `${inputId}_hint`;
+    const input = inputs[0];
+    const inputId = input.getAttribute("id");
+    const hintId = `${inputId}_hint`;
 
-      input.setAttribute('aria-describedby', hintId);
-      hint.setAttribute('id', hintId);
-    });
+    input.setAttribute("aria-describedby", hintId);
+    hint.setAttribute("id", hintId);
+  });
 
   /**
    * Add fieldset-like group labels ("legends") to the date-of-birth selector
    * and groups of radio buttons
    */
   const groups = document.querySelectorAll<HTMLDivElement>(
-    '.simple_form .date_of_birth, .simple_form .input.with_label.radio_buttons',
+    ".simple_form .date_of_birth, .simple_form .input.with_label.radio_buttons",
   );
   groups.forEach((groupWrapper) => {
     // This is the element serving as the label of the group.
-    const groupLabel = groupWrapper.querySelector<HTMLLabelElement>('label');
-    const labelWithId =
-      groupWrapper.querySelector<HTMLLabelElement>('label[for]');
-    const groupHint = groupWrapper.querySelector<HTMLDivElement>('.hint');
+    const groupLabel = groupWrapper.querySelector<HTMLLabelElement>("label");
+    const labelWithId = groupWrapper.querySelector<HTMLLabelElement>("label[for]");
+    const groupHint = groupWrapper.querySelector<HTMLDivElement>(".hint");
 
     // We need a unique ID to generate the aria associations. If `groupLabel`
     // doesn't have one, we just take the first label with a `for` attribute
     // that we can find, which is fine because we'll modify it before use.
-    const inputId =
-      groupLabel?.getAttribute('for') ?? labelWithId?.getAttribute('for');
+    const inputId = groupLabel?.getAttribute("for") ?? labelWithId?.getAttribute("for");
     const labelId = `${inputId}_label`;
     const hintId = `${inputId}_hint`;
 
-    groupLabel?.setAttribute('id', labelId);
-    groupHint?.setAttribute('id', hintId);
+    groupLabel?.setAttribute("id", labelId);
+    groupHint?.setAttribute("id", hintId);
 
-    groupWrapper.setAttribute('role', 'group');
-    groupWrapper.setAttribute('aria-labelledby', labelId);
+    groupWrapper.setAttribute("role", "group");
+    groupWrapper.setAttribute("aria-labelledby", labelId);
     if (groupHint) {
-      groupWrapper.setAttribute('aria-describedby', hintId);
+      groupWrapper.setAttribute("aria-describedby", hintId);
     }
   });
 }

@@ -1,16 +1,16 @@
-import { forwardRef, useCallback, useRef } from 'react';
+import { forwardRef, useCallback, useRef } from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { CopyIconButton } from '@/mastodon/components/copy_button';
+import { CopyIconButton } from "@/mastodon/components/copy_button";
 
-import classes from './copy_link_field.module.scss';
-import { FormFieldWrapper } from './form_field_wrapper';
-import type { CommonFieldWrapperProps } from './form_field_wrapper';
-import { TextInput } from './text_input_field';
-import type { TextInputProps } from './text_input_field';
+import classes from "./copy_link_field.module.scss";
+import { FormFieldWrapper } from "./form_field_wrapper";
+import type { CommonFieldWrapperProps } from "./form_field_wrapper";
+import { TextInput } from "./text_input_field";
+import type { TextInputProps } from "./text_input_field";
 
 interface CopyLinkFieldProps extends CommonFieldWrapperProps, TextInputProps {
   value: string;
@@ -21,10 +21,7 @@ interface CopyLinkFieldProps extends CommonFieldWrapperProps, TextInputProps {
  */
 
 export const CopyLinkField = forwardRef<HTMLInputElement, CopyLinkFieldProps>(
-  (
-    { id, label, hint, status, value, required, className, ...otherProps },
-    ref,
-  ) => {
+  ({ id, label, hint, status, value, required, className, ...otherProps }, ref) => {
     const intl = useIntl();
     const inputRef = useRef<HTMLInputElement | null>();
     const handleFocus = useCallback(() => {
@@ -34,7 +31,7 @@ export const CopyLinkField = forwardRef<HTMLInputElement, CopyLinkFieldProps>(
     const mergeRefs = useCallback(
       (element: HTMLInputElement | null) => {
         inputRef.current = element;
-        if (typeof ref === 'function') {
+        if (typeof ref === "function") {
           ref(element);
         } else if (ref) {
           ref.current = element;
@@ -44,13 +41,7 @@ export const CopyLinkField = forwardRef<HTMLInputElement, CopyLinkFieldProps>(
     );
 
     return (
-      <FormFieldWrapper
-        label={label}
-        hint={hint}
-        required={required}
-        status={status}
-        inputId={id}
-      >
+      <FormFieldWrapper label={label} hint={hint} required={required} status={status} inputId={id}>
         {(inputProps) => (
           <div className={classes.wrapper}>
             <TextInput
@@ -65,8 +56,8 @@ export const CopyLinkField = forwardRef<HTMLInputElement, CopyLinkFieldProps>(
             <CopyIconButton
               value={value}
               title={intl.formatMessage({
-                id: 'copy_icon_button.copy_this_text',
-                defaultMessage: 'Copy link to clipboard',
+                id: "copy_icon_button.copy_this_text",
+                defaultMessage: "Copy link to clipboard",
               })}
               className={classes.copyButton}
               aria-describedby={inputProps.id}
@@ -78,4 +69,4 @@ export const CopyLinkField = forwardRef<HTMLInputElement, CopyLinkFieldProps>(
   },
 );
 
-CopyLinkField.displayName = 'CopyLinkField';
+CopyLinkField.displayName = "CopyLinkField";

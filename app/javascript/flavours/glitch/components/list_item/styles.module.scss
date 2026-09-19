@@ -36,7 +36,7 @@
     }
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       inset: var(--clickable-area-spread, 0);
     }
@@ -64,7 +64,7 @@
     // Cover up the .title content's clickable area in the
     // padding box around the sideContent
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       inset-block: calc(-1 * var(--list-item-padding-block));
       inset-inline: calc(-1 * var(--list-item-padding));

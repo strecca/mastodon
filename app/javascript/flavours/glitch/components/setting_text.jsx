@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import ImmutablePropTypes from "react-immutable-proptypes";
 
 export default class SettingText extends PureComponent {
-
   static propTypes = {
     settings: ImmutablePropTypes.map.isRequired,
     settingPath: PropTypes.array.isRequired,
@@ -16,14 +15,14 @@ export default class SettingText extends PureComponent {
     this.props.onChange(this.props.settingPath, e.target.value);
   };
 
-  render () {
+  render() {
     const { settings, settingPath, label } = this.props;
 
     return (
       <label>
-        <span style={{ display: 'none' }}>{label}</span>
+        <span style={{ display: "none" }}>{label}</span>
         <input
-          className='glitch-setting-text'
+          className="glitch-setting-text"
           value={settings.getIn(settingPath)}
           onChange={this.handleChange}
           placeholder={label}
@@ -31,5 +30,4 @@ export default class SettingText extends PureComponent {
       </label>
     );
   }
-
 }

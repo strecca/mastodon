@@ -1,20 +1,16 @@
-import type { FC } from 'react';
+import type { FC } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import type { AccountField } from '@/mastodon/components/account_header/fields';
-import { Button } from '@/mastodon/components/button';
-import { EmojiHTML } from '@/mastodon/components/emoji/html';
-import {
-  ModalShell,
-  ModalShellActions,
-  ModalShellBody,
-} from '@/mastodon/components/modal_shell';
-import { NavigationFocusTarget } from '@/mastodon/components/navigation_focus_target';
+import type { AccountField } from "@/mastodon/components/account_header/fields";
+import { Button } from "@/mastodon/components/button";
+import { EmojiHTML } from "@/mastodon/components/emoji/html";
+import { ModalShell, ModalShellActions, ModalShellBody } from "@/mastodon/components/modal_shell";
+import { NavigationFocusTarget } from "@/mastodon/components/navigation_focus_target";
 
-import { useFieldHtml } from '../hooks/useFieldHtml';
+import { useFieldHtml } from "../hooks/useFieldHtml";
 
-import classes from './styles.module.scss';
+import classes from "./styles.module.scss";
 
 export const AccountFieldModal: FC<{
   onClose: () => void;
@@ -25,16 +21,16 @@ export const AccountFieldModal: FC<{
   return (
     <ModalShell>
       <ModalShellBody>
-        <NavigationFocusTarget as='h1'>
+        <NavigationFocusTarget as="h1">
           <EmojiHTML
-            as='span'
+            as="span"
             htmlString={field.name_emojified}
             onElement={handleLabelElement}
             className={classes.fieldName}
           />
         </NavigationFocusTarget>
         <EmojiHTML
-          as='p'
+          as="p"
           htmlString={field.value_emojified}
           onElement={handleValueElement}
           className={classes.fieldValue}
@@ -42,7 +38,7 @@ export const AccountFieldModal: FC<{
       </ModalShellBody>
       <ModalShellActions>
         <Button onClick={onClose} plain>
-          <FormattedMessage id='lightbox.close' defaultMessage='Close' />
+          <FormattedMessage id="lightbox.close" defaultMessage="Close" />
         </Button>
       </ModalShellActions>
     </ModalShell>

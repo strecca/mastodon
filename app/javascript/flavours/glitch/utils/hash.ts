@@ -17,10 +17,10 @@ export function cyrb32(str: string, seed = 0) {
  * @param array Array of objects to hash.
  * @param key Key name to use for the hash in the resulting objects (default: 'id').
  */
-export function hashObjectArray<
-  TObj extends object,
-  TKey extends string = 'id',
->(array: TObj[], key = 'id' as TKey): (TObj & Record<TKey, string>)[] {
+export function hashObjectArray<TObj extends object, TKey extends string = "id">(
+  array: TObj[],
+  key = "id" as TKey,
+): (TObj & Record<TKey, string>)[] {
   const keySet = new Set<string>();
 
   return array.map((obj) => {

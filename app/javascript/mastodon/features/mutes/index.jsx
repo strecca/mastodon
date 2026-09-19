@@ -1,36 +1,35 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { defineMessages, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from "react-intl";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import ImmutablePureComponent from 'react-immutable-pure-component';
-import { connect } from 'react-redux';
+import ImmutablePropTypes from "react-immutable-proptypes";
+import ImmutablePureComponent from "react-immutable-pure-component";
+import { connect } from "react-redux";
 
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 
-import VolumeOffIcon from '@/material-icons/400-24px/volume_off.svg?react';
-import { Account } from 'mastodon/components/account';
-import { injectIntl } from '@/mastodon/components/intl';
+import VolumeOffIcon from "@/material-icons/400-24px/volume_off.svg?react";
+import { Account } from "mastodon/components/account";
+import { injectIntl } from "@/mastodon/components/intl";
 
-import { fetchMutes, expandMutes } from '../../actions/mutes';
-import { LoadingIndicator } from '../../components/loading_indicator';
-import ScrollableList from '../../components/scrollable_list';
-import Column from '../ui/components/column';
+import { fetchMutes, expandMutes } from "../../actions/mutes";
+import { LoadingIndicator } from "../../components/loading_indicator";
+import ScrollableList from "../../components/scrollable_list";
+import Column from "../ui/components/column";
 
 const messages = defineMessages({
-  heading: { id: 'column.mutes', defaultMessage: 'Muted users' },
+  heading: { id: "column.mutes", defaultMessage: "Muted users" },
 });
 
-const mapStateToProps = state => ({
-  accountIds: state.getIn(['user_lists', 'mutes', 'items']),
-  hasMore: !!state.getIn(['user_lists', 'mutes', 'next']),
-  isLoading: state.getIn(['user_lists', 'mutes', 'isLoading'], true),
+const mapStateToProps = (state) => ({
+  accountIds: state.getIn(["user_lists", "mutes", "items"]),
+  hasMore: !!state.getIn(["user_lists", "mutes", "next"]),
+  isLoading: state.getIn(["user_lists", "mutes", "isLoading"], true),
 });
 
 class Mutes extends ImmutablePureComponent {
-
   static propTypes = {
     params: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -41,15 +40,19 @@ class Mutes extends ImmutablePureComponent {
     multiColumn: PropTypes.bool,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.dispatch(fetchMutes());
   }
 
-  handleLoadMore = debounce(() => {
-    this.props.dispatch(expandMutes());
-  }, 300, { leading: true });
+  handleLoadMore = debounce(
+    () => {
+      this.props.dispatch(expandMutes());
+    },
+    300,
+    { leading: true },
+  );
 
-  render () {
+  render() {
     const { intl, hasMore, accountIds, multiColumn, isLoading } = this.props;
 
     if (!accountIds) {
@@ -60,30 +63,37 @@ class Mutes extends ImmutablePureComponent {
       );
     }
 
-    const emptyMessage = <FormattedMessage id='empty_column.mutes' defaultMessage="You haven't muted any users yet." />;
+    const emptyMessage = (
+      <FormattedMessage id="empty_column.mutes" defaultMessage="You haven't muted any users yet." />
+    );
 
     return (
-      <Column bindToDocument={!multiColumn} icon='volume-off' iconComponent={VolumeOffIcon} heading={intl.formatMessage(messages.heading)} alwaysShowBackButton>
+      <Column
+        bindToDocument={!multiColumn}
+        icon="volume-off"
+        iconComponent={VolumeOffIcon}
+        heading={intl.formatMessage(messages.heading)}
+        alwaysShowBackButton
+      >
         <ScrollableList
-          scrollKey='mutes'
+          scrollKey="mutes"
           onLoadMore={this.handleLoadMore}
           hasMore={hasMore}
           isLoading={isLoading}
           emptyMessage={emptyMessage}
           bindToDocument={!multiColumn}
         >
-          {accountIds.map(id =>
-            <Account key={id} id={id} defaultAction='mute' />,
-          )}
+          {accountIds.map((id) => (
+            <Account key={id} id={id} defaultAction="mute" />
+          ))}
         </ScrollableList>
 
         <Helmet>
-          <meta name='robots' content='noindex' />
+          <meta name="robots" content="noindex" />
         </Helmet>
       </Column>
     );
   }
-
 }
 
 export default connect(mapStateToProps)(injectIntl(Mutes));

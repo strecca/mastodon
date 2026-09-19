@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { animated, useSpring, config } from '@react-spring/web';
+import { animated, useSpring, config } from "@react-spring/web";
 
-import { reduceMotion } from '../initial_state';
+import { reduceMotion } from "../initial_state";
 
-import { ShortNumber } from './short_number';
+import { ShortNumber } from "./short_number";
 
 interface Props {
   value: number;
@@ -16,7 +16,7 @@ export const AnimatedNumber: React.FC<Props> = ({ value }) => {
   const [styles, api] = useSpring(
     () => ({
       from: { transform: `translateY(${100 * direction}%)` },
-      to: { transform: 'translateY(0%)' },
+      to: { transform: "translateY(0%)" },
       onRest() {
         setPreviousValue(value);
       },
@@ -38,7 +38,7 @@ export const AnimatedNumber: React.FC<Props> = ({ value }) => {
   }
 
   return (
-    <span className='animated-number'>
+    <span className="animated-number">
       <animated.span style={styles}>
         <ShortNumber value={value} />
       </animated.span>
@@ -46,10 +46,10 @@ export const AnimatedNumber: React.FC<Props> = ({ value }) => {
         <animated.span
           style={{
             ...styles,
-            position: 'absolute',
+            position: "absolute",
             top: `${-100 * direction}%`, // Adds extra space on top of translateY
           }}
-          role='presentation'
+          role="presentation"
         >
           <ShortNumber value={previousValue} />
         </animated.span>

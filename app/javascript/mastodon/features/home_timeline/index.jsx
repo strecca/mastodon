@@ -1,46 +1,46 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { defineMessages, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
-import { Helmet } from '@unhead/react/helmet';
+import classNames from "classnames";
+import { Helmet } from "@unhead/react/helmet";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import CampaignIcon from '@/material-icons/400-24px/campaign.svg?react';
-import HomeIcon from '@/material-icons/400-24px/home-fill.svg?react';
-import { injectIntl } from '@/mastodon/components/intl';
-import { SymbolLogo } from 'mastodon/components/logo';
-import { fetchAnnouncements, toggleShowAnnouncements } from 'mastodon/actions/announcements';
-import { IconWithBadge } from 'mastodon/components/icon_with_badge';
-import { NotSignedInIndicator } from 'mastodon/components/not_signed_in_indicator';
-import { identityContextPropShape, withIdentity } from 'mastodon/identity_context';
-import { withBreakpoint } from 'mastodon/features/ui/hooks/useBreakpoint';
+import CampaignIcon from "@/material-icons/400-24px/campaign.svg?react";
+import HomeIcon from "@/material-icons/400-24px/home-fill.svg?react";
+import { injectIntl } from "@/mastodon/components/intl";
+import { SymbolLogo } from "mastodon/components/logo";
+import { fetchAnnouncements, toggleShowAnnouncements } from "mastodon/actions/announcements";
+import { IconWithBadge } from "mastodon/components/icon_with_badge";
+import { NotSignedInIndicator } from "mastodon/components/not_signed_in_indicator";
+import { identityContextPropShape, withIdentity } from "mastodon/identity_context";
+import { withBreakpoint } from "mastodon/features/ui/hooks/useBreakpoint";
 
-import { addColumn, removeColumn, moveColumn } from '../../actions/columns';
-import { expandHomeTimeline } from '../../actions/timelines';
-import Column from '../../components/column';
-import ColumnHeader from '../../components/column_header';
-import StatusListContainer from '../ui/containers/status_list_container';
+import { addColumn, removeColumn, moveColumn } from "../../actions/columns";
+import { expandHomeTimeline } from "../../actions/timelines";
+import Column from "../../components/column";
+import ColumnHeader from "../../components/column_header";
+import StatusListContainer from "../ui/containers/status_list_container";
 
-import { ColumnSettings } from './components/column_settings';
-import { CriticalUpdateBanner } from './components/critical_update_banner';
-import { Announcements } from './components/announcements';
-import { AnnualReportTimeline } from '../annual_report/timeline';
+import { ColumnSettings } from "./components/column_settings";
+import { CriticalUpdateBanner } from "./components/critical_update_banner";
+import { Announcements } from "./components/announcements";
+import { AnnualReportTimeline } from "../annual_report/timeline";
 
 const messages = defineMessages({
-  title: { id: 'column.home', defaultMessage: 'Home' },
-  show_announcements: { id: 'home.show_announcements', defaultMessage: 'Show announcements' },
-  hide_announcements: { id: 'home.hide_announcements', defaultMessage: 'Hide announcements' },
+  title: { id: "column.home", defaultMessage: "Home" },
+  show_announcements: { id: "home.show_announcements", defaultMessage: "Show announcements" },
+  hide_announcements: { id: "home.hide_announcements", defaultMessage: "Hide announcements" },
 });
 
-const mapStateToProps = state => ({
-  hasUnread: state.getIn(['timelines', 'home', 'unread']) > 0,
-  isPartial: state.getIn(['timelines', 'home', 'isPartial']),
-  hasAnnouncements: !state.getIn(['announcements', 'items']).isEmpty(),
-  unreadAnnouncements: state.getIn(['announcements', 'items']).count(item => !item.get('read')),
-  showAnnouncements: state.getIn(['announcements', 'show']),
+const mapStateToProps = (state) => ({
+  hasUnread: state.getIn(["timelines", "home", "unread"]) > 0,
+  isPartial: state.getIn(["timelines", "home", "isPartial"]),
+  hasAnnouncements: !state.getIn(["announcements", "items"]).isEmpty(),
+  unreadAnnouncements: state.getIn(["announcements", "items"]).count((item) => !item.get("read")),
+  showAnnouncements: state.getIn(["announcements", "show"]),
 });
 
 class HomeTimeline extends PureComponent {
@@ -64,7 +64,7 @@ class HomeTimeline extends PureComponent {
     if (columnId) {
       dispatch(removeColumn(columnId));
     } else {
-      dispatch(addColumn('HOME', {}));
+      dispatch(addColumn("HOME", {}));
     }
   };
 
@@ -77,28 +77,28 @@ class HomeTimeline extends PureComponent {
     this.column.scrollTop();
   };
 
-  setRef = c => {
+  setRef = (c) => {
     this.column = c;
   };
 
-  handleLoadMore = maxId => {
+  handleLoadMore = (maxId) => {
     this.props.dispatch(expandHomeTimeline({ maxId }));
   };
 
-  componentDidMount () {
+  componentDidMount() {
     setTimeout(() => this.props.dispatch(fetchAnnouncements()), 700);
     this._checkIfReloadNeeded(false, this.props.isPartial);
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     this._checkIfReloadNeeded(prevProps.isPartial, this.props.isPartial);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._stopPolling();
   }
 
-  _checkIfReloadNeeded (wasPartial, isPartial) {
+  _checkIfReloadNeeded(wasPartial, isPartial) {
     const { dispatch } = this.props;
 
     if (wasPartial === isPartial) {
@@ -112,7 +112,7 @@ class HomeTimeline extends PureComponent {
     }
   }
 
-  _stopPolling () {
+  _stopPolling() {
     if (this.polling) {
       clearInterval(this.polling);
       this.polling = null;
@@ -124,13 +124,22 @@ class HomeTimeline extends PureComponent {
     this.props.dispatch(toggleShowAnnouncements());
   };
 
-  render () {
-    const { intl, hasUnread, columnId, multiColumn, hasAnnouncements, unreadAnnouncements, showAnnouncements, matchesBreakpoint } = this.props;
+  render() {
+    const {
+      intl,
+      hasUnread,
+      columnId,
+      multiColumn,
+      hasAnnouncements,
+      unreadAnnouncements,
+      showAnnouncements,
+      matchesBreakpoint,
+    } = this.props;
     const pinned = !!columnId;
     const { signedIn } = this.props.identity;
     const banners = [
-      <CriticalUpdateBanner key='critical-update-banner' />,
-      <AnnualReportTimeline key='annual-report' />
+      <CriticalUpdateBanner key="critical-update-banner" />,
+      <AnnualReportTimeline key="annual-report" />,
     ];
 
     let announcementsButton;
@@ -138,21 +147,29 @@ class HomeTimeline extends PureComponent {
     if (hasAnnouncements) {
       announcementsButton = (
         <button
-          type='button'
-          className={classNames('column-header__button', { 'active': showAnnouncements })}
-          title={intl.formatMessage(showAnnouncements ? messages.hide_announcements : messages.show_announcements)}
-          aria-label={intl.formatMessage(showAnnouncements ? messages.hide_announcements : messages.show_announcements)}
+          type="button"
+          className={classNames("column-header__button", { active: showAnnouncements })}
+          title={intl.formatMessage(
+            showAnnouncements ? messages.hide_announcements : messages.show_announcements,
+          )}
+          aria-label={intl.formatMessage(
+            showAnnouncements ? messages.hide_announcements : messages.show_announcements,
+          )}
           onClick={this.handleToggleAnnouncementsClick}
         >
-          <IconWithBadge id='bullhorn' icon={CampaignIcon} count={unreadAnnouncements} />
+          <IconWithBadge id="bullhorn" icon={CampaignIcon} count={unreadAnnouncements} />
         </button>
       );
     }
 
     return (
-      <Column bindToDocument={!multiColumn} ref={this.setRef} label={intl.formatMessage(messages.title)}>
+      <Column
+        bindToDocument={!multiColumn}
+        ref={this.setRef}
+        label={intl.formatMessage(messages.title)}
+      >
         <ColumnHeader
-          icon='home'
+          icon="home"
           iconComponent={matchesBreakpoint ? SymbolLogo : HomeIcon}
           active={hasUnread}
           title={intl.formatMessage(messages.title)}
@@ -174,20 +191,26 @@ class HomeTimeline extends PureComponent {
             trackScroll={!pinned}
             scrollKey={`home_timeline-${columnId}`}
             onLoadMore={this.handleLoadMore}
-            timelineId='home'
-            emptyMessage={<FormattedMessage id='empty_column.home' defaultMessage='Your home timeline is empty! Follow more people to fill it up.' />}
+            timelineId="home"
+            emptyMessage={
+              <FormattedMessage
+                id="empty_column.home"
+                defaultMessage="Your home timeline is empty! Follow more people to fill it up."
+              />
+            }
             bindToDocument={!multiColumn}
           />
-        ) : <NotSignedInIndicator />}
+        ) : (
+          <NotSignedInIndicator />
+        )}
 
         <Helmet>
           <title>{intl.formatMessage(messages.title)}</title>
-          <meta name='robots' content='noindex' />
+          <meta name="robots" content="noindex" />
         </Helmet>
       </Column>
     );
   }
-
 }
 
 export default connect(mapStateToProps)(withBreakpoint(withIdentity(injectIntl(HomeTimeline))));

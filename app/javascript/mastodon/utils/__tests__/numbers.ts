@@ -1,4 +1,4 @@
-import { DECIMAL_UNITS, toShortNumber } from '../numbers';
+import { DECIMAL_UNITS, toShortNumber } from "../numbers";
 
 interface TableRow {
   input: number;
@@ -17,7 +17,7 @@ describe.each`
   ${123}            | ${123}       | ${DECIMAL_UNITS.ONE}      | ${0}
   ${1234}           | ${1.234}     | ${DECIMAL_UNITS.THOUSAND} | ${1}
   ${6666}           | ${6.666}     | ${DECIMAL_UNITS.THOUSAND} | ${1}
-`('toShortNumber', ({ input, base, unit, digits }: TableRow) => {
+`("toShortNumber", ({ input, base, unit, digits }: TableRow) => {
   test(`correctly formats ${input}`, () => {
     expect(toShortNumber(input)).toEqual([base, unit, digits]);
   });

@@ -1,33 +1,33 @@
-import { useCallback, useId, useState } from 'react';
+import { useCallback, useId, useState } from "react";
 
-import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, useIntl, defineMessages } from "react-intl";
 
-import type { ApiCollectionJSON } from '@/flavours/glitch/api_types/collections';
-import { EmptyState } from '@/flavours/glitch/components/empty_state';
-import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
-import { NavigationFocusTarget } from '@/flavours/glitch/components/navigation_focus_target';
-import { useCurrentAccountId } from '@/flavours/glitch/hooks/useAccountId';
-import type { Account } from '@/flavours/glitch/models/account';
+import type { ApiCollectionJSON } from "@/flavours/glitch/api_types/collections";
+import { EmptyState } from "@/flavours/glitch/components/empty_state";
+import { LoadingIndicator } from "@/flavours/glitch/components/loading_indicator";
+import { NavigationFocusTarget } from "@/flavours/glitch/components/navigation_focus_target";
+import { useCurrentAccountId } from "@/flavours/glitch/hooks/useAccountId";
+import type { Account } from "@/flavours/glitch/models/account";
 import {
   addCollectionItem,
   removeCollectionItem,
-} from '@/flavours/glitch/reducers/slices/collections';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import { IconButton } from 'flavours/glitch/components/icon_button';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+} from "@/flavours/glitch/reducers/slices/collections";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import { IconButton } from "flavours/glitch/components/icon_button";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
-import { MAX_COLLECTION_ACCOUNT_COUNT } from '../collections/editor/accounts';
+import { MAX_COLLECTION_ACCOUNT_COUNT } from "../collections/editor/accounts";
 import {
   NewCollectionButton,
   useCollectionsCreatedBy,
-} from '../collections/overview/created_by_account';
+} from "../collections/overview/created_by_account";
 
-import { CollectionToggle } from './collection_toggle';
+import { CollectionToggle } from "./collection_toggle";
 
 const messages = defineMessages({
   close: {
-    id: 'lightbox.close',
-    defaultMessage: 'Close',
+    id: "lightbox.close",
+    defaultMessage: "Close",
   },
 });
 
@@ -38,9 +38,7 @@ const ListItem: React.FC<{
   const dispatch = useAppDispatch();
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const accountItemInCollection = collection.items.find(
-    (item) => item.account_id === account.id,
-  );
+  const accountItemInCollection = collection.items.find((item) => item.account_id === account.id);
   const isAccountInCollection = !!accountItemInCollection;
 
   const addOrRemove = useCallback(
@@ -76,8 +74,7 @@ const ListItem: React.FC<{
   );
 
   const hasMaxItemCount =
-    !isAccountInCollection &&
-    collection.item_count >= MAX_COLLECTION_ACCOUNT_COUNT;
+    !isAccountInCollection && collection.item_count >= MAX_COLLECTION_ACCOUNT_COUNT;
 
   return (
     <CollectionToggle
@@ -87,8 +84,8 @@ const ListItem: React.FC<{
       subtitle={
         hasMaxItemCount ? (
           <FormattedMessage
-            id='collections.search_accounts_max_reached'
-            defaultMessage='You have added the maximum number of accounts'
+            id="collections.search_accounts_max_reached"
+            defaultMessage="You have added the maximum number of accounts"
           />
         ) : null
       }
@@ -109,49 +106,41 @@ export const CollectionAdder: React.FC<{
   const { collections, status } = useCollectionsCreatedBy(currentAccountId);
 
   return (
-    <div className='modal-root__modal dialog-modal'>
-      <div className='dialog-modal__header'>
+    <div className="modal-root__modal dialog-modal">
+      <div className="dialog-modal__header">
         <IconButton
-          className='dialog-modal__header__close'
+          className="dialog-modal__header__close"
           title={intl.formatMessage(messages.close)}
-          icon='times'
+          icon="times"
           iconComponent={CloseIcon}
           onClick={onClose}
         />
 
-        <NavigationFocusTarget
-          as='h1'
-          id={titleId}
-          className='dialog-modal__header__title'
-        >
+        <NavigationFocusTarget as="h1" id={titleId} className="dialog-modal__header__title">
           <FormattedMessage
-            id='collections.add_to_collection'
-            defaultMessage='Add {name} to collections'
+            id="collections.add_to_collection"
+            defaultMessage="Add {name} to collections"
             values={{ name: <strong>@{account?.acct}</strong> }}
           />
         </NavigationFocusTarget>
       </div>
 
-      <div className='dialog-modal__content'>
-        <div
-          className='lists-scrollable'
-          role='group'
-          aria-labelledby={titleId}
-        >
-          {status === 'loading' || !account ? (
+      <div className="dialog-modal__content">
+        <div className="lists-scrollable" role="group" aria-labelledby={titleId}>
+          {status === "loading" || !account ? (
             <LoadingIndicator />
           ) : collections.length === 0 ? (
             <EmptyState
               title={
                 <FormattedMessage
-                  id='empty_column.collections_self'
-                  defaultMessage='You have not created any collections yet.'
+                  id="empty_column.collections_self"
+                  defaultMessage="You have not created any collections yet."
                 />
               }
               message={
                 <FormattedMessage
-                  id='empty_column.account_featured_self.showcase_accounts_desc'
-                  defaultMessage='Collections are curated lists of accounts to help others discover more of the Fediverse.'
+                  id="empty_column.account_featured_self.showcase_accounts_desc"
+                  defaultMessage="Collections are curated lists of accounts to help others discover more of the Fediverse."
                 />
               }
             >

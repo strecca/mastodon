@@ -1,11 +1,11 @@
-import { useIntl, defineMessages } from 'react-intl';
-import { Helmet } from '@unhead/react/helmet';
-import { Column } from 'flavours/glitch/components/column';
-import { EntryDetail } from 'flavours/glitch/components/community_directory/entry_detail';
-import config from '../config.json';
+import { useIntl, defineMessages } from "react-intl";
+import { Helmet } from "@unhead/react/helmet";
+import { Column } from "flavours/glitch/components/column";
+import { EntryDetail } from "flavours/glitch/components/community_directory/entry_detail";
+import config from "../config.json";
 
 const messages = defineMessages({
-  title: { id: 'community.services.title', defaultMessage: 'Community Services' },
+  title: { id: "community.services.title", defaultMessage: "Community Services" },
 });
 
 // No ColumnHeader here — the colored category banner rendered by
@@ -17,7 +17,10 @@ const CommunityServicesShow = ({ params, multiColumn }) => {
   return (
     <Column bindToDocument={!multiColumn} label={t}>
       <EntryDetail config={config} entryId={params?.id} multiColumn={multiColumn} />
-      <Helmet><title>{t}</title><meta name='robots' content='noindex' /></Helmet>
+      <Helmet>
+        <title>{t}</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
     </Column>
   );
 };

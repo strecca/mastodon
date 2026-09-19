@@ -42,7 +42,7 @@ ml:
         title: പുതിയ അപ്ലിക്കേഷൻ
       show:
         actions: പ്രവർത്തനങ്ങൾ
-        title: 'അപ്ലിക്കേഷൻ: %{name}'
+        title: "അപ്ലിക്കേഷൻ: %{name}"
     authorizations:
       buttons:
         authorize: അംഗീകരിക്കുക

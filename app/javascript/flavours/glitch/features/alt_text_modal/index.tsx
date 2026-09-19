@@ -1,57 +1,51 @@
-import {
-  useState,
-  useCallback,
-  useRef,
-  useImperativeHandle,
-  forwardRef,
-} from 'react';
+import { useState, useCallback, useRef, useImperativeHandle, forwardRef } from "react";
 
-import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, useIntl, defineMessages } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import type { List as ImmutableList, Map as ImmutableMap } from 'immutable';
+import type { List as ImmutableList, Map as ImmutableMap } from "immutable";
 
-import { useSpring, animated } from '@react-spring/web';
-import Textarea from 'react-textarea-autosize';
-import { length } from 'stringz';
+import { useSpring, animated } from "@react-spring/web";
+import Textarea from "react-textarea-autosize";
+import { length } from "stringz";
 
-import { showAlertForError } from 'flavours/glitch/actions/alerts';
-import { uploadThumbnail } from 'flavours/glitch/actions/compose';
-import { changeUploadCompose } from 'flavours/glitch/actions/compose_typed';
-import { Button } from 'flavours/glitch/components/button';
-import { GIFV } from 'flavours/glitch/components/gifv';
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { NavigationFocusTarget } from 'flavours/glitch/components/navigation_focus_target';
-import { Skeleton } from 'flavours/glitch/components/skeleton';
-import { Audio } from 'flavours/glitch/features/audio';
-import { CharacterCounter } from 'flavours/glitch/features/compose/components/character_counter';
-import { Tesseract as fetchTesseract } from 'flavours/glitch/features/ui/util/async-components';
-import { Video, getPointerPosition } from 'flavours/glitch/features/video';
-import { me } from 'flavours/glitch/initial_state';
-import type { MediaAttachment } from 'flavours/glitch/models/media_attachment';
-import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
-import { assetHost } from 'flavours/glitch/utils/config';
+import { showAlertForError } from "flavours/glitch/actions/alerts";
+import { uploadThumbnail } from "flavours/glitch/actions/compose";
+import { changeUploadCompose } from "flavours/glitch/actions/compose_typed";
+import { Button } from "flavours/glitch/components/button";
+import { GIFV } from "flavours/glitch/components/gifv";
+import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
+import { NavigationFocusTarget } from "flavours/glitch/components/navigation_focus_target";
+import { Skeleton } from "flavours/glitch/components/skeleton";
+import { Audio } from "flavours/glitch/features/audio";
+import { CharacterCounter } from "flavours/glitch/features/compose/components/character_counter";
+import { Tesseract as fetchTesseract } from "flavours/glitch/features/ui/util/async-components";
+import { Video, getPointerPosition } from "flavours/glitch/features/video";
+import { me } from "flavours/glitch/initial_state";
+import type { MediaAttachment } from "flavours/glitch/models/media_attachment";
+import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
+import { assetHost } from "flavours/glitch/utils/config";
 
-import { InfoButton } from './components/info_button';
+import { InfoButton } from "./components/info_button";
 
 const messages = defineMessages({
   placeholderVisual: {
-    id: 'alt_text_modal.describe_for_people_with_visual_impairments',
-    defaultMessage: 'Describe this for people with visual impairments…',
+    id: "alt_text_modal.describe_for_people_with_visual_impairments",
+    defaultMessage: "Describe this for people with visual impairments…",
   },
   placeholderHearing: {
-    id: 'alt_text_modal.describe_for_people_with_hearing_impairments',
-    defaultMessage: 'Describe this for people with hearing impairments…',
+    id: "alt_text_modal.describe_for_people_with_hearing_impairments",
+    defaultMessage: "Describe this for people with hearing impairments…",
   },
   discardMessage: {
-    id: 'confirmations.discard_edit_media.message',
+    id: "confirmations.discard_edit_media.message",
     defaultMessage:
-      'You have unsaved changes to the media description or preview, discard them anyway?',
+      "You have unsaved changes to the media description or preview, discard them anyway?",
   },
   discardConfirm: {
-    id: 'confirmations.discard_edit_media.confirm',
-    defaultMessage: 'Discard',
+    id: "confirmations.discard_edit_media.confirm",
+    defaultMessage: "Discard",
   },
 });
 
@@ -87,12 +81,12 @@ const UploadButton: React.FC<{
       <Button onClick={handleClick}>{children}</Button>
 
       <input
-        id='upload-modal__thumbnail'
+        id="upload-modal__thumbnail"
         ref={fileRef}
-        type='file'
+        type="file"
         accept={mimeTypes}
         onChange={handleChange}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
       />
     </label>
   );
@@ -105,7 +99,7 @@ const Preview: React.FC<{
 }> = ({ mediaId, position, onPositionChange }) => {
   const nodeRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null);
 
-  const [dragging, setDragging] = useState<'started' | 'moving' | null>(null);
+  const [dragging, setDragging] = useState<"started" | "moving" | null>(null);
 
   const [x, y] = position;
   const style = useSpring({
@@ -113,25 +107,20 @@ const Preview: React.FC<{
       left: `${x * 100}%`,
       top: `${y * 100}%`,
     },
-    immediate: dragging === 'moving',
+    immediate: dragging === "moving",
   });
   const media = useAppSelector((state) =>
     (
       (state.compose as ImmutableMap<string, unknown>).get(
-        'media_attachments',
+        "media_attachments",
       ) as ImmutableList<MediaAttachment>
-    ).find((x) => x.get('id') === mediaId),
+    ).find((x) => x.get("id") === mediaId),
   );
-  const account = useAppSelector((state) =>
-    me ? state.accounts.get(me) : undefined,
-  );
+  const account = useAppSelector((state) => (me ? state.accounts.get(me) : undefined));
 
-  const setRef = useCallback(
-    (e: HTMLImageElement | HTMLVideoElement | null) => {
-      nodeRef.current = e;
-    },
-    [],
-  );
+  const setRef = useCallback((e: HTMLImageElement | HTMLVideoElement | null) => {
+    nodeRef.current = e;
+  }, []);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -142,23 +131,23 @@ const Preview: React.FC<{
       const handleMouseMove = (e: MouseEvent) => {
         const { x, y } = getPointerPosition(nodeRef.current, e);
 
-        setDragging('moving'); // This will disable the animation for quicker feedback, only do this if the mouse actually moves
+        setDragging("moving"); // This will disable the animation for quicker feedback, only do this if the mouse actually moves
         onPositionChange([x, y]);
       };
 
       const handleMouseUp = () => {
         setDragging(null);
-        document.removeEventListener('mouseup', handleMouseUp);
-        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener("mousemove", handleMouseMove);
       };
 
       const { x, y } = getPointerPosition(nodeRef.current, e.nativeEvent);
 
-      setDragging('started');
+      setDragging("started");
       onPositionChange([x, y]);
 
-      document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("mousemove", handleMouseMove);
     },
     [setDragging, onPositionChange],
   );
@@ -167,60 +156,48 @@ const Preview: React.FC<{
     return null;
   }
 
-  if (media.get('type') === 'image') {
+  if (media.get("type") === "image") {
     return (
-      <div className={classNames('focal-point', { dragging })}>
+      <div className={classNames("focal-point", { dragging })}>
         <img
           ref={setRef}
           draggable={false}
-          src={media.get('url') as string}
-          alt=''
-          role='presentation'
+          src={media.get("url") as string}
+          alt=""
+          role="presentation"
           onMouseDown={handleMouseDown}
         />
-        <animated.div className='focal-point__reticle' style={style} />
+        <animated.div className="focal-point__reticle" style={style} />
       </div>
     );
-  } else if (media.get('type') === 'gifv') {
+  } else if (media.get("type") === "gifv") {
     return (
-      <div className={classNames('focal-point', { dragging })}>
-        <GIFV
-          ref={setRef}
-          src={media.get('url') as string}
-          alt=''
-          onMouseDown={handleMouseDown}
-        />
-        <animated.div className='focal-point__reticle' style={style} />
+      <div className={classNames("focal-point", { dragging })}>
+        <GIFV ref={setRef} src={media.get("url") as string} alt="" onMouseDown={handleMouseDown} />
+        <animated.div className="focal-point__reticle" style={style} />
       </div>
     );
-  } else if (media.get('type') === 'video') {
+  } else if (media.get("type") === "video") {
     return (
       <Video
-        preview={media.get('preview_url') as string}
-        frameRate={media.getIn(['meta', 'original', 'frame_rate']) as string}
-        aspectRatio={`${media.getIn(['meta', 'original', 'width']) as number} / ${media.getIn(['meta', 'original', 'height']) as number}`}
-        blurhash={media.get('blurhash') as string}
-        src={media.get('url') as string}
+        preview={media.get("preview_url") as string}
+        frameRate={media.getIn(["meta", "original", "frame_rate"]) as string}
+        aspectRatio={`${media.getIn(["meta", "original", "width"]) as number} / ${media.getIn(["meta", "original", "height"]) as number}`}
+        blurhash={media.get("blurhash") as string}
+        src={media.get("url") as string}
         detailed
         editable
       />
     );
-  } else if (media.get('type') === 'audio') {
+  } else if (media.get("type") === "audio") {
     return (
       <Audio
-        src={media.get('url') as string}
-        poster={
-          (media.get('preview_url') as string | undefined) ??
-          account?.avatar_static
-        }
-        duration={media.getIn(['meta', 'original', 'duration'], 0) as number}
-        backgroundColor={
-          media.getIn(['meta', 'colors', 'background']) as string
-        }
-        foregroundColor={
-          media.getIn(['meta', 'colors', 'foreground']) as string
-        }
-        accentColor={media.getIn(['meta', 'colors', 'accent']) as string}
+        src={media.get("url") as string}
+        poster={(media.get("preview_url") as string | undefined) ?? account?.avatar_static}
+        duration={media.getIn(["meta", "original", "duration"], 0) as number}
+        backgroundColor={media.getIn(["meta", "colors", "background"]) as string}
+        foregroundColor={media.getIn(["meta", "colors", "foreground"]) as string}
+        accentColor={media.getIn(["meta", "colors", "accent"]) as string}
         editable
       />
     );
@@ -256,36 +233,27 @@ export const AltTextModal = forwardRef<ModalRef, Props & Partial<RestoreProps>>(
     const media = useAppSelector((state) =>
       (
         (state.compose as ImmutableMap<string, unknown>).get(
-          'media_attachments',
+          "media_attachments",
         ) as ImmutableList<MediaAttachment>
-      ).find((x) => x.get('id') === mediaId),
+      ).find((x) => x.get("id") === mediaId),
     );
     const lang = useAppSelector(
-      (state) =>
-        (state.compose as ImmutableMap<string, unknown>).get(
-          'language',
-        ) as string,
+      (state) => (state.compose as ImmutableMap<string, unknown>).get("language") as string,
     );
-    const focusX =
-      (media?.getIn(['meta', 'focus', 'x'], 0) as number | undefined) ?? 0;
-    const focusY =
-      (media?.getIn(['meta', 'focus', 'y'], 0) as number | undefined) ?? 0;
+    const focusX = (media?.getIn(["meta", "focus", "x"], 0) as number | undefined) ?? 0;
+    const focusY = (media?.getIn(["meta", "focus", "y"], 0) as number | undefined) ?? 0;
     const [description, setDescription] = useState(
-      previousDescription ??
-        (media?.get('description') as string | undefined) ??
-        '',
+      previousDescription ?? (media?.get("description") as string | undefined) ?? "",
     );
     const [position, setPosition] = useState<FocalPoint>(
       previousPosition ?? [focusX / 2 + 0.5, focusY / -2 + 0.5],
     );
     const [isDetecting, setIsDetecting] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const dirtyRef = useRef(
-      previousDescription || previousPosition ? true : false,
-    );
-    const type = media?.get('type') as string;
+    const dirtyRef = useRef(previousDescription || previousPosition ? true : false);
+    const type = media?.get("type") as string;
     const valid = length(description) <= MAX_LENGTH;
-    const unattached = media?.get('unattached') as boolean | undefined;
+    const unattached = media?.get("unattached") as boolean | undefined;
 
     const handleDescriptionChange = useCallback(
       (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -324,7 +292,7 @@ export const AltTextModal = forwardRef<ModalRef, Props & Partial<RestoreProps>>(
           setIsSaving(false);
           dirtyRef.current = false;
           onClose();
-          return '';
+          return "";
         })
         .catch((err: unknown) => {
           setIsSaving(false);
@@ -334,7 +302,7 @@ export const AltTextModal = forwardRef<ModalRef, Props & Partial<RestoreProps>>(
 
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
           e.preventDefault();
 
           if (valid) {
@@ -352,18 +320,18 @@ export const AltTextModal = forwardRef<ModalRef, Props & Partial<RestoreProps>>(
         .then(async ({ createWorker }) => {
           const [tesseractWorkerPath, tesseractCorePath] = await Promise.all([
             // eslint-disable-next-line import/extensions
-            import('tesseract.js/dist/worker.min.js?url'),
+            import("tesseract.js/dist/worker.min.js?url"),
             // eslint-disable-next-line import/no-extraneous-dependencies
-            import('tesseract.js-core/tesseract-core.wasm.js?url'),
+            import("tesseract.js-core/tesseract-core.wasm.js?url"),
           ]);
-          const worker = await createWorker('eng', 1, {
+          const worker = await createWorker("eng", 1, {
             workerPath: tesseractWorkerPath.default,
             corePath: tesseractCorePath.default,
             langPath: `${assetHost}/ocr/lang-data`,
-            cacheMethod: 'write',
+            cacheMethod: "write",
           });
 
-          const image = URL.createObjectURL(media?.get('file') as File);
+          const image = URL.createObjectURL(media?.get("file") as File);
           const result = await worker.recognize(image);
 
           setDescription(result.data.text);
@@ -371,7 +339,7 @@ export const AltTextModal = forwardRef<ModalRef, Props & Partial<RestoreProps>>(
 
           await worker.terminate();
 
-          return '';
+          return "";
         })
         .catch(() => {
           setIsDetecting(false);
@@ -400,39 +368,27 @@ export const AltTextModal = forwardRef<ModalRef, Props & Partial<RestoreProps>>(
     );
 
     return (
-      <div className='modal-root__modal dialog-modal'>
-        <div className='dialog-modal__header'>
+      <div className="modal-root__modal dialog-modal">
+        <div className="dialog-modal__header">
           <Button onClick={handleSubmit} disabled={!valid}>
             {isSaving ? (
               <LoadingIndicator />
             ) : (
-              <FormattedMessage
-                id='alt_text_modal.done'
-                defaultMessage='Done'
-              />
+              <FormattedMessage id="alt_text_modal.done" defaultMessage="Done" />
             )}
           </Button>
 
-          <NavigationFocusTarget
-            as='h1'
-            className='dialog-modal__header__title'
-          >
-            <FormattedMessage
-              id='alt_text_modal.add_alt_text'
-              defaultMessage='Add alt text'
-            />
+          <NavigationFocusTarget as="h1" className="dialog-modal__header__title">
+            <FormattedMessage id="alt_text_modal.add_alt_text" defaultMessage="Add alt text" />
           </NavigationFocusTarget>
 
           <Button secondary onClick={onClose}>
-            <FormattedMessage
-              id='alt_text_modal.cancel'
-              defaultMessage='Cancel'
-            />
+            <FormattedMessage id="alt_text_modal.cancel" defaultMessage="Cancel" />
           </Button>
         </div>
 
-        <div className='dialog-modal__content'>
-          <div className='dialog-modal__content__preview'>
+        <div className="dialog-modal__content">
+          <div className="dialog-modal__content__preview">
             <Preview
               mediaId={mediaId}
               position={position}
@@ -440,66 +396,58 @@ export const AltTextModal = forwardRef<ModalRef, Props & Partial<RestoreProps>>(
             />
 
             {/* This button is hidden for attached audio/video files, as they are already posted */}
-            {(type === 'audio' || type === 'video') && unattached && (
+            {(type === "audio" || type === "video") && unattached && (
               <UploadButton
                 onSelectFile={handleThumbnailChange}
-                mimeTypes='image/jpeg,image/png,image/gif,image/heic,image/heif,image/webp,image/avif'
+                mimeTypes="image/jpeg,image/png,image/gif,image/heic,image/heif,image/webp,image/avif"
               >
                 <FormattedMessage
-                  id='alt_text_modal.change_thumbnail'
-                  defaultMessage='Change thumbnail'
+                  id="alt_text_modal.change_thumbnail"
+                  defaultMessage="Change thumbnail"
                 />
               </UploadButton>
             )}
           </div>
 
-          <form
-            className='dialog-modal__content__form simple_form'
-            onSubmit={handleSubmit}
-          >
-            <div className='input'>
-              <div className='label_input'>
+          <form className="dialog-modal__content__form simple_form" onSubmit={handleSubmit}>
+            <div className="input">
+              <div className="label_input">
                 <Textarea
-                  id='description'
-                  value={isDetecting ? ' ' : description}
+                  id="description"
+                  value={isDetecting ? " " : description}
                   onChange={handleDescriptionChange}
                   onKeyDown={handleKeyDown}
                   lang={lang}
                   placeholder={intl.formatMessage(
-                    type === 'audio'
-                      ? messages.placeholderHearing
-                      : messages.placeholderVisual,
+                    type === "audio" ? messages.placeholderHearing : messages.placeholderVisual,
                   )}
                   minRows={3}
                   disabled={isDetecting}
                 />
 
                 {isDetecting && (
-                  <div className='label_input__loading-indicator'>
-                    <Skeleton width='100%' />
-                    <Skeleton width='100%' />
-                    <Skeleton width='61%' />
+                  <div className="label_input__loading-indicator">
+                    <Skeleton width="100%" />
+                    <Skeleton width="100%" />
+                    <Skeleton width="61%" />
                   </div>
                 )}
               </div>
 
-              <div className='input__toolbar'>
-                <CharacterCounter
-                  max={MAX_LENGTH}
-                  text={isDetecting ? '' : description}
-                />
+              <div className="input__toolbar">
+                <CharacterCounter max={MAX_LENGTH} text={isDetecting ? "" : description} />
 
-                <div className='spacer' />
+                <div className="spacer" />
 
                 <button
-                  className='link-button'
+                  className="link-button"
                   onClick={handleDetectClick}
-                  disabled={type !== 'image' || isDetecting}
-                  type='button'
+                  disabled={type !== "image" || isDetecting}
+                  type="button"
                 >
                   <FormattedMessage
-                    id='alt_text_modal.add_text_from_image'
-                    defaultMessage='Add text from image'
+                    id="alt_text_modal.add_text_from_image"
+                    defaultMessage="Add text from image"
                   />
                 </button>
 
@@ -512,4 +460,4 @@ export const AltTextModal = forwardRef<ModalRef, Props & Partial<RestoreProps>>(
     );
   },
 );
-AltTextModal.displayName = 'AltTextModal';
+AltTextModal.displayName = "AltTextModal";

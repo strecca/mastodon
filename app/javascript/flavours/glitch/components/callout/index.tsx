@@ -1,30 +1,23 @@
-import type { FC, ReactElement, ReactNode } from 'react';
+import type { FC, ReactElement, ReactNode } from "react";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import CheckIcon from '@/material-icons/400-24px/check.svg?react';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import ErrorIcon from '@/material-icons/400-24px/error.svg?react';
-import InfoIcon from '@/material-icons/400-24px/info.svg?react';
-import WarningIcon from '@/material-icons/400-24px/warning.svg?react';
+import CheckIcon from "@/material-icons/400-24px/check.svg?react";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import ErrorIcon from "@/material-icons/400-24px/error.svg?react";
+import InfoIcon from "@/material-icons/400-24px/info.svg?react";
+import WarningIcon from "@/material-icons/400-24px/warning.svg?react";
 
-import type { IconProp } from '../icon';
-import { Icon } from '../icon';
-import { IconButton } from '../icon_button';
+import type { IconProp } from "../icon";
+import { Icon } from "../icon";
+import { IconButton } from "../icon_button";
 
-import classes from './styles.module.css';
+import classes from "./styles.module.css";
 
 export interface CalloutProps {
-  variant?:
-    | 'default'
-    | 'subtle'
-    | 'feature'
-    | 'inverted'
-    | 'success'
-    | 'warning'
-    | 'error';
+  variant?: "default" | "subtle" | "feature" | "inverted" | "success" | "warning" | "error";
   title?: ReactNode;
   children: ReactNode;
   className?: string;
@@ -51,7 +44,7 @@ const variantClasses = {
 
 export const Callout: FC<CalloutProps> = ({
   className,
-  variant = 'default',
+  variant = "default",
   title,
   children,
   icon,
@@ -67,11 +60,7 @@ export const Callout: FC<CalloutProps> = ({
 
   return (
     <aside
-      className={classNames(
-        className,
-        classes.wrapper,
-        variantClasses[variant],
-      )}
+      className={classNames(className, classes.wrapper, variantClasses[variant])}
       data-variant={variant}
       id={id}
     >
@@ -85,22 +74,14 @@ export const Callout: FC<CalloutProps> = ({
         {(primaryAction ?? secondaryAction) && (
           <div className={classes.actionWrapper}>
             {secondaryAction && (
-              <button
-                type='button'
-                onClick={secondaryAction}
-                className={classes.action}
-              >
-                {secondaryLabel ?? 'Click'}
+              <button type="button" onClick={secondaryAction} className={classes.action}>
+                {secondaryLabel ?? "Click"}
               </button>
             )}
 
             {primaryAction && (
-              <button
-                type='button'
-                onClick={primaryAction}
-                className={classes.action}
-              >
-                {primaryLabel ?? 'Click'}
+              <button type="button" onClick={primaryAction} className={classes.action}>
+                {primaryLabel ?? "Click"}
               </button>
             )}
           </div>
@@ -111,10 +92,10 @@ export const Callout: FC<CalloutProps> = ({
 
       {onClose && (
         <IconButton
-          icon='close'
+          icon="close"
           title={intl.formatMessage({
-            id: 'callout.dismiss',
-            defaultMessage: 'Dismiss',
+            id: "callout.dismiss",
+            defaultMessage: "Dismiss",
           })}
           iconComponent={CloseIcon}
           className={classes.close}
@@ -125,24 +106,21 @@ export const Callout: FC<CalloutProps> = ({
   );
 };
 
-const CalloutIcon: FC<Pick<CalloutProps, 'variant' | 'icon'>> = ({
-  variant = 'default',
-  icon,
-}) => {
+const CalloutIcon: FC<Pick<CalloutProps, "variant" | "icon">> = ({ variant = "default", icon }) => {
   if (icon === false) {
     return null;
   }
 
   if (!icon || icon === true) {
     switch (variant) {
-      case 'inverted':
-      case 'success':
+      case "inverted":
+      case "success":
         icon = CheckIcon;
         break;
-      case 'warning':
+      case "warning":
         icon = WarningIcon;
         break;
-      case 'error':
+      case "error":
         icon = ErrorIcon;
         break;
       default:

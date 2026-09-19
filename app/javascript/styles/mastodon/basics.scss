@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 html {
   color: var(--color-text-primary);
@@ -55,7 +55,7 @@ body {
 
   // Disable kerning for Japanese text to preserve monospaced alignment for readability
   &:not(:lang(ja)) {
-    font-feature-settings: 'kern';
+    font-feature-settings: "kern";
   }
 
   text-size-adjust: none;
@@ -78,13 +78,13 @@ body {
       system-ui,
       -apple-system,
       BlinkMacSystemFont,
-      'Segoe UI',
+      "Segoe UI",
       Oxygen,
       Ubuntu,
       Cantarell,
-      'Fira Sans',
-      'Droid Sans',
-      'Helvetica Neue',
+      "Fira Sans",
+      "Droid Sans",
+      "Helvetica Neue",
       $font-sans-serif,
       sans-serif;
   }

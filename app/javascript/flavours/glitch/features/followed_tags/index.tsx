@@ -1,27 +1,24 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from "react";
 
-import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl, FormattedMessage } from "react-intl";
 
-import { isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled } from "@reduxjs/toolkit";
 
-import { Helmet } from '@unhead/react/helmet';
+import { Helmet } from "@unhead/react/helmet";
 
-import TagIcon from '@/material-icons/400-24px/tag.svg?react';
-import {
-  fetchFollowedHashtags,
-  unfollowHashtag,
-} from 'flavours/glitch/actions/tags_typed';
-import type { ApiHashtagJSON } from 'flavours/glitch/api_types/tags';
-import { Button } from 'flavours/glitch/components/button';
-import { Column } from 'flavours/glitch/components/column';
-import type { ColumnRef } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
-import { Hashtag } from 'flavours/glitch/components/hashtag';
-import ScrollableList from 'flavours/glitch/components/scrollable_list';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+import TagIcon from "@/material-icons/400-24px/tag.svg?react";
+import { fetchFollowedHashtags, unfollowHashtag } from "flavours/glitch/actions/tags_typed";
+import type { ApiHashtagJSON } from "flavours/glitch/api_types/tags";
+import { Button } from "flavours/glitch/components/button";
+import { Column } from "flavours/glitch/components/column";
+import type { ColumnRef } from "flavours/glitch/components/column";
+import { ColumnHeader } from "flavours/glitch/components/column_header";
+import { Hashtag } from "flavours/glitch/components/hashtag";
+import ScrollableList from "flavours/glitch/components/scrollable_list";
+import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
 const messages = defineMessages({
-  heading: { id: 'followed_tags', defaultMessage: 'Followed hashtags' },
+  heading: { id: "followed_tags", defaultMessage: "Followed hashtags" },
 });
 
 const FollowedTag: React.FC<{
@@ -37,23 +34,16 @@ const FollowedTag: React.FC<{
         onUnfollow(tagId);
       }
 
-      return '';
+      return "";
     });
   }, [dispatch, onUnfollow, tagId]);
 
-  const people =
-    parseInt(tag.history[0].accounts) +
-    parseInt(tag.history[1]?.accounts ?? '');
+  const people = parseInt(tag.history[0].accounts) + parseInt(tag.history[1]?.accounts ?? "");
 
   return (
-    <Hashtag
-      name={tag.name}
-      to={`/tags/${tag.name}`}
-      withGraph={false}
-      people={people}
-    >
+    <Hashtag name={tag.name} to={`/tags/${tag.name}`} withGraph={false} people={people}>
       <Button onClick={handleClick}>
-        <FormattedMessage id='account.unfollow' defaultMessage='Unfollow' />
+        <FormattedMessage id="account.unfollow" defaultMessage="Unfollow" />
       </Button>
     </Hashtag>
   );
@@ -62,9 +52,7 @@ const FollowedTag: React.FC<{
 const FollowedTags: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const { tags, loading, next, stale } = useAppSelector(
-    (state) => state.followedTags,
-  );
+  const { tags, loading, next, stale } = useAppSelector((state) => state.followedTags);
   const hasMore = !!next;
 
   useEffect(() => {
@@ -93,8 +81,8 @@ const FollowedTags: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
 
   const emptyMessage = (
     <FormattedMessage
-      id='empty_column.followed_tags'
-      defaultMessage='You have not followed any hashtags yet. When you do, they will show up here.'
+      id="empty_column.followed_tags"
+      defaultMessage="You have not followed any hashtags yet. When you do, they will show up here."
     />
   );
 
@@ -105,7 +93,7 @@ const FollowedTags: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
       label={intl.formatMessage(messages.heading)}
     >
       <ColumnHeader
-        icon='hashtag'
+        icon="hashtag"
         iconComponent={TagIcon}
         title={intl.formatMessage(messages.heading)}
         onClick={handleHeaderClick}
@@ -114,7 +102,7 @@ const FollowedTags: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
       />
 
       <ScrollableList
-        scrollKey='followed_tags'
+        scrollKey="followed_tags"
         emptyMessage={emptyMessage}
         hasMore={hasMore}
         isLoading={loading}
@@ -130,7 +118,7 @@ const FollowedTags: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
 
       <Helmet>
         <title>{intl.formatMessage(messages.heading)}</title>
-        <meta name='robots' content='noindex' />
+        <meta name="robots" content="noindex" />
       </Helmet>
     </Column>
   );

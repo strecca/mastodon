@@ -1,17 +1,14 @@
-import { useId } from 'react';
+import { useId } from "react";
 
-import type { ApiCollectionJSON } from '@/flavours/glitch/api_types/collections';
-import { Toggle } from '@/flavours/glitch/components/form_fields';
-import {
-  ListItemContent,
-  ListItemWrapper,
-} from '@/flavours/glitch/components/list_item';
+import type { ApiCollectionJSON } from "@/flavours/glitch/api_types/collections";
+import { Toggle } from "@/flavours/glitch/components/form_fields";
+import { ListItemContent, ListItemWrapper } from "@/flavours/glitch/components/list_item";
 import {
   AvatarGrid,
   CollectionInfo,
-} from 'flavours/glitch/features/collections/components/collection_lockup';
+} from "flavours/glitch/features/collections/components/collection_lockup";
 
-import classes from './collection_toggle.module.scss';
+import classes from "./collection_toggle.module.scss";
 
 export interface CollectionToggleProps {
   collection: ApiCollectionJSON;
@@ -53,7 +50,7 @@ export const CollectionToggle: React.FC<CollectionToggleProps> = ({
       }
     >
       <ListItemContent
-        as='label'
+        as="label"
         htmlFor={toggleId}
         subtitle={
           subtitle ?? (

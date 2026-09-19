@@ -1,33 +1,29 @@
-import type { ComponentPropsWithoutRef, FC } from 'react';
+import type { ComponentPropsWithoutRef, FC } from "react";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { AnimateEmojiProvider } from '../emoji/context';
-import { EmojiHTML } from '../emoji/html';
-import { Skeleton } from '../skeleton';
+import { AnimateEmojiProvider } from "../emoji/context";
+import { EmojiHTML } from "../emoji/html";
+import { Skeleton } from "../skeleton";
 
-import type { DisplayNameProps } from './index';
+import type { DisplayNameProps } from "./index";
 
 export const DisplayNameWithoutDomain: FC<
-  Omit<DisplayNameProps, 'variant'> & ComponentPropsWithoutRef<'span'>
+  Omit<DisplayNameProps, "variant"> & ComponentPropsWithoutRef<"span">
 > = ({ account, className, children, localDomain: _, ...props }) => {
   return (
-    <AnimateEmojiProvider
-      {...props}
-      as='span'
-      className={classNames('display-name', className)}
-    >
+    <AnimateEmojiProvider {...props} as="span" className={classNames("display-name", className)}>
       <bdi>
         {account ? (
           <EmojiHTML
-            className='display-name__html'
-            htmlString={account.get('display_name_html')}
-            as='strong'
-            extraEmojis={account.get('emojis')}
+            className="display-name__html"
+            htmlString={account.get("display_name_html")}
+            as="strong"
+            extraEmojis={account.get("emojis")}
           />
         ) : (
-          <strong className='display-name__html'>
-            <Skeleton width='10ch' />
+          <strong className="display-name__html">
+            <Skeleton width="10ch" />
           </strong>
         )}
       </bdi>

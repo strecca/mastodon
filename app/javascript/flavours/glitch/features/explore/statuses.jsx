@@ -1,30 +1,28 @@
-import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import PropTypes from "prop-types";
+import { PureComponent } from "react";
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
+import ImmutablePropTypes from "react-immutable-proptypes";
+import { connect } from "react-redux";
 
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 
+import { fetchTrendingStatuses, expandTrendingStatuses } from "flavours/glitch/actions/trends";
+import { DismissableBanner } from "flavours/glitch/components/dismissable_banner";
+import StatusList from "flavours/glitch/components/status_list";
+import { getStatusList } from "flavours/glitch/selectors";
+import { WithRouterPropTypes } from "flavours/glitch/utils/react_router";
 
-import { fetchTrendingStatuses, expandTrendingStatuses } from 'flavours/glitch/actions/trends';
-import { DismissableBanner } from 'flavours/glitch/components/dismissable_banner';
-import StatusList from 'flavours/glitch/components/status_list';
-import { getStatusList } from 'flavours/glitch/selectors';
-import { WithRouterPropTypes } from 'flavours/glitch/utils/react_router';
-
-const mapStateToProps = state => ({
-  statusIds: getStatusList(state, 'trending'),
-  isLoading: state.getIn(['status_lists', 'trending', 'isLoading'], true),
-  hasMore: !!state.getIn(['status_lists', 'trending', 'next']),
+const mapStateToProps = (state) => ({
+  statusIds: getStatusList(state, "trending"),
+  isLoading: state.getIn(["status_lists", "trending", "isLoading"], true),
+  hasMore: !!state.getIn(["status_lists", "trending", "next"]),
 });
 
 class Statuses extends PureComponent {
-
   static propTypes = {
     statusIds: ImmutablePropTypes.list,
     isLoading: PropTypes.bool,
@@ -34,34 +32,43 @@ class Statuses extends PureComponent {
     ...WithRouterPropTypes,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     const { dispatch, statusIds, history } = this.props;
 
     // If we're navigating back to the screen, do not trigger a reload
-    if (history.action === 'POP' && statusIds.size > 0) {
+    if (history.action === "POP" && statusIds.size > 0) {
       return;
     }
 
     dispatch(fetchTrendingStatuses());
   }
 
-  handleLoadMore = debounce(() => {
-    const { dispatch } = this.props;
-    dispatch(expandTrendingStatuses());
-  }, 300, { leading: true });
+  handleLoadMore = debounce(
+    () => {
+      const { dispatch } = this.props;
+      dispatch(expandTrendingStatuses());
+    },
+    300,
+    { leading: true },
+  );
 
-  render () {
+  render() {
     const { isLoading, hasMore, statusIds, multiColumn } = this.props;
 
-    const emptyMessage = <FormattedMessage id='empty_column.explore_statuses' defaultMessage='Nothing is trending right now. Check back later!' />;
+    const emptyMessage = (
+      <FormattedMessage
+        id="empty_column.explore_statuses"
+        defaultMessage="Nothing is trending right now. Check back later!"
+      />
+    );
 
     return (
       <StatusList
         trackScroll
         alwaysPrepend
-        timelineId='explore'
+        timelineId="explore"
         statusIds={statusIds}
-        scrollKey='explore-statuses'
+        scrollKey="explore-statuses"
         hasMore={hasMore}
         isLoading={isLoading}
         onLoadMore={this.handleLoadMore}
@@ -71,7 +78,6 @@ class Statuses extends PureComponent {
       />
     );
   }
-
 }
 
 export default connect(mapStateToProps)(withRouter(Statuses));
