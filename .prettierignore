@@ -12,3 +12,11 @@ config/email.yml
 # unclear environment-specific reasons. Not meant to be hand-formatted
 # either way.
 .storybook/static/mockServiceWorker.js
+
+# This fork's own translation overrides, governed by bin/i18n-tasks
+# normalize (single-quoted strings) -- oxfmt wants double quotes for the
+# same lines, and the two fight forever if both are allowed to touch it.
+# i18n-tasks is the domain-correct tool for Rails locale YAML; config/locales/
+# (upstream's own shipped translations) isn't governed by i18n-tasks the same
+# way and isn't affected by this conflict.
+config/locales-glitch/
