@@ -13,9 +13,7 @@
       "expires_at": null,
       "context": ["home", "notifications", "public"],
       "action": "warn",
-      "keywords_attributes": [
-        { "keyword": "more words let's see ", "whole_word": true }
-      ],
+      "keywords_attributes": [{ "keyword": "more words let's see ", "whole_word": true }],
       "statuses": []
     },
     {
@@ -23,9 +21,7 @@
       "expires_at": null,
       "context": ["public", "account"],
       "action": "warn",
-      "keywords_attributes": [
-        { "keyword": "something something", "whole_word": true }
-      ],
+      "keywords_attributes": [{ "keyword": "something something", "whole_word": true }],
       "statuses": []
     }
   ]

@@ -65,16 +65,7 @@
           "type": "array",
           "minItems": 0,
           "items": {
-            "enum": [
-              "atom1.0",
-              "gnusocial",
-              "imap",
-              "pnut",
-              "pop3",
-              "pumpio",
-              "rss2.0",
-              "twitter"
-            ]
+            "enum": ["atom1.0", "gnusocial", "imap", "pnut", "pop3", "pumpio", "rss2.0", "twitter"]
           }
         },
         "outbound": {
