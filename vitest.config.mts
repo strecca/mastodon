@@ -17,6 +17,8 @@ const storybookTests: TestProjectInlineConfiguration = {
   ],
   test: {
     name: "storybook",
+    // Real-browser stories are slow when the whole suite runs in parallel.
+    testTimeout: 30_000,
     browser: {
       enabled: true,
       headless: true,

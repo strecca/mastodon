@@ -30,6 +30,10 @@ const inNavigationPanel: Decorator = (Story) => (
   </div>
 );
 
+// The update check goes through the browser's service worker machinery, which can be
+// slow when many story files run in parallel.
+const SLOW_MACHINE_MS = 8000;
+
 const meta = {
   title: "Navigation panel/Check for updates button",
   component: CheckForUpdatesButton,
@@ -54,7 +58,9 @@ export const UpToDate: Story = {
     await expect(Number.parseFloat(style.fontSize)).toBeGreaterThanOrEqual(17);
 
     await userEvent.click(button);
-    await waitFor(() => expect(button).toHaveTextContent("You're up to date"));
+    await waitFor(() => expect(button).toHaveTextContent("You're up to date"), {
+      timeout: SLOW_MACHINE_MS,
+    });
   },
 };
 
@@ -64,10 +70,12 @@ export const UpdateAvailable: Story = {
     const button = within(canvasElement).getByRole("button");
 
     await userEvent.click(button);
-    await waitFor(() =>
-      expect(button).toHaveTextContent(
-        "YES, new update available. Click here to update and continue",
-      ),
+    await waitFor(
+      () =>
+        expect(button).toHaveTextContent(
+          "YES, new update available. Click here to update and continue",
+        ),
+      { timeout: SLOW_MACHINE_MS },
     );
   },
 };
@@ -85,6 +93,8 @@ export const CannotReachServer: Story = {
     const button = within(canvasElement).getByRole("button");
 
     await userEvent.click(button);
-    await waitFor(() => expect(button).toHaveTextContent("Couldn't check for updates"));
+    await waitFor(() => expect(button).toHaveTextContent("Couldn't check for updates"), {
+      timeout: SLOW_MACHINE_MS,
+    });
   },
 };

@@ -16,6 +16,8 @@ import {
   importLegacyShortcodes,
   importEmojiData,
 } from "@/mastodon/features/emoji/loader";
+import { IdentityContext as GlitchIdentityContext } from "@/flavours/glitch/identity_context";
+import { reducerWithInitialState as glitchReducerWithInitialState } from "@/flavours/glitch/reducers";
 import { IdentityContext } from "@/mastodon/identity_context";
 import type { LocaleData } from "@/mastodon/locales";
 import { reducerWithInitialState } from "@/mastodon/reducers";
@@ -80,7 +82,7 @@ const preview: Preview = {
     loggedIn: "true",
   },
   decorators: [
-    (Story, { parameters, globals, args, argTypes }) => {
+    (Story, { parameters, globals, args, argTypes, title }) => {
       // Get the locale from the global toolbar
       // and merge it with any parameters or args state.
       const { locale } = globals as { locale: string };
@@ -114,7 +116,13 @@ const preview: Preview = {
           )(args) ?? {};
       }
 
-      const reducer = reducerWithInitialState(
+      // Glitch components read glitch-only state (e.g. `local_settings`), which the
+      // vanilla reducers don't have, so glitch stories get glitch's own reducers.
+      const createReducer = (
+        title.startsWith("Glitch/") ? glitchReducerWithInitialState : reducerWithInitialState
+      ) as typeof reducerWithInitialState;
+
+      const reducer = createReducer(
         {
           meta: {
             locale,
@@ -187,16 +195,19 @@ const preview: Preview = {
     ),
     (Story, { globals }) => {
       const signedIn = globals.loggedIn !== "false";
+      const identity = {
+        signedIn,
+        accountId: signedIn ? "123" : undefined,
+        disabledAccountId: undefined,
+        permissions: 0,
+      };
+      // Each flavour has its own context object; provide both so a story works
+      // whichever one its components read.
       return (
-        <IdentityContext.Provider
-          value={{
-            signedIn,
-            accountId: signedIn ? "123" : undefined,
-            disabledAccountId: undefined,
-            permissions: 0,
-          }}
-        >
-          <Story />
+        <IdentityContext.Provider value={identity}>
+          <GlitchIdentityContext.Provider value={identity}>
+            <Story />
+          </GlitchIdentityContext.Provider>
         </IdentityContext.Provider>
       );
     },
@@ -208,10 +219,15 @@ const preview: Preview = {
     },
   ],
   loaders: [
-    mswLoader,
-    importCustomEmojiData,
-    importLegacyShortcodes,
-    ({ globals: { locale } }) => importEmojiData(locale),
+    // Storybook runs loaders in parallel, but the emoji loaders fetch from the mocked
+    // API, so MSW must be ready first. Otherwise, on a busy machine, they race it and
+    // fail with "Failed to fetch emoji data ... Not Found".
+    async (context) => {
+      await mswLoader(context);
+      await importCustomEmojiData();
+      await importLegacyShortcodes();
+      await importEmojiData(context.globals.locale);
+    },
   ],
   parameters: {
     layout: "centered",

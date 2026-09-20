@@ -1,5 +1,6 @@
-import { Map as ImmutableMap, List } from "immutable";
+import { fromJS } from "immutable";
 
+import { normalizeStatus } from "@/mastodon/actions/importer/normalizer";
 import type { ApiRelationshipJSON } from "@/mastodon/api_types/relationships";
 import type { ApiStatusJSON } from "@/mastodon/api_types/statuses";
 import type { CustomEmojiData, UnicodeEmojiData } from "@/mastodon/features/emoji/types";
@@ -80,12 +81,28 @@ export const statusFactory: FactoryFunction<ApiStatusJSON> = ({ id, ...data } = 
   ...data,
 });
 
-export const statusFactoryState = (options: FactoryOptions<ApiStatusJSON> = {}) =>
-  ImmutableMap<string, unknown>({
-    ...(statusFactory(options) as unknown as Record<string, unknown>),
-    account: options.account?.id ?? "1",
-    tags: List(options.tags),
-  }) as unknown as Status;
+// Builds a status the way the app's reducers store it: the API-shaped JSON goes
+// through the real importer normalizer (which adds contentHtml, spoilerHtml,
+// search_index, hidden, ...) and is then converted to Immutable structures.
+// Components read those derived fields, so a hand-rolled Map is always missing
+// something.
+export const statusFactoryState = (options: FactoryOptions<ApiStatusJSON> = {}) => {
+  const status = statusFactory(options);
+
+  const normalized = normalizeStatus(
+    {
+      ...status,
+      content: status.content ?? (status as { contentHtml?: string }).contentHtml,
+      spoiler_text: status.spoiler_text ?? "",
+      // Sent by the server; the status importer and components read it.
+      tagged_collections: [],
+    },
+    null,
+    {},
+  ) as Record<string, unknown>;
+
+  return fromJS(normalized) as unknown as Status;
+};
 
 export const relationshipsFactory: FactoryFunction<ApiRelationshipJSON> = ({
   id,
