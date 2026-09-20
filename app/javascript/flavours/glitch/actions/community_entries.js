@@ -61,23 +61,27 @@ export const fetchEntries =
 
 // ── Fetch single entry ────────────────────────────────────────
 
-export const fetchEntry = (categoryKey, apiEndpoint, id) => (dispatch) => {
-  const t = types(categoryKey);
-  dispatch({ type: t.FETCH_ONE_REQUEST, categoryKey });
+// `silent` refreshes the entry already on screen in place (no spinner, no
+// blanking) -- used by live refresh. A 404 still clears it ("removed").
+export const fetchEntry =
+  (categoryKey, apiEndpoint, id, { silent = false } = {}) =>
+  (dispatch) => {
+    const t = types(categoryKey);
+    if (!silent) dispatch({ type: t.FETCH_ONE_REQUEST, categoryKey });
 
-  api()
-    .get(`${apiEndpoint}/${id}`)
-    .then((response) => {
-      dispatch({
-        type: t.FETCH_ONE_SUCCESS,
-        categoryKey,
-        entry: response.data,
+    api()
+      .get(`${apiEndpoint}/${id}`)
+      .then((response) => {
+        dispatch({
+          type: t.FETCH_ONE_SUCCESS,
+          categoryKey,
+          entry: response.data,
+        });
+      })
+      .catch((error) => {
+        dispatch({ type: t.FETCH_ONE_FAIL, categoryKey, error });
       });
-    })
-    .catch((error) => {
-      dispatch({ type: t.FETCH_ONE_FAIL, categoryKey, error });
-    });
-};
+  };
 
 // ── Create entry ──────────────────────────────────────────────
 

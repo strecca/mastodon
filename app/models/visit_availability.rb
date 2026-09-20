@@ -19,6 +19,10 @@
 #  fk_rails_...  (community_visit_id => community_visits.id)
 #
 class VisitAvailability < ApplicationRecord
+  include CommunityLiveRefresh
+
+  community_live_refresh 'visits'
+
   belongs_to :community_visit
 
   enum :kind, {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,7 @@ import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
 import api from "flavours/glitch/api";
 import { useIdentity } from "flavours/glitch/identity_context";
 import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 
 const MemberStoriesList = ({ multiColumn }) => {
   const { signedIn } = useIdentity();
@@ -20,13 +21,19 @@ const MemberStoriesList = ({ multiColumn }) => {
   const [loading, setLoading] = useState(true);
   const [hasOwnStory, setHasOwnStory] = useState(null);
 
-  useEffect(() => {
+  const loadStories = useCallback(() => {
     api()
       .get("/api/v1/civezza_member_stories")
       .then((res) => setStories(res.data || []))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    loadStories();
+  }, [loadStories]);
+
+  useCommunityLiveRefresh("stories", loadStories);
 
   useEffect(() => {
     if (!signedIn) return;

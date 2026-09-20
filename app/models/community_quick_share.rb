@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class CommunityQuickShare < ApplicationRecord
+  include CommunityLiveRefresh
+
+  community_live_refresh 'quick_shares'
+
   belongs_to :account
 
   validates :caption, presence: true

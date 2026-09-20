@@ -7,6 +7,7 @@ import { Column } from "flavours/glitch/components/column";
 import { ColumnHeader } from "flavours/glitch/components/column_header";
 import { withIdentity } from "flavours/glitch/identity_context";
 import api from "flavours/glitch/api";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 
 const QuickShareShow = ({ identity, multiColumn }) => {
   const { slug } = useParams();
@@ -33,6 +34,8 @@ const QuickShareShow = ({ identity, multiColumn }) => {
   useEffect(() => {
     fetchShare();
   }, [fetchShare]);
+
+  useCommunityLiveRefresh("quick_shares", fetchShare);
 
   const handleShareAsPost = useCallback(async () => {
     if (!postText.trim()) {

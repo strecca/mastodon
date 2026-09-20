@@ -15,6 +15,7 @@ import { identityContextPropShape, withIdentity } from "flavours/glitch/identity
 import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 
 import { fetchEntries } from "flavours/glitch/actions/community_entries";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 
 import { CategoryBannerLink } from "./category_banner_link";
 import { EntryCard } from "./entry_card";
@@ -95,6 +96,12 @@ const EntryListInner = ({ config, multiColumn, identity }) => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, [dispatch, categoryKey, apiEndpoint, query, sort]);
+
+  const refreshEntries = useCallback(() => {
+    dispatch(fetchEntries(categoryKey, apiEndpoint, query, 1, sort));
+  }, [dispatch, categoryKey, apiEndpoint, query, sort]);
+
+  useCommunityLiveRefresh(categoryKey, refreshEntries);
 
   const handleQueryChange = useCallback((newQuery) => {
     setQuery(newQuery);

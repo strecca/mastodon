@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class CommunityListing < ApplicationRecord
+  include CommunityLiveRefresh
+
+  community_live_refresh 'listings'
+
   belongs_to :account
 
   has_many :community_listing_interests, dependent: :destroy

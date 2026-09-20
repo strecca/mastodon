@@ -11,8 +11,7 @@ import { ColumnHeader } from "flavours/glitch/components/column_header";
 import { useIdentity } from "flavours/glitch/identity_context";
 import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
 import { CategoryBannerLink } from "flavours/glitch/components/community_directory/category_banner_link";
-import { useAppDispatch } from "flavours/glitch/store";
-import { connectStream } from "flavours/glitch/stream";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 import api from "flavours/glitch/api";
 import AddIcon from "@/material-icons/400-24px/add.svg?react";
 import CelebrationIcon from "@/material-icons/400-24px/celebration.svg?react";
@@ -496,7 +495,6 @@ const CommunityEvents = ({ multiColumn }) => {
   const intl = useIntl();
   const { signedIn, accountId } = useIdentity();
   const sc = useSiteContent();
-  const dispatch = useAppDispatch();
 
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -537,8 +535,8 @@ const CommunityEvents = ({ multiColumn }) => {
     [intl.locale],
   ); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const loadEvents = useCallback(() => {
-    setLoading(true);
+  const loadEvents = useCallback((silent = false) => {
+    if (!silent) setLoading(true);
     api()
       .get("/api/v1/community_events", { params: { per_page: 200 } })
       .then((res) => {
@@ -552,19 +550,8 @@ const CommunityEvents = ({ multiColumn }) => {
     loadEvents();
   }, [loadEvents]);
 
-  useEffect(() => {
-    if (!signedIn) return;
-    const disconnect = dispatch(
-      connectStream("community:events", {}, () => ({
-        onConnect() {},
-        onDisconnect() {},
-        onReceive(data) {
-          if (data.event === "refresh") loadEvents();
-        },
-      })),
-    );
-    return disconnect;
-  }, [dispatch, signedIn, loadEvents]);
+  const refreshEvents = useCallback(() => loadEvents(true), [loadEvents]);
+  useCommunityLiveRefresh("events", refreshEvents);
 
   // Auto-navigate calendar when a date-range chip is selected
   useEffect(() => {

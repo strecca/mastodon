@@ -98,7 +98,8 @@ export default function communityEntriesReducer(state = initialState, action) {
       }
       return state
         .setIn([categoryKey, "currentEntryLoading"], false)
-        .setIn([categoryKey, "error"], oneMsg);
+        .setIn([categoryKey, "error"], oneMsg)
+        .update(categoryKey, (cat) => (oneStatus === 404 ? cat.set("currentEntry", null) : cat));
     }
 
     case "CLEAR_CURRENT":

@@ -26,6 +26,10 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class CommunityVisit < ApplicationRecord
+  include CommunityLiveRefresh
+
+  community_live_refresh 'visits'
+
   belongs_to :account
   has_many :visit_availabilities, dependent: :destroy
   has_many :visit_notifications, class_name: 'CommunityVisitNotification',

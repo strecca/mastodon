@@ -131,6 +131,10 @@ const CHANNEL_NAMES = [
   "hashtag:local",
 ];
 
+// Community pages stream a bare refresh signal on "community:<category key>".
+const COMMUNITY_CHANNEL_PATTERN = /^community:[a-z][a-z0-9_]{0,39}$/;
+const COMMUNITY_PATH_PATTERN = /^\/api\/v1\/streaming\/community\/([a-z][a-z0-9_]{0,39})$/;
+
 const startServer = async () => {
   const pgConfig = Database.configFromEnv(process.env, environment);
   const pgPool = Database.getPool(pgConfig, environment, logger);
@@ -473,12 +477,10 @@ const startServer = async () => {
         return "direct";
       case "/api/v1/streaming/list":
         return "list";
-      case "/api/v1/streaming/community/listings":
-        return "community:listings";
-      case "/api/v1/streaming/community/events":
-        return "community:events";
-      default:
-        return undefined;
+      default: {
+        const communityKey = COMMUNITY_PATH_PATTERN.exec(path)?.[1];
+        return communityKey ? `community:${communityKey}` : undefined;
+      }
     }
   };
 
@@ -1308,20 +1310,18 @@ const startServer = async () => {
             });
 
           break;
-        case "community:listings":
-          resolve({
-            channelIds: ["timeline:community:listings"],
-            options: { needsFiltering: false, allowLocalOnly: true },
-          });
-          break;
-        case "community:events":
-          resolve({
-            channelIds: ["timeline:community:events"],
-            options: { needsFiltering: false, allowLocalOnly: true },
-          });
-          break;
         default:
-          reject(new RequestError("Unknown stream type"));
+          // Community pages (listings, events, artists, ... and any generated
+          // category): the channel only ever carries a bare { event: "refresh" }
+          // signal, never data, so the category key just has to be well-formed.
+          if (COMMUNITY_CHANNEL_PATTERN.test(name)) {
+            resolve({
+              channelIds: [`timeline:${name}`],
+              options: { needsFiltering: false, allowLocalOnly: true },
+            });
+          } else {
+            reject(new RequestError("Unknown stream type"));
+          }
       }
     });
 

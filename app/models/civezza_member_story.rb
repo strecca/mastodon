@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class CivezzaMemberStory < ApplicationRecord
+  include CommunityLiveRefresh
+
+  community_live_refresh 'stories'
+
   belongs_to :account
 
   validates :account_id, uniqueness: true

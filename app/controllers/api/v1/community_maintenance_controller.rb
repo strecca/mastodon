@@ -48,6 +48,8 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
     before = parse_date(params[:before]) || Date.current
     count  = CommunityEvent.where('event_date < ?', before).count
     CommunityEvent.where('event_date < ?', before).delete_all
+    Rails.cache.increment('community:events:list:v')
+    CommunityDirectoryRefreshWorker.schedule('community:events')
     render json: { deleted: count, type: 'past_events' }
   end
 
@@ -62,6 +64,7 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
     scope = CommunityListing.where(status: statuses).where('updated_at < ?', cutoff)
     count = scope.count
     scope.delete_all
+    CommunityDirectoryRefreshWorker.schedule('community:listings')
     render json: { deleted: count, type: 'stale_listings' }
   end
 
@@ -71,6 +74,7 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
     before = parse_date(params[:before]) || Date.current
     count  = CommunityVisit.where('departure_date < ?', before).count
     CommunityVisit.where('departure_date < ?', before).delete_all
+    CommunityDirectoryRefreshWorker.schedule('community:visits')
     render json: { deleted: count, type: 'past_visits' }
   end
 

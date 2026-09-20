@@ -19,19 +19,8 @@ export const LISTING_INTEREST_REMOVE = "COMMUNITY_LISTINGS/INTEREST_REMOVE";
 
 // ── List ───────────────────────────────────────────────────────────────────────
 
-// Fetches all listings unfiltered. Only dispatched when !loaded so navigation
-// back to the list page is instant without a network round-trip.
-export const fetchListings = () => (dispatch, getState) => {
-  if (getState().getIn(["community_listings", "loaded"])) return Promise.resolve();
-
-  dispatch({ type: LISTINGS_FETCH_REQUEST });
-  return api()
-    .get("/api/v1/community_listings")
-    .then((res) => dispatch({ type: LISTINGS_FETCH_SUCCESS, listings: res.data }))
-    .catch((err) => dispatch({ type: LISTINGS_FETCH_FAIL, error: err }));
-};
-
-// Force-refresh regardless of loaded state (e.g. after create/delete)
+// Fetches all listings unfiltered, always from the server. The list page shows
+// what is already loaded straight away and calls this to bring it up to date.
 export const refreshListings = () => (dispatch) => {
   dispatch({ type: LISTINGS_FETCH_REQUEST });
   return api()
@@ -49,6 +38,18 @@ export const fetchListing = (id) => (dispatch, getState) => {
     .get(`/api/v1/community_listings/${id}`)
     .then((res) => dispatch({ type: LISTING_FETCH_SUCCESS, listing: res.data }));
 };
+
+// Re-fetch a listing that is already on screen, in place. A 404 means the
+// owner deleted it, so drop it from the store and the page shows "not found".
+export const revalidateListing = (id) => (dispatch) =>
+  api()
+    .get(`/api/v1/community_listings/${id}`)
+    .then((res) => dispatch({ type: LISTING_FETCH_SUCCESS, listing: res.data }))
+    .catch((err) => {
+      if (err?.response?.status === 404) {
+        dispatch({ type: LISTING_DELETE_SUCCESS, id: String(id) });
+      }
+    });
 
 // Force-fetch a single listing (used after interest queue actions)
 export const refreshListing = (id) => (dispatch) =>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 import { Link, useHistory } from "react-router-dom";
 
@@ -19,12 +19,14 @@ import { directCompose } from "flavours/glitch/actions/compose";
 import {
   fetchListing,
   refreshListing,
+  revalidateListing,
   deleteListing,
   fulfillListing,
   closeListing,
   addInterest,
   removeInterest,
 } from "flavours/glitch/actions/community_listings";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 import { TYPE_LABELS, STATUS_LABELS, CONDITION_LABELS, listingOptionLabel } from "../option_labels";
 
 const fmtDate = (iso) =>
@@ -202,6 +204,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
   const id = String(params?.id);
   const cached = useAppSelector((s) => s.getIn(["community_listings", "byId", id]));
 
+  const hadCacheOnOpen = useRef(!!cached);
   const [loading, setLoading] = useState(!cached);
   const [showInterest, setShowInterest] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
@@ -211,6 +214,18 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
     setLoading(true);
     dispatch(fetchListing(id)).finally(() => setLoading(false));
   }, [dispatch, id, cached]);
+
+  const revalidate = useCallback(() => {
+    dispatch(revalidateListing(id));
+  }, [dispatch, id]);
+
+  // A listing opened from the list is shown from memory at once; check it is
+  // still current. (Not cached = the fetch above already got the latest.)
+  useEffect(() => {
+    if (hadCacheOnOpen.current) revalidate();
+  }, [revalidate]);
+
+  useCommunityLiveRefresh("listings", revalidate);
 
   const listing = cached?.toJS();
 

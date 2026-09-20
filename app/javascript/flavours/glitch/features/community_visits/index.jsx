@@ -9,6 +9,7 @@ import { ColumnHeader } from "flavours/glitch/components/column_header";
 import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 import { useIdentity } from "flavours/glitch/identity_context";
 import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 import { CategoryBannerLink } from "flavours/glitch/components/community_directory/category_banner_link";
 import {
   fetchVisits,
@@ -471,6 +472,16 @@ const CommunityVisits = ({ multiColumn }) => {
     dispatch(fetchVisits(from, to));
     dispatch(fetchHeatmap());
   }, [dispatch, year, month]);
+
+  const refreshVisits = useCallback(() => {
+    const from = isoDate(new Date(year, month, 1));
+    const to = isoDate(new Date(year, month + 1, 0));
+    dispatch(fetchVisits(from, to));
+    dispatch(fetchHeatmap()).catch(() => {});
+    if (signedIn) dispatch(fetchMyVisits()).catch(() => {});
+  }, [dispatch, year, month, signedIn]);
+
+  useCommunityLiveRefresh("visits", refreshVisits);
 
   useEffect(() => {
     if (!signedIn) return;

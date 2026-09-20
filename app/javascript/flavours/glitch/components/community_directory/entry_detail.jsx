@@ -83,6 +83,12 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
     return () => dispatch(clearCurrentEntry(categoryKey));
   }, [dispatch, categoryKey, apiEndpoint, entryId]);
 
+  const refreshEntry = useCallback(() => {
+    if (entryId) dispatch(fetchEntry(categoryKey, apiEndpoint, entryId, { silent: true }));
+  }, [dispatch, categoryKey, apiEndpoint, entryId]);
+
+  useCommunityLiveRefresh(categoryKey, refreshEntry);
+
   const { signedIn } = identity;
   const isAdmin = !!(identity.permissions & 0x1);
 

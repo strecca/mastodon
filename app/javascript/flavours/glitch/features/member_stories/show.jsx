@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { Helmet } from "@unhead/react/helmet";
 
 import { useViewingLocale } from "flavours/glitch/hooks/useViewingLocale";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 
 import { Column } from "flavours/glitch/components/column";
 import { ColumnHeader } from "flavours/glitch/components/column_header";
@@ -93,16 +94,25 @@ const MemberStoriesShow = ({ multiColumn, params }) => {
   const [lightbox, setLightbox] = useState(null); // null = closed, 0/1/2 = open
   const [hasOwnStory, setHasOwnStory] = useState(null);
 
-  useEffect(() => {
+  const loadStory = useCallback(() => {
     if (!accountId) return;
     api()
       .get(`/api/v1/civezza_member_stories/${accountId}`)
-      .then((res) => setStory(res.data))
+      .then((res) => {
+        setStory(res.data);
+        setNotFound(false);
+      })
       .catch((err) => {
         if (err.response?.status === 404) setNotFound(true);
       })
       .finally(() => setLoading(false));
   }, [accountId]);
+
+  useEffect(() => {
+    loadStory();
+  }, [loadStory]);
+
+  useCommunityLiveRefresh("stories", loadStory);
 
   useEffect(() => {
     if (!signedIn) return;

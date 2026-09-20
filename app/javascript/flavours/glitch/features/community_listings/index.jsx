@@ -12,8 +12,8 @@ import { useIdentity } from "flavours/glitch/identity_context";
 import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
 import { CategoryBannerLink } from "flavours/glitch/components/community_directory/category_banner_link";
 import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
-import { fetchListings } from "flavours/glitch/actions/community_listings";
-import { connectStream } from "flavours/glitch/stream";
+import { refreshListings } from "flavours/glitch/actions/community_listings";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 
 import { ListingCard } from "./components/listing_card";
 
@@ -39,23 +39,15 @@ const CommunityListings = ({ multiColumn }) => {
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
 
-  useEffect(() => {
-    dispatch(fetchListings());
+  const refresh = useCallback(() => {
+    dispatch(refreshListings());
   }, [dispatch]);
 
   useEffect(() => {
-    if (!signedIn) return;
-    const disconnect = dispatch(
-      connectStream("community:listings", {}, (innerDispatch) => ({
-        onConnect() {},
-        onDisconnect() {},
-        onReceive(data) {
-          if (data.event === "refresh") innerDispatch(fetchListings());
-        },
-      })),
-    );
-    return disconnect;
-  }, [dispatch, signedIn]);
+    refresh();
+  }, [refresh]);
+
+  useCommunityLiveRefresh("listings", refresh);
 
   const handleSearch = useCallback(
     (e) => {

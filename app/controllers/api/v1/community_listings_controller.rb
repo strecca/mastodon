@@ -42,7 +42,6 @@ class Api::V1::CommunityListingsController < Api::BaseController
     if @listing.save
       CommunityTranslationWorker.perform_async('CommunityListing', @listing.id)
       CommunityEntryNotifyWorker.perform_async('new_entry', 'CommunityListing', @listing.id, 'listings')
-      CommunityDirectoryRefreshWorker.perform_in(30.seconds, 'community:listings')
       render json: serialize(@listing), status: :created
     else
       render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity
@@ -56,7 +55,6 @@ class Api::V1::CommunityListingsController < Api::BaseController
 
     if @listing.update(attrs)
       CommunityTranslationWorker.perform_async('CommunityListing', @listing.id)
-      CommunityDirectoryRefreshWorker.perform_in(30.seconds, 'community:listings')
       render json: serialize(@listing)
     else
       render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity

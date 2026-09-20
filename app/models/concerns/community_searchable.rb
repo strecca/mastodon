@@ -13,6 +13,9 @@ module CommunitySearchable
   SEARCHABLE_WIDGETS = %w[text textarea select radio url email].freeze
 
   included do
+    include CommunityLiveRefresh
+    community_live_refresh self::CATEGORY_KEY
+
     # Invalidate the list cache whenever status changes (e.g. moderation approve/reject)
     # or an entry is destroyed. Uses a version counter so one INCREMENT clears all
     # page/sort/query variants without a Redis SCAN.

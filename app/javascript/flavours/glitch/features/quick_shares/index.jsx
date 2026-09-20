@@ -7,6 +7,7 @@ import { Helmet } from "@unhead/react/helmet";
 import { Column } from "flavours/glitch/components/column";
 import { ColumnHeader } from "flavours/glitch/components/column_header";
 import api from "flavours/glitch/api";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 
 const formatDate = (iso) => {
   const d = new Date(iso);
@@ -19,12 +20,19 @@ const QuickShareIndex = ({ multiColumn }) => {
   const [query, setQuery] = useState("");
   const [excluded, setExcluded] = useState(() => new Set());
 
-  useEffect(() => {
+  const loadShares = useCallback(() => {
     api()
       .get("/api/v1/community_quick_shares")
       .then((res) => setShares(res.data))
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    loadShares();
+  }, [loadShares]);
+
+  useCommunityLiveRefresh("quick_shares", loadShares);
 
   const posters = useMemo(() => {
     const byUsername = new Map();
