@@ -20,6 +20,18 @@ const UPDATE_CHECK_INTERVAL = 5 * 60_000;
 // bursts; don't hit the network for each one.
 const MIN_RESUME_CHECK_GAP = 15_000;
 
+// A page that loaded with no service worker in control (a brand-new visitor's
+// first visit) gets claimed by the first worker a few seconds later, which also
+// fires "controllerchange". That is not an update, so it must not reload the
+// page. Captured at module load, before that claim can happen.
+const loadedUnderWorker = "serviceWorker" in navigator && !!navigator.serviceWorker.controller;
+
+const reloadIfWorkerSwapped = () => {
+  if (loadedUnderWorker) {
+    reloadOnce();
+  }
+};
+
 const messages = defineMessages({
   title: {
     id: "service_worker_update_notice.title",
@@ -125,7 +137,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
     // The new worker just activated and took control -- reload once to
     // actually run its code. Shared guard so a stray extra event (or the
     // button's own handler) can't loop.
-    navigator.serviceWorker.addEventListener("controllerchange", reloadOnce);
+    navigator.serviceWorker.addEventListener("controllerchange", reloadIfWorkerSwapped);
 
     // iOS throttles and freezes background pages, so don't depend on the
     // interval alone: re-check the moment the app wakes up (switching back
@@ -142,7 +154,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
     window.addEventListener("online", handleWake);
 
     return () => {
-      navigator.serviceWorker.removeEventListener("controllerchange", reloadOnce);
+      navigator.serviceWorker.removeEventListener("controllerchange", reloadIfWorkerSwapped);
       document.removeEventListener("visibilitychange", handleWake);
       window.removeEventListener("pageshow", handleWake);
       window.removeEventListener("focus", handleWake);
