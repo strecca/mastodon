@@ -17,10 +17,17 @@ const MIN_GAP_MS = 15_000;
  *    froze the page in the background never receives pushes, so this is what
  *    catches it up. It applies to signed-out visitors too.
  *
+ * Pass `{ stream: false }` for a page that already has its own live stream
+ * (the Live Posts timeline) and only needs the wake-up refresh.
+ *
  * Wake-up and reconnect refreshes are throttled to one per 15 seconds.
  * `refresh` should update data in place, without a loading spinner.
  */
-export function useCommunityLiveRefresh(channelKey: string, refresh: () => void) {
+export function useCommunityLiveRefresh(
+  channelKey: string,
+  refresh: () => void,
+  { stream = true }: { stream?: boolean } = {},
+) {
   const dispatch = useAppDispatch();
   const { signedIn } = useIdentity();
   const refreshRef = useRef(refresh);
@@ -58,7 +65,7 @@ export function useCommunityLiveRefresh(channelKey: string, refresh: () => void)
 
     let disconnect: (() => void) | undefined;
 
-    if (signedIn) {
+    if (signedIn && stream) {
       let connectedBefore = false;
 
       // connectStream is an untyped JS thunk creator that returns the disconnect function.
@@ -95,5 +102,5 @@ export function useCommunityLiveRefresh(channelKey: string, refresh: () => void)
       window.removeEventListener("online", onWake);
       disconnect?.();
     };
-  }, [dispatch, signedIn, channelKey]);
+  }, [dispatch, signedIn, channelKey, stream]);
 }

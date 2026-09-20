@@ -7,7 +7,7 @@ import { toServerSideType } from "flavours/glitch/utils/filters";
 
 import { importFetchedStatus, importFetchedStatuses } from "./importer";
 import { submitMarkers } from "./markers";
-import { timelineDelete } from "./timelines_typed";
+import { timelineDelete, isNonStatusId } from "./timelines_typed";
 
 export { disconnectTimeline } from "./timelines_typed";
 
@@ -179,6 +179,86 @@ export function expandTimeline(timelineId, path, params = {}) {
   };
 }
 
+const REFRESH_PAGE_SIZE = 20;
+
+// Reconcile the newest page of an already-loaded timeline with the server: drop
+// statuses that were deleted (or hidden) since they were loaded, update edited
+// ones in place, and pull in newer ones (`loadNewer` returns the thunk for that).
+//
+// Live "delete" events are fire-and-forget over a websocket, so a page that was
+// frozen or offline -- or a signed-out visitor, who has no stream at all --
+// never hears about deletions. Normal loading only ever asks for statuses
+// *newer* than the ones held, so nothing else would remove them.
+export function refreshTimeline(timelineId, path, params, loadNewer) {
+  return async (dispatch, getState) => {
+    const initial = getState().getIn(["timelines", timelineId]);
+
+    // Nothing loaded yet (or a load is running): the normal load covers it.
+    if (!initial || initial.get("isLoading")) {
+      return;
+    }
+
+    let page;
+
+    try {
+      const response = await api().get(path, { params: { ...params, limit: REFRESH_PAGE_SIZE } });
+      page = response.data;
+    } catch {
+      // Offline or the server hiccuped: keep what is on screen.
+      return;
+    }
+
+    // An empty answer is more likely a hiccup than a feed emptied of everything.
+    if (page.length === 0) {
+      return;
+    }
+
+    dispatch(importFetchedStatuses(page));
+
+    const timeline = getState().getIn(["timelines", timelineId], ImmutableMap());
+    const held = timeline
+      .get("items", ImmutableList())
+      .concat(timeline.get("pendingItems", ImmutableList()))
+      .filter((id) => !isNonStatusId(id));
+
+    const freshIds = new Set(page.map((status) => status.id));
+    const heldIds = new Set(held.toArray());
+
+    // Only statuses inside the range this page covers can be judged deleted:
+    // one newer than the page's newest entry may have just arrived over the live
+    // stream. A short page means the whole feed fit in it, so nothing older
+    // survives either; otherwise the page vouches only down to its oldest entry.
+    const newestFresh = page[0].id;
+    const oldestFresh = page[page.length - 1].id;
+    const coversAll = page.length < REFRESH_PAGE_SIZE;
+
+    held
+      .filter(
+        (id) =>
+          !freshIds.has(id) &&
+          compareId(id, newestFresh) <= 0 &&
+          (coversAll || compareId(id, oldestFresh) >= 0),
+      )
+      .forEach((id) => {
+        dispatch(deleteFromTimelines(id));
+      });
+
+    const newest = held.reduce(
+      (max, id) => (max === null || compareId(id, max) > 0 ? id : max),
+      null,
+    );
+
+    if (
+      page.some(
+        (status) =>
+          !heldIds.has(status.id) && (newest === null || compareId(status.id, newest) > 0),
+      )
+    ) {
+      dispatch(loadNewer());
+    }
+  };
+}
+
 export function fillTimelineGaps(timelineId, path, params = {}) {
   return async (dispatch, getState) => {
     const timeline = getState().getIn(["timelines", timelineId], ImmutableMap());
@@ -212,6 +292,13 @@ export const expandCommunityTimeline = ({ maxId, onlyMedia } = {}) =>
     max_id: maxId,
     only_media: !!onlyMedia,
   });
+export const refreshCommunityTimeline = ({ onlyMedia } = {}) =>
+  refreshTimeline(
+    `community${onlyMedia ? ":media" : ""}`,
+    "/api/v1/timelines/public",
+    { local: true, only_media: !!onlyMedia },
+    () => expandCommunityTimeline({ onlyMedia }),
+  );
 export const expandDirectTimeline = ({ maxId } = {}) =>
   expandTimeline("direct", "/api/v1/timelines/direct", { max_id: maxId });
 export const expandAccountTimeline = (accountId, { maxId, withReplies, tagged } = {}) =>

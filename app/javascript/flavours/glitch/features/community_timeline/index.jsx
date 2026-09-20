@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { PureComponent } from "react";
+import { PureComponent, useCallback } from "react";
 
 import { defineMessages, FormattedMessage } from "react-intl";
 
@@ -12,11 +12,13 @@ import { injectIntl } from "@/flavours/glitch/components/intl";
 import { DismissableBanner } from "flavours/glitch/components/dismissable_banner";
 import { identityContextPropShape, withIdentity } from "flavours/glitch/identity_context";
 import { domain, localLiveFeedAccess } from "flavours/glitch/initial_state";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 import { canViewFeed } from "flavours/glitch/permissions";
+import { useAppDispatch } from "flavours/glitch/store";
 
 import { addColumn, removeColumn, moveColumn } from "../../actions/columns";
 import { connectCommunityStream } from "../../actions/streaming";
-import { expandCommunityTimeline } from "../../actions/timelines";
+import { expandCommunityTimeline, refreshCommunityTimeline } from "../../actions/timelines";
 import Column from "../../components/column";
 import ColumnHeader from "../../components/column_header";
 import StatusListContainer from "../ui/containers/status_list_container";
@@ -46,6 +48,23 @@ const mapStateToProps = (state, { columnId }) => {
     onlyMedia,
     regex,
   };
+};
+
+// Catches the feed up when the app returns to the foreground: adds new posts and
+// removes posts deleted meanwhile. Works signed out too (no stream needed).
+const WakeRefresh = ({ onlyMedia }) => {
+  const dispatch = useAppDispatch();
+  const refresh = useCallback(() => {
+    dispatch(refreshCommunityTimeline({ onlyMedia }));
+  }, [dispatch, onlyMedia]);
+
+  useCommunityLiveRefresh(`live_posts${onlyMedia ? "_media" : ""}`, refresh, { stream: false });
+
+  return null;
+};
+
+WakeRefresh.propTypes = {
+  onlyMedia: PropTypes.bool,
 };
 
 class CommunityTimeline extends PureComponent {
@@ -184,6 +203,8 @@ class CommunityTimeline extends PureComponent {
           bindToDocument={!multiColumn}
           regex={this.props.regex}
         />
+
+        <WakeRefresh onlyMedia={onlyMedia} />
 
         <Helmet>
           <title>{intl.formatMessage(messages.title)}</title>
