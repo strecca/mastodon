@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 
@@ -24,8 +25,29 @@ const jsRoot = path.resolve(__dirname, "app/javascript");
 
 const cssAliasClasses: ReadonlyArray<string> = ["components", "features"];
 
+// Stamped into both the app bundle and the service worker (sw.js) so every
+// deploy produces a byte-different sw.js. Without this, sw.js only changed when
+// service-worker code itself changed, so ordinary deploys never reached devices
+// that already had the app open (see ServiceWorkerUpdateNotice / app_update.ts).
+function resolveBuildId(): string {
+  if (process.env.BUILD_ID) {
+    return process.env.BUILD_ID;
+  }
+
+  try {
+    return execSync("git rev-parse --short=12 HEAD", {
+      stdio: ["ignore", "pipe", "ignore"],
+    })
+      .toString()
+      .trim();
+  } catch {
+    return "dev";
+  }
+}
+
 export const config: UserConfigFnPromise = async ({ mode, command }) => {
   const isProdBuild = mode === "production" && command === "build";
+  const buildId = resolveBuildId();
 
   let outDirName = "packs-dev";
   if (mode === "test" || mode === "production") {
@@ -37,6 +59,9 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
     root: jsRoot,
     base: `/${outDirName}/`,
     envDir: __dirname,
+    define: {
+      __BUILD_ID__: JSON.stringify(buildId),
+    },
     resolve: {
       tsconfigPaths: true,
       alias: {

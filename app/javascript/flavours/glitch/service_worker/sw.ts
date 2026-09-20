@@ -6,6 +6,16 @@ import { handleNotificationClick, handlePush } from "./web_push_notifications";
 
 declare const self: ServiceWorkerGlobalScope;
 
+// Stamped at build time (vite.config.mts `define`). Browsers only install a new
+// service worker when sw.js differs byte-for-byte from the installed one, and
+// sw.js otherwise only changes when service-worker code changes -- so before
+// this constant existed, an ordinary deploy never produced an update and
+// devices with the app already open (e.g. a phone's home-screen app) stayed on
+// stale code indefinitely. Every deploy now changes this literal, so every
+// deploy is a new worker and reaches ServiceWorkerUpdateNotice.
+// It is referenced in the message handler below so minification keeps it.
+const BUILD_ID = __BUILD_ID__;
+
 // Cache the app shell on install. Note this worker does NOT auto-replace an
 // already-active one on open pages -- see the 'message' handler below for
 // why, and ServiceWorkerUpdateNotice for the user-facing prompt that
@@ -13,13 +23,6 @@ declare const self: ServiceWorkerGlobalScope;
 self.addEventListener("install", (event) => {
   event.waitUntil(cacheRoot());
 });
-// Note for testing a future update-ready prompt: a comment-only edit here
-// is invisible to the browser's own update-detection byte comparison,
-// since comments get stripped by minification -- confirmed 2026-09-18,
-// two comment-only "test build" commits never actually changed the
-// compiled sw.js at all. Use a real code change (e.g. a temporary
-// console.warn in the 'install' handler above) instead, then remove it
-// once confirmed.
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(self.clients.claim());
@@ -32,8 +35,12 @@ self.addEventListener("activate", (event) => {
 // at which point this worker activates and `clients.claim()` above hands it
 // control right away.
 self.addEventListener("message", (event) => {
-  if ((event.data as { type?: string } | undefined)?.type === "SKIP_WAITING") {
+  const type = (event.data as { type?: string } | undefined)?.type;
+
+  if (type === "SKIP_WAITING") {
     void self.skipWaiting();
+  } else if (type === "GET_BUILD_ID") {
+    event.source?.postMessage({ type: "BUILD_ID", buildId: BUILD_ID });
   }
 });
 

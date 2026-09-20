@@ -51,6 +51,8 @@ export default defineConfig(async (context) => {
 
   return {
     ...baseConfig,
+    // A fixed build id, so tests never depend on git being available.
+    define: { ...baseConfig.define, __BUILD_ID__: JSON.stringify("test-build-id") },
     test: {
       projects: [legacyTests, storybookTests],
     },

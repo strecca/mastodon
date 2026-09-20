@@ -4,14 +4,21 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { Alert } from "flavours/glitch/components/alert";
 import { useInterval } from "flavours/glitch/hooks/useInterval";
+import { applyUpdate, checkForUpdate, reloadOnce } from "flavours/glitch/utils/app_update";
 
 // Browsers only check for a new service worker on a fresh page navigation,
 // or when explicitly told to via registration.update() -- they do NOT
 // proactively re-check while a tab just sits open and idle. Without this,
 // someone browsing for a while (exactly the case this feature is for) would
 // never see an update prompt no matter how long they waited, since nothing
-// would ever prompt the browser to go look.
-const UPDATE_CHECK_INTERVAL = 60_000;
+// would ever prompt the browser to go look. Every deploy now changes sw.js
+// (build id stamped in sw.ts), so this poll only needs to be a backstop; the
+// wake-from-background checks below are the main trigger on phones.
+const UPDATE_CHECK_INTERVAL = 5 * 60_000;
+
+// Wake-up events (visibilitychange, pageshow, focus, online) often arrive in
+// bursts; don't hit the network for each one.
+const MIN_RESUME_CHECK_GAP = 15_000;
 
 const messages = defineMessages({
   title: {
@@ -30,19 +37,37 @@ const messages = defineMessages({
 });
 
 /**
- * Detects when a new service worker has installed and is waiting to take
- * over (i.e. a real update to an already-open session, not the very first
- * visit), and shows a prompt so the member can choose when to apply it --
- * never silently, since that could interrupt someone mid-post. The new
- * worker only activates once they click "Update now"; see sw.ts's
- * `message` handler for the other half of this.
+ * Tells the member when a newer MiaCivezza.com is available and lets them choose
+ * when to apply it -- never silently, since that could interrupt someone
+ * mid-post. Detects updates three ways: a new service worker finishing its
+ * install, a periodic re-check, and (mainly for phones, which freeze pages in
+ * the background) an immediate re-check whenever the app wakes up. The manual
+ * "check for updates" button in the navigation panel shares the same logic
+ * (utils/app_update.ts). See sw.ts's `message` handler for the other half of
+ * the activation handshake.
  */
 export const ServiceWorkerUpdateNotice: React.FC = () => {
   const intl = useIntl();
-  const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
   const [updating, setUpdating] = useState(false);
-  const hasReloaded = useRef(false);
   const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
+  const lastResumeCheck = useRef(0);
+
+  const runResumeCheck = useCallback(() => {
+    const now = Date.now();
+
+    if (now - lastResumeCheck.current < MIN_RESUME_CHECK_GAP) {
+      return;
+    }
+
+    lastResumeCheck.current = now;
+
+    void checkForUpdate().then((status) => {
+      if (status === "available") {
+        setUpdateAvailable(true);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (!("serviceWorker" in navigator)) {
@@ -70,7 +95,7 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
         // the worker's own lifecycle state instead of this page's
         // controller relationship is the more reliable signal.
         if (newWorker.state === "installed" && registration.active) {
-          setWaitingWorker(newWorker);
+          setUpdateAvailable(true);
         }
       });
     };
@@ -85,61 +110,59 @@ export const ServiceWorkerUpdateNotice: React.FC = () => {
       // before this component mounted. Same reasoning as above: check
       // registration.active, not navigator.serviceWorker.controller.
       if (registration.waiting && registration.active) {
-        setWaitingWorker(registration.waiting);
+        setUpdateAvailable(true);
       }
 
       registration.addEventListener("updatefound", () => {
         handleUpdateFound(registration);
       });
-
-      // Ask immediately too, in case something was deployed between page
-      // load and this component mounting.
-      void registration.update();
     });
 
-    const handleControllerChange = () => {
-      // The new worker just activated and took control -- reload once to
-      // actually run its code. Guarded so a stray extra event can't loop.
-      if (!hasReloaded.current) {
-        hasReloaded.current = true;
-        window.location.reload();
-      }
-    };
-    navigator.serviceWorker.addEventListener("controllerchange", handleControllerChange);
+    // Ask straight away too, in case something was deployed between page
+    // load and this component mounting.
+    runResumeCheck();
 
-    // iOS throttles background JS timers unreliably, so don't depend on the
-    // interval alone -- also check the moment the page becomes visible
-    // again (switching back from another app, reopening from the home
-    // screen), which is driven by an actual event, not a timer.
-    const handleVisibilityChange = () => {
+    // The new worker just activated and took control -- reload once to
+    // actually run its code. Shared guard so a stray extra event (or the
+    // button's own handler) can't loop.
+    navigator.serviceWorker.addEventListener("controllerchange", reloadOnce);
+
+    // iOS throttles and freezes background pages, so don't depend on the
+    // interval alone: re-check the moment the app wakes up (switching back
+    // from another app, reopening from the home screen, regaining network).
+    // These are driven by real events, not timers.
+    const handleWake = () => {
       if (document.visibilityState === "visible") {
-        void registrationRef.current?.update();
+        runResumeCheck();
       }
     };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleWake);
+    window.addEventListener("pageshow", handleWake);
+    window.addEventListener("focus", handleWake);
+    window.addEventListener("online", handleWake);
 
     return () => {
-      navigator.serviceWorker.removeEventListener("controllerchange", handleControllerChange);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      navigator.serviceWorker.removeEventListener("controllerchange", reloadOnce);
+      document.removeEventListener("visibilitychange", handleWake);
+      window.removeEventListener("pageshow", handleWake);
+      window.removeEventListener("focus", handleWake);
+      window.removeEventListener("online", handleWake);
     };
-  }, []);
+  }, [runResumeCheck]);
 
   useInterval(
     () => {
       void registrationRef.current?.update();
     },
-    { delay: UPDATE_CHECK_INTERVAL, isEnabled: !waitingWorker },
+    { delay: UPDATE_CHECK_INTERVAL, isEnabled: !updateAvailable },
   );
 
   const handleUpdateClick = useCallback(() => {
-    if (!waitingWorker) {
-      return;
-    }
     setUpdating(true);
-    waitingWorker.postMessage({ type: "SKIP_WAITING" });
-  }, [waitingWorker]);
+    void applyUpdate();
+  }, []);
 
-  if (!waitingWorker) {
+  if (!updateAvailable) {
     return null;
   }
 

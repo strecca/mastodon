@@ -63,6 +63,7 @@ import { useAppSelector, useAppDispatch } from "flavours/glitch/store";
 
 import { AnnualReportNavItem } from "../annual_report/nav_item";
 
+import { CheckForUpdatesButton } from "./components/check_for_updates_button";
 import { DisabledAccountBanner } from "./components/disabled_account_banner";
 import { FollowedTagsPanel } from "./components/followed_tags_panel";
 import { ListPanel } from "./components/list_panel";
@@ -357,6 +358,12 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({ multiColu
           iconComponent={ArticleIcon}
           text={intl.formatMessage(messages.dailyDigest)}
         />
+
+        {/* Manual "is there a newer version?" check -- visible to everyone,
+            since a phone's home-screen app can sit on a stale copy for days. */}
+        <div className="navigation-panel__check-updates">
+          <CheckForUpdatesButton />
+        </div>
 
         {signedIn && (
           <ColumnLink
