@@ -286,6 +286,13 @@ export const expandPublicTimeline = ({ maxId, onlyMedia, onlyRemote, allowLocalO
       only_media: !!onlyMedia,
     },
   );
+export const refreshPublicTimeline = ({ onlyMedia, onlyRemote, allowLocalOnly } = {}) =>
+  refreshTimeline(
+    `public${onlyRemote ? ":remote" : allowLocalOnly ? ":allow_local_only" : ""}${onlyMedia ? ":media" : ""}`,
+    "/api/v1/timelines/public",
+    { remote: !!onlyRemote, allow_local_only: !!allowLocalOnly, only_media: !!onlyMedia },
+    () => expandPublicTimeline({ onlyMedia, onlyRemote, allowLocalOnly }),
+  );
 export const expandCommunityTimeline = ({ maxId, onlyMedia } = {}) =>
   expandTimeline(`community${onlyMedia ? ":media" : ""}`, "/api/v1/timelines/public", {
     local: true,

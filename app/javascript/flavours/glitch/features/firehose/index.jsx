@@ -11,9 +11,15 @@ import PublicIcon from "@/material-icons/400-24px/public.svg?react";
 import { addColumn } from "flavours/glitch/actions/columns";
 import { changeSetting } from "flavours/glitch/actions/settings";
 import { connectPublicStream, connectCommunityStream } from "flavours/glitch/actions/streaming";
-import { expandPublicTimeline, expandCommunityTimeline } from "flavours/glitch/actions/timelines";
+import {
+  expandPublicTimeline,
+  expandCommunityTimeline,
+  refreshPublicTimeline,
+  refreshCommunityTimeline,
+} from "flavours/glitch/actions/timelines";
 import { DismissableBanner } from "flavours/glitch/components/dismissable_banner";
 import SettingText from "flavours/glitch/components/setting_text";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 import { localLiveFeedAccess, remoteLiveFeedAccess, domain } from "flavours/glitch/initial_state";
 import { canViewFeed } from "flavours/glitch/permissions";
 import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
@@ -158,6 +164,24 @@ const Firehose = ({ feedType, multiColumn }) => {
   );
 
   const handleHeaderClick = useCallback(() => columnRef.current?.scrollTop(), []);
+
+  // Catch the feed up when the app returns to the foreground: add new posts and
+  // drop posts deleted meanwhile. Needs no stream, so it works signed out too.
+  const refreshFeed = useCallback(() => {
+    switch (feedType) {
+      case "community":
+        dispatch(refreshCommunityTimeline({ onlyMedia }));
+        break;
+      case "public":
+        dispatch(refreshPublicTimeline({ onlyMedia, allowLocalOnly }));
+        break;
+      case "public:remote":
+        dispatch(refreshPublicTimeline({ onlyMedia, onlyRemote: true }));
+        break;
+    }
+  }, [dispatch, feedType, onlyMedia, allowLocalOnly]);
+
+  useCommunityLiveRefresh(`live_posts_${feedType}`, refreshFeed, { stream: false });
 
   useEffect(() => {
     let disconnect;
