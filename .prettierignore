@@ -20,3 +20,8 @@ config/email.yml
 # (upstream's own shipped translations) isn't governed by i18n-tasks the same
 # way and isn't affected by this conflict.
 config/locales-glitch/
+
+# Restored byte-for-byte from glitch-soc/main (they were missing entirely); keep
+# them identical to upstream rather than reformatting them.
+public/500.html
+public/embed.js
