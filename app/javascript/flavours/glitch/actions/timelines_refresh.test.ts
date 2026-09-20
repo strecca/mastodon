@@ -169,6 +169,16 @@ describe("refreshTimeline", () => {
     expect(loadNewer).not.toHaveBeenCalled();
   });
 
+  it("keeps everything when the server says the feed is still being built (206)", async () => {
+    const { run, deleted, loadNewer } = setup(["105", "104", "103"]);
+    mocks.get.mockResolvedValue({ status: 206, data: statusesWithIds(["105"]) });
+
+    await run();
+
+    expect(deleted()).toEqual([]);
+    expect(loadNewer).not.toHaveBeenCalled();
+  });
+
   it("keeps everything when the server answers with an empty page", async () => {
     const { run, deleted } = setup(["105", "104"]);
     mocks.get.mockResolvedValue({ data: [] });

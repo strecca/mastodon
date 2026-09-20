@@ -16,7 +16,8 @@ import { addColumn, removeColumn, moveColumn } from "flavours/glitch/actions/col
 import { fetchList } from "flavours/glitch/actions/lists";
 import { openModal } from "flavours/glitch/actions/modal";
 import { connectListStream } from "flavours/glitch/actions/streaming";
-import { expandListTimeline } from "flavours/glitch/actions/timelines";
+import { expandListTimeline, refreshListTimeline } from "flavours/glitch/actions/timelines";
+import { TimelineWakeRefresh } from "flavours/glitch/features/ui/components/timeline_wake_refresh";
 import Column from "flavours/glitch/components/column";
 import ColumnHeader from "flavours/glitch/components/column_header";
 import { Icon } from "flavours/glitch/components/icon";
@@ -177,6 +178,11 @@ class ListTimeline extends PureComponent {
             />
           }
           bindToDocument={!multiColumn}
+        />
+
+        <TimelineWakeRefresh
+          feedKey="list"
+          refresh={() => refreshListTimeline(this.props.params.id)}
         />
 
         <Helmet>

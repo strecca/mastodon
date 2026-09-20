@@ -19,7 +19,8 @@ import { identityContextPropShape, withIdentity } from "flavours/glitch/identity
 import { withBreakpoint } from "flavours/glitch/features/ui/hooks/useBreakpoint";
 
 import { addColumn, removeColumn, moveColumn } from "../../actions/columns";
-import { expandHomeTimeline } from "../../actions/timelines";
+import { expandHomeTimeline, refreshHomeTimeline } from "../../actions/timelines";
+import { TimelineWakeRefresh } from "../ui/components/timeline_wake_refresh";
 import Column from "../../components/column";
 import ColumnHeader from "../../components/column_header";
 import StatusListContainer from "../ui/containers/status_list_container";
@@ -206,6 +207,8 @@ class HomeTimeline extends PureComponent {
         ) : (
           <NotSignedInIndicator />
         )}
+
+        <TimelineWakeRefresh feedKey="home" refresh={refreshHomeTimeline} />
 
         <Helmet>
           <title>{intl.formatMessage(messages.title)}</title>

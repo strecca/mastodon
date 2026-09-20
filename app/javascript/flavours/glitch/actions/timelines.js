@@ -202,6 +202,12 @@ export function refreshTimeline(timelineId, path, params, loadNewer) {
 
     try {
       const response = await api().get(path, { params: { ...params, limit: REFRESH_PAGE_SIZE } });
+
+      // 206: the server is still building this feed, so the page is incomplete.
+      if (response.status === 206) {
+        return;
+      }
+
       page = response.data;
     } catch {
       // Offline or the server hiccuped: keep what is on screen.
@@ -342,6 +348,23 @@ export const expandHashtagTimeline = (hashtag, { maxId, tags, local } = {}) => {
     },
   );
 };
+
+export const refreshHomeTimeline = () =>
+  refreshTimeline("home", "/api/v1/timelines/home", {}, () => expandHomeTimeline());
+export const refreshListTimeline = (id) =>
+  refreshTimeline(`list:${id}`, `/api/v1/timelines/list/${id}`, {}, () => expandListTimeline(id));
+export const refreshHashtagTimeline = (hashtag, { tags, local } = {}) =>
+  refreshTimeline(
+    `hashtag:${hashtag}${local ? ":local" : ""}`,
+    `/api/v1/timelines/tag/${hashtag}`,
+    {
+      any: parseTags(tags, "any"),
+      all: parseTags(tags, "all"),
+      none: parseTags(tags, "none"),
+      local: local,
+    },
+    () => expandHashtagTimeline(hashtag, { tags, local }),
+  );
 
 export const fillHomeTimelineGaps = () => fillTimelineGaps("home", "/api/v1/timelines/home", {});
 export const fillPublicTimelineGaps = ({ onlyMedia, onlyRemote, allowLocalOnly } = {}) =>

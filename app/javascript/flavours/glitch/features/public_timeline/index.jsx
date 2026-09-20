@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { PureComponent, useCallback } from "react";
+import { PureComponent } from "react";
 
 import { defineMessages, FormattedMessage } from "react-intl";
 
@@ -12,15 +12,14 @@ import { DismissableBanner } from "flavours/glitch/components/dismissable_banner
 import { injectIntl } from "@/flavours/glitch/components/intl";
 import { identityContextPropShape, withIdentity } from "flavours/glitch/identity_context";
 import { domain, localLiveFeedAccess, remoteLiveFeedAccess } from "flavours/glitch/initial_state";
-import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 import { canViewFeed } from "flavours/glitch/permissions";
-import { useAppDispatch } from "flavours/glitch/store";
 
 import { addColumn, removeColumn, moveColumn } from "../../actions/columns";
 import { connectPublicStream } from "../../actions/streaming";
 import { expandPublicTimeline, refreshPublicTimeline } from "../../actions/timelines";
 import Column from "../../components/column";
 import ColumnHeader from "../../components/column_header";
+import { TimelineWakeRefresh } from "../ui/components/timeline_wake_refresh";
 import StatusListContainer from "../ui/containers/status_list_container";
 
 import ColumnSettingsContainer from "./containers/column_settings_container";
@@ -61,25 +60,6 @@ const mapStateToProps = (state, { columnId }) => {
     allowLocalOnly,
     regex,
   };
-};
-
-// Catches the column up when the app returns to the foreground: adds new posts and
-// removes posts deleted meanwhile. Works signed out too (no stream needed).
-const WakeRefresh = ({ onlyMedia, onlyRemote, allowLocalOnly }) => {
-  const dispatch = useAppDispatch();
-  const refresh = useCallback(() => {
-    dispatch(refreshPublicTimeline({ onlyMedia, onlyRemote, allowLocalOnly }));
-  }, [dispatch, onlyMedia, onlyRemote, allowLocalOnly]);
-
-  useCommunityLiveRefresh("live_posts_public", refresh, { stream: false });
-
-  return null;
-};
-
-WakeRefresh.propTypes = {
-  onlyMedia: PropTypes.bool,
-  onlyRemote: PropTypes.bool,
-  allowLocalOnly: PropTypes.bool,
 };
 
 class PublicTimeline extends PureComponent {
@@ -231,10 +211,15 @@ class PublicTimeline extends PureComponent {
           regex={this.props.regex}
         />
 
-        <WakeRefresh
-          onlyMedia={this.props.onlyMedia}
-          onlyRemote={this.props.onlyRemote}
-          allowLocalOnly={this.props.allowLocalOnly}
+        <TimelineWakeRefresh
+          feedKey="public"
+          refresh={() =>
+            refreshPublicTimeline({
+              onlyMedia: this.props.onlyMedia,
+              onlyRemote: this.props.onlyRemote,
+              allowLocalOnly: this.props.allowLocalOnly,
+            })
+          }
         />
 
         <Helmet>

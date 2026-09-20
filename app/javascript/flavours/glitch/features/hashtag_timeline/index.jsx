@@ -12,7 +12,12 @@ import { isEqual } from "lodash";
 import TagIcon from "@/material-icons/400-24px/tag.svg?react";
 import { addColumn, removeColumn, moveColumn } from "flavours/glitch/actions/columns";
 import { connectHashtagStream } from "flavours/glitch/actions/streaming";
-import { expandHashtagTimeline, clearTimeline } from "flavours/glitch/actions/timelines";
+import {
+  expandHashtagTimeline,
+  refreshHashtagTimeline,
+  clearTimeline,
+} from "flavours/glitch/actions/timelines";
+import { TimelineWakeRefresh } from "flavours/glitch/features/ui/components/timeline_wake_refresh";
 import Column from "flavours/glitch/components/column";
 import ColumnHeader from "flavours/glitch/components/column_header";
 import { identityContextPropShape, withIdentity } from "flavours/glitch/identity_context";
@@ -244,6 +249,18 @@ class HashtagTimeline extends PureComponent {
           }
           bindToDocument={!multiColumn}
         />
+
+        {hasFeedAccess && (
+          <TimelineWakeRefresh
+            feedKey="hashtag"
+            refresh={() =>
+              refreshHashtagTimeline(this.props.params.id, {
+                tags: this.props.params.tags,
+                local,
+              })
+            }
+          />
+        )}
 
         <Helmet>
           <title>#{id}</title>
