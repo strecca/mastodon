@@ -648,6 +648,22 @@ body > [data-popper-placement] {
     padding: 0 12px;
     aspect-ratio: 3/2;
     flex-shrink: 0;
+
+    // 3-4 photos: two per row, every tile keeps the same size and shape it has
+    // with two photos, and the box grows taller for the second row. Cramming
+    // them all into the fixed 3:2 box above shrank each tile to about half
+    // height in this narrow column, which made the remove (X) button too small
+    // to hit reliably.
+    &.media-gallery--layout-3,
+    &.media-gallery--layout-4 {
+      aspect-ratio: auto;
+      grid-template-rows: none;
+      grid-auto-rows: auto;
+
+      .compose-form__upload {
+        aspect-ratio: 2 / 3;
+      }
+    }
   }
 
   .media-gallery {
@@ -678,6 +694,11 @@ body > [data-popper-placement] {
       align-items: flex-start;
       justify-content: space-between;
       padding: 8px;
+
+      // Above the ALT strip (z-index 2) that sits along the bottom of the tile,
+      // so nothing can ever cover the remove/edit buttons.
+      position: relative;
+      z-index: 3;
     }
 
     &__preview,
@@ -745,7 +766,8 @@ body > [data-popper-placement] {
     }
 
     .icon-button.compose-form__upload__delete {
-      padding: 2px;
+      // 20px icon + 6px padding = 32px hit area (was 24px).
+      padding: 6px;
       border-radius: 50%;
 
       .icon {

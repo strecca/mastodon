@@ -161,12 +161,12 @@ export const UploadForm: React.FC = () => {
               accessibility={accessibility}
             >
               <SortableContext items={mediaIds.toArray()} strategy={rectSortingStrategy}>
-                {mediaIds.map((id, idx) => (
+                {mediaIds.map((id) => (
                   <Upload
                     key={id}
                     id={id}
                     dragging={id === activeId}
-                    tall={mediaIds.size < 3 || (mediaIds.size === 3 && idx === 0)}
+                    tall={mediaIds.size < 3}
                     wide={mediaIds.size === 1}
                   />
                 ))}

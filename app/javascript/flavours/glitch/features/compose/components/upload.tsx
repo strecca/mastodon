@@ -27,6 +27,17 @@ const selectUserAvatar = createAppSelector(
   (accounts, myId) => accounts.get(myId)?.avatar_static,
 );
 
+// The whole tile is a drag-and-drop handle (useSortable's listeners are spread
+// onto the tile below). Pressing a button inside it must not also start a drag:
+// a pointer press would be claimed by the drag layer, and Enter/Space on a
+// focused button would pick the tile up instead of activating the button. That
+// made the X ("remove this photo") unreliable, most noticeably on the small
+// tiles of a 3-4 photo layout. Stopping propagation here keeps the drag layer
+// out of it without touching the button's own click.
+const stopDragStart = (event: React.SyntheticEvent) => {
+  event.stopPropagation();
+};
+
 export const Upload: React.FC<{
   id: string;
   dragging?: boolean;
@@ -109,10 +120,18 @@ export const Upload: React.FC<{
             type="button"
             className="icon-button compose-form__upload__delete"
             onClick={handleUndoClick}
+            onPointerDown={stopDragStart}
+            onKeyDown={stopDragStart}
           >
             <Icon id="close" icon={CloseIcon} />
           </button>
-          <button type="button" className="icon-button" onClick={handleFocalPointClick}>
+          <button
+            type="button"
+            className="icon-button"
+            onClick={handleFocalPointClick}
+            onPointerDown={stopDragStart}
+            onKeyDown={stopDragStart}
+          >
             <Icon id="edit" icon={EditIcon} />{" "}
             <FormattedMessage id="upload_form.edit" defaultMessage="Edit" />
           </button>
@@ -125,6 +144,8 @@ export const Upload: React.FC<{
               active: missingDescription,
             })}
             onClick={handleFocalPointClick}
+            onPointerDown={stopDragStart}
+            onKeyDown={stopDragStart}
           >
             {missingDescription && <Icon id="warning" icon={WarningIcon} />} ALT
           </button>
