@@ -75,9 +75,7 @@ export const WithAction: Story = {
   },
   render: Simple.render,
   play: async ({ args, canvas, userEvent }) => {
-    // The component marks its action button aria-hidden, so it has no accessible
-    // name and role queries can't find it; look it up by its visible text.
-    const button = await canvas.findByText("Open");
+    const button = await canvas.findByRole("button", { name: "Open" });
     await userEvent.click(button);
     await expect(args.onActionClick).toHaveBeenCalled();
   },
