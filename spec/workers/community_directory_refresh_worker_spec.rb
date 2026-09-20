@@ -5,12 +5,17 @@ require 'rails_helper'
 RSpec.describe CommunityDirectoryRefreshWorker do
   include Redisable
 
-  let(:channel) { 'community:listings' }
+  # Private channel names: the test environment shares Redis with the live
+  # site, and no real client ever subscribes to these.
+  let(:channel) { 'community:spec_probe_one' }
+  let(:other_channel) { 'community:spec_probe_two' }
 
   before do
-    redis.del("community_refresh_pending:#{channel}", 'community_refresh_pending:community:events')
+    redis.del("community_refresh_pending:#{channel}", "community_refresh_pending:#{other_channel}")
     described_class.clear
   end
+
+  after { redis.del("community_refresh_pending:#{channel}", "community_refresh_pending:#{other_channel}") }
 
   describe '.schedule' do
     it 'queues one delayed job however many writes happen in a burst' do
@@ -22,9 +27,9 @@ RSpec.describe CommunityDirectoryRefreshWorker do
 
     it 'queues separate jobs for separate channels' do
       described_class.schedule(channel)
-      described_class.schedule('community:events')
+      described_class.schedule(other_channel)
 
-      expect(described_class.jobs.pluck('args')).to contain_exactly([channel], ['community:events'])
+      expect(described_class.jobs.pluck('args')).to contain_exactly([channel], [other_channel])
     end
   end
 
