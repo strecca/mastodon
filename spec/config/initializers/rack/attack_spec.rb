@@ -177,37 +177,58 @@ RSpec.describe Rack::Attack, type: :request do
     it_behaves_like 'throttled endpoint'
   end
 
-  describe Rack::Attack::Request, '#paging_request?' do
+  describe Rack::Attack::Request do
     def build_request(path, **env)
       described_class.new(Rack::MockRequest.env_for(path, **env))
-    end
-
-    it 'is true when the query string asks for a page' do
-      expect(build_request('/api/v1/timelines/public?max_id=123')).to be_paging_request
-    end
-
-    it 'is false when there are no paging parameters' do
-      expect(build_request('/api/v1/timelines/public?local=true')).to_not be_paging_request
     end
 
     # Vulnerability scanners send multipart uploads whose body is not valid multipart
     # (no closing boundary, or no boundary at all). Reading the parameters used to
     # raise Rack::Multipart::EmptyContentError from inside the rate limiter, which
     # surfaced as a 500 and an alert email.
-    [
+    malformed_bodies = [
       'this is not a multipart body at all',
       "------abc\r\n",
       "------abc\r\nContent-Disposition: form-data; name=\"0\"\r\n\r\n{\"then\":\"$1:__proto__:then\"}\r\n",
-    ].each do |body|
-      it "is false, without raising, for a malformed multipart body (#{body.inspect.first(30)})" do
-        request = build_request('/api/auth/signin', method: 'POST', 'CONTENT_TYPE' => 'multipart/form-data; boundary=----abc', input: body)
+    ]
 
-        expect(request).to_not be_paging_request
+    def malformed_upload(path, body)
+      build_request(path, method: 'POST', 'CONTENT_TYPE' => 'multipart/form-data; boundary=----abc', input: body)
+    end
+
+    describe '#paging_request?' do
+      it 'is true when the query string asks for a page' do
+        expect(build_request('/api/v1/timelines/public?max_id=123')).to be_paging_request
+      end
+
+      it 'is false when there are no paging parameters' do
+        expect(build_request('/api/v1/timelines/public?local=true')).to_not be_paging_request
+      end
+
+      it 'is still true for a paging query string sent with a malformed body' do
+        expect(malformed_upload('/api/v1/timelines/public?max_id=123', malformed_bodies.first)).to be_paging_request
+      end
+
+      malformed_bodies.each do |body|
+        it "is false, without raising, for a malformed multipart body (#{body.inspect.first(30)})" do
+          expect(malformed_upload('/dashboard', body)).to_not be_paging_request
+        end
+      end
+
+      it 'is false, without raising, for conflicting parameter types' do
+        expect(build_request('/api/v1/timelines/public?a=1&a[b]=2')).to_not be_paging_request
       end
     end
 
-    it 'is false, without raising, for conflicting parameter types' do
-      expect(build_request('/api/v1/timelines/public?a=1&a[b]=2')).to_not be_paging_request
+    describe '#authenticated_user_id' do
+      malformed_bodies.each do |body|
+        it "is nil, without raising, for a malformed multipart body (#{body.inspect.first(30)})" do
+          request = malformed_upload('/api/auth/signin', body)
+
+          expect(request.authenticated_user_id).to be_nil
+          expect(request).to be_unauthenticated
+        end
+      end
     end
   end
 end

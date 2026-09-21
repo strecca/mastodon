@@ -13,6 +13,22 @@ class Rack::Attack
       )
     end
 
+    # Reading params parses the request body. A malformed body (typically a
+    # multipart upload that isn't valid multipart, sent by vulnerability
+    # scanners) raises Rack::BadRequest errors here, before Rails is involved,
+    # which surfaced as a 500 plus an alert email instead of the 400 Rails gives
+    # the same input. Fall back to the query string alone (or nothing) so the
+    # request carries on and Rails answers it.
+    def params
+      super
+    rescue Rack::BadRequest
+      begin
+        self.GET
+      rescue Rack::BadRequest
+        {}
+      end
+    end
+
     def remote_ip
       @remote_ip ||= (@env['action_dispatch.remote_ip'] || ip).to_s
     end
@@ -59,13 +75,6 @@ class Rack::Attack
 
     def paging_request?
       params['page'].present? || params['min_id'].present? || params['max_id'].present? || params['since_id'].present?
-    rescue Rack::BadRequest
-      # Reading `params` parses the request body. A malformed body (typically a
-      # multipart upload with no content, sent by vulnerability scanners) raises
-      # here, before Rails is involved, and would surface as a 500 plus an alert
-      # email. It can't be a paging request; return false so the request carries
-      # on and Rails answers it with its normal 400.
-      false
     end
   end
 
