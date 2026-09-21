@@ -190,13 +190,20 @@ RSpec.describe Rack::Attack, type: :request do
       expect(build_request('/api/v1/timelines/public?local=true')).to_not be_paging_request
     end
 
-    # Vulnerability scanners send multipart uploads with no content. Reading the
-    # parameters used to raise Rack::Multipart::EmptyContentError from inside the
-    # rate limiter, which surfaced as a 500 and an alert email.
-    it 'is false, without raising, for a multipart body that has no content' do
-      request = build_request('/api/auth/signin', method: 'POST', 'CONTENT_TYPE' => 'multipart/form-data; boundary=----abc', input: '')
+    # Vulnerability scanners send multipart uploads whose body is not valid multipart
+    # (no closing boundary, or no boundary at all). Reading the parameters used to
+    # raise Rack::Multipart::EmptyContentError from inside the rate limiter, which
+    # surfaced as a 500 and an alert email.
+    [
+      'this is not a multipart body at all',
+      "------abc\r\n",
+      "------abc\r\nContent-Disposition: form-data; name=\"0\"\r\n\r\n{\"then\":\"$1:__proto__:then\"}\r\n",
+    ].each do |body|
+      it "is false, without raising, for a malformed multipart body (#{body.inspect.first(30)})" do
+        request = build_request('/api/auth/signin', method: 'POST', 'CONTENT_TYPE' => 'multipart/form-data; boundary=----abc', input: body)
 
-      expect(request).to_not be_paging_request
+        expect(request).to_not be_paging_request
+      end
     end
 
     it 'is false, without raising, for conflicting parameter types' do
