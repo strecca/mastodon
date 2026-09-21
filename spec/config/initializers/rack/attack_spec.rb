@@ -176,4 +176,31 @@ RSpec.describe Rack::Attack, type: :request do
 
     it_behaves_like 'throttled endpoint'
   end
+
+  describe Rack::Attack::Request, '#paging_request?' do
+    def build_request(path, **env)
+      described_class.new(Rack::MockRequest.env_for(path, **env))
+    end
+
+    it 'is true when the query string asks for a page' do
+      expect(build_request('/api/v1/timelines/public?max_id=123')).to be_paging_request
+    end
+
+    it 'is false when there are no paging parameters' do
+      expect(build_request('/api/v1/timelines/public?local=true')).to_not be_paging_request
+    end
+
+    # Vulnerability scanners send multipart uploads with no content. Reading the
+    # parameters used to raise Rack::Multipart::EmptyContentError from inside the
+    # rate limiter, which surfaced as a 500 and an alert email.
+    it 'is false, without raising, for a multipart body that has no content' do
+      request = build_request('/api/auth/signin', method: 'POST', 'CONTENT_TYPE' => 'multipart/form-data; boundary=----abc', input: '')
+
+      expect(request).to_not be_paging_request
+    end
+
+    it 'is false, without raising, for conflicting parameter types' do
+      expect(build_request('/api/v1/timelines/public?a=1&a[b]=2')).to_not be_paging_request
+    end
+  end
 end
