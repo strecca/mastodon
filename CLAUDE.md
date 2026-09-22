@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Mastodon Glitch Edition** — a fork of [Mastodon](https://github.com/mastodon/mastodon) maintained at glitch-soc. It adds extra features and local customizations, including a **Community Directory** scaffolding system (see `docs/CLAUDE.md` for its full architecture).
 
+**Before working on anything involving the live site — real-time updates, background jobs, email/translation, auth, or deployment — read `docs/HOW_MIACIVEZZA_IS_WIRED.md` first.** It's the current, code-verified map of how those systems actually work in production, kept up to date as of the date at its top; `docs/CLAUDE.md` covers the Community Directory's design in depth but has some stale operational details.
+
 Tech stack: Ruby on Rails (REST API, admin) · PostgreSQL · Redis/Sidekiq · Node.js streaming server · React 18 + Redux (Immutable.js) · Vite build.
 
 ## Development Commands

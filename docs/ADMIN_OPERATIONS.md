@@ -28,7 +28,7 @@ Run in **mastodon tab**:
 
 ```bash
 git pull --rebase
-rm -rf tmp/cache/vite public/packs
+rm -rf tmp/cache/vite
 RAILS_ENV=production bundle exec rails assets:precompile
 ```
 
@@ -38,8 +38,22 @@ Run in **root tab**:
 systemctl restart mastodon-web
 ```
 
-> Use `rm -rf tmp/cache/vite public/packs` any time Vite says
+> Use `rm -rf tmp/cache/vite` any time Vite says
 > "Skipping vite build. Watched files have not changed."
+>
+> **Never add `public/packs` to that `rm -rf`.** It deletes the previous
+> build's lazy-loaded JS chunks, so anyone who already has the app open in a
+> browser tab gets 404s on the next thing they click, until they reload. This
+> broke the site for real visitors twice (2026-09-18, 2026-09-20) before the
+> deploy recipe was corrected. Vite's production build never empties its own
+> output directory, so old chunks are harmless to leave in place — only
+> `tmp/cache/vite` (Vite's build cache, not shipped to browsers) ever needs
+> clearing. See `docs/HOW_MIACIVEZZA_IS_WIRED.md` for the full explanation
+> and the per-deploy build-id mechanism that replaced the old wipe-and-hope
+> approach.
+>
+> If `streaming/index.js` changed, also restart `mastodon-streaming` (see
+> §12).
 
 ---
 
@@ -131,7 +145,7 @@ git push
 ```bash
 git checkout -- app/javascript/flavours/glitch/locales/
 git pull
-rm -rf tmp/cache/vite public/packs
+rm -rf tmp/cache/vite
 RAILS_ENV=production bundle exec rails assets:precompile
 ```
 
