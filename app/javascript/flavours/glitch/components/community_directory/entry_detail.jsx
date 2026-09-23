@@ -17,6 +17,7 @@ import {
   clearCurrentEntry,
   deleteEntry,
 } from "flavours/glitch/actions/community_entries";
+import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 import { useViewingLocale } from "flavours/glitch/hooks/useViewingLocale";
 import { CategoryBannerLink } from "./category_banner_link";
 import { fieldLabel, translatedValue, optionLabel } from "./translation_helpers";
