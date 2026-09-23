@@ -5280,10 +5280,42 @@
     color: inherit;
   }
 
+  &__header {
+    text-align: center;
+    padding-top: 12px;
+    margin-bottom: 16px;
+  }
+
+  &__header-logo {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  &__header-tagline {
+    font-size: 13.5px;
+    color: var(--fd-ink-soft);
+    margin: 10px 0 0;
+  }
+
   &__toggle-row {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+  }
+
+  // Below 760px, the app's own "Language & More Links" button (.nav-panel-fab
+  // in components.scss) is fixed to the top-right corner of the viewport,
+  // independent of page content -- without this clearance, the header/toggle
+  // row's own top content sits directly underneath it and becomes both
+  // visually covered and untappable. 760px matches that button's own
+  // show/hide breakpoint exactly, so desktop (where the button never renders)
+  // gets no extra, unnecessary space.
+  @media screen and (width <= 760px) {
+    &__header {
+      padding-top: calc(56px + env(safe-area-inset-top));
+    }
   }
 
   &__toggle {
