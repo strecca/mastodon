@@ -277,14 +277,17 @@ class SwitchingColumnsArea extends PureComponent {
       // Reads the real "Index page" admin setting (Admin > Server Settings >
       // Branding) instead of a hardcoded path, so it's admin-editable and
       // persisted through Mastodon's own Setting.landing_page, not just
-      // hardcoded here. 'about' and any unrecognized/default value fall
-      // through to /guide, since /about itself now redirects there anyway.
+      // hardcoded here. 'about' and any unrecognized/default value (the
+      // actual default is 'guide') fall through to /landing -- the
+      // consolidated Live Posts / Daily Digest / Community front door --
+      // instead of the bare /guide explainer page. /guide itself is
+      // unchanged and still reachable from /landing and the nav panel.
       if (trendsEnabled && landingPage === "trends") {
         rootRedirect = "/explore";
       } else if (localLiveFeedAccess === "public" && landingPage === "local_feed") {
         rootRedirect = "/public/local";
       } else {
-        rootRedirect = "/guide";
+        rootRedirect = "/landing";
       }
     }
 
