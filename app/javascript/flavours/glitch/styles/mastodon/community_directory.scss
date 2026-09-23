@@ -1,4 +1,6 @@
 // app/javascript/flavours/glitch/styles/mastodon/community_directory.scss
+@use "theme/light";
+
 //
 // Styles for the Community Directory system:
 // - community-hub: public landing page with category cards
@@ -5257,6 +5259,18 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 .fd {
+  // Real embedded components (Live Posts via StatusListContainer, etc.) read
+  // the site's own shared --color-* tokens for their text/link/background
+  // colors, which are theme-adaptive -- dark by default (see
+  // styles/mastodon/theme/index.scss's html:not([data-color-scheme]) rule)
+  // regardless of the reader's own browser/OS preference. This page's
+  // background is fixed light, so without this, dark-theme-resolved light
+  // text becomes invisible against it (confirmed live 2026-09-23: post text
+  // needed to be selected/highlighted to be read at all). Re-applying the
+  // real light theme's own token set, scoped to just this page, fixes every
+  // embedded component consistently instead of patching one color at a time.
+  @include light.tokens;
+
   --fd-paper: #fdf9f1;
   --fd-paper-raised: #ffffff;
   --fd-ink: #2b2620;
