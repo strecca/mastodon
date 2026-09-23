@@ -3,12 +3,18 @@ import { Link } from "react-router-dom";
 import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
 
 /**
- * Translatable link pair shown on every category list/detail page: back to
- * /landing (all community categories) alongside a companion link to the
- * live Mastodon feed (/public/local) — the live feed's own Firehose column
- * (features/firehose/index.jsx) already links back to /community, but
- * nothing linked the other direction, making the live feed effectively
- * undiscoverable from anywhere in the Community section.
+ * Translatable link shown on every category list/detail page, back to
+ * /landing -- the consolidated front door (Live Posts, Daily Digest, and
+ * every category, all on one page as of the front-door redesign).
+ *
+ * Used to be a link pair: this one plus a separate "See Live Posts" link to
+ * /public/local, the old standalone (differently styled) live feed page.
+ * Dropped 2026-09-23: since /landing now has Live Posts on it too, a second
+ * link to a *different* page showing the *same* thing was no longer a real
+ * alternative destination, just a second, inconsistent-looking path to
+ * content already one click away -- confirmed live: someone using the "See
+ * Live Posts" link visibly dropped out of the new page's styling into the
+ * old one.
  *
  * variant='cta'  → "Click here to see All Community Categories"  (entry lists / detail pages)
  * variant='back' → "← All Community Categories"                  (page-level back links)
@@ -25,12 +31,6 @@ export const CategoryBannerLink = ({ variant = "cta" }) => {
     <div className="community-category-banner-row">
       <Link to="/landing" className="community-category-banner">
         {label}
-      </Link>
-      <Link
-        to="/public/local"
-        className="community-category-banner community-category-banner--posts"
-      >
-        {sc("nav_see_live_posts", "See Live Posts")}
       </Link>
     </div>
   );

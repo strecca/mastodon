@@ -438,9 +438,7 @@
 // ═══════════════════════════════════════════════════════════════
 
 // ── Category return banner (top of entry detail page) ────────────────────────
-// Rendered as a row: generic "see all categories" link + a companion link to
-// the live Mastodon feed, so the feed is always one tap away from anywhere
-// in the Community section (previously only reachable via /landing).
+// Link back to /landing, the consolidated front door.
 
 .community-category-banner-row {
   display: flex;
@@ -448,13 +446,9 @@
   border-bottom: 1px solid var(--color-border-primary);
 
   .community-category-banner {
-    flex: 1 1 50%;
+    flex: 1 1 auto;
     border-bottom: none;
     min-width: 0;
-  }
-
-  .community-category-banner:first-child {
-    border-right: 1px solid var(--color-border-primary);
   }
 }
 
@@ -478,23 +472,6 @@
     background: var(--color-bg-hover, rgba(0, 0, 0, 0.05));
     text-decoration: none;
     color: var(--color-text-brand);
-  }
-
-  // Solid background + explicit white text — not colored text on a themed
-  // background — so this reads clearly on the plainer light-theme mobile
-  // rendering too, not just the dark theme it was designed against. Same
-  // reasoning as .community-category-banner--specific below.
-  &--posts {
-    background: var(--color-accent, #6364ff);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-
-    &:hover {
-      background: var(--color-accent, #6364ff);
-      color: #fff;
-      filter: brightness(1.12);
-    }
   }
 
   // Same brand color as the list page's .ch-* ColumnHeader — this banner
