@@ -3,7 +3,8 @@
 
 //
 // Styles for the Community Directory system:
-// - community-hub: public landing page with category cards
+// - .fd: the front door (/landing) -- Live Posts, Daily Digest, and the
+//   category grid on one page. See features/community_landing/index.jsx.
 // - community-entry-list: browsable list with search + filters
 // - community-entry-card: preview card in list view
 // - community-entry-detail: full detail page
@@ -13,110 +14,6 @@
 // - cd-field-editor: individual field config in builder
 // - cd-preview: live preview of the form layout
 // - community-directory-admin: admin landing page
-
-// ═══════════════════════════════════════════════════════════════
-//  Community Hub — public landing page with category cards
-// ═══════════════════════════════════════════════════════════════
-
-.community-hub {
-  padding: 20px;
-
-  &__intro {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-
-  &__title {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin: 0 0 8px;
-  }
-
-  &__subtitle {
-    font-size: 15px;
-    color: var(--color-text-secondary);
-    margin: 0;
-  }
-
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  &__card {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px;
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border-primary);
-    border-radius: 8px;
-    text-decoration: none;
-    color: inherit;
-    transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease;
-
-    &:hover,
-    &:focus-visible {
-      border-color: var(--color-border-brand);
-      box-shadow: 0 2px 8px var(--color-shadow-primary);
-    }
-  }
-
-  &__card-icon {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--color-bg-brand-softest);
-    color: var(--color-text-brand);
-
-    svg {
-      width: 24px;
-      height: 24px;
-      fill: currentColor;
-    }
-  }
-
-  &__card-body {
-    flex: 1;
-    min-width: 0;
-  }
-
-  &__card-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-text-primary);
-    margin: 0 0 2px;
-  }
-
-  &__card-desc {
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    margin: 0 0 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  &__card-count {
-    font-size: 12px;
-    color: var(--color-text-tertiary);
-  }
-
-  &__card-action {
-    flex-shrink: 0;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--color-text-brand);
-  }
-}
 
 // ═══════════════════════════════════════════════════════════════
 //  Entry List — browsable list with search and filtered results
@@ -5622,7 +5519,6 @@
     color: rgba(255, 255, 255, 0.6);
   }
 }
-
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Landing Settings admin form  (.cl-landing-settings)

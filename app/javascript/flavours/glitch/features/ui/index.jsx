@@ -105,7 +105,6 @@ import {
   AccountEdit,
   AccountEditFeaturedTags,
   Quotes,
-  CommunityHub,
   CommunityMaintenance,
   CommunityDirectory,
   CommunityDirectoryFormBuilder,
@@ -422,7 +421,13 @@ class SwitchingColumnsArea extends PureComponent {
             />
             <WrappedRoute path="/directory" component={Directory} content={children} />
             {/* Community Directory */}
-            <WrappedRoute path="/community" exact component={CommunityHub} content={children} />
+            {/* /community used to render its own separate, older category-grid
+                page (CommunityHub) -- now retired in favor of /landing, the
+                consolidated front door, so every path into "browse all
+                categories" lands on the same page. Client-side redirect (not
+                just a server-side one) so this also fires for in-app link
+                clicks, which never leave the SPA router. */}
+            <Redirect from="/community" to="/landing" exact />
             <WrappedRoute
               path="/community_maintenance"
               exact

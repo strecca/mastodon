@@ -285,9 +285,6 @@ export function CommunityDirectoryAdmin() {
       throw err;
     });
 }
-export function CommunityHub() {
-  return import("../../community_hub");
-}
 
 export function CommunityDirectory() {
   return import("../../community_directory");
