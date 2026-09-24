@@ -123,16 +123,17 @@ const CommunityLanding = ({ identity }) => {
   // so the board (below the Live Posts pane) has actually laid out before
   // scrollIntoView runs.
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log("[fd-debug] mount effect, hash=", window.location.hash, "el=", document.getElementById("fd-board"));
-    if (window.location.hash === "#fd-board") {
-      const timeout = setTimeout(() => {
-        // eslint-disable-next-line no-console
-        console.log("[fd-debug] scrolling, el=", document.getElementById("fd-board"));
-        scrollToBoard();
-      }, 0);
-      return () => clearTimeout(timeout);
-    }
+    if (window.location.hash !== "#fd-board") return;
+    // Live Posts (and its images) are still loading in above the board at
+    // mount time, so the board's position keeps shifting downward for a
+    // bit -- confirmed live 2026-09-24: a single scrollIntoView right on
+    // mount landed on wherever the board happened to be before that
+    // content finished growing the page, not its final position.
+    // Re-issuing the scroll a few times is simpler and more robust than
+    // guessing one "safe" delay or hooking into every async content
+    // source (timeline fetch, digest fetch, image loads) individually.
+    const timeouts = [0, 300, 800, 1500].map((ms) => setTimeout(scrollToBoard, ms));
+    return () => timeouts.forEach(clearTimeout);
   }, [scrollToBoard]);
 
   const digestContent = digest
