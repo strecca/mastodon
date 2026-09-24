@@ -42,6 +42,14 @@ export type AppThunkApi = Pick<GetThunkAPI<AppThunkConfig>, "getState" | "dispat
 interface AppThunkOptions<Arg> {
   useLoadingBar?: boolean;
   condition?: (arg: Arg, { getState }: { getState: AppThunkApi["getState"] }) => boolean;
+  // Passed through to rejectWithValue on failure -- errorsMiddleware reads
+  // these off the rejected action's payload to decide whether to show the
+  // generic error alert (including the "Members Only" 401 banner). Use for
+  // secondary/background data (thread context, trending tags, featured
+  // tags, ...) that legitimately fails for signed-out users without the
+  // primary content being gated.
+  skipAlert?: boolean;
+  skipNotFound?: boolean;
 }
 
 // Type definitions for the sync thunks.
@@ -138,7 +146,7 @@ export function createAsyncThunk<Arg = void, Returned = void>(
         });
       } catch (error) {
         return rejectWithValue(
-          { error },
+          { error, skipAlert: options.skipAlert, skipNotFound: options.skipNotFound },
           {
             useLoadingBar: options.useLoadingBar,
           },
@@ -271,6 +279,8 @@ export function createDataLoadingThunk<LoadDataResult, Args extends ArgsType, Re
     {
       useLoadingBar: thunkOptions?.useLoadingBar ?? true,
       condition: thunkOptions?.condition,
+      skipAlert: thunkOptions?.skipAlert,
+      skipNotFound: thunkOptions?.skipNotFound,
     },
   );
 }

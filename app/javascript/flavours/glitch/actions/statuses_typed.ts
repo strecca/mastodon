@@ -21,6 +21,12 @@ export const fetchContext = createDataLoadingThunk(
       prefetchOnly,
     };
   },
+  // A signed-out visitor opening any public post 401s here (confirmed live
+  // 2026-09-24) -- this instance requires auth for thread context even
+  // though the post itself loads fine anonymously. That's not the same as
+  // the post being members-only, so don't show the generic "Members Only"
+  // alert over what's otherwise a normal, successful page view.
+  { skipAlert: true },
 );
 
 export const completeContextRefresh = createAction<{ statusId: string }>("status/context/complete");
