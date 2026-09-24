@@ -4,8 +4,16 @@ import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
 
 /**
  * Translatable link shown on every category list/detail page, back to
- * /landing -- the consolidated front door (Live Posts, Daily Digest, and
- * every category, all on one page as of the front-door redesign).
+ * /landing's category board -- the consolidated front door (Live Posts,
+ * Daily Digest, and every category, all on one page as of the front-door
+ * redesign).
+ *
+ * Links to /landing#fd-board, not bare /landing: the front door opens on
+ * its Live Posts pane by default, so a bare /landing link meant this
+ * "see all categories" link actually required a *second* click (the
+ * Community tab) to reach the categories -- confirmed live 2026-09-24.
+ * community_landing/index.jsx scrolls straight to the #fd-board section on
+ * mount when it sees this hash, the same jump its own Community tab does.
  *
  * Used to be a link pair: this one plus a separate "See Live Posts" link to
  * /public/local, the old standalone (differently styled) live feed page.
@@ -29,7 +37,7 @@ export const CategoryBannerLink = ({ variant = "cta" }) => {
 
   return (
     <div className="community-category-banner-row">
-      <Link to="/landing" className="community-category-banner">
+      <Link to="/landing#fd-board" className="community-category-banner">
         {label}
       </Link>
     </div>

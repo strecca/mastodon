@@ -287,7 +287,7 @@ const Firehose = ({ feedType, multiColumn }) => {
       </ColumnHeader>
 
       <div className="account__section-headline">
-        <NavLink exact to="/landing">
+        <NavLink exact to="/landing#fd-board">
           <FormattedMessage
             tagName="div"
             id="firehose.community"

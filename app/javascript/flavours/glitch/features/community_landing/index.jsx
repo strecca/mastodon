@@ -116,6 +116,19 @@ const CommunityLanding = ({ identity }) => {
     document.getElementById("fd-board")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
+  // "Click here to see All Community Categories" (category_banner_link.jsx)
+  // links here with a #fd-board hash so the board is reachable in one
+  // click from any category page, instead of landing on Live Posts first
+  // and requiring a second click on the Community tab. Deferred one tick
+  // so the board (below the Live Posts pane) has actually laid out before
+  // scrollIntoView runs.
+  useEffect(() => {
+    if (window.location.hash === "#fd-board") {
+      const timeout = setTimeout(scrollToBoard, 0);
+      return () => clearTimeout(timeout);
+    }
+  }, [scrollToBoard]);
+
   const digestContent = digest
     ? (digestLocale === "it" ? digest.content_it : digest.content_en) ||
       digest.content_it ||
