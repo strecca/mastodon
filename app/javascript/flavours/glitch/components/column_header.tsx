@@ -44,13 +44,31 @@ const BackButton: React.FC<{
   const columnIndex = useColumnIndexContext();
 
   const handleBackClick = useCallback(() => {
-    // TEMPORARY diagnostic (2026-09-24) -- remove once the real-device
-    // back-button issue is understood. Blocking alert() so we can tell,
-    // definitively, whether the tap ever reaches this handler at all.
-    // eslint-disable-next-line no-alert
-    alert(`back-button tapped. fromMastodon=${String(history.location.state?.fromMastodon)}`);
     if (history.location.state?.fromMastodon) {
+      // goBack() relies on the browser's real native session-history stack
+      // actually having an earlier entry to return to -- which can go out
+      // of sync with our own location.state.fromMastodon flag (e.g. a
+      // page reload, such as the "check for updates" button, keeps the
+      // reloaded entry's state but resets what's actually behind it in
+      // the tab's history). When that happens goBack() silently does
+      // nothing: no error, no navigation, no console output -- confirmed
+      // live on a real device 2026-09-24. If nothing actually navigates
+      // within 300ms, fall back to an explicit destination instead of
+      // leaving the user stuck.
+      let backSucceeded = false;
+      const unlisten = history.listen(() => {
+        backSucceeded = true;
+        unlisten();
+      });
+
       history.goBack();
+
+      setTimeout(() => {
+        if (!backSucceeded) {
+          unlisten();
+          history.push("/");
+        }
+      }, 300);
     } else {
       history.push("/");
     }
