@@ -4,7 +4,21 @@ module AccountOwnedConcern
   extend ActiveSupport::Concern
 
   included do
-    before_action :authenticate_user!, if: -> { limited_federation_mode? && request.format != :json }
+    # Used to require login here whenever limited_federation_mode? was on,
+    # conflating two unrelated things under one setting: which remote
+    # servers this instance federates with (still enforced separately, via
+    # DomainAllow/DomainBlock -- untouched by this change), and whether a
+    # signed-out visitor can view an account/status permalink page.
+    # set_account below always resolves a LOCAL account (Account.local.find
+    # / Account.find_local!, never overridden to allow remote lookups by
+    # any controller that includes this concern -- remote accounts/statuses
+    # are handled entirely by separate Redirect::* controllers), so this
+    # gate was only ever blocking local content. miacivezza.com has no
+    # federation to protect here regardless (confirmed 2026-09-24: this
+    # instance is intentionally divorced from the fediverse, local-only)
+    # -- removed so a permalink to a local post/profile matches what the
+    # front door's Live Posts feed already shows signed-out visitors,
+    # instead of dead-ending in a login wall.
     before_action :set_account, if: :account_required?
     before_action :check_account_approval, if: :account_required?
     before_action :check_account_suspension, if: :account_required?
