@@ -4278,10 +4278,24 @@ a.account__display-name {
     text-decoration: underline;
   }
 
+  // The adjacent column title (e.g. "Posts and replies") is plain,
+  // non-interactive text, not part of this button -- so a phone treats a
+  // tap landing on or near it as text selection (offering Copy, etc.)
+  // instead of a click, and the tap never reaches this button at all.
+  // Confirmed on a real device 2026-09-24: only a tap precisely isolated
+  // on the tiny arrow itself registered. Was padding-inline-end: 5px,
+  // leaving almost no buffer before that text starts -- widened
+  // considerably, and the icon itself is enlarged below, so there is
+  // real, forgiving finger space around the arrow rather than a sliver.
   &.compact {
-    padding-inline-end: 5px;
+    padding-inline-end: 16px;
     flex: 0 0 auto;
   }
+}
+
+.column-back-button__icon {
+  width: 28px;
+  height: 28px;
 }
 
 .react-toggle {
