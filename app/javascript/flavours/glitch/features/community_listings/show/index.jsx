@@ -330,7 +330,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
 
       <div className="cl-detail">
         <Link to="/community_listings" className="cl-detail__back">
-          ← All Listings
+          ← Community Listings
         </Link>
 
         {statusLabel && <div className="cl-detail__status-banner">{statusLabel}</div>}

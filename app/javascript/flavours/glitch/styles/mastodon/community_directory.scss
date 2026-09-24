@@ -4575,15 +4575,30 @@
 .cl-detail {
   padding: 16px;
 
+  // Matches the colored "specific category" banner every generator-category
+  // detail page uses (.community-category-banner--specific in
+  // entry_detail.jsx) -- this page is hand-built, not generated, so it
+  // never picked up that treatment and was left as a small plain-text
+  // link (13px, no background) until David flagged the inconsistency live
+  // on mobile 2026-09-24. #5a7a1a is Listings' own brand color, same as
+  // its tile on /landing and its ColumnHeader on the list page
+  // (.ch-listings). Bleeds to the edges of .cl-detail's own 16px padding,
+  // same technique as the front-door header image fill.
   &__back {
-    display: inline-block;
-    color: var(--color-accent, #6364ff);
-    font-size: 13px;
-    margin-bottom: 12px;
+    display: block;
+    background: #5a7a1a;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    padding: 12px 20px;
+    margin: -16px -16px 16px;
     text-decoration: none;
 
     &:hover {
-      text-decoration: underline;
+      filter: brightness(1.12);
+      color: #fff;
+      text-decoration: none;
     }
   }
 
