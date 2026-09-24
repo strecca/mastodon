@@ -1,4 +1,5 @@
 import { Children, cloneElement, createContext, forwardRef, useCallback, useContext } from "react";
+import { useLocation } from "react-router-dom";
 
 import classNames from "classnames";
 
@@ -8,6 +9,7 @@ import { useAppSelector } from "@/flavours/glitch/store";
 import { Footer } from "flavours/glitch/features/custom_homepage/components/footer";
 import { Header } from "flavours/glitch/features/custom_homepage/components/header";
 import { CollapsibleNavigationPanel } from "flavours/glitch/features/navigation_panel";
+import { isCommunityRoute } from "flavours/glitch/utils/community_routes";
 
 import { useBreakpoint } from "../hooks/useBreakpoint";
 import {
@@ -89,10 +91,14 @@ export const ColumnsArea = forwardRef<
     (state.settings as Record<{ columns: List<Record<Column>> }>).get("columns"),
   );
   const isModalOpen = useAppSelector((state) => !state.modal.get("stack").isEmpty());
+  const location = useLocation();
+  const panelsClassName = classNames("columns-area__panels", {
+    "columns-area__panels--fd": isCommunityRoute(location.pathname),
+  });
 
   if (minimalShell) {
     return (
-      <div className="columns-area__panels">
+      <div className={panelsClassName}>
         <div className="columns-area__panels__main">
           <Header />
 
@@ -110,7 +116,7 @@ export const ColumnsArea = forwardRef<
 
   if (singleColumn) {
     return (
-      <div className="columns-area__panels">
+      <div className={panelsClassName}>
         <div className="columns-area__panels__pane columns-area__panels__pane--compositional">
           <div className="columns-area__panels__pane__inner">
             {renderComposePanel && <ComposePanel />}

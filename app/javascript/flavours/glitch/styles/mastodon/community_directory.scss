@@ -23,6 +23,31 @@
   --fd-hills: #5b4b8a;
 }
 
+// Applied to the whole 3-column app shell (compose panel + nav panel +
+// routed content, see columns_area.tsx) whenever the current route is part
+// of the Community section -- see utils/community_routes.ts for exactly
+// which routes qualify. One choke point instead of a per-page opt-in, so a
+// newly added Community page is themed automatically instead of silently
+// being missed (as happened with /community_listings, 2026-09-24).
+// Redefines the standard --color-* tokens rather than every individual
+// component's rules; anything nested inside (including .fd and
+// .community-entry-list/.community-entry-detail below) inherits these
+// through the normal CSS custom-property cascade.
+.columns-area__panels--fd {
+  @include fd-palette;
+
+  background: var(--fd-paper);
+  color: var(--fd-ink);
+
+  --color-bg-primary: var(--fd-paper-raised);
+  --color-bg-secondary: var(--fd-line);
+  --color-text-primary: var(--fd-ink);
+  --color-text-secondary: var(--fd-ink-soft);
+  --color-text-tertiary: var(--fd-ink-soft);
+  --color-text-brand: var(--fd-terracotta);
+  --color-border-primary: var(--fd-line);
+}
+
 // Styles for the Community Directory system:
 // - .fd: the front door (/landing) -- Live Posts, Daily Digest, and the
 //   category grid on one page. See features/community_landing/index.jsx.
