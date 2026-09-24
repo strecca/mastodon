@@ -16,6 +16,10 @@ module Admin
         landing_see_posts_btn
         landing_login_link
       ],
+      'Landing Page — Category Board' => %w[
+        landing_board_title
+        landing_board_subtitle
+      ],
       'Landing Page — Join CTA' => %w[
         landing_join_heading
         landing_join_feature_1

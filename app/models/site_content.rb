@@ -49,6 +49,10 @@ class SiteContent < ApplicationRecord
     'landing_see_posts_btn'   => 'See Community Posts',
     'landing_login_link'      => 'Log in →',
 
+    # ── Landing page: category board ──
+    'landing_board_title'     => 'Civezza & Liguria Community Bulletin Board',
+    'landing_board_subtitle'  => 'Every kind of local post in one place — tap a category to open it.',
+
     # ── Landing page: join CTA ──
     'landing_join_heading'    => 'Join the MiaCivezza.com Community',
     'landing_join_feature_1'  => 'Make your own posts, add Civezza Community Events, Favorite Restaurants, and list items for Sale, Giveaway, Trade or Searching For — plus Properties for Sale, Rent or short-term Vacation stays.',

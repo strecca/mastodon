@@ -284,8 +284,13 @@ const CommunityLanding = ({ identity }) => {
 
       <section className="fd__board" id="fd-board">
         <div className="fd__board-head">
-          <h2>The Board</h2>
-          <p>Every kind of local post in one place — tap a category to open it.</p>
+          <h2>{sc("landing_board_title", "Civezza & Liguria Community Bulletin Board")}</h2>
+          <p>
+            {sc(
+              "landing_board_subtitle",
+              "Every kind of local post in one place — tap a category to open it.",
+            )}
+          </p>
         </div>
         <div className="fd__tiles">
           {TILE_DEFS.map(({ to, Icon, key, bg }) => (
