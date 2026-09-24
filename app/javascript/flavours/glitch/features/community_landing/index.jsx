@@ -156,13 +156,15 @@ const CommunityLanding = ({ identity }) => {
       </Helmet>
 
       <header className="fd__header">
-        <img
-          className="fd__header-logo"
-          src="/miacivezza-sun-small.png"
-          alt="MiaCivezza.com"
-          width="600"
-          height="303"
-        />
+        <div className="fd__header-image-wrap">
+          <img
+            className="fd__header-logo"
+            src="/miacivezza-sun-small.png"
+            alt="MiaCivezza.com"
+            width="600"
+            height="303"
+          />
+        </div>
         <p className="fd__header-tagline">
           {sc("landing_hero_tagline", "Explore everything our community has to offer")}
         </p>

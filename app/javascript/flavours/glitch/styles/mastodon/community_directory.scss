@@ -5220,8 +5220,20 @@
 
   &__header {
     text-align: center;
-    padding-top: 12px;
     margin-bottom: 16px;
+  }
+
+  // Fills the cream space around the logo image so it reads as one
+  // continuous banner rather than a small image floating on plain
+  // background. Color is a real sample of the image's own top-edge pixels
+  // (#0073ef), not a guess -- confirmed live 2026-09-24 against
+  // public/miacivezza-sun-small.png. Bleeds to the edges of .fd's own
+  // padding (20px top, 16px sides) via negative margin, then re-pads
+  // inside so the image doesn't touch the edge.
+  &__header-image-wrap {
+    background: #0073ef;
+    margin: -20px -16px 0;
+    padding: 24px 16px 20px;
   }
 
   &__header-logo {
@@ -5251,7 +5263,7 @@
   // show/hide breakpoint exactly, so desktop (where the button never renders)
   // gets no extra, unnecessary space.
   @media screen and (width <= 760px) {
-    &__header {
+    &__header-image-wrap {
       padding-top: calc(56px + env(safe-area-inset-top));
     }
   }
