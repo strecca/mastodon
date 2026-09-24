@@ -1,7 +1,28 @@
 // app/javascript/flavours/glitch/styles/mastodon/community_directory.scss
 @use "theme/light";
 
-//
+// Shared front-door palette: warm cream page + white raised cards + warm ink
+// text + 4 accent hues (sea/terracotta/olive/hills, one per category
+// grouping). Originally built for .fd (the front door itself); reused
+// wherever the rest of the Community section should carry the same
+// identity. @include light.tokens first so every real embedded component
+// (post text, avatars, etc.) reads a real light --color-* base regardless
+// of the visitor/member's own theme -- see the note above .fd below for why
+// that matters.
+@mixin fd-palette {
+  @include light.tokens;
+
+  --fd-paper: #fdf9f1;
+  --fd-paper-raised: #ffffff;
+  --fd-ink: #2b2620;
+  --fd-ink-soft: #6b6258;
+  --fd-line: #e8dfcd;
+  --fd-sea: #2f6690;
+  --fd-terracotta: #c1502e;
+  --fd-olive: #6b8f47;
+  --fd-hills: #5b4b8a;
+}
+
 // Styles for the Community Directory system:
 // - .fd: the front door (/landing) -- Live Posts, Daily Digest, and the
 //   category grid on one page. See features/community_landing/index.jsx.
@@ -18,6 +39,30 @@
 // ═══════════════════════════════════════════════════════════════
 //  Entry List — browsable list with search and filtered results
 // ═══════════════════════════════════════════════════════════════
+
+// The rest of the Community section (list + detail, shared across all 5
+// generator categories) carries the same warm cream identity as the front
+// door -- its own consistent "storefront" branding, forced regardless of
+// the visitor/member's own theme choice, same reasoning as .fd itself.
+// Implemented by redefining the standard --color-* tokens these pages
+// already build on (see feedback_css_var_audit in project memory), so
+// every nested component (cards, filters, forms) picks it up without
+// individually rewriting each one.
+.community-entry-list,
+.community-entry-detail {
+  @include fd-palette;
+
+  background: var(--fd-paper);
+  color: var(--fd-ink);
+
+  --color-bg-primary: var(--fd-paper-raised);
+  --color-bg-secondary: var(--fd-line);
+  --color-text-primary: var(--fd-ink);
+  --color-text-secondary: var(--fd-ink-soft);
+  --color-text-tertiary: var(--fd-ink-soft);
+  --color-text-brand: var(--fd-terracotta);
+  --color-border-primary: var(--fd-line);
+}
 
 .community-entry-list {
   &__add-bar {
@@ -5133,27 +5178,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 .fd {
-  // Real embedded components (Live Posts via StatusListContainer, etc.) read
-  // the site's own shared --color-* tokens for their text/link/background
-  // colors, which are theme-adaptive -- dark by default (see
-  // styles/mastodon/theme/index.scss's html:not([data-color-scheme]) rule)
-  // regardless of the reader's own browser/OS preference. This page's
-  // background is fixed light, so without this, dark-theme-resolved light
-  // text becomes invisible against it (confirmed live 2026-09-23: post text
-  // needed to be selected/highlighted to be read at all). Re-applying the
-  // real light theme's own token set, scoped to just this page, fixes every
-  // embedded component consistently instead of patching one color at a time.
-  @include light.tokens;
-
-  --fd-paper: #fdf9f1;
-  --fd-paper-raised: #ffffff;
-  --fd-ink: #2b2620;
-  --fd-ink-soft: #6b6258;
-  --fd-line: #e8dfcd;
-  --fd-sea: #2f6690;
-  --fd-terracotta: #c1502e;
-  --fd-olive: #6b8f47;
-  --fd-hills: #5b4b8a;
+  @include fd-palette;
 
   width: 100%;
   box-sizing: border-box;
