@@ -123,8 +123,14 @@ const CommunityLanding = ({ identity }) => {
   // so the board (below the Live Posts pane) has actually laid out before
   // scrollIntoView runs.
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log("[fd-debug] mount effect, hash=", window.location.hash, "el=", document.getElementById("fd-board"));
     if (window.location.hash === "#fd-board") {
-      const timeout = setTimeout(scrollToBoard, 0);
+      const timeout = setTimeout(() => {
+        // eslint-disable-next-line no-console
+        console.log("[fd-debug] scrolling, el=", document.getElementById("fd-board"));
+        scrollToBoard();
+      }, 0);
       return () => clearTimeout(timeout);
     }
   }, [scrollToBoard]);
