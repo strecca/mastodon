@@ -44,6 +44,11 @@ const BackButton: React.FC<{
   const columnIndex = useColumnIndexContext();
 
   const handleBackClick = useCallback(() => {
+    // TEMPORARY diagnostic (2026-09-24) -- remove once the real-device
+    // back-button issue is understood. Blocking alert() so we can tell,
+    // definitively, whether the tap ever reaches this handler at all.
+    // eslint-disable-next-line no-alert
+    alert(`back-button tapped. fromMastodon=${String(history.location.state?.fromMastodon)}`);
     if (history.location.state?.fromMastodon) {
       history.goBack();
     } else {
