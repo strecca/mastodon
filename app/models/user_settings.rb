@@ -43,7 +43,13 @@ class UserSettings
     setting :display_media, default: 'default', in: %w(hide_all default show_all)
     setting :auto_play, default: false
     setting :emoji_style, default: 'auto', in: %w(auto native twemoji)
-    setting :color_scheme, default: 'auto', in: %w(auto light dark)
+    # Default changed 'auto' -> 'light' as part of the front-door redesign
+    # (2026-09-24): style continuity between the signed-out front door
+    # (which always forces the light palette via .fd) and the signed-in
+    # Member view. Only affects members who have never touched Preferences
+    # > Appearance > Color scheme -- an explicit choice (including 'auto')
+    # always wins.
+    setting :color_scheme, default: 'light', in: %w(auto light dark)
     setting :contrast, default: 'auto', in: %w(auto high)
   end
 
