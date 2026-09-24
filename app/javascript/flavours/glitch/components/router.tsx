@@ -5,7 +5,7 @@ import type { useLocation } from "react-router";
 import { Router as OriginalRouter, useHistory } from "react-router";
 
 import type { LocationDescriptor, LocationDescriptorObject, Path } from "history";
-import { createBrowserHistory } from "history";
+import { createBrowserHistory, parsePath } from "history";
 
 import { layoutFromWindow } from "flavours/glitch/is_mobile";
 import { isDevelopment } from "flavours/glitch/utils/environment";
@@ -43,7 +43,20 @@ function normalizePath(
   path: HistoryPath,
   state?: LocationState,
 ): LocationDescriptorObject<LocationState> {
-  const location = typeof path === "string" ? { pathname: path } : { ...path };
+  // parsePath, not { pathname: path }: a plain string path can carry a hash
+  // or query string (e.g. "/landing#fd-board"), and history's push/replace
+  // don't re-split an object-form pathname field that still has one baked
+  // in -- react-router's own location state ends up with the raw
+  // "/landing#fd-board" as its pathname (matching no route, 404) even
+  // though window.location itself parses it correctly, which is what made
+  // this so confusing to track down. Confirmed live 2026-09-24.
+  // @types/history's parsePath() return type claims a `state` field that it
+  // never actually sets (confirmed at runtime) -- both branches cast to our
+  // own location type rather than history's loosely-typed one.
+  const location: LocationDescriptorObject<LocationState> =
+    typeof path === "string"
+      ? ({ ...parsePath(path) } as LocationDescriptorObject<LocationState>)
+      : ({ ...path } as LocationDescriptorObject<LocationState>);
 
   if (location.state === undefined && state !== undefined) {
     location.state = state;
