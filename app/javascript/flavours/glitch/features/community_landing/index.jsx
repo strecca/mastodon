@@ -171,7 +171,15 @@ const CommunityLanding = ({ identity }) => {
         <div className="fd__header-image-wrap">
           <img
             className="fd__header-logo"
-            src="/miacivezza-sun-small.png"
+            // Cache-busting query param, not just the bare path: the
+            // service worker caches every image request cache-first for 7
+            // days (see service_worker/caching.ts), entirely separate from
+            // the JS/CSS build-id update mechanism -- a plain static path
+            // like this one can silently keep serving a stale/bad cached
+            // response for up to a week after any change, unaffected by
+            // "check for updates". Confirmed live 2026-09-25. Bump this
+            // version marker any time this specific image file changes.
+            src="/miacivezza-sun-small.png?v=2"
             alt="MiaCivezza.com"
             width="600"
             height="303"
