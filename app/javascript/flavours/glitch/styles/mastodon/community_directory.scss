@@ -39,6 +39,13 @@
   background: var(--fd-paper);
   color: var(--fd-ink);
 
+  // David compared this against the site's own Roboto stack in a live
+  // side-by-side mockup 2026-09-25 and preferred it (larger, easier to
+  // read) -- real self-hosted file already vendored upstream, just never
+  // @used anywhere in this fork until now (see styles/fonts/inter.scss).
+  // Falls back to the site's normal stack, never bare sans-serif.
+  font-family: Inter, mastodon-font-sans-serif, sans-serif;
+
   --color-bg-primary: var(--fd-paper-raised);
   --color-bg-secondary: var(--fd-line);
   --color-text-primary: var(--fd-ink);
