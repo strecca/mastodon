@@ -28,13 +28,21 @@ const formatDateEn = (isoDate) => {
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
-// Render a paragraph, converting [text](url) markdown links and bare https:// URLs.
+// Render a paragraph, converting [text](url) markdown links, bare https://
+// URLs, and **bold** markdown spans (the digest generator's output uses
+// **bold** for emphasis, which was previously left as literal asterisks --
+// confirmed live 2026-09-25, fixed on both this page and the identical
+// front-door pane in community_landing/index.jsx).
 // Links to /newsletters/ get a prominent gold button style.
-const LINK_RE = /(\[[^\]]+\]\(https?:\/\/[^)]+\)|https?:\/\/\S+)/;
+const LINK_RE = /(\[[^\]]+\]\(https?:\/\/[^)]+\)|https?:\/\/\S+|\*\*[^*]+\*\*)/;
 
 const renderParagraph = (text) => {
   const parts = text.split(LINK_RE);
   return parts.map((part, i) => {
+    const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
+    if (boldMatch) {
+      return <strong key={i}>{boldMatch[1]}</strong>;
+    }
     const mdMatch = part.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/);
     if (mdMatch) {
       const [, linkText, url] = mdMatch;

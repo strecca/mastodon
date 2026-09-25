@@ -59,11 +59,16 @@ const TILE_DEFAULTS = {
   stories: { label: "Member Stories", desc: "Personal histories · Civezza connections" },
 };
 
-// Converts [text](url) markdown links and bare https:// URLs, same rendering rule as /daily.
-const LINK_RE = /(\[[^\]]+\]\(https?:\/\/[^)]+\)|https?:\/\/\S+)/;
+// Converts [text](url) markdown links, bare https:// URLs, and **bold**
+// spans, same rendering rule as /daily (features/daily_digest/index.jsx).
+const LINK_RE = /(\[[^\]]+\]\(https?:\/\/[^)]+\)|https?:\/\/\S+|\*\*[^*]+\*\*)/;
 const renderParagraph = (text) => {
   const parts = text.split(LINK_RE);
   return parts.map((part, i) => {
+    const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
+    if (boldMatch) {
+      return <strong key={i}>{boldMatch[1]}</strong>;
+    }
     const mdMatch = part.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/);
     if (mdMatch) {
       const [, linkText, url] = mdMatch;
