@@ -5348,75 +5348,14 @@
     }
   }
 
+  // Deliberately no background/border/padding of its own -- .daily-digest
+  // inside (the real masthead design, reused verbatim, see
+  // community_landing/index.jsx) already has its own dark navy framing on
+  // the standalone /daily page, and adding a second cream card around it
+  // here would double-frame it. This wrapper is layout-only.
   &__digest-pane {
-    background: var(--fd-paper-raised);
-    border: 1px solid var(--fd-line);
     border-radius: 14px;
-    padding: 20px 22px;
-  }
-
-  &__digest-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    border-bottom: 2px solid #f2b134;
-    padding-bottom: 8px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-
-  &__digest-title {
-    font-weight: 700;
-    font-size: 17px;
-  }
-
-  &__digest-locale {
-    display: flex;
-    gap: 2px;
-
-    button {
-      font: inherit;
-      font-size: 12px;
-      font-weight: 700;
-      border: 1px solid var(--fd-line);
-      background: var(--fd-paper);
-      color: var(--fd-ink-soft);
-      padding: 4px 9px;
-      cursor: pointer;
-
-      &:first-child {
-        border-radius: 999px 0 0 999px;
-      }
-
-      &:last-child {
-        border-radius: 0 999px 999px 0;
-      }
-
-      &.active {
-        background: var(--fd-ink);
-        border-color: var(--fd-ink);
-        color: #fff;
-      }
-    }
-  }
-
-  &__digest-paragraph {
-    font-size: 14.5px;
-    line-height: 1.7;
-    margin: 0 0 1em;
-  }
-
-  &__digest-empty {
-    font-size: 14px;
-    color: var(--fd-ink-soft);
-    text-align: center;
-    padding: 24px 8px;
-  }
-
-  &__digest-link {
-    color: var(--fd-terracotta);
-    font-weight: 600;
+    overflow: hidden;
   }
 
   &__cta-band {

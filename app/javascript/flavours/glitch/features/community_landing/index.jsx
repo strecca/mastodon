@@ -21,6 +21,20 @@ import { expandCommunityTimeline, refreshCommunityTimeline } from "../../actions
 import { TimelineWakeRefresh } from "../ui/components/timeline_wake_refresh";
 import StatusListContainer from "../ui/containers/status_list_container";
 
+// Same formatting as the real /daily page (features/daily_digest/index.jsx)
+// -- reused here verbatim so the two stay visually identical.
+const formatDate = (isoDate) => {
+  if (!isoDate) return "";
+  const d = new Date(`${isoDate}T00:00:00`);
+  return d.toLocaleDateString("it-IT", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+};
+
+const formatDateEn = (isoDate) => {
+  if (!isoDate) return "";
+  const d = new Date(`${isoDate}T00:00:00`);
+  return d.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+};
+
 // Backgrounds darkened from the Cinque Terre (Manarola) palette for WCAG AA white-text contrast
 const TILE_DEFS = [
   { to: "/community_listings", Icon: TagIcon, key: "listings", bg: "#5A7A1A" },
@@ -53,22 +67,30 @@ const renderParagraph = (text) => {
     const mdMatch = part.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/);
     if (mdMatch) {
       const [, linkText, url] = mdMatch;
+      const isNewsletter = url.includes("/newsletters/");
       return (
-        <a key={i} href={url} className="fd-digest__link" target="_blank" rel="noopener noreferrer">
+        <a
+          key={i}
+          href={url}
+          className={isNewsletter ? "daily-digest__newsletter-btn" : "daily-digest__inline-link"}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {linkText}
         </a>
       );
     }
     if (part.match(/^https?:\/\/\S+$/)) {
+      const isNewsletter = part.includes("/newsletters/");
       return (
         <a
           key={i}
           href={part}
-          className="fd-digest__link"
+          className={isNewsletter ? "daily-digest__newsletter-btn" : "daily-digest__inline-link"}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {part}
+          {isNewsletter ? "Leggi la newsletter" : part}
         </a>
       );
     }
@@ -249,50 +271,117 @@ const CommunityLanding = ({ identity }) => {
 
         {pane === "digest" && (
           <div className="fd__digest-pane">
-            <div className="fd__digest-head">
-              <span className="fd__digest-title">MiaCivezza — Notiziario della Comunità</span>
-              <div className="fd__digest-locale">
-                <button
-                  type="button"
-                  className={digestLocale === "it" ? "active" : ""}
-                  onClick={() => setDigestLocale("it")}
-                >
-                  IT
-                </button>
-                <button
-                  type="button"
-                  className={digestLocale === "en" ? "active" : ""}
-                  onClick={() => setDigestLocale("en")}
-                >
-                  EN
-                </button>
+            {/* Reuses the real /daily page's own masthead/article design
+                (features/daily_digest/index.jsx, styles in
+                components.scss) verbatim, by className, rather than a
+                simplified version -- David preferred the original's dark
+                navy + gold newspaper treatment over the plain cream
+                version this pane used to have. Inter (applied to the
+                whole Community section) still governs the body text; the
+                masthead name and drop-cap keep their own explicit serif
+                font-family, same as the real page. */}
+            <div className="daily-digest">
+              <div className="daily-digest__masthead">
+                <div className="daily-digest__masthead-rule daily-digest__masthead-rule--top" />
+                <div className="daily-digest__masthead-title">
+                  <span className="daily-digest__masthead-name">MiaCivezza</span>
+                  <span className="daily-digest__masthead-subtitle">
+                    {digestLocale === "it" ? "Notiziario della Comunità" : "Community Daily"}
+                  </span>
+                </div>
+                <div className="daily-digest__masthead-rule daily-digest__masthead-rule--bottom" />
+
+                <div className="daily-digest__masthead-meta">
+                  <span className="daily-digest__date">
+                    {digest &&
+                      (digestLocale === "it" ? formatDate(digest.date) : formatDateEn(digest.date))}
+                  </span>
+
+                  <div className="daily-digest__locale-toggle">
+                    <button
+                      type="button"
+                      className={`daily-digest__locale-btn${digestLocale === "it" ? " active" : ""}`}
+                      onClick={() => setDigestLocale("it")}
+                    >
+                      IT
+                    </button>
+                    <span className="daily-digest__locale-sep">|</span>
+                    <button
+                      type="button"
+                      className={`daily-digest__locale-btn${digestLocale === "en" ? " active" : ""}`}
+                      onClick={() => setDigestLocale("en")}
+                    >
+                      EN
+                    </button>
+                  </div>
+                </div>
+                <div className="daily-digest__masthead-rule daily-digest__masthead-rule--thin" />
+              </div>
+
+              <div className="daily-digest__body">
+                {digestLoading && (
+                  <div className="daily-digest__loading">
+                    {digestLocale === "it" ? "Caricamento in corso…" : "Loading…"}
+                  </div>
+                )}
+
+                {!digestLoading && digestError === "no_digest" && (
+                  <div className="daily-digest__empty">
+                    <p className="daily-digest__empty-headline">
+                      {digestLocale === "it"
+                        ? "Notiziario non ancora disponibile per questa data."
+                        : "No digest available for this date yet."}
+                    </p>
+                    <p className="daily-digest__empty-note">
+                      {digestLocale === "it"
+                        ? "Il notiziario viene generato ogni mattina alle 7:00 ora italiana."
+                        : "The digest is generated each morning at 7:00 AM Italy time."}
+                    </p>
+                  </div>
+                )}
+                {!digestLoading && digestError === "error" && (
+                  <div className="daily-digest__empty">
+                    <p>
+                      {digestLocale === "it"
+                        ? "Errore durante il caricamento. Riprova più tardi."
+                        : "Error loading digest. Please try again later."}
+                    </p>
+                  </div>
+                )}
+
+                {!digestLoading && !digestError && digestParagraphs.length > 0 && (
+                  <div className="daily-digest__article">
+                    {digest?.article_count > 0 && (
+                      <div className="daily-digest__dateline">
+                        {digestLocale === "it"
+                          ? `IMPERIA — Basato su ${digest.article_count} eventi comunitari`
+                          : `IMPERIA — Based on ${digest.article_count} community events`}
+                      </div>
+                    )}
+                    <div className="daily-digest__columns">
+                      {digestParagraphs.map((p, i) => (
+                        <p key={i} className="daily-digest__paragraph">
+                          {renderParagraph(p)}
+                        </p>
+                      ))}
+                    </div>
+                    {digest?.generated_at && (
+                      <div className="daily-digest__footer">
+                        {digestLocale === "it" ? "Generato da intelligenza artificiale · " : "AI-generated · "}
+                        <a href="https://miacivezza.com" className="daily-digest__footer-link">
+                          miacivezza.com
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 
-            {digestLoading && <div className="fd__digest-empty">Loading…</div>}
-
-            {!digestLoading && digestError === "no_digest" && (
-              <div className="fd__digest-empty">
-                Today's Notiziario isn't ready yet — it's generated each morning at 7:00 Italy time.
-              </div>
-            )}
-            {!digestLoading && digestError === "error" && (
-              <div className="fd__digest-empty">
-                Couldn't load today's digest right now. Please try again shortly.
-              </div>
-            )}
-
             {!digestLoading && !digestError && digestParagraphs.length > 0 && (
-              <>
-                {digestParagraphs.map((p, i) => (
-                  <p key={i} className="fd__digest-paragraph">
-                    {renderParagraph(p)}
-                  </p>
-                ))}
-                <div className="fd__see-all">
-                  <Link to="/daily">Read past editions →</Link>
-                </div>
-              </>
+              <div className="fd__see-all">
+                <Link to="/daily">Read past editions →</Link>
+              </div>
             )}
           </div>
         )}
