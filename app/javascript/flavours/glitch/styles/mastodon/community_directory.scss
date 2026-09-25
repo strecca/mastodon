@@ -5469,6 +5469,35 @@
     }
   }
 
+  // Quick way back to Live Posts/Daily Digest from the board -- landing
+  // here (e.g. via the #fd-board anchor jump from a category page's back
+  // link) scrolls the real toggle out of view above, with no way back to
+  // it short of scrolling all the way up. David's call 2026-09-25:
+  // simpler than a sticky/scroll-tracking bar, just two direct links.
+  &__board-quicklinks {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+
+    button {
+      font: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--fd-sea);
+      background: var(--fd-paper-raised);
+      border: 1px solid var(--fd-line);
+      border-radius: 999px;
+      padding: 7px 14px;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--fd-line);
+        color: var(--fd-ink);
+      }
+    }
+  }
+
   &__board-foot {
     display: flex;
     justify-content: center;

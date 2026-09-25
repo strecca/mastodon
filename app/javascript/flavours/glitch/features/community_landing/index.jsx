@@ -116,6 +116,18 @@ const CommunityLanding = ({ identity }) => {
     document.getElementById("fd-board")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
+  // Quick-jump links under the board heading (see fd__board-head below) --
+  // added 2026-09-25 because landing on the board (e.g. via the #fd-board
+  // anchor jump from a category page's back link) scrolls the toggle row
+  // itself out of view, with no way back to Live Posts/Daily Digest short
+  // of manually scrolling all the way up. Simpler than a sticky/tracking
+  // bar: just set the pane and scroll to the top, same as picking it from
+  // the real toggle would do.
+  const jumpToPane = useCallback((newPane) => {
+    setPane(newPane);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   // "Click here to see All Community Categories" (category_banner_link.jsx)
   // links here with a #fd-board hash so the board is reachable in one
   // click from any category page, instead of landing on Live Posts first
@@ -291,6 +303,14 @@ const CommunityLanding = ({ identity }) => {
               "Every kind of local post in one place — tap a category to open it.",
             )}
           </p>
+          <div className="fd__board-quicklinks">
+            <button type="button" onClick={() => jumpToPane("live")}>
+              ↑ Live Posts
+            </button>
+            <button type="button" onClick={() => jumpToPane("digest")}>
+              ↑ Daily Digest
+            </button>
+          </div>
         </div>
         <div className="fd__tiles">
           {TILE_DEFS.map(({ to, Icon, key, bg }) => (
