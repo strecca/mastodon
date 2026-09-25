@@ -125,7 +125,17 @@ const CommunityLanding = ({ identity }) => {
   // the real toggle would do.
   const jumpToPane = useCallback((newPane) => {
     setPane(newPane);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Same fix as scrollToBoard below: the pane's content (especially a
+    // long Daily Digest post) hasn't finished rendering at the moment this
+    // fires, so the page is still growing taller for a bit -- a single
+    // scrollTo(0) landed partway down a long digest post instead of at its
+    // first paragraph, confirmed live 2026-09-25. Re-issuing catches the
+    // final, settled position instead of guessing one delay. This is a
+    // plain click handler, not an effect, so there's no cleanup to return
+    // -- the click is a one-off user action, not a mount that can re-fire.
+    [0, 300, 800, 1500].forEach((ms) => {
+      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), ms);
+    });
   }, []);
 
   // "Click here to see All Community Categories" (category_banner_link.jsx)
