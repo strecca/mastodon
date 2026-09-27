@@ -327,6 +327,7 @@ export const fetchCollectionsCreatedByAccount = createDataLoadingThunk(
   async ({ collections }, { dispatch }) => {
     await fetchAccountsForCollectionPreview(collections, dispatch);
   },
+  { skipAlert: true },
 );
 
 export const fetchCollectionsFeaturingAccount = createDataLoadingThunk(
@@ -335,6 +336,7 @@ export const fetchCollectionsFeaturingAccount = createDataLoadingThunk(
   async ({ collections }, { dispatch }) => {
     await fetchAccountsForCollectionPreview(collections, dispatch);
   },
+  { skipAlert: true },
 );
 
 export const fetchCollection = createDataLoadingThunk(

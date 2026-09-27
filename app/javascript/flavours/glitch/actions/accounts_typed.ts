@@ -112,6 +112,7 @@ export const fetchEndorsedAccounts = createDataLoadingThunk(
     dispatch(importFetchedAccounts(data));
     return data;
   },
+  { skipAlert: true },
 );
 
 export const fetchAccounts = createDataLoadingThunk(
