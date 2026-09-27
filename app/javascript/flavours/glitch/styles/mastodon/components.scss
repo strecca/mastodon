@@ -4996,6 +4996,22 @@ a.status-card {
   z-index: 2;
   outline: 0;
 
+  // Below 760px, .nav-panel-fab ("Language & More Links") is fixed to the
+  // top-right of the viewport, independent of page content -- on any page
+  // whose ColumnHeader has its own right-aligned button(s) (e.g. the
+  // "hide/show all media" toggle), that button sits in the same physical
+  // space as the FAB, confirmed live 2026-09-27. On desktop the language
+  // switcher is a normal docked element in the nav panel, not an overlay,
+  // so it never collides -- this is mobile-only, matching the FAB's own
+  // breakpoint. Same clearance value already proven for the front door's
+  // header (community_directory.scss's fd__header-image-wrap) -- pushes
+  // the header down as a whole (margin, not padding) rather than
+  // stretching it, since this is a normal in-flow element (position:
+  // relative), not fixed/sticky.
+  @media screen and (width <= 760px) {
+    margin-top: calc(56px + env(safe-area-inset-top));
+  }
+
   &__title-wrapper {
     display: flex;
     flex-grow: 1;
