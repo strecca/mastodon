@@ -82,12 +82,25 @@ class DailyDigestService
     it_text = call_claude_with_retries(italian_prompt(date, events)) { |text| validate_article!(text, language: 'Italian') }
     en_text = call_claude_with_retries(translation_prompt(it_text)) { |text| validate_translation!(text, source_length: it_text.length) }
 
+    ongoing = fetch_ongoing_events(date)
+    it_text = "#{it_text}\n\n#{ongoing_paragraph(ongoing, locale: :it)}" if ongoing.any?
+    en_text = "#{en_text}\n\n#{ongoing_paragraph(ongoing, locale: :en)}" if ongoing.any?
+
     digest = CommunityDailyDigest.find_or_initialize_by(digest_date: date)
     digest.content_it    = it_text
     digest.content_en    = en_text
     digest.article_count = events.size
     digest.generated_at  = Time.current
     digest.save!
+
+    # Mark these events as covered so tomorrow's fetch_events excludes them --
+    # a long-running event shouldn't get a fresh AI-narrated mention every
+    # day it happens to still fall in the lookahead window. Once it's been
+    # announced once, it either drops out entirely (single-day/no end_date)
+    # or graduates to the terse "Ongoing Events" line via fetch_ongoing_events
+    # below, which is independent of this flag.
+    events.update_all(digest_announced_at: Time.current) # rubocop:disable Rails/SkipsModelValidations
+
     digest
   end
 
@@ -97,8 +110,40 @@ class DailyDigestService
     CommunityEvent
       .where(status: :approved, auto_imported: true)
       .where(event_date: date..LOOKAHEAD_DAYS.days.from_now(date))
+      .where(digest_announced_at: nil)
       .order(event_date: :asc)
       .limit(30)
+  end
+
+  # Events already underway (started before today) that haven't ended yet.
+  # Independent of digest_announced_at -- a long-running event whose start
+  # date was already in the past when it was imported never qualifies for
+  # fetch_events at all (event_date < date fails that range), so it needs
+  # its own path onto the digest rather than depending on ever having been
+  # "announced" there first.
+  def fetch_ongoing_events(date)
+    CommunityEvent
+      .where(status: :approved, auto_imported: true)
+      .where.not(end_date: nil)
+      .where('event_date < ? AND end_date >= ?', date, date)
+      .order(end_date: :asc)
+      .limit(20)
+  end
+
+  def ongoing_paragraph(events, locale:)
+    if locale == :it
+      items = events.map { |e| "#{e.event_name} (ancora in corso fino al #{fmt_date(e.end_date, :it)})" }
+      "**Eventi in corso:** #{items.join('; ')}."
+    else
+      items = events.map { |e| "#{e.event_name} (still running through #{fmt_date(e.end_date, :en)})" }
+      "**Ongoing Events:** #{items.join('; ')}."
+    end
+  end
+
+  def fmt_date(date, locale)
+    I18n.l(date.to_date, format: :long, locale: locale)
+  rescue I18n::ArgumentError, I18n::MissingTranslationData
+    date.to_date.strftime(locale == :it ? '%-d %B %Y' : '%B %-d, %Y')
   end
 
   def fetch_recent_newsletter(date)
