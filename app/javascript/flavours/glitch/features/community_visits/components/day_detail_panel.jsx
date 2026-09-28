@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import CloseIcon from "@/material-icons/400-24px/close.svg?react";
 import EditIcon from "@/material-icons/400-24px/edit.svg?react";
@@ -50,7 +51,13 @@ export const DayDetailPanel = ({ date, visits, onClose, onEdit }) => {
 
   const todayIso = new Date().toISOString().slice(0, 10);
 
-  return (
+  // Portalled to document.body -- rendered inline, this backdrop's
+  // position: fixed is contained by .columns-area__panels__main's
+  // `container: column / inline-size` (implicit containment is a spec side
+  // effect of container-type), so inset: 0 measures against that content
+  // column instead of the real viewport. Same fix as community_directory's
+  // entry_detail.jsx lightbox and community_events' EventDayPanel.
+  return createPortal(
     <div
       className="cv-modal-backdrop"
       onClick={handleBackdropClick}
@@ -145,6 +152,7 @@ export const DayDetailPanel = ({ date, visits, onClose, onEdit }) => {
           })}
         </ul>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

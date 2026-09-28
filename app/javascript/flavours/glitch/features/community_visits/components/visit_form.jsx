@@ -1,6 +1,7 @@
 // visit_form.jsx — create / edit modal for a community visit
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useAppDispatch } from "flavours/glitch/store";
 import { createVisit, updateVisit } from "flavours/glitch/actions/community_visits";
 import CloseIcon from "@/material-icons/400-24px/close.svg?react";
@@ -96,7 +97,10 @@ export const VisitForm = ({ visit, onClose, onSaved, myPeopleCount = 0 }) => {
     }
   };
 
-  return (
+  // Portalled to document.body -- see day_detail_panel.jsx in this same
+  // directory for why (position: fixed containment side effect of
+  // .columns-area__panels__main's container-query setup).
+  return createPortal(
     <div className="cv-modal-backdrop" onClick={onClose}>
       <div
         className="cv-modal"
@@ -230,6 +234,7 @@ export const VisitForm = ({ visit, onClose, onSaved, myPeopleCount = 0 }) => {
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

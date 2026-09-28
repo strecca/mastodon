@@ -3,6 +3,7 @@
 // ce-* CSS namespace, amber/golden colour scheme.
 
 import { useState, useEffect, useMemo, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { Helmet } from "@unhead/react/helmet";
 import { useIntl, defineMessages } from "react-intl";
@@ -220,7 +221,16 @@ const EventDayPanel = ({ date, events, onClose, accountId }) => {
 
   if (!date || !events) return null;
 
-  return (
+  // Portalled straight to document.body. Rendered inline (as a descendant of
+  // .columns-area__panels__main), this backdrop's position: fixed is
+  // contained by that ancestor's `container: column / inline-size` --
+  // implicit containment is a spec-mandated side effect of container-type,
+  // see entry_detail.jsx's lightbox for the same fix applied earlier. The
+  // backdrop then only covers the main content column's box instead of the
+  // real viewport, leaving the nav sidebar undimmed and, depending on that
+  // box's height relative to the modal, can push the modal card out of the
+  // visible area entirely.
+  return createPortal(
     <div
       className="cv-modal-backdrop"
       onClick={handleBackdropClick}
@@ -297,7 +307,8 @@ const EventDayPanel = ({ date, events, onClose, accountId }) => {
           })}
         </ul>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 

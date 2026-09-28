@@ -1,6 +1,7 @@
 // notify_friends_modal.jsx — send a friend_ping to connected visitors or My People group
 
 import { useState, useEffect, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { useAppDispatch, useAppSelector } from "flavours/glitch/store";
 import { notifyFriends } from "flavours/glitch/actions/community_visits";
 import CloseIcon from "@/material-icons/400-24px/close.svg?react";
@@ -108,7 +109,10 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
     ? "Your My People group is empty. Add members below to notify them."
     : "No connections have announced overlapping visits yet. They'll get an automatic notification when they do.";
 
-  return (
+  // Portalled to document.body -- see day_detail_panel.jsx in this same
+  // directory for why (position: fixed containment side effect of
+  // .columns-area__panels__main's container-query setup).
+  return createPortal(
     <div className="cv-modal-backdrop" onClick={onClose}>
       <div
         className="cv-modal"
@@ -219,6 +223,7 @@ export const NotifyFriendsModal = ({ visit, onClose }) => {
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
