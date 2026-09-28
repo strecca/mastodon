@@ -49,10 +49,13 @@ module Scrapers
       dates = parse_italian_date_range(date_text)
       return nil unless dates
 
-      # Skip if fully in the past, or if start date is implausibly old
-      # (guards against find_date_text picking up a past-edition date from page text)
+      # Skip if fully in the past, or -- for an ambiguous single-date match
+      # only -- if the start date is implausibly old (guards against
+      # find_date_text picking up a past-edition date from page text). An
+      # explicit "Dal X al Y" range is unambiguous even when X is months
+      # ago, since that's just a genuinely long-running event/exhibition.
       return nil if dates[:end] < Date.today
-      return nil if dates[:start] < (Date.today - 7)
+      return nil if dates[:source] != :range && dates[:start] < (Date.today - 7)
 
       location = extract_location(doc, url)
       description = extract_description(doc) || title

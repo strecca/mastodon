@@ -42,8 +42,11 @@ module Scrapers
       dates = extract_event_date(full_text, pub_date)
       return nil unless dates
 
+      # Stale-start guard is skipped for an explicit "Dal X al Y" range match
+      # (source: :range) -- that's an unambiguous long-running event, not the
+      # regex latching onto an unrelated date on the page.
       return nil if dates[:end] < Date.today
-      return nil if dates[:start] < (Date.today - 7)
+      return nil if dates[:source] != :range && dates[:start] < (Date.today - 7)
 
       location = extract_location(full_text) || 'Imperia'
 

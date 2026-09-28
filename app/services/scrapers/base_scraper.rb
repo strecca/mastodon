@@ -89,6 +89,10 @@ module Scrapers
       t = text.downcase.strip.gsub(/\s+/, ' ')
 
       # Range: "dal 29 maggio al 31 maggio 2026" or "29 maggio - 1 giugno 2026"
+      # Tagged source: :range -- both ends are explicitly stated by the site
+      # itself, so a start date far in the past is legitimate (a long-running
+      # exhibition/market) rather than a sign the regex grabbed the wrong
+      # date. Callers should skip any "start too old" guard for this source.
       range_re = /(?:dal?\s+)?(?:\w+\s+)?(\d{1,2})\s+(\w+)(?:\s+(\d{4}))?\s+(?:al?|-|–)\s+(?:\w+\s+)?(\d{1,2})\s+(\w+)\s+(\d{4})/
       if (m = t.match(range_re))
         year    = m[6].to_i
@@ -96,7 +100,8 @@ module Scrapers
         e_month = ITALIAN_MONTHS[m[5]] or return nil
         s_year  = m[3].present? ? m[3].to_i : year
         return { start: Date.new(s_year, s_month, m[1].to_i),
-                 end:   Date.new(year,   e_month, m[4].to_i) }
+                 end:   Date.new(year,   e_month, m[4].to_i),
+                 source: :range }
       end
 
       # Single day with year: "29 maggio 2026" (optional weekday prefix)
@@ -104,11 +109,14 @@ module Scrapers
       if (m = t.match(single_re))
         month = ITALIAN_MONTHS[m[2]] or return nil
         d = Date.new(m[3].to_i, month, m[1].to_i)
-        return { start: d, end: d }
+        return { start: d, end: d, source: :single }
       end
 
       # Single day without year: "domenica 12 luglio", "12 luglio"
       # Assume current year; roll to next year if the date is more than 7 days past.
+      # No source: :range here -- ambiguous, could be the regex latching onto
+      # an unrelated date elsewhere on the page, so callers should still
+      # guard against an implausibly old start.
       month_names = ITALIAN_MONTHS.keys.join('|')
       yearless_re = /(?:\w+\s+)?(\d{1,2})\s+(#{month_names})\b/
       if (m = t.match(yearless_re))
@@ -119,7 +127,7 @@ module Scrapers
           return nil
         end
         candidate = Date.new(Date.today.year + 1, month, m[1].to_i) if candidate < Date.today - 7
-        return { start: candidate, end: candidate }
+        return { start: candidate, end: candidate, source: :single }
       end
 
       nil

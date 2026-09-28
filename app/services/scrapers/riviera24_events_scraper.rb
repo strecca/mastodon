@@ -99,9 +99,12 @@ module Scrapers
       dates = extract_event_date(combined, pub_date)
       return nil unless dates
 
-      # Drop events that are entirely in the past
+      # Drop events that are entirely in the past. The stale-start guard is
+      # skipped for an explicit "Dal X al Y" range match (source: :range) --
+      # that's an unambiguous long-running event, not the regex latching
+      # onto an unrelated date on the page.
       return nil if dates[:end] < Date.today
-      return nil if dates[:start] < (Date.today - 7)
+      return nil if dates[:source] != :range && dates[:start] < (Date.today - 7)
 
       # Town appears in Riviera24 article titles ("Imperia, ..." / "A Sanremo ...")
       # and as the first word of the article body in bold. Search title first.
