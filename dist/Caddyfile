@@ -2,6 +2,14 @@ miacivezza.com {
 	@healthcheck path /health
 	log_skip @healthcheck
 
+	# Compress text responses (HTML/CSS/JS/JSON) before sending -- found
+	# 2026-09-29 that this was never configured, so every response (JS
+	# bundles included, ~2MB uncompressed on a fresh page load) went out
+	# byte-for-byte uncompressed. Caddy skips already-compressed formats
+	# (images, fonts, media) automatically, so this only affects text
+	# assets, exactly the ones that dominate initial page weight.
+	encode zstd gzip
+
 	# Access logging, added 2026-09-06 -- closes an observability gap found
 	# during a scanning investigation: Rails' own request log never records
 	# remote_ip, so there was no way to attribute web traffic to a source IP
