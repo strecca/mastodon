@@ -42,10 +42,21 @@ miacivezza.com {
 		file_server
 	}
 
+	# dial_timeout/response_header_timeout only, added 2026-09-29 -- deliberately
+	# no read_timeout/write_timeout here. These bound how long Caddy waits for
+	# the connection to open and for the initial response (the WebSocket
+	# upgrade handshake), not the lifetime of the connection after that --
+	# streaming clients are meant to sit open and mostly silent for a long
+	# time, and a read/write timeout would kill those legitimately-idle
+	# connections instead of just catching a genuinely dead upstream.
 	handle /api/v1/streaming* {
 		reverse_proxy localhost:4000 {
 			header_up Upgrade {http.upgrade}
 			header_up Connection {http.upgrade}
+			transport http {
+				dial_timeout 5s
+				response_header_timeout 30s
+			}
 		}
 	}
 
@@ -53,6 +64,10 @@ miacivezza.com {
 		reverse_proxy localhost:4000 {
 			header_up Upgrade {http.upgrade}
 			header_up Connection {http.upgrade}
+			transport http {
+				dial_timeout 5s
+				response_header_timeout 30s
+			}
 		}
 	}
 
@@ -74,9 +89,18 @@ miacivezza.com {
 		header Cache-Control "no-store"
 	}
 
+	# Same dial_timeout/response_header_timeout reasoning as the streaming
+	# blocks above -- bounds a genuinely hung Rails request (slow query,
+	# stuck external API call) to a fast 502 instead of leaving the visitor
+	# waiting indefinitely, without touching normal long-poll/slow-network
+	# behavior since this only covers time-to-first-response-byte.
 	handle {
 		reverse_proxy localhost:3000 {
 			header_up X-Real-IP {remote_host}
+			transport http {
+				dial_timeout 5s
+				response_header_timeout 30s
+			}
 		}
 	}
 }
