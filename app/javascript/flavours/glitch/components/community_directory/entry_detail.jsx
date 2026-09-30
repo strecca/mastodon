@@ -21,6 +21,7 @@ import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveR
 import { useViewingLocale } from "flavours/glitch/hooks/useViewingLocale";
 import { CategoryBannerLink } from "./category_banner_link";
 import { fieldLabel, translatedValue, optionLabel } from "./translation_helpers";
+import ArrowBackIcon from "@/material-icons/400-24px/arrow_back.svg?react";
 
 const messages = defineMessages({
   edit: { id: "community.detail.edit", defaultMessage: "Edit this entry" },
@@ -229,7 +230,8 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
           className="community-category-banner community-category-banner--specific"
           style={{ "--category-color": CATEGORY_COLORS[categoryKey] }}
         >
-          ← {config.display_name}
+          <ArrowBackIcon className="community-category-banner__arrow community-category-banner__arrow--specific" aria-hidden="true" />
+          {config.display_name}
         </Link>
 
         {/* ── Hero: hills landscape + name/badges/location ── */}

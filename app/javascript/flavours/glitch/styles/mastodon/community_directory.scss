@@ -581,6 +581,14 @@
       color: #fff;
       filter: brightness(1.12);
     }
+
+    // White, not the fixed amber the generic banner uses above -- this
+    // variant sits on an arbitrary per-category accent color, and amber
+    // could lose contrast against some of those; white always matches
+    // this banner's own text color and stays readable on any of them.
+    .community-category-banner__arrow--specific {
+      color: #fff;
+    }
   }
 }
 
