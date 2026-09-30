@@ -76,13 +76,29 @@ class DailyDigestService
   SYSTEM
 
   def generate(date: Date.today)
-    events = fetch_events(date)
-    return nil if events.empty?
-
-    it_text = call_claude_with_retries(italian_prompt(date, events)) { |text| validate_article!(text, language: 'Italian') }
-    en_text = call_claude_with_retries(translation_prompt(it_text)) { |text| validate_translation!(text, source_length: it_text.length) }
-
+    events  = fetch_events(date)
     ongoing = fetch_ongoing_events(date)
+
+    # Only skip the whole edition if there is truly nothing to say. Found
+    # live 2026-09-30: bailing out purely on `events.empty?` meant a day
+    # where every upcoming event already had digest_announced_at set (from
+    # the previous day's coverage) produced NO digest at all, even though
+    # events were still genuinely ongoing -- the scheduler "succeeded" in
+    # 0.004s without ever calling Claude, and the site showed "not
+    # available for this date" for a date that should have had an edition.
+    return nil if events.empty? && ongoing.empty?
+
+    if events.any?
+      it_text = call_claude_with_retries(italian_prompt(date, events)) { |text| validate_article!(text, language: 'Italian') }
+      en_text = call_claude_with_retries(translation_prompt(it_text)) { |text| validate_translation!(text, source_length: it_text.length) }
+    else
+      # Nothing new entered the lookahead window today -- skip the Claude
+      # call entirely (nothing to narrate) and let a short deterministic
+      # intro plus the Ongoing Events paragraph carry the whole edition.
+      it_text = no_new_events_intro(date, locale: :it)
+      en_text = no_new_events_intro(date, locale: :en)
+    end
+
     it_text = "#{it_text}\n\n#{ongoing_paragraph(ongoing, locale: :it)}" if ongoing.any?
     en_text = "#{en_text}\n\n#{ongoing_paragraph(ongoing, locale: :en)}" if ongoing.any?
 
@@ -99,7 +115,7 @@ class DailyDigestService
     # announced once, it either drops out entirely (single-day/no end_date)
     # or graduates to the terse "Ongoing Events" line via fetch_ongoing_events
     # below, which is independent of this flag.
-    events.update_all(digest_announced_at: Time.current) # rubocop:disable Rails/SkipsModelValidations
+    events.update_all(digest_announced_at: Time.current) if events.any? # rubocop:disable Rails/SkipsModelValidations
 
     digest
   end
@@ -144,6 +160,15 @@ class DailyDigestService
     I18n.l(date.to_date, format: :long, locale: locale)
   rescue I18n::ArgumentError, I18n::MissingTranslationData
     date.to_date.strftime(locale == :it ? '%-d %B %Y' : '%B %-d, %Y')
+  end
+
+  def no_new_events_intro(date, locale:)
+    formatted = fmt_date(date, locale)
+    if locale == :it
+      "**#{formatted}** — Nessun nuovo evento in programma per oggi, ma la comunità continua a muoversi."
+    else
+      "**#{formatted}** — No new events on the calendar today, but the community keeps moving."
+    end
   end
 
   def fetch_recent_newsletter(date)
