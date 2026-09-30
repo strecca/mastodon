@@ -4611,8 +4611,15 @@
   // its tile on /landing and its ColumnHeader on the list page
   // (.ch-listings). Bleeds to the edges of .cl-detail's own 16px padding,
   // same technique as the front-door header image fill.
+  // Converted from a plain text "←" glyph to display:flex + a real icon
+  // 2026-09-30, same pass that added the arrow_back icon to the generated
+  // categories' back links -- consistency across every "go back" link
+  // site-wide, not just the generator ones.
   &__back {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     background: #5a7a1a;
     color: #fff;
     font-size: 15px;
@@ -4627,6 +4634,13 @@
       color: #fff;
       text-decoration: none;
     }
+  }
+
+  &__back-arrow {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: #fff;
   }
 
   &__status-banner {
