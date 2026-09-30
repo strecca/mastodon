@@ -551,16 +551,26 @@
     color: var(--color-text-brand);
   }
 
-  // Warm amber accent, deliberately brighter/more saturated than the
-  // terracotta text color -- a real icon (not a text "←" glyph) that pops
-  // enough to read clearly as a clickable "go back" affordance on a small
-  // mobile screen. Same amber already used for the calendar day-panel
-  // accent elsewhere in this file, not a new one-off color.
-  &__arrow {
-    width: 22px;
-    height: 22px;
+  // Bold circular back-button badge, matching a reference image David
+  // shared 2026-09-30: a thick-ring circle with a bold rounded arrow
+  // inside, not a bare glyph -- a first pass at just a plain 22px icon
+  // read as too small/subtle. currentColor so badge/icon color is set in
+  // one place per usage below (amber here, white on colored backgrounds).
+  &__arrow-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
+    border: 3px solid currentColor;
+    border-radius: 50%;
     color: #e87d0d;
+  }
+
+  &__arrow {
+    width: 18px;
+    height: 18px;
   }
 
   // Same brand color as the list page's .ch-* ColumnHeader — this banner
@@ -586,7 +596,7 @@
     // variant sits on an arbitrary per-category accent color, and amber
     // could lose contrast against some of those; white always matches
     // this banner's own text color and stays readable on any of them.
-    .community-category-banner__arrow--specific {
+    .community-category-banner__arrow-badge--specific {
       color: #fff;
     }
   }
@@ -4636,10 +4646,23 @@
     }
   }
 
-  &__back-arrow {
-    width: 22px;
-    height: 22px;
+  // Same bold circular badge treatment as the generic category banners --
+  // see community-category-banner__arrow-badge above for why (a plain
+  // small icon read as too subtle per David's reference image).
+  &__back-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
+    border: 3px solid #fff;
+    border-radius: 50%;
+  }
+
+  &__back-arrow {
+    width: 18px;
+    height: 18px;
     color: #fff;
   }
 

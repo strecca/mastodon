@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
-import ArrowBackIcon from "@/material-icons/400-24px/arrow_back.svg?react";
+import ArrowBackIcon from "@/material-icons/400-24px/arrow_back-fill.svg?react";
 
 /**
  * Translatable link shown on every category list/detail page, back to
@@ -36,6 +36,14 @@ import ArrowBackIcon from "@/material-icons/400-24px/arrow_back.svg?react";
  * mobile. The site_content default strings AND the live DB rows (all 8
  * locales) were updated together to drop the leading "← " they'd had before,
  * so this doesn't end up rendering a duplicate arrow.
+ *
+ * Round 2, same day: a plain 22px outline icon still read as too small/subtle
+ * per David's reference image (a bold circular back-button badge -- thick
+ * ring, thick rounded arrow inside, not a bare glyph). No pre-made icon like
+ * that exists in this project's vendored Material Icons subset, so it is
+ * built from the filled arrow_back-fill icon inside a CSS circle badge
+ * (border + fixed size) rather than one custom SVG asset -- see
+ * __arrow-badge in the SCSS.
  */
 export const CategoryBannerLink = ({ variant = "cta" }) => {
   const sc = useSiteContent();
@@ -48,7 +56,11 @@ export const CategoryBannerLink = ({ variant = "cta" }) => {
   return (
     <div className="community-category-banner-row">
       <Link to="/landing#fd-board" className="community-category-banner">
-        {variant === "back" && <ArrowBackIcon className="community-category-banner__arrow" aria-hidden="true" />}
+        {variant === "back" && (
+          <span className="community-category-banner__arrow-badge">
+            <ArrowBackIcon className="community-category-banner__arrow" aria-hidden="true" />
+          </span>
+        )}
         {label}
       </Link>
     </div>

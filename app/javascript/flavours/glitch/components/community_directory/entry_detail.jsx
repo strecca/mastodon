@@ -21,7 +21,7 @@ import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveR
 import { useViewingLocale } from "flavours/glitch/hooks/useViewingLocale";
 import { CategoryBannerLink } from "./category_banner_link";
 import { fieldLabel, translatedValue, optionLabel } from "./translation_helpers";
-import ArrowBackIcon from "@/material-icons/400-24px/arrow_back.svg?react";
+import ArrowBackIcon from "@/material-icons/400-24px/arrow_back-fill.svg?react";
 
 const messages = defineMessages({
   edit: { id: "community.detail.edit", defaultMessage: "Edit this entry" },
@@ -230,7 +230,9 @@ const EntryDetailInner = ({ config, entryId, identity }) => {
           className="community-category-banner community-category-banner--specific"
           style={{ "--category-color": CATEGORY_COLORS[categoryKey] }}
         >
-          <ArrowBackIcon className="community-category-banner__arrow community-category-banner__arrow--specific" aria-hidden="true" />
+          <span className="community-category-banner__arrow-badge community-category-banner__arrow-badge--specific">
+            <ArrowBackIcon className="community-category-banner__arrow" aria-hidden="true" />
+          </span>
           {config.display_name}
         </Link>
 

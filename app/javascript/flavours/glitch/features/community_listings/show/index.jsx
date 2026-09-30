@@ -28,7 +28,7 @@ import {
 } from "flavours/glitch/actions/community_listings";
 import { useCommunityLiveRefresh } from "flavours/glitch/hooks/useCommunityLiveRefresh";
 import { TYPE_LABELS, STATUS_LABELS, CONDITION_LABELS, listingOptionLabel } from "../option_labels";
-import ArrowBackIcon from "@/material-icons/400-24px/arrow_back.svg?react";
+import ArrowBackIcon from "@/material-icons/400-24px/arrow_back-fill.svg?react";
 
 const fmtDate = (iso) =>
   new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
@@ -331,7 +331,9 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
 
       <div className="cl-detail">
         <Link to="/community_listings" className="cl-detail__back">
-          <ArrowBackIcon className="cl-detail__back-arrow" aria-hidden="true" />
+          <span className="cl-detail__back-badge">
+            <ArrowBackIcon className="cl-detail__back-arrow" aria-hidden="true" />
+          </span>
           Community Listings
         </Link>
 
