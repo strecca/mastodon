@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
+import ArrowBackIcon from "@/material-icons/400-24px/arrow_back.svg?react";
 
 /**
  * Translatable link shown on every category list/detail page, back to
@@ -25,19 +26,29 @@ import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
  * old one.
  *
  * variant='cta'  → "Click here to see All Community Categories"  (entry lists / detail pages)
- * variant='back' → "← All Community Categories"                  (page-level back links)
+ * variant='back' → arrow_back icon + "All Community Categories"  (page-level back links)
+ *
+ * The back variant's arrow used to be a literal "←" character baked into the
+ * translatable site-content text itself. Replaced 2026-09-30 with a real
+ * icon, rendered separately from the (now arrow-free) text, so it reads as
+ * an actual clickable affordance rather than a text glyph -- David asked for
+ * this to be more visually obvious as a "go back" action, especially on
+ * mobile. The site_content default strings AND the live DB rows (all 8
+ * locales) were updated together to drop the leading "← " they'd had before,
+ * so this doesn't end up rendering a duplicate arrow.
  */
 export const CategoryBannerLink = ({ variant = "cta" }) => {
   const sc = useSiteContent();
 
   const label =
     variant === "back"
-      ? sc("nav_all_categories", "← All Community Categories")
+      ? sc("nav_all_categories", "All Community Categories")
       : sc("nav_see_all_categories", "Click here to see All Community Categories");
 
   return (
     <div className="community-category-banner-row">
       <Link to="/landing#fd-board" className="community-category-banner">
+        {variant === "back" && <ArrowBackIcon className="community-category-banner__arrow" aria-hidden="true" />}
         {label}
       </Link>
     </div>

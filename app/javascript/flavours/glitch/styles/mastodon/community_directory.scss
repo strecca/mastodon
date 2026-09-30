@@ -551,6 +551,18 @@
     color: var(--color-text-brand);
   }
 
+  // Warm amber accent, deliberately brighter/more saturated than the
+  // terracotta text color -- a real icon (not a text "←" glyph) that pops
+  // enough to read clearly as a clickable "go back" affordance on a small
+  // mobile screen. Same amber already used for the calendar day-panel
+  // accent elsewhere in this file, not a new one-off color.
+  &__arrow {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: #e87d0d;
+  }
+
   // Same brand color as the list page's .ch-* ColumnHeader — this banner
   // is a continuation of that one, carried onto the detail page, not a
   // separate element, so it deliberately duplicates that styling here
