@@ -2,8 +2,11 @@
 
 module Scrapers
   class BaseScraper
-    TIMEOUT    = 15
-    USER_AGENT = 'Mozilla/5.0 (compatible; MiacivezzaBot/1.0; +https://miacivezza.com)'
+    TIMEOUT      = 15
+    USER_AGENT   = 'Mozilla/5.0 (compatible; MiacivezzaBot/1.0; +https://miacivezza.com)'
+    MAX_RETRIES  = 2
+    RETRY_DELAY  = 2 # seconds
+    RETRYABLE_STATUSES = [429, 500, 502, 503, 504].freeze
 
     ITALIAN_MONTHS = {
       'gennaio' => 1, 'febbraio' => 2, 'marzo' => 3, 'aprile' => 4,
@@ -21,7 +24,11 @@ module Scrapers
 
     protected
 
-    def fetch_html(url, max_redirects: 5)
+    # retries counts down from MAX_RETRIES -- retried on transient network
+    # errors (timeout, connection refused, etc.) and on retryable HTTP
+    # statuses (429/5xx), never on a permanent failure like 404 where
+    # trying again would just waste time and get the same answer.
+    def fetch_html(url, max_redirects: 5, retries: MAX_RETRIES)
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl     = (uri.scheme == 'https')
@@ -33,8 +40,9 @@ module Scrapers
       request['Accept']     = 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8'
 
       response = http.request(request)
+      status   = response.code.to_i
 
-      case response.code.to_i
+      case status
       when 200
         encoding = response.type_params['charset'] || 'UTF-8'
         body = response.body.force_encoding(encoding).encode('UTF-8', invalid: :replace, undef: :replace)
@@ -43,42 +51,74 @@ module Scrapers
         return nil if max_redirects.zero?
         location = response['location']
         location = URI.join(url, location).to_s if location && !location.start_with?('http')
-        fetch_html(location, max_redirects: max_redirects - 1) if location
+        fetch_html(location, max_redirects: max_redirects - 1, retries: retries) if location
+      when *RETRYABLE_STATUSES
+        if retries.positive?
+          Rails.logger.warn("[#{self.class.name}] HTTP #{status} for #{url}, retrying (#{retries} left)")
+          sleep RETRY_DELAY
+          fetch_html(url, max_redirects: max_redirects, retries: retries - 1)
+        else
+          Rails.logger.warn("[#{self.class.name}] HTTP #{status} for #{url}, out of retries")
+          nil
+        end
       else
-        Rails.logger.warn("[#{self.class.name}] HTTP #{response.code} for #{url}")
+        Rails.logger.warn("[#{self.class.name}] HTTP #{status} for #{url}")
         nil
       end
     rescue StandardError => e
-      Rails.logger.error("[#{self.class.name}] Fetch error #{url}: #{e.message}")
-      nil
+      if retries.positive?
+        Rails.logger.warn("[#{self.class.name}] Fetch error #{url}: #{e.message}, retrying (#{retries} left)")
+        sleep RETRY_DELAY
+        fetch_html(url, max_redirects: max_redirects, retries: retries - 1)
+      else
+        Rails.logger.error("[#{self.class.name}] Fetch error #{url}: #{e.message}, out of retries")
+        nil
+      end
     end
 
     # Returns a Nokogiri::XML::Document of the RSS feed, or nil on failure.
     # Follows up to max_redirects 3xx responses (e.g. www → CDN redirects).
-    # Callers access items via doc.css('item').
-    def fetch_rss(url, max_redirects: 5)
+    # Callers access items via doc.css('item'). Same retry reasoning as
+    # fetch_html above.
+    def fetch_rss(url, max_redirects: 5, retries: MAX_RETRIES)
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl      = (uri.scheme == 'https')
       http.open_timeout = TIMEOUT
       http.read_timeout = TIMEOUT
       response = http.get(uri.request_uri, 'User-Agent' => USER_AGENT)
+      status   = response.code.to_i
 
-      case response.code.to_i
+      case status
       when 200
         Nokogiri::XML(response.body)
       when 301, 302, 303, 307, 308
         return nil if max_redirects.zero?
         location = response['location']
         location = URI.join(url, location).to_s if location && !location.start_with?('http')
-        fetch_rss(location, max_redirects: max_redirects - 1) if location
+        fetch_rss(location, max_redirects: max_redirects - 1, retries: retries) if location
+      when *RETRYABLE_STATUSES
+        if retries.positive?
+          Rails.logger.warn("[#{self.class.name}] RSS HTTP #{status} for #{url}, retrying (#{retries} left)")
+          sleep RETRY_DELAY
+          fetch_rss(url, max_redirects: max_redirects, retries: retries - 1)
+        else
+          Rails.logger.warn("[#{self.class.name}] RSS HTTP #{status} for #{url}, out of retries")
+          nil
+        end
       else
-        Rails.logger.warn("[#{self.class.name}] RSS HTTP #{response.code} for #{url}")
+        Rails.logger.warn("[#{self.class.name}] RSS HTTP #{status} for #{url}")
         nil
       end
     rescue StandardError => e
-      Rails.logger.error("[#{self.class.name}] RSS error #{url}: #{e.message}")
-      nil
+      if retries.positive?
+        Rails.logger.warn("[#{self.class.name}] RSS error #{url}: #{e.message}, retrying (#{retries} left)")
+        sleep RETRY_DELAY
+        fetch_rss(url, max_redirects: max_redirects, retries: retries - 1)
+      else
+        Rails.logger.error("[#{self.class.name}] RSS error #{url}: #{e.message}, out of retries")
+        nil
+      end
     end
 
     # "Dal 29 Maggio al 31 Maggio 2026", "29 Maggio - 1 Giugno 2026",
