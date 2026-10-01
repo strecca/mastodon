@@ -44,6 +44,13 @@ import ArrowBackIcon from "@/material-icons/400-24px/arrow_back-fill.svg?react";
  * built from the filled arrow_back-fill icon inside a CSS circle badge
  * (border + fixed size) rather than one custom SVG asset -- see
  * __arrow-badge in the SCSS.
+ *
+ * Round 3, 2026-10-01: the badge was gated behind variant === 'back' only,
+ * so every category using the default 'cta' variant (the generator
+ * categories: properties, services, restaurants, artists) had NO arrow at
+ * all -- confirmed live by David pasting the actual rendered HTML from
+ * each category. Badge now renders for both variants; only the text label
+ * still differs between them.
  */
 export const CategoryBannerLink = ({ variant = "cta" }) => {
   const sc = useSiteContent();
@@ -56,11 +63,9 @@ export const CategoryBannerLink = ({ variant = "cta" }) => {
   return (
     <div className="community-category-banner-row">
       <Link to="/landing#fd-board" className="community-category-banner">
-        {variant === "back" && (
-          <span className="community-category-banner__arrow-badge">
-            <ArrowBackIcon className="community-category-banner__arrow" aria-hidden="true" />
-          </span>
-        )}
+        <span className="community-category-banner__arrow-badge">
+          <ArrowBackIcon className="community-category-banner__arrow" aria-hidden="true" />
+        </span>
         {label}
       </Link>
     </div>

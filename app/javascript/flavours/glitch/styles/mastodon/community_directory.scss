@@ -556,32 +556,27 @@
   // inside, not a bare glyph -- a first pass at just a plain 22px icon
   // read as too small/subtle.
   //
-  // All white, everywhere, deliberately -- this used to be amber here and
-  // white on colored backgrounds via currentColor, but that only ever
-  // colored the ring: arrow_back-fill.svg's <path> has no fill="currentColor"
-  // (it has no fill attribute at all, so browsers default it to solid
-  // black), so the arrow itself was always flat black underneath regardless
-  // of the ring's color -- invisible against a white ring, low-contrast
-  // against several category colors. Explicit fill on the icon fixes the
-  // real bug; going fully white everywhere (border-color and fill both)
-  // instead of keeping the amber/white split removes the one case
-  // (the generic cream banner) where black-on-white would otherwise have
-  // been fine but now needs to match everywhere else on purpose.
+  // 2026-10-01: white didn't contrast enough against this banner's own
+  // cream background (confirmed live), so this specific badge -- the one
+  // on the generic "All Community Categories" banner only, not the
+  // colored --specific one below, which stays white deliberately -- is
+  // bright orange instead, and 50% larger per direct request (34px->51px
+  // badge, 18px->27px icon, border scaled to match).
   &__arrow-badge {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    width: 51px;
+    height: 51px;
     flex-shrink: 0;
-    border: 3px solid #fff;
+    border: 4.5px solid #e87d0d;
     border-radius: 50%;
   }
 
   &__arrow {
-    width: 18px;
-    height: 18px;
-    fill: #fff;
+    width: 27px;
+    height: 27px;
+    fill: #e87d0d;
   }
 
   // Same brand color as the list page's .ch-* ColumnHeader — this banner
@@ -596,6 +591,22 @@
     font-weight: 700;
     padding: 10px 20px;
     border-bottom: none;
+
+    // Stays white at the original (non-enlarged) size -- this badge sits
+    // on an arbitrary per-category accent color, already confirmed
+    // working well in white; the orange/enlarged treatment above is
+    // specific to the generic cream banner's contrast problem, not this.
+    .community-category-banner__arrow-badge {
+      width: 34px;
+      height: 34px;
+      border-color: #fff;
+    }
+
+    .community-category-banner__arrow {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
 
     &:hover {
       background: var(--category-color, var(--color-bg-secondary));
