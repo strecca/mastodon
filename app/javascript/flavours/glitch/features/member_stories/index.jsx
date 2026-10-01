@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "@unhead/react/helmet";
 
 import GroupsIcon from "@/material-icons/400-24px/groups.svg?react";
+import ArrowBackIcon from "@/material-icons/400-24px/arrow_back-fill.svg?react";
 
 import { Column } from "flavours/glitch/components/column";
 import { ColumnHeader } from "flavours/glitch/components/column_header";
@@ -63,7 +64,10 @@ const MemberStoriesList = ({ multiColumn }) => {
       <div className="ms-page">
         <div className="ms-hero">
           <Link to="/landing" className="ms-hero__back">
-            ← Community Directory
+            <span className="ms-hero__back-badge">
+              <ArrowBackIcon className="ms-hero__back-arrow" aria-hidden="true" />
+            </span>
+            Community Directory
           </Link>
           <GroupsIcon className="ms-hero__icon" />
           <h2 className="ms-hero__title">Member Stories</h2>

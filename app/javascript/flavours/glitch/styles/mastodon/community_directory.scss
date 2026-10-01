@@ -5779,17 +5779,44 @@
   text-align: center;
   position: relative;
 
+  // Brought up to the same standard as the other category pages'
+  // "All Community Categories" back link 2026-10-01 -- was an 11px text
+  // "←" glyph, which David flagged as reading "unfinished" next to the
+  // new bold orange badge used everywhere else. Same badge, same color,
+  // same size -- see community-category-banner__arrow-badge for the
+  // original and its full reasoning (including the SVG fill-attribute
+  // gotcha, which applies here identically since it is the same icon).
   &__back {
-    display: block;
-    margin-bottom: 4px;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.75);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
     text-decoration: none;
     align-self: flex-start;
+
     &:hover {
-      color: #fff;
       text-decoration: underline;
     }
+  }
+
+  &__back-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 51px;
+    height: 51px;
+    flex-shrink: 0;
+    border: 4.5px solid #e87d0d;
+    border-radius: 50%;
+  }
+
+  &__back-arrow {
+    width: 27px;
+    height: 27px;
+    fill: #e87d0d;
   }
 
   &__icon {
