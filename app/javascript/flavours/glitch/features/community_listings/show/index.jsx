@@ -9,8 +9,8 @@ import { Map as ImmutableMap } from "immutable";
 import { Helmet } from "@unhead/react/helmet";
 
 import { Column } from "flavours/glitch/components/column";
-import { ColumnHeader } from "flavours/glitch/components/column_header";
 import { LoadingIndicator } from "flavours/glitch/components/loading_indicator";
+import { CategoryBannerLink } from "flavours/glitch/components/community_directory/category_banner_link";
 import { useIdentity } from "flavours/glitch/identity_context";
 import { useViewingLocale } from "flavours/glitch/hooks/useViewingLocale";
 import api from "flavours/glitch/api";
@@ -193,7 +193,7 @@ const InterestQueue = ({ interests, listingId, onRefresh }) => {
   );
 };
 
-const CommunityListingsShow = ({ multiColumn, params }) => {
+const CommunityListingsShow = ({ params }) => {
   const dispatch = useAppDispatch();
   const { signedIn, permissions } = useIdentity();
   const isAdmin = !!(permissions & 0x1);
@@ -316,7 +316,7 @@ const CommunityListingsShow = ({ multiColumn, params }) => {
 
   return (
     <Column>
-      <ColumnHeader icon="tag" title="Listing" multiColumn={multiColumn} />
+      <CategoryBannerLink />
       <Helmet>
         <title>{listing.title} · miacivezza</title>
       </Helmet>
