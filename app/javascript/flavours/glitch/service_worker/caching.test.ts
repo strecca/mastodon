@@ -257,6 +257,84 @@ describe("handleFetch", () => {
     expect(deleteSpy).toHaveBeenCalledWith("/");
   });
 
+  test("fetches from the network and caches the response when nothing is cached yet", async () => {
+    const communityCache = new MockCache();
+    const request = createRequest("/api/v1/community_events");
+    const networkResponse = new Response("events", { status: 200 });
+    const putSpy = vi.spyOn(communityCache, "put");
+
+    vi.stubGlobal("caches", {
+      open: vi.fn().mockImplementation((name: string) => {
+        expect(name).toBe("mastodon-community-api");
+        return Promise.resolve(communityCache);
+      }),
+    });
+
+    const fetch = vi.fn().mockResolvedValue(networkResponse);
+    vi.stubGlobal("fetch", fetch);
+
+    const { event, respondWith } = createFetchEvent(request);
+
+    handleFetch(event);
+
+    await expect(respondWith()).resolves.toBe(networkResponse);
+    expect(fetch).toHaveBeenCalledWith(request);
+    expect(putSpy).toHaveBeenCalledWith(request, expect.any(Response));
+  });
+
+  test("serves a cached community API response immediately and refreshes it in the background", async () => {
+    const communityCache = new MockCache();
+    const request = createRequest("/api/v1/community_listings");
+    const cachedResponse = createResponse(now - DAY * 2);
+    const freshResponse = new Response("fresh listings", { status: 200 });
+    const putSpy = vi.spyOn(communityCache, "put");
+
+    communityCache.store.set(request.url, { request, response: cachedResponse });
+
+    vi.stubGlobal("caches", {
+      open: vi.fn().mockResolvedValue(communityCache),
+    });
+
+    const fetch = vi.fn().mockResolvedValue(freshResponse);
+    vi.stubGlobal("fetch", fetch);
+
+    const { event, respondWith, waitUntilMock, waitUntilPromises } = createFetchEvent(request);
+
+    handleFetch(event);
+
+    // The cached response returns immediately -- it does not wait on the
+    // network fetch that refreshes it.
+    await expect(respondWith()).resolves.toBe(cachedResponse);
+    expect(waitUntilMock).toHaveBeenCalled();
+
+    // The background refresh (handed to waitUntil) still runs and updates
+    // the cache for the next visit.
+    await waitUntilPromises();
+    expect(fetch).toHaveBeenCalledWith(request);
+    expect(putSpy).toHaveBeenCalledWith(request, expect.any(Response));
+  });
+
+  test("does not intercept non-GET requests to a community API path", () => {
+    const request = new Request("https://example.com/api/v1/community_events", {
+      method: "POST",
+    });
+    const { event, respondWithMock } = createFetchEvent(request);
+
+    handleFetch(event);
+
+    expect(respondWithMock).not.toHaveBeenCalled();
+  });
+
+  test("does not intercept community API paths outside the allowlist", () => {
+    const { event, respondWithMock } = createFetchEvent(
+      createRequest("/api/v1/community_directory/moderation"),
+    );
+
+    handleFetch(event);
+
+    expect(respondWithMock).not.toHaveBeenCalled();
+  });
+
   test("ignores requests that are not handled by the service worker cache", () => {
     const { event, respondWith, respondWithMock } = createFetchEvent(
       createRequest("/api/v1/timelines/home"),
@@ -358,13 +436,20 @@ function createFetchEvent(request: Request) {
   const respondWith = vi.fn((response: Response | Promise<Response>) => {
     responsePromise = Promise.resolve(response);
   });
+  const waitUntilPromises: Promise<unknown>[] = [];
+  const waitUntil = vi.fn((promise: Promise<unknown>) => {
+    waitUntilPromises.push(promise);
+  });
 
   return {
     event: {
       request,
       respondWith,
+      waitUntil,
     } as unknown as FetchEvent,
     respondWith: () => responsePromise,
     respondWithMock: respondWith,
+    waitUntilMock: waitUntil,
+    waitUntilPromises: () => Promise.all(waitUntilPromises),
   };
 }
