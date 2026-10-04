@@ -131,6 +131,30 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
       rolldownOptions: {
         input: await findEntrypoints(),
         output: {
+          // Found 2026-10-03: with no manualChunks at all, Rolldown's default
+          // algorithm gives every module shared across more than one lazy-
+          // loaded route its own separate chunk -- in practice this meant
+          // hundreds of individual ~300-700 byte files, one per icon SVG and
+          // one per small shared hook/utility, for a single page view. Byte
+          // count was already fine (compression fixed that separately), but
+          // on a real high-latency mobile connection each of those small
+          // files still pays a full round-trip, and that is what was
+          // actually causing "still blank after minutes" on a weak signal --
+          // confirmed by throttled-network testing, not assumed. Consolidate
+          // the two biggest sources of this fragmentation (every icon SVG,
+          // and the long tail of node_modules deps) into two coherent
+          // bundles instead. Locales keep their existing per-language
+          // chunking untouched -- that split is deliberate, so only the
+          // locale actually in use downloads.
+          manualChunks(id) {
+            if (id.includes("/material-icons/")) {
+              return "icons";
+            }
+            if (id.includes("node_modules") && !id.includes("node_modules/@formatjs")) {
+              return "vendor";
+            }
+            return undefined;
+          },
           chunkFileNames({ facadeModuleId, name }) {
             if (!facadeModuleId) return "[name]-[hash].js";
             if (/mastodon\/locales\/[a-zA-Z\-]+\.json/.exec(facadeModuleId)) {
