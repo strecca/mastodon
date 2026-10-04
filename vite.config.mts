@@ -150,6 +150,21 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
             if (id.includes("/material-icons/")) {
               return "icons";
             }
+            // The service worker's web_push_notifications.js genuinely needs
+            // intl-messageformat + lodash (to format push text in the
+            // recipient's locale) -- its only real node_modules dependency.
+            // Giving these their own chunk, separate from the catch-all
+            // "vendor" bucket below, means sw.js never has to import the
+            // whole ~1MB vendor chunk (React, Redux, etc. -- all irrelevant
+            // to a background worker) just to reach this one small need.
+            // Found 2026-10-04 while tracing why installing an updated
+            // service worker could force a vendor re-download.
+            if (
+              id.includes("node_modules/intl-messageformat") ||
+              id.includes("node_modules/lodash")
+            ) {
+              return "lodash-intl";
+            }
             if (id.includes("node_modules") && !id.includes("node_modules/@formatjs")) {
               return "vendor";
             }

@@ -1,7 +1,13 @@
 /// <reference lib="WebWorker" />
 /// <reference types="vite/client" />
 
-import { DAY } from "../utils/time";
+// Deliberately not imported from ../utils/time: that file also imports
+// react-intl for its UI-formatting helpers, and since defineMessages() runs
+// at module scope, a bundler can't tree-shake that import away. Pulling it
+// into the service worker meant any node_modules-wide manualChunks rule
+// (see vite.config.mts) made the whole ~1MB vendor chunk a real dependency
+// of sw.js, just to get this one constant -- found 2026-10-04.
+export const DAY = 1000 * 60 * 60 * 24;
 
 const CACHE_NAME_PREFIX = "mastodon-";
 const CACHE_HEADER_TTL = "x-timestamp";
