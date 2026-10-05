@@ -150,6 +150,22 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
             if (id.includes("/material-icons/")) {
               return "icons";
             }
+            // React/ReactDOM/scheduler get their own chunk, separate from the
+            // long tail of other node_modules deps below. This does NOT
+            // shrink a first-time visitor's total download -- measured
+            // 2026-10-03, same total bytes either way, just split across two
+            // files. The real benefit is on a return visit after a later
+            // deploy: react rarely changes version, so this chunk's hash
+            // usually stays stable across ordinary feature deploys, letting
+            // the browser skip re-downloading it (~43KB gzipped) while still
+            // fetching whatever in "vendor" actually changed.
+            if (
+              id.includes("node_modules/react/") ||
+              id.includes("node_modules/react-dom/") ||
+              id.includes("node_modules/scheduler/")
+            ) {
+              return "react-core";
+            }
             // The service worker's web_push_notifications.js genuinely needs
             // intl-messageformat + lodash (to format push text in the
             // recipient's locale) -- its only real node_modules dependency.
