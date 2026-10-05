@@ -1,116 +1,24 @@
 class Api::V1::CommunityEventsController < Api::BaseController
   CATEGORY_KEY = 'events'
+  MODEL = CommunityEvent
 
-  include CommunityCacheable
-
-  skip_before_action :require_authenticated_user!, only: [:index, :show]
-
-  before_action :require_user!, only: [:create, :update, :destroy]
-  before_action :set_entry, only: [:show, :update, :destroy]
-  before_action :authorize_owner!, only: [:update, :destroy]
-
-  def index
-    sort_col, sort_dir = case params[:sort]
-                         when 'past'    then [:event_date, :desc]
-                         when 'newest'  then [:created_at, :desc]
-                         when 'az'      then [:event_name, :asc]
-                         else                [:event_date, :asc]
-                         end
-
-    result = cached_list do
-      entries = CommunityEvent.includes(:account)
-                              .search(params[:q])
-                              .where(status: :approved)
-                              .order(sort_col => sort_dir)
-                              .select(*list_columns)
-                              .page(params[:page]).per(params[:per_page] || 20)
-
-      { entries: entries.map { |e| serialize(e, detail: false) },
-        total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
-    end
-
-    inject_list_translations(result, 'CommunityEvent')
-    render json: result
-  end
-
-  def show
-    render json: serialize(@entry, detail: true)
-  end
-
-  def create
-    rate_limit_error = check_rate_limit
-    return render json: { error: rate_limit_error }, status: :too_many_requests if rate_limit_error
-
-    entry = CommunityEvent.new(entry_params)
-    entry.account = current_account
-    entry.image_media_ids = validated_media_ids
-    entry.status  = auto_approve? ? :approved : :pending
-
-    if entry.save
-      invalidate_list_cache
-      CommunityDirectoryMailer.entry_submitted(entry, CATEGORY_KEY).deliver_later unless entry.approved?
-      CommunityTranslationWorker.perform_async(entry.class.name, entry.id)
-      CommunityEntryNotifyWorker.perform_async('new_entry', entry.class.name, entry.id, CATEGORY_KEY) if entry.approved?
-      render json: serialize(entry, detail: true), status: :created
-    else
-      render json: { errors: entry.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    @entry.image_media_ids = validated_media_ids if params.key?(:media_ids)
-    if @entry.update(entry_params)
-      invalidate_list_cache
-      CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
-      render json: serialize(@entry, detail: true)
-    else
-      render json: { errors: @entry.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    @entry.destroy!
-    invalidate_list_cache
-    head :no_content
-  end
+  include CommunityCategoryController
 
   private
 
-  def set_entry
-    @entry = CommunityEvent.find(params[:id])
+  def sort_for(sort)
+    case sort
+    when 'past'   then [:event_date, :desc]
+    when 'newest' then [:created_at, :desc]
+    when 'az'     then [:event_name, :asc]
+    else               [:event_date, :asc]
+    end
   end
 
-  def authorize_owner!
-    return if @entry.account_id == current_account&.id
-    return if current_user&.can?(:administrator)
-    return if steward?
-    render json: { error: 'Forbidden' }, status: :forbidden
-  end
-
-  def steward?
-    CommunityDirectoryPermission.exists?(account: current_account, category_key: CATEGORY_KEY, is_steward: true)
-  end
-
-  def trusted?
-    CommunityDirectoryPermission.exists?(account: current_account, trusted: true, category_key: nil) ||
-      CommunityDirectoryPermission.exists?(account: current_account, trusted: true, category_key: CATEGORY_KEY)
-  end
-
-  def auto_approve?
-    return true if current_user&.can?(:administrator)
-    return true if trusted?
-    setting = CommunityDirectoryCategorySetting.find_by(category_key: CATEGORY_KEY)
-    setting&.requires_approval == false
-  end
-
-  def check_rate_limit
-    setting = CommunityDirectoryCategorySetting.find_by(category_key: CATEGORY_KEY)
-    return nil unless setting&.max_entries_per_account.present?
-    return nil if auto_approve?
-
-    window = setting.period_days.present? ? setting.period_days.days.ago : 30.days.ago
-    count = CommunityEvent.where(account: current_account, created_at: window..).count
-    count >= setting.max_entries_per_account ? "Entry limit reached: #{setting.max_entries_per_account} per #{setting.period_days || 30} days." : nil
+  # Capped at 2, not the usual 3 -- Events intentionally allows fewer photos
+  # per entry than other categories.
+  def max_media_ids
+    2
   end
 
   def entry_params
@@ -119,60 +27,15 @@ class Api::V1::CommunityEventsController < Api::BaseController
                                   :website, :telephone, category: [])
   end
 
-  def list_columns
-    super + [:image_media_ids]
-  end
-
-  def image_data_for(entry)
-    return [] unless Array(entry.image_media_ids).any?
-    MediaAttachment.where(id: entry.image_media_ids)
-                   .filter_map do |ma|
-                     original = attachment_url(ma, :original)
-                     next if original.blank?
-                     { original: original, preview: attachment_url(ma, :small) || original }
-                   end
-  rescue StandardError
-    []
-  end
-
-  def attachment_url(ma, style)
-    raw = style == :original && ma.remote_url.present? ? ma.remote_url : ma.file.url(style)
-    return nil if raw.blank?
-    raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
-  rescue StandardError
-    nil
-  end
-
-  # Capped at 2, not the usual 3 -- Events intentionally allows fewer photos
-  # per entry than other categories.
-  def validated_media_ids
-    ids = Array(params[:media_ids]).reject(&:blank?).first(2).map(&:to_i).select(&:positive?)
-    MediaAttachment.where(id: ids, account: current_account).pluck(:id)
-  end
-
   def serialize(e, detail: true)
-    imgs = image_data_for(e)
-    base = {
-      id: e.id, account_id: e.account_id.to_s, status: e.status,
-      account: { id: e.account.id.to_s, username: e.account.username,
-                 display_name: e.account.display_name, avatar: e.account.avatar_original_url,
-                 avatar_static: e.account.avatar_static_url },
-      images:             imgs.map { |i| i[:original] },
-      image_previews:     imgs.map { |i| i[:preview] },
-      image_media_ids:    e.image_media_ids,
+    base = base_entry_fields(e).merge(
       category:           e.category,
       event_name:         e.event_name,
       event_date:         e.event_date&.iso8601,
       location_town_city: e.location_town_city,
-      created_at:         e.created_at.iso8601,
-      updated_at:         e.updated_at.iso8601,
-    }
+    )
 
     return base unless detail
-
-    translations = CommunityEntryTranslation
-      .where(translatable_type: e.class.name, translatable_id: e.id)
-      .each_with_object({}) { |t, h| (h[t.locale] ||= {})[t.field_name] = t.translated_text }
 
     base.merge(
       event_description: e.event_description,
@@ -184,7 +47,7 @@ class Api::V1::CommunityEventsController < Api::BaseController
       source_url:        e.source_url,
       source_name:       e.source_name,
       auto_imported:     e.auto_imported,
-      translations:      translations
+      translations:      translations_for(e)
     )
   end
 end
