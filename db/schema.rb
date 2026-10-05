@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_28_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -535,6 +535,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_120000) do
     t.string "contact_info_1"
     t.string "contact_info_2"
     t.datetime "created_at", null: false
+    t.datetime "digest_announced_at"
     t.datetime "end_date"
     t.datetime "event_date", null: false
     t.text "event_description"
@@ -553,6 +554,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_120000) do
     t.index ["category"], name: "index_community_events_on_category", using: :gin
     t.index ["created_at"], name: "idx_community_events_approved_newest", order: :desc, where: "(status = 1)"
     t.index ["created_at"], name: "index_community_events_on_created_at"
+    t.index ["digest_announced_at"], name: "index_community_events_on_digest_announced_at"
     t.index ["end_date"], name: "index_community_events_on_end_date"
     t.index ["event_date"], name: "idx_community_events_approved_past", order: :desc, where: "(status = 1)"
     t.index ["event_date"], name: "idx_community_events_approved_upcoming", where: "(status = 1)"
