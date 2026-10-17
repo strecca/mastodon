@@ -2,6 +2,97 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.6.9] - 2026-10-01
+
+### Security
+
+- Update dependencies
+
+### Added
+
+- Add logging of account data removal (#40572 by @ClearlyClaire)
+
+### Changed
+
+- Change account self-deletion page to always ask to confirm username (#40576 and #40733 by @ClearlyClaire)
+
+### Fixed
+
+- Fix threads leak by updating dependency aws-sdk-s3
+- Fix inconsistent horizontal page padding between profile and profile editor (#40700 by @diondiondion)
+- Fix server error on registration for wrong DOB (#40607 by @sudeeptarlekar)
+- Fix quotes disclaimer disappearing on posts with no quote (#40587 by @crafkaz)
+- Fix `POST /api/v1/accounts` still being accessible when `SSO_ACCOUNT_SIGN_UP` is set (#40681 by @ClearlyClaire)
+- Fix reported statuses not being deleted after account deletion (#40650 by @ClearlyClaire)
+- Fix mobile navigation covering up "Next step" button during onboarding (#40634 by @diondiondion)
+- Fix rate limits not normalizing submitted e-mail addresses (#40658 by @Gargron)
+- Fix moderators being able to issue a warning on moderators of higher position (#40646 by @ClearlyClaire)
+- Fix description text overflowing on Overview landing page (#40272 by @diondiondion)
+- Fix account avatar and header descriptions not being deleted when an account is deleted (#40621 by @ClearlyClaire)
+- Fix deleted accounts not being removed from featured collections (#40623 by @ClearlyClaire)
+- Fix `PreviewCardsStatus` records not being deleted on account deletion (#40624 by @ClearlyClaire)
+- Fix replies order (#40481 by @OmmyZhang)
+- Fix missing confirmation when leaving with an unsent post (#40478 by @crafkaz)
+
+## [4.6.8] - 2026-09-15
+
+### Security
+
+- Temporarily disable HEIF support
+
+### Fixes
+
+- Fix relative privacy policy links in subscription emails (#40486 by @crafkaz)
+- Fix canonical email blocks interfering with freezing or approving users (#40463 by @ClearlyClaire)
+- Fix 500 error when submitting a status twice (#40439 by @ClearlyClaire)
+- Fix account deletion not deleting generated annual reports (#40394 by @ClearlyClaire)
+- Fix notifications not being cleaned up when notification requests are deleted in bulk (#40393 by @ClearlyClaire)
+
+## [4.6.7] - 2026-09-01
+
+### Security
+
+- Update dependencies
+- Fix password authentication bypass in 2FA auth for LDAP/PAM/SSO accounts ([GHSA-vx32-x96w-qq65](https://github.com/mastodon/mastodon/security/advisories/GHSA-vx32-x96w-qq65))
+- Fix Denial of Service when processing pathological JSON-LD activities ([GHSA-vgm8-frgh-rh2v](https://github.com/mastodon/mastodon/security/advisories/GHSA-vgm8-frgh-rh2v))
+- Fix disabled staff accounts still having access to admin API ([GHSA-62j4-hvj7-px3f](https://github.com/mastodon/mastodon/security/advisories/GHSA-62j4-hvj7-px3f))
+
+### Fixes
+
+- Fix `config/` directory missing from Bootsnap precompilation options in Dockerfile (#40255 by @ClearlyClaire)
+- Fix autosuggestions overstaying their welcome in languages that don't use spaces (#40217 by @Gargron)
+- Fix error when processing remote actors with `null` public keys (#40194 by @ClearlyClaire)
+- Fix various off-by-one errors in statistics time ranges (#40193 by @ClearlyClaire)
+
+## [4.6.6] - 2026-08-13
+
+### Changed
+
+- Change `mastodon:setup` task warning about trademark to match `masto` but ignore subdomains (#40143 by @ClearlyClaire)
+
+### Fixed
+
+- Fix connection errors when processing `fediverse:creator` preventing creation of preview cards (#40135 by @ClearlyClaire)
+- Fix Web UI being inaccessible with URLs ending with `.zip` (#40134 by @ClearlyClaire)
+- Fix semitransparent background of picture-in-picture video player (#40132 by @diondiondion)
+- Fix title tooltip appearing for fullscreen videos (#40127 by @diondiondion)
+- Fix image preview too dark in alt text editor dialog (#40126 by @diondiondion)
+- Fix domain block impact queries being rejected (#40122 by @ClearlyClaire)
+- Fix mobile navigation scrolling to top while opening (#40042 by @sharlayan)
+- Fix selected account being lost when creating a collection (#39897 and #40133 by @diondiondion and @sharlayan)
+
+## [4.6.5] - 2026-08-06
+
+### Fixed
+
+- Fix Collection items being rejected because of incorrect attribute being read (#40052 by @shleeable)
+- Fix typo in embedded quote handling code (#40049 by @shleeable)
+- Fix account merging worker incorrectly merging `Appeal` and `AccountWarning` records (#39982 by @shleeable)
+- Fix off-by-one in handling of updated remote posts allowing up to 5 attachments (#39978 by @shleeable)
+- Fix collection items limit not being consistently applied (#39969 by @oneiros)
+- Fix oversized profile image crop uploads (#39958 by @sharlayan)
+- Fix emoji autocomplete sometimes suggesting emojis for earlier keystrokes (#39947 by @ChaosExAnima)
+
 ## [4.6.4] - 2026-07-27
 
 ### Security

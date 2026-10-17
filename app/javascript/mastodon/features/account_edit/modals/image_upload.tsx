@@ -90,12 +90,12 @@ export const ImageUploadModal: FC<DialogModalProps & { location: ImageLocation }
         setStep("select");
         return;
       }
-      void calculateCroppedImage(imageSrc, crop).then((blob) => {
+      void calculateCroppedImage(imageSrc, crop, location).then((blob) => {
         setImageBlob(blob);
         setStep("alt");
       });
     },
-    [imageSrc],
+    [imageSrc, location],
   );
 
   const dispatch = useAppDispatch();
@@ -382,10 +382,18 @@ const StepAlt: FC<{
   );
 };
 
-async function calculateCroppedImage(imageSrc: string, crop: Area): Promise<Blob> {
+async function calculateCroppedImage(
+  imageSrc: string,
+  crop: Area,
+  location: ImageLocation,
+): Promise<Blob> {
   const image = await dataUriToImage(imageSrc);
-  const canvas = new OffscreenCanvas(crop.width, crop.height);
-  const ctx = canvas.getContext("2d");
+  const maxWidth = location === 'avatar' ? 400 : 1500;
+  const scale = Math.min(1, maxWidth / crop.width);
+  const width = Math.round(crop.width * scale);
+  const height = Math.round(crop.height * scale);
+  const canvas = new OffscreenCanvas(width, height);
+  const ctx = canvas.getContext('2d');
   if (!ctx) {
     throw new Error("Failed to get canvas context");
   }
@@ -393,7 +401,17 @@ async function calculateCroppedImage(imageSrc: string, crop: Area): Promise<Blob
   ctx.imageSmoothingQuality = "high";
 
   // Draw the image
-  ctx.drawImage(image, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+  ctx.drawImage(
+    image,
+    crop.x,
+    crop.y,
+    crop.width,
+    crop.height,
+    0,
+    0,
+    width,
+    height,
+  );
 
   return canvas.convertToBlob();
 }

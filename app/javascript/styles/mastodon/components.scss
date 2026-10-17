@@ -518,7 +518,7 @@ body > [data-popper-placement] {
 }
 
 .autosuggest-account .account__avatar,
-.autosuggest-emoji img {
+.autosuggest-emoji .emojione {
   display: block;
   width: 24px;
   height: 24px;
@@ -8231,6 +8231,10 @@ noscript {
   justify-content: center;
   align-items: center;
 
+  img {
+    user-select: none;
+  }
+
   &.dragging {
     cursor: grabbing;
   }
@@ -8242,7 +8246,7 @@ noscript {
     transform: translate(-50%, -50%);
     border: 2px solid var(--color-text-on-media);
     border-radius: 50%;
-    box-shadow: 0 0 0 9999em var(--color-shadow-primary);
+    box-shadow: 0 0 0 9999em rgb(from black r g b / 25%);
     pointer-events: none;
   }
 }
@@ -8699,6 +8703,7 @@ noscript {
   bottom: 20px;
   inset-inline-end: 20px;
   width: 300px;
+  background-color: var(--color-bg-primary);
   box-shadow: var(--dropdown-shadow);
 
   &__footer {
@@ -10979,10 +10984,14 @@ noscript {
 }
 
 .column-footer {
-  padding: 16px;
   position: sticky;
   bottom: 0;
+  padding: 16px;
   background: var(--color-bg-primary);
+
+  @media (width <= $mobile-menu-breakpoint) {
+    padding-bottom: calc(16px + var(--mobile-bottom-nav-height, 0));
+  }
 }
 
 .lists-scrollable {

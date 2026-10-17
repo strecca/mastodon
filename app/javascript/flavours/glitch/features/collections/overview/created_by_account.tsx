@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import type { ReactNode } from 'react';
+import { useEffect } from 'react';
 
 import { FormattedMessage } from "react-intl";
 
-import { Link } from "react-router-dom";
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import AddIcon from "@/material-icons/400-24px/add.svg?react";
 import { DisplayName } from "flavours/glitch/components/display_name";
@@ -22,10 +24,23 @@ import { CollectionListItem } from "../components/collection_list_item";
 import { messages as editorMessages, MaxCollectionsCallout, userCollectionLimit } from "../editor";
 import classes from "../styles.module.scss";
 
-export const NewCollectionButton: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
-  <Link to="/collections/new" className="button button--compact" onClick={onClick}>
-    <Icon id="plus" icon={AddIcon} />
-    <FormattedMessage {...editorMessages.newCollection} />
+export const NewCollectionButton: React.FC<{
+  compact?: boolean;
+  secondary?: boolean;
+  onClick?: () => void;
+  children?: ReactNode;
+}> = ({ compact, secondary, onClick, children }) => (
+  <Link
+    to='/collections/new'
+    className={classNames(
+      'button',
+      compact && 'button--compact',
+      secondary && 'button-secondary',
+    )}
+    onClick={onClick}
+  >
+    <Icon id='plus' icon={AddIcon} />
+    {children ?? <FormattedMessage {...editorMessages.newCollection} />}
   </Link>
 );
 
@@ -90,7 +105,7 @@ export const CollectionsCreatedByAccount: React.FC = () => {
             />
           }
         >
-          <NewCollectionButton />
+          <NewCollectionButton compact />
         </EmptyState>
       );
     } else {
@@ -122,7 +137,7 @@ export const CollectionsCreatedByAccount: React.FC = () => {
             }}
           />
         </h2>
-        {showCreateButton && <NewCollectionButton />}
+        {showCreateButton && <NewCollectionButton compact />}
       </div>
       <ItemList>
         {isOwnCollectionPage && !canCreateMoreCollections && (

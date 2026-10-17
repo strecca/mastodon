@@ -61,7 +61,7 @@
                 required: true,
                 wrapper: :with_block_label
 
-  - if approved_registrations? && @invite.blank?
+  - if approved_registrations? && !@invite&.bypass_approval?
     - jt = civezza_join_texts
     .registration-reason-prompt
       %p.lead
@@ -89,4 +89,4 @@
               wrapper: :with_label
 
   .actions
-    = f.button :button, @invite.present? ? t('auth.register') : sign_up_message, type: :submit
+    = f.button :button, @invite&.bypass_approval? ? t('auth.register') : sign_up_message, type: :submit

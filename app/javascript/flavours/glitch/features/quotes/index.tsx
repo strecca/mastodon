@@ -136,6 +136,7 @@ export const Quotes: React.FC<{
         emptyMessage={emptyMessage}
         bindToDocument={!multiColumn}
         prepend={prependMessage}
+        alwaysPrepend
       />
 
       <Helmet>
