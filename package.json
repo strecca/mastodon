@@ -79,9 +79,9 @@
     "hoist-non-react-statics": "^3.3.2",
     "http-link-header": "^1.1.1",
     "idb": "^8.0.3",
-    "immutable": "^4.3.9",
+    "immutable": "^5.1.8",
     "intl-messageformat": "^11.0.0",
-    "js-yaml": "^4.3.2",
+    "js-yaml": "^5.4.1",
     "lande": "^1.0.10",
     "lodash": "^4.17.21",
     "marky": "^1.2.5",
@@ -183,7 +183,7 @@
     "typescript": "~6.0.0",
     "typescript-eslint": "^8.55.0",
     "typescript-plugin-css-modules": "^5.2.0",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.5"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -201,7 +201,7 @@
     "@types/react-dom": "^18.2.4",
     "@types/redux-immutable/immutable": "^4.3.9",
     "body-parser": "^2.3.0",
-    "fast-uri": "^3.1.7",
+    "fast-uri": "^3.1.8",
     "kind-of": "^6.0.3",
     "qs": "^6.16.0",
     "undici": "^7.29.0"
