@@ -30,8 +30,41 @@ class DailyDigestService
   # than an intentionally brief one.
   MIN_ARTICLE_CHARS = 500
 
-  # Italian accented vowels essentially never appear in English prose.
-  ITALIAN_ACCENTED_CHARS = /[àèìòùÀÈÌÒÙ]/
+  # Found live 2026-10-17: the old single-accented-character check
+  # (ITALIAN_ACCENTED_CHARS) rejected every single attempt, every day,
+  # whenever any event title/venue legitimately contained an accent that a
+  # faithful translation correctly preserves (e.g. "liberta" in a quoted
+  # Italian song-festival title, "si" in a quoted song title) -- a
+  # deterministic false positive, not sampling variance, so retries could
+  # never recover ("Scheduler::DailyDigestScheduler ... English article
+  # contains Italian text"). Replaced with a sentence-level Italian-prose
+  # detector below: it looks for a genuinely Italian *sentence* (several
+  # Italian function words clustered together), not just one accented
+  # character anywhere. Tuned and verified 2026-10-17 against all 84 real
+  # stored digests (CommunityDailyDigest) plus constructed cases: zero
+  # false positives on legitimate quoted Italian titles/venues (including a
+  # bilingual book title with an English gloss in parentheses, the
+  # trickiest real case found), while still catching the original
+  # 2026-09-03 failure shape (an untranslated Italian sentence/paragraph
+  # left in the "English" response) with or without a paragraph break
+  # before it.
+  ITALIAN_FUNCTION_WORDS = %w[
+    che non sono e è era ho hanno anche ancora però perché quando con per
+    del della dei delle degli nel nella sul sulla il lo gli la le un una uno
+    questo questa molto di da in su
+  ].to_set.freeze
+
+  # A sentence shorter than this is too easily dominated by one quoted
+  # Italian title/phrase (e.g. a 6-word sentence that's just an Italian
+  # book title plus its English gloss) -- found live 2026-10-17 tuning
+  # against real digests, see ITALIAN_FUNCTION_WORDS comment above.
+  MIN_SENTENCE_WORDS = 10
+
+  # Require this many actual function-word matches, not just a high ratio
+  # on a tiny sample -- same reasoning as MIN_SENTENCE_WORDS, belt-and-suspenders.
+  MIN_ITALIAN_MATCHES = 3
+
+  MAX_ITALIAN_SHARE = 0.25
 
   # Single-field schema, reused for both the Italian article and the English
   # translation -- two separate calls now, see #generate. 2026-09-03: the
@@ -294,10 +327,32 @@ class DailyDigestService
 
   def validate_translation!(text, source_length:)
     raise Error, "English article too short (#{text.length} chars) - response likely truncated" if text.length < MIN_ARTICLE_CHARS
-    raise Error, 'English article contains Italian text - translation likely failed' if text.match?(ITALIAN_ACCENTED_CHARS)
+
+    if (sentence = italian_sentence(text))
+      Rails.logger.warn("[DailyDigest] rejected translation, Italian sentence: #{sentence.strip.truncate(200)}")
+      raise Error, "English article contains an Italian sentence - translation likely failed: #{sentence.strip.truncate(120).inspect}"
+    end
 
     if text.length < source_length * MIN_TRANSLATION_RATIO
       raise Error, "English translation too short relative to its source (#{text.length} chars vs #{source_length} chars Italian) - response likely truncated"
+    end
+  end
+
+  # Finds a sentence that reads as genuinely Italian: enough Italian
+  # function words, clustered densely enough, in one sentence. Markdown
+  # link text is stripped first since Italian event/newsletter titles
+  # legitimately stay there (e.g. [Leggi la newsletter](url)) -- see
+  # ITALIAN_FUNCTION_WORDS comment for the tuning story.
+  def italian_sentence(text)
+    clean = text.gsub(/\[[^\]]*\]\([^)]*\)/, '')
+    clean.split(/(?<=[.!?])\s+/).find do |sentence|
+      words = sentence.downcase.scan(/\p{L}+/)
+      next false if words.size < MIN_SENTENCE_WORDS
+
+      matches = words.count { ITALIAN_FUNCTION_WORDS.include?(_1) }
+      next false if matches < MIN_ITALIAN_MATCHES
+
+      matches.fdiv(words.size) > MAX_ITALIAN_SHARE
     end
   end
 end

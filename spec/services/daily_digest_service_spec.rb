@@ -85,10 +85,58 @@ RSpec.describe DailyDigestService do
         expect { subject.generate }.to raise_error(described_class::Error, /English article too short/)
       end
 
-      it 'raises Error when the "translation" still contains Italian text' do
+      it 'raises Error when the "translation" still contains an untranslated Italian sentence (no paragraph break)' do
         stub_claude_responses(full_it, still_italian)
 
-        expect { subject.generate }.to raise_error(described_class::Error, /contains Italian text/)
+        expect { subject.generate }.to raise_error(described_class::Error, /contains an Italian sentence/)
+      end
+
+      it 'raises Error when an untranslated Italian paragraph is appended with a real paragraph break' do
+        # Reproduces the 2026-09-03 conflation shape, this time with the
+        # Italian portion as its own paragraph rather than a run-on sentence.
+        with_break = "#{full_en}\n\nE poi c'è Seborga, con la sua Sagra del Polpo e Patate, " \
+                     "tra i borghi più suggestivi della zona. Non dimenticate di visitare anche " \
+                     "il centro storico, che è molto bello in questo periodo dell'anno."
+
+        stub_claude_responses(full_it, with_break)
+
+        expect { subject.generate }.to raise_error(described_class::Error, /contains an Italian sentence/)
+      end
+
+      # The actual 2026-10-17 production bug: the old validator rejected ANY
+      # accented character anywhere, so a faithful translation that legitimately
+      # quotes an Italian title (event names, song titles) failed deterministically
+      # on every attempt -- not a sampling fluke, every retry hit the same rejection.
+      it 'does NOT raise when the translation faithfully quotes an accented Italian title' do
+        faithful_en = <<~EN
+          Good morning, dear community! Today brings a wonderful lineup of events across our beloved Riviera.
+
+          In Pieve di Teco, don't miss the Alpine Popular Cuisine Festival, celebrating the mountain flavors of our region with tastings, music and tradition.
+
+          Meanwhile in Sanremo, the city once again becomes the capital of the Italian songwriter, with a special evening titled "Il Tenco sfida il tempo degli algoritmi" exploring music, memory and freedom in the age of technology.
+
+          Don't miss the Parr-rock choir returning to Teatro Cavour with "Laudato sì... ma rock", a joyful blend of gospel and rock energy.
+
+          Whatever you choose, come celebrate the season with us -- visit miacivezza.com for full details on every event.
+        EN
+
+        stub_claude_responses(full_it, faithful_en)
+
+        expect { subject.generate }.not_to raise_error
+      end
+
+      # A real false positive found while tuning against all 84 stored
+      # production digests (2026-10-17): a short bilingual book title with
+      # its English gloss in parentheses, immediately adjacent, has a high
+      # Italian-word ratio purely because the sentence itself is short.
+      it 'does NOT raise on a short bilingual title with its English gloss alongside it' do
+        faithful_en = "#{full_en}Nicola Perullo presents his book Contro i cuochi. " \
+                      'Per amore della cucina* (*Against Chefs. For the Love of Cooking) ' \
+                      'in Piazza della Vittoria at 9:30 pm.'
+
+        stub_claude_responses(full_it, faithful_en)
+
+        expect { subject.generate }.not_to raise_error
       end
 
       it 'raises Error when the translation clears the absolute floor but is truncated relative to its source' do
