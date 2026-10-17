@@ -29,6 +29,17 @@ class Rack::Attack
       end
     end
 
+    # Found during the 4.6.9 upgrade (doorkeeper 5.9.2 -> 5.9.9): Doorkeeper's
+    # newer Token.body_parameters calls #POST directly, not #params, so the
+    # rescue above never saw it -- the exact same malformed-multipart-body
+    # 500 this file exists to prevent, just reachable through a new path.
+    # Same rescue, applied to the method that's actually being called now.
+    def POST
+      super
+    rescue Rack::BadRequest
+      {}
+    end
+
     def remote_ip
       @remote_ip ||= (@env['action_dispatch.remote_ip'] || ip).to_s
     end

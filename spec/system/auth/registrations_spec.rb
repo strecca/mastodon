@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Auth Registration' do
+  include ApplicationHelper
+
   context 'when there are server rules' do
     let!(:rule) { Fabricate :rule, text: 'You must be seven meters tall' }
     let!(:rule_translation) { Fabricate :rule_translation, rule:, hint: 'Rule translation hint', text: rule.text }
@@ -49,8 +51,13 @@ RSpec.describe 'Auth Registration' do
           expect(page)
             .to have_title(I18n.t('auth.register'))
 
+          # This fork replaces the stock invite_request.text label with a
+          # custom prompt (civezza_join_texts, app/helpers/application_helper.rb)
+          # rendered via `.registration-reason-prompt` -- the field itself
+          # has `label: false` in new.html.haml, so the stock label never
+          # renders here by design.
           expect(page)
-            .to have_text(I18n.t('simple_form.labels.invite_request.text'))
+            .to have_text(civezza_join_texts[:question])
 
           expect { fill_in_and_submit_form(apply: true) }
             .to change(User, :count).by(1)
@@ -69,8 +76,10 @@ RSpec.describe 'Auth Registration' do
           expect(page)
             .to have_title(I18n.t('auth.register'))
 
+          # See the sibling "not required" example above for why this checks
+          # the fork's custom prompt instead of the stock simple_form label.
           expect(page)
-            .to have_text(I18n.t('simple_form.labels.invite_request.text'))
+            .to have_text(civezza_join_texts[:question])
 
           # Not providing the invite text results in an error
           expect { fill_in_and_submit_form(apply: true) }
