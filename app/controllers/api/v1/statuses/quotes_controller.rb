@@ -38,12 +38,12 @@ class Api::V1::Statuses::QuotesController < Api::V1::Statuses::BaseController
     @pagination_since_id = @statuses.first.quote.id unless @statuses.empty?
     @pagination_max_id = @statuses.last.quote.id if @records_continue
 
-    return unless current_account&.id != @status.account_id
-
-    domains = @statuses.filter_map(&:account_domain).uniq
-    account_ids = @statuses.map(&:account_id).uniq
-    current_account&.preload_relations!(account_ids, domains)
-    @statuses.reject! { |status| StatusFilter.new(status, current_account).filtered? }
+    if current_account&.id != @status.account_id
+      domains = @statuses.filter_map(&:account_domain).uniq
+      account_ids = @statuses.map(&:account_id).uniq
+      current_account&.preload_relations!(account_ids, domains)
+      @statuses.reject! { |status| StatusFilter.new(status, current_account).filtered? }
+    end
   end
 
   def default_statuses

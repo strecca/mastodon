@@ -193,12 +193,12 @@ class Form::Import
 
     errors.add(:data, I18n.t('imports.errors.over_rows_processing_limit', count: ROWS_PROCESSING_LIMIT)) if csv_row_count > ROWS_PROCESSING_LIMIT
 
-    return unless type.to_sym == :following
-
-    base_limit = FollowLimitValidator.limit_for_account(current_account)
-    limit = base_limit
-    limit -= current_account.following_count unless overwrite
-    errors.add(:data, I18n.t('users.follow_limit_reached', limit: base_limit)) if csv_row_count > limit
+    if type.to_sym == :following
+      base_limit = FollowLimitValidator.limit_for_account(current_account)
+      limit = base_limit
+      limit -= current_account.following_count unless overwrite
+      errors.add(:data, I18n.t('users.follow_limit_reached', limit: base_limit)) if csv_row_count > limit
+    end
   end
 
   def validate_json_data

@@ -38,10 +38,10 @@ module Account::Counters
     result = updated_account_stat(key, value.to_i, status_created_at:)
 
     # Reload account_stat if it was loaded, taking into account newly-created unsaved records
-    return unless association(:account_stat).loaded?
-
-    account_stat.id = result.first['id'] if account_stat.new_record?
-    account_stat.reload
+    if association(:account_stat).loaded?
+      account_stat.id = result.first['id'] if account_stat.new_record?
+      account_stat.reload
+    end
   end
 
   def account_stat

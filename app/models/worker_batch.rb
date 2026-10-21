@@ -57,10 +57,10 @@ class WorkerBatch
     async_refresh = AsyncRefresh.new(async_refresh_key) if async_refresh_key.present?
     async_refresh&.increment_result_count(by: 1) if increment
 
-    return unless pending.zero? || processed >= (threshold || 1.0).to_f * (processed + pending)
-
-    async_refresh&.finish!
-    cleanup
+    if pending.zero? || processed >= (threshold || 1.0).to_f * (processed + pending)
+      async_refresh&.finish!
+      cleanup
+    end
   end
 
   def finish!

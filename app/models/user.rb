@@ -225,10 +225,10 @@ class User < ApplicationRecord
 
     increment(:sign_in_count) if new_sign_in
 
-    return if new_record?
-
-    save(validate: false)
-    prepare_returning_user!
+    unless new_record?
+      save(validate: false)
+      prepare_returning_user!
+    end
   end
 
   def pending?
