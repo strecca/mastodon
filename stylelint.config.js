@@ -4,6 +4,8 @@ module.exports = {
     "app/javascript/styles/mastodon/reset.scss",
     "app/javascript/flavours/glitch/styles/mastodon/reset.scss",
     "app/javascript/styles/win95.scss",
+    // Archived 2026-05-19 copy kept for reference only; nothing imports it.
+    "docs/community_directory_scss_snapshot_2026-05-19.scss",
     "coverage/**/*",
     "node_modules/**/*",
     "public/assets/**/*",

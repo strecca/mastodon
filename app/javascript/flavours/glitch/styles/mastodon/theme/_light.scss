@@ -77,7 +77,6 @@
   --color-border-media: rgb(252 248 255 / 15%); // legacy
   --color-border-error-soft: #{utils.css-alpha(var(--color-text-error), 50%)}; // legacy
   --color-border-warning-soft: #{utils.css-alpha(var(--color-text-warning), 50%)}; // legacy
-
   --color-border-success-soft: var(--color-green-200);
 
   /* SHADOW TOKENS (LEGACY) */

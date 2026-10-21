@@ -175,7 +175,7 @@
     line-height: 1.1;
     margin-bottom: 8px;
 
-    @media (max-width: 600px) {
+    @media (width <= 600px) {
       font-size: 22px;
     }
   }
@@ -233,7 +233,7 @@
 
     &.active {
       color: var(--color-accent, #6364ff);
-      background: rgba(99, 100, 255, 0.12);
+      background: rgba(99, 100, 255, 12%);
     }
   }
 
@@ -247,7 +247,7 @@
     gap: 6px;
     font-size: 13px;
     font-weight: 700;
-    color: #ffffff;
+    color: #fff;
     text-decoration: none;
     padding: 8px 18px;
     border-radius: 6px;
@@ -256,7 +256,7 @@
     transition:
       background 0.15s,
       transform 0.1s;
-    box-shadow: 0 2px 8px rgba(99, 100, 255, 0.35);
+    box-shadow: 0 2px 8px rgba(99, 100, 255, 35%);
 
     &::before {
       content: "\21E9";
@@ -265,7 +265,7 @@
 
     &:hover {
       background: #7b7eb8;
-      color: #ffffff;
+      color: #fff;
       text-decoration: none;
       transform: translateY(-1px);
     }
@@ -274,12 +274,13 @@
   // Body layouts
   &__body--two-col {
     display: grid;
+
     // Left sidebar ~35%, main article ~65% - mirrors the PDF column split
     grid-template-columns: 35fr 65fr;
     gap: 32px;
     align-items: start;
 
-    @media (max-width: 680px) {
+    @media (width <= 680px) {
       grid-template-columns: 1fr;
       gap: 0;
     }
@@ -296,7 +297,7 @@
     padding-right: 4px;
     border-right: 1px solid var(--color-border, #38384a);
 
-    @media (max-width: 680px) {
+    @media (width <= 680px) {
       border-right: none;
       border-bottom: 1px solid var(--color-border, #38384a);
       padding-bottom: 24px;
@@ -416,7 +417,7 @@
     line-height: 1.05;
     margin-bottom: 10px;
 
-    @media (max-width: 600px) {
+    @media (width <= 600px) {
       font-size: 22px;
     }
   }
@@ -438,7 +439,7 @@
 
     &.active {
       color: var(--nl-rule, #2a1a0a);
-      background: rgba(42, 26, 10, 0.1);
+      background: rgba(42, 26, 10, 10%);
     }
   }
 
@@ -526,7 +527,7 @@
     line-height: 1;
     color: var(--nl-ink, #fff);
 
-    @media (max-width: 600px) {
+    @media (width <= 600px) {
       font-size: 28px;
     }
   }
@@ -557,7 +558,7 @@
     color: var(--nl-sidebar-ink, #b8b8c8);
     border-right-color: var(--color-accent, #6364ff);
 
-    @media (max-width: 600px) {
+    @media (width <= 600px) {
       border-bottom-color: var(--color-accent, #6364ff);
       color: var(--nl-ink, #f0f0f0);
     }
@@ -659,7 +660,7 @@
   gap: 16px;
   margin-bottom: 24px;
 
-  @media (max-width: 900px) {
+  @media (width <= 900px) {
     grid-template-columns: 1fr;
   }
 
@@ -684,7 +685,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 
-  @media (max-width: 640px) {
+  @media (width <= 640px) {
     grid-template-columns: 1fr;
   }
 }

@@ -2,6 +2,7 @@
 @use "mastodon/mixins";
 @use "@/styles/fonts/roboto";
 @use "@/styles/fonts/roboto-mono";
+
 // Upstream vendored this real Inter variable font file (5.0 redesign,
 // commit 01a6b3aece) but nothing in this fork ever @used the partial that
 // declares its @font-face -- confirmed 2026-09-25. David compared it

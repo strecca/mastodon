@@ -2422,7 +2422,7 @@ a.sparkline {
   display: flex;
   gap: 4px;
   margin-bottom: 20px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 10%);
   padding-bottom: 0;
 
   &__tab {
@@ -2443,12 +2443,12 @@ a.sparkline {
 
     &:hover {
       color: #fff;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 6%);
     }
 
     &--active {
       color: #fff;
-      border-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 10%);
       border-bottom-color: #1f232b;
       background: #1f232b;
     }
@@ -2469,8 +2469,8 @@ a.sparkline {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 4%);
+    border: 1px solid rgba(255, 255, 255, 8%);
     border-radius: 8px;
     padding: 12px 20px;
     min-width: 140px;
@@ -2496,8 +2496,8 @@ a.sparkline {
     }
 
     &--warn {
-      border-color: rgba(255, 165, 0, 0.4);
-      background: rgba(255, 165, 0, 0.06);
+      border-color: rgba(255, 165, 0, 40%);
+      background: rgba(255, 165, 0, 6%);
 
       strong {
         color: #ffa500;
@@ -2505,17 +2505,17 @@ a.sparkline {
     }
 
     &--error {
-      border-color: rgba(255, 60, 60, 0.5);
-      background: rgba(255, 60, 60, 0.08);
+      border-color: rgba(255, 60, 60, 50%);
+      background: rgba(255, 60, 60, 8%);
 
       strong {
-        color: #ff4444;
+        color: #f44;
       }
     }
 
     &--active {
-      border-color: rgba(99, 100, 255, 0.4);
-      background: rgba(99, 100, 255, 0.06);
+      border-color: rgba(99, 100, 255, 40%);
+      background: rgba(99, 100, 255, 6%);
 
       strong {
         color: #6364ff;
@@ -2543,12 +2543,12 @@ a.sparkline {
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--color-text-secondary, #9baec8);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 10%);
     }
 
     td {
       padding: 10px 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 5%);
       vertical-align: middle;
     }
 
@@ -2557,7 +2557,7 @@ a.sparkline {
     }
 
     tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 2%);
     }
   }
 
@@ -2568,7 +2568,7 @@ a.sparkline {
   &__bar {
     width: 80px;
     height: 6px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 10%);
     border-radius: 3px;
     overflow: hidden;
     display: inline-block;
@@ -2620,20 +2620,20 @@ a.sparkline {
   font-weight: 600;
   letter-spacing: 0.04em;
   margin: 1px;
-  background: rgba(99, 100, 255, 0.2);
+  background: rgba(99, 100, 255, 20%);
   color: #a0a1ff;
-  border: 1px solid rgba(99, 100, 255, 0.3);
+  border: 1px solid rgba(99, 100, 255, 30%);
 
   &--present {
-    background: rgba(40, 180, 100, 0.15);
+    background: rgba(40, 180, 100, 15%);
     color: #60c98a;
-    border-color: rgba(40, 180, 100, 0.3);
+    border-color: rgba(40, 180, 100, 30%);
   }
 
   &--missing {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 5%);
     color: var(--color-text-secondary, #9baec8);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 10%);
     opacity: 0.5;
   }
 }
@@ -2647,7 +2647,7 @@ a.sparkline {
   gap: 6px;
   padding: 10px 14px;
   margin-bottom: 16px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 3%);
   border: 1px solid var(--color-border-default, #444);
   border-radius: 6px;
 
@@ -2677,7 +2677,7 @@ a.sparkline {
     cursor: pointer;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 10%);
       border-color: var(--color-text-secondary, #888);
     }
   }
@@ -2716,7 +2716,7 @@ a.sparkline {
 
   &__key {
     padding: 4px 10px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 5%);
     font-family: monospace;
     font-size: 11px;
     color: var(--color-text-secondary, #aaa);
@@ -2781,9 +2781,9 @@ a.sparkline {
     box-sizing: border-box;
     font-size: 16px;
     padding: 14px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 12%);
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 4%);
     color: #fff;
     margin-bottom: 24px;
 
@@ -2794,7 +2794,7 @@ a.sparkline {
     &:focus {
       outline: none;
       border-color: #6364ff;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 6%);
     }
   }
 
@@ -2810,24 +2810,24 @@ a.sparkline {
     color: var(--color-text-secondary, #9baec8);
     margin: 0 0 10px;
     padding-bottom: 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 10%);
   }
 
   &__card {
     display: block;
     padding: 12px 16px;
     margin-bottom: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 8%);
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 3%);
     text-decoration: none;
     transition:
       background 0.15s,
       border-color 0.15s;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(99, 100, 255, 0.4);
+      background: rgba(255, 255, 255, 6%);
+      border-color: rgba(99, 100, 255, 40%);
     }
   }
 
@@ -2862,8 +2862,8 @@ a.sparkline {
     font-size: 12px;
     line-height: 1.5;
     color: #ffa500;
-    background: rgba(255, 165, 0, 0.08);
-    border: 1px solid rgba(255, 165, 0, 0.3);
+    background: rgba(255, 165, 0, 8%);
+    border: 1px solid rgba(255, 165, 0, 30%);
     border-radius: 6px;
   }
 
