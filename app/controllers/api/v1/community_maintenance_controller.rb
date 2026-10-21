@@ -4,11 +4,11 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
   before_action :require_user!
   before_action :require_admin!
 
-  SCRAPER_NAMES = %w[
+  SCRAPER_NAMES = %w(
     CentroItaliaEventsScraper
     ComuneSanLorenzoScraper
     LaVoceDiImperiaScraper
-  ].freeze
+  ).freeze
 
   # GET /api/v1/community_maintenance/stats
   def stats
@@ -16,28 +16,28 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
 
     render json: {
       events: {
-        past:     CommunityEvent.where('event_date < ?', today).count,
+        past: CommunityEvent.where('event_date < ?', today).count,
         upcoming: CommunityEvent.where('event_date >= ?', today).count,
-        pending:  CommunityEvent.where(status: :pending).count,
+        pending: CommunityEvent.where(status: :pending).count,
       },
       listings: {
-        open:       CommunityListing.where(status: :open).count,
-        fulfilled:  CommunityListing.where(status: :fulfilled).count,
-        closed:     CommunityListing.where(status: :closed).count,
-        stale:      CommunityListing.where(status: [:fulfilled, :closed])
-                                    .where('updated_at < ?', 30.days.ago).count,
+        open: CommunityListing.where(status: :open).count,
+        fulfilled: CommunityListing.where(status: :fulfilled).count,
+        closed: CommunityListing.where(status: :closed).count,
+        stale: CommunityListing.where(status: [:fulfilled, :closed])
+          .where('updated_at < ?', 30.days.ago).count,
       },
       visits: {
-        past:       CommunityVisit.where('departure_date < ?', today).count,
-        active:     CommunityVisit.where('arrival_date <= ? AND departure_date >= ?', today, today).count,
-        upcoming:   CommunityVisit.where('arrival_date > ?', today).count,
+        past: CommunityVisit.where('departure_date < ?', today).count,
+        active: CommunityVisit.where('arrival_date <= ? AND departure_date >= ?', today, today).count,
+        upcoming: CommunityVisit.where('arrival_date > ?', today).count,
       },
       scrapers: ScraperRunLog.latest_per_source.map { |r| serialize_log(r) },
       storage: {
         protected_ids: protected_media_count,
-        orphaned:      MediaAttachment.unattached.where('created_at < ?', 1.day.ago).count,
-        log_entries:   ScraperRunLog.count,
-        old_logs:      ScraperRunLog.where('ran_at < ?', 30.days.ago).count,
+        orphaned: MediaAttachment.unattached.where('created_at < ?', 1.day.ago).count,
+        log_entries: ScraperRunLog.count,
+        old_logs: ScraperRunLog.where('ran_at < ?', 30.days.ago).count,
       },
     }
   end
@@ -56,9 +56,13 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
   # DELETE /api/v1/community_maintenance/stale_listings
   # params: days (integer, default 30), statuses (array, default [fulfilled, closed])
   def stale_listings
-    days     = [params[:days].to_i, 1].max rescue 30
+    days = begin
+      [params[:days].to_i, 1].max
+    rescue
+      30
+    end
     days     = 30 if days == 0
-    statuses = Array(params[:statuses]).presence || %w[fulfilled closed]
+    statuses = Array(params[:statuses]).presence || %w(fulfilled closed)
     cutoff   = days.days.ago
 
     scope = CommunityListing.where(status: statuses).where('updated_at < ?', cutoff)
@@ -81,7 +85,11 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
   # DELETE /api/v1/community_maintenance/scraper_logs
   # params: days (integer, default 30)
   def scraper_logs
-    days  = [params[:days].to_i, 1].max rescue 30
+    days = begin
+      [params[:days].to_i, 1].max
+    rescue
+      30
+    end
     days  = 30 if days == 0
     count = ScraperRunLog.where('ran_at < ?', days.days.ago).count
     ScraperRunLog.where('ran_at < ?', days.days.ago).delete_all
@@ -92,7 +100,7 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
   # params: scraper (scraper class name)
   def run_scraper
     name = params[:scraper].to_s
-    return render json: { error: 'Unknown scraper' }, status: :unprocessable_entity unless SCRAPER_NAMES.include?(name)
+    return render json: { error: 'Unknown scraper' }, status: 422 unless SCRAPER_NAMES.include?(name)
 
     CommunityScraperWorker.perform_async(name)
     render json: { queued: name }
@@ -113,7 +121,7 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
   private
 
   def require_admin!
-    render json: { error: 'Admin access required' }, status: :forbidden unless current_user&.can?(:administrator)
+    render json: { error: 'Admin access required' }, status: 403 unless current_user&.can?(:administrator)
   end
 
   def parse_date(value)
@@ -133,13 +141,13 @@ class Api::V1::CommunityMaintenanceController < Api::BaseController
 
   def serialize_log(log)
     {
-      source:        log.source_name,
-      ran_at:        log.ran_at&.iso8601,
-      status:        log.status,
-      fetched:       log.fetched,
-      imported:      log.imported,
-      skipped:       log.skipped,
-      errors:        log.error_count,
+      source: log.source_name,
+      ran_at: log.ran_at&.iso8601,
+      status: log.status,
+      fetched: log.fetched,
+      imported: log.imported,
+      skipped: log.skipped,
+      errors: log.error_count,
       error_message: log.error_message,
     }
   end

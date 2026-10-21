@@ -7,11 +7,8 @@ module Scrapers
     STALE_DAYS  = 14
 
     # Towns in Imperia province for location extraction from article titles
-    KNOWN_TOWNS = %w[
-      Imperia Civezza Diano\ Marina Cervo Sanremo Bordighera Ventimiglia
-      Taggia Arma\ di\ Taggia Pontedassio Chiusanico Aurigo Porto\ Maurizio
-      Oneglia Diano\ Castello Pieve\ di\ Teco Dolcedo Caramagna\ Ligure
-      San\ Lorenzo\ al\ Mare Costarainera Lingueglietta
+    KNOWN_TOWNS = [
+      'Imperia', 'Civezza', 'Diano Marina', 'Cervo', 'Sanremo', 'Bordighera', 'Ventimiglia', 'Taggia', 'Arma di Taggia', 'Pontedassio', 'Chiusanico', 'Aurigo', 'Porto Maurizio', 'Oneglia', 'Diano Castello', 'Pieve di Teco', 'Dolcedo', 'Caramagna Ligure', 'San Lorenzo al Mare', 'Costarainera', 'Lingueglietta'
     ].freeze
 
     def fetch_events
@@ -31,7 +28,15 @@ module Scrapers
       link        = item.at_xpath('link')&.text&.strip.presence ||
                     item.at_xpath('following-sibling::text()[normalize-space()]')&.text&.strip
       pub_date_str = item.at_xpath('pubDate')&.text
-      pub_date     = pub_date_str ? (Time.parse(pub_date_str).to_date rescue Date.today) : Date.today
+      pub_date     = if pub_date_str
+                       begin
+                         Time.parse(pub_date_str).to_date
+                       rescue
+                         Date.today
+                       end
+                     else
+                       Date.today
+                     end
 
       return nil if title.blank?
 
@@ -51,14 +56,14 @@ module Scrapers
       location = extract_location(full_text) || 'Imperia'
 
       {
-        title:       title,
-        event_date:  dates[:start],
-        end_date:    dates[:end] == dates[:start] ? nil : dates[:end],
-        location:    location,
+        title: title,
+        event_date: dates[:start],
+        end_date: dates[:end] == dates[:start] ? nil : dates[:end],
+        location: location,
         description: description.presence || title,
-        source_url:  link,
+        source_url: link,
         source_name: SOURCE_NAME,
-        category:    ['community'],
+        category: ['community'],
       }
     end
 
@@ -72,9 +77,7 @@ module Scrapers
       end
 
       # "sabato e domenica", "questo weekend / fine settimana" → nearest Sat-Sun
-      if t.match?(/fine\s+settimana|weekend/)
-        return nearest_weekend(pub_date)
-      end
+      return nearest_weekend(pub_date) if t.match?(/fine\s+settimana|weekend/)
 
       # Try explicit Italian date range or single date in the text
       parse_italian_date_range(text)

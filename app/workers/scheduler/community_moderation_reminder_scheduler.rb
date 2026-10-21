@@ -18,9 +18,7 @@ class Scheduler::CommunityModerationReminderScheduler
     pending_by_category = collect_pending
 
     admin_email = Setting.site_contact_email.presence
-    if admin_email.present?
-      CommunityDirectoryMailer.moderation_digest(pending_by_category, admin_email).deliver_later
-    end
+    CommunityDirectoryMailer.moderation_digest(pending_by_category, admin_email).deliver_later if admin_email.present?
 
     notify_stewards(pending_by_category)
   end
@@ -31,6 +29,7 @@ class Scheduler::CommunityModerationReminderScheduler
     community_table_names.sum do |key|
       model = model_for(key)
       next 0 unless model && model.column_names.include?('status')
+
       model.where(status: :pending).where('created_at < ?', PENDING_THRESHOLD.ago).count
     end
   end
@@ -41,18 +40,18 @@ class Scheduler::CommunityModerationReminderScheduler
       next unless model && model.column_names.include?('status')
 
       entries = model.where(status: :pending)
-                     .where('created_at < ?', PENDING_THRESHOLD.ago)
-                     .includes(:account)
+        .where('created_at < ?', PENDING_THRESHOLD.ago)
+        .includes(:account)
       next if entries.empty?
 
       config = load_config(key)
 
       { category_key: key,
         category_display_name: config&.dig('display_name') || key.titleize,
-        entries: entries.map { |e|
-          { submitter:    e.account.username,
+        entries: entries.map do |e|
+          { submitter: e.account.username,
             submitted_at: e.created_at.strftime('%b %-d, %Y %H:%M UTC') }
-        } }
+        end }
     end
   end
 
@@ -70,13 +69,14 @@ class Scheduler::CommunityModerationReminderScheduler
       stewards.each do |perm|
         user = User.find_by(account: perm.account)
         next unless user&.email.present?
+
         CommunityDirectoryMailer.moderation_digest(category_data, user.email).deliver_later
       end
     end
   end
 
   def community_table_names
-    excluded = %w[community_directory community_directory_permissions community_directory_category_settings]
+    excluded = %w(community_directory community_directory_permissions community_directory_category_settings)
     ActiveRecord::Base.connection.tables
       .select { |t| t.start_with?('community_') && excluded.exclude?(t) }
       .map { |t| t.delete_prefix('community_') }

@@ -36,7 +36,7 @@ RSpec.describe DailyDigestService do
   describe '#generate' do
     context 'when there are no upcoming approved auto-imported events' do
       it 'returns nil without calling Claude' do
-        expect(Anthropic::Client).not_to receive(:new)
+        expect(Anthropic::Client).to_not receive(:new)
 
         expect(subject.generate).to be_nil
       end
@@ -95,7 +95,7 @@ RSpec.describe DailyDigestService do
         # Reproduces the 2026-09-03 conflation shape, this time with the
         # Italian portion as its own paragraph rather than a run-on sentence.
         with_break = "#{full_en}\n\nE poi c'è Seborga, con la sua Sagra del Polpo e Patate, " \
-                     "tra i borghi più suggestivi della zona. Non dimenticate di visitare anche " \
+                     'tra i borghi più suggestivi della zona. Non dimenticate di visitare anche ' \
                      "il centro storico, che è molto bello in questo periodo dell'anno."
 
         stub_claude_responses(full_it, with_break)
@@ -122,7 +122,7 @@ RSpec.describe DailyDigestService do
 
         stub_claude_responses(full_it, faithful_en)
 
-        expect { subject.generate }.not_to raise_error
+        expect { subject.generate }.to_not raise_error
       end
 
       # A real false positive found while tuning against all 84 stored
@@ -136,7 +136,7 @@ RSpec.describe DailyDigestService do
 
         stub_claude_responses(full_it, faithful_en)
 
-        expect { subject.generate }.not_to raise_error
+        expect { subject.generate }.to_not raise_error
       end
 
       it 'raises Error when the translation clears the absolute floor but is truncated relative to its source' do
@@ -201,7 +201,7 @@ RSpec.describe DailyDigestService do
       end
 
       it 'raises Error and never calls the Anthropic client' do
-        expect(Anthropic::Client).not_to receive(:new)
+        expect(Anthropic::Client).to_not receive(:new)
 
         expect { subject.generate }.to raise_error(described_class::Error, /ANTHROPIC_API_KEY/)
       end

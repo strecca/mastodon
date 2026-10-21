@@ -28,30 +28,30 @@ class Api::V1::CommunityPropertiesController < Api::BaseController
 
   def serialize(e, detail: true)
     base = base_entry_fields(e).merge(
-      title:          e.title,
-      listing_type:   e.listing_type,
-      property_type:  e.property_type,
-      town:           e.town,
-      price:          e.price,
-      price_period:   e.price_period,
+      title: e.title,
+      listing_type: e.listing_type,
+      property_type: e.property_type,
+      town: e.town,
+      price: e.price,
+      price_period: e.price_period,
       available_from: e.available_from,
-      bedrooms:       e.bedrooms,
-      size_sqm:       e.size_sqm,
-      phone:          e.phone,
+      bedrooms: e.bedrooms,
+      size_sqm: e.size_sqm,
+      phone: e.phone
     )
 
     return base unless detail
 
     base.merge(
-      description:  e.description,
-      bathrooms:    e.bathrooms,
-      floor:        e.floor,
-      furnished:    e.furnished,
-      condition:    e.condition,
-      features:     e.features,
-      email:        e.email,
-      agency_name:  e.agency_name,
-      translations: translations_for(e),
+      description: e.description,
+      bathrooms: e.bathrooms,
+      floor: e.floor,
+      furnished: e.furnished,
+      condition: e.condition,
+      features: e.features,
+      email: e.email,
+      agency_name: e.agency_name,
+      translations: translations_for(e)
     )
   end
 end

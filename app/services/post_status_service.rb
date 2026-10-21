@@ -166,20 +166,18 @@ class PostStatusService < BaseService
     antispam = Antispam.new(status_for_validation)
     antispam.local_preflight_check!
 
-    if status_for_validation.valid?
-      # Marking the status as destroyed is necessary to prevent the status from being
-      # persisted when the associated media attachments get updated when creating the
-      # scheduled status.
-      status_for_validation.destroy
+    raise ActiveRecord::RecordInvalid unless status_for_validation.valid?
 
-      # The following transaction block is needed to wrap the UPDATEs to
-      # the media attachments when the scheduled status is created
+    # Marking the status as destroyed is necessary to prevent the status from being
+    # persisted when the associated media attachments get updated when creating the
+    # scheduled status.
+    status_for_validation.destroy
 
-      ApplicationRecord.transaction do
-        @status = @account.scheduled_statuses.create!(scheduled_status_attributes)
-      end
-    else
-      raise ActiveRecord::RecordInvalid
+    # The following transaction block is needed to wrap the UPDATEs to
+    # the media attachments when the scheduled status is created
+
+    ApplicationRecord.transaction do
+      @status = @account.scheduled_statuses.create!(scheduled_status_attributes)
     end
   rescue Antispam::SilentlyDrop
     @status = @account.scheduled_status.new(scheduled_status_attributes).tap(&:delete)

@@ -12,12 +12,12 @@ class CreateCommunityEntryTranslations < ActiveRecord::Migration[7.2]
     end
 
     add_index :community_entry_translations,
-      %i[translatable_type translatable_id locale field_name],
-      unique: true,
-      name: 'idx_community_translations_unique'
+              %i(translatable_type translatable_id locale field_name),
+              unique: true,
+              name: 'idx_community_translations_unique'
 
     add_index :community_entry_translations,
-      %i[translatable_type translatable_id locale],
-      name: 'idx_community_translations_by_entry_locale'
+              %i(translatable_type translatable_id locale),
+              name: 'idx_community_translations_by_entry_locale'
   end
 end

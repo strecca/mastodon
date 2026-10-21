@@ -27,7 +27,7 @@ namespace :api, format: false do
 
   # JSON / REST API
   namespace :v1 do
-    resources :community_artists,     only: [:index, :show, :create, :update, :destroy]
+    resources :community_artists, only: [:index, :show, :create, :update, :destroy]
     resources :community_daily_digests, only: [:index, :show]
     resources :community_newsletters,   only: [:index, :show], param: :slug
     resources :community_quick_shares,  only: [:index, :show, :create, :destroy], param: :slug do
@@ -40,7 +40,7 @@ namespace :api, format: false do
     resources :community_services,    only: [:index, :show, :create, :update, :destroy]
     resources :community_restaurants, only: [:index, :show, :create, :update, :destroy]
     resources :community_properties,  only: [:index, :show, :create, :update, :destroy]
-    resources :community_events,  only: [:index, :show, :create, :update, :destroy]
+    resources :community_events, only: [:index, :show, :create, :update, :destroy]
     resources :community_listings, only: [:index, :show, :create, :update, :destroy] do
       member do
         post :fulfill
@@ -77,8 +77,8 @@ namespace :api, format: false do
         post :notify_friends
       end
     end
-    resources :community_my_people,   only: [:index, :create, :destroy]
-    resources :community_locations,    only: [:index, :create, :update, :destroy]
+    resources :community_my_people, only: [:index, :create, :destroy]
+    resources :community_locations, only: [:index, :create, :update, :destroy]
     resource  :community_notification_preferences, only: [:show, :update]
     resources :community_visit_notifications, only: [:index] do
       collection do
@@ -118,7 +118,7 @@ namespace :api, format: false do
     post   'community_directory/permissions',          to: 'community_directory#permissions_create'
     delete 'community_directory/permissions/:id',      to: 'community_directory#permissions_destroy'
     # Category settings
-    get   'community_directory/settings',             to: 'community_directory#settings_index'
+    get   'community_directory/settings', to: 'community_directory#settings_index'
     put   'community_directory/settings/:category_key', to: 'community_directory#settings_update'
     get   'community_directory/duplicate_check',      to: 'community_directory#duplicate_check'
     get   'community_directory/scraper_logs',         to: 'community_directory#scraper_logs'
@@ -135,12 +135,12 @@ namespace :api, format: false do
     # Community maintenance console (admin only)
     get    'community_maintenance/stats',         to: 'community_maintenance#stats'
     delete 'community_maintenance/past_events',   to: 'community_maintenance#past_events'
-    delete 'community_maintenance/stale_listings',to: 'community_maintenance#stale_listings'
+    delete 'community_maintenance/stale_listings', to: 'community_maintenance#stale_listings'
     delete 'community_maintenance/past_visits',   to: 'community_maintenance#past_visits'
     delete 'community_maintenance/scraper_logs',  to: 'community_maintenance#scraper_logs'
     post   'community_maintenance/run_scraper',   to: 'community_maintenance#run_scraper'
     post   'community_maintenance/run_all_scrapers', to: 'community_maintenance#run_all_scrapers'
-    post   'community_maintenance/run_vacuum',    to: 'community_maintenance#run_vacuum'
+    post   'community_maintenance/run_vacuum', to: 'community_maintenance#run_vacuum'
     # Community Directory public API
     resources :community_directory_public, only: [:index]
     resources :statuses, only: [:index, :create, :show, :update, :destroy] do

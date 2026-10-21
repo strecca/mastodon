@@ -14,8 +14,8 @@ class CommunityEntryNotificationMailer < ApplicationMailer
     total = notifications.size
     locale_for_account(@recipient) do
       mail(
-        to:      user.email,
-        subject: "#{total} new community update#{total == 1 ? '' : 's'} waiting for you"
+        to: user.email,
+        subject: "#{total} new community update#{'s' unless total == 1} waiting for you"
       )
     end
   end

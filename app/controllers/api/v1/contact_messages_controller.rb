@@ -15,9 +15,7 @@ class Api::V1::ContactMessagesController < Api::BaseController
 
     # Bots also tend to submit near-instantly after the page loads.
     rendered_at = params[:form_rendered_at].to_i
-    if rendered_at.positive? && (Time.now.to_i - rendered_at) < MIN_SUBMIT_SECONDS
-      return render json: { success: true }
-    end
+    return render json: { success: true } if rendered_at.positive? && (Time.now.to_i - rendered_at) < MIN_SUBMIT_SECONDS
 
     subject = params[:subject].to_s.strip
     message = params[:message].to_s.strip
@@ -33,20 +31,20 @@ class Api::V1::ContactMessagesController < Api::BaseController
       username     = nil
       is_member    = false
 
-      return render json: { error: 'Email is required.' }, status: :unprocessable_entity if sender_email.blank?
-      return render json: { error: 'Invalid email address.' }, status: :unprocessable_entity unless sender_email.match?(URI::MailTo::EMAIL_REGEXP)
+      return render json: { error: 'Email is required.' }, status: 422 if sender_email.blank?
+      return render json: { error: 'Invalid email address.' }, status: 422 unless sender_email.match?(URI::MailTo::EMAIL_REGEXP)
     end
 
-    return render json: { error: 'Missing required fields.' }, status: :unprocessable_entity if
+    return render json: { error: 'Missing required fields.' }, status: 422 if
       sender_name.blank? || subject.blank? || message.blank?
 
     ContactMessageMailer.contact(
-      sender_name:  sender_name,
+      sender_name: sender_name,
       sender_email: sender_email,
-      subject:      subject,
-      message:      message,
-      is_member:    is_member,
-      username:     username
+      subject: subject,
+      message: message,
+      is_member: is_member,
+      username: username
     ).deliver_later
 
     render json: { success: true }

@@ -69,7 +69,7 @@ class Scheduler::MemberNotificationFlushScheduler
 
     CommunityEntryNotificationMailer.digest(account, notifications.to_a).deliver_now
     notifications.update_all(emailed_at: Time.current)
-  rescue StandardError => e
+  rescue => e
     Rails.logger.error("[MemberNotificationFlush] Error for account #{account_id}: #{e.message}")
   end
 end

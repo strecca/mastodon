@@ -274,12 +274,10 @@ class Request
     end
   end
 
-  if ::HTTP::Response.methods.include?(:body_with_limit) && !Rails.env.production?
-    raise 'HTTP::Response#body_with_limit is already defined, the monkey patch will not be applied'
-  else
-    class ::HTTP::Response
-      include Request::ClientLimit
-    end
+  raise 'HTTP::Response#body_with_limit is already defined, the monkey patch will not be applied' if ::HTTP::Response.methods.include?(:body_with_limit) && !Rails.env.production?
+
+  class ::HTTP::Response
+    include Request::ClientLimit
   end
 
   class Socket < TCPSocket
@@ -347,11 +345,9 @@ class Request
           end
         end
 
-        if outer_e
-          raise outer_e
-        else
-          raise SocketError, "No address for #{host}"
-        end
+        raise outer_e if outer_e
+
+        raise SocketError, "No address for #{host}"
       end
 
       alias new open

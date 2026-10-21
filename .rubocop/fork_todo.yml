@@ -1,0 +1,345 @@
+# Fork-only RuboCop exceptions, generated 2026-10-21 from the offenses left
+# after `rubocop -a` (1,474 safe fixes applied). Upstream's own exceptions
+# stay in .rubocop_todo.yml; this file covers only this fork's code.
+#
+# NOT INVESTIGATED: 404 offenses across 115 files, mostly cops whose
+# autocorrect is unsafe (e.g. Rails/Date: Date.today -> Date.current changes
+# timezone) or that need a human (I18n string extraction). New code is held
+# to the full rules. Remove entries as the code is fixed; don't add new ones.
+
+I18n/RailsI18n: # department level, so it merges with .rubocop/i18n.yml
+  Exclude:
+    - "app/controllers/admin/dynamic_categories_controller.rb"
+    - "app/controllers/admin/newsletters_controller.rb"
+    - "app/controllers/admin/quick_search_controller.rb"
+    - "app/controllers/admin/site_settings_controller.rb"
+    - "app/controllers/admin/translation_status_controller.rb"
+    - "app/controllers/api/v1/contact_messages_controller.rb"
+    - "app/helpers/application_helper.rb"
+    - "app/mailers/new_member_announcement_mailer.rb"
+    - "app/mailers/welcome_mailer.rb"
+    - "app/models/community_landing_setting.rb"
+    - "app/models/community_listing.rb"
+    - "app/models/site_content.rb"
+    - "app/services/community_directory_generator.rb"
+    - "app/services/community_directory_updater.rb"
+    - "app/services/daily_digest_service.rb"
+    - "app/services/dynamic_schema_manager.rb"
+    - "app/services/newsletter_import_service.rb"
+
+Layout/LineLength:
+  Exclude:
+    - "app/mailers/new_member_announcement_mailer.rb"
+    - "app/models/account.rb"
+    - "app/models/site_content.rb"
+    - "app/services/scrapers/la_voce_di_imperia_scraper.rb"
+    - "spec/fabricators/account_fabricator.rb"
+    - "spec/models/account_spec.rb"
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - "config/environments/development.rb"
+
+Lint/DuplicateBranch:
+  Exclude:
+    - "app/controllers/api/v1/timelines/public_controller.rb"
+    - "app/models/community_daily_digest.rb"
+
+Lint/NoReturnInBeginEndBlocks:
+  Exclude:
+    - "app/services/scrapers/base_scraper.rb"
+
+Lint/RedundantDirGlobSort:
+  Exclude:
+    - "app/services/newsletter_import_service.rb"
+
+Lint/ShadowedException:
+  Exclude:
+    - "app/controllers/api/v1/community_daily_digests_controller.rb"
+    - "app/controllers/api/v1/community_maintenance_controller.rb"
+    - "app/controllers/api/v1/community_visits_controller.rb"
+    - "app/services/daily_digest_service.rb"
+
+Lint/UnusedMethodArgument:
+  Exclude:
+    - "config/initializers/error_reporting.rb"
+
+Lint/UselessConstantScoping:
+  Exclude:
+    - "app/controllers/api/v1/community_directory_controller.rb"
+    - "app/services/community_directory_generator.rb"
+    - "app/services/daily_digest_service.rb"
+    - "app/services/newsletter_import_service.rb"
+    - "app/services/scrapers/centro_italia_events_scraper.rb"
+
+Naming/MethodName:
+  Exclude:
+    - "config/initializers/rack_attack.rb"
+
+Naming/MethodParameterName:
+  Exclude:
+    - "app/controllers/api/v1/civezza_member_stories_controller.rb"
+    - "app/controllers/api/v1/community_artists_controller.rb"
+    - "app/controllers/api/v1/community_directory_controller.rb"
+    - "app/controllers/api/v1/community_entry_notifications_controller.rb"
+    - "app/controllers/api/v1/community_events_controller.rb"
+    - "app/controllers/api/v1/community_landing_controller.rb"
+    - "app/controllers/api/v1/community_listings_controller.rb"
+    - "app/controllers/api/v1/community_newsletters_controller.rb"
+    - "app/controllers/api/v1/community_properties_controller.rb"
+    - "app/controllers/api/v1/community_restaurants_controller.rb"
+    - "app/controllers/api/v1/community_services_controller.rb"
+    - "app/controllers/api/v1/community_visit_notifications_controller.rb"
+    - "app/controllers/concerns/community_category_controller.rb"
+    - "app/services/community_directory_generator.rb"
+    - "app/services/community_directory_updater.rb"
+    - "community_directory_v2/app/services/community_directory_generator.rb"
+
+Naming/VariableNumber:
+  Exclude:
+    - "app/controllers/api/v1/community_artists_controller.rb"
+    - "app/controllers/api/v1/community_events_controller.rb"
+    - "app/controllers/api/v1/community_visits_controller.rb"
+    - "app/models/community_artist.rb"
+    - "app/models/community_event.rb"
+    - "app/services/community_event_import_service.rb"
+    - "db/migrate/20260518100918_create_community_artists.rb"
+    - "db/migrate/20260523100001_create_community_events.rb"
+    - "db/migrate/20260526120000_add_import_fields_to_community_events.rb"
+    - "spec/requests/api/v1/community_artists_spec.rb"
+    - "spec/requests/api/v1/community_events_spec.rb"
+
+Performance/CollectionLiteralInLoop:
+  Exclude:
+    - "app/controllers/api/v1/community_directory_controller.rb"
+    - "app/serializers/dynamic_resource_serializer.rb"
+    - "app/serializers/manifest_serializer.rb"
+    - "app/services/community_directory_generator.rb"
+    - "app/services/community_directory_updater.rb"
+    - "app/services/community_og_preview.rb"
+    - "community_directory_v2/app/services/community_directory_generator.rb"
+
+Performance/DeletePrefix:
+  Exclude:
+    - "app/models/newsletter_asset.rb"
+    - "app/services/scrapers/comune_san_lorenzo_scraper.rb"
+
+Performance/MapCompact:
+  Exclude:
+    - "app/services/community_directory_generator.rb"
+    - "app/services/member_welcome_digest_service.rb"
+
+RSpec/LeakyLocalVariable:
+  Exclude:
+    - "spec/config/initializers/rack/attack_spec.rb"
+
+RSpec/LetSetup:
+  Exclude:
+    - "spec/workers/community_entry_push_worker_spec.rb"
+
+RSpec/MessageSpies:
+  Exclude:
+    - "spec/services/daily_digest_service_spec.rb"
+    - "spec/services/member_welcome_digest_service_spec.rb"
+    - "spec/workers/community_entry_notify_worker_spec.rb"
+    - "spec/workers/community_entry_push_worker_spec.rb"
+    - "spec/workers/member_welcome_digest_worker_spec.rb"
+
+Rails/Blank:
+  Exclude:
+    - "app/controllers/concerns/community_category_controller.rb"
+    - "app/mailers/admin_alert_mailer.rb"
+    - "app/mailers/community_directory_mailer.rb"
+    - "app/mailers/community_entry_notification_mailer.rb"
+    - "app/mailers/community_visits_mailer.rb"
+    - "app/models/form/admin_settings.rb"
+    - "app/workers/community_entry_push_worker.rb"
+    - "app/workers/community_listing_notify_worker.rb"
+    - "app/workers/scheduler/community_moderation_reminder_scheduler.rb"
+
+Rails/CompactBlank:
+  Exclude:
+    - "app/controllers/admin/site_settings_controller.rb"
+    - "app/controllers/concerns/community_category_controller.rb"
+    - "app/services/community_translation_service.rb"
+
+Rails/DangerousColumnNames:
+  Exclude:
+    - "db/migrate/20260529180000_create_scraper_run_logs.rb"
+
+Rails/Date:
+  Exclude:
+    - "app/controllers/admin/newsletters_controller.rb"
+    - "app/controllers/api/v1/community_daily_digests_controller.rb"
+    - "app/services/community_event_import_service.rb"
+    - "app/services/daily_digest_service.rb"
+    - "app/services/newsletter_import_service.rb"
+    - "app/services/scrapers/base_scraper.rb"
+    - "app/services/scrapers/centro_italia_events_scraper.rb"
+    - "app/services/scrapers/comune_san_lorenzo_scraper.rb"
+    - "app/services/scrapers/la_voce_di_imperia_scraper.rb"
+    - "app/services/scrapers/riviera24_events_scraper.rb"
+    - "app/workers/scheduler/daily_digest_scheduler.rb"
+    - "spec/fabricators/community_newsletter_fabricator.rb"
+    - "spec/services/daily_digest_service_spec.rb"
+    - "spec/workers/scheduler/daily_digest_scheduler_spec.rb"
+
+Rails/I18nLocaleTexts:
+  Exclude:
+    - "app/controllers/admin/dynamic_categories_controller.rb"
+    - "app/controllers/admin/newsletters_controller.rb"
+    - "app/controllers/admin/quick_search_controller.rb"
+    - "app/controllers/admin/site_settings_controller.rb"
+    - "app/controllers/admin/translation_status_controller.rb"
+    - "app/mailers/admin_alert_mailer.rb"
+    - "app/models/community_listing_interest.rb"
+    - "app/models/community_newsletter.rb"
+    - "app/models/community_quick_share.rb"
+
+Rails/InverseOf:
+  Exclude:
+    - "app/models/community_entry_notification.rb"
+    - "app/models/community_visit_notification.rb"
+
+Rails/Pluck:
+  Exclude:
+    - "app/controllers/admin/translation_status_controller.rb"
+    - "app/controllers/api/v1/civezza_member_stories_controller.rb"
+    - "app/controllers/api/v1/community_listings_controller.rb"
+    - "app/controllers/concerns/community_cacheable.rb"
+    - "app/controllers/concerns/community_category_controller.rb"
+    - "app/models/concerns/community_searchable.rb"
+    - "app/services/community_directory_updater.rb"
+    - "lib/tasks/i18n_translate.rake"
+    - "spec/requests/api/v1/community_artists_spec.rb"
+    - "spec/requests/api/v1/community_events_spec.rb"
+    - "spec/requests/api/v1/community_properties_spec.rb"
+    - "spec/requests/api/v1/community_restaurants_spec.rb"
+    - "spec/requests/api/v1/community_services_spec.rb"
+
+Rails/ReversibleMigration:
+  Exclude:
+    - "db/migrate/20260523120000_remove_community_duplicate_indexes.rb"
+
+Rails/RootPathnameMethods:
+  Exclude:
+    - "app/models/newsletter_asset.rb"
+    - "app/services/community_directory_generator.rb"
+    - "community_directory_v2/app/services/community_directory_generator.rb"
+
+Rails/SquishedSQLHeredocs:
+  Exclude:
+    - "db/migrate/20260601100000_add_trigram_search_indexes_to_community_tables.rb"
+    - "db/migrate/20260621180000_add_expires_at_to_community_listings.rb"
+
+Rails/TimeZone:
+  Exclude:
+    - "app/services/scrapers/la_voce_di_imperia_scraper.rb"
+    - "app/services/scrapers/riviera24_events_scraper.rb"
+
+Rails/WhereExists:
+  Exclude:
+    - "app/services/community_event_import_service.rb"
+
+Rails/WhereRange:
+  Exclude:
+    - "app/controllers/api/v1/community_maintenance_controller.rb"
+    - "app/controllers/api/v1/community_visits_controller.rb"
+    - "app/models/community_visit.rb"
+    - "app/workers/scheduler/community_moderation_reminder_scheduler.rb"
+    - "app/workers/scheduler/community_stale_entry_scheduler.rb"
+    - "app/workers/scheduler/expire_listings_scheduler.rb"
+
+Style/ComparableBetween:
+  Exclude:
+    - "app/models/community_visit.rb"
+
+Style/DoubleNegation:
+  Exclude:
+    - "app/services/community_directory_generator.rb"
+    - "app/services/community_directory_updater.rb"
+    - "community_directory_v2/app/services/community_directory_generator.rb"
+
+Style/FormatStringToken:
+  Exclude:
+    - "app/mailers/new_member_announcement_mailer.rb"
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - "app/controllers/api/v1/admin/community_directory_controller.rb"
+    - "app/controllers/api/v1/community_directory_controller.rb"
+    - "app/controllers/api/v1/community_directory_public_controller.rb"
+    - "app/controllers/api/v1/community_events_controller.rb"
+    - "app/mailers/community_directory_mailer.rb"
+    - "app/models/community_artist.rb"
+    - "app/models/community_directory_category_setting.rb"
+    - "app/models/community_directory_permission.rb"
+    - "app/models/community_event.rb"
+    - "app/services/community_directory_generator.rb"
+    - "app/services/community_directory_updater.rb"
+    - "app/views/sitemaps/index.xml.builder"
+    - "community_directory_v2/app/controllers/api/v1/community_directory_controller.rb"
+    - "community_directory_v2/app/controllers/api/v1/community_directory_public_controller.rb"
+    - "community_directory_v2/app/services/community_directory_generator.rb"
+    - "db/migrate/20260518100918_create_community_artists.rb"
+    - "db/migrate/20260518161834_add_fields_to_community_artists.rb"
+    - "db/migrate/20260519100000_create_community_directory_permissions.rb"
+    - "db/migrate/20260519100001_create_community_directory_category_settings.rb"
+    - "db/migrate/20260519100002_add_status_to_community_artists.rb"
+    - "db/migrate/20260519110000_add_stale_reject_to_community_directory_category_settings.rb"
+    - "db/migrate/20260523100001_create_community_events.rb"
+    - "db/migrate/20260523120000_remove_community_duplicate_indexes.rb"
+    - "db/migrate/20260529180000_create_scraper_run_logs.rb"
+    - "db/migrate/20260531100000_create_community_listings.rb"
+    - "db/migrate/20260531100001_create_community_listing_interests.rb"
+    - "db/migrate/20260531150000_add_image_media_ids_to_community_listings.rb"
+    - "db/migrate/20260531200000_create_community_landing_settings.rb"
+    - "db/migrate/20260621170000_rename_scraper_run_logs_errors_to_error_count.rb"
+    - "db/migrate/20260621180000_add_expires_at_to_community_listings.rb"
+    - "db/migrate/20260703000001_create_site_contents.rb"
+
+Style/HashExcept:
+  Exclude:
+    - "app/controllers/admin/site_settings_controller.rb"
+
+Style/MultilineBlockChain:
+  Exclude:
+    - "app/services/community_directory_generator.rb"
+    - "app/services/community_directory_updater.rb"
+    - "community_directory_v2/app/services/community_directory_generator.rb"
+
+Style/MutableConstant:
+  Exclude:
+    - "app/controllers/api/v1/community_events_controller.rb"
+    - "app/models/community_artist.rb"
+    - "app/models/community_event.rb"
+    - "app/services/community_directory_generator.rb"
+
+Style/NumericPredicate:
+  Exclude:
+    - "app/controllers/admin/site_settings_controller.rb"
+    - "app/controllers/api/v1/community_maintenance_controller.rb"
+    - "app/workers/scheduler/translation_catchup_scheduler.rb"
+
+Style/ReduceToHash:
+  Exclude:
+    - "app/controllers/admin/site_settings_controller.rb"
+    - "app/services/community_directory_updater.rb"
+
+Style/SafeNavigation:
+  Exclude:
+    - "app/controllers/api/v1/community_directory_controller.rb"
+    - "app/workers/scheduler/community_moderation_reminder_scheduler.rb"
+    - "app/workers/scheduler/community_stale_entry_scheduler.rb"
+
+Style/SelectByRegexp:
+  Exclude:
+    - "app/services/community_directory_generator.rb"
+    - "app/services/scrapers/centro_italia_events_scraper.rb"
+
+Style/StringConcatenation:
+  Exclude:
+    - "app/services/community_directory_generator.rb"
+    - "app/services/community_directory_updater.rb"
+    - "app/services/newsletter_import_service.rb"
+    - "community_directory_v2/app/services/community_directory_generator.rb"

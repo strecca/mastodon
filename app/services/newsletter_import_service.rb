@@ -13,13 +13,14 @@
 #   newsletter = CommunityNewsletter.new(result[:fields])
 
 class NewsletterImportService
-  Error = Class.new(StandardError)
+  class Error < StandardError
+  end
 
   ANTHROPIC_API = 'https://api.anthropic.com/v1/messages'
   MAX_TOKENS    = 4096
   MAX_PDF_MB    = 25
 
-  EXTRACTION_PROMPT = <<~PROMPT.freeze
+  EXTRACTION_PROMPT = <<~PROMPT
     You are parsing a community newsletter from miacivezza.com - a bilingual (Italian/English)
     community platform for people with ties to Civezza and the Imperia province of Liguria.
 
@@ -92,7 +93,7 @@ class NewsletterImportService
     Base64.strict_encode64(File.binread(pdf_path))
   end
 
-  DESIGN_TOKEN_PROMPT = <<~PROMPT.freeze
+  DESIGN_TOKEN_PROMPT = <<~PROMPT
     You are a CSS design analyst. Look at this newsletter PDF and extract its visual design as precise CSS tokens.
 
     Examine the actual rendered colors, typography choices, and layout proportions.
@@ -127,23 +128,23 @@ class NewsletterImportService
 
     response = HTTP
       .headers(
-        'x-api-key'         => api_key,
+        'x-api-key' => api_key,
         'anthropic-version' => '2023-06-01',
-        'content-type'      => 'application/json'
+        'content-type' => 'application/json'
       )
       .timeout(60)
       .post(ANTHROPIC_API, json: {
-        model:      model,
+        model: model,
         max_tokens: 512,
-        messages:   [{
-          role:    'user',
+        messages: [{
+          role: 'user',
           content: [
             {
-              type:   'document',
+              type: 'document',
               source: {
-                type:       'base64',
+                type: 'base64',
                 media_type: 'application/pdf',
-                data:       pdf_base64,
+                data: pdf_base64,
               },
             },
             { type: 'text', text: DESIGN_TOKEN_PROMPT },
@@ -161,12 +162,12 @@ class NewsletterImportService
     parsed = JSON.parse(match.to_s)
 
     # Validate hex colors - reject obviously wrong values
-    %w[bg_color ink_color accent_color rule_color sidebar_ink].each do |key|
+    %w(bg_color ink_color accent_color rule_color sidebar_ink).each do |key|
       parsed.delete(key) unless parsed[key].to_s.match?(/\A#[0-9a-fA-F]{3,6}\z/)
     end
 
     parsed.presence
-  rescue StandardError => e
+  rescue => e
     Rails.logger.warn("NewsletterImportService: design token extraction failed - #{e.message}")
     nil
   end
@@ -183,7 +184,7 @@ class NewsletterImportService
     return [] if image_files.empty?
 
     classify_images(image_files)
-  rescue StandardError => e
+  rescue => e
     Rails.logger.warn("NewsletterImportService: image extraction failed - #{e.message}")
     []
   end
@@ -217,8 +218,8 @@ class NewsletterImportService
       next unless item['keep']
 
       {
-        path:     paths[item['index']],
-        role:     item['role'],
+        path: paths[item['index']],
+        role: item['role'],
         position: item['position'],
         alt_text: item['alt_text'].to_s,
       }
@@ -238,23 +239,23 @@ class NewsletterImportService
 
     response = HTTP
       .headers(
-        'x-api-key'         => api_key,
+        'x-api-key' => api_key,
         'anthropic-version' => '2023-06-01',
-        'content-type'      => 'application/json'
+        'content-type' => 'application/json'
       )
       .timeout(180)
       .post(ANTHROPIC_API, json: {
-        model:      model,
+        model: model,
         max_tokens: MAX_TOKENS,
-        messages:   [{
-          role:    'user',
+        messages: [{
+          role: 'user',
           content: [
             {
-              type:   'document',
+              type: 'document',
               source: {
-                type:       'base64',
+                type: 'base64',
                 media_type: 'application/pdf',
-                data:       pdf_base64,
+                data: pdf_base64,
               },
             },
             {
@@ -288,15 +289,15 @@ class NewsletterImportService
 
     response = HTTP
       .headers(
-        'x-api-key'         => api_key,
+        'x-api-key' => api_key,
         'anthropic-version' => '2023-06-01',
-        'content-type'      => 'application/json'
+        'content-type' => 'application/json'
       )
       .timeout(120)
       .post(ANTHROPIC_API, json: {
-        model:      model,
+        model: model,
         max_tokens: MAX_TOKENS,
-        messages:   [{ role: 'user', content: prompt }],
+        messages: [{ role: 'user', content: prompt }],
       })
 
     raise Error, "Anthropic API #{response.status}: #{response.body.to_s.truncate(200)}" unless response.status.success?
@@ -312,17 +313,17 @@ class NewsletterImportService
     result = JSON.parse(match.to_s)
 
     {
-      layout_variant:      result['layout_variant'].presence&.then { |v| CommunityNewsletter::LAYOUT_VARIANTS.include?(v) ? v : 'gazette' } || 'gazette',
-      title:               result['title'].to_s.strip,
-      author_name:         result['author_name'].to_s.strip,
-      published_on:        parse_date(result['published_on']),
+      layout_variant: result['layout_variant'].presence&.then { |v| CommunityNewsletter::LAYOUT_VARIANTS.include?(v) ? v : 'gazette' } || 'gazette',
+      title: result['title'].to_s.strip,
+      author_name: result['author_name'].to_s.strip,
+      published_on: parse_date(result['published_on']),
       newsletter_template: result['newsletter_template'].presence || 'two_column',
-      masthead_location:   result['masthead_location'].to_s.strip,
-      footer_attribution:  result['footer_attribution'].to_s.strip,
-      left_column_it:      result['left_column_it'].to_s.strip,
-      left_column_en:      result['left_column_en'].to_s.strip,
-      right_column_it:     result['right_column_it'].to_s.strip,
-      right_column_en:     result['right_column_en'].to_s.strip,
+      masthead_location: result['masthead_location'].to_s.strip,
+      footer_attribution: result['footer_attribution'].to_s.strip,
+      left_column_it: result['left_column_it'].to_s.strip,
+      left_column_en: result['left_column_en'].to_s.strip,
+      right_column_it: result['right_column_it'].to_s.strip,
+      right_column_en: result['right_column_en'].to_s.strip,
     }
   rescue JSON::ParserError => e
     raise Error, "JSON parse error: #{e.message}"

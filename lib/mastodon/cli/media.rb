@@ -64,27 +64,27 @@ module Mastodon::CLI
         say("Visited #{processed} accounts and removed profile media totaling #{number_to_human_size(aggregate)}#{dry_run_mode_suffix}", :green, true)
       end
 
-      unless options[:prune_profiles] || options[:remove_headers]
-        attachment_scope = MediaAttachment.cached.remote.where(created_at: ..time_ago)
+      return if options[:prune_profiles] || options[:remove_headers]
 
-        attachment_scope = attachment_scope.without_local_interaction if options[:keep_interacted]
+      attachment_scope = MediaAttachment.cached.remote.where(created_at: ..time_ago)
 
-        processed, aggregate = parallelize_with_progress(attachment_scope) do |media_attachment|
-          next if media_attachment.file.blank?
+      attachment_scope = attachment_scope.without_local_interaction if options[:keep_interacted]
 
-          size = (media_attachment.file_file_size || 0) + (media_attachment.thumbnail_file_size || 0)
+      processed, aggregate = parallelize_with_progress(attachment_scope) do |media_attachment|
+        next if media_attachment.file.blank?
 
-          unless dry_run?
-            media_attachment.file.destroy
-            media_attachment.thumbnail.destroy
-            media_attachment.save
-          end
+        size = (media_attachment.file_file_size || 0) + (media_attachment.thumbnail_file_size || 0)
 
-          size
+        unless dry_run?
+          media_attachment.file.destroy
+          media_attachment.thumbnail.destroy
+          media_attachment.save
         end
 
-        say("Removed #{processed} media attachments (approx. #{number_to_human_size(aggregate)})#{dry_run_mode_suffix}", :green, true)
+        size
       end
+
+      say("Removed #{processed} media attachments (approx. #{number_to_human_size(aggregate)})#{dry_run_mode_suffix}", :green, true)
     end
 
     option :start_after

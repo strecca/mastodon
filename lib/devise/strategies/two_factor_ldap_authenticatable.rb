@@ -13,11 +13,11 @@ module Devise
       def authenticate!
         resource = mapping.to.authenticate_with_ldap(params[scope])
 
-        if resource && !resource.otp_required_for_login?
-          success!(resource)
-        else
-          fail(:invalid) # rubocop:disable Style/SignalException -- method is from Warden::Strategies::Base
-        end
+        raise(:invalid) unless resource && !resource.otp_required_for_login?
+
+        success!(resource)
+
+        # -- method is from Warden::Strategies::Base
       end
 
       protected

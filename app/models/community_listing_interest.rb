@@ -5,8 +5,8 @@ class CommunityListingInterest < ApplicationRecord
   belongs_to :account
 
   enum :status, {
-    pending:   0,
-    selected:  1,
+    pending: 0,
+    selected: 1,
     dismissed: 2,
   }
 

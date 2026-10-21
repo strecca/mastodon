@@ -19,7 +19,7 @@ RSpec.describe 'Community Events' do
       get '/api/v1/community_events'
 
       names = response.parsed_body['entries'].map { |e| e['event_name'] }
-      expect(names).to eq(%w[Sooner Later])
+      expect(names).to eq(%w(Sooner Later))
     end
 
     it 'sorts by event_date descending when sort=past' do
@@ -29,7 +29,7 @@ RSpec.describe 'Community Events' do
       get '/api/v1/community_events', params: { sort: 'past' }
 
       names = response.parsed_body['entries'].map { |e| e['event_name'] }
-      expect(names).to eq(%w[NewerEvent OlderEvent])
+      expect(names).to eq(%w(NewerEvent OlderEvent))
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe 'Community Events' do
       media = Array.new(3) { Fabricate(:media_attachment, account: owner) }
 
       post '/api/v1/community_events', headers: headers,
-                                        params: valid_params.merge(media_ids: media.map(&:id))
+                                       params: valid_params.merge(media_ids: media.map(&:id))
 
       expect(response.parsed_body['image_media_ids'].size).to eq(2)
     end
@@ -68,7 +68,7 @@ RSpec.describe 'Community Events' do
 
       it 'is forbidden' do
         patch "/api/v1/community_events/#{entry.id}", headers: other_headers,
-                                                         params: { entry: { event_name: 'Hijacked' } }
+                                                      params: { entry: { event_name: 'Hijacked' } }
 
         expect(response).to have_http_status(403)
       end
@@ -79,9 +79,9 @@ RSpec.describe 'Community Events' do
     let!(:entry) { Fabricate(:community_event, account: owner, status: :approved) }
 
     it 'allows the owner to delete' do
-      expect {
+      expect do
         delete "/api/v1/community_events/#{entry.id}", headers: headers
-      }.to change(CommunityEvent, :count).by(-1)
+      end.to change(CommunityEvent, :count).by(-1)
 
       expect(response).to have_http_status(204)
     end

@@ -9,7 +9,7 @@ class CommunityDirectoryMailer < ApplicationMailer
     return unless admin_email.present?
 
     mail(
-      to:      admin_email,
+      to: admin_email,
       subject: "Community Directory: New #{category_key.titleize} entry pending review"
     )
   end
@@ -19,7 +19,7 @@ class CommunityDirectoryMailer < ApplicationMailer
     @total = pending_by_category.sum { |g| g[:entries].length }
 
     mail(
-      to:      recipient_email,
+      to: recipient_email,
       subject: "Community Directory: #{@total} #{@total == 1 ? 'entry' : 'entries'} awaiting review"
     )
   end
@@ -33,7 +33,7 @@ class CommunityDirectoryMailer < ApplicationMailer
     return unless user&.email.present?
 
     mail(
-      to:      user.email,
+      to: user.email,
       subject: "Your #{category_key.titleize} directory listing has been approved!"
     )
   end

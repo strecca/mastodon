@@ -36,11 +36,11 @@ module CommunityCategoryController
 
     result = cached_list do
       entries = self.class::MODEL.includes(:account)
-                                  .search(params[:q])
-                                  .where(status: :approved)
-                                  .order(sort_col => sort_dir)
-                                  .select(*list_columns)
-                                  .page(params[:page]).per(params[:per_page] || 20)
+        .search(params[:q])
+        .where(status: :approved)
+        .order(sort_col => sort_dir)
+        .select(*list_columns)
+        .page(params[:page]).per(params[:per_page] || 20)
 
       { entries: entries.map { |e| serialize(e, detail: false) },
         total: entries.total_count, page: entries.current_page, pages: entries.total_pages }
@@ -56,7 +56,7 @@ module CommunityCategoryController
 
   def create
     rate_limit_error = check_rate_limit
-    return render json: { error: rate_limit_error }, status: :too_many_requests if rate_limit_error
+    return render json: { error: rate_limit_error }, status: 429 if rate_limit_error
 
     entry = self.class::MODEL.new(entry_params)
     entry.account = current_account
@@ -68,9 +68,9 @@ module CommunityCategoryController
       CommunityDirectoryMailer.entry_submitted(entry, self.class::CATEGORY_KEY).deliver_later unless entry.approved?
       CommunityTranslationWorker.perform_async(entry.class.name, entry.id)
       CommunityEntryNotifyWorker.perform_async('new_entry', entry.class.name, entry.id, self.class::CATEGORY_KEY) if entry.approved?
-      render json: serialize(entry, detail: true), status: :created
+      render json: serialize(entry, detail: true), status: 201
     else
-      render json: { errors: entry.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: entry.errors.full_messages }, status: 422
     end
   end
 
@@ -81,14 +81,14 @@ module CommunityCategoryController
       CommunityTranslationWorker.perform_async(@entry.class.name, @entry.id)
       render json: serialize(@entry, detail: true)
     else
-      render json: { errors: @entry.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @entry.errors.full_messages }, status: 422
     end
   end
 
   def destroy
     @entry.destroy!
     invalidate_list_cache
-    head :no_content
+    head 204
   end
 
   private
@@ -101,7 +101,8 @@ module CommunityCategoryController
     return if @entry.account_id == current_account&.id
     return if current_user&.can?(:administrator)
     return if steward?
-    render json: { error: 'Forbidden' }, status: :forbidden
+
+    render json: { error: 'Forbidden' }, status: 403
   end
 
   def steward?
@@ -116,6 +117,7 @@ module CommunityCategoryController
   def auto_approve?
     return true if current_user&.can?(:administrator)
     return true if trusted?
+
     setting = CommunityDirectoryCategorySetting.find_by(category_key: self.class::CATEGORY_KEY)
     setting&.requires_approval == false
   end
@@ -132,21 +134,24 @@ module CommunityCategoryController
 
   def image_data_for(entry)
     return [] unless Array(entry.image_media_ids).any?
+
     MediaAttachment.where(id: entry.image_media_ids)
-                   .filter_map do |ma|
-                     original = attachment_url(ma, :original)
-                     next if original.blank?
-                     { original: original, preview: attachment_url(ma, :small) || original }
-                   end
-  rescue StandardError
+      .filter_map do |ma|
+        original = attachment_url(ma, :original)
+        next if original.blank?
+
+        { original: original, preview: attachment_url(ma, :small) || original }
+      end
+  rescue
     []
   end
 
   def attachment_url(ma, style)
     raw = style == :original && ma.remote_url.present? ? ma.remote_url : ma.file.url(style)
     return nil if raw.blank?
+
     raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
-  rescue StandardError
+  rescue
     nil
   end
 
@@ -171,11 +176,11 @@ module CommunityCategoryController
       account: { id: e.account.id.to_s, username: e.account.username,
                  display_name: e.account.display_name, avatar: e.account.avatar_original_url,
                  avatar_static: e.account.avatar_static_url },
-      images:          imgs.map { |i| i[:original] },
-      image_previews:  imgs.map { |i| i[:preview] },
+      images: imgs.map { |i| i[:original] },
+      image_previews: imgs.map { |i| i[:preview] },
       image_media_ids: e.image_media_ids,
-      created_at:      e.created_at.iso8601,
-      updated_at:      e.updated_at.iso8601,
+      created_at: e.created_at.iso8601,
+      updated_at: e.updated_at.iso8601
     }
   end
 

@@ -24,7 +24,7 @@ class Api::V1::SiteContentsController < Api::BaseController
     if record.save
       render json: { key: key, locale: locale, value: value }
     else
-      render json: { errors: record.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: record.errors.full_messages }, status: 422
     end
   end
 
@@ -33,6 +33,6 @@ class Api::V1::SiteContentsController < Api::BaseController
   def require_admin!
     return if current_user&.can?(:administrator)
 
-    render json: { error: 'Forbidden' }, status: :forbidden
+    render json: { error: 'Forbidden' }, status: 403
   end
 end

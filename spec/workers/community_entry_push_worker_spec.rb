@@ -11,7 +11,7 @@ RSpec.describe CommunityEntryPushWorker do
   let(:listing)      { Fabricate(:community_listing, account: sender) }
   let(:notification) do
     Fabricate(:community_entry_notification, recipient: recipient, sender: sender,
-                                              notifiable: listing, category_key: 'listings', kind: :new_entry)
+                                             notifiable: listing, category_key: 'listings', kind: :new_entry)
   end
 
   describe '#perform' do
@@ -44,7 +44,7 @@ RSpec.describe CommunityEntryPushWorker do
 
     context 'when the recipient has no active push subscription' do
       it 'does not attempt delivery and leaves browser_pushed_at nil' do
-        expect(WebPushDeliveryService).not_to receive(:new)
+        expect(WebPushDeliveryService).to_not receive(:new)
 
         subject.perform(notification.id)
 
@@ -58,7 +58,7 @@ RSpec.describe CommunityEntryPushWorker do
       it 'does not push again' do
         notification.update_column(:browser_pushed_at, Time.current)
 
-        expect(WebPushDeliveryService).not_to receive(:new)
+        expect(WebPushDeliveryService).to_not receive(:new)
 
         subject.perform(notification.id)
       end
@@ -68,7 +68,7 @@ RSpec.describe CommunityEntryPushWorker do
       it 'does not raise' do
         id = notification.id
         notification.destroy!
-        expect { subject.perform(id) }.not_to raise_error
+        expect { subject.perform(id) }.to_not raise_error
       end
     end
   end

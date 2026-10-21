@@ -49,9 +49,9 @@ class Vacuum::MediaAttachmentsVacuum
     tables = conn.tables.select { |t| t.start_with?('community_') && conn.column_exists?(t, :image_media_ids) }
     return nil if tables.empty?
 
-    tables.map { |t|
+    tables.map do |t|
       "SELECT unnest(image_media_ids) FROM #{conn.quote_table_name(t)} WHERE image_media_ids IS NOT NULL AND image_media_ids != '{}'"
-    }.join(' UNION ')
+    end.join(' UNION ')
   end
 
   def retention_period?

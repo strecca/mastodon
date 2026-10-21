@@ -21,7 +21,7 @@
 #
 class CommunityMyPerson < ApplicationRecord
   belongs_to :account
-  belongs_to :member_account, class_name: 'Account', foreign_key: :member_account_id
+  belongs_to :member_account, class_name: 'Account'
 
   validates :member_account_id, uniqueness: { scope: :account_id }
   validate  :cannot_add_self

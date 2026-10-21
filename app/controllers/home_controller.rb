@@ -6,12 +6,12 @@ class HomeController < ApplicationController
   # Public content the SPA serves through this same catch-all route — these
   # get indexed. Everything else routed to home#index (settings, timelines,
   # notifications, admin tools, etc.) stays noindex, matching upstream intent.
-  INDEXABLE_PREFIXES = %w[
+  INDEXABLE_PREFIXES = %w(
     /landing /guide /daily /contact
     /community_artists /community_events /community_listings
     /community_services /community_restaurants /community_properties
     /newsletters /member_stories
-  ].freeze
+  ).freeze
 
   def index
     expires_in(15.seconds, public: true, stale_while_revalidate: 30.seconds, stale_if_error: 60.seconds) unless user_signed_in?

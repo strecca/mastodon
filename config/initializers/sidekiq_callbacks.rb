@@ -4,11 +4,11 @@
 # the dead set. We alert on community-specific workers only — Mastodon's
 # built-in schedulers failing is informational noise, not an ops alert.
 
-SIDEKIQ_ALERTABLE_WORKERS = %w[
+SIDEKIQ_ALERTABLE_WORKERS = %w(
   CommunityTranslationWorker
   Scheduler::DailyDigestScheduler
   Scheduler::EventImportScheduler
-].freeze
+).freeze
 
 Sidekiq.configure_server do |config|
   config.death_handlers << lambda do |job, exception|

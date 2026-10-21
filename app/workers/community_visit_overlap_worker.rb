@@ -53,9 +53,9 @@ class CommunityVisitOverlapWorker
       if owner_pref.on_visit_overlap
         notif = CommunityVisitNotification.find_or_create_by(
           recipient_account_id: owner.id,
-          sender_account_id:    other_account.id,
-          community_visit_id:   other_visit.id,
-          kind:                 :overlap_detected
+          sender_account_id: other_account.id,
+          community_visit_id: other_visit.id,
+          kind: :overlap_detected
         )
         CommunityVisitEmailWorker.perform_async(notif.id)
       end
@@ -64,9 +64,9 @@ class CommunityVisitOverlapWorker
       if other_pref.on_visit_overlap
         notif = CommunityVisitNotification.find_or_create_by(
           recipient_account_id: other_account.id,
-          sender_account_id:    owner.id,
-          community_visit_id:   visit.id,
-          kind:                 :overlap_detected
+          sender_account_id: owner.id,
+          community_visit_id: visit.id,
+          kind: :overlap_detected
         )
         CommunityVisitEmailWorker.perform_async(notif.id)
       end

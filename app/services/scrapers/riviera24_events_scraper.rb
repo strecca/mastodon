@@ -24,36 +24,36 @@ module Scrapers
     # All municipalities and localities in the Imperia province area.
     # Order matters: more specific names (e.g. "Arma di Taggia") before
     # shorter ones ("Arma", "Taggia") so the first match wins.
-    KNOWN_TOWNS = %w[
-      Arma\ di\ Taggia
-      Diano\ Castello
-      Diano\ Marina
-      Pieve\ di\ Teco
-      Porto\ Maurizio
-      San\ Lorenzo\ al\ Mare
-      Santo\ Stefano\ al\ Mare
-      Caramagna\ Ligure
-      Bordighera
-      Caravonica
-      Cervo
-      Chiusanico
-      Cipressa
-      Civezza
-      Costarainera
-      Dolcedo
-      Imperia
-      Lingueglietta
-      Lucinasco
-      Molini\ di\ Triora
-      Oneglia
-      Ospedaletti
-      Pontedassio
-      Riva\ Ligure
-      Sanremo
-      Taggia
-      Triora
-      Vallecrosia
-      Ventimiglia
+    KNOWN_TOWNS = [
+      'Arma di Taggia',
+      'Diano Castello',
+      'Diano Marina',
+      'Pieve di Teco',
+      'Porto Maurizio',
+      'San Lorenzo al Mare',
+      'Santo Stefano al Mare',
+      'Caramagna Ligure',
+      'Bordighera',
+      'Caravonica',
+      'Cervo',
+      'Chiusanico',
+      'Cipressa',
+      'Civezza',
+      'Costarainera',
+      'Dolcedo',
+      'Imperia',
+      'Lingueglietta',
+      'Lucinasco',
+      'Molini di Triora',
+      'Oneglia',
+      'Ospedaletti',
+      'Pontedassio',
+      'Riva Ligure',
+      'Sanremo',
+      'Taggia',
+      'Triora',
+      'Vallecrosia',
+      'Ventimiglia',
     ].freeze
 
     # ------------------------------------------------------------------ #
@@ -84,7 +84,7 @@ module Scrapers
       # at_css('encoded') silently returns nil for namespaced elements.
       full_text   = strip_html(item.at_xpath(
         'content:encoded',
-        'content' => 'http://purl.org/rss/1.0/modules/content/',
+        'content' => 'http://purl.org/rss/1.0/modules/content/'
       )&.text.to_s)
       link        = extract_link(item)
       pub_date    = parse_pub_date(item.at_xpath('pubDate')&.text)
@@ -113,14 +113,14 @@ module Scrapers
                  'Provincia di Imperia'
 
       {
-        title:       title,
-        event_date:  dates[:start],
-        end_date:    dates[:end] == dates[:start] ? nil : dates[:end],
-        location:    location,
+        title: title,
+        event_date: dates[:start],
+        end_date: dates[:end] == dates[:start] ? nil : dates[:end],
+        location: location,
         description: description.presence || title,
-        source_url:  link,
+        source_url: link,
         source_name: SOURCE_NAME,
-        category:    ['community'],
+        category: ['community'],
       }
     end
 
@@ -132,7 +132,15 @@ module Scrapers
     end
 
     def parse_pub_date(str)
-      str ? (Time.parse(str).to_date rescue Date.today) : Date.today
+      if str
+        begin
+          Time.parse(str).to_date
+        rescue
+          Date.today
+        end
+      else
+        Date.today
+      end
     end
 
     # Looks for event dates inside a block of mixed Italian prose.
@@ -147,9 +155,7 @@ module Scrapers
       end
 
       # "questo weekend" / "fine settimana" → nearest Saturday–Sunday
-      if t.match?(/fine\s+settimana|weekend/)
-        return nearest_weekend(pub_date)
-      end
+      return nearest_weekend(pub_date) if t.match?(/fine\s+settimana|weekend/)
 
       # Explicit Italian date patterns: "Dal 5 agosto al 10 agosto 2026",
       # "sabato 19 luglio 2026", "19 e 20 ottobre", etc.
@@ -161,6 +167,7 @@ module Scrapers
     # their shorter components.
     def extract_location(text)
       return nil if text.blank?
+
       KNOWN_TOWNS.find { |town| text.match?(/\b#{Regexp.escape(town)}\b/i) }
     end
 

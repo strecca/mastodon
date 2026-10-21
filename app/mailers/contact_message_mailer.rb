@@ -12,9 +12,9 @@ class ContactMessageMailer < ApplicationMailer
     notify_address = ENV.fetch('CONTACT_NOTIFY_EMAIL') { User.admins.first&.email }
 
     mail(
-      to:       notify_address,
+      to: notify_address,
       reply_to: sender_email,
-      subject:  "[miacivezza contact] #{subject}"
+      subject: "[miacivezza contact] #{subject}"
     )
   end
 end

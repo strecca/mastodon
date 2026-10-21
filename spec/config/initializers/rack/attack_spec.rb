@@ -205,7 +205,7 @@ RSpec.describe Rack::Attack, type: :request do
     ]
 
     def malformed_upload(path, body)
-      build_request(path, method: 'POST', 'CONTENT_TYPE' => 'multipart/form-data; boundary=----abc', input: body)
+      build_request(path, :method => 'POST', 'CONTENT_TYPE' => 'multipart/form-data; boundary=----abc', :input => body)
     end
 
     describe '#paging_request?' do

@@ -194,12 +194,12 @@ class Form::AdminSettings
     Rails.cache.delete(:"setting_digest_#{key}")
 
     key_value = instance_variable_get(:"@#{key}")
-    if key_value.present?
-      Rails.cache.write(
-        :"setting_digest_#{key}",
-        Digest::SHA256.hexdigest(key_value)
-      )
-    end
+    return unless key_value.present?
+
+    Rails.cache.write(
+      :"setting_digest_#{key}",
+      Digest::SHA256.hexdigest(key_value)
+    )
   end
 
   def typecast_value(key, value)

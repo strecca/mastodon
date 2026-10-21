@@ -1,0 +1,31 @@
+# Fork-only haml-lint exceptions, generated 2026-10-21 (see .rubocop/fork_todo.yml).
+# NOT INVESTIGATED: 25 lints. Remove entries as fixed; don't add new ones.
+linters:
+  ClassesBeforeIds:
+    exclude:
+      - "app/views/admin/quick_search/show.html.haml"
+  ConsecutiveSilentScripts:
+    exclude:
+      - "app/views/newsletters/show.html.haml"
+      - "app/views/shared/_og.html.haml"
+  IdNames:
+    exclude:
+      - "app/views/admin/newsletters/new.html.haml"
+  InlineStyles:
+    exclude:
+      - "app/views/admin/translation_status/show.html.haml"
+      - "app/views/new_member_announcement_mailer/announce.html.haml"
+  RuboCop:
+    exclude:
+      - "app/views/admin/newsletters/index.html.haml"
+      - "app/views/admin/newsletters/show.html.haml"
+      - "app/views/admin/translation_status/show.html.haml"
+      - "app/views/auth/join/show.html.haml"
+      - "app/views/auth/registrations/new.html.haml"
+      - "app/views/auth/shared/_locale_switcher.html.haml"
+      - "app/views/shared/_og.html.haml"
+  UnnecessaryStringOutput:
+    exclude:
+      - "app/views/admin/newsletters/edit.html.haml"
+      - "app/views/auth/join/show.html.haml"
+      - "app/views/new_member_announcement_mailer/announce.html.haml"

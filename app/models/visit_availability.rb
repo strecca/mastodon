@@ -26,12 +26,12 @@ class VisitAvailability < ApplicationRecord
   belongs_to :community_visit
 
   enum :kind, {
-    coffee:       0,
-    dinner:       1,
-    hike:         2,
-    excursion:    3,
+    coffee: 0,
+    dinner: 1,
+    hike: 2,
+    excursion: 3,
     introduction: 4,
-    open_house:   5,
+    open_house: 5,
   }
 
   validates :kind, presence: true

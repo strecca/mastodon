@@ -9,7 +9,8 @@
 #   DailyDigestService.new.generate(date: Date.yesterday)
 
 class DailyDigestService
-  Error = Class.new(StandardError)
+  class Error < StandardError
+  end
 
   MAX_TOKENS     = 4096
   LOOKAHEAD_DAYS = 60
@@ -48,11 +49,11 @@ class DailyDigestService
   # 2026-09-03 failure shape (an untranslated Italian sentence/paragraph
   # left in the "English" response) with or without a paragraph break
   # before it.
-  ITALIAN_FUNCTION_WORDS = %w[
+  ITALIAN_FUNCTION_WORDS = %w(
     che non sono e è era ho hanno anche ancora però perché quando con per
     del della dei delle degli nel nella sul sulla il lo gli la le un una uno
     questo questa molto di da in su
-  ].to_set.freeze
+  ).to_set.freeze
 
   # A sentence shorter than this is too easily dominated by one quoted
   # Italian title/phrase (e.g. a 6-word sentence that's just an Italian
@@ -80,7 +81,7 @@ class DailyDigestService
     additionalProperties: false,
   }.freeze
 
-  SYSTEM_PROMPT = <<~SYSTEM.freeze
+  SYSTEM_PROMPT = <<~SYSTEM
     You are the editorial voice of MiaCivezza.com - a private, members-only community
     platform for people with roots in, or deep ties to, the Imperia province and the
     Ligurian Riviera of northwestern Italy. "Mia Civezza" takes its name from the small
@@ -148,7 +149,7 @@ class DailyDigestService
     # announced once, it either drops out entirely (single-day/no end_date)
     # or graduates to the terse "Ongoing Events" line via fetch_ongoing_events
     # below, which is independent of this flag.
-    events.update_all(digest_announced_at: Time.current) if events.any? # rubocop:disable Rails/SkipsModelValidations
+    events.update_all(digest_announced_at: Time.current) if events.any?
 
     digest
   end
@@ -204,7 +205,7 @@ class DailyDigestService
     end
   end
 
-  def fetch_recent_newsletter(date)
+  def fetch_recent_newsletter(_date)
     CommunityNewsletter.for_digest.order(published_on: :desc).first
   end
 
@@ -212,9 +213,7 @@ class DailyDigestService
     events_text = events.map do |e|
       lines = ["- #{e.event_name}"]
       lines << "  Data: #{e.event_date.strftime('%-d %B %Y')}"
-      if e.end_date.present? && e.end_date.to_date != e.event_date.to_date
-        lines << "  Fine: #{e.end_date.strftime('%-d %B %Y')}"
-      end
+      lines << "  Fine: #{e.end_date.strftime('%-d %B %Y')}" if e.end_date.present? && e.end_date.to_date != e.event_date.to_date
       lines << "  Luogo: #{e.location_town_city}" if e.location_town_city.present?
       lines << "  Fonte: #{e.source_name}" if e.source_name.present?
       lines << "  Descrizione: #{e.event_description.truncate(300)}" if e.event_description.present?
@@ -223,11 +222,9 @@ class DailyDigestService
 
     newsletter      = fetch_recent_newsletter(date)
     newsletter_note = if newsletter
-      url = "https://#{Rails.configuration.x.web_domain}/newsletters/#{newsletter.slug}"
-      "NEWSLETTER DELLA COMUNITA': \"#{newsletter.title}\" di #{newsletter.author_name} (#{url})\nRiepilogo: #{newsletter.digest_summary}"
-    else
-      nil
-    end
+                        url = "https://#{Rails.configuration.x.web_domain}/newsletters/#{newsletter.slug}"
+                        "NEWSLETTER DELLA COMUNITA': \"#{newsletter.title}\" di #{newsletter.author_name} (#{url})\nRiepilogo: #{newsletter.digest_summary}"
+                      end
 
     newsletter_section = newsletter_note ? <<~NL : ''
       C'e' anche una newsletter recente della comunita':
@@ -241,7 +238,11 @@ class DailyDigestService
     <<~PROMPT
       Sei il redattore di MiaCivezza.com, un sito di comunità dedicato alle persone con legami con la regione di Imperia e della Liguria nordoccidentale, e agli italiani che vivono all'estero.
 
-      Oggi è #{I18n.l(date, format: :long, locale: :it) rescue date.strftime('%-d %B %Y')}.
+      Oggi è #{begin
+        I18n.l(date, format: :long, locale: :it)
+      rescue
+        date.strftime('%-d %B %Y')
+      end}.
 
       Di seguito trovi gli eventi comunitari in arrivo, raccolti da fonti locali come Comune di San Lorenzo al Mare, CentroItalia e La Voce di Imperia.
 
@@ -333,9 +334,9 @@ class DailyDigestService
       raise Error, "English article contains an Italian sentence - translation likely failed: #{sentence.strip.truncate(120).inspect}"
     end
 
-    if text.length < source_length * MIN_TRANSLATION_RATIO
-      raise Error, "English translation too short relative to its source (#{text.length} chars vs #{source_length} chars Italian) - response likely truncated"
-    end
+    return unless text.length < source_length * MIN_TRANSLATION_RATIO
+
+    raise Error, "English translation too short relative to its source (#{text.length} chars vs #{source_length} chars Italian) - response likely truncated"
   end
 
   # Finds a sentence that reads as genuinely Italian: enough Italian

@@ -16,12 +16,13 @@ module Admin
       @newsletters = CommunityNewsletter.order(published_on: :desc, created_at: :desc).page(params[:page]).per(20)
     end
 
-    def show
-    end
+    def show; end
 
     def new
       @newsletter = CommunityNewsletter.new(newsletter_template: 'two_column')
     end
+
+    def edit; end
 
     def create
       if params[:import_file].present?
@@ -34,9 +35,6 @@ module Admin
           render :new
         end
       end
-    end
-
-    def edit
     end
 
     def update
@@ -85,6 +83,7 @@ module Admin
 
     def require_admin!
       return if current_user&.can?(:administrator) || current_user&.can?(:manage_reports)
+
       redirect_to root_path, alert: 'Not authorized.'
     end
 
@@ -134,17 +133,17 @@ module Admin
     def store_original_pdf(newsletter, tmp_path)
       return unless File.exist?(tmp_path)
 
-      store_dir = Rails.root.join('public', 'newsletter_assets', newsletter.id.to_s)
+      store_dir = Rails.public_path.join('newsletter_assets', newsletter.id.to_s)
       FileUtils.mkdir_p(store_dir)
       dest = store_dir.join('original.pdf')
       FileUtils.cp(tmp_path, dest)
       newsletter.update_column(:original_pdf_path, "newsletter_assets/#{newsletter.id}/original.pdf")
-    rescue StandardError => e
+    rescue => e
       Rails.logger.warn("store_original_pdf failed: #{e.message}")
     end
 
     def attach_extracted_images(newsletter, image_paths)
-      store_dir = Rails.root.join('public', 'newsletter_assets', newsletter.id.to_s)
+      store_dir = Rails.public_path.join('newsletter_assets', newsletter.id.to_s)
       FileUtils.mkdir_p(store_dir)
 
       image_paths.each_with_index do |meta, i|
@@ -156,11 +155,11 @@ module Admin
         FileUtils.cp(meta[:path], dest)
 
         newsletter.newsletter_assets.create!(
-          role:          meta[:role],
-          position:      meta[:position],
-          alt_text:      meta[:alt_text],
+          role: meta[:role],
+          position: meta[:position],
+          alt_text: meta[:alt_text],
           display_order: i,
-          file_path:     "newsletter_assets/#{newsletter.id}/#{filename}"
+          file_path: "newsletter_assets/#{newsletter.id}/#{filename}"
         )
       end
     end

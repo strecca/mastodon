@@ -5,19 +5,19 @@
 # decide what gets a <meta name="robots"> noindex tag. Cached briefly since
 # entry counts are small (dozens, not millions) and change infrequently.
 class SitemapsController < ApplicationController
-  STATIC_PATHS = %w[
+  STATIC_PATHS = %w(
     / /landing /guide /daily /contact
     /community_artists /community_events /community_listings
     /community_services /community_restaurants /community_properties
     /newsletters /member_stories
-  ].freeze
+  ).freeze
 
   CATEGORY_MODELS = {
-    'community_artists'     => CommunityArtist,
-    'community_events'      => CommunityEvent,
-    'community_properties'  => CommunityProperty,
+    'community_artists' => CommunityArtist,
+    'community_events' => CommunityEvent,
+    'community_properties' => CommunityProperty,
     'community_restaurants' => CommunityRestaurant,
-    'community_services'    => CommunityService,
+    'community_services' => CommunityService,
   }.freeze
 
   def index

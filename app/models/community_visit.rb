@@ -32,8 +32,7 @@ class CommunityVisit < ApplicationRecord
 
   belongs_to :account
   has_many :visit_availabilities, dependent: :destroy
-  has_many :visit_notifications, class_name: 'CommunityVisitNotification',
-           foreign_key: :community_visit_id, dependent: :destroy
+  has_many :visit_notifications, class_name: 'CommunityVisitNotification', dependent: :destroy
 
   enum :visibility, { public_to_members: 0, connections_only: 1, ghost: 2, my_people: 3 }, default: :public_to_members
 
@@ -44,14 +43,14 @@ class CommunityVisit < ApplicationRecord
   # ── Scopes ────────────────────────────────────────────────────────────────
 
   # Visits whose dates overlap [from..to] — the core calendar query
-  scope :overlapping, ->(from, to) {
+  scope :overlapping, lambda { |from, to|
     where('arrival_date <= ? AND departure_date >= ?', to, from)
   }
 
   scope :upcoming,          -> { where('departure_date >= ?', Date.current) }
   scope :past,              -> { where('departure_date < ?',  Date.current) }
   scope :visible_to_members, -> { where.not(visibility: :ghost) }
-  scope :for_account,       ->(account) { where(account: account) }
+  scope :for_account, ->(account) { where(account: account) }
 
   # ── Helpers ───────────────────────────────────────────────────────────────
 
@@ -67,6 +66,7 @@ class CommunityVisit < ApplicationRecord
 
   def departure_on_or_after_arrival
     return unless arrival_date && departure_date
+
     errors.add(:departure_date, 'must be on or after arrival date') if departure_date < arrival_date
   end
 end

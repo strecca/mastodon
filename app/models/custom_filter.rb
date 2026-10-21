@@ -50,7 +50,7 @@ class CustomFilter < ApplicationRecord
   has_many :statuses, class_name: 'CustomFilterStatus', inverse_of: :custom_filter, dependent: :destroy
   # Add this block from grok april 19, 2026
   # has_many :artists, dependent: :destroy   # one category
-# has_many :venues, dependent: :destroy   # repeat for each dynamic category you create
+  # has_many :venues, dependent: :destroy   # repeat for each dynamic category you create
   accepts_nested_attributes_for :keywords, reject_if: :all_blank, allow_destroy: true
 
   validates :title, :context, presence: true

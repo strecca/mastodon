@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class DynamicSchemaManager
-  SCHEMA_DIR = Rails.root.join('config/dynamic_schemas')
-  FEATURES_DIR = Rails.root.join('app/javascript/flavours/glitch/features')
+  SCHEMA_DIR = Rails.root.join('config', 'dynamic_schemas')
+  FEATURES_DIR = Rails.root.join('app', 'javascript', 'flavours', 'glitch', 'features', 'features', 'glitch', 'features', 'features', 'flavours', 'glitch', 'features', 'features', 'glitch', 'features', 'features')
 
   def self.table_name_for(category)
     "community_#{category.pluralize.parameterize.underscore}"
@@ -11,13 +12,13 @@ class DynamicSchemaManager
     path = SCHEMA_DIR.join("#{category.parameterize}.yml")
     default = {
       'category_name' => category,
-      'table_name'    => table_name_for(category),
-      'db_fields'     => [],
-      'form_config'   => { 'fields' => [], 'icon' => 'fa-users' }
+      'table_name' => table_name_for(category),
+      'db_fields' => [],
+      'form_config' => { 'fields' => [], 'icon' => 'fa-users' },
     }
     return default unless File.exist?(path)
 
-    YAML.safe_load(File.read(path), permitted_classes: [Symbol]) || default
+    YAML.safe_load_file(path, permitted_classes: [Symbol]) || default
   end
 
   def self.save(category, schema)
@@ -49,19 +50,17 @@ class DynamicSchemaManager
       yaml_path: yaml_path,
       migration: migration_path,
       feature_folder: feature_path.to_s,
-      message: "✅ Category '#{category}' fully generated.\nYAML saved to config/dynamic_schemas/#{category}.yml\nMigration created.\nRun `rails db:migrate` to create the table."
+      message: "✅ Category '#{category}' fully generated.\nYAML saved to config/dynamic_schemas/#{category}.yml\nMigration created.\nRun `rails db:migrate` to create the table.",
     }
   end
 
-  private
-
-  def self.generate_per_category_wrappers!(base_path, category)
+  def self.generate_per_category_wrappers!(base_path, _category)
     wrappers = {
-      'index/index.jsx'    => "import CommunityDirectoryIndex from '../community_directory/index/index';\nexport default CommunityDirectoryIndex;",
+      'index/index.jsx' => "import CommunityDirectoryIndex from '../community_directory/index/index';\nexport default CommunityDirectoryIndex;",
       'category/index.jsx' => "import CommunityDirectoryCategory from '../community_directory/category/index';\nexport default CommunityDirectoryCategory;",
-      'show/index.jsx'     => "import CommunityDirectoryShow from '../community_directory/show/index';\nexport default CommunityDirectoryShow;",
-      'new/index.jsx'      => "import CommunityDirectoryNew from '../community_directory/new/index';\nexport default CommunityDirectoryNew;",
-      'edit/index.jsx'     => "import CommunityDirectoryEdit from '../community_directory/edit/index';\nexport default CommunityDirectoryEdit;"
+      'show/index.jsx' => "import CommunityDirectoryShow from '../community_directory/show/index';\nexport default CommunityDirectoryShow;",
+      'new/index.jsx' => "import CommunityDirectoryNew from '../community_directory/new/index';\nexport default CommunityDirectoryNew;",
+      'edit/index.jsx' => "import CommunityDirectoryEdit from '../community_directory/edit/index';\nexport default CommunityDirectoryEdit;",
     }
 
     wrappers.each do |rel_path, content|

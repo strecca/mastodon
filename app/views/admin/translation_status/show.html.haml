@@ -69,7 +69,7 @@
               %span.locale-badge.locale-badge--missing= loc.upcase
           %td
             - if row[:total] > 0
-              = button_to "Backfill",
+              = button_to 'Backfill',
                           backfill_admin_translation_status_path,
                           params: { klass: row[:klass] },
                           method: :post,

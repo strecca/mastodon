@@ -34,25 +34,25 @@ class Scheduler::EventImportScheduler
         total_skipped  += result[:skipped]
 
         ScraperRunLog.create!(
-          source_name:   source_name,
-          ran_at:        began_at,
-          fetched:       events.size,
-          imported:      result[:imported],
-          skipped:       result[:skipped],
-          error_count:   result[:errors],
-          status:        events.empty? ? 'empty' : 'ok',
+          source_name: source_name,
+          ran_at: began_at,
+          fetched: events.size,
+          imported: result[:imported],
+          skipped: result[:skipped],
+          error_count: result[:errors],
+          status: events.empty? ? 'empty' : 'ok'
         )
-      rescue StandardError => e
+      rescue => e
         Rails.logger.error("[EventImport] #{source_name} failed: #{e.message}")
         ScraperRunLog.create!(
-          source_name:   source_name,
-          ran_at:        began_at,
-          fetched:       0,
-          imported:      0,
-          skipped:       0,
-          error_count:   1,
-          status:        'failed',
-          error_message: e.message.truncate(500),
+          source_name: source_name,
+          ran_at: began_at,
+          fetched: 0,
+          imported: 0,
+          skipped: 0,
+          error_count: 1,
+          status: 'failed',
+          error_message: e.message.truncate(500)
         )
       end
     end

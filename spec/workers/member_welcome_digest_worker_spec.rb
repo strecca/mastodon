@@ -36,7 +36,7 @@ RSpec.describe MemberWelcomeDigestWorker do
     it 'does not call the service again if a digest already exists for today' do
       Fabricate(:member_welcome_digest, account: account, digest_date: Date.current)
 
-      expect(MemberWelcomeDigestService).not_to receive(:new)
+      expect(MemberWelcomeDigestService).to_not receive(:new)
 
       subject.perform(account.id, since.iso8601)
     end
@@ -46,14 +46,14 @@ RSpec.describe MemberWelcomeDigestWorker do
       allow(MemberWelcomeDigestService).to receive(:new).and_return(service)
       allow(service).to receive(:generate).and_raise(MemberWelcomeDigestService::Error, 'boom')
 
-      expect { subject.perform(account.id, since.iso8601) }.not_to raise_error
+      expect { subject.perform(account.id, since.iso8601) }.to_not raise_error
 
       digest = MemberWelcomeDigest.find_by(account: account, digest_date: Date.current)
       expect(digest.content).to be_nil
     end
 
     it 'does not raise when the account no longer exists' do
-      expect { subject.perform(-1, since.iso8601) }.not_to raise_error
+      expect { subject.perform(-1, since.iso8601) }.to_not raise_error
     end
   end
 end

@@ -11,23 +11,23 @@ class CommunityListing < ApplicationRecord
 
   enum :listing_type, {
     giveaway: 0,
-    trade:    1,
-    sell:     2,
-    rent:     3,
-    iso:      4,
+    trade: 1,
+    sell: 2,
+    rent: 3,
+    iso: 4,
   }
 
   enum :condition_value, {
-    new_item:  0,
-    like_new:  1,
-    used:      2,
-    damaged:   3,
+    new_item: 0,
+    like_new: 1,
+    used: 2,
+    damaged: 3,
   }, prefix: :condition
 
   enum :status, {
-    open:      0,
+    open: 0,
     fulfilled: 1,
-    closed:    2,
+    closed: 2,
   }
 
   validates :title,        presence: true, length: { maximum: 120 }
@@ -35,7 +35,7 @@ class CommunityListing < ApplicationRecord
   validates :description,  length: { maximum: 2000 }
   validates :trade_for,    length: { maximum: 500 }
   validates :rental_period, length: { maximum: 100 }
-  validates :price,        numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   validate :price_required_for_sell_and_rent
   validate :image_count_limit
@@ -43,14 +43,16 @@ class CommunityListing < ApplicationRecord
   scope :publicly_visible, -> { where(status: :open) }
   scope :recent,           -> { order(created_at: :desc) }
   scope :by_type,          ->(t) { where(listing_type: t) if t.present? }
-  scope :search,           ->(query) {
+  scope :search,           lambda { |query|
     return all if query.blank?
+
     cols = "lower(coalesce(title,'') || ' ' || coalesce(description,''))"
     where("#{cols} LIKE ?", "%#{query.downcase}%")
   }
 
   def image_media_attachments
     return [] if image_media_ids.blank?
+
     MediaAttachment.where(id: image_media_ids).index_by(&:id).values_at(*image_media_ids).compact
   end
 
@@ -66,6 +68,7 @@ class CommunityListing < ApplicationRecord
 
   def price_required_for_sell_and_rent
     return unless sell? || rent?
+
     errors.add(:price, 'is required for sell and rent listings') if price.blank?
   end
 

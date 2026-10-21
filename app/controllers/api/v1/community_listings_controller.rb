@@ -42,9 +42,9 @@ class Api::V1::CommunityListingsController < Api::BaseController
     if @listing.save
       CommunityTranslationWorker.perform_async('CommunityListing', @listing.id)
       CommunityEntryNotifyWorker.perform_async('new_entry', 'CommunityListing', @listing.id, 'listings')
-      render json: serialize(@listing), status: :created
+      render json: serialize(@listing), status: 201
     else
-      render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @listing.errors.full_messages }, status: 422
     end
   end
 
@@ -57,14 +57,14 @@ class Api::V1::CommunityListingsController < Api::BaseController
       CommunityTranslationWorker.perform_async('CommunityListing', @listing.id)
       render json: serialize(@listing)
     else
-      render json: { errors: @listing.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @listing.errors.full_messages }, status: 422
     end
   end
 
   # DELETE /api/v1/community_listings/:id
   def destroy
     @listing.destroy!
-    head :no_content
+    head 204
   end
 
   # POST /api/v1/community_listings/:id/fulfill
@@ -82,7 +82,7 @@ class Api::V1::CommunityListingsController < Api::BaseController
   # POST /api/v1/community_listings/:id/watch
   # "Notify me if this listing gets a response."
   def watch
-    return render json: { error: 'Cannot watch your own listing' }, status: :unprocessable_entity \
+    return render json: { error: 'Cannot watch your own listing' }, status: 422 \
       if @listing.account_id == current_account.id
 
     CommunityEntryWatch.find_or_create_by!(account: current_account, watchable: @listing)
@@ -100,13 +100,14 @@ class Api::V1::CommunityListingsController < Api::BaseController
   def set_listing
     @listing = CommunityListing.includes(:account, :community_listing_interests).find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Listing not found' }, status: :not_found
+    render json: { error: 'Listing not found' }, status: 404
   end
 
   def authorize_owner!
     return if @listing.account_id == current_account.id
     return if current_user&.can?(:administrator)
-    render json: { error: 'Forbidden' }, status: :forbidden
+
+    render json: { error: 'Forbidden' }, status: 403
   end
 
   def listing_params
@@ -120,14 +121,16 @@ class Api::V1::CommunityListingsController < Api::BaseController
   def validated_media_ids
     ids = Array(params[:media_ids]).first(4).map(&:to_i).select(&:positive?)
     return [] if ids.empty?
+
     MediaAttachment.where(id: ids, account: current_account).pluck(:id)
   end
 
   def attachment_url(ma, style)
     raw = style == :original && ma.remote_url.present? ? ma.remote_url : ma.file.url(style)
     return nil if raw.blank?
+
     raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
-  rescue StandardError
+  rescue
     nil
   end
 
@@ -135,9 +138,10 @@ class Api::V1::CommunityListingsController < Api::BaseController
     listing.image_media_attachments.filter_map do |ma|
       original = attachment_url(ma, :original)
       next if original.blank?
+
       { original: original, preview: attachment_url(ma, :small) || original }
     end
-  rescue StandardError
+  rescue
     []
   end
 
@@ -145,31 +149,31 @@ class Api::V1::CommunityListingsController < Api::BaseController
     owner   = listing.account
     imgs    = image_data_for(listing)
     data = {
-      id:            listing.id,
-      listing_type:  listing.listing_type,
-      title:         listing.title,
-      description:   listing.description,
-      category:      listing.category,
-      condition:     listing.condition_value,
-      price:         listing.price&.to_s,
-      currency:      listing.currency,
+      id: listing.id,
+      listing_type: listing.listing_type,
+      title: listing.title,
+      description: listing.description,
+      category: listing.category,
+      condition: listing.condition_value,
+      price: listing.price&.to_s,
+      currency: listing.currency,
       rental_period: listing.rental_period,
-      trade_for:     listing.trade_for,
-      location:      listing.location,
-      status:        listing.status,
+      trade_for: listing.trade_for,
+      location: listing.location,
+      status: listing.status,
       interest_count: listing.community_listing_interests.size,
-      images:          imgs.map { |i| i[:original] },
-      image_previews:  imgs.map { |i| i[:preview] },
+      images: imgs.map { |i| i[:original] },
+      image_previews: imgs.map { |i| i[:preview] },
       image_media_ids: listing.image_media_ids,
       account: {
-        id:           owner.id.to_s,
-        username:     owner.username,
+        id: owner.id.to_s,
+        username: owner.username,
         display_name: owner.display_name,
-        avatar:       owner.avatar_original_url,
+        avatar: owner.avatar_original_url,
       },
-      is_own:     current_account&.id == listing.account_id,
+      is_own: current_account&.id == listing.account_id,
       interested: current_account ? listing.interested?(current_account) : false,
-      watching:   current_account ? CommunityEntryWatch.exists?(account: current_account, watchable: listing) : false,
+      watching: current_account ? CommunityEntryWatch.exists?(account: current_account, watchable: listing) : false,
       created_at: listing.created_at.iso8601,
       updated_at: listing.updated_at.iso8601,
     }
@@ -181,9 +185,9 @@ class Api::V1::CommunityListingsController < Api::BaseController
 
       if current_account&.id == listing.account_id || current_user&.can?(:administrator)
         data[:interests] = listing.community_listing_interests
-                                  .includes(:account)
-                                  .order(created_at: :asc)
-                                  .map { |i| serialize_interest(i) }
+          .includes(:account)
+          .order(created_at: :asc)
+          .map { |i| serialize_interest(i) }
       end
     end
 
@@ -193,14 +197,14 @@ class Api::V1::CommunityListingsController < Api::BaseController
   def serialize_interest(interest)
     acc = interest.account
     {
-      id:      interest.id,
+      id: interest.id,
       message: interest.message,
-      status:  interest.status,
+      status: interest.status,
       account: {
-        id:           acc.id.to_s,
-        username:     acc.username,
+        id: acc.id.to_s,
+        username: acc.username,
         display_name: acc.display_name,
-        avatar:       acc.avatar_original_url,
+        avatar: acc.avatar_original_url,
       },
       created_at: interest.created_at.iso8601,
     }

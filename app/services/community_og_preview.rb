@@ -8,11 +8,11 @@
 # of being hardcoded per model, since db_name varies category to category.
 class CommunityOgPreview
   CATEGORY_MODELS = {
-    'artists'     => CommunityArtist,
-    'events'      => CommunityEvent,
-    'properties'  => CommunityProperty,
+    'artists' => CommunityArtist,
+    'events' => CommunityEvent,
+    'properties' => CommunityProperty,
     'restaurants' => CommunityRestaurant,
-    'services'    => CommunityService,
+    'services' => CommunityService,
   }.freeze
 
   ENTRY_PATH      = %r{\A/community_(artists|events|properties|restaurants|services)/(\d+)\z}
@@ -33,7 +33,7 @@ class CommunityOgPreview
     elsif (m = NEWSLETTER_PATH.match(path))
       newsletter_preview(m[1])
     end
-  rescue StandardError => e
+  rescue => e
     Rails.logger.error("[CommunityOgPreview] #{e.class}: #{e.message}")
     nil
   end
@@ -49,9 +49,9 @@ class CommunityOgPreview
     image  = image_media_attachments(record).first
 
     {
-      title:       entry_title(record, config),
+      title: entry_title(record, config),
       description: entry_description(record, config).presence || config['description'].to_s,
-      image_url:   image && file_url(image.file),
+      image_url: image && file_url(image.file),
     }
   end
 
@@ -62,9 +62,9 @@ class CommunityOgPreview
     image = image_media_attachments(record).first
 
     {
-      title:       record.title,
+      title: record.title,
       description: truncate(record.description.to_s).presence || 'A community listing on MiaCivezza.com',
-      image_url:   image && file_url(image.file),
+      image_url: image && file_url(image.file),
     }
   end
 
@@ -76,9 +76,9 @@ class CommunityOgPreview
     asset = record.asset_for(:header_graphic) || record.asset_for(:editorial_photo)
 
     {
-      title:       record.title,
+      title: record.title,
       description: truncate(strip_markup(body)).presence || "A newsletter from MiaCivezza.com by #{record.author_name}",
-      image_url:   asset && absolute_url(asset.image_url),
+      image_url: asset && absolute_url(asset.image_url),
     }
   end
 
@@ -94,7 +94,7 @@ class CommunityOgPreview
     if record.respond_to?(:first_name) && (record.first_name.present? || record.last_name.present?)
       [record.first_name, record.last_name].compact_blank.join(' ')
     else
-      name_field = config['fields'].find { |f| %w[display_name name title].include?(f['db_name']) }
+      name_field = config['fields'].find { |f| %w(display_name name title).include?(f['db_name']) }
       name_field ? record[name_field['db_name']].to_s : config['display_name']
     end
   end
@@ -111,7 +111,7 @@ class CommunityOgPreview
   def file_url(paperclip_like_file)
     raw = paperclip_like_file.url(:original)
     absolute_url(raw)
-  rescue StandardError
+  rescue
     nil
   end
 

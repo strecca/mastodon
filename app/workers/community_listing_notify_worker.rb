@@ -3,6 +3,7 @@
 # Notifies a listing owner that someone expressed interest.
 class CommunityListingNotifyWorker
   include Sidekiq::Worker
+
   sidekiq_options queue: 'default', retry: 3
 
   def perform(listing_id, interested_account_id)

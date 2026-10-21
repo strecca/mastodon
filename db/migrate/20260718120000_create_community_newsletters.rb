@@ -15,12 +15,12 @@ class CreateCommunityNewsletters < ActiveRecord::Migration[7.2]
       t.text     :right_column_it
       t.text     :right_column_en
       t.text     :source_text
-      t.integer  :status,              null: false, default: 0
+      t.integer  :status, null: false, default: 0
       t.string   :mastodon_status_id
       t.timestamps
     end
 
-    add_index :community_newsletters, :slug,         unique: true
+    add_index :community_newsletters, :slug, unique: true
     add_index :community_newsletters, :published_on
     add_index :community_newsletters, :status
   end

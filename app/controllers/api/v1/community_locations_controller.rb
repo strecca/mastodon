@@ -16,9 +16,9 @@ class Api::V1::CommunityLocationsController < Api::BaseController
   def create
     location = CommunityLocation.new(location_params)
     if location.save
-      render json: serialize(location), status: :created
+      render json: serialize(location), status: 201
     else
-      render json: { errors: location.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: location.errors.full_messages }, status: 422
     end
   end
 
@@ -27,14 +27,14 @@ class Api::V1::CommunityLocationsController < Api::BaseController
     if @location.update(location_params)
       render json: serialize(@location)
     else
-      render json: { errors: @location.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @location.errors.full_messages }, status: 422
     end
   end
 
   # DELETE /api/v1/community_locations/:id
   def destroy
     @location.destroy!
-    head :no_content
+    head 204
   end
 
   private
@@ -42,12 +42,13 @@ class Api::V1::CommunityLocationsController < Api::BaseController
   def set_location
     @location = CommunityLocation.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Not found' }, status: :not_found
+    render json: { error: 'Not found' }, status: 404
   end
 
   def require_admin!
     return if current_user&.can?(:administrator)
-    render json: { error: 'Forbidden' }, status: :forbidden
+
+    render json: { error: 'Forbidden' }, status: 403
   end
 
   def location_params
@@ -56,9 +57,9 @@ class Api::V1::CommunityLocationsController < Api::BaseController
 
   def serialize(location)
     {
-      id:         location.id,
-      name:       location.name,
-      active:     location.active,
+      id: location.id,
+      name: location.name,
+      active: location.active,
       sort_order: location.sort_order,
     }
   end

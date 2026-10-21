@@ -34,9 +34,7 @@ module Admin
 
     def backfill
       klass_name = params[:klass].to_s
-      unless ALLOWED_CLASSES.include?(klass_name)
-        return redirect_to admin_translation_status_path, alert: 'Invalid category.'
-      end
+      return redirect_to admin_translation_status_path, alert: 'Invalid category.' unless ALLOWED_CLASSES.include?(klass_name)
 
       count = 0
       klass_name.constantize.find_each do |entry|
@@ -80,13 +78,13 @@ module Admin
         missing    = TARGET_LOCALES - locales
 
         {
-          label:            cat[:label],
-          klass:            klass_name,
-          total:            total,
+          label: cat[:label],
+          klass: klass_name,
+          total: total,
           translation_rows: rows,
-          locales:          locales,
-          missing:          missing,
-          coverage_pct:     TARGET_LOCALES.empty? ? 0 : (locales.size * 100 / TARGET_LOCALES.size),
+          locales: locales,
+          missing: missing,
+          coverage_pct: TARGET_LOCALES.empty? ? 0 : (locales.size * 100 / TARGET_LOCALES.size),
         }
       end
     end

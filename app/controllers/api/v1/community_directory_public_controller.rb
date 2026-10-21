@@ -13,9 +13,9 @@ class Api::V1::CommunityDirectoryPublicController < Api::BaseController
   # excluded because they have no feature directory.
   def index
     tables = ActiveRecord::Base.connection.tables
-               .select { |t| t.start_with?('community_') }
-               .sort
-               .filter_map { |t| build_category_info(t) }
+      .select { |t| t.start_with?('community_') }
+      .sort
+      .filter_map { |t| build_category_info(t) }
 
     render json: tables
   end
@@ -34,12 +34,12 @@ class Api::V1::CommunityDirectoryPublicController < Api::BaseController
     ).first['cnt']
 
     {
-      name:          config['category_key'],
-      display_name:  config['display_name'],
-      description:   config['description'],
-      icon:          config['icon'],
-      table_name:    table_name,
-      route:         "/#{table_name}",
+      name: config['category_key'],
+      display_name: config['display_name'],
+      description: config['description'],
+      icon: config['icon'],
+      table_name: table_name,
+      route: "/#{table_name}",
       entries_count: count,
     }
   end

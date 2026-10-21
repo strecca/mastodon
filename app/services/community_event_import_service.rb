@@ -29,7 +29,7 @@ class CommunityEventImportService
     rescue ActiveRecord::RecordInvalid => e
       errors += 1
       Rails.logger.error("[EventImport] Invalid record '#{attrs[:title]}': #{e.message}")
-    rescue StandardError => e
+    rescue => e
       errors += 1
       Rails.logger.error("[EventImport] Error importing '#{attrs[:title]}': #{e.message}")
     end
@@ -70,19 +70,19 @@ class CommunityEventImportService
                    end
 
     CommunityEvent.create!(
-      account:            @system_account,
-      event_name:         attrs[:title].to_s.truncate(255),
-      event_description:  (attrs[:description] || attrs[:title]).to_s.truncate(5000),
-      event_date:         utc_midnight(display_date),
-      end_date:           attrs[:end_date] ? utc_midnight(attrs[:end_date]) : nil,
+      account: @system_account,
+      event_name: attrs[:title].to_s.truncate(255),
+      event_description: (attrs[:description] || attrs[:title]).to_s.truncate(5000),
+      event_date: utc_midnight(display_date),
+      end_date: attrs[:end_date] ? utc_midnight(attrs[:end_date]) : nil,
       location_town_city: (attrs[:location] || 'Imperia').to_s.truncate(255),
-      contact_info_1:     attrs[:contact]&.truncate(255),
-      website:            attrs[:website]&.truncate(255),
-      source_url:         attrs[:source_url]&.truncate(500),
-      source_name:        attrs[:source_name]&.truncate(100),
-      auto_imported:      true,
-      status:             :approved,
-      category:           Array(attrs[:category]).presence || ['community'],
+      contact_info_1: attrs[:contact]&.truncate(255),
+      website: attrs[:website]&.truncate(255),
+      source_url: attrs[:source_url]&.truncate(500),
+      source_name: attrs[:source_name]&.truncate(100),
+      auto_imported: true,
+      status: :approved,
+      category: Array(attrs[:category]).presence || ['community']
     )
   end
 end

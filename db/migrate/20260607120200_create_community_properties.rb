@@ -18,12 +18,12 @@ class CreateCommunityProperties < ActiveRecord::Migration[7.2]
       t.string  :floor
       t.string  :furnished
       t.string  :condition
-      t.jsonb   :features,      default: []
+      t.jsonb   :features, default: []
       t.string  :phone
       t.string  :email
       t.string  :agency_name
       t.column  :image_media_ids, :bigint, array: true, default: []
-      t.integer :status,        default: 0, null: false
+      t.integer :status, default: 0, null: false
       t.timestamps
     end
 
@@ -32,10 +32,10 @@ class CreateCommunityProperties < ActiveRecord::Migration[7.2]
 
     safety_assured do
       execute "CREATE INDEX idx_community_properties_search_trgm ON community_properties USING gin (lower(coalesce(title,'') || ' ' || coalesce(description,'')) gin_trgm_ops) WHERE status = 1;"
-      execute "CREATE INDEX idx_community_properties_approved_newest  ON community_properties (created_at DESC) WHERE status = 1;"
-      execute "CREATE INDEX idx_community_properties_approved_oldest  ON community_properties (created_at ASC)  WHERE status = 1;"
-      execute "CREATE INDEX idx_community_properties_approved_az      ON community_properties (title ASC)       WHERE status = 1;"
-      execute "CREATE INDEX idx_community_properties_approved_updated ON community_properties (updated_at DESC)  WHERE status = 1;"
+      execute 'CREATE INDEX idx_community_properties_approved_newest  ON community_properties (created_at DESC) WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_properties_approved_oldest  ON community_properties (created_at ASC)  WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_properties_approved_az      ON community_properties (title ASC)       WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_properties_approved_updated ON community_properties (updated_at DESC)  WHERE status = 1;'
     end
   end
 

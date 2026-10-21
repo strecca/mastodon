@@ -11,7 +11,7 @@ module Scrapers
     ITALIAN_MONTHS = {
       'gennaio' => 1, 'febbraio' => 2, 'marzo' => 3, 'aprile' => 4,
       'maggio' => 5, 'giugno' => 6, 'luglio' => 7, 'agosto' => 8,
-      'settembre' => 9, 'ottobre' => 10, 'novembre' => 11, 'dicembre' => 12,
+      'settembre' => 9, 'ottobre' => 10, 'novembre' => 11, 'dicembre' => 12
     }.freeze
 
     # Returns Array<Hash>. Each hash:
@@ -31,7 +31,7 @@ module Scrapers
     def fetch_html(url, max_redirects: 5, retries: MAX_RETRIES)
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl     = (uri.scheme == 'https')
+      http.use_ssl = (uri.scheme == 'https')
       http.open_timeout = TIMEOUT
       http.read_timeout = TIMEOUT
 
@@ -49,6 +49,7 @@ module Scrapers
         Nokogiri::HTML(body)
       when 301, 302, 303, 307, 308
         return nil if max_redirects.zero?
+
         location = response['location']
         location = URI.join(url, location).to_s if location && !location.start_with?('http')
         fetch_html(location, max_redirects: max_redirects - 1, retries: retries) if location
@@ -65,7 +66,7 @@ module Scrapers
         Rails.logger.warn("[#{self.class.name}] HTTP #{status} for #{url}")
         nil
       end
-    rescue StandardError => e
+    rescue => e
       if retries.positive?
         Rails.logger.warn("[#{self.class.name}] Fetch error #{url}: #{e.message}, retrying (#{retries} left)")
         sleep RETRY_DELAY
@@ -94,6 +95,7 @@ module Scrapers
         Nokogiri::XML(response.body)
       when 301, 302, 303, 307, 308
         return nil if max_redirects.zero?
+
         location = response['location']
         location = URI.join(url, location).to_s if location && !location.start_with?('http')
         fetch_rss(location, max_redirects: max_redirects - 1, retries: retries) if location
@@ -110,7 +112,7 @@ module Scrapers
         Rails.logger.warn("[#{self.class.name}] RSS HTTP #{status} for #{url}")
         nil
       end
-    rescue StandardError => e
+    rescue => e
       if retries.positive?
         Rails.logger.warn("[#{self.class.name}] RSS error #{url}: #{e.message}, retrying (#{retries} left)")
         sleep RETRY_DELAY
@@ -140,7 +142,7 @@ module Scrapers
         e_month = ITALIAN_MONTHS[m[5]] or return nil
         s_year  = m[3].present? ? m[3].to_i : year
         return { start: Date.new(s_year, s_month, m[1].to_i),
-                 end:   Date.new(year,   e_month, m[4].to_i),
+                 end: Date.new(year, e_month, m[4].to_i),
                  source: :range }
       end
 
@@ -181,7 +183,7 @@ module Scrapers
 
       if (m = text.match(%r{(\d{1,2})/(\d{1,2})/(\d{4})\s*[-–]\s*(\d{1,2})/(\d{1,2})/(\d{4})}))
         { start: Date.new(m[3].to_i, m[2].to_i, m[1].to_i),
-          end:   Date.new(m[6].to_i, m[5].to_i, m[4].to_i) }
+          end: Date.new(m[6].to_i, m[5].to_i, m[4].to_i) }
       elsif (m = text.match(%r{(\d{1,2})/(\d{1,2})/(\d{4})}))
         d = Date.new(m[3].to_i, m[2].to_i, m[1].to_i)
         { start: d, end: d }
@@ -192,6 +194,7 @@ module Scrapers
 
     def clean_text(str)
       return nil if str.nil?
+
       str.gsub(/[[:space:]]+/, ' ').strip.presence
     end
   end

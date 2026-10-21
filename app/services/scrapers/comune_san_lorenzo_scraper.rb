@@ -36,6 +36,7 @@ module Scrapers
         5.times do
           parent = node.parent
           break if parent.nil? || parent.name == 'body'
+
           node = parent
           # Stop once we have a heading or a descriptive link alongside the date
           break if node.at_css('h2, h3, h4') || (node.css('a').size > 1)
@@ -70,14 +71,14 @@ module Scrapers
              end
 
       {
-        title:       title,
-        event_date:  dates[:start],
-        end_date:    dates[:end] == dates[:start] ? nil : dates[:end],
-        location:    LOCATION,
+        title: title,
+        event_date: dates[:start],
+        end_date: dates[:end] == dates[:start] ? nil : dates[:end],
+        location: LOCATION,
         description: description,
-        source_url:  url,
+        source_url: url,
         source_name: SOURCE_NAME,
-        category:    ['community'],
+        category: ['community'],
       }
     end
   end

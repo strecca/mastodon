@@ -31,7 +31,7 @@ RSpec.describe 'Community Artists' do
 
       names = response.parsed_body['entries'].map { |e| e['first_name'] }
       expect(names).to include('Approved')
-      expect(names).not_to include('Pending')
+      expect(names).to_not include('Pending')
     end
 
     # The exact question this spec exists to answer: dropping the redundant
@@ -95,7 +95,7 @@ RSpec.describe 'Community Artists' do
         post '/api/v1/community_artists', headers: headers, params: valid_params
 
         expect(CommunityDirectoryMailer).to have_received(:entry_submitted)
-        expect(CommunityEntryNotifyWorker).not_to have_received(:perform_async)
+        expect(CommunityEntryNotifyWorker).to_not have_received(:perform_async)
       end
     end
 
@@ -146,7 +146,7 @@ RSpec.describe 'Community Artists' do
 
     it 'allows the owner to update' do
       patch "/api/v1/community_artists/#{entry.id}", headers: headers,
-                                                       params: { entry: { first_name: 'Updated' } }
+                                                     params: { entry: { first_name: 'Updated' } }
 
       expect(response).to have_http_status(200)
       expect(entry.reload.first_name).to eq('Updated')
@@ -159,10 +159,10 @@ RSpec.describe 'Community Artists' do
 
       it 'is forbidden' do
         patch "/api/v1/community_artists/#{entry.id}", headers: other_headers,
-                                                         params: { entry: { first_name: 'Hijacked' } }
+                                                       params: { entry: { first_name: 'Hijacked' } }
 
         expect(response).to have_http_status(403)
-        expect(entry.reload.first_name).not_to eq('Hijacked')
+        expect(entry.reload.first_name).to_not eq('Hijacked')
       end
     end
 
@@ -177,7 +177,7 @@ RSpec.describe 'Community Artists' do
 
       it 'is allowed' do
         patch "/api/v1/community_artists/#{entry.id}", headers: admin_headers,
-                                                         params: { entry: { first_name: 'ModeratedEdit' } }
+                                                       params: { entry: { first_name: 'ModeratedEdit' } }
 
         expect(response).to have_http_status(200)
         expect(entry.reload.first_name).to eq('ModeratedEdit')
@@ -195,7 +195,7 @@ RSpec.describe 'Community Artists' do
 
       it 'is allowed' do
         patch "/api/v1/community_artists/#{entry.id}", headers: steward_headers,
-                                                         params: { entry: { first_name: 'StewardEdit' } }
+                                                       params: { entry: { first_name: 'StewardEdit' } }
 
         expect(response).to have_http_status(200)
         expect(entry.reload.first_name).to eq('StewardEdit')
@@ -210,9 +210,9 @@ RSpec.describe 'Community Artists' do
     let!(:entry) { Fabricate(:community_artist, account: owner, status: :approved) }
 
     it 'allows the owner to delete' do
-      expect {
+      expect do
         delete "/api/v1/community_artists/#{entry.id}", headers: headers
-      }.to change(CommunityArtist, :count).by(-1)
+      end.to change(CommunityArtist, :count).by(-1)
 
       expect(response).to have_http_status(204)
     end
@@ -223,9 +223,9 @@ RSpec.describe 'Community Artists' do
       let(:other_headers) { { 'Authorization' => "Bearer #{other_token.token}" } }
 
       it 'is forbidden and does not delete' do
-        expect {
+        expect do
           delete "/api/v1/community_artists/#{entry.id}", headers: other_headers
-        }.not_to change(CommunityArtist, :count)
+        end.to_not change(CommunityArtist, :count)
 
         expect(response).to have_http_status(403)
       end

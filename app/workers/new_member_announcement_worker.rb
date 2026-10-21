@@ -6,6 +6,7 @@
 
 class NewMemberAnnouncementWorker
   include Sidekiq::Worker
+
   sidekiq_options queue: 'mailers', retry: 3
 
   def perform(new_user_id)
@@ -15,11 +16,11 @@ class NewMemberAnnouncementWorker
     new_account = new_user.account
 
     existing_members = User.confirmed
-                            .joins(:account)
-                            .where(accounts: { suspended_at: nil })
-                            .where.not(id: new_user.id)
-                            .where.not('accounts.username LIKE ?', 'demo\_%')
-                            .includes(:account)
+      .joins(:account)
+      .where(accounts: { suspended_at: nil })
+      .where.not(id: new_user.id)
+      .where.not('accounts.username LIKE ?', 'demo\_%')
+      .includes(:account)
 
     return if existing_members.empty?
 

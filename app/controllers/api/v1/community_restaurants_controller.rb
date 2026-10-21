@@ -26,21 +26,21 @@ class Api::V1::CommunityRestaurantsController < Api::BaseController
 
   def serialize(e, detail: true)
     base = base_entry_fields(e).merge(
-      name:         e.name,
+      name: e.name,
       cuisine_type: e.cuisine_type,
-      town:         e.town,
-      phone:        e.phone,
-      price_range:  e.price_range,
+      town: e.town,
+      phone: e.phone,
+      price_range: e.price_range
     )
 
     return base unless detail
 
     base.merge(
-      description:   e.description,
-      website:       e.website,
+      description: e.description,
+      website: e.website,
       opening_hours: e.opening_hours,
-      features:      e.features,
-      translations:  translations_for(e),
+      features: e.features,
+      translations: translations_for(e)
     )
   end
 end

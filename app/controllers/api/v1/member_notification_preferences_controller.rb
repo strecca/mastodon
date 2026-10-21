@@ -15,7 +15,7 @@ class Api::V1::MemberNotificationPreferencesController < Api::BaseController
     if pref.update(preference_params)
       render json: serialize(pref)
     else
-      render json: { errors: pref.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: pref.errors.full_messages }, status: 422
     end
   end
 
@@ -27,10 +27,10 @@ class Api::V1::MemberNotificationPreferencesController < Api::BaseController
 
   def serialize(pref)
     {
-      email_frequency:      pref.email_frequency || 'digest',
-      quiet_hours_enabled:  pref.quiet_hours_enabled || false,
-      quiet_hours_start:    pref.quiet_hours_start&.strftime('%H:%M'),
-      quiet_hours_end:      pref.quiet_hours_end&.strftime('%H:%M'),
+      email_frequency: pref.email_frequency || 'digest',
+      quiet_hours_enabled: pref.quiet_hours_enabled || false,
+      quiet_hours_start: pref.quiet_hours_start&.strftime('%H:%M'),
+      quiet_hours_end: pref.quiet_hours_end&.strftime('%H:%M'),
       quiet_hours_timezone: pref.quiet_hours_timezone || 'UTC',
     }
   end

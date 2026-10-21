@@ -87,7 +87,7 @@ RSpec.describe 'Member Welcome Digest' do
       it 'does not raise' do
         subject
 
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(200)
       end
     end
   end

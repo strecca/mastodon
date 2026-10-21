@@ -11,15 +11,15 @@
 
 class CommunityDirectoryUpdater
   WIDGET_TO_PG = {
-    'text'       => 'string',
-    'textarea'   => 'text',
-    'select'     => 'string',
+    'text' => 'string',
+    'textarea' => 'text',
+    'select' => 'string',
     'checkboxes' => 'jsonb',
-    'radio'      => 'string',
-    'date'       => 'date',
-    'url'        => 'string',
-    'email'      => 'string',
-    'number'     => 'integer',
+    'radio' => 'string',
+    'date' => 'date',
+    'url' => 'string',
+    'email' => 'string',
+    'number' => 'integer',
   }.freeze
 
   def initialize(category_name, config)
@@ -49,8 +49,11 @@ class CommunityDirectoryUpdater
     rewrite_controller
     run_migration if Rails.env.development? && @new_fields.any?
 
-    msg = @new_fields.any? ? 'Schema updated. Restart required: rm -rf public/packs-dev tmp/cache && bin/dev' \
-                           : 'Config updated. Vite HMR will pick up the change.'
+    msg = if @new_fields.any?
+            'Schema updated. Restart required: rm -rf public/packs-dev tmp/cache && bin/dev'
+          else
+            'Config updated. Vite HMR will pick up the change.'
+          end
 
     { success: true, name: @name, display_name: @display_name,
       new_columns: @new_fields.map { |f| f[:db_name] },
@@ -75,7 +78,7 @@ class CommunityDirectoryUpdater
       next if prior == f[:widget].to_s
 
       raise "Cannot change widget type for '#{f[:db_name]}' (was #{prior}, got #{f[:widget]}). " \
-            "Remove it from the form and add a new field with a different db_name instead."
+            'Remove it from the form and add a new field with a different db_name instead.'
     end
   end
 
@@ -84,7 +87,7 @@ class CommunityDirectoryUpdater
     return {} unless File.exist?(path)
 
     JSON.parse(File.read(path))['fields']
-        .each_with_object({}) { |f, h| h[f['db_name']] = f['widget'] }
+      .each_with_object({}) { |f, h| h[f['db_name']] = f['widget'] }
   end
 
   def find_new_fields
@@ -108,12 +111,12 @@ class CommunityDirectoryUpdater
     data = {
       category_key: @name,
       display_name: @display_name,
-      description:  @description,
-      icon:         @icon,
-      table_name:   @table_name,
+      description: @description,
+      icon: @icon,
+      table_name: @table_name,
       api_endpoint: "/api/v1/#{@table_name}",
-      fields:       @fields,
-      groups:       @groups,
+      fields: @fields,
+      groups: @groups,
     }
     File.write(path, JSON.pretty_generate(data) + "\n")
     @files_modified << path.to_s
@@ -125,8 +128,11 @@ class CommunityDirectoryUpdater
     ts   = Time.now.utc.strftime('%Y%m%d%H%M%S')
     adds = @new_fields.map do |f|
       pg = WIDGET_TO_PG[f[:widget].to_s] || 'string'
-      pg == 'jsonb' ? "    add_column :#{@table_name}, :#{f[:db_name]}, :jsonb, default: []" \
-                    : "    add_column :#{@table_name}, :#{f[:db_name]}, :#{pg}"
+      if pg == 'jsonb'
+        "    add_column :#{@table_name}, :#{f[:db_name]}, :jsonb, default: []"
+      else
+        "    add_column :#{@table_name}, :#{f[:db_name]}, :#{pg}"
+      end
     end
     idxs = @new_fields.select { |f| f[:searchable] }.map do |f|
       gin = WIDGET_TO_PG[f[:widget].to_s] == 'jsonb' ? ', using: :gin' : ''
@@ -240,18 +246,18 @@ class CommunityDirectoryUpdater
 
   def rewrite_model
     vals = @fields.select { |f| f[:required] }
-                  .map { |f| "  validates :#{f[:db_name]}, presence: true" }
+      .map { |f| "  validates :#{f[:db_name]}, presence: true" }
 
-    str_cols = @fields.select { |f|
-      f[:searchable] && %w[text textarea select radio url email].include?(f[:widget].to_s)
-    }.map { |f| f[:db_name] }
+    str_cols = @fields.select do |f|
+      f[:searchable] && %w(text textarea select radio url email).include?(f[:widget].to_s)
+    end.map { |f| f[:db_name] }
 
     scope = if str_cols.any?
-      cond = str_cols.map { |c| "#{c} ILIKE :q" }.join(' OR ')
-      "  scope :search, ->(query) { query.blank? ? all : where(\"#{cond}\", q: \"%\#{query}%\") }"
-    else
-      "  scope :search, ->(_q) { all }"
-    end
+              cond = str_cols.map { |c| "#{c} ILIKE :q" }.join(' OR ')
+              "  scope :search, ->(query) { query.blank? ? all : where(\"#{cond}\", q: \"%\#{query}%\") }"
+            else
+              '  scope :search, ->(_q) { all }'
+            end
 
     path = Rails.root.join('app', 'models', "#{@table_name.singularize}.rb")
     File.write(path, <<~RB)
@@ -269,9 +275,9 @@ class CommunityDirectoryUpdater
   def rewrite_controller
     permitted      = @fields.map { |f| ":#{f[:db_name]}" }.join(', ')
     jsonb_fields   = @fields.select { |f| f[:widget].to_s == 'checkboxes' }
-    jsonb_permit   = jsonb_fields.map { |f|
+    jsonb_permit   = jsonb_fields.map do |f|
       "      p[:#{f[:db_name]}] = params[:entry][:#{f[:db_name]}] if params[:entry][:#{f[:db_name]}].is_a?(Array)"
-    }.join("\n")
+    end.join("\n")
     field_serialize = @fields.map { |f| "        #{f[:db_name]}: e.#{f[:db_name]}," }.join("\n")
 
     path = Rails.root.join('app', 'controllers', 'api', 'v1', "#{@table_name}_controller.rb")
@@ -344,17 +350,17 @@ class CommunityDirectoryUpdater
   def normalize_field(f)
     f = f.deep_symbolize_keys
     {
-      db_name:        f[:db_name].to_s.downcase.gsub(/[^a-z0-9_]/, ''),
-      label:          f[:label].to_s,
-      placeholder:    f[:placeholder].to_s,
-      widget:         f[:widget].to_s.presence || 'text',
-      required:       !!f[:required],
-      searchable:     !!f[:searchable],
-      show_in_list:   f.key?(:show_in_list)   ? !!f[:show_in_list]   : true,
+      db_name: f[:db_name].to_s.downcase.gsub(/[^a-z0-9_]/, ''),
+      label: f[:label].to_s,
+      placeholder: f[:placeholder].to_s,
+      widget: f[:widget].to_s.presence || 'text',
+      required: !!f[:required],
+      searchable: !!f[:searchable],
+      show_in_list: f.key?(:show_in_list) ? !!f[:show_in_list] : true,
       show_in_detail: f.key?(:show_in_detail) ? !!f[:show_in_detail] : true,
-      options:        Array(f[:options]),
-      column:         f[:column].to_s.presence || 'full',
-      group:          f[:group].to_s.presence  || 'default',
+      options: Array(f[:options]),
+      column: f[:column].to_s.presence || 'full',
+      group: f[:group].to_s.presence || 'default',
     }
   end
 

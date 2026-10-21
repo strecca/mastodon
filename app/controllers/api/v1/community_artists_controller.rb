@@ -25,22 +25,22 @@ class Api::V1::CommunityArtistsController < Api::BaseController
 
   def serialize(e, detail: true)
     base = base_entry_fields(e).merge(
-      category:           e.category,
+      category: e.category,
       location_town_city: e.location_town_city,
-      first_name:         e.first_name,
-      last_name:          e.last_name,
-      telephone:          e.telephone,
+      first_name: e.first_name,
+      last_name: e.last_name,
+      telephone: e.telephone
     )
 
     return base unless detail
 
     base.merge(
       artist_description: e.artist_description,
-      hours_schedule:     e.hours_schedule,
-      contact_info_1:     e.contact_info_1,
-      contact_info_2:     e.contact_info_2,
-      website:            e.website,
-      translations:       translations_for(e)
+      hours_schedule: e.hours_schedule,
+      contact_info_1: e.contact_info_1,
+      contact_info_2: e.contact_info_2,
+      website: e.website,
+      translations: translations_for(e)
     )
   end
 end

@@ -16,7 +16,7 @@ class Api::V1::MemberNotificationCategorySubscriptionsController < Api::BaseCont
   # Idempotent — returns the existing record if already subscribed.
   def create
     category_key = params[:category_key].to_s
-    return render json: { error: 'category_key is required' }, status: :unprocessable_entity if category_key.blank?
+    return render json: { error: 'category_key is required' }, status: 422 if category_key.blank?
 
     sub = MemberNotificationCategorySubscription.find_or_initialize_by(
       account_id: current_account.id, category_key: category_key
@@ -24,18 +24,18 @@ class Api::V1::MemberNotificationCategorySubscriptionsController < Api::BaseCont
 
     if sub.new_record?
       sub.save!
-      render json: serialize(sub), status: :created
+      render json: serialize(sub), status: 201
     else
       render json: serialize(sub)
     end
   rescue ActiveRecord::RecordInvalid => e
-    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+    render json: { errors: e.record.errors.full_messages }, status: 422
   end
 
   # DELETE /api/v1/member_notification_category_subscriptions/:id
   def destroy
     @subscription.destroy!
-    head :no_content
+    head 204
   end
 
   private
@@ -43,7 +43,7 @@ class Api::V1::MemberNotificationCategorySubscriptionsController < Api::BaseCont
   def set_subscription
     @subscription = MemberNotificationCategorySubscription.find_by!(id: params[:id], account_id: current_account.id)
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Not found' }, status: :not_found
+    render json: { error: 'Not found' }, status: 404
   end
 
   def serialize(sub)

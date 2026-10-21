@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # Translates community.* locale keys from en.json into each target locale file
 # using the DeepL API. Safe to re-run — existing keys are never overwritten.
@@ -31,17 +32,17 @@ namespace :i18n do
     # ── Config ───────────────────────────────────────────────────────────────
     dl_cfg   = Rails.configuration.x.translation.deepl
     api_key  = dl_cfg[:api_key].presence or
-               abort('ERROR: DEEPL_API_KEY is not set in .env.production')
+      abort('ERROR: DEEPL_API_KEY is not set in .env.production')
     endpoint = dl_cfg[:plan] == 'free' ? 'https://api-free.deepl.com/v2' : 'https://api.deepl.com/v2'
 
     prefix         = ENV.fetch('PREFIX', 'community.')
     dry_run        = ENV['DRY_RUN'] == '1'
-    target_locales = ENV['LOCALES'].present? ? ENV['LOCALES'].split(',').map(&:strip) : %w[it fr de sv es no nl]
+    target_locales = ENV['LOCALES'].present? ? ENV['LOCALES'].split(',').map(&:strip) : %w(it fr de sv es no nl)
 
     # DeepL target-language codes differ for some locales
     deepl_code = ->(locale) { { 'no' => 'NB', 'pt' => 'PT-PT', 'en' => 'EN-GB' }.fetch(locale, locale.upcase) }
 
-    locales_dir = Rails.root.join('app/javascript/flavours/glitch/locales')
+    locales_dir = Rails.root.join('app', 'javascript', 'flavours', 'glitch', 'locales', 'locales', 'glitch', 'locales', 'locales', 'flavours', 'glitch', 'locales', 'locales', 'glitch', 'locales', 'locales')
     en_source   = JSON.parse(File.read(locales_dir.join('en.json')))
 
     source_keys = en_source.select { |k, _| k.start_with?(prefix) }
@@ -64,14 +65,16 @@ namespace :i18n do
     protect_placeholders = lambda do |text|
       store = []
       safe  = text.gsub(/\{[A-Za-z_][A-Za-z0-9_]*\}/) do |match|
-        idx = store.size; store << match; "<x id=\"#{idx}\"/>"
+        idx = store.size
+        store << match
+        "<x id=\"#{idx}\"/>"
       end
       [safe, store]
     end
 
     restore_placeholders = lambda do |text, store|
       # DeepL sometimes emits a space before the closing slash: <x id="0" />
-      text.gsub(/<x\s+id="(\d+)"\s*\/>/) { store[$1.to_i] || $& }
+      text.gsub(%r{<x\s+id="(\d+)"\s*/>}) { store[Regexp.last_match(1).to_i] || Regexp.last_match(0) }
     end
 
     # ── DeepL API call ────────────────────────────────────────────────────────
@@ -79,14 +82,12 @@ namespace :i18n do
       response = HTTP
         .auth("DeepL-Auth-Key #{api_key}")
         .post("#{endpoint}/translate", json: {
-          text:         texts,
-          target_lang:  target_lang,
+          text: texts,
+          target_lang: target_lang,
           tag_handling: 'xml',
         })
 
-      unless response.status.success?
-        abort("DeepL API error #{response.status}: #{response.body.to_s.first(300)}")
-      end
+      abort("DeepL API error #{response.status}: #{response.body.to_s.first(300)}") unless response.status.success?
 
       JSON.parse(response.body.to_s)['translations'].map { |t| t['text'] }
     end
@@ -106,7 +107,7 @@ namespace :i18n do
 
       # Three-way split: plain strings / simple-count-plural ICU / complex ICU
       plain_keys   = []
-      simple_icu   = []   # [{ key:, prefix:, singular:, plural: }]
+      simple_icu   = [] # [{ key:, prefix:, singular:, plural: }]
       complex_icu  = []
 
       missing.each do |key, val|
@@ -125,7 +126,7 @@ namespace :i18n do
       end
 
       total_auto = plain_keys.size + simple_icu.size
-      puts "#{locale}: #{plain_keys.size} plain + #{simple_icu.size} count-plural → DeepL #{deepl_code.call(locale)}#{dry_run ? ' (DRY RUN)' : ''}"
+      puts "#{locale}: #{plain_keys.size} plain + #{simple_icu.size} count-plural → DeepL #{deepl_code.call(locale)}#{' (DRY RUN)' if dry_run}"
       next if dry_run || total_auto.zero?
 
       # Build a single flat array: [plain_0, plain_1, …, icu_0_sg, icu_0_pl, icu_1_sg, icu_1_pl, …]
@@ -154,13 +155,13 @@ namespace :i18n do
       # Reassemble simple ICU plural strings
       offset = plain_pairs.size
       simple_icu.each_with_index do |entry, i|
-        sg = all_translated[offset + i * 2].strip
-        pl = all_translated[offset + i * 2 + 1].strip
+        sg = all_translated[offset + (i * 2)].strip
+        pl = all_translated[offset + (i * 2) + 1].strip
         existing[entry[:key]] = if entry[:prefix].empty?
-          "{count, plural, one {# #{sg}} other {# #{pl}}}"
-        else
-          "#{entry[:prefix]}{count, plural, one {# #{sg}} other {# #{pl}}}"
-        end
+                                  "{count, plural, one {# #{sg}} other {# #{pl}}}"
+                                else
+                                  "#{entry[:prefix]}{count, plural, one {# #{sg}} other {# #{pl}}}"
+                                end
       end
 
       # Write sorted so git diffs stay clean

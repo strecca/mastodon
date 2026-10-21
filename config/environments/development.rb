@@ -2,12 +2,11 @@
 
 require 'active_support/core_ext/integer/time'
 
-
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY='tfr4CgG3SHtA0x68PiCiUOeaMUPvYDQo'
-  ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT='kVduKaF8v0isMHOC3FA7BAQtSCIXSquD'
-  ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY='WlLzxBbFwPX6HF8S5tRZVboPh0D54VaH'
+  ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY = 'tfr4CgG3SHtA0x68PiCiUOeaMUPvYDQo'
+  ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT = 'kVduKaF8v0isMHOC3FA7BAQtSCIXSquD'
+  ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY = 'WlLzxBbFwPX6HF8S5tRZVboPh0D54VaH'
 
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true

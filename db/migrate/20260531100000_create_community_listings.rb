@@ -5,7 +5,7 @@ class CreateCommunityListings < ActiveRecord::Migration[7.2]
       t.integer    :listing_type,   null: false, default: 0
       t.string     :title,          null: false
       t.text       :description
-      t.jsonb      :category,       null: false, default: []
+      t.jsonb      :category, null: false, default: []
       t.integer    :condition_value
       t.decimal    :price,          precision: 10, scale: 2
       t.string     :currency,       default: 'EUR'

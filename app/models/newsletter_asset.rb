@@ -3,8 +3,8 @@
 class NewsletterAsset < ApplicationRecord
   belongs_to :community_newsletter
 
-  ROLES     = %w[sidebar_graphic editorial_photo footer_illustration header_graphic].freeze
-  POSITIONS = %w[left_column right_column footer header].freeze
+  ROLES     = %w(sidebar_graphic editorial_photo footer_illustration header_graphic).freeze
+  POSITIONS = %w(left_column right_column footer header).freeze
 
   validates :role,     inclusion: { in: ROLES }
   validates :position, inclusion: { in: POSITIONS }
@@ -16,6 +16,6 @@ class NewsletterAsset < ApplicationRecord
   end
 
   def image_attached?
-    file_path.present? && File.exist?(Rails.root.join('public', file_path.sub(%r{\A/}, '')))
+    file_path.present? && File.exist?(Rails.public_path.join(file_path.sub(%r{\A/}, '')))
   end
 end

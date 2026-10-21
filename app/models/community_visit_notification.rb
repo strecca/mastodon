@@ -33,12 +33,12 @@ class CommunityVisitNotification < ApplicationRecord
   belongs_to :recipient, class_name: 'Account', foreign_key: :recipient_account_id
   belongs_to :sender,    class_name: 'Account', foreign_key: :sender_account_id, optional: true
   belongs_to :visit,     class_name: 'CommunityVisit',
-             foreign_key: :community_visit_id, optional: true
+                         foreign_key: :community_visit_id, optional: true
 
   enum :kind, {
     overlap_detected: 0,
-    friend_ping:      1,
-    visit_updated:    2,
+    friend_ping: 1,
+    visit_updated: 2,
     new_member_joined: 3,
   }
 

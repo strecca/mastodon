@@ -21,6 +21,8 @@ inherit_from:
   - .rubocop/style.yml
   - .rubocop/i18n.yml
   - .rubocop/custom.yml
+  - .rubocop_todo.yml
+  - .rubocop/fork_todo.yml
   - .rubocop/strict.yml
 
 inherit_mode:

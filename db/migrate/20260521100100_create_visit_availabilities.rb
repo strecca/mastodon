@@ -12,7 +12,7 @@ class CreateVisitAvailabilities < ActiveRecord::Migration[7.2]
     end
 
     # A visit can only have each availability kind once
-    add_index :visit_availabilities, %i[community_visit_id kind],
+    add_index :visit_availabilities, %i(community_visit_id kind),
               unique: true,
               name: 'idx_visit_availabilities_unique'
   end

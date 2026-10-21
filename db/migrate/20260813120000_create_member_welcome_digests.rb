@@ -19,7 +19,7 @@ class CreateMemberWelcomeDigests < ActiveRecord::Migration[7.2]
     end
 
     add_index :member_welcome_digests,
-              %i[account_id digest_date],
+              %i(account_id digest_date),
               unique: true,
               name: 'idx_member_welcome_digests_unique'
   end

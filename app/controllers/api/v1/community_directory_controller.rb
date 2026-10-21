@@ -17,20 +17,20 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     if File.exist?(config_path)
       render json: JSON.parse(File.read(config_path))
     else
-      render json: { error: 'Category not found' }, status: :not_found
+      render json: { error: 'Category not found' }, status: 404
     end
   end
 
   def generate
     config = permit_config_params
     result = CommunityDirectoryGenerator.new(config).generate!
-    render json: result, status: result[:success] ? :created : :unprocessable_entity
+    render json: result, status: result[:success] ? :created : :unprocessable_content
   end
 
   def update_category
     config = permit_config_params
     result = CommunityDirectoryUpdater.new(params[:name], config).update!
-    render json: result, status: result[:success] ? :ok : :unprocessable_entity
+    render json: result, status: result[:success] ? :ok : :unprocessable_content
   end
 
   # ── Moderation queue ─────────────────────────────────────────
@@ -42,6 +42,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     pending = keys.flat_map do |category_key|
       model = model_for_category(category_key)
       next [] unless model && model.column_names.include?('status')
+
       model.where(status: :pending).includes(:account).map { |e| moderation_serialize(e, category_key) }
     end
 
@@ -52,9 +53,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     entry, category_key = find_moderation_entry
     return unless entry
 
-    unless admin_or_steward_for?(category_key)
-      render json: { error: 'Forbidden' }, status: :forbidden and return
-    end
+    render json: { error: 'Forbidden' }, status: 403 and return unless admin_or_steward_for?(category_key)
 
     entry.update!(status: :approved)
     CommunityDirectoryMailer.entry_approved(entry, category_key).deliver_later
@@ -66,9 +65,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     entry, category_key = find_moderation_entry
     return unless entry
 
-    unless admin_or_steward_for?(category_key)
-      render json: { error: 'Forbidden' }, status: :forbidden and return
-    end
+    render json: { error: 'Forbidden' }, status: 403 and return unless admin_or_steward_for?(category_key)
 
     entry.update!(status: :rejected)
     render json: { success: true, id: entry.id, status: 'rejected' }
@@ -84,23 +81,23 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   def permissions_create
     account = Account.find_by!(username: params[:username].to_s.delete_prefix('@'))
     perm = CommunityDirectoryPermission.find_or_initialize_by(
-      account:      account,
+      account: account,
       category_key: params[:category_key].presence
     )
     perm.update!(
-      trusted:    ActiveModel::Type::Boolean.new.cast(params[:trusted]),
+      trusted: ActiveModel::Type::Boolean.new.cast(params[:trusted]),
       is_steward: ActiveModel::Type::Boolean.new.cast(params[:is_steward]),
-      notes:      params[:notes]
+      notes: params[:notes]
     )
-    render json: serialize_permission(perm), status: :created
+    render json: serialize_permission(perm), status: 201
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Account not found: #{params[:username]}" }, status: :not_found
+    render json: { error: "Account not found: #{params[:username]}" }, status: 404
   end
 
   def permissions_destroy
     perm = CommunityDirectoryPermission.find(params[:id])
     perm.destroy!
-    head :no_content
+    head 204
   end
 
   # ── Duplicate detection ──────────────────────────────────────
@@ -126,12 +123,12 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     concat_sql = text_fields.map { |f| "COALESCE(#{conn.quote_column_name(f['db_name'])}, '')" }.join(" || ' ' || ")
 
     matches = model.where(status: [0, 1])
-                   .where("LOWER(SUBSTRING(#{concat_sql}, 1, 50)) = ?", submitted_key)
-                   .limit(5)
-                   .map do |entry|
-                     preview = text_fields.map { |f| entry.send(f['db_name']).to_s }.join(' ')
-                     { id: entry.id, preview: preview, status: entry.status }
-                   end
+      .where("LOWER(SUBSTRING(#{concat_sql}, 1, 50)) = ?", submitted_key)
+      .limit(5)
+      .map do |entry|
+        preview = text_fields.map { |f| entry.send(f['db_name']).to_s }.join(' ')
+        { id: entry.id, preview: preview, status: entry.status }
+      end
 
     render json: { matches: }
   end
@@ -143,9 +140,9 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     result = community_table_names.map do |key|
       s = settings[key]
       { category_key: key,
-        requires_approval:       s&.requires_approval.nil? ? true : s.requires_approval,
+        requires_approval: s&.requires_approval.nil? || s.requires_approval,
         max_entries_per_account: s&.max_entries_per_account,
-        period_days:             s&.period_days,
+        period_days: s&.period_days,
         stale_reject_after_days: s&.stale_reject_after_days }
     end
     render json: result
@@ -155,9 +152,9 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     key = params[:category_key]
     setting = CommunityDirectoryCategorySetting.find_or_initialize_by(category_key: key)
     setting.update!(
-      requires_approval:       ActiveModel::Type::Boolean.new.cast(params.fetch(:requires_approval, true)),
+      requires_approval: ActiveModel::Type::Boolean.new.cast(params.fetch(:requires_approval, true)),
       max_entries_per_account: params[:max_entries_per_account].presence&.to_i,
-      period_days:             params[:period_days].presence&.to_i,
+      period_days: params[:period_days].presence&.to_i,
       stale_reject_after_days: params[:stale_reject_after_days].presence&.to_i
     )
     render json: { category_key: key, requires_approval: setting.requires_approval,
@@ -173,24 +170,22 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   def admin_entries
     category_key = params[:category].to_s.gsub(/[^a-z0-9_]/, '')
     model = model_for_category(category_key)
-    return render json: { error: 'Category not found' }, status: :not_found unless model
+    return render json: { error: 'Category not found' }, status: 404 unless model
 
     scope = model.includes(:account).order(created_at: :desc)
-    if params[:status].present? && params[:status] != 'all'
-      scope = scope.where(status: params[:status])
-    end
+    scope = scope.where(status: params[:status]) if params[:status].present? && params[:status] != 'all'
 
     page_entries = scope.page(params[:page]).per(50)
 
     config = CommunityDirectoryConfig.config_for(category_key)
-    name_field = (config['fields'] || []).find { |f| %w[name title first_name].include?(f['db_name']) }
+    name_field = (config['fields'] || []).find { |f| %w(name title first_name).include?(f['db_name']) }
 
     render json: {
-      category_key:  category_key,
-      display_name:  CommunityDirectoryConfig.display_name_for(category_key),
-      entries:       page_entries.map { |e| admin_entry_serialize(e, category_key, name_field) },
-      total:         page_entries.total_count,
-      pages:         page_entries.total_pages,
+      category_key: category_key,
+      display_name: CommunityDirectoryConfig.display_name_for(category_key),
+      entries: page_entries.map { |e| admin_entry_serialize(e, category_key, name_field) },
+      total: page_entries.total_count,
+      pages: page_entries.total_pages,
     }
   end
 
@@ -198,25 +193,25 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   def admin_delete_entry
     category_key = params[:category].to_s.gsub(/[^a-z0-9_]/, '')
     model = model_for_category(category_key)
-    return render json: { error: 'Category not found' }, status: :not_found unless model
+    return render json: { error: 'Category not found' }, status: 404 unless model
 
     entry = model.find(params[:id])
     entry.destroy!
     Rails.cache.increment("community:#{category_key}:list:v")
-    head :no_content
+    head 204
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Entry not found' }, status: :not_found
+    render json: { error: 'Entry not found' }, status: 404
   end
 
   # GET /api/v1/community_directory/scraper_logs
   # Returns last 10 runs per source, plus a latest-per-source summary.
   def scraper_logs
-    rows  = ScraperRunLog.recent.limit(60)
+    rows = ScraperRunLog.recent.limit(60)
     latest = ScraperRunLog.latest_per_source
 
     render json: {
       latest: latest.map { |r| serialize_log(r) },
-      recent: rows.map  { |r| serialize_log(r) },
+      recent: rows.map { |r| serialize_log(r) },
     }
   end
 
@@ -225,17 +220,19 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   # ── Auth helpers ─────────────────────────────────────────────
 
   def require_admin!
-    render json: { error: 'Admin access required' }, status: :forbidden unless current_user&.can?(:administrator)
+    render json: { error: 'Admin access required' }, status: 403 unless current_user&.can?(:administrator)
   end
 
   def require_admin_or_steward!
     return if current_user&.can?(:administrator)
     return if CommunityDirectoryPermission.exists?(account: current_account, is_steward: true)
-    render json: { error: 'Admin or steward access required' }, status: :forbidden
+
+    render json: { error: 'Admin or steward access required' }, status: 403
   end
 
   def admin_or_steward_for?(category_key)
     return true if current_user&.can?(:administrator)
+
     CommunityDirectoryPermission.exists?(account: current_account, category_key: category_key, is_steward: true)
   end
 
@@ -248,14 +245,14 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
 
   def serialize_log(r)
     {
-      id:            r.id,
-      source_name:   r.source_name,
-      ran_at:        r.ran_at.iso8601,
-      fetched:       r.fetched,
-      imported:      r.imported,
-      skipped:       r.skipped,
-      errors:        r.error_count,
-      status:        r.status,
+      id: r.id,
+      source_name: r.source_name,
+      ran_at: r.ran_at.iso8601,
+      fetched: r.fetched,
+      imported: r.imported,
+      skipped: r.skipped,
+      errors: r.error_count,
+      status: r.status,
       error_message: r.error_message,
     }
   end
@@ -266,14 +263,14 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     key   = params[:category_key].to_s
     model = model_for_category(key)
     unless model
-      render json: { error: 'Category not found' }, status: :not_found
+      render json: { error: 'Category not found' }, status: 404
       return [nil, nil]
     end
 
     entry = model.find(params[:entry_id])
     [entry, key]
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Entry not found' }, status: :not_found
+    render json: { error: 'Entry not found' }, status: 404
     [nil, nil]
   end
 
@@ -309,7 +306,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
 
   # ── Category helpers ─────────────────────────────────────────
 
-  EXCLUDED_TABLES = %w[
+  EXCLUDED_TABLES = %w(
     community_directory
     community_directory_permissions
     community_directory_category_settings
@@ -319,7 +316,7 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
     community_visit_notifications
     community_listings
     community_listing_interests
-  ].freeze
+  ).freeze
 
   def community_table_names
     ActiveRecord::Base.connection.tables
@@ -335,21 +332,21 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
 
   def admin_entry_serialize(e, category_key, name_field)
     name = if name_field && e.respond_to?(name_field['db_name'])
-      val = e.send(name_field['db_name']).to_s
-      val.presence || "##{e.id}"
-    elsif e.respond_to?(:first_name)
-      [e.try(:first_name), e.try(:last_name)].compact.join(' ').presence || "##{e.id}"
-    elsif e.respond_to?(:name) then e.name.to_s.presence || "##{e.id}"
-    elsif e.respond_to?(:title) then e.title.to_s.presence || "##{e.id}"
-    else "##{e.id}"
-    end
+             val = e.send(name_field['db_name']).to_s
+             val.presence || "##{e.id}"
+           elsif e.respond_to?(:first_name)
+             [e.try(:first_name), e.try(:last_name)].compact.join(' ').presence || "##{e.id}"
+           elsif e.respond_to?(:name) then e.name.to_s.presence || "##{e.id}"
+           elsif e.respond_to?(:title) then e.title.to_s.presence || "##{e.id}"
+           else "##{e.id}"
+           end
 
-    { id:           e.id,
+    { id: e.id,
       category_key: category_key,
-      status:       e.status,
-      name:         name,
-      account:      { username: e.account&.username, display_name: e.account&.display_name },
-      created_at:   e.created_at.iso8601 }
+      status: e.status,
+      name: name,
+      account: { username: e.account&.username, display_name: e.account&.display_name },
+      created_at: e.created_at.iso8601 }
   end
 
   def permit_config_params
@@ -368,10 +365,13 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
       conn      = ActiveRecord::Base.connection
       quoted    = conn.quote_table_name(table_name)
       has_status = conn.column_exists?(table_name, :status)
-      sql = has_status ? "SELECT COUNT(*) FROM #{quoted} WHERE status = 1" \
-                       : "SELECT COUNT(*) FROM #{quoted}"
+      sql = if has_status
+              "SELECT COUNT(*) FROM #{quoted} WHERE status = 1"
+            else
+              "SELECT COUNT(*) FROM #{quoted}"
+            end
       conn.execute(sql).first['count'].to_i
-    rescue StandardError
+    rescue
       0
     end
 

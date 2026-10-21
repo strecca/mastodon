@@ -12,15 +12,15 @@
 
 class CommunityDirectoryGenerator
   WIDGET_TO_PG = {
-    'text'       => 'string',
-    'textarea'   => 'text',
-    'select'     => 'string',
+    'text' => 'string',
+    'textarea' => 'text',
+    'select' => 'string',
     'checkboxes' => 'jsonb',
-    'radio'      => 'string',
-    'date'       => 'date',
-    'url'        => 'string',
-    'email'      => 'string',
-    'number'     => 'integer',
+    'radio' => 'string',
+    'date' => 'date',
+    'url' => 'string',
+    'email' => 'string',
+    'number' => 'integer',
   }.freeze
 
   attr_reader :name, :display_name, :description, :icon, :fields, :groups,
@@ -58,7 +58,7 @@ class CommunityDirectoryGenerator
 
     { success: true, name: @name, display_name: @display_name,
       files_created: @files_created, files_modified: @files_modified,
-      message: "Clear cache and restart Vite: rm -rf public/packs-dev tmp/cache && bin/dev" }
+      message: 'Clear cache and restart Vite: rm -rf public/packs-dev tmp/cache && bin/dev' }
   rescue => e
     { success: false, error: e.message, backtrace: e.backtrace&.first(5) }
   end
@@ -72,15 +72,15 @@ class CommunityDirectoryGenerator
     raise 'Name must start with a letter and contain only a-z, 0-9, _' unless @name.match?(/\A[a-z][a-z0-9_]*\z/)
     raise 'At least one field is required' if @fields.empty?
     raise "Feature already exists: #{feature_path}" if Dir.exist?(feature_path)
-    raise "Migration exists for #{@table_name}" if Dir.glob(Rails.root.join('db','migrate',"*_create_#{@table_name}.rb")).any?
+    raise "Migration exists for #{@table_name}" if Dir.glob(Rails.root.join('db', 'migrate', "*_create_#{@table_name}.rb")).any?
   end
 
   # ── Paths ────────────────────────────────────────────────────
 
-  def glitch_root  = Rails.root.join('app','javascript','flavours','glitch')
+  def glitch_root  = Rails.root.join('app', 'javascript', 'flavours', 'glitch')
   def feature_path = glitch_root.join('features', @feature_key)
-  def async_path   = glitch_root.join('features','ui','util','async-components.js')
-  def ui_path      = glitch_root.join('features','ui','index.jsx')
+  def async_path   = glitch_root.join('features', 'ui', 'util', 'async-components.js')
+  def ui_path      = glitch_root.join('features', 'ui', 'index.jsx')
 
   # ── Config JSON ──────────────────────────────────────────────
 
@@ -112,9 +112,9 @@ class CommunityDirectoryGenerator
 
   def create_react_pages
     write feature_path.join('index.jsx'), page_index
-    write feature_path.join('show','index.jsx'), page_show
-    write feature_path.join('new','index.jsx'), page_new
-    write feature_path.join('edit','index.jsx'), page_edit
+    write feature_path.join('show', 'index.jsx'), page_show
+    write feature_path.join('new', 'index.jsx'), page_new
+    write feature_path.join('edit', 'index.jsx'), page_edit
   end
 
   def page_index
@@ -222,7 +222,7 @@ class CommunityDirectoryGenerator
       "    add_index :#{@table_name}, :#{f[:db_name]}#{gin}"
     end
 
-    write Rails.root.join('db','migrate',"#{ts}_create_#{@table_name}.rb"), <<~RB
+    write Rails.root.join('db', 'migrate', "#{ts}_create_#{@table_name}.rb"), <<~RB
       class Create#{@table_name.camelize} < ActiveRecord::Migration[7.2]
         def change
           create_table :#{@table_name} do |t|
@@ -242,21 +242,21 @@ class CommunityDirectoryGenerator
 
   def create_model
     vals = @fields.select { |f| f.deep_symbolize_keys[:required] }
-                  .map { |f| "  validates :#{f.deep_symbolize_keys[:db_name]}, presence: true" }
+      .map { |f| "  validates :#{f.deep_symbolize_keys[:db_name]}, presence: true" }
 
-    str_search = @fields.select { |f|
+    str_search = @fields.select do |f|
       fs = f.deep_symbolize_keys
-      fs[:searchable] && %w[text textarea select radio url email].include?(fs[:widget].to_s)
-    }.map { |f| f.deep_symbolize_keys[:db_name] }
+      fs[:searchable] && %w(text textarea select radio url email).include?(fs[:widget].to_s)
+    end.map { |f| f.deep_symbolize_keys[:db_name] }
 
     scope = if str_search.any?
-      cond = str_search.map { |c| "#{c} ILIKE :q" }.join(' OR ')
-      "  scope :search, ->(query) { query.blank? ? all : where(\"#{cond}\", q: \"%\#{query}%\") }"
-    else
-      "  scope :search, ->(_q) { all }"
-    end
+              cond = str_search.map { |c| "#{c} ILIKE :q" }.join(' OR ')
+              "  scope :search, ->(query) { query.blank? ? all : where(\"#{cond}\", q: \"%\#{query}%\") }"
+            else
+              '  scope :search, ->(_q) { all }'
+            end
 
-    write Rails.root.join('app','models',"#{@table_name.singularize}.rb"), <<~RB
+    write Rails.root.join('app', 'models', "#{@table_name.singularize}.rb"), <<~RB
       class #{@model_name} < ApplicationRecord
         belongs_to :account
       #{vals.join("\n")}
@@ -270,21 +270,21 @@ class CommunityDirectoryGenerator
   def create_controller
     permitted = @fields.map { |f| ":#{f.deep_symbolize_keys[:db_name]}" }.join(', ')
     jsonb_fields = @fields.select { |f| f.deep_symbolize_keys[:widget] == 'checkboxes' }
-                          .map { |f| ":#{f.deep_symbolize_keys[:db_name]}" }
+      .map { |f| ":#{f.deep_symbolize_keys[:db_name]}" }
 
     jsonb_permit = if jsonb_fields.any?
-      jsonb_fields.map { |jf|
-        "      p[#{jf}] = params[:entry][#{jf}] if params[:entry][#{jf}].is_a?(Array)"
-      }.join("\n")
-    else
-      ''
-    end
+                     jsonb_fields.map do |jf|
+                       "      p[#{jf}] = params[:entry][#{jf}] if params[:entry][#{jf}].is_a?(Array)"
+                     end.join("\n")
+                   else
+                     ''
+                   end
 
-    field_serialize = @fields.map { |f|
+    field_serialize = @fields.map do |f|
       "        #{f.deep_symbolize_keys[:db_name]}: e.#{f.deep_symbolize_keys[:db_name]},"
-    }.join("\n")
+    end.join("\n")
 
-    write Rails.root.join('app','controllers','api','v1',"#{@table_name}_controller.rb"), <<~RB
+    write Rails.root.join('app', 'controllers', 'api', 'v1', "#{@table_name}_controller.rb"), <<~RB
       class Api::V1::#{@table_name.camelize}Controller < Api::BaseController
         before_action :require_user!, only: [:create, :update, :destroy]
         before_action :set_entry, only: [:show, :update, :destroy]
@@ -392,11 +392,11 @@ class CommunityDirectoryGenerator
 
     # Add routes before /explore
     routes = <<~JSX
-                {/* #{@display_name} */}
-                <WrappedRoute path='/#{@feature_key}/new' exact component={#{@pascal_name}New} content={children} />
-                <WrappedRoute path='/#{@feature_key}/:id/edit' exact component={#{@pascal_name}Edit} content={children} />
-                <WrappedRoute path='/#{@feature_key}/:id' exact component={#{@pascal_name}Show} content={children} />
-                <WrappedRoute path='/#{@feature_key}' exact component={#{@pascal_name}} content={children} />
+      {/* #{@display_name} */}
+      <WrappedRoute path='/#{@feature_key}/new' exact component={#{@pascal_name}New} content={children} />
+      <WrappedRoute path='/#{@feature_key}/:id/edit' exact component={#{@pascal_name}Edit} content={children} />
+      <WrappedRoute path='/#{@feature_key}/:id' exact component={#{@pascal_name}Show} content={children} />
+      <WrappedRoute path='/#{@feature_key}' exact component={#{@pascal_name}} content={children} />
 
     JSX
     content.sub!("<WrappedRoute path='/explore'", "#{routes}            <WrappedRoute path='/explore'")
@@ -408,12 +408,12 @@ class CommunityDirectoryGenerator
   # ── Inject config/routes/api.rb ───────────────────────────────
 
   def inject_rails_routes
-    path = Rails.root.join('config','routes','api.rb')
+    path = Rails.root.join('config', 'routes', 'api.rb')
     content = File.read(path)
     return if content.include?("resources :#{@table_name}")
 
     line = "    resources :#{@table_name}, only: [:index, :show, :create, :update, :destroy]\n"
-    content.sub!(/namespace :v1 do\n/, "namespace :v1 do\n#{line}")
+    content.sub!("namespace :v1 do\n", "namespace :v1 do\n#{line}")
     File.write(path, content)
     @files_modified << path.to_s
   end
@@ -423,7 +423,7 @@ class CommunityDirectoryGenerator
   # on the Rails side instead of serving the React SPA.
 
   def inject_web_app_routes
-    path = Rails.root.join('config','routes','web_app.rb')
+    path = Rails.root.join('config', 'routes', 'web_app.rb')
     content = File.read(path)
 
     route_entry = "/#{@feature_key}/(*any)"

@@ -7,9 +7,10 @@
 
 class Scheduler::TranslationCatchupScheduler
   include Sidekiq::Worker
+
   sidekiq_options queue: 'scheduler'
 
-  CATEGORY_TYPES = %w[
+  CATEGORY_TYPES = %w(
     CommunityService
     CommunityEvent
     CommunityRestaurant
@@ -17,7 +18,7 @@ class Scheduler::TranslationCatchupScheduler
     CommunityProperty
     CommunityListing
     CivezzaMemberStory
-  ].freeze
+  ).freeze
 
   def perform
     target_count = CommunityTranslationWorker::TARGET_LOCALES.size
@@ -40,7 +41,7 @@ class Scheduler::TranslationCatchupScheduler
       Sidekiq::Client.push_bulk(
         'class' => 'CommunityTranslationWorker',
         'queue' => 'low',
-        'args'  => incomplete.map { |id| [type, id] }
+        'args' => incomplete.map { |id| [type, id] }
       )
 
       Rails.logger.info("[TranslationCatchup] Queued #{incomplete.size} #{type} entries")

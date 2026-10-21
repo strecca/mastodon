@@ -12,9 +12,9 @@ class CreateCommunityRestaurants < ActiveRecord::Migration[7.2]
       t.string  :website
       t.string  :price_range
       t.string  :opening_hours
-      t.jsonb   :features,      default: []
+      t.jsonb   :features, default: []
       t.column  :image_media_ids, :bigint, array: true, default: []
-      t.integer :status,        default: 0, null: false
+      t.integer :status, default: 0, null: false
       t.timestamps
     end
 
@@ -24,10 +24,10 @@ class CreateCommunityRestaurants < ActiveRecord::Migration[7.2]
 
     safety_assured do
       execute "CREATE INDEX idx_community_restaurants_search_trgm ON community_restaurants USING gin (lower(coalesce(name,'') || ' ' || coalesce(description,'')) gin_trgm_ops) WHERE status = 1;"
-      execute "CREATE INDEX idx_community_restaurants_approved_newest  ON community_restaurants (created_at DESC) WHERE status = 1;"
-      execute "CREATE INDEX idx_community_restaurants_approved_oldest  ON community_restaurants (created_at ASC)  WHERE status = 1;"
-      execute "CREATE INDEX idx_community_restaurants_approved_az      ON community_restaurants (name ASC)        WHERE status = 1;"
-      execute "CREATE INDEX idx_community_restaurants_approved_updated ON community_restaurants (updated_at DESC)  WHERE status = 1;"
+      execute 'CREATE INDEX idx_community_restaurants_approved_newest  ON community_restaurants (created_at DESC) WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_restaurants_approved_oldest  ON community_restaurants (created_at ASC)  WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_restaurants_approved_az      ON community_restaurants (name ASC)        WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_restaurants_approved_updated ON community_restaurants (updated_at DESC)  WHERE status = 1;'
     end
   end
 

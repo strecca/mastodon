@@ -2,7 +2,7 @@ class CreateCommunityDirectoryPermissions < ActiveRecord::Migration[7.2]
   def change
     create_table :community_directory_permissions do |t|
       t.references :account, null: false, foreign_key: true
-      t.string :category_key  # null = global across all categories
+      t.string :category_key # null = global across all categories
       t.boolean :trusted, default: false, null: false
       t.boolean :is_steward, default: false, null: false
       t.text :notes

@@ -23,5 +23,5 @@ class CommunityEntryWatch < ApplicationRecord
   belongs_to :account
   belongs_to :watchable, polymorphic: true
 
-  validates :account_id, uniqueness: { scope: %i[watchable_type watchable_id] }
+  validates :account_id, uniqueness: { scope: %i(watchable_type watchable_id) }
 end

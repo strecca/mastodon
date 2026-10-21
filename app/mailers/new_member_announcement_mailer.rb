@@ -16,12 +16,12 @@ class NewMemberAnnouncementMailer < ApplicationMailer
     locale = recipient.locale.presence || 'en'
 
     @subject  = SiteContent.for('new_member_announcement_subject', locale: locale,
-                                fallback: 'A new member has joined MiaCivezza.com!')
+                                                                   fallback: 'A new member has joined MiaCivezza.com!')
     @intro    = SiteContent.for('new_member_announcement_intro', locale: locale,
-                                fallback: '%{username} just joined our community — say hello!')
-                            .gsub('%{username}', "@#{@new_username}")
+                                                                 fallback: '%{username} just joined our community — say hello!')
+      .gsub('%{username}', "@#{@new_username}")
     @reminder = SiteContent.for('new_member_announcement_reminder', locale: locale,
-                                fallback: "As a Reminder if you have not filled out your Member Profile with a personal image or avatar & a background image please consider doing it after reading this email. And then drop by \"Member Stories\" and take the time to tell us all a story about yourself, too. If you've already completed these steps, Thank You for helping making our Community even more connected and personal!")
+                                                                    fallback: "As a Reminder if you have not filled out your Member Profile with a personal image or avatar & a background image please consider doing it after reading this email. And then drop by \"Member Stories\" and take the time to tell us all a story about yourself, too. If you've already completed these steps, Thank You for helping making our Community even more connected and personal!")
 
     mail(to: recipient.email, subject: @subject)
   end

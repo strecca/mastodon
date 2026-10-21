@@ -51,7 +51,7 @@ RSpec.describe 'Community Restaurants' do
 
       it 'is forbidden' do
         patch "/api/v1/community_restaurants/#{entry.id}", headers: other_headers,
-                                                               params: { entry: { name: 'Hijacked' } }
+                                                           params: { entry: { name: 'Hijacked' } }
 
         expect(response).to have_http_status(403)
       end
@@ -62,9 +62,9 @@ RSpec.describe 'Community Restaurants' do
     let!(:entry) { Fabricate(:community_restaurant, account: owner, status: :approved) }
 
     it 'allows the owner to delete' do
-      expect {
+      expect do
         delete "/api/v1/community_restaurants/#{entry.id}", headers: headers
-      }.to change(CommunityRestaurant, :count).by(-1)
+      end.to change(CommunityRestaurant, :count).by(-1)
 
       expect(response).to have_http_status(204)
     end

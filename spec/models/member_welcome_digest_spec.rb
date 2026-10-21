@@ -37,7 +37,7 @@ RSpec.describe MemberWelcomeDigest do
       viewed   = Fabricate(:member_welcome_digest, viewed_at: Time.current)
 
       expect(described_class.unviewed).to contain_exactly(unviewed)
-      expect(described_class.unviewed).not_to include(viewed)
+      expect(described_class.unviewed).to_not include(viewed)
     end
   end
 

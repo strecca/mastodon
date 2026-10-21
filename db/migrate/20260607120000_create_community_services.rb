@@ -25,10 +25,10 @@ class CreateCommunityServices < ActiveRecord::Migration[7.2]
 
     safety_assured do
       execute "CREATE INDEX idx_community_services_search_trgm ON community_services USING gin (lower(coalesce(name,'') || ' ' || coalesce(description,'')) gin_trgm_ops) WHERE status = 1;"
-      execute "CREATE INDEX idx_community_services_approved_newest  ON community_services (created_at DESC) WHERE status = 1;"
-      execute "CREATE INDEX idx_community_services_approved_oldest  ON community_services (created_at ASC)  WHERE status = 1;"
-      execute "CREATE INDEX idx_community_services_approved_az      ON community_services (name ASC)        WHERE status = 1;"
-      execute "CREATE INDEX idx_community_services_approved_updated ON community_services (updated_at DESC)  WHERE status = 1;"
+      execute 'CREATE INDEX idx_community_services_approved_newest  ON community_services (created_at DESC) WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_services_approved_oldest  ON community_services (created_at ASC)  WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_services_approved_az      ON community_services (name ASC)        WHERE status = 1;'
+      execute 'CREATE INDEX idx_community_services_approved_updated ON community_services (updated_at DESC)  WHERE status = 1;'
     end
   end
 

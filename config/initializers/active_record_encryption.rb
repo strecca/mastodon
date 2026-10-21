@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 Rails.application.configure do
   config.active_record.encryption.deterministic_key = 'tfr4CgG3SHtA0x68PiCiUOeaMUPvYDQo'
   config.active_record.encryption.key_derivation_salt = 'kVduKaF8v0isMHOC3FA7BAQtSCIXSquD'

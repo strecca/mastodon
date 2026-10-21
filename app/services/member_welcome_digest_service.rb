@@ -11,7 +11,8 @@
 # Usage:
 #   MemberWelcomeDigestService.new(account).generate(since: 1.day.ago)
 class MemberWelcomeDigestService
-  Error = Class.new(StandardError)
+  class Error < StandardError
+  end
 
   MODEL      = 'claude-haiku-4-5'
   MAX_TOKENS = 512
@@ -33,7 +34,7 @@ class MemberWelcomeDigestService
     additionalProperties: false,
   }.freeze
 
-  SYSTEM_PROMPT = <<~SYSTEM.freeze
+  SYSTEM_PROMPT = <<~SYSTEM
     You are writing a short "welcome back" note for a member of MiaCivezza.com,
     a private community platform for people connected to the Imperia province
     and the Ligurian Riviera of northwestern Italy.
@@ -102,12 +103,12 @@ class MemberWelcomeDigestService
     prioritized_ids = MemberNotificationTarget.where(account_id: @account.id).pluck(:target_account_id).to_set
 
     candidates = Status
-                 .where(account_id: @account.following.select(:id))
-                 .list_eligible_visibility
-                 .where(created_at: since..)
-                 .order(created_at: :desc)
-                 .limit(MAX_ITEMS_PER_SOURCE * 3)
-                 .to_a
+      .where(account_id: @account.following.select(:id))
+      .list_eligible_visibility
+      .where(created_at: since..)
+      .order(created_at: :desc)
+      .limit(MAX_ITEMS_PER_SOURCE * 3)
+      .to_a
 
     # Stable sort: targeted accounts first, otherwise most-recent first.
     candidates

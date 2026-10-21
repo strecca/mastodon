@@ -8,8 +8,8 @@ class Api::V1::MemberNotificationTargetsController < Api::BaseController
   # Returns the accounts the current user always wants to hear from.
   def index
     targets = MemberNotificationTarget.where(account_id: current_account.id)
-                                       .includes(:target_account)
-                                       .order(:created_at)
+      .includes(:target_account)
+      .order(:created_at)
     render json: targets.map { |t| serialize(t) }
   end
 
@@ -24,20 +24,20 @@ class Api::V1::MemberNotificationTargetsController < Api::BaseController
 
     if target.new_record?
       target.save!
-      render json: serialize(target), status: :created
+      render json: serialize(target), status: 201
     else
       render json: serialize(target)
     end
   rescue ActiveRecord::RecordInvalid => e
-    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+    render json: { errors: e.record.errors.full_messages }, status: 422
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Account not found' }, status: :not_found
+    render json: { error: 'Account not found' }, status: 404
   end
 
   # DELETE /api/v1/member_notification_targets/:id
   def destroy
     @target.destroy!
-    head :no_content
+    head 204
   end
 
   private
@@ -45,18 +45,18 @@ class Api::V1::MemberNotificationTargetsController < Api::BaseController
   def set_target
     @target = MemberNotificationTarget.find_by!(id: params[:id], account_id: current_account.id)
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Not found' }, status: :not_found
+    render json: { error: 'Not found' }, status: 404
   end
 
   def serialize(target)
     acct = target.target_account
     {
-      id:      target.id,
+      id: target.id,
       account: {
-        id:           acct.id.to_s,
-        username:     acct.username,
+        id: acct.id.to_s,
+        username: acct.username,
         display_name: acct.display_name,
-        avatar:       acct.avatar_original_url,
+        avatar: acct.avatar_original_url,
       },
     }
   end

@@ -13,10 +13,10 @@ class Api::V1::CommunityEntryNotificationsController < Api::BaseController
 
     render json: {
       notifications: notifications.map { |n| serialize(n) },
-      total:         notifications.total_count,
-      page:          notifications.current_page,
-      pages:         notifications.total_pages,
-      unread_count:  CommunityEntryNotification.for_recipient(current_account).unread.count,
+      total: notifications.total_count,
+      page: notifications.current_page,
+      pages: notifications.total_pages,
+      unread_count: CommunityEntryNotification.for_recipient(current_account).unread.count,
     }
   end
 
@@ -29,7 +29,7 @@ class Api::V1::CommunityEntryNotificationsController < Api::BaseController
   # POST /api/v1/community_entry_notifications/:id/read
   def read
     notification = find_own_notification
-    return render json: { error: 'Not found' }, status: :not_found unless notification
+    return render json: { error: 'Not found' }, status: 404 unless notification
 
     notification.mark_read!
     render json: serialize(notification)
@@ -50,7 +50,7 @@ class Api::V1::CommunityEntryNotificationsController < Api::BaseController
   # this specific notification, rather than a blanket unsubscribe.
   def mute
     notification = find_own_notification
-    return render json: { error: 'Not found' }, status: :not_found unless notification
+    return render json: { error: 'Not found' }, status: 404 unless notification
 
     if notification.entry_response?
       CommunityEntryWatch.where(account_id: current_account.id, watchable: notification.notifiable).destroy_all
@@ -76,23 +76,23 @@ class Api::V1::CommunityEntryNotificationsController < Api::BaseController
 
   def serialize(n)
     {
-      id:                    n.id,
-      kind:                  n.kind,
-      category_key:          n.category_key,
+      id: n.id,
+      kind: n.kind,
+      category_key: n.category_key,
       category_display_name: CommunityDirectoryConfig.display_name_for(n.category_key),
-      read:                  n.read?,
-      created_at:            n.created_at.iso8601,
-      sender:                n.sender ? serialize_account(n.sender) : nil,
-      url:                   "/community_#{n.category_key}/#{n.notifiable_id}",
+      read: n.read?,
+      created_at: n.created_at.iso8601,
+      sender: n.sender ? serialize_account(n.sender) : nil,
+      url: "/community_#{n.category_key}/#{n.notifiable_id}",
     }
   end
 
   def serialize_account(account)
     {
-      id:           account.id.to_s,
-      username:     account.username,
+      id: account.id.to_s,
+      username: account.username,
       display_name: account.display_name,
-      avatar:       account.avatar_original_url,
+      avatar: account.avatar_original_url,
     }
   end
 end

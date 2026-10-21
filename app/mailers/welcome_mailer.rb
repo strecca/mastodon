@@ -12,11 +12,11 @@ class WelcomeMailer < ApplicationMailer
     locale    = user.locale.presence || 'en'
 
     @subject   = SiteContent.for('welcome_email_subject',   locale: locale,
-                                 fallback: 'Welcome to MiaCivezza.com!')
+                                                            fallback: 'Welcome to MiaCivezza.com!')
     @body      = SiteContent.for('welcome_email_body',      locale: locale,
-                                 fallback: "We're glad you're here. Explore the community directory, share your story, and connect with neighbours in Civezza and along the Ligurian coast.")
+                                                            fallback: "We're glad you're here. Explore the community directory, share your story, and connect with neighbours in Civezza and along the Ligurian coast.")
     @cta_label = SiteContent.for('welcome_email_cta_label', locale: locale,
-                                 fallback: 'Explore the Community')
+                                                            fallback: 'Explore the Community')
     @cta_url   = root_url
 
     mail(to: user.email, subject: @subject)

@@ -16,7 +16,7 @@ class Api::V1::CommunityLandingController < Api::BaseController
     if settings.update(landing_params)
       render json: serialize(settings)
     else
-      render json: { errors: settings.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: settings.errors.full_messages }, status: 422
     end
   end
 
@@ -28,16 +28,17 @@ class Api::V1::CommunityLandingController < Api::BaseController
 
   def serialize(s)
     {
-      site_name:     s.site_name,
+      site_name: s.site_name,
       site_subtitle: s.site_subtitle,
-      tagline:       s.tagline,
-      join_heading:  s.join_heading,
-      join_body:     s.join_body,
+      tagline: s.tagline,
+      join_heading: s.join_heading,
+      join_body: s.join_body,
     }
   end
 
   def require_admin!
     return if current_user&.can?(:administrator)
-    render json: { error: 'Forbidden' }, status: :forbidden
+
+    render json: { error: 'Forbidden' }, status: 403
   end
 end

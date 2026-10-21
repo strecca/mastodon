@@ -5,6 +5,7 @@
 # Called from the controller (notify_friends) and CommunityVisitOverlapWorker.
 class CommunityVisitEmailWorker
   include Sidekiq::Worker
+
   sidekiq_options queue: 'mailers', retry: 3
 
   def perform(notification_id)

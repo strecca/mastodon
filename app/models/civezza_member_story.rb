@@ -17,6 +17,6 @@ class CivezzaMemberStory < ApplicationRecord
 
   def image_media_attachments
     MediaAttachment.where(id: image_media_ids).index_by(&:id)
-                   .values_at(*image_media_ids).compact
+      .values_at(*image_media_ids).compact
   end
 end

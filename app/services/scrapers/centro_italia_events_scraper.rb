@@ -33,9 +33,9 @@ module Scrapers
 
     def extract_event_links(doc)
       doc.css('a[href]')
-         .map { |a| a['href'].to_s.strip }
-         .select { |h| h.match?(%r{\A/liguria/imperia/[^/]+/[^/]+\.html\z}) }
-         .uniq
+        .map { |a| a['href'].to_s.strip }
+        .select { |h| h.match?(%r{\A/liguria/imperia/[^/]+/[^/]+\.html\z}) }
+        .uniq
     end
 
     def scrape_detail(url)
@@ -61,20 +61,20 @@ module Scrapers
       description = extract_description(doc) || title
 
       website = doc.css('a[href^="http"]')
-                   .map { |a| a['href'] }
-                   .reject { |h| h.include?('centroitaliaevents') }
-                   .first
+        .map { |a| a['href'] }
+        .reject { |h| h.include?('centroitaliaevents') }
+        .first
 
       {
-        title:       title,
-        event_date:  dates[:start],
-        end_date:    dates[:end] == dates[:start] ? nil : dates[:end],
-        location:    location,
+        title: title,
+        event_date: dates[:start],
+        end_date: dates[:end] == dates[:start] ? nil : dates[:end],
+        location: location,
         description: description,
-        source_url:  url,
+        source_url: url,
         source_name: SOURCE_NAME,
-        website:     website,
-        category:    ['community'],
+        website: website,
+        category: ['community'],
       }
     end
 
@@ -93,6 +93,7 @@ module Scrapers
       %w[.data .date .periodo .dates [class*="data"] [class*="date"] [class*="periodo"]].each do |sel|
         node = doc.at_css(sel)
         next unless node
+
         text = node.text
         return text if text.match?(ITALIAN_DATE_RE)
       end
@@ -121,7 +122,7 @@ module Scrapers
       from_element&.truncate(80) || 'Imperia'
     end
 
-    BOILERPLATE_FRAGMENT = 'Centro Italia Events è una piattaforma'.freeze
+    BOILERPLATE_FRAGMENT = 'Centro Italia Events è una piattaforma'
 
     def extract_description(doc)
       # Prefer a dedicated description block

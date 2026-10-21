@@ -29,14 +29,14 @@ class AdminExceptionNotifier
   # scanning, not a targeted attack. Rails' own anti-spoofing check is doing
   # exactly its job by raising instead of guessing; the request fails safely
   # either way, so there's nothing actionable per occurrence.
-  IGNORED_CLASSES = %w[
+  IGNORED_CLASSES = %w(
     ActiveRecord::RecordNotFound
     ActionController::RoutingError
     ActionController::InvalidAuthenticityToken
     Sidekiq::JobRetry::Handled
     Sidekiq::JobRetry::Skip
     ActionDispatch::RemoteIp::IpSpoofAttackError
-  ].freeze
+  ).freeze
 
   def report(error, handled:, severity:, context:, source: nil)
     return if handled

@@ -27,7 +27,7 @@ RSpec.describe MemberWelcomeDigestService do
   describe '#generate' do
     context 'when there is no activity of any kind since the given time' do
       it 'returns nil without calling Claude' do
-        expect(Anthropic::Client).not_to receive(:new)
+        expect(Anthropic::Client).to_not receive(:new)
 
         expect(subject.generate(since: since)).to be_nil
       end
@@ -78,7 +78,7 @@ RSpec.describe MemberWelcomeDigestService do
 
       before do
         Fabricate(:community_entry_notification, recipient: account, sender: sender,
-                                                   notifiable: listing, category_key: 'listings', kind: :new_entry)
+                                                 notifiable: listing, category_key: 'listings', kind: :new_entry)
       end
 
       it 'includes the specific category name and a real entry URL, never a vague placeholder' do

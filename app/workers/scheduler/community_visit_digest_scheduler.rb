@@ -21,9 +21,9 @@ class Scheduler::CommunityVisitDigestScheduler
       .where(emailed_at: nil)
       .where(kind: [:overlap_detected, :friend_ping])
       .joins(
-        "INNER JOIN community_notification_preferences cnp ON cnp.account_id = community_visit_notifications.recipient_account_id"
+        'INNER JOIN community_notification_preferences cnp ON cnp.account_id = community_visit_notifications.recipient_account_id'
       )
-      .where("cnp.email_frequency IN (2, 3)") # 2=daily_digest, 3=weekly_digest
+      .where('cnp.email_frequency IN (2, 3)') # 2=daily_digest, 3=weekly_digest
       .distinct
       .pluck(:recipient_account_id)
 
@@ -64,7 +64,7 @@ class Scheduler::CommunityVisitDigestScheduler
 
     now = Time.current
     notifications.update_all(emailed_at: now)
-  rescue StandardError => e
+  rescue => e
     Rails.logger.error("[CommunityVisitDigest] Error for account #{account_id}: #{e.message}")
   end
 end

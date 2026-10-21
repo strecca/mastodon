@@ -14,7 +14,7 @@ class CommunityVisitsMailer < ApplicationMailer
 
     locale_for_account(@recipient) do
       mail(
-        to:      user.email,
+        to: user.email,
         subject: "#{@sender.display_name.presence || "@#{@sender.username}"} will also be in town — visit overlap detected"
       )
     end
@@ -32,7 +32,7 @@ class CommunityVisitsMailer < ApplicationMailer
 
     locale_for_account(@recipient) do
       mail(
-        to:      user.email,
+        to: user.email,
         subject: "#{@sender.display_name.presence || "@#{@sender.username}"} wants to connect during your visit"
       )
     end
@@ -51,7 +51,7 @@ class CommunityVisitsMailer < ApplicationMailer
     total = notifications.size
     locale_for_account(@recipient) do
       mail(
-        to:      user.email,
+        to: user.email,
         subject: "#{total} community visit #{total == 1 ? 'update' : 'updates'} waiting for you"
       )
     end

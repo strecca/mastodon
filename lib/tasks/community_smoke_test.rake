@@ -10,11 +10,11 @@ namespace :community do
     base = "http://localhost:#{ENV.fetch('PORT', 3000)}"
     host = ENV.fetch('LOCAL_DOMAIN', 'localhost')
 
-    endpoints = %w[
+    endpoints = %w(
       /api/v1/community_artists
       /api/v1/community_events
       /api/v1/community_listings
-    ]
+    )
 
     puts "\n== Community API Smoke Test ==\n"
     all_ok = true
@@ -27,7 +27,11 @@ namespace :community do
       res = Net::HTTP.start(uri.host, uri.port) { |h| h.request(req) }
 
       if res.code == '200'
-        body = JSON.parse(res.body) rescue nil
+        body = begin
+          JSON.parse(res.body)
+        rescue
+          nil
+        end
         count = body.is_a?(Hash) ? body['total'] : body&.length
         puts "  ✓ #{path} — HTTP 200, #{count} entries"
       elsif res.code == '301'

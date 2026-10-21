@@ -38,7 +38,7 @@ class CommunityArtist < ApplicationRecord
 
   belongs_to :account
   has_many :entry_translations, class_name: 'CommunityEntryTranslation',
-           as: :translatable, dependent: :destroy
+                                as: :translatable, dependent: :destroy
 
   enum :status, { pending: 0, approved: 1, rejected: 2 }, default: :pending
 

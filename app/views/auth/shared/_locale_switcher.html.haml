@@ -1,6 +1,6 @@
 .auth-locale-switcher
-  - [['en','EN'],['it','IT'],['fr','FR'],['de','DE'],['sv','SV'],['es','ES'],['no','NO'],['nl','NL']].each do |code, label|
+  - [['en', 'EN'], ['it', 'IT'], ['fr', 'FR'], ['de', 'DE'], ['sv', 'SV'], ['es', 'ES'], ['no', 'NO'], ['nl', 'NL']].each do |code, label|
     - active = I18n.locale.to_s.start_with?(code)
     - href = request.path + '?' + request.query_parameters.except('lang').merge('lang' => code).to_query
-    = link_to href, class: "auth-locale-btn#{active ? ' active' : ''}" do
+    = link_to href, class: "auth-locale-btn#{' active' if active}" do
       = label

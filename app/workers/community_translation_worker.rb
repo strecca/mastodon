@@ -20,12 +20,12 @@ class CommunityTranslationWorker
   # translation as a result. English translation into itself is a
   # harmless no-op for DeepL (no source-language detection exists here to
   # skip it conditionally). Add/remove as the community grows.
-  TARGET_LOCALES = %w[en it de fr es pt nl da sv no sl sq].freeze
+  TARGET_LOCALES = %w(en it de fr es pt nl da sv no sl sq).freeze
 
   # Models that don't have a features/community_*/config.json — field names listed directly.
   FIELD_OVERRIDES = {
-    'CommunityListing'   => %w[title description trade_for],
-    'CivezzaMemberStory' => %w[about_me civezza_story shaping_moment why_i_joined],
+    'CommunityListing' => %w(title description trade_for),
+    'CivezzaMemberStory' => %w(about_me civezza_story shaping_moment why_i_joined),
   }.freeze
 
   def perform(translatable_type, translatable_id)
@@ -64,9 +64,9 @@ class CommunityTranslationWorker
 
     existing = CommunityEntryTranslation.find_by(
       translatable_type: translatable_type,
-      translatable_id:   entry.id,
-      locale:            locale,
-      field_name:        db_name
+      translatable_id: entry.id,
+      locale: locale,
+      field_name: db_name
     )
     return if existing&.source_digest == digest
 
@@ -75,19 +75,19 @@ class CommunityTranslationWorker
 
     CommunityEntryTranslation.upsert(
       { translatable_type: translatable_type,
-        translatable_id:   entry.id,
-        locale:            locale,
-        field_name:        db_name,
-        translated_text:   translated,
-        source_digest:     digest,
-        created_at:        Time.current,
-        updated_at:        Time.current },
-      unique_by: %i[translatable_type translatable_id locale field_name]
+        translatable_id: entry.id,
+        locale: locale,
+        field_name: db_name,
+        translated_text: translated,
+        source_digest: digest,
+        created_at: Time.current,
+        updated_at: Time.current },
+      unique_by: %i(translatable_type translatable_id locale field_name)
     )
     nil
   rescue CommunityTranslationService::Error, HTTP::Error => e
     Rails.logger.warn("[CommunityTranslation] #{translatable_type}##{entry.id} #{locale}/#{db_name}: #{e.message}")
-    e  # return the error so perform can decide whether to retry
+    e # return the error so perform can decide whether to retry
   end
 
   def load_config(translatable_type)

@@ -10,7 +10,7 @@ class Api::V1::CommunityVisitsController < Api::BaseController
   skip_before_action :require_authenticated_user!, only: [:heatmap]
   before_action :require_user!, except: [:heatmap]
   before_action :require_admin!, only: [:admin_all, :admin_stats]
-  before_action :set_visit,     only: [:show, :update, :destroy, :notify_friends]
+  before_action :set_visit, only: [:show, :update, :destroy, :notify_friends]
   before_action :authorize_owner!, only: [:update, :destroy, :notify_friends]
 
   # GET /api/v1/community_visits?from=2026-06-01&to=2026-08-31
@@ -74,9 +74,9 @@ class Api::V1::CommunityVisitsController < Api::BaseController
     end
 
     CommunityVisitOverlapWorker.perform_async(visit.id)
-    render json: serialize_visit(visit), status: :created
+    render json: serialize_visit(visit), status: 201
   rescue ActiveRecord::RecordInvalid => e
-    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+    render json: { errors: e.record.errors.full_messages }, status: 422
   end
 
   # PUT /api/v1/community_visits/:id
@@ -89,29 +89,29 @@ class Api::V1::CommunityVisitsController < Api::BaseController
     CommunityVisitOverlapWorker.perform_async(@visit.id)
     render json: serialize_visit(@visit)
   rescue ActiveRecord::RecordInvalid => e
-    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+    render json: { errors: e.record.errors.full_messages }, status: 422
   end
 
   # DELETE /api/v1/community_visits/:id
   def destroy
     @visit.destroy!
-    head :no_content
+    head 204
   end
 
   # POST /api/v1/community_visits/:id/notify_friends
   # Sends a friend_ping notification to up to 20 connected accounts.
   def notify_friends
     raw_ids = Array(params[:account_ids]).map(&:to_i).first(20).uniq
-    return render json: { error: 'No accounts specified' }, status: :bad_request if raw_ids.empty?
+    return render json: { error: 'No accounts specified' }, status: 400 if raw_ids.empty?
 
     valid_ids = if @visit.my_people?
                   # Gate on My People group membership instead of follow graph
                   CommunityMyPerson.where(account_id: current_account.id, member_account_id: raw_ids)
-                                   .pluck(:member_account_id) & raw_ids
+                    .pluck(:member_account_id) & raw_ids
                 else
                   connected_subset(raw_ids)
                 end
-    return render json: { error: 'None of those accounts are in your group' }, status: :unprocessable_entity if valid_ids.empty?
+    return render json: { error: 'None of those accounts are in your group' }, status: 422 if valid_ids.empty?
 
     message = params[:message].presence&.truncate(140)
     notified = 0
@@ -120,17 +120,17 @@ class Api::V1::CommunityVisitsController < Api::BaseController
       # Don't re-ping if an unread ping for this exact visit already exists
       next if CommunityVisitNotification.exists?(
         recipient_account_id: recipient_id,
-        community_visit_id:   @visit.id,
-        kind:                 :friend_ping,
-        read_at:              nil
+        community_visit_id: @visit.id,
+        kind: :friend_ping,
+        read_at: nil
       )
 
       notif = CommunityVisitNotification.create!(
         recipient_account_id: recipient_id,
-        sender_account_id:    current_account.id,
-        community_visit_id:   @visit.id,
-        kind:                 :friend_ping,
-        message:              message
+        sender_account_id: current_account.id,
+        community_visit_id: @visit.id,
+        kind: :friend_ping,
+        message: message
       )
       CommunityVisitEmailWorker.perform_async(notif.id)
       notified += 1
@@ -176,9 +176,9 @@ class Api::V1::CommunityVisitsController < Api::BaseController
     members     = CommunityVisit.distinct.count(:account_id)
 
     render json: {
-      in_town_now:   in_town_now,
+      in_town_now: in_town_now,
       upcoming_7days: upcoming_7,
-      total_visits:  total,
+      total_visits: total,
       total_members: members,
     }
   end
@@ -190,25 +190,27 @@ class Api::V1::CommunityVisitsController < Api::BaseController
   def set_visit
     @visit = CommunityVisit.includes(:account, :visit_availabilities).find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Visit not found' }, status: :not_found
+    render json: { error: 'Visit not found' }, status: 404
   end
 
   def authorize_owner!
     return if @visit.account_id == current_account.id
     return if current_user&.can?(:administrator)
-    render json: { error: 'Forbidden' }, status: :forbidden
+
+    render json: { error: 'Forbidden' }, status: 403
   end
 
   def require_admin!
     return if current_user&.can?(:administrator)
-    render json: { error: 'Forbidden' }, status: :forbidden
+
+    render json: { error: 'Forbidden' }, status: 403
   end
 
   # ── Visibility-aware query ────────────────────────────────────────────────
 
   def visible_visits_in_range(from_date, to_date)
     base = CommunityVisit.overlapping(from_date, to_date)
-                         .includes(:account, :visit_availabilities)
+      .includes(:account, :visit_availabilities)
 
     public_visits = base.where(visibility: :public_to_members)
 
@@ -227,7 +229,7 @@ class Api::V1::CommunityVisitsController < Api::BaseController
     own_visits = base.where(account_id: current_account.id)
 
     (public_visits.to_a + connections_visits.to_a + my_people_visits.to_a + own_visits.to_a).uniq(&:id)
-                                                                                             .sort_by(&:arrival_date)
+      .sort_by(&:arrival_date)
   end
 
   # ── Availabilities ────────────────────────────────────────────────────────
@@ -236,6 +238,7 @@ class Api::V1::CommunityVisitsController < Api::BaseController
     visit.visit_availabilities.destroy_all
     Array(kinds).map(&:to_s).uniq.each do |kind|
       next unless VisitAvailability.kinds.key?(kind)
+
       visit.visit_availabilities.create!(kind: kind)
     end
   end
@@ -274,43 +277,43 @@ class Api::V1::CommunityVisitsController < Api::BaseController
 
   def serialize_visit(visit, relationship_map = {})
     {
-      id:             visit.id,
-      account:        serialize_account(visit.account),
-      arrival_date:   visit.arrival_date.iso8601,
+      id: visit.id,
+      account: serialize_account(visit.account),
+      arrival_date: visit.arrival_date.iso8601,
       departure_date: visit.departure_date.iso8601,
-      duration_days:  visit.duration_days,
-      visibility:     visit.visibility,
-      note:           visit.note,
+      duration_days: visit.duration_days,
+      visibility: visit.visibility,
+      note: visit.note,
       availabilities: visit.visit_availabilities.map(&:kind),
-      relationship:   relationship_map[visit.account_id] || 'none',
-      is_own:         visit.account_id == current_account&.id,
-      active:         visit.active?,
-      created_at:     visit.created_at.iso8601,
-      updated_at:     visit.updated_at.iso8601,
+      relationship: relationship_map[visit.account_id] || 'none',
+      is_own: visit.account_id == current_account&.id,
+      active: visit.active?,
+      created_at: visit.created_at.iso8601,
+      updated_at: visit.updated_at.iso8601,
     }
   end
 
   def admin_serialize_visit(visit)
     {
-      id:             visit.id,
-      account:        serialize_account(visit.account),
-      arrival_date:   visit.arrival_date.iso8601,
+      id: visit.id,
+      account: serialize_account(visit.account),
+      arrival_date: visit.arrival_date.iso8601,
       departure_date: visit.departure_date.iso8601,
-      duration_days:  visit.duration_days,
-      visibility:     visit.visibility,
-      note:           visit.note,
+      duration_days: visit.duration_days,
+      visibility: visit.visibility,
+      note: visit.note,
       availabilities: visit.visit_availabilities.map(&:kind),
-      active:         visit.active?,
-      created_at:     visit.created_at.iso8601,
+      active: visit.active?,
+      created_at: visit.created_at.iso8601,
     }
   end
 
   def serialize_account(account)
     {
-      id:           account.id.to_s,
-      username:     account.username,
+      id: account.id.to_s,
+      username: account.username,
       display_name: account.display_name,
-      avatar:       account.avatar_original_url,
+      avatar: account.avatar_original_url,
     }
   end
 

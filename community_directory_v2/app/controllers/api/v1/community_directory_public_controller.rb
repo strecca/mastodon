@@ -11,10 +11,10 @@ class Api::V1::CommunityDirectoryPublicController < Api::BaseController
   # Returns all community_* tables with their config and entry counts
   def index
     tables = ActiveRecord::Base.connection.tables
-                .select { |t| t.start_with?('community_') }
-                .reject { |t| t == 'community_directory' }
-                .sort
-                .map { |t| build_category_info(t) }
+      .select { |t| t.start_with?('community_') }
+      .reject { |t| t == 'community_directory' }
+      .sort
+      .map { |t| build_category_info(t) }
 
     render json: tables
   end

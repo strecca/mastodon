@@ -233,8 +233,6 @@ Rails.application.routes.draw do
   resource :authorize_interaction, only: [:show]
   resource :share, only: [:show]
 
-  get '/newsletters/:slug/pdf', to: 'newsletters#pdf', as: :newsletter_pdf
-
   draw(:admin)
 
   get '/admin', to: redirect('/admin/dashboard', status: 302)

@@ -43,7 +43,7 @@ RSpec.describe 'Community Quick Shares' do
       before { quick_share.update_column(:mastodon_status_id, '123456') }
 
       it 'does not post a second status' do
-        expect { subject }.not_to change { owner.statuses.count }
+        expect { subject }.to_not(change { owner.statuses.count })
       end
 
       it 'returns an error instead of succeeding silently' do
@@ -59,7 +59,7 @@ RSpec.describe 'Community Quick Shares' do
       let(:token)          { Fabricate(:accessible_access_token, resource_owner_id: other_account.user.id) }
 
       it 'is forbidden and does not post anything' do
-        expect { subject }.not_to change { owner.statuses.count }
+        expect { subject }.to_not(change { owner.statuses.count })
 
         expect(response).to have_http_status(403)
       end
@@ -73,7 +73,7 @@ RSpec.describe 'Community Quick Shares' do
       end
 
       it 'does not post anything' do
-        expect { subject }.not_to change { owner.statuses.count }
+        expect { subject }.to_not(change { owner.statuses.count })
 
         expect(response).to have_http_status(422)
       end

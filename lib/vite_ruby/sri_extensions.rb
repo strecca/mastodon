@@ -3,9 +3,9 @@
 module ViteRuby::ManifestIntegrityExtension
   def path_and_integrity_for(name, **)
     entry = lookup!(name, **)
-    { 
-      path: entry.fetch('file'), 
-      integrity: dev_server_running? ? nil : entry.fetch('integrity', nil) 
+    {
+      path: entry.fetch('file'),
+      integrity: dev_server_running? ? nil : entry.fetch('integrity', nil),
     }
   end
 
@@ -20,6 +20,7 @@ module ViteRuby::ManifestIntegrityExtension
 
   def resolve_virtual_entry(name)
     return name if dev_server_running?
+
     @name_lookup_cache ||= load_name_lookup_cache
     @name_lookup_cache.fetch(name)
   end
@@ -34,7 +35,7 @@ module ViteRuby::ManifestIntegrityExtension
 
   def resolve_entries_with_integrity(*names, **options)
     entries = names.map { |name| lookup!(name, **options) }
-    
+
     script_paths = entries.map do |entry|
       {
         file: entry.fetch('file'),
@@ -46,12 +47,12 @@ module ViteRuby::ManifestIntegrityExtension
 
     {
       scripts: script_paths,
-      imports: imports.filter_map { |entry| 
-        { 
-          file: entry.fetch('file'), 
-          integrity: dev_server_running? ? nil : entry.fetch('integrity', nil) 
-        } 
-      }.uniq,
+      imports: imports.filter_map do |entry|
+        {
+          file: entry.fetch('file'),
+          integrity: dev_server_running? ? nil : entry.fetch('integrity', nil),
+        }
+      end.uniq,
       stylesheets: dev_server_running? ? [] : (entries + imports).flat_map { |entry| entry['css'] }.compact.uniq,
     }
   end
@@ -135,6 +136,7 @@ module ViteRails::TagHelpers::IntegrityExtension
 
   def vite_polyfills_tag(crossorigin: 'anonymous', **)
     return if ViteRuby.instance.dev_server_running?
+
     entry = vite_manifest.path_and_integrity_for('polyfills', type: :virtual)
     javascript_include_tag(entry[:path], type: 'module', integrity: entry[:integrity], crossorigin: crossorigin, **)
   end

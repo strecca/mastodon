@@ -26,11 +26,10 @@ class CommunityQuickShare < ApplicationRecord
 
   def generate_slug
     base = ActiveSupport::Inflector.transliterate(caption)
-                .downcase
-                .gsub(/[^a-z0-9\s-]/, '')
-                .gsub(/\s+/, '-')
-                .gsub(/-+/, '-')
-                .strip.first(60)
+      .downcase
+      .gsub(/[^a-z0-9\s-]/, '')
+      .gsub(/\s+/, '-').squeeze('-')
+      .strip.first(60)
     base = 'shared-file' if base.blank?
 
     candidate = base

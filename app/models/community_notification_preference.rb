@@ -26,8 +26,8 @@ class CommunityNotificationPreference < ApplicationRecord
   belongs_to :account
 
   enum :email_frequency, {
-    never:        0,
-    immediate:    1,
+    never: 0,
+    immediate: 1,
     daily_digest: 2,
     weekly_digest: 3,
   }, default: :daily_digest

@@ -102,7 +102,7 @@ RSpec.describe UserTrackingConcern do
         user.update(current_sign_in_at: nil)
         sign_in user, scope: :user
 
-        expect(MemberWelcomeDigestWorker).not_to receive(:perform_async) # rubocop:disable RSpec/MessageSpies
+        expect(MemberWelcomeDigestWorker).to_not receive(:perform_async) # rubocop:disable RSpec/MessageSpies
 
         get :show
       end
@@ -112,7 +112,7 @@ RSpec.describe UserTrackingConcern do
         sign_in user, scope: :user
         Fabricate(:member_welcome_digest, account: user.account, digest_date: Date.current)
 
-        expect(MemberWelcomeDigestWorker).not_to receive(:perform_async) # rubocop:disable RSpec/MessageSpies
+        expect(MemberWelcomeDigestWorker).to_not receive(:perform_async) # rubocop:disable RSpec/MessageSpies
 
         get :show
       end
@@ -121,7 +121,7 @@ RSpec.describe UserTrackingConcern do
         user.update(current_sign_in_at: 60.minutes.ago)
         sign_in user, scope: :user
 
-        expect(MemberWelcomeDigestWorker).not_to receive(:perform_async) # rubocop:disable RSpec/MessageSpies
+        expect(MemberWelcomeDigestWorker).to_not receive(:perform_async) # rubocop:disable RSpec/MessageSpies
 
         get :show
       end

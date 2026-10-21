@@ -29,14 +29,14 @@ RSpec.describe CommunityEntryNotifyWorker do
       bystander = Fabricate(:account)
 
       expect { subject.perform('new_entry', 'CommunityListing', listing.id, 'listings') }
-        .not_to(change { CommunityEntryNotification.for_recipient(bystander).count })
+        .to_not(change { CommunityEntryNotification.for_recipient(bystander).count })
     end
 
     it 'never notifies the poster about their own entry' do
       Fabricate(:member_notification_category_subscription, account: poster, category_key: 'listings')
 
       expect { subject.perform('new_entry', 'CommunityListing', listing.id, 'listings') }
-        .not_to(change { CommunityEntryNotification.for_recipient(poster).count })
+        .to_not(change { CommunityEntryNotification.for_recipient(poster).count })
     end
 
     it 'notifies a matching account only once, even if both subscribed and targeted' do
@@ -53,10 +53,10 @@ RSpec.describe CommunityEntryNotifyWorker do
         recipient = Fabricate(:account)
         Fabricate(:member_notification_category_subscription, account: recipient, category_key: 'listings')
         Fabricate(:member_notification_preference, account: recipient, quiet_hours_enabled: true,
-                                                     quiet_hours_start: '00:00', quiet_hours_end: '23:59',
-                                                     quiet_hours_timezone: 'UTC')
+                                                   quiet_hours_start: '00:00', quiet_hours_end: '23:59',
+                                                   quiet_hours_timezone: 'UTC')
 
-        expect(CommunityEntryPushWorker).not_to receive(:perform_async)
+        expect(CommunityEntryPushWorker).to_not receive(:perform_async)
 
         expect { subject.perform('new_entry', 'CommunityListing', listing.id, 'listings') }
           .to change { CommunityEntryNotification.for_recipient(recipient).count }.by(1)
@@ -79,7 +79,7 @@ RSpec.describe CommunityEntryNotifyWorker do
     context 'when the entry has since been deleted' do
       it 'does not raise' do
         listing.destroy!
-        expect { subject.perform('new_entry', 'CommunityListing', listing.id, 'listings') }.not_to raise_error
+        expect { subject.perform('new_entry', 'CommunityListing', listing.id, 'listings') }.to_not raise_error
       end
     end
   end
@@ -102,14 +102,14 @@ RSpec.describe CommunityEntryNotifyWorker do
       Fabricate(:community_entry_watch, account: responder, watchable: listing)
 
       expect { subject.perform('entry_response', 'CommunityListingInterest', interest.id) }
-        .not_to(change { CommunityEntryNotification.for_recipient(responder).count })
+        .to_not(change { CommunityEntryNotification.for_recipient(responder).count })
     end
 
     it 'does not notify the listing owner via the watch path (they already get CommunityListingNotifyWorker)' do
       Fabricate(:community_entry_watch, account: owner, watchable: listing)
 
       expect { subject.perform('entry_response', 'CommunityListingInterest', interest.id) }
-        .not_to(change { CommunityEntryNotification.for_recipient(owner).count })
+        .to_not(change { CommunityEntryNotification.for_recipient(owner).count })
     end
   end
 end

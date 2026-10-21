@@ -6,10 +6,10 @@ class CommunityScraperWorker
   sidekiq_options retry: 0, queue: 'default'
 
   SCRAPER_MAP = {
-    'CentroItaliaEventsScraper'  => Scrapers::CentroItaliaEventsScraper,
-    'ComuneSanLorenzoScraper'    => Scrapers::ComuneSanLorenzoScraper,
-    'LaVoceDiImperiaScraper'     => Scrapers::LaVoceDiImperiaScraper,
-    'Riviera24EventsScraper'     => Scrapers::Riviera24EventsScraper,
+    'CentroItaliaEventsScraper' => Scrapers::CentroItaliaEventsScraper,
+    'ComuneSanLorenzoScraper' => Scrapers::ComuneSanLorenzoScraper,
+    'LaVoceDiImperiaScraper' => Scrapers::LaVoceDiImperiaScraper,
+    'Riviera24EventsScraper' => Scrapers::Riviera24EventsScraper,
   }.freeze
 
   def perform(scraper_name)
@@ -24,23 +24,23 @@ class CommunityScraperWorker
       result = CommunityEventImportService.new.import(events)
 
       ScraperRunLog.create!(
-        source_name:   source_name,
-        ran_at:        began_at,
-        fetched:       events.size,
-        imported:      result[:imported],
-        skipped:       result[:skipped],
-        error_count:   result[:errors],
-        status:        events.empty? ? 'empty' : 'ok'
+        source_name: source_name,
+        ran_at: began_at,
+        fetched: events.size,
+        imported: result[:imported],
+        skipped: result[:skipped],
+        error_count: result[:errors],
+        status: events.empty? ? 'empty' : 'ok'
       )
-    rescue StandardError => e
+    rescue => e
       ScraperRunLog.create!(
-        source_name:   source_name,
-        ran_at:        began_at,
-        fetched:       0,
-        imported:      0,
-        skipped:       0,
-        error_count:   1,
-        status:        'failed',
+        source_name: source_name,
+        ran_at: began_at,
+        fetched: 0,
+        imported: 0,
+        skipped: 0,
+        error_count: 1,
+        status: 'failed',
         error_message: e.message.truncate(500)
       )
     end

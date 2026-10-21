@@ -26,22 +26,22 @@ class Api::V1::CommunityServicesController < Api::BaseController
 
   def serialize(e, detail: true)
     base = base_entry_fields(e).merge(
-      name:        e.name,
-      category:    e.category,
-      town:        e.town,
-      phone:       e.phone,
-      price_range: e.price_range,
+      name: e.name,
+      category: e.category,
+      town: e.town,
+      phone: e.phone,
+      price_range: e.price_range
     )
 
     return base unless detail
 
     base.merge(
-      description:      e.description,
-      email:            e.email,
-      website:          e.website,
-      business_hours:   e.business_hours,
+      description: e.description,
+      email: e.email,
+      website: e.website,
+      business_hours: e.business_hours,
       languages_spoken: e.languages_spoken,
-      translations:     translations_for(e),
+      translations: translations_for(e)
     )
   end
 end

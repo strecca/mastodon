@@ -36,7 +36,7 @@ RSpec.describe PostNewsletterWorker do
 
       it 'does not post a new status' do
         expect { subject.perform(newsletter.id) }
-          .not_to change { admin_account.statuses.count }
+          .to_not(change { admin_account.statuses.count })
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe PostNewsletterWorker do
 
       it 'backfills mastodon_status_id from the existing status instead of posting a duplicate' do
         expect { subject.perform(newsletter.id) }
-          .not_to change { admin_account.statuses.count }
+          .to_not(change { admin_account.statuses.count })
 
         expect(newsletter.reload.mastodon_status_id).to eq(existing_status.id.to_s)
       end
@@ -58,13 +58,13 @@ RSpec.describe PostNewsletterWorker do
 
       it 'does not post a status' do
         expect { subject.perform(newsletter.id) }
-          .not_to change { admin_account.statuses.count }
+          .to_not(change { admin_account.statuses.count })
       end
     end
 
     context 'when the newsletter no longer exists' do
       it 'does not raise' do
-        expect { subject.perform(-1) }.not_to raise_error
+        expect { subject.perform(-1) }.to_not raise_error
       end
     end
   end

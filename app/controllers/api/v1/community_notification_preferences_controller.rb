@@ -15,7 +15,7 @@ class Api::V1::CommunityNotificationPreferencesController < Api::BaseController
     if pref.update(preference_params)
       render json: serialize(pref)
     else
-      render json: { errors: pref.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: pref.errors.full_messages }, status: 422
     end
   end
 
@@ -27,11 +27,11 @@ class Api::V1::CommunityNotificationPreferencesController < Api::BaseController
 
   def serialize(pref)
     {
-      email_frequency:  pref.email_frequency  || 'daily_digest',
-      browser_push:     pref.browser_push     || false,
-      on_visit_overlap: pref.on_visit_overlap.nil? ? true  : pref.on_visit_overlap,
-      on_friend_ping:   pref.on_friend_ping.nil?   ? true  : pref.on_friend_ping,
-      on_new_member:    pref.on_new_member.nil?     ? false : pref.on_new_member,
+      email_frequency: pref.email_frequency || 'daily_digest',
+      browser_push: pref.browser_push || false,
+      on_visit_overlap: pref.on_visit_overlap.nil? || pref.on_visit_overlap,
+      on_friend_ping: pref.on_friend_ping.nil? || pref.on_friend_ping,
+      on_new_member: pref.on_new_member.nil? ? false : pref.on_new_member,
     }
   end
 end

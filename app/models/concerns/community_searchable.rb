@@ -10,10 +10,11 @@
 module CommunitySearchable
   extend ActiveSupport::Concern
 
-  SEARCHABLE_WIDGETS = %w[text textarea select radio url email].freeze
+  SEARCHABLE_WIDGETS = %w(text textarea select radio url email).freeze
 
   included do
     include CommunityLiveRefresh
+
     community_live_refresh self::CATEGORY_KEY
 
     # Invalidate the list cache whenever status changes (e.g. moderation approve/reject)
@@ -27,18 +28,19 @@ module CommunitySearchable
     )
 
     searchable_cols = if File.exist?(config_path)
-      JSON.parse(File.read(config_path))
-          .fetch('fields', [])
-          .select { |f| f['searchable'] && SEARCHABLE_WIDGETS.include?(f['widget'].to_s) }
-          .map    { |f| f['db_name'] }
-    else
-      []
-    end
+                        JSON.parse(File.read(config_path))
+                          .fetch('fields', [])
+                          .select { |f| f['searchable'] && SEARCHABLE_WIDGETS.include?(f['widget'].to_s) }
+                          .map    { |f| f['db_name'] }
+                      else
+                        []
+                      end
 
     if searchable_cols.any?
       sql_expr = searchable_cols.map { |c| "coalesce(#{c},'')" }.join(" || ' ' || ")
-      scope :search, ->(query) {
+      scope :search, lambda { |query|
         next all if query.blank?
+
         where("lower(#{sql_expr}) LIKE ?", "%#{query.downcase}%")
       }
     else

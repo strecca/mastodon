@@ -35,10 +35,10 @@ class HomeFeed < Feed
   end
 
   def upgrade_redis_key!
-    if redis.type(redis_regeneration_key) == 'string'
-      redis.del(redis_regeneration_key)
-      regeneration_in_progress!
-      true
-    end
+    return unless redis.type(redis_regeneration_key) == 'string'
+
+    redis.del(redis_regeneration_key)
+    regeneration_in_progress!
+    true
   end
 end

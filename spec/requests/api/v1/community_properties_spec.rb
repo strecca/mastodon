@@ -18,7 +18,7 @@ RSpec.describe 'Community Properties' do
       get '/api/v1/community_properties', params: { sort: 'az' }
 
       titles = response.parsed_body['entries'].map { |e| e['title'] }
-      expect(titles).to eq(%w[Aaa\ Villa Zzz\ Villa])
+      expect(titles).to eq(['Aaa Villa', 'Zzz Villa'])
     end
   end
 
@@ -46,7 +46,7 @@ RSpec.describe 'Community Properties' do
 
       it 'is forbidden' do
         patch "/api/v1/community_properties/#{entry.id}", headers: other_headers,
-                                                             params: { entry: { title: 'Hijacked' } }
+                                                          params: { entry: { title: 'Hijacked' } }
 
         expect(response).to have_http_status(403)
       end
@@ -57,9 +57,9 @@ RSpec.describe 'Community Properties' do
     let!(:entry) { Fabricate(:community_property, account: owner, status: :approved) }
 
     it 'allows the owner to delete' do
-      expect {
+      expect do
         delete "/api/v1/community_properties/#{entry.id}", headers: headers
-      }.to change(CommunityProperty, :count).by(-1)
+      end.to change(CommunityProperty, :count).by(-1)
 
       expect(response).to have_http_status(204)
     end

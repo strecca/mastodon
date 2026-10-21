@@ -5,7 +5,7 @@ class CommunityNewsletter < ApplicationRecord
 
   enum :status, { draft: 0, published: 1 }
 
-  LAYOUT_VARIANTS = %w[gazette magazine letter].freeze
+  LAYOUT_VARIANTS = %w(gazette magazine letter).freeze
   validates :layout_variant, inclusion: { in: LAYOUT_VARIANTS }
 
   validates :title,       presence: true
@@ -39,11 +39,10 @@ class CommunityNewsletter < ApplicationRecord
 
   def generate_slug
     base = ActiveSupport::Inflector.transliterate(title)
-                .downcase
-                .gsub(/[^a-z0-9\s-]/, '')
-                .gsub(/\s+/, '-')
-                .gsub(/-+/, '-')
-                .strip.first(80)
+      .downcase
+      .gsub(/[^a-z0-9\s-]/, '')
+      .gsub(/\s+/, '-').squeeze('-')
+      .strip.first(80)
 
     candidate = base
     n = 2

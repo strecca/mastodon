@@ -7,9 +7,9 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
   # GET /api/v1/civezza_member_stories
   def index
     @stories = CivezzaMemberStory.published
-                                  .includes(:account)
-                                  .order(updated_at: :desc)
-                                  .limit(200)
+      .includes(:account)
+      .order(updated_at: :desc)
+      .limit(200)
     render json: @stories.map { |s| serialize(s) }
   end
 
@@ -21,9 +21,8 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
 
   # GET /api/v1/civezza_member_stories/:account_id
   def show
-    unless @story&.published? || @story&.account_id == current_account.id
-      return render json: { error: 'Not found' }, status: :not_found
-    end
+    return render json: { error: 'Not found' }, status: 404 unless @story&.published? || @story&.account_id == current_account.id
+
     render json: serialize(@story, own: @story.account_id == current_account.id)
   end
 
@@ -39,18 +38,18 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
       status = story.previously_new_record? ? :created : :ok
       render json: serialize(story, own: true), status: status
     else
-      render json: { errors: story.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: story.errors.full_messages }, status: 422
     end
-  rescue StandardError => e
+  rescue => e
     Rails.logger.error("[MemberStories#upsert] #{e.class}: #{e.message}")
-    render json: { errors: [e.message] }, status: :internal_server_error
+    render json: { errors: [e.message] }, status: 500
   end
 
   private
 
   def set_story
     @story = CivezzaMemberStory.includes(:account).find_by(account_id: params[:account_id])
-    render json: { error: 'Not found' }, status: :not_found unless @story
+    render json: { error: 'Not found' }, status: 404 unless @story
   end
 
   def story_params
@@ -60,14 +59,16 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
   def validated_media_ids
     ids = Array(params[:media_ids]).first(3).map(&:to_i).select(&:positive?)
     return [] if ids.empty?
+
     MediaAttachment.where(id: ids, account: current_account).pluck(:id)
   end
 
   def attachment_url(ma, style)
     raw = style == :original && ma.remote_url.present? ? ma.remote_url : ma.file.url(style)
     return nil if raw.blank?
+
     raw.start_with?('http') ? raw : "#{request.base_url}#{raw}"
-  rescue StandardError
+  rescue
     nil
   end
 
@@ -75,9 +76,10 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
     story.image_media_attachments.filter_map do |ma|
       original = attachment_url(ma, :original)
       next if original.blank?
+
       { original: original, preview: attachment_url(ma, :small) || original }
     end
-  rescue StandardError
+  rescue
     []
   end
 
@@ -85,23 +87,25 @@ class Api::V1::CivezzaMemberStoriesController < Api::BaseController
     owner = story.account
     imgs  = image_data_for(story)
     {
-      id:              story.id,
-      account_id:      owner&.id.to_s,
-      about_me:        story.about_me,
-      civezza_story:   story.civezza_story,
-      shaping_moment:  story.shaping_moment,
-      why_i_joined:    story.why_i_joined,
-      published:       story.published?,
-      images:          imgs.map { |i| i[:original] },
-      image_previews:  imgs.map { |i| i[:preview] },
+      id: story.id,
+      account_id: owner&.id.to_s,
+      about_me: story.about_me,
+      civezza_story: story.civezza_story,
+      shaping_moment: story.shaping_moment,
+      why_i_joined: story.why_i_joined,
+      published: story.published?,
+      images: imgs.map { |i| i[:original] },
+      image_previews: imgs.map { |i| i[:preview] },
       image_media_ids: story.image_media_ids,
-      account: owner ? {
-        id:           owner.id.to_s,
-        username:     owner.username,
-        display_name: owner.display_name.presence || owner.username,
-        avatar:       owner.avatar_original_url,
-      } : nil,
-      is_own:       own,
+      account: if owner
+                 {
+                   id: owner.id.to_s,
+                   username: owner.username,
+                   display_name: owner.display_name.presence || owner.username,
+                   avatar: owner.avatar_original_url,
+                 }
+               end,
+      is_own: own,
       translations: CommunityEntryTranslation
         .where(translatable_type: 'CivezzaMemberStory', translatable_id: story.id)
         .each_with_object({}) { |t, h| (h[t.locale] ||= {})[t.field_name] = t.translated_text },

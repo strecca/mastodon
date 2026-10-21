@@ -33,7 +33,7 @@ class CreateMemberNotificationPreferences < ActiveRecord::Migration[7.2]
     end
 
     add_index :member_notification_category_subscriptions,
-              %i[account_id category_key],
+              %i(account_id category_key),
               unique: true,
               name: 'idx_member_notif_category_subs_unique'
 
@@ -52,7 +52,7 @@ class CreateMemberNotificationPreferences < ActiveRecord::Migration[7.2]
     end
 
     add_index :member_notification_targets,
-              %i[account_id target_account_id],
+              %i(account_id target_account_id),
               unique: true,
               name: 'idx_member_notif_targets_unique'
 
@@ -72,7 +72,7 @@ class CreateMemberNotificationPreferences < ActiveRecord::Migration[7.2]
     end
 
     add_index :community_entry_watches,
-              %i[account_id watchable_type watchable_id],
+              %i(account_id watchable_type watchable_id),
               unique: true,
               name: 'idx_community_entry_watches_unique'
 
@@ -97,12 +97,12 @@ class CreateMemberNotificationPreferences < ActiveRecord::Migration[7.2]
 
     # Inbox query: all notifications for a recipient, newest first
     add_index :community_entry_notifications,
-              %i[recipient_account_id created_at],
+              %i(recipient_account_id created_at),
               name: 'idx_community_entry_notifs_inbox'
 
     # Unread count: recipient + read_at IS NULL
     add_index :community_entry_notifications,
-              %i[recipient_account_id read_at],
+              %i(recipient_account_id read_at),
               name: 'idx_community_entry_notifs_unread'
 
     # Scheduler flush query: rows still needing push/email delivery

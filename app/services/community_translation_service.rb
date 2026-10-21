@@ -8,7 +8,8 @@
 #   CommunityTranslationService.new.translate(text, target_locale: 'it')
 
 class CommunityTranslationService
-  Error = Class.new(StandardError)
+  class Error < StandardError
+  end
 
   # DeepL requires region-specific codes for some locales
   DEEPL_LOCALE_MAP = {
@@ -55,10 +56,10 @@ class CommunityTranslationService
   def translate_deepl(text, target)
     code = DEEPL_LOCALE_MAP[target] || target.upcase
     response = HTTP.auth("DeepL-Auth-Key #{deepl_api_key}")
-                   .post("#{deepl_endpoint}/translate", json: {
-                     text: [text],
-                     target_lang: code,
-                   })
+      .post("#{deepl_endpoint}/translate", json: {
+        text: [text],
+        target_lang: code,
+      })
     raise Error, "DeepL returned #{response.status}" unless response.status.success?
 
     result = JSON.parse(response.body.to_s).dig('translations', 0, 'text')
@@ -77,10 +78,10 @@ class CommunityTranslationService
     texts.each_slice(50).with_index do |slice_texts, chunk|
       slice_keys = keys[chunk * 50, slice_texts.length]
       response   = HTTP.auth("DeepL-Auth-Key #{deepl_api_key}")
-                       .post("#{deepl_endpoint}/translate", json: {
-                         text:        slice_texts,
-                         target_lang: code,
-                       })
+        .post("#{deepl_endpoint}/translate", json: {
+          text: slice_texts,
+          target_lang: code,
+        })
       raise Error, "DeepL returned #{response.status}" unless response.status.success?
 
       translations = JSON.parse(response.body.to_s)['translations']
@@ -92,9 +93,9 @@ class CommunityTranslationService
 
   def translate_libre(text, target)
     response = HTTP.post("#{Setting.libre_translate_endpoint}/translate", json: {
-      q:       text,
-      source:  'auto',
-      target:  target,
+      q: text,
+      source: 'auto',
+      target: target,
       api_key: Setting.libre_translate_api_key.presence || '',
     })
     raise Error, "LibreTranslate returned #{response.status}" unless response.status.success?
@@ -111,8 +112,10 @@ class CommunityTranslationService
 
   def deepl_endpoint
     # Free-tier API keys end in :fx
-    Rails.configuration.x.translation.deepl[:plan] == 'free' ?
-      'https://api-free.deepl.com/v2' :
+    if Rails.configuration.x.translation.deepl[:plan] == 'free'
+      'https://api-free.deepl.com/v2'
+    else
       'https://api.deepl.com/v2'
+    end
   end
 end

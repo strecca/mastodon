@@ -12,7 +12,7 @@ class AdminAlertMailer < ApplicationMailer
     return unless notify_address.present?
 
     mail(
-      to:      notify_address,
+      to: notify_address,
       subject: "[miacivezza alert] #{@worker} job exhausted retries"
     )
   end
@@ -33,7 +33,7 @@ class AdminAlertMailer < ApplicationMailer
     return unless notify_address.present?
 
     mail(
-      to:      notify_address,
+      to: notify_address,
       subject: "[miacivezza alert] #{@exception_class}: #{@error.to_s.truncate(80)}"
     )
   end
@@ -46,7 +46,7 @@ class AdminAlertMailer < ApplicationMailer
     return unless notify_address.present?
 
     mail(
-      to:      notify_address,
+      to: notify_address,
       subject: '[miacivezza alert] Nightly database backup failed'
     )
   end

@@ -31,7 +31,7 @@ class PostNewsletterWorker
 
     status = PostStatusService.new.call(
       admin_account,
-      text:       text,
+      text: text,
       visibility: :public
     )
 

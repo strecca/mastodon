@@ -19,7 +19,7 @@
 module CommunityCacheable
   extend ActiveSupport::Concern
 
-  BASE_LIST_COLS = %w[id account_id status created_at updated_at].freeze
+  BASE_LIST_COLS = %w(id account_id status created_at updated_at).freeze
 
   included do
     class_attribute :_cd_list_columns, :_cd_list_field_names, instance_accessor: false
@@ -31,7 +31,7 @@ module CommunityCacheable
 
     if File.exist?(config_path)
       cfg_fields = JSON.parse(File.read(config_path)).fetch('fields', [])
-      list_names  = cfg_fields.select { |f| f['show_in_list'] }.map { |f| f['db_name'] }
+      list_names = cfg_fields.select { |f| f['show_in_list'] }.map { |f| f['db_name'] }
 
       self._cd_list_columns     = (BASE_LIST_COLS + list_names).map(&:to_sym)
       self._cd_list_field_names = list_names
