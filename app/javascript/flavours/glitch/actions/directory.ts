@@ -18,6 +18,12 @@ export const fetchDirectory = createDataLoadingThunk(
 
     return { accounts: data, isLast: data.length < DIRECTORY_FETCH_LIMIT };
   },
+  // The directory API is members-only on this instance, so a signed-out
+  // visitor always 401s here -- and features/directory/index.tsx already
+  // shows its own inline "Members Only / Sign Up Free" box for exactly that
+  // case. Without this, the generic sliding alert duplicated it on top
+  // (found by a signed-out live crawl, 2026-10-21).
+  { skipAlert: true },
 );
 
 export const expandDirectory = createDataLoadingThunk(
@@ -36,4 +42,6 @@ export const expandDirectory = createDataLoadingThunk(
 
     return { accounts: data, isLast: data.length < DIRECTORY_FETCH_LIMIT };
   },
+  // Same reasoning as fetchDirectory above.
+  { skipAlert: true },
 );

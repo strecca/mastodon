@@ -469,14 +469,18 @@ const CommunityVisits = ({ multiColumn }) => {
   useEffect(() => {
     const from = isoDate(new Date(year, month, 1));
     const to = isoDate(new Date(year, month + 1, 0));
-    dispatch(fetchVisits(from, to));
-    dispatch(fetchHeatmap());
-  }, [dispatch, year, month]);
+    // Visit names/dates are members-only; signed-out visitors only get the
+    // anonymous monthly counts for the HeatmapTeaser. Fetching visits while
+    // signed out just 401'd and slid the generic "Members Only" alert over
+    // the page's own sign-in prompt.
+    if (signedIn) dispatch(fetchVisits(from, to));
+    dispatch(fetchHeatmap()).catch(() => {});
+  }, [dispatch, year, month, signedIn]);
 
   const refreshVisits = useCallback(() => {
     const from = isoDate(new Date(year, month, 1));
     const to = isoDate(new Date(year, month + 1, 0));
-    dispatch(fetchVisits(from, to));
+    if (signedIn) dispatch(fetchVisits(from, to));
     dispatch(fetchHeatmap()).catch(() => {});
     if (signedIn) dispatch(fetchMyVisits()).catch(() => {});
   }, [dispatch, year, month, signedIn]);
@@ -694,191 +698,197 @@ const CommunityVisits = ({ multiColumn }) => {
             </div>
           )}
 
-          {/* ── Filter chips ──────────────────────────────────────── */}
-          <div className="cv-filters">
-            {FILTER_CHIPS.map((chip) => (
-              <button
-                key={chip.key}
-                type="button"
-                className={`cv-filter-chip${activeFilter === chip.key ? " cv-filter-chip--active" : ""}`}
-                onClick={() => toggleFilter(chip.key)}
-              >
-                {chip.label}
-              </button>
-            ))}
-            {hasActiveFilters && (
-              <button
-                type="button"
-                className="cv-filter-chip cv-filter-chip--clear"
-                onClick={clearFilters}
-              >
-                Clear
-              </button>
-            )}
-          </div>
+          {!signedIn && <HeatmapTeaser heatmap={heatmap} />}
 
-          {/* ── Date range pickers ────────────────────────────────── */}
-          <div className="cv-date-range">
-            <label className="cv-date-range__label">
-              From
-              <input
-                type="date"
-                className="cv-date-range__input"
-                value={dateFrom}
-                onChange={handleDateFrom}
-              />
-            </label>
-            <span className="cv-date-range__sep">→</span>
-            <label className="cv-date-range__label">
-              To
-              <input
-                type="date"
-                className="cv-date-range__input"
-                value={dateTo}
-                onChange={handleDateTo}
-              />
-            </label>
-          </div>
-
-          {/* ════════════════════════════════════════════════════════ */}
-          {/*  LIST VIEW                                               */}
-          {/* ════════════════════════════════════════════════════════ */}
-          {view === "list" && (
-            <div className="cv-list">
-              <div className="cv-list__header-bar">
-                <h3 className="cv-list__header">{listHeader}</h3>
-                <button
-                  type="button"
-                  className="cv-view-toggle"
-                  onClick={() => {
-                    setView("calendar");
-                    const t = new Date();
-                    setNavDate({ year: t.getFullYear(), month: t.getMonth() });
-                  }}
-                >
-                  View Calendar
-                </button>
-              </div>
-
-              {loading && listVisits.size === 0 ? (
-                <div className="cv-list__loading">Loading visits…</div>
-              ) : groupedByArrival.length === 0 ? (
-                <div className="cv-list__empty">
-                  No upcoming visits found.{" "}
-                  {hasActiveFilters && (
-                    <button type="button" className="cv-list__clear-link" onClick={clearFilters}>
-                      Clear filters
-                    </button>
-                  )}
-                </div>
-              ) : (
-                groupedByArrival.map(([groupKey, groupVisits]) => (
-                  <VisitDateGroup
-                    key={groupKey}
-                    groupKey={groupKey}
-                    visits={groupVisits}
-                    expandedId={expandedVisitId}
-                    onToggle={toggleExpanded}
-                    onEdit={openEdit}
-                    onDelete={handleDelete}
-                    onNotify={setNotifyVisit}
-                  />
-                ))
-              )}
-            </div>
-          )}
-
-          {/* ════════════════════════════════════════════════════════ */}
-          {/*  CALENDAR VIEW                                           */}
-          {/* ════════════════════════════════════════════════════════ */}
-          {view === "calendar" && (
+          {signedIn && (
             <>
-              <div className="cv-cal__nav">
-                <button className="cv-nav-btn" onClick={prevMonth} aria-label="Previous month">
-                  <ChevronLeftIcon />
-                </button>
-                <h2 className="cv-cal__month-title">
-                  {MONTH_NAMES[month]} {year}
-                </h2>
-                <button className="cv-nav-btn" onClick={nextMonth} aria-label="Next month">
-                  <ChevronRightIcon />
-                </button>
-              </div>
-
-              <div className="cv-cal__view-toggle-row">
-                <button type="button" className="cv-view-toggle" onClick={() => setView("list")}>
-                  <ListIcon /> Back to List
-                </button>
-              </div>
-
-              <div className="cv-cal">
-                {WEEKDAY_LABELS.map((d) => (
-                  <div key={d} className="cv-cal__weekday">
-                    {d}
-                  </div>
+              {/* ── Filter chips ──────────────────────────────────────── */}
+              <div className="cv-filters">
+                {FILTER_CHIPS.map((chip) => (
+                  <button
+                    key={chip.key}
+                    type="button"
+                    className={`cv-filter-chip${activeFilter === chip.key ? " cv-filter-chip--active" : ""}`}
+                    onClick={() => toggleFilter(chip.key)}
+                  >
+                    {chip.label}
+                  </button>
                 ))}
-
-                {loading && visits.size === 0
-                  ? Array.from({ length: 35 }, (_, i) => (
-                      <div key={i} className="cv-cal__day cv-cal__day--skeleton" />
-                    ))
-                  : calendarGrid.map((day, i) => {
-                      if (!day) return <div key={i} className="cv-cal__day cv-cal__day--empty" />;
-                      const key = isoDate(day);
-                      const dayVisits = visitsByDay[key] || [];
-                      const clickable = dayVisits.length > 0;
-                      return (
-                        <div
-                          key={key}
-                          className={[
-                            "cv-cal__day",
-                            isToday(day) && "cv-cal__day--today",
-                            isPastDay(day) && "cv-cal__day--past",
-                            clickable && "cv-cal__day--has-visits",
-                          ]
-                            .filter(Boolean)
-                            .join(" ")}
-                          onClick={clickable ? () => openDayPanel(key, dayVisits) : undefined}
-                          role={clickable ? "button" : undefined}
-                          tabIndex={clickable ? 0 : undefined}
-                          onKeyDown={
-                            clickable
-                              ? (e) =>
-                                  (e.key === "Enter" || e.key === " ") &&
-                                  openDayPanel(key, dayVisits)
-                              : undefined
-                          }
-                          aria-label={
-                            clickable
-                              ? `${day.getDate()} — ${dayVisits.length} visitor${dayVisits.length === 1 ? "" : "s"}`
-                              : undefined
-                          }
-                        >
-                          <span className="cv-cal__day-num">{day.getDate()}</span>
-                          {dayVisits.length > 0 && <AvatarPile visits={dayVisits} />}
-                        </div>
-                      );
-                    })}
-              </div>
-
-              <div className="cv-legend">
-                {Object.entries({
-                  mutual: "Mutual",
-                  following: "Following",
-                  follower: "Follows you",
-                  none: "Member",
-                }).map(([k, label]) => (
-                  <span key={k} className="cv-legend__item">
-                    <span className="cv-legend__dot" style={{ background: RING_COLORS[k] }} />
-                    {label}
-                  </span>
-                ))}
-                {signedIn && (
-                  <Link to="/community_visits/notifications" className="cv-legend__notif-link">
-                    Notifications &amp; Settings →
-                  </Link>
+                {hasActiveFilters && (
+                  <button
+                    type="button"
+                    className="cv-filter-chip cv-filter-chip--clear"
+                    onClick={clearFilters}
+                  >
+                    Clear
+                  </button>
                 )}
               </div>
+
+              {/* ── Date range pickers ────────────────────────────────── */}
+              <div className="cv-date-range">
+                <label className="cv-date-range__label">
+                  From
+                  <input
+                    type="date"
+                    className="cv-date-range__input"
+                    value={dateFrom}
+                    onChange={handleDateFrom}
+                  />
+                </label>
+                <span className="cv-date-range__sep">→</span>
+                <label className="cv-date-range__label">
+                  To
+                  <input
+                    type="date"
+                    className="cv-date-range__input"
+                    value={dateTo}
+                    onChange={handleDateTo}
+                  />
+                </label>
+              </div>
+
+              {/* ════════════════════════════════════════════════════════ */}
+              {/*  LIST VIEW                                               */}
+              {/* ════════════════════════════════════════════════════════ */}
+              {view === "list" && (
+                <div className="cv-list">
+                  <div className="cv-list__header-bar">
+                    <h3 className="cv-list__header">{listHeader}</h3>
+                    <button
+                      type="button"
+                      className="cv-view-toggle"
+                      onClick={() => {
+                        setView("calendar");
+                        const t = new Date();
+                        setNavDate({ year: t.getFullYear(), month: t.getMonth() });
+                      }}
+                    >
+                      View Calendar
+                    </button>
+                  </div>
+
+                  {loading && listVisits.size === 0 ? (
+                    <div className="cv-list__loading">Loading visits…</div>
+                  ) : groupedByArrival.length === 0 ? (
+                    <div className="cv-list__empty">
+                      No upcoming visits found.{" "}
+                      {hasActiveFilters && (
+                        <button type="button" className="cv-list__clear-link" onClick={clearFilters}>
+                          Clear filters
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    groupedByArrival.map(([groupKey, groupVisits]) => (
+                      <VisitDateGroup
+                        key={groupKey}
+                        groupKey={groupKey}
+                        visits={groupVisits}
+                        expandedId={expandedVisitId}
+                        onToggle={toggleExpanded}
+                        onEdit={openEdit}
+                        onDelete={handleDelete}
+                        onNotify={setNotifyVisit}
+                      />
+                    ))
+                  )}
+                </div>
+              )}
+
+              {/* ════════════════════════════════════════════════════════ */}
+              {/*  CALENDAR VIEW                                           */}
+              {/* ════════════════════════════════════════════════════════ */}
+              {view === "calendar" && (
+                <>
+                  <div className="cv-cal__nav">
+                    <button className="cv-nav-btn" onClick={prevMonth} aria-label="Previous month">
+                      <ChevronLeftIcon />
+                    </button>
+                    <h2 className="cv-cal__month-title">
+                      {MONTH_NAMES[month]} {year}
+                    </h2>
+                    <button className="cv-nav-btn" onClick={nextMonth} aria-label="Next month">
+                      <ChevronRightIcon />
+                    </button>
+                  </div>
+
+                  <div className="cv-cal__view-toggle-row">
+                    <button type="button" className="cv-view-toggle" onClick={() => setView("list")}>
+                      <ListIcon /> Back to List
+                    </button>
+                  </div>
+
+                  <div className="cv-cal">
+                    {WEEKDAY_LABELS.map((d) => (
+                      <div key={d} className="cv-cal__weekday">
+                        {d}
+                      </div>
+                    ))}
+
+                    {loading && visits.size === 0
+                      ? Array.from({ length: 35 }, (_, i) => (
+                          <div key={i} className="cv-cal__day cv-cal__day--skeleton" />
+                        ))
+                      : calendarGrid.map((day, i) => {
+                          if (!day) return <div key={i} className="cv-cal__day cv-cal__day--empty" />;
+                          const key = isoDate(day);
+                          const dayVisits = visitsByDay[key] || [];
+                          const clickable = dayVisits.length > 0;
+                          return (
+                            <div
+                              key={key}
+                              className={[
+                                "cv-cal__day",
+                                isToday(day) && "cv-cal__day--today",
+                                isPastDay(day) && "cv-cal__day--past",
+                                clickable && "cv-cal__day--has-visits",
+                              ]
+                                .filter(Boolean)
+                                .join(" ")}
+                              onClick={clickable ? () => openDayPanel(key, dayVisits) : undefined}
+                              role={clickable ? "button" : undefined}
+                              tabIndex={clickable ? 0 : undefined}
+                              onKeyDown={
+                                clickable
+                                  ? (e) =>
+                                      (e.key === "Enter" || e.key === " ") &&
+                                      openDayPanel(key, dayVisits)
+                                  : undefined
+                              }
+                              aria-label={
+                                clickable
+                                  ? `${day.getDate()} — ${dayVisits.length} visitor${dayVisits.length === 1 ? "" : "s"}`
+                                  : undefined
+                              }
+                            >
+                              <span className="cv-cal__day-num">{day.getDate()}</span>
+                              {dayVisits.length > 0 && <AvatarPile visits={dayVisits} />}
+                            </div>
+                          );
+                        })}
+                  </div>
+
+                  <div className="cv-legend">
+                    {Object.entries({
+                      mutual: "Mutual",
+                      following: "Following",
+                      follower: "Follows you",
+                      none: "Member",
+                    }).map(([k, label]) => (
+                      <span key={k} className="cv-legend__item">
+                        <span className="cv-legend__dot" style={{ background: RING_COLORS[k] }} />
+                        {label}
+                      </span>
+                    ))}
+                    {signedIn && (
+                      <Link to="/community_visits/notifications" className="cv-legend__notif-link">
+                        Notifications &amp; Settings →
+                      </Link>
+                    )}
+                  </div>
+                </>
+              )}
             </>
           )}
 

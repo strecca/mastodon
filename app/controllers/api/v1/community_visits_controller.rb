@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
 class Api::V1::CommunityVisitsController < Api::BaseController
-  before_action :require_user!, except: [:heatmap, :index]
+  # Visit names/dates are members-only (David's call, 2026-10-21). Only the
+  # anonymous per-month counts in #heatmap are public, for the signed-out
+  # teaser. Api::BaseController requires auth for every API action on this
+  # instance (LIMITED_FEDERATION_MODE), so a public action must skip that
+  # explicitly -- an `except:` on require_user! alone is not enough, which is
+  # why the heatmap 401'd for signed-out visitors from June until this fix.
+  skip_before_action :require_authenticated_user!, only: [:heatmap]
+  before_action :require_user!, except: [:heatmap]
   before_action :require_admin!, only: [:admin_all, :admin_stats]
   before_action :set_visit,     only: [:show, :update, :destroy, :notify_friends]
   before_action :authorize_owner!, only: [:update, :destroy, :notify_friends]
@@ -204,8 +211,6 @@ class Api::V1::CommunityVisitsController < Api::BaseController
                          .includes(:account, :visit_availabilities)
 
     public_visits = base.where(visibility: :public_to_members)
-
-    return public_visits.to_a.sort_by(&:arrival_date) unless current_account
 
     # connections_only: visible to accounts in the current user's follow graph
     following_ids = Follow.where(account_id: current_account.id).pluck(:target_account_id)
