@@ -26,13 +26,23 @@ import StatusListContainer from "../ui/containers/status_list_container";
 const formatDate = (isoDate) => {
   if (!isoDate) return "";
   const d = new Date(`${isoDate}T00:00:00`);
-  return d.toLocaleDateString("it-IT", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+  return d.toLocaleDateString("it-IT", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 };
 
 const formatDateEn = (isoDate) => {
   if (!isoDate) return "";
   const d = new Date(`${isoDate}T00:00:00`);
-  return d.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+  return d.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 };
 
 // Backgrounds darkened from the Cinque Terre (Manarola) palette for WCAG AA white-text contrast
@@ -372,7 +382,9 @@ const CommunityLanding = ({ identity }) => {
                     </div>
                     {digest?.generated_at && (
                       <div className="daily-digest__footer">
-                        {digestLocale === "it" ? "Generato da intelligenza artificiale · " : "AI-generated · "}
+                        {digestLocale === "it"
+                          ? "Generato da intelligenza artificiale · "
+                          : "AI-generated · "}
                         <a href="https://miacivezza.com" className="daily-digest__footer-link">
                           miacivezza.com
                         </a>

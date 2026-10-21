@@ -25,3 +25,8 @@ config/locales-glitch/
 # them identical to upstream rather than reformatting them.
 public/500.html
 public/embed.js
+
+# Inline <script> whose exact bytes are pinned by a sha256 in the CSP header
+# (ThemeHelper#javascript_inline_tag) and by spec/requests/content_security_policy_spec.rb.
+# Reformatting it changes the hash, so keep it byte-identical to upstream.
+app/javascript/inline/theme-selection.js

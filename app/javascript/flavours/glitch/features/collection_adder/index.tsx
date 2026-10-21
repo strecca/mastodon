@@ -23,8 +23,8 @@ import {
   useCollectionsCreatedBy,
 } from "../collections/overview/created_by_account";
 
-import { CollectionToggle } from './collection_toggle';
-import classes from './styles.module.scss';
+import { CollectionToggle } from "./collection_toggle";
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   close: {
@@ -113,10 +113,7 @@ export const CollectionAdder: React.FC<{
       dispatch(
         collectionEditorActions.reset({
           account_id: account.id,
-          state:
-            account.feature_approval.current_user === 'manual'
-              ? 'pending'
-              : 'accepted',
+          state: account.feature_approval.current_user === "manual" ? "pending" : "accepted",
         }),
       );
     }
@@ -170,8 +167,8 @@ export const CollectionAdder: React.FC<{
               <div className={classes.newCollection}>
                 <NewCollectionButton secondary onClick={handleNewCollection}>
                   <FormattedMessage
-                    id='collections.create_new_collection'
-                    defaultMessage='Create new collection'
+                    id="collections.create_new_collection"
+                    defaultMessage="Create new collection"
                   />
                 </NewCollectionButton>
               </div>

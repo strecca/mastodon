@@ -27,7 +27,7 @@ az:
       rule:
         hint: İxtiyari. Qayda barədə daha çox ayrıntı təqdim edin
       sessions:
-        otp: 'Telefon tətbiqiniz tərəfindən yaradılmış iki faktorlu kodu daxil edin və ya geri qaytarma kodlarınızdan birini istifadə edin:'
+        otp: "Telefon tətbiqiniz tərəfindən yaradılmış iki faktorlu kodu daxil edin və ya geri qaytarma kodlarınızdan birini istifadə edin:"
         webauthn: Əgər USB açarıdırsa, taxdığınıza və gərək olarsa üzərinə toxunduğunuza əmin olun.
       user:
         role: Rol, istifadəçinin sahib olduğu izinlərə nəzarət edir.

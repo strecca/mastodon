@@ -349,7 +349,7 @@ pt-PT:
       back_to_account: Voltar à página da conta
       back_to_report: Voltar à página da denúncia
       batch:
-        add_to_report: 'Adicionar à denúncia #%{id}'
+        add_to_report: "Adicionar à denúncia #%{id}"
         remove_from_report: Remover da denúncia
         report: Denúncia
       collection_title: Colecionado por %{name}
@@ -1665,8 +1665,8 @@ pt-PT:
     errors:
       empty: Ficheiro CSV vazio
       incompatible_type: Incompatível com o tipo de importação selecionado
-      invalid_csv_file: 'Arquivo CSV inválido. Erro: %{error}'
-      invalid_json_file: 'Ficheiro JSON inválido. Erro: %{error}'
+      invalid_csv_file: "Arquivo CSV inválido. Erro: %{error}"
+      invalid_json_file: "Ficheiro JSON inválido. Erro: %{error}"
       over_rows_processing_limit: contém mais de %{count} linhas
       status_not_found_warning: Alguns dos teus filtros ocultam publicações específicas que não são conhecidas por este servidor. Estas publicações não serão filtradas automaticamente se forem descobertas mais tarde pelo servidor.
       too_large: O ficheiro é demasiado grande

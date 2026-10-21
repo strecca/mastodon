@@ -1450,11 +1450,7 @@
     }
 
     &--has-visits {
-      background: linear-gradient(
-        160deg,
-        rgba(244, 160, 0, 13%) 0%,
-        rgba(255, 107, 53, 7%) 100%
-      );
+      background: linear-gradient(160deg, rgba(244, 160, 0, 13%) 0%, rgba(255, 107, 53, 7%) 100%);
     }
   }
 
@@ -3780,11 +3776,7 @@
     border-bottom: 1px solid #efefef;
 
     &--current {
-      background: linear-gradient(
-        90deg,
-        rgba(21, 101, 192, 12%) 0%,
-        rgba(25, 118, 210, 5%) 100%
-      );
+      background: linear-gradient(90deg, rgba(21, 101, 192, 12%) 0%, rgba(25, 118, 210, 5%) 100%);
       color: #1565c0;
     }
 

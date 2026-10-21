@@ -388,12 +388,12 @@ async function calculateCroppedImage(
   location: ImageLocation,
 ): Promise<Blob> {
   const image = await dataUriToImage(imageSrc);
-  const maxWidth = location === 'avatar' ? 400 : 1500;
+  const maxWidth = location === "avatar" ? 400 : 1500;
   const scale = Math.min(1, maxWidth / crop.width);
   const width = Math.round(crop.width * scale);
   const height = Math.round(crop.height * scale);
   const canvas = new OffscreenCanvas(width, height);
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   if (!ctx) {
     throw new Error("Failed to get canvas context");
   }
@@ -401,17 +401,7 @@ async function calculateCroppedImage(
   ctx.imageSmoothingQuality = "high";
 
   // Draw the image
-  ctx.drawImage(
-    image,
-    crop.x,
-    crop.y,
-    crop.width,
-    crop.height,
-    0,
-    0,
-    width,
-    height,
-  );
+  ctx.drawImage(image, crop.x, crop.y, crop.width, crop.height, 0, 0, width, height);
 
   return canvas.convertToBlob();
 }

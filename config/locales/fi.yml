@@ -2301,8 +2301,8 @@ fi:
         sensitive: Tästä lähtien kaikki lähetetyt mediatiedostot merkitään arkaluonteisiksi ja piilotetaan napsautusvaroituksen taakse.
         silence: Voit edelleen käyttää tiliäsi, mutta vain sinua jo seuraavat käyttäjät näkevät julkaisusi tällä palvelimella ja sinut voidaan sulkea pois eri löydettävyysominaisuuksista. Toiset voivat kuitenkin edelleen seurata sinua manuaalisesti.
         suspend: Et voi enää käyttää tiliäsi, eivätkä profiilisi ja muut tiedot ole enää käytettävissä. Voit silti kirjautua sisään pyytääksesi tietojesi varmuuskopiota, kunnes tiedot on poistettu kokonaan noin 30 päivän kuluttua. Säilytämme kuitenkin joitain perustietoja, jotka estävät sinua kiertämästä jäädytystä.
-      reason: 'Syy:'
-      statuses: 'Viitatut julkaisut:'
+      reason: "Syy:"
+      statuses: "Viitatut julkaisut:"
       subject:
         delete_statuses: Julkaisusi tilillä %{acct} on poistettu
         disable: Tilisi %{acct} on jäädytetty

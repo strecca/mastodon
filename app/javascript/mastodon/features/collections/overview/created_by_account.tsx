@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
-import { useEffect } from 'react';
+import type { ReactNode } from "react";
+import { useEffect } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 import AddIcon from "@/material-icons/400-24px/add.svg?react";
 import { DisplayName } from "mastodon/components/display_name";
@@ -31,15 +31,11 @@ export const NewCollectionButton: React.FC<{
   children?: ReactNode;
 }> = ({ compact, secondary, onClick, children }) => (
   <Link
-    to='/collections/new'
-    className={classNames(
-      'button',
-      compact && 'button--compact',
-      secondary && 'button-secondary',
-    )}
+    to="/collections/new"
+    className={classNames("button", compact && "button--compact", secondary && "button-secondary")}
     onClick={onClick}
   >
-    <Icon id='plus' icon={AddIcon} />
+    <Icon id="plus" icon={AddIcon} />
     {children ?? <FormattedMessage {...editorMessages.newCollection} />}
   </Link>
 );

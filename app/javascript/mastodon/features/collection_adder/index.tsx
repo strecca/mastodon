@@ -2,20 +2,20 @@ import { useCallback, useId, useState } from "react";
 
 import { FormattedMessage, useIntl, defineMessages } from "react-intl";
 
-import type { ApiCollectionJSON } from '@/mastodon/api_types/collections';
-import { EmptyState } from '@/mastodon/components/empty_state';
-import { LoadingIndicator } from '@/mastodon/components/loading_indicator';
-import { NavigationFocusTarget } from '@/mastodon/components/navigation_focus_target';
-import { useCurrentAccountId } from '@/mastodon/hooks/useAccountId';
-import type { Account } from '@/mastodon/models/account';
+import type { ApiCollectionJSON } from "@/mastodon/api_types/collections";
+import { EmptyState } from "@/mastodon/components/empty_state";
+import { LoadingIndicator } from "@/mastodon/components/loading_indicator";
+import { NavigationFocusTarget } from "@/mastodon/components/navigation_focus_target";
+import { useCurrentAccountId } from "@/mastodon/hooks/useAccountId";
+import type { Account } from "@/mastodon/models/account";
 import {
   addCollectionItem,
   collectionEditorActions,
   removeCollectionItem,
-} from '@/mastodon/reducers/slices/collections';
-import CloseIcon from '@/material-icons/400-24px/close.svg?react';
-import { IconButton } from 'mastodon/components/icon_button';
-import { useAppDispatch, useAppSelector } from 'mastodon/store';
+} from "@/mastodon/reducers/slices/collections";
+import CloseIcon from "@/material-icons/400-24px/close.svg?react";
+import { IconButton } from "mastodon/components/icon_button";
+import { useAppDispatch, useAppSelector } from "mastodon/store";
 
 import { MAX_COLLECTION_ACCOUNT_COUNT } from "../collections/editor/accounts";
 import {
@@ -23,8 +23,8 @@ import {
   useCollectionsCreatedBy,
 } from "../collections/overview/created_by_account";
 
-import { CollectionToggle } from './collection_toggle';
-import classes from './styles.module.scss';
+import { CollectionToggle } from "./collection_toggle";
+import classes from "./styles.module.scss";
 
 const messages = defineMessages({
   close: {
@@ -113,10 +113,7 @@ export const CollectionAdder: React.FC<{
       dispatch(
         collectionEditorActions.reset({
           account_id: account.id,
-          state:
-            account.feature_approval.current_user === 'manual'
-              ? 'pending'
-              : 'accepted',
+          state: account.feature_approval.current_user === "manual" ? "pending" : "accepted",
         }),
       );
     }
@@ -170,8 +167,8 @@ export const CollectionAdder: React.FC<{
               <div className={classes.newCollection}>
                 <NewCollectionButton secondary onClick={handleNewCollection}>
                   <FormattedMessage
-                    id='collections.create_new_collection'
-                    defaultMessage='Create new collection'
+                    id="collections.create_new_collection"
+                    defaultMessage="Create new collection"
                   />
                 </NewCollectionButton>
               </div>

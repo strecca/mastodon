@@ -140,7 +140,7 @@ az:
       elasticsearch_running_check:
         message_html: Elasticsearch-a bağlana bilmədi. Lütfən çalışdığına əmin olun və ya tam mətn axtarışını sıradan çıxardın
       elasticsearch_version_check:
-        message_html: 'Uyumlu olmayan Elasticsearch versiyası: %{value}'
+        message_html: "Uyumlu olmayan Elasticsearch versiyası: %{value}"
       upload_check_privacy_error_object_storage:
         message_html: "<strong>Obyekt deponuz yanlış konfiqurasiya olunub. İstifadəçilərinizin məxfiliyi risk altındadır.</strong>"
     tags:
@@ -230,7 +230,7 @@ az:
       footer:
         privacy_html: E-poçtlar, Mastodon tərəfindən dəstəklənən %{domain} serverindən göndərilir. Bu serverin fərdi verilərinizi necə emal etdiyini anlamaq üçün <a href="%{privacy_policy_path}">Məxfilik Siyasətinə</a> baxın.
   errors:
-    '403': Bu səhifəyə baxmaq üçün izniniz yoxdur.
+    "403": Bu səhifəyə baxmaq üçün izniniz yoxdur.
   exports:
     archive_takeout:
       hint_html: "<strong>Göndərişlərinizin və yüklədiyiniz medianın</strong> bir arxivini tələb edə bilərsiniz. Xaricə köçürülmüş verilər, istənilən uyumlu yazılım tərəfindən oxuna bilən ActivityPub formatında olacaq. Hər 7 gündə bir dəfə arxiv tələb edə bilərsiniz."
@@ -387,10 +387,10 @@ az:
       subtitle: Hesabınız yenidən normal vəziyyətdədir.
       title: Etiraz təsdiqlənib
     failed_2fa:
-      details: 'Daxil olma cəhdi üçün ayrıntılar:'
+      details: "Daxil olma cəhdi üçün ayrıntılar:"
     suspicious_sign_in:
       change_password: parolu dəyişdir
-      details: 'Daxil olmaq üçün ayrıntılar:'
+      details: "Daxil olmaq üçün ayrıntılar:"
       subject: Hesabınıza yeni bir IP ünvanından erişildi
     terms_of_service_changed:
       title: Vacib güncəlləmə

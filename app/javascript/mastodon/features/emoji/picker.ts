@@ -31,7 +31,7 @@ export async function emojiMartSearch({
   signal?: AbortSignal;
 }): Promise<LegacyEmoji[] | null> {
   try {
-    const query = token.replace(':', '').trim();
+    const query = token.replace(":", "").trim();
     if (!query.length) {
       return [];
     }
@@ -49,10 +49,10 @@ export async function emojiMartSearch({
       signal,
     });
     const legacyResults = results.map((emoji) =>
-      'shortcode' in emoji
+      "shortcode" in emoji
         ? ({ id: emoji.shortcode, custom: true } as const)
         : {
-            id: emoji.label.replaceAll(' ', '_').toLowerCase(),
+            id: emoji.label.replaceAll(" ", "_").toLowerCase(),
             native: emoji.unicode,
           },
     );

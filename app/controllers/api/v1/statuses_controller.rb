@@ -4,7 +4,10 @@ class Api::V1::StatusesController < Api::BaseController
   include Authorization
   include Api::InteractionPoliciesConcern
 
-  skip_before_action :require_authenticated_user!, only: [:index, :show, :context]
+  # (Thread context lives in Statuses::ContextsController, not here -- listing
+  # a :context action that doesn't exist raised in test/dev and 404'd every
+  # request to this controller under DISALLOW_UNAUTHENTICATED_API_ACCESS.)
+  skip_before_action :require_authenticated_user!, only: [:index, :show]
 
   before_action -> { authorize_if_got_token! :read, :'read:statuses' }, except: [:create, :update, :destroy]
   before_action -> { doorkeeper_authorize! :write, :'write:statuses' }, only:   [:create, :update, :destroy]

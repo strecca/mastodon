@@ -1580,10 +1580,10 @@ cs:
         other: Interagujte s těmito příspěvky a objevujte více.
       subject:
         plural: Nové příspěvky od %{name}
-        singular: 'Nový příspěvek: „%{excerpt}“'
+        singular: "Nový příspěvek: „%{excerpt}“"
       title:
         plural: Nové příspěvky od %{name}
-        singular: 'Nový příspěvek: „%{excerpt}“'
+        singular: "Nový příspěvek: „%{excerpt}“"
   email_subscriptions:
     active: Aktivní
     confirmations:
@@ -1723,8 +1723,8 @@ cs:
     errors:
       empty: Prázdný CSV soubor
       incompatible_type: Nekompatibilní s vybraným typem importu
-      invalid_csv_file: 'Neplatný soubor CSV. Chyba: %{error}'
-      invalid_json_file: 'Neplatný JSON soubor. Chyba: %{error}'
+      invalid_csv_file: "Neplatný soubor CSV. Chyba: %{error}"
+      invalid_json_file: "Neplatný JSON soubor. Chyba: %{error}"
       over_rows_processing_limit: obsahuje více než %{count} řádků
       status_not_found_warning: Některé z vašich filtrů skrývají specifické příspěvky, které nejsou tímto serverem známy. Tyto příspěvky nebudou automaticky filtrovány, pokud budou objeveny později.
       too_large: Soubor je příliš velký

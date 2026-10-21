@@ -774,7 +774,11 @@ const CommunityVisits = ({ multiColumn }) => {
                     <div className="cv-list__empty">
                       No upcoming visits found.{" "}
                       {hasActiveFilters && (
-                        <button type="button" className="cv-list__clear-link" onClick={clearFilters}>
+                        <button
+                          type="button"
+                          className="cv-list__clear-link"
+                          onClick={clearFilters}
+                        >
                           Clear filters
                         </button>
                       )}
@@ -814,7 +818,11 @@ const CommunityVisits = ({ multiColumn }) => {
                   </div>
 
                   <div className="cv-cal__view-toggle-row">
-                    <button type="button" className="cv-view-toggle" onClick={() => setView("list")}>
+                    <button
+                      type="button"
+                      className="cv-view-toggle"
+                      onClick={() => setView("list")}
+                    >
                       <ListIcon /> Back to List
                     </button>
                   </div>
@@ -831,7 +839,8 @@ const CommunityVisits = ({ multiColumn }) => {
                           <div key={i} className="cv-cal__day cv-cal__day--skeleton" />
                         ))
                       : calendarGrid.map((day, i) => {
-                          if (!day) return <div key={i} className="cv-cal__day cv-cal__day--empty" />;
+                          if (!day)
+                            return <div key={i} className="cv-cal__day cv-cal__day--empty" />;
                           const key = isoDate(day);
                           const dayVisits = visitsByDay[key] || [];
                           const clickable = dayVisits.length > 0;

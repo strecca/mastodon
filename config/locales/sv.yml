@@ -1575,7 +1575,7 @@ sv:
     "500":
       content: Vi är ledsna, men något gick fel från vårat håll.
       title: Den här sidan är inte korrekt
-    '503': Sidan kunde inte visas på grund av ett tillfälligt serverfel.
+    "503": Sidan kunde inte visas på grund av ett tillfälligt serverfel.
     noscript_html: Aktivera JavaScript för att använda Mastodons webbapplikation. Alternativt kan du prova någon av Mastodons <a href="%{apps_path}">plattformsspecifika appar</a> för din plattform.
   existing_username_validator:
     not_found: kunde inte hitta en lokal användare med det användarnamnet
@@ -1930,7 +1930,7 @@ sv:
     description_html: Om du aktiverar <strong>tvåfaktorsautentisering</strong> med en autentiseringsapp kommer du behöva din mobiltelefon för att logga in, som kommer generera koder för dig att ange.
     enable: Aktivera
     instructions_html: "<strong>Skanna den här QR-koden i Google Authenticator eller en liknande TOTP-app i din telefon</strong>. Från och med nu så kommer den appen att generera symboler som du måste skriva in när du ska logga in."
-    manual_instructions: 'Om du inte kan skanna QR-koden och behöver ange den manuellt finns klartextnyckeln här:'
+    manual_instructions: "Om du inte kan skanna QR-koden och behöver ange den manuellt finns klartextnyckeln här:"
     setup: Konfigurera
     wrong_code: Den ifyllda koden är ogiltig! Är server-tiden och enhetens tid korrekt?
   pagination:

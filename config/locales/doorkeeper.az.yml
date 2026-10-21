@@ -46,7 +46,7 @@ az:
         actions: Əməliyyatlar
         application_id: İstəkçi açarı
         secret: İstəkçi sirri
-        title: 'Tətbiq: %{name}'
+        title: "Tətbiq: %{name}"
     authorizations:
       buttons:
         authorize: Səlahiyyət ver
@@ -75,7 +75,7 @@ az:
     errors:
       messages:
         access_denied: Resurs sahibi və ya avtorizasiya serveri istəyə rədd cavabı verdi.
-        invalid_client: 'Bu səbəblərdən birinə görə istəkçi kimlik doğrulaması uğursuz oldu: naməlum istəkçi; istəkçi kimlik doğrulaması daxil edilməyib; kimlik doğrulama üsulu dəstəklənmir.'
+        invalid_client: "Bu səbəblərdən birinə görə istəkçi kimlik doğrulaması uğursuz oldu: naməlum istəkçi; istəkçi kimlik doğrulaması daxil edilməyib; kimlik doğrulama üsulu dəstəklənmir."
         invalid_grant: Təqdim edilən səlahiyyət vermə icazəsi yararsızdır, müddəti bitib, ləğv edilib, səlahiyyət vermə sorğusunda istifadə olunan yönləndirmə URI-si ilə uyuşmur və ya başqa istəkçiyə verilib.
         invalid_token:
           expired: Erişim tokeninin vaxtı bitib

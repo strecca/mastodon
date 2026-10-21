@@ -117,6 +117,14 @@ module TestEndpoints
     REQUIRE_TOKEN = %w(
       /api/v1/custom_emojis
     ).freeze
+
+    # This fork deliberately opens single public posts to signed-out visitors
+    # even with the API locked down (Api::V1::StatusesController skips
+    # require_authenticated_user! for :show, since 2026-06-09), so upstream's
+    # "anonymous gets an error" expectation doesn't apply to this one.
+    PUBLIC_DESPITE_DISALLOW = %w(
+      /api/v1/statuses/110224538612341312
+    ).freeze
   end
 end
 
@@ -579,11 +587,19 @@ RSpec.describe 'Caching behavior' do
         end
       end
 
-      (TestEndpoints::REQUIRE_TOKEN + TestEndpoints::AUTHORIZATION_DEPENDENT_CACHABLE + TestEndpoints::DisabledAnonymousAPI::REQUIRE_TOKEN).each do |endpoint|
+      (TestEndpoints::REQUIRE_TOKEN + TestEndpoints::AUTHORIZATION_DEPENDENT_CACHABLE + TestEndpoints::DisabledAnonymousAPI::REQUIRE_TOKEN - TestEndpoints::DisabledAnonymousAPI::PUBLIC_DESPITE_DISALLOW).each do |endpoint|
         describe endpoint do
           before { get endpoint }
 
           it_behaves_like 'non-cacheable error'
+        end
+      end
+
+      TestEndpoints::DisabledAnonymousAPI::PUBLIC_DESPITE_DISALLOW.each do |endpoint|
+        describe endpoint do
+          before { get endpoint }
+
+          it_behaves_like 'cachable response'
         end
       end
     end

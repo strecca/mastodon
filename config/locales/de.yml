@@ -1143,7 +1143,7 @@ de:
       notified_on_html: Nutzer*innen wurden am %{date} benachrichtigt
       notify_users: Nutzer*innen benachrichtigen
       preview:
-        explanation_html: 'Die E-Mail wird an <strong>%{display_count} Nutzer*innen</strong> geschickt, die sich vor dem %{date} registriert haben. Folgendes wird in der E-Mail enthalten sein:'
+        explanation_html: "Die E-Mail wird an <strong>%{display_count} Nutzer*innen</strong> geschickt, die sich vor dem %{date} registriert haben. Folgendes wird in der E-Mail enthalten sein:"
         send_preview: Vorschau an %{email} senden
         send_to_all:
           one: "%{display_count} E-Mail senden"

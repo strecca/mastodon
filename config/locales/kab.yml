@@ -1008,7 +1008,7 @@ kab:
     remove_selected_follows: Ur ṭṭafar ara iseqdacen yettwafernen
     status: Addad n umiḍan
   rss:
-    content_warning: 'Alɣu n ugbur :'
+    content_warning: "Alɣu n ugbur :"
     descriptions:
       account: Iznan izuyaz sɣur @%{acct}
   self_destruct:
@@ -1091,7 +1091,7 @@ kab:
       video:
         one: "%{count} n tbidyutt"
         other: "%{count} n tbidyutin"
-    content_warning: 'Alɣu ɣef ugbur: %{warning}'
+    content_warning: "Alɣu ɣef ugbur: %{warning}"
     content_warnings:
       hide: Ffer tasuffeɣt
       show: Sken-d ugar

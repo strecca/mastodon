@@ -691,7 +691,7 @@ export const CollapsibleNavigationPanel: React.FC = () => {
     },
     {
       from: () => [x.get(), 0],
-      axis: 'x',
+      axis: "x",
       filterTaps: true,
       bounds: isLtrDir ? { left: 0 } : { right: 0 },
       rubberband: true,

@@ -5,6 +5,9 @@ vendor/bundle/
 # Environment files — contain encryption keys and secrets, never commit
 .env
 .env.*
+# Upstream's test config: dummy DO_NOT_USE values only, and CI needs it (without
+# it every URL-checking spec fails). Real test DB creds go in .env.test.local.
+!.env.test
 env.development
 
 # macOS metadata

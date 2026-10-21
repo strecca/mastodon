@@ -1473,7 +1473,7 @@ hu:
     challenge_not_passed: A beírt információ helytelen
     confirm_password: Személyazonosságod megerősítéséhez írd be a jelenlegi jelszavad
     confirm_username: Felhasználónév megerősítése
-    confirm_username_hint_html: 'Írd be ezt: <code>%{username}</code>, hogy megerősítsd a törlendő fiókot'
+    confirm_username_hint_html: "Írd be ezt: <code>%{username}</code>, hogy megerősítsd a törlendő fiókot"
     proceed: Felhasználói fiók törlése
     success_msg: Felhasználói fiókod sikeresen töröltük
     title: "%{acct} fiók törlése"

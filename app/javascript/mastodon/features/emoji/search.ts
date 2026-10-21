@@ -64,7 +64,7 @@ export async function search({
   signal?: AbortSignal;
 }) {
   log('searching for "%s"', rawQuery);
-  performance.mark('emoji-search-start');
+  performance.mark("emoji-search-start");
 
   signal?.throwIfAborted();
 

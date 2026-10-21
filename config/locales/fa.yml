@@ -349,7 +349,7 @@ fa:
       back_to_account: بازگشت به صفحهٔ حساب
       back_to_report: بازگشت به صفحهٔ گزارش
       batch:
-        add_to_report: 'افزودن به گزارش #%{id}'
+        add_to_report: "افزودن به گزارش #%{id}"
         remove_from_report: برداشتن از گزارش
         report: گزارش
       collection_title: محموعه به دست %{name}

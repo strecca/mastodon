@@ -604,17 +604,19 @@ const fetchComposeSuggestionsEmojis = (dispatch, token) => {
     token,
     // Right now we are hard-coding the locale to English since the picker search only supports English.
     // Once we replace the legacy picker we can remove this and use the actual locale of the user.
-    locale: 'en',
+    locale: "en",
     limit: 5,
     signal: searchComposeSuggestionsEmojiController.signal,
-  }).then((results) => {
-    if (results) {
-      dispatch(readyComposeSuggestionsEmojis(token, results));
-    }
-  }).finally(() => {
-    searchComposeSuggestionsEmojiController = undefined;
-  });
-}
+  })
+    .then((results) => {
+      if (results) {
+        dispatch(readyComposeSuggestionsEmojis(token, results));
+      }
+    })
+    .finally(() => {
+      searchComposeSuggestionsEmojiController = undefined;
+    });
+};
 
 const fetchComposeSuggestionsTags = throttle(
   (dispatch, token) => {

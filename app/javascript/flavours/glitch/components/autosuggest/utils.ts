@@ -8,8 +8,8 @@ export const textAtCursorMatchesToken = (
   let word: string;
 
   const regex = new RegExp(
-    `[${searchTokens.join('')}${WORD}+-]+(\\s[\\p{Script=Latin}\\p{Script=Cyrillic}\\p{M}]+)?$`,
-    'iu',
+    `[${searchTokens.join("")}${WORD}+-]+(\\s[\\p{Script=Latin}\\p{Script=Cyrillic}\\p{M}]+)?$`,
+    "iu",
   );
   const left = str.slice(0, caretPosition).search(regex);
   const right = str.slice(caretPosition).search(/\s/);

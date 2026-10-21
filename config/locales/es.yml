@@ -1562,19 +1562,19 @@ es:
     native: Nativo
     twemoji: Twemoji
   errors:
-    '400': La solicitud que has enviado no es válida o estaba mal formada.
-    '403': No tienes permiso para acceder a esta página.
-    '404': La página que estabas buscando no existe.
-    '406': Esta página no está disponible en el formato solicitado.
-    '410': La página que estabas buscando no existe más.
-    '422':
+    "400": La solicitud que has enviado no es válida o estaba mal formada.
+    "403": No tienes permiso para acceder a esta página.
+    "404": La página que estabas buscando no existe.
+    "406": Esta página no está disponible en el formato solicitado.
+    "410": La página que estabas buscando no existe más.
+    "422":
       content: Verificación de seguridad fallida. ¿Estás bloqueando algunas cookies?
       title: Verificación de seguridad fallida
     "429": Demasiadas solicitudes
     "500":
       content: Lo sentimos, algo ha funcionado mal por nuestra parte.
       title: Esta página no es correcta
-    '503': La página no se ha podido cargar debido a un fallo temporal del servidor.
+    "503": La página no se ha podido cargar debido a un fallo temporal del servidor.
     noscript_html: Para usar la aplicación web de Mastodon, por favor activa JavaScript. Alternativamente, prueba alguna de las <a href="%{apps_path}">aplicaciones nativas</a> para Mastodon para tu plataforma.
   existing_username_validator:
     not_found: no pudo encontrar un usuario local con ese nombre de usuario
@@ -1883,7 +1883,7 @@ es:
     follow_request:
       action: Administrar solicitudes para seguir
       body: "%{name} ha solicitado seguirte"
-      subject: 'Seguidor pendiente: %{name}'
+      subject: "Seguidor pendiente: %{name}"
       title: Nueva solicitud de seguimiento
     mention:
       action: Responder
@@ -1929,7 +1929,7 @@ es:
     description_html: Si habilitas <strong>autenticación de dos factores</strong> a través de una aplicación de autenticación, el ingreso requerirá que estés en posesión de tu teléfono, que generará códigos para que ingreses.
     enable: Activar
     instructions_html: "<strong>Escanea este código QR desde Google Authenticator o una aplicación similar en tu teléfono</strong>. A partir de ahora, esta aplicación generará códigos que tendrás que ingresar cuando quieras iniciar sesión."
-    manual_instructions: 'Si no puedes escanear el código QR y necesitas introducirlo manualmente, este es el secreto en texto plano:'
+    manual_instructions: "Si no puedes escanear el código QR y necesitas introducirlo manualmente, este es el secreto en texto plano:"
     setup: Configurar
     wrong_code: "¡El código ingresado es inválido! ¿Es correcta la hora del dispositivo y del servidor?"
   pagination:
