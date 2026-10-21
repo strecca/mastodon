@@ -215,7 +215,11 @@ jobs:
       RAILS_ENV: test
       BUNDLE_WITH: test
       LOCAL_DOMAIN: localhost:3000
-      LOCAL_HTTPS: true
+      # Upstream value. The E2E Capybara server speaks plain http, so https
+      # URLs (avatars, media, post redirects) fail. Flipped to true on
+      # 2026-09-19 by mistake: the failures it targeted were in the `test` job,
+      # caused by the missing .env.test (restored 2026-10-21).
+      LOCAL_HTTPS: false
 
     strategy:
       fail-fast: false

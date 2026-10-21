@@ -31,10 +31,13 @@ RSpec.describe 'Home page' do
         Setting.landing_page = 'about'
       end
 
-      it 'visits the root path and is redirected to the about page', :js do
+      # This fork sends 'about' (and any unrecognised value) to the /landing
+      # front door instead -- /about itself 301s to /guide. See the
+      # rootRedirect comment in features/ui/index.jsx.
+      it 'visits the root path and is redirected to the landing page', :js do
         visit root_path
 
-        expect(page).to have_current_path('/about')
+        expect(page).to have_current_path('/landing')
       end
     end
 

@@ -25,8 +25,10 @@ RSpec.describe 'NewStatuses', :inline_jobs, :js, :streaming do
       .to have_css('.status__content__text', text: status_text)
   end
 
+  # This fork's root is the /landing front door even when signed in, so go to
+  # the home timeline explicitly -- that's where upstream's root put you.
   def visit_homepage
-    visit root_path
+    visit '/home'
 
     expect(page)
       .to have_css('div.app-holder')
