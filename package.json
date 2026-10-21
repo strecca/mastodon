@@ -119,7 +119,7 @@
     "twitter-text": "3.1.0",
     "type-fest": "^5.8.0",
     "use-debounce": "^10.0.0",
-    "vite": "^8.0.0",
+    "vite": "~8.2.4",
     "vite-plugin-manifest-sri": "^0.2.0",
     "vite-plugin-svgr": "^5.0.0",
     "wicg-inert": "^3.1.2"
@@ -153,10 +153,10 @@
     "@types/react-test-renderer": "^18.0.0",
     "@types/redux-immutable": "^4.0.3",
     "@types/requestidlecallback": "^0.3.5",
-    "@vitest/browser": "^4.1.0",
-    "@vitest/browser-playwright": "^4.1.10",
+    "@vitest/browser": "^4.1.12",
+    "@vitest/browser-playwright": "^4.1.12",
     "@vitest/coverage-v8": "^4.1.0",
-    "@vitest/ui": "^4.1.0",
+    "@vitest/ui": "^4.1.12",
     "chromatic": "^17.0.0",
     "eslint": "^9.39.2",
     "eslint-import-resolver-typescript": "^4.2.5",
@@ -183,7 +183,7 @@
     "typescript": "~6.0.0",
     "typescript-eslint": "^8.55.0",
     "typescript-plugin-css-modules": "^5.2.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -202,6 +202,7 @@
     "@types/redux-immutable/immutable": "^4.3.9",
     "body-parser": "^2.3.0",
     "fast-uri": "^3.1.7",
+    "oxfmt/tinypool": "^2.1.2",
     "kind-of": "^6.0.3",
     "qs": "^6.16.0",
     "undici": "^7.29.0"
