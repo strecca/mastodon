@@ -178,7 +178,9 @@ class NewsletterImportService
     return [] unless system('which pdfimages > /dev/null 2>&1')
 
     dir = Dir.mktmpdir('newsletter_assets_')
-    `pdfimages -all "#{pdf_path}" "#{dir}/asset"`
+    # Argument-list form: no shell, so nothing in the path can be interpreted
+    # as a command (Brakeman: Command Injection).
+    system('pdfimages', '-all', pdf_path.to_s, "#{dir}/asset", out: File::NULL, err: File::NULL)
 
     image_files = Dir["#{dir}/asset-*"].sort
     return [] if image_files.empty?

@@ -95,21 +95,6 @@ namespace :admin do
     get '/settings'
     get '/settings/edit'
   end
-  # from grok april 19, 2026
-  resources :dynamic_categories, only: [:index, :new, :create] do
-    member do
-      get :edit
-      post :save_fields
-      post :save_form
-    end
-  end
-  resources :dynamic_categories, only: [:index, :new, :create] do
-    member do
-      get :edit
-      post :save_fields
-      post :save_form
-    end
-  end
 
   namespace :settings do
     resource :branding, only: [:show, :update], controller: 'branding'

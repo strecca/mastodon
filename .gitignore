@@ -65,3 +65,6 @@ public-miacivezza-key.txt.pub
 .eslintcache
 streaming/.eslintcache
 docs/HOW_MIACIVEZZA_IS_WIRED.md
+
+# Storybook build output (yarn build-storybook)
+/storybook-static/

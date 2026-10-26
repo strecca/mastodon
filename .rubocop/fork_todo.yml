@@ -9,7 +9,6 @@
 
 I18n/RailsI18n: # department level, so it merges with .rubocop/i18n.yml
   Exclude:
-    - "app/controllers/admin/dynamic_categories_controller.rb"
     - "app/controllers/admin/newsletters_controller.rb"
     - "app/controllers/admin/quick_search_controller.rb"
     - "app/controllers/admin/site_settings_controller.rb"
@@ -24,7 +23,6 @@ I18n/RailsI18n: # department level, so it merges with .rubocop/i18n.yml
     - "app/services/community_directory_generator.rb"
     - "app/services/community_directory_updater.rb"
     - "app/services/daily_digest_service.rb"
-    - "app/services/dynamic_schema_manager.rb"
     - "app/services/newsletter_import_service.rb"
 
 Layout/LineLength:
@@ -112,7 +110,6 @@ Naming/VariableNumber:
 Performance/CollectionLiteralInLoop:
   Exclude:
     - "app/controllers/api/v1/community_directory_controller.rb"
-    - "app/serializers/dynamic_resource_serializer.rb"
     - "app/serializers/manifest_serializer.rb"
     - "app/services/community_directory_generator.rb"
     - "app/services/community_directory_updater.rb"
@@ -186,7 +183,6 @@ Rails/Date:
 
 Rails/I18nLocaleTexts:
   Exclude:
-    - "app/controllers/admin/dynamic_categories_controller.rb"
     - "app/controllers/admin/newsletters_controller.rb"
     - "app/controllers/admin/quick_search_controller.rb"
     - "app/controllers/admin/site_settings_controller.rb"
@@ -266,7 +262,6 @@ Style/FormatStringToken:
 
 Style/FrozenStringLiteralComment:
   Exclude:
-    - "app/controllers/api/v1/admin/community_directory_controller.rb"
     - "app/controllers/api/v1/community_directory_controller.rb"
     - "app/controllers/api/v1/community_directory_public_controller.rb"
     - "app/controllers/api/v1/community_events_controller.rb"

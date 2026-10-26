@@ -3,3 +3,8 @@
   - CheckPermitAttributes
 :url_safe_methods:
   - url_for_preview_card
+# This fork: community_directory_v2/ is a standalone installable copy of the
+# Community Directory feature (see CLAUDE.md). The app never loads it, so
+# scanning it only duplicates warnings already reported for app/.
+:skip_files:
+  - community_directory_v2/

@@ -1,0 +1,154 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "573d73d437a4b1df879cf9ed597e626b88435f8213422d3dfe1d73a3ec90e797",
+      "check_name": "FileAccess",
+      "message": "Parameter value used in file name",
+      "file": "app/controllers/api/v1/community_directory_controller.rb",
+      "line": 18,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "File.read(CommunityDirectoryConfig.config_path(params[:name]))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Api::V1::CommunityDirectoryController",
+        "method": "show_category"
+      },
+      "user_input": "params[:name]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": "Reviewed 2026-10-26: CommunityDirectoryConfig.config_path strips params[:name] to [a-z0-9_] before building the path, so no traversal; endpoint is admin-only."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "6746cab719c4897486318ceb8053f05d529f877ac32b22be63d8e8ddc4d80f5a",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/api/v1/community_maintenance_controller.rb",
+      "line": 139,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.select_values(\"SELECT COUNT(*) FROM (#{ActiveRecord::Base.connection.tables.select do\n t.start_with?(\"community_\") and ActiveRecord::Base.connection.column_exists?(t, :image_media_ids)\n end.map do\n \"SELECT unnest(image_media_ids) FROM #{ActiveRecord::Base.connection.quote_table_name(t)} WHERE image_media_ids IS NOT NULL AND image_media_ids != '{}'\"\n end.join(\" UNION \")}) AS ids\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Api::V1::CommunityMaintenanceController",
+        "method": "protected_media_count"
+      },
+      "user_input": "ActiveRecord::Base.connection.tables.select do\n t.start_with?(\"community_\") and ActiveRecord::Base.connection.column_exists?(t, :image_media_ids)\n end.map do\n \"SELECT unnest(image_media_ids) FROM #{ActiveRecord::Base.connection.quote_table_name(t)} WHERE image_media_ids IS NOT NULL AND image_media_ids != '{}'\"\n end.join(\" UNION \")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Reviewed 2026-10-26: table names come from connection.tables (the DB catalog), filtered to community_* and quoted with quote_table_name; no request input reaches the SQL."
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "696b15690d6ddfab197b527bfc0d25974015f8c75545b5c1eac4ee994bef8751",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/newsletters/show.html.haml",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"newsletter-show\", \"newsletter-show--#{CommunityNewsletter.published.find_by!(:slug => params[:slug]).newsletter_template}\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "NewslettersController",
+          "method": "show",
+          "line": 13,
+          "file": "app/controllers/newsletters_controller.rb",
+          "rendered": {
+            "name": "newsletters/show",
+            "file": "app/views/newsletters/show.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "newsletters/show"
+      },
+      "user_input": "CommunityNewsletter.published.find_by!(:slug => params[:slug])",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": "Reviewed 2026-10-26: newsletter_template is an admin-set enum-like attribute used as a CSS class; HAML escapes attribute values."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "6fbbd75e583d9c53cde2e428658593191d567bcc75323f48a4f552cbef5fb1c8",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/api/v1/community_directory_controller.rb",
+      "line": 126,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "model_for_category(params[:category].to_s).where(:status => ([0, 1])).where(\"LOWER(SUBSTRING(#{((CommunityDirectoryConfig.config_for(params[:category].to_s)[\"fields\"] or []).select do\n (f[\"widget\"] == \"text\") and f[\"required\"]\n end.select do\n f[\"duplicate_key\"]\n end or (CommunityDirectoryConfig.config_for(params[:category].to_s)[\"fields\"] or []).select do\n (f[\"widget\"] == \"text\") and f[\"required\"]\n end.first(2)).map do\n \"COALESCE(#{model_for_category(params[:category].to_s).connection.quote_column_name(f[\"db_name\"])}, '')\"\n end.join(\" || ' ' || \")}, 1, 50)) = ?\", ((CommunityDirectoryConfig.config_for(params[:category].to_s)[\"fields\"] or []).select do\n (f[\"widget\"] == \"text\") and f[\"required\"]\n end.select do\n f[\"duplicate_key\"]\n end or (CommunityDirectoryConfig.config_for(params[:category].to_s)[\"fields\"] or []).select do\n (f[\"widget\"] == \"text\") and f[\"required\"]\n end.first(2)).map do\n params[f[\"db_name\"]].to_s.strip\n end.join(\" \").downcase[0, 50])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Api::V1::CommunityDirectoryController",
+        "method": "duplicate_check"
+      },
+      "user_input": "params[:category].to_s",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Reviewed 2026-10-26: column names come from the server-side config.json and are quoted with quote_column_name; the submitted text is bound via ? placeholder."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "a71e790852fea52838c04cb9b6d4265b947a2ccd62c113ee23176de7df9150df",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/vacuum/media_attachments_vacuum.rb",
+      "line": 44,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "MediaAttachment.unattached.created_before(TTL.ago).where(\"id NOT IN (#{community_image_media_ids_sql})\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Vacuum::MediaAttachmentsVacuum",
+        "method": "orphaned_media_attachments"
+      },
+      "user_input": "community_image_media_ids_sql",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Reviewed 2026-10-26: subquery built from connection.tables (DB catalog) filtered to community_* tables with image_media_ids, quoted with quote_table_name; no request input."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "cbde6c85746fd0f5dca7c643556ed74833bd645abf2507377b8e752031a0ec75",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/community_searchable.rb",
+      "line": 44,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(\"lower(#{(JSON.parse(File.read(Rails.root.join(\"app\", \"javascript\", \"flavours\", \"glitch\", \"features\", \"community_#{self::CATEGORY_KEY}\", \"config.json\"))).fetch(\"fields\", []).select do\n f[\"searchable\"] and [\"text\", \"textarea\", \"select\", \"radio\", \"url\", \"email\"].include?(f[\"widget\"].to_s)\n end.map do\n f[\"db_name\"]\n end or []).map do\n \"coalesce(#{c},'')\"\n end.join(\" || ' ' || \")}) LIKE ?\", \"%#{query.downcase}%\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CommunitySearchable",
+        "method": null
+      },
+      "user_input": "(JSON.parse(File.read(Rails.root.join(\"app\", \"javascript\", \"flavours\", \"glitch\", \"features\", \"community_#{self::CATEGORY_KEY}\", \"config.json\"))).fetch(\"fields\", []).select do\n f[\"searchable\"] and [\"text\", \"textarea\", \"select\", \"radio\", \"url\", \"email\"].include?(f[\"widget\"].to_s)\n end.map do\n f[\"db_name\"]\n end or []).map do\n \"coalesce(#{c},'')\"\n end.join(\" || ' ' || \")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "Reviewed 2026-10-26: column names come from the server-side config.json at class load; the user query is bound via ? placeholder (LIKE pattern), never interpolated."
+    }
+  ],
+  "brakeman_version": "8.0.4"
+}

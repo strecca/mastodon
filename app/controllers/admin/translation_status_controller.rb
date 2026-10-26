@@ -33,11 +33,13 @@ module Admin
     end
 
     def backfill
-      klass_name = params[:klass].to_s
-      return redirect_to admin_translation_status_path, alert: 'Invalid category.' unless ALLOWED_CLASSES.include?(klass_name)
+      # Resolve the model from our own allowlist entry, never by constantizing
+      # the request parameter itself (Brakeman: Remote Code Execution).
+      klass_name = ALLOWED_CLASSES.find { |name| name == params[:klass].to_s }
+      return redirect_to admin_translation_status_path, alert: 'Invalid category.' if klass_name.nil?
 
       count = 0
-      klass_name.constantize.find_each do |entry|
+      Object.const_get(klass_name).find_each do |entry|
         CommunityTranslationWorker.perform_async(klass_name, entry.id)
         count += 1
       end
