@@ -178,7 +178,10 @@ jobs:
 
   test-e2e:
     name: End to End testing
-    runs-on: ubuntu-latest
+    # Pinned 2026-10-26: ubuntu-latest became 26.04, and Playwright (1.60
+    # through 1.64.1) can't install Chromium deps there. Return to
+    # ubuntu-latest once a Playwright release supports ubuntu26.04.
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
 
     needs:
