@@ -26,13 +26,15 @@ const renderBody = (text) => {
           </h3>
         );
       }
-      // Inline **bold** within a paragraph
-      const parts = para.split(/(\*\*[^*]+\*\*)/);
+      // Inline **bold** and *italic* within a paragraph (same rule as /daily)
+      const parts = para.split(/(\*\*[^*]+\*\*|\*[^*\s](?:[^*\n]*[^*\s])?\*)/);
       return (
         <p key={i} className="newsletter-show__para">
           {parts.map((part, j) => {
             const bold = part.match(/^\*\*(.+)\*\*$/);
-            return bold ? <strong key={j}>{bold[1]}</strong> : part;
+            if (bold) return <strong key={j}>{bold[1]}</strong>;
+            const italic = part.match(/^\*([^*\s](?:[^*\n]*[^*\s])?)\*$/);
+            return italic ? <em key={j}>{italic[1]}</em> : part;
           })}
         </p>
       );

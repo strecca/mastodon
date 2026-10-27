@@ -34,7 +34,10 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 // confirmed live 2026-09-25, fixed on both this page and the identical
 // front-door pane in community_landing/index.jsx).
 // Links to /newsletters/ get a prominent gold button style.
-const LINK_RE = /(\[[^\]]+\]\(https?:\/\/[^)]+\)|https?:\/\/\S+|\*\*[^*]+\*\*)/;
+// *italic* comes after **bold** in the alternation so bold wins; no regex
+// lookbehind (it throws a SyntaxError on iOS Safari < 16.4 and blanks the page).
+const LINK_RE =
+  /(\[[^\]]+\]\(https?:\/\/[^)]+\)|https?:\/\/\S+|\*\*[^*]+\*\*|\*[^*\s](?:[^*\n]*[^*\s])?\*)/;
 
 const renderParagraph = (text) => {
   const parts = text.split(LINK_RE);
@@ -42,6 +45,10 @@ const renderParagraph = (text) => {
     const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
     if (boldMatch) {
       return <strong key={i}>{boldMatch[1]}</strong>;
+    }
+    const italicMatch = part.match(/^\*([^*\s](?:[^*\n]*[^*\s])?)\*$/);
+    if (italicMatch) {
+      return <em key={i}>{italicMatch[1]}</em>;
     }
     const mdMatch = part.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/);
     if (mdMatch) {
