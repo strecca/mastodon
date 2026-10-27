@@ -26,6 +26,12 @@ config/locales-glitch/
 public/500.html
 public/embed.js
 
+# Upstream's Docker/devcontainer files. This fork never uses Docker (native
+# Hetzner deploy), but keeping them byte-identical to upstream avoids merge
+# conflicts on every glitch-soc upgrade. Restored 2026-10-27.
+docker-compose.yml
+.devcontainer/
+
 # Inline <script> whose exact bytes are pinned by a sha256 in the CSP header
 # (ThemeHelper#javascript_inline_tag) and by spec/requests/content_security_policy_spec.rb.
 # Reformatting it changes the hash, so keep it byte-identical to upstream.
