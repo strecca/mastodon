@@ -208,7 +208,7 @@ class MemberWelcomeDigestService
 
     statuses.map do |status|
       author  = status.account.display_name.presence || status.account.username
-      snippet = ActionController::Base.helpers.strip_tags(status.text).squish.truncate(160)
+      snippet = HTMLEntities.new.decode(ActionController::Base.helpers.strip_tags(status.text).to_str).squish.truncate(160)
       "- #{author} posted: #{snippet} (#{status_url(status)})"
     end.join("\n")
   end

@@ -115,4 +115,17 @@ RSpec.describe MemberWelcomeDigestService do
       end
     end
   end
+
+  describe 'followed post snippets sent to Claude' do
+    # Rails 8.1.4.1's strip_tags encodes quotes; the prompt is plain text, so
+    # Claude must see real apostrophes and ampersands, not &#39; or &amp;.
+    it 'contains plain characters, not HTML entities' do
+      status = Fabricate(:status, text: %(<p>Ci vediamo all'una &amp; "dopo"</p>))
+
+      line = subject.send(:describe_followed_posts, [status])
+
+      expect(line).to include(%(Ci vediamo all'una & "dopo"))
+      expect(line).to_not match(/&(#39|quot|amp);/)
+    end
+  end
 end

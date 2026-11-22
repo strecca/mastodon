@@ -125,7 +125,9 @@ class CommunityOgPreview
     text.to_s.squish.truncate(DESCRIPTION_MAX_LENGTH)
   end
 
+  # Plain text for og:description. strip_tags encodes quotes since Rails 8.1.4.1
+  # (and always encoded & < >); decode so the view escapes exactly once.
   def strip_markup(text)
-    ActionController::Base.helpers.strip_tags(text.to_s)
+    HTMLEntities.new.decode(ActionController::Base.helpers.strip_tags(text.to_s).to_str)
   end
 end
