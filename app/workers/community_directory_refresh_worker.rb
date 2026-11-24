@@ -24,6 +24,10 @@ class CommunityDirectoryRefreshWorker
 
   def perform(channel)
     redis.del("community_refresh_pending:#{channel}")
-    redis.publish("timeline:#{channel}", { event: 'refresh' }.to_json)
+    # The streaming server silently drops any message without a `payload`
+    # (streaming/index.js listener: `if (!message?.event || !message?.payload) return`),
+    # so the bare { event: 'refresh' } sent until 2026-11-24 never reached a client.
+    # The client only checks `event`; the payload just has to be present.
+    redis.publish("timeline:#{channel}", { event: 'refresh', payload: channel }.to_json)
   end
 end

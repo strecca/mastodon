@@ -53,8 +53,6 @@ miacivezza.com {
 		reverse_proxy localhost:4000 {
 			# Drop client-supplied Forwarded headers (Mastodon 4.6.11, GHSA-qp4r-p842-mw5c)
 			header_up -Forwarded
-			header_up Upgrade {http.upgrade}
-			header_up Connection {http.upgrade}
 			transport http {
 				dial_timeout 5s
 				response_header_timeout 30s
@@ -66,8 +64,6 @@ miacivezza.com {
 		reverse_proxy localhost:4000 {
 			# Drop client-supplied Forwarded headers (Mastodon 4.6.11, GHSA-qp4r-p842-mw5c)
 			header_up -Forwarded
-			header_up Upgrade {http.upgrade}
-			header_up Connection {http.upgrade}
 			transport http {
 				dial_timeout 5s
 				response_header_timeout 30s

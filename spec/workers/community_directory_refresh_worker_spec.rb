@@ -41,7 +41,19 @@ RSpec.describe CommunityDirectoryRefreshWorker do
 
       worker.perform(channel)
 
-      expect(fake_redis).to have_received(:publish).with("timeline:#{channel}", { event: 'refresh' }.to_json)
+      expect(fake_redis).to have_received(:publish).with("timeline:#{channel}", { event: 'refresh', payload: channel }.to_json)
+    end
+
+    it 'includes a payload, without which the streaming server drops the message' do
+      worker = described_class.new
+      fake_redis = instance_double(Redis, del: 1, publish: 1)
+      allow(worker).to receive(:redis).and_return(fake_redis)
+
+      worker.perform(channel)
+
+      expect(fake_redis).to have_received(:publish) do |_name, message|
+        expect(JSON.parse(message)).to include('event' => 'refresh', 'payload' => be_present)
+      end
     end
 
     it 'releases the lock so the next write can schedule again' do
