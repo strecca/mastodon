@@ -1,6 +1,11 @@
 ---
 # Closed community platform — no Fediverse federation.
-# Removed: push, ingress, pull, fasp queues (federation — always empty here).
+# Removed: ingress, fasp queues (inbound federation / FASP — never used here).
+# push and pull are NOT federation-only and must stay: push carries browser push
+# notifications (Web::PushNotificationWorker, CommunityEntryPushWorker) and webhooks;
+# pull carries account deletion, suspensions, archive exports, imports and link
+# previews. They were removed 2026-07-12 by mistake and restored 2026-11-24
+# (spec/config/sidekiq_queues_spec.rb guards this).
 # Removed: indexing_scheduler (Elasticsearch not installed).
 # Removed: trends_* schedulers (no value without federation or public discovery).
 # Removed: follow_recommendations_scheduler (federation-graph based).
@@ -9,7 +14,9 @@
 :concurrency: <%= ENV.fetch('SIDEKIQ_CONCURRENCY', 5) %>
 :queues:
   - [default, 8]
+  - [push, 4]
   - [mailers, 2]
+  - [pull, 1]
   - [scheduler]
   - [low, 1]
 
