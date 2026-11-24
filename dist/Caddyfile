@@ -51,6 +51,8 @@ miacivezza.com {
 	# connections instead of just catching a genuinely dead upstream.
 	handle /api/v1/streaming* {
 		reverse_proxy localhost:4000 {
+			# Drop client-supplied Forwarded headers (Mastodon 4.6.11, GHSA-qp4r-p842-mw5c)
+			header_up -Forwarded
 			header_up Upgrade {http.upgrade}
 			header_up Connection {http.upgrade}
 			transport http {
@@ -62,6 +64,8 @@ miacivezza.com {
 
 	handle /api/v2/streaming* {
 		reverse_proxy localhost:4000 {
+			# Drop client-supplied Forwarded headers (Mastodon 4.6.11, GHSA-qp4r-p842-mw5c)
+			header_up -Forwarded
 			header_up Upgrade {http.upgrade}
 			header_up Connection {http.upgrade}
 			transport http {
@@ -96,6 +100,8 @@ miacivezza.com {
 	# behavior since this only covers time-to-first-response-byte.
 	handle {
 		reverse_proxy localhost:3000 {
+			# Drop client-supplied Forwarded headers (Mastodon 4.6.11, GHSA-qp4r-p842-mw5c)
+			header_up -Forwarded
 			header_up X-Real-IP {remote_host}
 			transport http {
 				dial_timeout 5s
