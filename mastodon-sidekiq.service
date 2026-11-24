@@ -7,7 +7,7 @@ Type=simple
 User=mastodon
 WorkingDirectory=/home/mastodon/live
 Environment=RAILS_ENV=production
-ExecStart=/usr/local/rbenv/versions/3.4.9/bin/bundle exec sidekiq
+ExecStart=/usr/local/rbenv/versions/3.4.13/bin/bundle exec sidekiq
 Restart=always
 RestartSec=5
 
