@@ -9,6 +9,8 @@ import { ColumnHeader } from "flavours/glitch/components/column_header";
 import api from "flavours/glitch/api";
 import { useSiteContent } from "flavours/glitch/hooks/useSiteContent";
 
+import { loadNotificationSettings } from "./load_settings";
+
 const EMAIL_FREQUENCIES = [
   { value: "never", label: "Never" },
   { value: "immediate", label: "As soon as possible" },
@@ -28,17 +30,12 @@ const NotificationSettings = ({ multiColumn }) => {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    Promise.all([
-      api().get("/api/v1/community_directory/categories"),
-      api().get("/api/v1/member_notification_category_subscriptions"),
-      api().get("/api/v1/member_notification_targets"),
-      api().get("/api/v1/member_notification_preferences"),
-    ])
-      .then(([categoriesRes, subsRes, targetsRes, prefsRes]) => {
-        setCategories(categoriesRes.data);
-        setSubscriptions(subsRes.data);
-        setTargets(targetsRes.data);
-        setPreferences(prefsRes.data);
+    loadNotificationSettings()
+      .then((data) => {
+        setCategories(data.categories);
+        setSubscriptions(data.subscriptions);
+        setTargets(data.targets);
+        setPreferences(data.preferences);
       })
       .finally(() => setLoading(false));
   }, []);
