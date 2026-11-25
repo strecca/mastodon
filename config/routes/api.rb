@@ -106,9 +106,6 @@ namespace :api, format: false do
     end
     # Community Directory admin API
     get   'community_directory/categories',           to: 'community_directory#categories'
-    get   'community_directory/categories/:name',     to: 'community_directory#show_category'
-    post  'community_directory/generate',             to: 'community_directory#generate'
-    patch 'community_directory/categories/:name',     to: 'community_directory#update_category'
     # Moderation queue
     get   'community_directory/moderation',           to: 'community_directory#moderation_index'
     put   'community_directory/moderation/approve',   to: 'community_directory#moderation_approve'

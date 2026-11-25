@@ -6,8 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **miacivezza.com**: a closed community site for Civezza built on **Mastodon glitch-soc** (a fork of
 [Mastodon](https://github.com/mastodon/mastodon)), with custom community features (events, listings,
-artists, restaurants, services, properties, visits, member stories, newsletters, Daily Digest) and a
-**Community Directory** scaffolding system. It runs in production on one Hetzner server.
+artists, restaurants, services, properties, visits, member stories, newsletters, Daily Digest) sharing one **Community Directory** admin area and component set. It runs in production on one Hetzner server.
 
 Tech stack: Ruby on Rails (REST API, admin) · PostgreSQL · Redis (Valkey) / Sidekiq · Node.js streaming
 server · React 18 + Redux (Immutable.js) · Vite build · Caddy in front.
@@ -84,7 +83,7 @@ on the Mac.
 app/
   controllers/    # REST API + web controllers
   models/         # ActiveRecord models
-  services/       # business logic (e.g., community_directory_generator.rb)
+  services/       # business logic (e.g., daily_digest_service.rb)
   workers/        # Sidekiq async jobs (check config/sidekiq.yml lists the worker's queue)
   policies/       # Pundit authorization
   serializers/    # active_model_serializers JSON output
@@ -161,14 +160,15 @@ SVG icons: `import FooIcon from '@/material-icons/400-24px/foo.svg?react';`
 
 ## Community Directory Feature
 
-A build-time scaffolding system that generates new community resource categories from an admin UI at
-`/community_directory/admin`. It writes real Rails and React files to disk and injects routes.
-**Full architecture: `docs/CLAUDE.md`.**
+The community categories (artists, events, restaurants, services, properties, plus the hand-built
+listings and visits) share one set of components and one admin area (`/community_directory`:
+moderation, permissions, per-category settings, the Entries Manager, scraper logs). **Architecture:
+`docs/CLAUDE.md`.**
 
-- Generated pages are thin wrappers around shared components in `app/javascript/flavours/glitch/components/community_directory/`.
+- Category pages are thin wrappers around shared components in `app/javascript/flavours/glitch/components/community_directory/`.
 - A single Redux reducer (`reducers/community_entries.js`) handles all categories via `categoryKey`.
-- **Generating a new category has no current procedure.** The last categories (2026-06-07) were generated
-  under the retired Docker setup and committed from the Mac. Before the next one, design and agree a
-  procedure with David (e.g. run the generator in a throwaway server clone, bring the files to the Mac,
-  commit, then deploy with migrations). Never run it against the live checkout.
-- `community_directory_v2/` contains a standalone installable copy of the feature (`install_community_directory.sh`).
+- Category API controllers share `app/controllers/concerns/community_category_controller.rb`.
+- **To add a category, use the `community-category` skill.** It copies the closest live category, wires
+  all the shared registries, and verifies them with `integration_check.sh`. The admin "generator" that
+  used to write category files was removed on 2026-11-25: its templates had fallen behind the live
+  code, and it only knew 9 of the ~26 places a category is wired into.

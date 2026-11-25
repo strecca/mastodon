@@ -17,21 +17,19 @@ import { fetchCategories, fetchSettings, saveSetting } from "../../actions/commu
 
 const messages = defineMessages({
   title: { id: "community_directory.title", defaultMessage: "Community Directory Admin" },
-  createNew: { id: "community_directory.create_new", defaultMessage: "Create new category" },
   moderation: { id: "community_directory.moderation", defaultMessage: "Moderation Queue" },
   permissions: { id: "community_directory.permissions", defaultMessage: "Permissions" },
   scraperLogs: { id: "community_directory.scraper_logs", defaultMessage: "Scraper Logs" },
   locations: { id: "community_directory.locations", defaultMessage: "Manage Towns" },
   empty: {
     id: "community_directory.empty",
-    defaultMessage: "No categories generated yet. Create your first one.",
+    defaultMessage: "No categories found.",
   },
   entries: {
     id: "community_directory.entries",
     defaultMessage: "{count, plural, one {# entry} other {# entries}}",
   },
   view: { id: "community_directory.view", defaultMessage: "View" },
-  edit: { id: "community_directory.edit", defaultMessage: "Edit" },
   manageEntries: { id: "community_directory.manage_entries", defaultMessage: "Manage Entries" },
   rateLimits: { id: "community_directory.rate_limits", defaultMessage: "Rate Limits" },
   maxEntries: { id: "community_directory.max_entries", defaultMessage: "Max entries per account" },
@@ -100,9 +98,6 @@ const CategoryCard = ({ cat, setting, intl, dispatch }) => {
         </Link>
         <Link to={`/community_directory/entries/${name}`} className="button button-secondary">
           {intl.formatMessage(messages.manageEntries)}
-        </Link>
-        <Link to={`/community_directory/edit/${name}`} className="button">
-          {intl.formatMessage(messages.edit)}
         </Link>
       </div>
 
@@ -206,9 +201,6 @@ const CommunityDirectoryAdmin = ({ multiColumn }) => {
       <div className="scrollable">
         <div className="community-directory-admin">
           <div className="community-directory-admin__header">
-            <Link to="/community_directory/admin" className="button">
-              {intl.formatMessage(messages.createNew)}
-            </Link>
             <Link to="/community_directory/moderation" className="button button-secondary">
               {intl.formatMessage(messages.moderation)}
             </Link>

@@ -273,29 +273,8 @@ export function ListEdit() {
 export function ListMembers() {
   return import("../../lists/members");
 }
-export function CommunityDirectoryAdmin() {
-  return Promise.resolve(import("../../community_directory/admin/index"))
-    .then((module) => {
-      return {
-        default: module.default || module.CommunityDirectoryAdmin || module,
-      };
-    })
-    .catch((err) => {
-      console.error("Failed to load CommunityDirectoryAdmin:", err);
-      throw err;
-    });
-}
-
 export function CommunityDirectory() {
   return import("../../community_directory");
-}
-
-export function CommunityDirectoryFormBuilder() {
-  return import("../../community_directory/admin");
-}
-
-export function CommunityDirectoryEdit() {
-  return import("../../community_directory/edit");
 }
 
 export function CommunityDirectoryModeration() {
@@ -406,8 +385,6 @@ export function CommunityPropertiesEdit() {
 export function CommunityDirectoryEntries() {
   return import("../../community_directory/entries");
 }
-
-// [CD:ASYNC_EXPORTS]
 
 export function CommunityArtistsEdit() {
   return import("../../community_artists/edit");

@@ -19,14 +19,6 @@ module Admin
         keywords: 'dashboard overview categories entries counts rate limit approval',
       },
       {
-        label: 'Category Builder — add or edit a category',
-        url: '/community_directory/admin',
-        category: 'Community Directory',
-        description: "Add a brand-new directory category from scratch, or edit an existing one's fields, groups, and layout.",
-        caveat: 'Writes real source files and a database migration to disk. In production you must also run a migration, rebuild assets, and restart the app afterward — closer to a mini-deploy than a form save. A category key can never be renamed once created.',
-        keywords: 'new category add category edit category fields add field schema generator create category',
-      },
-      {
         label: 'Moderation Queue',
         url: '/community_directory/moderation',
         category: 'Community Directory',

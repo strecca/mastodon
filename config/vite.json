@@ -11,8 +11,7 @@
       "app/javascript/flavours/glitch/actions/community_directory.js",
       "app/javascript/flavours/glitch/reducers/community_directory.js",
       "app/javascript/flavours/glitch/features/ui/index.jsx",
-      "app/javascript/flavours/glitch/features/ui/util/async-components.js",
-      "app/javascript/flavours/glitch/features/community_directory/admin/**/*"
+      "app/javascript/flavours/glitch/features/ui/util/async-components.js"
     ]
   },
   "production": {

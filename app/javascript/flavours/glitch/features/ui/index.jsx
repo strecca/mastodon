@@ -94,7 +94,6 @@ import {
   Mutes,
   PinnedStatuses,
   Directory,
-  CommunityDirectoryAdmin,
   OnboardingProfile,
   OnboardingFollows,
   Explore,
@@ -107,8 +106,6 @@ import {
   Quotes,
   CommunityMaintenance,
   CommunityDirectory,
-  CommunityDirectoryFormBuilder,
-  CommunityDirectoryEdit,
   CommunityDirectoryModeration,
   CommunityDirectoryPermissions,
   CommunityDirectoryScraperLogs,
@@ -156,7 +153,6 @@ import {
   NotificationSettings,
   CommunityEntryNotifications,
   HowItWorks,
-  // [CD:ASYNC_IMPORTS]
 } from "./util/async-components";
 import { ColumnsContextProvider } from "./util/columns_context";
 import {
@@ -435,16 +431,6 @@ class SwitchingColumnsArea extends PureComponent {
               content={children}
             />
             <WrappedRoute
-              path="/community_directory/admin"
-              component={CommunityDirectoryFormBuilder}
-              content={children}
-            />
-            <WrappedRoute
-              path="/community_directory/edit/:category"
-              component={CommunityDirectoryEdit}
-              content={children}
-            />
-            <WrappedRoute
               path="/community_directory/scraper_logs"
               exact
               component={CommunityDirectoryScraperLogs}
@@ -711,7 +697,6 @@ class SwitchingColumnsArea extends PureComponent {
               component={CommunityEntryNotifications}
               content={children}
             />
-            {/* [CD:ROUTES] */}
 
             <WrappedRoute path="/explore" component={Explore} content={children} />
             <WrappedRoute path="/search" component={Search} content={children} />

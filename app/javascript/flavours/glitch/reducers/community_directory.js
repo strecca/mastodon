@@ -6,9 +6,6 @@ import {
   COMMUNITY_DIR_CATEGORIES_FETCH_REQUEST,
   COMMUNITY_DIR_CATEGORIES_FETCH_SUCCESS,
   COMMUNITY_DIR_CATEGORIES_FETCH_FAIL,
-  COMMUNITY_DIR_GENERATE_REQUEST,
-  COMMUNITY_DIR_GENERATE_SUCCESS,
-  COMMUNITY_DIR_GENERATE_FAIL,
   COMMUNITY_DIR_MODERATION_FETCH_REQUEST,
   COMMUNITY_DIR_MODERATION_FETCH_SUCCESS,
   COMMUNITY_DIR_MODERATION_FETCH_FAIL,
@@ -28,9 +25,6 @@ const initialState = ImmutableMap({
   categories: ImmutableList(),
   categoriesLoading: false,
   categoriesError: null,
-  generating: false,
-  generationResult: null,
-  generationError: null,
   moderation: ImmutableList(),
   moderationLoading: false,
   moderationError: null,
@@ -53,19 +47,6 @@ export default function communityDirectoryReducer(state = initialState, action) 
       return state
         .set("categoriesLoading", false)
         .set("categoriesError", action.error?.message || "Failed");
-
-    // ── Generate ────────────────────────────────────────────────
-    case COMMUNITY_DIR_GENERATE_REQUEST:
-      return state
-        .set("generating", true)
-        .set("generationResult", null)
-        .set("generationError", null);
-    case COMMUNITY_DIR_GENERATE_SUCCESS:
-      return state.set("generating", false).set("generationResult", fromJS(action.result));
-    case COMMUNITY_DIR_GENERATE_FAIL:
-      return state
-        .set("generating", false)
-        .set("generationError", action.error?.message || "Generation failed");
 
     // ── Moderation ──────────────────────────────────────────────
     case COMMUNITY_DIR_MODERATION_FETCH_REQUEST:

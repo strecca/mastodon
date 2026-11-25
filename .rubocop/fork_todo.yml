@@ -20,8 +20,6 @@ I18n/RailsI18n: # department level, so it merges with .rubocop/i18n.yml
     - "app/models/community_landing_setting.rb"
     - "app/models/community_listing.rb"
     - "app/models/site_content.rb"
-    - "app/services/community_directory_generator.rb"
-    - "app/services/community_directory_updater.rb"
     - "app/services/daily_digest_service.rb"
     - "app/services/newsletter_import_service.rb"
 
@@ -65,7 +63,6 @@ Lint/UnusedMethodArgument:
 Lint/UselessConstantScoping:
   Exclude:
     - "app/controllers/api/v1/community_directory_controller.rb"
-    - "app/services/community_directory_generator.rb"
     - "app/services/daily_digest_service.rb"
     - "app/services/newsletter_import_service.rb"
     - "app/services/scrapers/centro_italia_events_scraper.rb"
@@ -89,9 +86,6 @@ Naming/MethodParameterName:
     - "app/controllers/api/v1/community_services_controller.rb"
     - "app/controllers/api/v1/community_visit_notifications_controller.rb"
     - "app/controllers/concerns/community_category_controller.rb"
-    - "app/services/community_directory_generator.rb"
-    - "app/services/community_directory_updater.rb"
-    - "community_directory_v2/app/services/community_directory_generator.rb"
 
 Naming/VariableNumber:
   Exclude:
@@ -111,10 +105,7 @@ Performance/CollectionLiteralInLoop:
   Exclude:
     - "app/controllers/api/v1/community_directory_controller.rb"
     - "app/serializers/manifest_serializer.rb"
-    - "app/services/community_directory_generator.rb"
-    - "app/services/community_directory_updater.rb"
     - "app/services/community_og_preview.rb"
-    - "community_directory_v2/app/services/community_directory_generator.rb"
 
 Performance/DeletePrefix:
   Exclude:
@@ -123,7 +114,6 @@ Performance/DeletePrefix:
 
 Performance/MapCompact:
   Exclude:
-    - "app/services/community_directory_generator.rb"
     - "app/services/member_welcome_digest_service.rb"
 
 RSpec/LeakyLocalVariable:
@@ -205,7 +195,6 @@ Rails/Pluck:
     - "app/controllers/concerns/community_cacheable.rb"
     - "app/controllers/concerns/community_category_controller.rb"
     - "app/models/concerns/community_searchable.rb"
-    - "app/services/community_directory_updater.rb"
     - "lib/tasks/i18n_translate.rake"
     - "spec/requests/api/v1/community_artists_spec.rb"
     - "spec/requests/api/v1/community_events_spec.rb"
@@ -220,8 +209,6 @@ Rails/ReversibleMigration:
 Rails/RootPathnameMethods:
   Exclude:
     - "app/models/newsletter_asset.rb"
-    - "app/services/community_directory_generator.rb"
-    - "community_directory_v2/app/services/community_directory_generator.rb"
 
 Rails/SquishedSQLHeredocs:
   Exclude:
@@ -250,12 +237,6 @@ Style/ComparableBetween:
   Exclude:
     - "app/models/community_visit.rb"
 
-Style/DoubleNegation:
-  Exclude:
-    - "app/services/community_directory_generator.rb"
-    - "app/services/community_directory_updater.rb"
-    - "community_directory_v2/app/services/community_directory_generator.rb"
-
 Style/FormatStringToken:
   Exclude:
     - "app/mailers/new_member_announcement_mailer.rb"
@@ -270,12 +251,7 @@ Style/FrozenStringLiteralComment:
     - "app/models/community_directory_category_setting.rb"
     - "app/models/community_directory_permission.rb"
     - "app/models/community_event.rb"
-    - "app/services/community_directory_generator.rb"
-    - "app/services/community_directory_updater.rb"
     - "app/views/sitemaps/index.xml.builder"
-    - "community_directory_v2/app/controllers/api/v1/community_directory_controller.rb"
-    - "community_directory_v2/app/controllers/api/v1/community_directory_public_controller.rb"
-    - "community_directory_v2/app/services/community_directory_generator.rb"
     - "db/migrate/20260518100918_create_community_artists.rb"
     - "db/migrate/20260518161834_add_fields_to_community_artists.rb"
     - "db/migrate/20260519100000_create_community_directory_permissions.rb"
@@ -297,18 +273,11 @@ Style/HashExcept:
   Exclude:
     - "app/controllers/admin/site_settings_controller.rb"
 
-Style/MultilineBlockChain:
-  Exclude:
-    - "app/services/community_directory_generator.rb"
-    - "app/services/community_directory_updater.rb"
-    - "community_directory_v2/app/services/community_directory_generator.rb"
-
 Style/MutableConstant:
   Exclude:
     - "app/controllers/api/v1/community_events_controller.rb"
     - "app/models/community_artist.rb"
     - "app/models/community_event.rb"
-    - "app/services/community_directory_generator.rb"
 
 Style/NumericPredicate:
   Exclude:
@@ -319,7 +288,6 @@ Style/NumericPredicate:
 Style/ReduceToHash:
   Exclude:
     - "app/controllers/admin/site_settings_controller.rb"
-    - "app/services/community_directory_updater.rb"
 
 Style/SafeNavigation:
   Exclude:
@@ -329,12 +297,8 @@ Style/SafeNavigation:
 
 Style/SelectByRegexp:
   Exclude:
-    - "app/services/community_directory_generator.rb"
     - "app/services/scrapers/centro_italia_events_scraper.rb"
 
 Style/StringConcatenation:
   Exclude:
-    - "app/services/community_directory_generator.rb"
-    - "app/services/community_directory_updater.rb"
     - "app/services/newsletter_import_service.rb"
-    - "community_directory_v2/app/services/community_directory_generator.rb"

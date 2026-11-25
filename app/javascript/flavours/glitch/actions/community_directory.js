@@ -8,10 +8,6 @@ export const COMMUNITY_DIR_CATEGORIES_FETCH_REQUEST = "COMMUNITY_DIR_CATEGORIES_
 export const COMMUNITY_DIR_CATEGORIES_FETCH_SUCCESS = "COMMUNITY_DIR_CATEGORIES_FETCH_SUCCESS";
 export const COMMUNITY_DIR_CATEGORIES_FETCH_FAIL = "COMMUNITY_DIR_CATEGORIES_FETCH_FAIL";
 
-export const COMMUNITY_DIR_GENERATE_REQUEST = "COMMUNITY_DIR_GENERATE_REQUEST";
-export const COMMUNITY_DIR_GENERATE_SUCCESS = "COMMUNITY_DIR_GENERATE_SUCCESS";
-export const COMMUNITY_DIR_GENERATE_FAIL = "COMMUNITY_DIR_GENERATE_FAIL";
-
 // ── Moderation ────────────────────────────────────────────────
 
 export const COMMUNITY_DIR_MODERATION_FETCH_REQUEST = "COMMUNITY_DIR_MODERATION_FETCH_REQUEST";
@@ -47,30 +43,6 @@ export const fetchCategories = () => (dispatch) => {
       dispatch({ type: COMMUNITY_DIR_CATEGORIES_FETCH_FAIL, error, skipAlert: true });
     });
 };
-
-export const generateCategory = (config) => (dispatch) => {
-  dispatch({ type: COMMUNITY_DIR_GENERATE_REQUEST });
-  return api()
-    .post("/api/v1/community_directory/generate", config)
-    .then((response) => {
-      dispatch({ type: COMMUNITY_DIR_GENERATE_SUCCESS, result: response.data });
-      return response.data;
-    })
-    .catch((error) => {
-      dispatch({ type: COMMUNITY_DIR_GENERATE_FAIL, error });
-      throw error;
-    });
-};
-
-export const fetchCategory = (name) => () =>
-  api()
-    .get(`/api/v1/community_directory/categories/${name}`)
-    .then((r) => r.data);
-
-export const updateCategory = (name, config) => () =>
-  api()
-    .patch(`/api/v1/community_directory/categories/${name}`, config)
-    .then((r) => r.data);
 
 // Moderation
 

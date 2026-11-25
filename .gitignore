@@ -67,6 +67,8 @@ streaming/.eslintcache
 docs/HOW_MIACIVEZZA_IS_WIRED.md
 # Standing decisions log (local only: operational detail, repo is public)
 docs/DECISIONS.md
+# Early design-chat transcript for the Community Directory (kept locally, out of the public repo)
+Grok-Community-Directory.txt
 
 # Storybook build output (yarn build-storybook)
 /storybook-static/

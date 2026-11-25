@@ -1,11 +1,16 @@
 # Community Directory: architecture reference
 
 > **Status (updated 2026-11-25):** this is the original design document for the Community Directory
-> (May 2026). Sections 1-11 and 13-14 still describe how it's built. Later additions (moderation status,
-> trust/rate limits, image fields, translations, sorting, live refresh) are in the code and in memory
-> `project_community_directory`, and some items in section 15 have since been done.
+> (May 2026). **The admin generator it describes was removed on 2026-11-25.** That covers "Layer 2"
+> (the form builder at `/community_directory/admin`), "Layer 3" (`community_directory_generator.rb`),
+> the `generate` / category-edit endpoints and `community_directory_v2/`. Those parts are kept here only
+> as history; new categories are built with the personal skill `community-category`. Still current:
+> Layer 1 (the shared components), Layer 4 (the public hub), the thin-wrapper pattern, the generic Redux
+> layer, the `config.json` schema, the permissions model and the routing patterns. Later additions
+> (moderation status, trust/rate limits, image fields, translations, sorting, live refresh, the shared
+> `CommunityCategoryController`) are in the code and in memory `project_community_directory`.
 > For the ground rules and the live setup, read the repo `CLAUDE.md`, `docs/HOW_MIACIVEZZA_IS_WIRED.md`
-> and `docs/DECISIONS.md`. There is no local Rails/Docker development: see section 12.
+> and `docs/DECISIONS.md`.
 
 > This document captures the complete architectural decisions, design patterns, and technical
 > specifications for the Community Directory scaffolding system. It was produced during the
@@ -398,10 +403,9 @@ More specific routes MUST come before less specific ones:
 There's no local Rails or Docker environment (retired). The Mac runs git and yarn only; Rails,
 migrations and specs run on the server through the personal skills (see the repo `CLAUDE.md`).
 
-**Generating a new category currently has no agreed procedure.** The generator was last used on
-2026-06-07 under the retired Docker setup, and its output was committed from the Mac. Before the next
-category, agree a procedure with David (open item in `docs/DECISIONS.md`). Never run the generator
-against the live server checkout, since code must reach the server through git.
+**New categories are built in code with the `community-category` skill** (decided 2026-11-25, D17 in
+`docs/DECISIONS.md`): copy the closest live category, wire every shared registry, and verify with its
+`integration_check.sh`. The generator was removed; git history has it if it's ever needed.
 
 ## 13. Dependencies
 

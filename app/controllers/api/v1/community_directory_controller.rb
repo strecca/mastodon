@@ -5,32 +5,13 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
   before_action :require_admin!, except: [:moderation_index, :moderation_approve, :moderation_reject, :duplicate_check]
   before_action :require_admin_or_steward!, only: [:moderation_index, :moderation_approve, :moderation_reject]
 
-  # ── Category scaffolding ─────────────────────────────────────
+  # ── Categories ───────────────────────────────────────────────
+  # New categories are built in code (personal skill `community-category`); the
+  # admin generator that used to live here was removed on 2026-11-25.
 
   def categories
     tables = community_table_names.map { |key| build_category_info("community_#{key}") }
     render json: tables
-  end
-
-  def show_category
-    config_path = CommunityDirectoryConfig.config_path(params[:name])
-    if File.exist?(config_path)
-      render json: JSON.parse(File.read(config_path))
-    else
-      render json: { error: 'Category not found' }, status: 404
-    end
-  end
-
-  def generate
-    config = permit_config_params
-    result = CommunityDirectoryGenerator.new(config).generate!
-    render json: result, status: result[:success] ? :created : :unprocessable_content
-  end
-
-  def update_category
-    config = permit_config_params
-    result = CommunityDirectoryUpdater.new(params[:name], config).update!
-    render json: result, status: result[:success] ? :ok : :unprocessable_content
   end
 
   # ── Moderation queue ─────────────────────────────────────────
@@ -347,16 +328,6 @@ class Api::V1::CommunityDirectoryController < Api::BaseController
       name: name,
       account: { username: e.account&.username, display_name: e.account&.display_name },
       created_at: e.created_at.iso8601 }
-  end
-
-  def permit_config_params
-    # Admin-only endpoint — use permit! on fields/groups so locale keys
-    # (label_it, placeholder_de, etc.) and new flags (translatable, duplicate_key)
-    # are not stripped by Strong Parameters.
-    p = params.permit(:name, :display_name, :description, :icon).to_h
-    p['fields'] = params[:fields]&.map(&:permit!) || []
-    p['groups'] = params[:groups]&.map(&:permit!) || []
-    p
   end
 
   def build_category_info(table_name)
