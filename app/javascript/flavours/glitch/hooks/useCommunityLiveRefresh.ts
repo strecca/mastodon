@@ -5,6 +5,10 @@ import { useAppDispatch } from "flavours/glitch/store";
 import { connectStream } from "flavours/glitch/stream";
 
 const MIN_GAP_MS = 15_000;
+// Signed-out visitors (most of the audience) can't use the live stream: the
+// streaming server requires a sign-in token for every connection. While the page
+// is on screen they check for new content this often instead.
+const SIGNED_OUT_POLL_MS = 20_000;
 
 /**
  * Keeps a community page current without the member doing anything.
@@ -15,10 +19,13 @@ const MIN_GAP_MS = 15_000;
  *  - the live connection comes back after dropping;
  *  - the app returns to the foreground or the network comes back. A phone that
  *    froze the page in the background never receives pushes, so this is what
- *    catches it up. It applies to signed-out visitors too.
+ *    catches it up. It applies to signed-out visitors too;
+ *  - every 20 seconds while the page is visible, for signed-out visitors only,
+ *    since they get no pushes at all. Paused while the tab is hidden.
  *
- * Pass `{ stream: false }` for a page that already has its own live stream
- * (the Live Posts timeline) and only needs the wake-up refresh.
+ * Pass `{ stream: false }` for a page that already has its own live stream for
+ * signed-in members (the Live Posts timeline). It still gets the wake-up refresh
+ * and, for signed-out visitors, the 20-second check.
  *
  * Wake-up and reconnect refreshes are throttled to one per 15 seconds.
  * `refresh` should update data in place, without a loading spinner.
@@ -64,6 +71,15 @@ export function useCommunityLiveRefresh(
     window.addEventListener("online", onWake);
 
     let disconnect: (() => void) | undefined;
+    let pollTimer: ReturnType<typeof setInterval> | undefined;
+
+    if (!signedIn) {
+      pollTimer = setInterval(() => {
+        if (document.visibilityState === "visible") {
+          run(false);
+        }
+      }, SIGNED_OUT_POLL_MS);
+    }
 
     if (signedIn && stream) {
       let connectedBefore = false;
@@ -100,6 +116,7 @@ export function useCommunityLiveRefresh(
       window.removeEventListener("pageshow", onWake);
       window.removeEventListener("focus", onWake);
       window.removeEventListener("online", onWake);
+      clearInterval(pollTimer);
       disconnect?.();
     };
   }, [dispatch, signedIn, channelKey, stream]);

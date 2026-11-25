@@ -32,8 +32,12 @@ vi.mock("flavours/glitch/stream", () => ({
   },
 }));
 
+const setVisibility = (value: "visible" | "hidden") => {
+  Object.defineProperty(document, "visibilityState", { value, configurable: true });
+};
+
 const becomeVisible = () => {
-  Object.defineProperty(document, "visibilityState", { value: "visible", configurable: true });
+  setVisibility("visible");
   document.dispatchEvent(new Event("visibilitychange"));
 };
 
@@ -45,6 +49,9 @@ describe("useCommunityLiveRefresh", () => {
     mocks.callbacks = null;
     mocks.channel = null;
     mocks.disconnect.mockClear();
+    // Every test starts with the page in the background, so the signed-out
+    // 20-second check only runs when a test makes the page visible.
+    setVisibility("hidden");
   });
 
   afterEach(() => {
@@ -141,6 +148,63 @@ describe("useCommunityLiveRefresh", () => {
     becomeVisible();
 
     expect(mocks.disconnect).toHaveBeenCalledTimes(1);
+    expect(refresh).not.toHaveBeenCalled();
+  });
+
+  it("checks every 20 seconds while visible for signed-out visitors", () => {
+    setVisibility("visible");
+    const refresh = vi.fn();
+    renderHook(() => {
+      useCommunityLiveRefresh("live_posts_community", refresh, { stream: false });
+    });
+
+    vi.advanceTimersByTime(19_000);
+
+    expect(refresh).not.toHaveBeenCalled();
+
+    vi.advanceTimersByTime(1_000);
+
+    expect(refresh).toHaveBeenCalledTimes(1);
+
+    vi.advanceTimersByTime(40_000);
+
+    expect(refresh).toHaveBeenCalledTimes(3);
+  });
+
+  it("does not check while the page is hidden", () => {
+    const refresh = vi.fn();
+    renderHook(() => {
+      useCommunityLiveRefresh("listings", refresh);
+    });
+
+    vi.advanceTimersByTime(120_000);
+
+    expect(refresh).not.toHaveBeenCalled();
+  });
+
+  it("does not run the 20-second check for signed-in members", () => {
+    mocks.signedIn = true;
+    setVisibility("visible");
+    const refresh = vi.fn();
+    renderHook(() => {
+      useCommunityLiveRefresh("listings", refresh);
+    });
+
+    vi.advanceTimersByTime(120_000);
+
+    expect(refresh).not.toHaveBeenCalled();
+  });
+
+  it("stops the 20-second check on unmount", () => {
+    setVisibility("visible");
+    const refresh = vi.fn();
+    const { unmount } = renderHook(() => {
+      useCommunityLiveRefresh("listings", refresh);
+    });
+
+    unmount();
+    vi.advanceTimersByTime(120_000);
+
     expect(refresh).not.toHaveBeenCalled();
   });
 
