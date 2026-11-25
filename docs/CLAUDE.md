@@ -1,20 +1,11 @@
-KEY information:
+# Community Directory: architecture reference
 
-Contents: Mac Intel, Node v24, VS Code terminal, no sudo, no Windows assumptions, think-ahead error scanning preferences. I do a lot of Development environment testing so that I can run apps in my Firefox or Chrome browser at a http://localhost address. # Global Preferences
-
-- Mac Intel development machine
-- Node v24.12.0
-- VS Code terminal for all commands
-- Never use `sudo` for npm installs
-- Never generate Windows-specific commands or paths
-- When troubleshooting errors, scan the entire script for similar
-  issues before responding — don't just fix the reported line
-- Always think ahead for errors that logically follow from the same pattern
-- No placeholder code or generic templates — full production implementations
-- Never suggest a Brew Install of any component to avoid Homebrew’s dependency management or to ensure compatibility with Apple’s approved software paths
-  "This is a scaffolding tool, not a runtime feature. Read docs/COMMUNITY_DIRECTORY_ARCHITECTURE.md before any changes. Generated pages are thin wrappers — modify shared components at components/community_directory/, not individual feature pages."
-
-# Community Directory — Architecture & Design Document
+> **Status (updated 2026-11-25):** this is the original design document for the Community Directory
+> (May 2026). Sections 1-11 and 13-14 still describe how it's built. Later additions (moderation status,
+> trust/rate limits, image fields, translations, sorting, live refresh) are in the code and in memory
+> `project_community_directory`, and some items in section 15 have since been done.
+> For the ground rules and the live setup, read the repo `CLAUDE.md`, `docs/HOW_MIACIVEZZA_IS_WIRED.md`
+> and `docs/DECISIONS.md`. There is no local Rails/Docker development: see section 12.
 
 > This document captures the complete architectural decisions, design patterns, and technical
 > specifications for the Community Directory scaffolding system. It was produced during the
@@ -404,22 +395,13 @@ More specific routes MUST come before less specific ones:
 
 ## 12. Development Workflow
 
-### After generating a new category:
+There's no local Rails or Docker environment (retired). The Mac runs git and yarn only; Rails,
+migrations and specs run on the server through the personal skills (see the repo `CLAUDE.md`).
 
-```bash
-rm -rf public/packs-dev tmp/cache && bin/dev
-```
-
-Vite HMR does NOT reliably pick up new files written to disk. The full cache clear + restart
-is the only dependable method.
-
-### Dev environment:
-
-- Mac Intel
-- Node v24.12.0
-- Docker-based Mastodon dev
-- VS Code terminal for all commands
-- Repository: https://github.com/TruthTriumphs/glitch-soc-mastodon
+**Generating a new category currently has no agreed procedure.** The generator was last used on
+2026-06-07 under the retired Docker setup, and its output was committed from the Mac. Before the next
+category, agree a procedure with David (open item in `docs/DECISIONS.md`). Never run the generator
+against the live server checkout, since code must reach the server through git.
 
 ## 13. Dependencies
 
@@ -457,15 +439,3 @@ auth-gating complexity in the hub and keeps the admin namespace clean.
   so translations need manual addition to locale files
 - The persistent "Explore our Community Directory" header/banner mentioned in requirements
   has not yet been implemented — it would go in the navigation panel component
-
-# WHERE WE START IN THIS SESSION: This is MacPro2020:mastodon davidh$ writing now: It is May 18, 2026 around 09:50 as I begin. On May 17 my chat conversation with Claude Opus 4.6 Extended produced the above content and files. ALL OF THE CHANGES IN THE ABOVE SCRIPT HAVE BEEN MADE MANUALLY. I am running a Vite localhost Development environment which is actually inside a Docker environment. I am pulling from the mastodon glitch-soc fork in github but have not necessarily pulled in all of the glitch-soc and mastodon mail merges or changes. admin
-
-@admin
-500
-
-localhost:3000: About · Profiles directory · Privacy policy
-
-Mastodon: About · Get the app · Keyboard shortcuts · View source code · v4.6.0-alpha.7+glitch
-My problem that you will assist to solve is that once I have accessed http://localhost:3000/community_directory/admin and completed building the fields for a table that should be named 'community_artists' I then click the "Generate Community Feature" and perhaps 3 seconds of processing passes before a red highlighted text message reports at the top of the form 'Request failed with status code 500' I tried twice and I see no evidence that a single file has been written.  
-I am suspicious of community_directory_v2/app/javascript/flavours/glitch/components/community_directory/entry_list.jsx -- it refers to getting values from a 'config.json' file and I see none inside of this whole application.
-I A WONDERING IF IT IS A PROBLEM WITH RUBY WRITE

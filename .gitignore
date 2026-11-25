@@ -65,6 +65,8 @@ public-miacivezza-key.txt.pub
 .eslintcache
 streaming/.eslintcache
 docs/HOW_MIACIVEZZA_IS_WIRED.md
+# Standing decisions log (local only: operational detail, repo is public)
+docs/DECISIONS.md
 
 # Storybook build output (yarn build-storybook)
 /storybook-static/
