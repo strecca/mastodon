@@ -6,7 +6,7 @@ require 'rails_helper'
 # push and pull queues were dropped from config/sidekiq.yml as "federation only", which
 # left account deletion, suspensions, archive exports, link previews and browser push
 # notifications enqueued forever with no error anywhere.
-RSpec.describe 'config/sidekiq.yml queues' do
+RSpec.describe 'config/sidekiq.yml queues' do # rubocop:disable RSpec/DescribeClass -- checks a config file, not a class
   # Queues this closed (non-federated) site deliberately does not process.
   let(:intentionally_unlistened) { %w(ingress fasp) }
 
@@ -19,9 +19,8 @@ RSpec.describe 'config/sidekiq.yml queues' do
     Rails.application.eager_load!
     # Module#name directly: some classes define their own `.name` with required arguments
     class_name = Module.instance_method(:name)
-    ObjectSpace.each_object(Class)
-               .select { |klass| class_name.bind_call(klass) && klass < Sidekiq::Job }
-               .to_h { |klass| [class_name.bind_call(klass), klass.get_sidekiq_options['queue'].to_s] }
+    jobs = ObjectSpace.each_object(Class).select { |klass| class_name.bind_call(klass) && klass < Sidekiq::Job }
+    jobs.to_h { |klass| [class_name.bind_call(klass), klass.get_sidekiq_options['queue'].to_s] }
   end
 
   it 'listens to the queue of every worker, except the deliberately unused ones' do
